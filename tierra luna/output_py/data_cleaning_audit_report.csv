@@ -1,0 +1,15 @@
+body,variable,total_pixels,scale_corrected_px,nodata_sentinel_px,out_of_physical_range_px,statistical_outliers_px,total_imputed_px,clean_min,clean_mean,clean_std,clean_max
+MOON,elevation_m,16200,0,0,0,0,0,-7609.6953,-518.9744,2063.6982,8301.8828
+MOON,elevation_rel_m,16200,0,0,0,0,0,-7090.7207,0.0,2063.6982,8820.8574
+MOON,slope_deg,16200,0,0,0,0,0,1.6914,8.6067,3.4877,31.4987
+MOON,roughness_m,16200,0,0,0,0,0,7.3542,642.3062,425.8831,3058.2656
+MOON,temp_k,16200,0,0,0,0,0,43.4538,88.7669,11.1793,110.4311
+MOON,rock_or_bare_frac,16200,0,0,0,0,0,0.0015,0.005,0.0026,0.0463
+MOON,sar_sigma0_db,16200,0,0,0,17,17,-18.6652,-17.0851,0.7954,-13.1026
+EARTH,elevation_m,16200,0,0,0,0,0,-250.0,224.6803,910.4382,5274.3125
+EARTH,elevation_rel_m,16200,0,0,0,0,0,-1045.7161,-634.1358,818.7587,4226.8906
+EARTH,slope_deg,16200,0,0,0,0,0,0.01,1.5684,3.4324,37.1684
+EARTH,roughness_m,16200,0,0,0,0,0,0.1,71.5853,160.3901,1969.8711
+EARTH,temp_k,16200,0,0,0,0,0,217.3576,280.2513,17.5059,327.5201
+EARTH,rock_or_bare_frac,16200,0,0,0,0,0,0.0,0.1534,0.2716,0.98
+EARTH,sar_sigma0_db,16200,0,0,0,0,0,-24.0,-19.9821,5.6264,0.5853

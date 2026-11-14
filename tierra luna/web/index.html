@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Earth-Moon Planetary Analog Finder | NASA Space Apps 2026</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --bg-panel: #131b2e;
+      --bg-card: #1b253d;
+      --border: #2a395c;
+      --accent: #38bdf8;
+      --accent-green: #22c55e;
+      --accent-amber: #facc15;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      gap: 16px;
+      padding: 16px;
+      flex: 1;
+    }
+    @media (max-width: 1150px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    label { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px; }
+    select, button, input[type="number"] {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    button { cursor: pointer; }
+    select { width: 100%; cursor: pointer; }
+    button:hover { border-color: var(--accent); background: #233152; }
+    .preset-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .slider-group, .mission-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 11px;
+    }
+    .mission-card { display: flex; flex-direction: column; gap: 6px; }
+    .mission-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .mission-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .mission-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .gate-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.2);
+    }
+    .gate-inputs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .gate-inputs input[type="number"] {
+      width: 62px;
+      padding: 3px 5px;
+      font-size: 11px;
+      text-align: right;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .slider-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .top-visuals {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 1280px) {
+      .top-visuals { grid-template-columns: 1fr; }
+    }
+    #map {
+      width: 100%;
+      height: 450px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b0f19;
+    }
+    .canvas-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .canvas-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .canvas-box h4 { font-size: 12px; margin-bottom: 6px; color: var(--text-main); display: flex; justify-content: space-between; }
+    canvas {
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      border-radius: 6px;
+      image-rendering: pixelated;
+      border: 1px solid var(--border);
+      cursor: crosshair;
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+    .kpi-val { font-size: 18px; font-weight: 700; color: var(--accent); margin-top: 2px; }
+    .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .table-wrap {
+      overflow-x: auto;
+      max-height: 370px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+    }
+    th, td {
+      padding: 8px 9px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    th {
+      background: #162038;
+      color: var(--text-muted);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    tr.rank-row:hover {
+      background: rgba(56, 189, 248, 0.12);
+      cursor: pointer;
+    }
+    .score-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+    .m-badge {
+      display: inline-block;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-right: 2px;
+    }
+    .m-pass {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+    }
+    .m-fail {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .legend-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #1e1b4b, #2563eb, #10b981, #facc15, #ef4444);
+      margin-top: 6px;
+    }
+    .legend-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .opt-map-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+    }
+    .opt-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .opt-pill {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: #131b2e;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .opt-pill.active {
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
+    }
+    .opt-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .opt-zone-marker {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #0b0f19;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+      border: 1.5px solid #ffffff;
+      transform: translate(-50%, -125%);
+      pointer-events: auto;
+    }
+    .opt-zones-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 4px;
+    }
+    @media (max-width: 1400px) {
+      .opt-zones-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .opt-zones-grid { grid-template-columns: 1fr; }
+    }
+    .opt-zone-col {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .opt-zone-item {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 6px;
+      padding: 5px 7px;
+      font-size: 10.5px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .opt-zone-item:hover {
+      border-color: var(--accent);
+      background: #1e293b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h2>Global Earth–Moon Planetary Analog Finder</h2>
+      <span class="badge">Real LRO LOLA + Diviner vs. NOAA ETOPO1/SRTM30 + NCEP Global</span>
+      <span class="badge" id="hdrMissionVersion">mission_filters.json</span>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button id="btnWorldView">Reset World View</button>
+      <button id="btnDownloadRoverPreset">Export presets.json (rover_preset.py)</button>
+      <button id="btnDownloadJson">Export mission_filters.json</button>
+      <button id="btnDownloadCsv">Export Ranking + Mission Gates CSV</button>
+      <button id="btnReset">Reset All</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="panel-title">
+        <span>1. Lunar Target Region</span>
+      </div>
+      <div>
+        <label for="zoneSelect">Select Lunar Zone (or click Moon map)</label>
+        <select id="zoneSelect"></select>
+      </div>
+
+      <div class="panel-title">
+        <span>2. Mission Gates (mission_filters.json)</span>
+        <span id="missionMaskLabel" style="font-size:10px; color:var(--text-muted);">mask &ge; 0.30</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12px;">
+        <label style="margin:0; display:flex; align-items:center; gap:6px; cursor:pointer; color:var(--text-main);">
+          <input type="checkbox" id="chkOnlyPass" checked />
+          <span>Filter map &amp; ranking by active mission gates (AND)</span>
+        </label>
+      </div>
+      <div id="missionsContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+
+      <div class="panel-title">
+        <span>2b. Rover Physics &amp; Preset (rover_preset.py)</span>
+        <span id="roverTipBadge" style="font-size:10px; color:var(--accent-green);">Tip-over: 47.29°</span>
+      </div>
+      <div class="mission-card" id="roverPresetSidebarCard">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px;">
+          <b id="roverNameLabel">VIPER (approximation) — 4 wheels</b>
+          <span style="color:var(--accent); font-size:10.5px;">Level A Physics</span>
+        </div>
+        <div class="gate-row">
+          <span>Mass (kg) / CG z (m)</span>
+          <div class="gate-inputs">
+            <input type="number" step="10" id="rpMassKg" value="440" title="rover_spec.mass_kg" />
+            <input type="number" step="0.05" id="rpCgHeightM" value="0.60" title="rover_spec.cg_height_m" />
+          </div>
+        </div>
+        <div class="gate-row">
+          <span>Wheelbase / Track (m)</span>
+          <div class="gate-inputs">
+            <input type="number" step="0.05" id="rpWheelbaseM" value="1.30" title="rover_spec.wheelbase_m" />
+            <input type="number" step="0.05" id="rpTrackM" value="1.30" title="rover_spec.track_m" />
+          </div>
+        </div>
+        <div class="gate-row">
+          <span>Max Speed (m/s) / Max Slope (°)</span>
+          <div class="gate-inputs">
+            <input type="number" step="0.05" id="rpMaxSpeedMps" value="0.20" title="rover_spec.max_speed_mps" />
+            <input type="number" step="0.5" id="rpMaxOpSlopeDeg" value="15.0" title="rover_spec.max_operational_slope_deg" />
+          </div>
+        </div>
+        <div class="gate-row">
+          <span>Tolerances: Slope (°) / Rough (m)</span>
+          <div class="gate-inputs">
+            <input type="number" step="0.5" id="rpTolSlopeDeg" value="5.0" title="tolerances.slope_300m_deg.scale" />
+            <input type="number" step="1.0" id="rpTolRoughM" value="10.0" title="tolerances.rough_300m_m.scale" />
+          </div>
+        </div>
+        <div class="gate-row">
+          <span>Workable: Rain / Wind / Tmin</span>
+          <div class="gate-inputs">
+            <input type="number" step="0.5" id="rpRainMax" value="1.0" style="width:46px;" title="workable_days.rain_mm_max" />
+            <input type="number" step="1" id="rpWindMax" value="12.0" style="width:46px;" title="workable_days.wind_max_ms_max" />
+            <input type="number" step="1" id="rpTminMin" value="-10.0" style="width:48px;" title="workable_days.tmin_c_min" />
+          </div>
+        </div>
+        <label style="margin:2px 0 0 0; display:flex; align-items:center; gap:6px; cursor:pointer; color:var(--text-main); font-size:11.5px;">
+          <input type="checkbox" id="chkRequireWorkable" />
+          <span>Enforce workable_days gate (rain &le; 1mm, wind &le; 12m/s, Tmin &ge; -10°C)</span>
+        </label>
+        <div id="rpSafetyWarning" style="font-size:11px; color:var(--accent-green); margin-top:2px;"></div>
+      </div>
+
+      <div class="panel-title">
+        <span>3. Variable Weight Sliders</span>
+        <span id="weightSumLabel" style="font-size:11px; color:var(--text-muted);">100% norm</span>
+      </div>
+      <div class="preset-row">
+        <button data-preset="balanced">Balanced</button>
+        <button data-preset="rover">Rover Mobility</button>
+        <button data-preset="solar">Solar &amp; Light</button>
+        <button data-preset="thermal">Thermal Swing</button>
+      </div>
+      <div id="slidersContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">#1 Passing Earth Analog</div>
+          <div class="kpi-val" id="kpiBestScore">--%</div>
+          <div class="kpi-sub" id="kpiBestCoords">--</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Mission Gate Pass Rate</div>
+          <div class="kpi-val" id="kpiPassCount">-- / --</div>
+          <div class="kpi-sub" id="kpiPassSub">Active missions: --</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Lunar Target (LOLA + Diviner)</div>
+          <div class="kpi-val" id="kpiMoonTemp">-- K</div>
+          <div class="kpi-sub" id="kpiMoonElev">Elev: -- m</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Earth #1 Thermal &amp; Cryosphere</div>
+          <div class="kpi-val" id="kpiEarthTemp">-- K</div>
+          <div class="kpi-sub" id="kpiThermalMatch">Inertia / Permafrost: --</div>
+        </div>
+      </div>
+
+      <div class="top-visuals">
+        <div class="panel">
+          <div class="panel-title">
+            <span>Global Continental Earth Analog Map (-90°..+90°, -180°..+180°)</span>
+            <span style="font-size:11px; color:var(--text-muted);">Single Non-Repeating Map | Optimal Mission Zones Overlay</span>
+          </div>
+          <div class="opt-map-bar">
+            <label style="margin:0; display:flex; align-items:center; gap:6px; cursor:pointer; color:var(--text-main); font-weight:600;">
+              <input type="checkbox" id="chkShowOptZones" checked />
+              <span>Show Optimal Mission Zones on Map</span>
+            </label>
+            <div class="opt-pill-group" id="optMissionPills">
+              <button type="button" class="opt-pill active" data-opt-filter="overview">
+                <span class="opt-dot" style="background:#ffffff;"></span>ALL MISSIONS
+              </button>
+              <button type="button" class="opt-pill" data-opt-filter="rover">
+                <span class="opt-dot" style="background:#38bdf8;"></span>ROVER
+              </button>
+              <button type="button" class="opt-pill" data-opt-filter="solar">
+                <span class="opt-dot" style="background:#facc15;"></span>SOLAR
+              </button>
+              <button type="button" class="opt-pill" data-opt-filter="thermal">
+                <span class="opt-dot" style="background:#fb923c;"></span>THERMAL
+              </button>
+              <button type="button" class="opt-pill" data-opt-filter="ice">
+                <span class="opt-dot" style="background:#c084fc;"></span>ICE (ISRU)
+              </button>
+              <button type="button" class="opt-pill" data-opt-filter="all">
+                <span class="opt-dot" style="background:#22c55e;"></span>COMBINED (4-IN-1)
+              </button>
+            </div>
+          </div>
+          <div id="map"></div>
+          <div>
+            <div class="legend-bar"></div>
+            <div class="legend-labels">
+              <span>Low Similarity (0%) / Filtered Out</span>
+              <span>Moderate (50%)</span>
+              <span>High Analog Match (100%)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <span>Full-Globe Moon Map (LRO LOLA + Diviner)</span>
+            <select id="bandViewSelect" style="width:auto; padding:4px 8px; font-size:12px;">
+              <option value="elev">Elevation (m)</option>
+              <option value="slope">Slope (deg)</option>
+              <option value="rough">Roughness (m)</option>
+              <option value="temp">Temperature (K)</option>
+              <option value="rock">Rock Abundance [0-1]</option>
+              <option value="sar">SAR Backscatter (dB)</option>
+            </select>
+          </div>
+          <div class="canvas-stack">
+            <div class="canvas-box">
+              <h4>
+                <span>FULL MOON: LRO LOLA + Diviner (-180°..+180°)</span>
+                <span style="color:var(--accent);">Click Moon to pick target point!</span>
+              </h4>
+              <canvas id="moonCanvas" width="90" height="45"></canvas>
+            </div>
+          </div>
+          <div id="missionAuditCard" class="slider-group" style="font-size:11.5px; line-height:1.45;"></div>
+          <div id="selectedCellCard" class="slider-group" style="font-size:11.5px; line-height:1.45;"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <span>Optimal Mission Zones on Earth (from mission_filters.py &amp; mission_filters.json — Click any zone to fly &amp; inspect on map)</span>
+          <span style="font-size:11px; color:var(--text-muted);" id="optAtlasSubLabel">Showing Top Optimal Zones per Mission</span>
+        </div>
+        <div class="opt-zones-grid" id="optimalZonesAtlas"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <span>VIPER Rover Physics, Gravity Scaling &amp; Test Transfer Card (rover_preset.py — Robotics 1)</span>
+          <span style="font-size:11px; color:var(--text-muted);" id="roverTransferSub">Earth (9.81 m/s²) vs. Moon (1.62 m/s²) &amp; Mars (3.73 m/s²)</span>
+        </div>
+        <div id="roverPhysicsPanel" style="display:grid; grid-template-columns: 1.15fr 1fr; gap:12px; font-size:11.5px; line-height:1.45;"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <span>Global Terrestrial Analog Ranking &amp; Mission Filter Gates (Click row to fly to site)</span>
+          <span style="font-size:11px; color:var(--text-muted);" id="tableCountLabel">Top 35 Passing Sites</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Similarity</th>
+                <th>Mission Gates</th>
+                <th>Workable Days</th>
+                <th>Terrestrial Region / Landmark</th>
+                <th>Matched Lunar Zone</th>
+                <th>Lat (°)</th>
+                <th>Lon (°)</th>
+                <th>Elev (m)</th>
+                <th>Slope (°)</th>
+                <th>Rough (m)</th>
+                <th>Temp (K)</th>
+                <th>ΔT Amp (K)</th>
+                <th>Irrad (kWh/m²/d)</th>
+                <th>Sun Max / Low</th>
+                <th>Inertia Class</th>
+                <th>Permafrost</th>
+              </tr>
+            </thead>
+            <tbody id="rankingTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="analog_data.js"></script>
+  <script>
+    const FEATURE_META = [
+      { key: "slope_deg", label: "Topographic Slope (relieve)", unit: "deg (0–90°)", desc: "LOLA LDSM_16 vs. ETOPO1/SRTM30 slope" },
+      { key: "roughness_m", label: "Surface Roughness (relieve)", unit: "meters (m)", desc: "Sub-grid elevation standard deviation" },
+      { key: "elevation_rel_m", label: "Relative Elevation (relieve)", unit: "meters (m)", desc: "Zero-centered planetary relief" },
+      { key: "temp_k", label: "Surface Temperature (termico)", unit: "Kelvin (K)", desc: "Diviner vs. NOAA NCEP thermal regime" },
+      { key: "rock_or_bare_frac", label: "Rock / Bare Fraction (material)", unit: "fraction [0–1]", desc: "Diviner RA vs. Bare ground fraction" },
+      { key: "sar_sigma0_db", label: "SAR Backscatter (material/agua)", unit: "decibels (dB)", desc: "Dielectric & surface roughness" }
+    ];
+
+    const PRESETS = {
+      balanced: { slope_deg: 25, roughness_m: 20, elevation_rel_m: 15, temp_k: 15, rock_or_bare_frac: 15, sar_sigma0_db: 10 },
+      rover:    { slope_deg: 35, roughness_m: 25, elevation_rel_m: 10, temp_k: 10, rock_or_bare_frac: 15, sar_sigma0_db: 5 },
+      solar:    { slope_deg: 15, roughness_m: 10, elevation_rel_m: 20, temp_k: 35, rock_or_bare_frac: 10, sar_sigma0_db: 10 },
+      thermal:  { slope_deg: 10, roughness_m: 10, elevation_rel_m: 15, temp_k: 40, rock_or_bare_frac: 20, sar_sigma0_db: 5 }
+    };
+
+    const GATE_PROP_MAP = {
+      slope_300m_deg: "s300",
+      rough_300m_m: "r300",
+      irradiance_kwh_m2_day: "irr",
+      sun_elev_max_deg: "smax",
+      sun_low_frac_0_5deg: "slow",
+      lst_diurnal_amp_k: "damp",
+      thermal_inertia_class: "tic",
+      permafrost_class: "pfc"
+    };
+
+    const data = window.ANALOG_DATA;
+    const missionCfg = JSON.parse(JSON.stringify(data.mission_filters));
+    let activeMissions = { rover: true, solar: true, thermal: true, ice: false };
+    let weights = { ...PRESETS.balanced };
+    let currentZone = Object.keys(data.lunar_zones)[0];
+    let customMoonTarget = null;
+    let scoredCells = [];
+
+    document.getElementById("hdrMissionVersion").textContent = `mission_filters.json (${missionCfg.version || "v1.0"})`;
+    document.getElementById("missionMaskLabel").textContent = `mask_min >= ${missionCfg.mask_min}`;
+
+    const zoneSelect = document.getElementById("zoneSelect");
+    Object.keys(data.lunar_zones).forEach(z => {
+      const opt = document.createElement("option");
+      opt.value = z;
+      opt.textContent = `${z} (${data.lunar_zones[z].pixel_count} cells)`;
+      zoneSelect.appendChild(opt);
+    });
+    zoneSelect.addEventListener("change", () => {
+      customMoonTarget = null;
+      currentZone = zoneSelect.value;
+      recomputeAndRender();
+    });
+
+    function applyDomainWeightsFromMission(mKey) {
+      const mw = missionCfg.missions[mKey].weights;
+      if (!mw) return;
+      const relieve = (mw.relieve || 0.2) * 100;
+      const material = (mw.material || 0.2) * 100;
+      const termico = (mw.termico || 0.2) * 100;
+      const luz = (mw.luz || 0.2) * 100;
+      const agua = (mw.agua || 0.2) * 100;
+
+      const mapped = {
+        slope_deg: Math.round(relieve * 0.45 + luz * 0.15),
+        roughness_m: Math.round(relieve * 0.35 + material * 0.20),
+        elevation_rel_m: Math.round(relieve * 0.20 + luz * 0.35 + agua * 0.20),
+        temp_k: Math.round(termico * 0.80 + luz * 0.35 + agua * 0.45),
+        rock_or_bare_frac: Math.round(material * 0.55 + termico * 0.20 + luz * 0.15),
+        sar_sigma0_db: Math.round(material * 0.25 + agua * 0.35)
+      };
+      Object.keys(mapped).forEach(k => {
+        weights[k] = mapped[k];
+        sliderInputs[k].value = mapped[k];
+        sliderLabels[k].textContent = `${mapped[k]}%`;
+      });
+      recomputeAndRender();
+    }
+
+    function buildMissionCards() {
+      const container = document.getElementById("missionsContainer");
+      container.innerHTML = "";
+      Object.entries(missionCfg.missions).forEach(([mKey, mObj]) => {
+        const card = document.createElement("div");
+        card.className = "mission-card";
+        const w = mObj.weights || {};
+        const wStr = `relieve:${w.relieve ?? "-"} | mat:${w.material ?? "-"} | term:${w.termico ?? "-"} | luz:${w.luz ?? "-"} | agua:${w.agua ?? "-"}`;
+        const frozenStr = mObj.frozen_at ? `Frozen by ${mObj.author || "Team"} (${mObj.frozen_at.slice(0, 10)})` : "Unfrozen template";
+
+        let gatesHtml = "";
+        Object.entries(mObj.gates || {}).forEach(([gCol, gRule]) => {
+          if (gRule.allow || gRule.exclude) {
+            const modeTxt = gRule.allow ? `allow: [${gRule.allow.join(", ")}]` : `exclude: [${gRule.exclude.join(", ")}]`;
+            gatesHtml += `
+              <div class="gate-row" title="Source: ${gRule.source || 'N/A'}">
+                <span><b>${gCol}</b></span>
+                <span style="color:var(--accent);">${modeTxt}</span>
+              </div>
+            `;
+          } else {
+            gatesHtml += `
+              <div class="gate-row" title="Source: ${gRule.source || 'N/A'}">
+                <span><b>${gCol}</b></span>
+                <div class="gate-inputs">
+                  <span>min</span>
+                  <input type="number" step="any" data-m="${mKey}" data-col="${gCol}" data-bound="min" value="${gRule.min ?? ''}" />
+                  <span>max</span>
+                  <input type="number" step="any" data-m="${mKey}" data-col="${gCol}" data-bound="max" value="${gRule.max ?? ''}" />
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        card.innerHTML = `
+          <div class="mission-head">
+            <label class="mission-title" style="margin:0; color:var(--text-main);">
+              <input type="checkbox" data-mission-toggle="${mKey}" ${activeMissions[mKey] ? "checked" : ""} />
+              <span>[${mKey.toUpperCase()}] ${mObj.description}</span>
+            </label>
+            <button type="button" data-apply-mweights="${mKey}" style="padding:3px 7px; font-size:10.5px;">Use Weights</button>
+          </div>
+          <div class="mission-meta">
+            <div><b>Weights:</b> ${wStr}</div>
+            <div><b>Status:</b> ${frozenStr} | <span id="mPassStat_${mKey}" style="color:var(--accent-green); font-weight:600;">--</span></div>
+          </div>
+          ${gatesHtml}
+        `;
+        container.appendChild(card);
+      });
+
+      container.querySelectorAll("[data-mission-toggle]").forEach(chk => {
+        chk.addEventListener("change", () => {
+          activeMissions[chk.dataset.missionToggle] = chk.checked;
+          recomputeAndRender();
+        });
+      });
+
+      container.querySelectorAll("[data-apply-mweights]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          applyDomainWeightsFromMission(btn.dataset.applyMweights);
+        });
+      });
+
+      container.querySelectorAll("input[type='number']").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const { m, col, bound } = inp.dataset;
+          const v = inp.value.trim() === "" ? null : Number(inp.value);
+          missionCfg.missions[m].gates[col][bound] = isFinite(v) ? v : null;
+          recomputeAndRender();
+        });
+      });
+    }
+
+    function evaluateCellMissionFails(cell, mObj, maskMin) {
+      const fails = [];
+      if (maskMin !== null && maskMin !== undefined && cell.mf < maskMin) {
+        fails.push("mask_fraction");
+      }
+      (mObj.require_present || []).forEach(reqCol => {
+        const pKey = GATE_PROP_MAP[reqCol];
+        const val = cell[pKey];
+        if (val === null || val === undefined || String(val).trim() === "") {
+          fails.push(`${reqCol}:missing`);
+        }
+      });
+      Object.entries(mObj.gates || {}).forEach(([gCol, gRule]) => {
+        const pKey = GATE_PROP_MAP[gCol];
+        const raw = cell[pKey];
+        if (gRule.allow || gRule.exclude) {
+          if (raw === null || raw === undefined || String(raw).trim() === "") return;
+          const v = String(raw).trim().toLowerCase();
+          if (gRule.allow && !gRule.allow.map(x => String(x).toLowerCase()).includes(v)) {
+            fails.push(gCol);
+          } else if (gRule.exclude && gRule.exclude.map(x => String(x).toLowerCase()).includes(v)) {
+            fails.push(gCol);
+          }
+        } else {
+          if (raw === null || raw === undefined || !isFinite(Number(raw))) return;
+          const v = Number(raw);
+          if (gRule.min !== null && gRule.min !== undefined && v < gRule.min) {
+            fails.push(gCol);
+          } else if (gRule.max !== null && gRule.max !== undefined && v > gRule.max) {
+            fails.push(gCol);
+          }
+        }
+      });
+      return fails;
+    }
+
+    const slidersContainer = document.getElementById("slidersContainer");
+    const sliderInputs = {};
+    const sliderLabels = {};
+
+    FEATURE_META.forEach(f => {
+      const div = document.createElement("div");
+      div.className = "slider-group";
+      div.innerHTML = `
+        <div class="slider-header">
+          <span>${f.label}</span>
+          <span id="val_${f.key}">${weights[f.key]}%</span>
+        </div>
+        <input type="range" id="sl_${f.key}" min="0" max="100" step="5" value="${weights[f.key]}" />
+        <div class="slider-sub">${f.desc} (${f.unit})</div>
+      `;
+      slidersContainer.appendChild(div);
+      const input = div.querySelector("input");
+      const valSpan = div.querySelector(`#val_${f.key}`);
+      sliderInputs[f.key] = input;
+      sliderLabels[f.key] = valSpan;
+      input.addEventListener("input", () => {
+        weights[f.key] = Number(input.value);
+        valSpan.textContent = `${weights[f.key]}%`;
+        recomputeAndRender();
+      });
+    });
+
+    document.querySelectorAll("[data-preset]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = PRESETS[btn.dataset.preset];
+        Object.keys(p).forEach(k => {
+          weights[k] = p[k];
+          sliderInputs[k].value = p[k];
+          sliderLabels[k].textContent = `${p[k]}%`;
+        });
+        recomputeAndRender();
+      });
+    });
+
+    document.getElementById("chkOnlyPass").addEventListener("change", recomputeAndRender);
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      customMoonTarget = null;
+      Object.assign(missionCfg, JSON.parse(JSON.stringify(data.mission_filters)));
+      activeMissions = { rover: true, solar: true, thermal: true, ice: false };
+      buildMissionCards();
+      document.querySelector('[data-preset="balanced"]').click();
+    });
+
+    const worldBounds = L.latLngBounds(L.latLng(-85.0, -180.0), L.latLng(85.0, 180.0));
+    const map = L.map("map", {
+      worldCopyJump: false,
+      maxBounds: worldBounds,
+      maxBoundsViscosity: 1.0,
+      minZoom: 2
+    }).setView([15.0, 0.0], 2);
+
+    const osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      noWrap: true,
+      bounds: worldBounds,
+      attribution: "&copy; OpenStreetMap | Global Earth-Moon Study"
+    });
+    const topoLayer = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+      maxZoom: 17,
+      noWrap: true,
+      bounds: worldBounds,
+      attribution: "&copy; OpenTopoMap"
+    });
+    osmLayer.addTo(map);
+    L.control.layers({ "Global Map": osmLayer, "Topographic": topoLayer }).addTo(map);
+
+    document.getElementById("btnWorldView").addEventListener("click", () => {
+      map.flyTo([15.0, 0.0], 2, { duration: 0.6 });
+    });
+
+    const gridLayerGroup = L.layerGroup().addTo(map);
+    const markerLayerGroup = L.layerGroup().addTo(map);
+    const optimalZoneLayerGroup = L.layerGroup().addTo(map);
+
+    const MISSION_STYLE = {
+      rover:   { label: "ROVER",   color: "#38bdf8", bg: "rgba(56, 189, 248, 0.22)", title: "Rover Mobility & Trafficability" },
+      solar:   { label: "SOLAR",   color: "#facc15", bg: "rgba(250, 204, 21, 0.22)", title: "Solar Energy & Low-Angle Light" },
+      thermal: { label: "THERMAL", color: "#fb923c", bg: "rgba(251, 146, 60, 0.22)", title: "Extreme Thermal & Inertia" },
+      ice:     { label: "ICE",     color: "#c084fc", bg: "rgba(192, 132, 252, 0.22)", title: "Cryosphere & Ice Drilling (ISRU)" },
+      all:     { label: "ALL-4",   color: "#22c55e", bg: "rgba(34, 197, 94, 0.24)",  title: "Combined Multi-Mission (All 4 Gates)" }
+    };
+
+    let optMissionFilter = "overview";
+    const zonePopupMap = {};
+
+    document.getElementById("chkShowOptZones").addEventListener("change", recomputeAndRender);
+    document.querySelectorAll("#optMissionPills .opt-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#optMissionPills .opt-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        optMissionFilter = btn.dataset.optFilter;
+        recomputeAndRender();
+      });
+    });
+
+    const rpIds = [
+      "rpMassKg", "rpCgHeightM", "rpWheelbaseM", "rpTrackM",
+      "rpMaxSpeedMps", "rpMaxOpSlopeDeg", "rpTolSlopeDeg", "rpTolRoughM",
+      "rpRainMax", "rpWindMax", "rpTminMin", "chkRequireWorkable"
+    ];
+    rpIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener("input", () => {
+          if (id === "rpMaxOpSlopeDeg") {
+            const v = Number(el.value);
+            if (isFinite(v) && v > 0 && missionCfg.missions.rover?.gates?.slope_300m_deg) {
+              missionCfg.missions.rover.gates.slope_300m_deg.max = v;
+              const gateInput = document.querySelector("input[data-m='rover'][data-col='slope_300m_deg'][data-bound='max']");
+              if (gateInput) gateInput.value = v;
+            }
+          }
+          recomputeAndRender();
+        });
+        el.addEventListener("change", recomputeAndRender);
+      }
+    });
+
+    function computeLiveRoverPreset() {
+      const baseRp = data.rover_preset || {};
+      const g = baseRp.gravity || { earth: 9.81, moon: 1.62, mars: 3.73 };
+      const mass = Math.max(1, Number(document.getElementById("rpMassKg").value) || 440);
+      const cgH = Math.max(0.05, Number(document.getElementById("rpCgHeightM").value) || 0.60);
+      const wb = Math.max(0.1, Number(document.getElementById("rpWheelbaseM").value) || 1.30);
+      const tr = Math.max(0.1, Number(document.getElementById("rpTrackM").value) || 1.30);
+      const vMax = Math.max(0.01, Number(document.getElementById("rpMaxSpeedMps").value) || 0.20);
+      const maxOpSlope = Number(document.getElementById("rpMaxOpSlopeDeg").value) || 15.0;
+      const tolSlope = Math.max(0.5, Number(document.getElementById("rpTolSlopeDeg").value) || 5.0);
+      const tolRough = Math.max(1.0, Number(document.getElementById("rpTolRoughM").value) || 10.0);
+      const rainMax = Number(document.getElementById("rpRainMax").value);
+      const windMax = Number(document.getElementById("rpWindMax").value);
+      const tminMin = Number(document.getElementById("rpTminMin").value);
+      const requireWorkable = document.getElementById("chkRequireWorkable").checked;
+
+      const nContacts = 4;
+      const patchL = 0.10, patchW = 0.20;
+      const area = nContacts * patchL * patchW;
+
+      const dForward = wb / 2.0;
+      const dSide = tr / 2.0;
+      const tipForward = (Math.atan(dForward / cgH) * 180) / Math.PI;
+      const tipSide = (Math.atan(dSide / cgH) * 180) / Math.PI;
+      const tipMin = Math.round(Math.min(tipForward, tipSide) * 100) / 100;
+
+      const earthWeight = Math.round(mass * g.earth * 10) / 10;
+      const earthPress = Math.round((mass * g.earth) / area * 10) / 10;
+
+      const moonWeight = Math.round(mass * g.moon * 10) / 10;
+      const moonPress = Math.round((mass * g.moon) / area * 10) / 10;
+      const moonTwinMass = Math.round(((mass * g.moon) / g.earth) * 10) / 10;
+      const moonLoadRatio = Math.round((g.earth / g.moon) * 100) / 100;
+      const moonFroudeFactor = Math.round(Math.sqrt(g.earth / g.moon) * 100) / 100;
+      const moonTestSpeed = Math.round(vMax * Math.sqrt(g.earth / g.moon) * 1000) / 1000;
+
+      const marsWeight = Math.round(mass * g.mars * 10) / 10;
+      const marsPress = Math.round((mass * g.mars) / area * 10) / 10;
+      const marsTwinMass = Math.round(((mass * g.mars) / g.earth) * 10) / 10;
+      const marsLoadRatio = Math.round((g.earth / g.mars) * 100) / 100;
+      const marsFroudeFactor = Math.round(Math.sqrt(g.earth / g.mars) * 100) / 100;
+      const marsTestSpeed = Math.round(vMax * Math.sqrt(g.earth / g.mars) * 1000) / 1000;
+
+      const roverGateSlopeMax = missionCfg.missions.rover?.gates?.slope_300m_deg?.max ?? maxOpSlope;
+      const slopeSafe = roverGateSlopeMax < tipMin;
+
+      return {
+        name: baseRp.preset?.rover_reference?.name || "VIPER (approximation)",
+        locomotion: "wheels (4 contacts, 0.10m x 0.20m patch)",
+        mass, cgH, wb, tr, vMax, maxOpSlope,
+        tolSlope, tolRough,
+        rainMax: isFinite(rainMax) ? rainMax : 1.0,
+        windMax: isFinite(windMax) ? windMax : 12.0,
+        tminMin: isFinite(tminMin) ? tminMin : -10.0,
+        requireWorkable,
+        tipMin,
+        tipForward: Math.round(tipForward * 100) / 100,
+        tipSide: Math.round(tipSide * 100) / 100,
+        leverForward: Math.round(dForward * 1000) / 1000,
+        leverSide: Math.round(dSide * 1000) / 1000,
+        slopeSafe,
+        roverGateSlopeMax,
+        physics: {
+          earth: { g_mps2: g.earth, weight_n: earthWeight, ground_pressure_pa: earthPress },
+          moon:  { g_mps2: g.moon, weight_n: moonWeight, ground_pressure_pa: moonPress, earth_twin_mass_kg: moonTwinMass, earth_load_ratio: moonLoadRatio, froude_speed_factor: moonFroudeFactor, earth_test_speed_mps: moonTestSpeed },
+          mars:  { g_mps2: g.mars, weight_n: marsWeight, ground_pressure_pa: marsPress, earth_twin_mass_kg: marsTwinMass, earth_load_ratio: marsLoadRatio, froude_speed_factor: marsFroudeFactor, earth_test_speed_mps: marsTestSpeed }
+        },
+        notes: baseRp.preset?.notes || []
+      };
+    }
+
+    function renderRoverPresetPanel(rp, workableCount, nTotal) {
+      const tipBadge = document.getElementById("roverTipBadge");
+      const warnEl = document.getElementById("rpSafetyWarning");
+      if (rp.slopeSafe) {
+        tipBadge.style.color = "var(--accent-green)";
+        tipBadge.textContent = `Tip-over: ${rp.tipMin}° (SAFE)`;
+        warnEl.style.color = "var(--accent-green)";
+        warnEl.textContent = `✓ Gate slope_300m_deg max (${rp.roverGateSlopeMax}°) < Static tip-over (${rp.tipMin}°) | Workable cells: ${workableCount}/${nTotal}`;
+      } else {
+        tipBadge.style.color = "var(--accent-red)";
+        tipBadge.textContent = `Tip-over: ${rp.tipMin}° (UNSAFE!)`;
+        warnEl.style.color = "var(--accent-red)";
+        warnEl.textContent = `⚠ PresetError (rover_preset.py): slope gate max (${rp.roverGateSlopeMax}°) >= static tip-over (${rp.tipMin}°)`;
+      }
+
+      const panel = document.getElementById("roverPhysicsPanel");
+      const pE = rp.physics.earth, pM = rp.physics.moon, pMa = rp.physics.mars;
+      panel.innerHTML = `
+        <div class="slider-group" style="display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:4px;">
+            <b style="color:var(--accent);">1. Rover Reference &amp; Multi-Body Physics (transfer_physics)</b>
+            <span>Mass: <b>${rp.mass} kg</b> | CG: <b>[0, 0, ${rp.cgH}] m</b></span>
+          </div>
+          <div>
+            • <b>Static Tip-Over (static_tipover, Level A):</b> Min <b>${rp.tipMin}°</b> (Forward/Rear: <b>${rp.tipForward}°</b> at lever ${rp.leverForward}m | Left/Right: <b>${rp.tipSide}°</b> at lever ${rp.leverSide}m) — <i>independent of gravity</i>.<br/>
+            • <b>Tolerances (PRESET_CONFIG):</b> slope_300m_deg scale = <b>${rp.tolSlope}°</b> | rough_300m_m scale = <b>${rp.tolRough} m</b>.<br/>
+            • <b>Workable Days (workable_days):</b> rain &le; <b>${rp.rainMax} mm/d</b>, wind &le; <b>${rp.windMax} m/s</b>, Tmin &ge; <b>${rp.tminMin} °C</b> (${workableCount}/${nTotal} Earth cells pass).
+          </div>
+          <table style="margin-top:2px; font-size:11px;">
+            <thead>
+              <tr>
+                <th>Body (g)</th>
+                <th>Weight on Tool</th>
+                <th>Ground Pressure</th>
+                <th>Earth Twin Mass</th>
+                <th>Load Ratio</th>
+                <th>Froude Test Speed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Moon (1.62 m/s²)</b></td>
+                <td><b>${pM.weight_n} N</b></td>
+                <td><b>${pM.ground_pressure_pa} Pa</b> (${(pM.ground_pressure_pa / 1000).toFixed(2)} kPa)</td>
+                <td style="color:var(--accent-green);"><b>${pM.earth_twin_mass_kg} kg</b></td>
+                <td>${pM.earth_load_ratio}&times;</td>
+                <td style="color:var(--accent);"><b>${pM.earth_test_speed_mps} m/s</b> (${pM.froude_speed_factor}&times;)</td>
+              </tr>
+              <tr>
+                <td><b>Mars (3.73 m/s²)</b></td>
+                <td><b>${pMa.weight_n} N</b></td>
+                <td><b>${pMa.ground_pressure_pa} Pa</b> (${(pMa.ground_pressure_pa / 1000).toFixed(2)} kPa)</td>
+                <td><b>${pMa.earth_twin_mass_kg} kg</b></td>
+                <td>${pMa.earth_load_ratio}&times;</td>
+                <td><b>${pMa.earth_test_speed_mps} m/s</b> (${pMa.froude_speed_factor}&times;)</td>
+              </tr>
+              <tr>
+                <td><b>Earth 1g (9.81 m/s²)</b></td>
+                <td>${pE.weight_n} N</td>
+                <td>${pE.ground_pressure_pa} Pa (${(pE.ground_pressure_pa / 1000).toFixed(2)} kPa)</td>
+                <td>${rp.mass} kg (full)</td>
+                <td>1.00&times;</td>
+                <td>${rp.vMax} m/s (nominal)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="slider-group" style="display:flex; flex-direction:column; gap:5px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding-bottom:4px;">
+            <b style="color:var(--accent);">2. Test Transfer Card (transfer_card — Levels A, B, C)</b>
+            <span style="color:var(--text-muted);">rover_preset.py contract</span>
+          </div>
+          <div>
+            <span class="m-badge m-pass">LEVEL A</span> <b>Static tip-over angle (min):</b> <b>${rp.tipMin} deg</b> — <i>independent of gravity, transfers 1:1 from Earth to Moon/Mars</i>.<br/>
+            <span class="m-badge m-pass">LEVEL A</span> <b>Weight on tool (Moon / Mars / Earth):</b> <b>[${pM.weight_n}, ${pMa.weight_n}, ${pE.weight_n}] N</b> — <i>m&middot;g; Earth test pushes ${pM.earth_load_ratio}&times; harder than Moon</i>.<br/>
+            <span class="m-badge m-pass">LEVEL A</span> <b>Earth twin mass for equal ground load:</b> <b>${pM.earth_twin_mass_kg} kg (Moon)</b> / <b>${pMa.earth_twin_mass_kg} kg (Mars)</b> — <i>m&middot;g_target/g_earth</i>.<br/>
+            <span class="m-badge m-pass">LEVEL A</span> <b>Earth test speed (Froude match):</b> <b>${pM.earth_test_speed_mps} m/s (Moon)</b> / <b>${pMa.earth_test_speed_mps} m/s (Mars)</b> — <i>v&middot;&radic;(g_earth/g_target)</i>.<br/>
+            <span class="m-badge" style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.45);">LEVEL B</span> <b>Energy per km:</b> range only, <b>&plusmn;30%</b> <i>(Apollo 15 LRV, Costes et al. 1972)</i>.<br/>
+            <span class="m-badge" style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.45);">LEVEL B</span> <b>Granular slip:</b> cohesionless sand scaling only; <i>a lightened rover at 1g is optimistic (arXiv 2405.11001)</i>.<br/>
+            <span class="m-badge m-fail">LEVEL C</span> <b>Declared limits (no prediction):</b> Traction &amp; sinkage on target, thermal control, dust adhesion, radiation on electronics.
+          </div>
+        </div>
+      `;
+    }
+
+    function computeCellMissionScores(cell, mPass, rp, target) {
+      const s300 = cell.s300, r300 = cell.r300, rock = cell.rock ?? 0.5;
+      const tSlope = target?.slope_deg ?? 3.5;
+      const tRough = target?.roughness_m ?? 60.0;
+      const slopeTol = rp?.tolSlope || 5.0;
+      const roughTol = (rp?.tolRough || 10.0) * 12.0;
+      const slopeQ = Math.exp(-0.5 * Math.pow((s300 - tSlope) / Math.max(slopeTol, 0.5), 2));
+      const roughQ = Math.exp(-0.5 * Math.pow((r300 - tRough) / Math.max(roughTol, 5.0), 2));
+      const rovGateQ = 100 * (0.45 * slopeQ + 0.30 * roughQ + 0.25 * Math.max(0, Math.min(1, rock)));
+
+      const irrQ = Math.max(0, Math.min(1, (cell.irr - 1.8) / (8.5 - 1.8)));
+      const lowQ = Math.max(0, Math.min(1, (cell.slow - 0.025) / 0.18));
+      const elevQ = Math.max(0, Math.min(1, 1 - Math.abs(cell.smax - 35) / 50));
+      const solGateQ = 100 * (0.45 * irrQ + 0.35 * lowQ + 0.20 * elevQ);
+
+      const ampQ = Math.max(0, Math.min(1, (cell.damp - 16) / 28));
+      const ticQ = (cell.tic === "roca" || cell.tic === "hielo") ? 1.0 : (cell.tic === "regolito" ? 0.85 : 0.7);
+      const thmGateQ = 100 * (0.50 * ampQ + 0.25 * ticQ + 0.25 * Math.max(0, Math.min(1, rock)));
+
+      const coldQ = Math.max(0, Math.min(1, (280 - (cell.temp || 280)) / 60));
+      const pfcQ = cell.pfc === "continuo" ? 1.0 : (cell.pfc === "discontinuo" ? 0.85 : (cell.pfc === "esporadico" ? 0.70 : 0.55));
+      const iceGateQ = 100 * (0.55 * coldQ + 0.45 * pfcQ);
+
+      const baseRover = cell.s_rov ?? cell.sim;
+      const baseSolar = cell.s_sol ?? cell.sim;
+      const baseTherm = cell.s_thm ?? cell.sim;
+      const baseIce   = cell.s_ice ?? cell.sim;
+
+      const sRov = mPass.rover   ? (0.45 * baseRover + 0.25 * cell.sim + 0.30 * rovGateQ) : 0;
+      const sSol = mPass.solar   ? (0.55 * baseSolar + 0.25 * cell.sim + 0.20 * solGateQ) : 0;
+      const sThm = mPass.thermal ? (0.55 * baseTherm + 0.25 * cell.sim + 0.20 * thmGateQ) : 0;
+      const sIce = mPass.ice     ? (0.55 * baseIce   + 0.25 * cell.sim + 0.20 * iceGateQ) : 0;
+      const passAll4 = mPass.rover && mPass.solar && mPass.thermal && mPass.ice;
+      const sAll = passAll4 ? ((sRov + sSol + sThm + sIce) / 4.0) : 0;
+
+      return {
+        rover:   Math.round(sRov * 10) / 10,
+        solar:   Math.round(sSol * 10) / 10,
+        thermal: Math.round(sThm * 10) / 10,
+        ice:     Math.round(sIce * 10) / 10,
+        all:     Math.round(sAll * 10) / 10
+      };
+    }
+
+    function buildDynamicOptimalZones(allCells, topK = 5) {
+      const mList = ["rover", "solar", "thermal", "ice", "all"];
+      const result = {};
+
+      mList.forEach(mKey => {
+        const candidates = allCells.filter(c =>
+          mKey === "all"
+            ? (c.mPass.rover && c.mPass.solar && c.mPass.thermal && c.mPass.ice)
+            : c.mPass[mKey]
+        );
+        candidates.sort((a, b) => b.mScores[mKey] - a.mScores[mKey]);
+
+        const chosen = [];
+        const centers = [];
+        for (const c of candidates) {
+          let near = false;
+          for (const [clat, clon] of centers) {
+            const d = Math.hypot(c.lat - clat, (c.lon - clon) * Math.cos((c.lat * Math.PI) / 180));
+            if (d < 15.0) { near = true; break; }
+          }
+          if (near) continue;
+          centers.push([c.lat, c.lon]);
+
+          const cluster = candidates.filter(x =>
+            Math.hypot(x.lat - c.lat, (x.lon - c.lon) * Math.cos((c.lat * Math.PI) / 180)) <= 8.5
+          );
+          const lats = cluster.map(x => x.lat);
+          const lons = cluster.map(x => x.lon);
+          const bbox = [
+            Math.max(-84, Math.min(...lats) - 2.2),
+            Math.max(-179, Math.min(...lons) - 2.8),
+            Math.min(84, Math.max(...lats) + 2.2),
+            Math.min(179, Math.max(...lons) + 2.8)
+          ];
+
+          chosen.push({
+            mission: mKey,
+            rank: chosen.length + 1,
+            score: c.mScores[mKey],
+            cell: c,
+            clusterCount: cluster.length,
+            bbox
+          });
+          if (chosen.length >= topK) break;
+        }
+        result[mKey] = chosen;
+      });
+      return result;
+    }
+
+    function colorRamp(t) {
+      const c = Math.max(0, Math.min(1, t));
+      const stops = [
+        [30, 27, 75],
+        [37, 99, 235],
+        [16, 185, 129],
+        [250, 204, 21],
+        [239, 68, 68]
+      ];
+      const pos = c * (stops.length - 1);
+      const i = Math.min(stops.length - 2, Math.floor(pos));
+      const f = pos - i;
+      const r = Math.round(stops[i][0] + f * (stops[i + 1][0] - stops[i][0]));
+      const g = Math.round(stops[i][1] + f * (stops[i + 1][1] - stops[i][1]));
+      const b = Math.round(stops[i][2] + f * (stops[i + 1][2] - stops[i][2]));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function getActiveTarget() {
+      if (customMoonTarget) return customMoonTarget;
+      return { ...data.lunar_zones[currentZone], label: currentZone };
+    }
+
+    function recomputeAndRender() {
+      const target = getActiveTarget();
+      const feats = data.features;
+      const activeIdx = [];
+      let wSum = 0;
+
+      feats.forEach((f, i) => {
+        const valid = data.moon_stats[f].valid && data.earth_stats[f].valid;
+        if (valid && weights[f] > 0) {
+          activeIdx.push(i);
+          wSum += weights[f];
+        }
+      });
+
+      document.getElementById("weightSumLabel").textContent = `Active weight sum: ${wSum}`;
+
+      const mKeys = Object.keys(missionCfg.missions);
+      const selectedMissions = mKeys.filter(m => activeMissions[m]);
+      const onlyPass = document.getElementById("chkOnlyPass").checked;
+
+      const auditStats = {};
+      mKeys.forEach(m => { auditStats[m] = { pass: 0, failBy: {} }; });
+      let passSelectedCount = 0;
+      let workableCount = 0;
+
+      const liveRp = computeLiveRoverPreset();
+
+      const allEvaluated = data.earth_cells.map(cell => {
+        let sq = 0;
+        if (wSum > 0) {
+          activeIdx.forEach(i => {
+            const fKey = feats[i];
+            const nw = weights[fKey] / wSum;
+            const diff = cell.z[i] - target[`${fKey}_z`];
+            sq += nw * diff * diff;
+          });
+        }
+        const rms = Math.sqrt(sq);
+        const sim = 100.0 * Math.exp(-0.45 * rms);
+        const tempDiff = cell.z[3] - target.temp_k_z;
+        const tempSim = 100.0 * Math.exp(-0.35 * tempDiff * tempDiff);
+
+        const rainV = cell.rain ?? 0.5;
+        const windV = cell.wind ?? 6.0;
+        const tminV = cell.tmin ?? ((cell.temp || 265) - 273.15 - 0.35 * (cell.damp || 20));
+        const workableOk = (rainV <= liveRp.rainMax) && (windV <= liveRp.windMax) && (tminV >= liveRp.tminMin);
+        if (workableOk) workableCount += 1;
+
+        const mPass = {};
+        const mFails = {};
+        mKeys.forEach(m => {
+          const fails = evaluateCellMissionFails(cell, missionCfg.missions[m], missionCfg.mask_min);
+          if (m === "rover" && liveRp.requireWorkable && !workableOk) {
+            fails.push("workable_days");
+          }
+          mPass[m] = fails.length === 0;
+          mFails[m] = fails;
+          if (fails.length === 0) {
+            auditStats[m].pass += 1;
+          } else {
+            fails.forEach(fl => {
+              auditStats[m].failBy[fl] = (auditStats[m].failBy[fl] || 0) + 1;
+            });
+          }
+        });
+
+        const passActive = selectedMissions.every(m => mPass[m]) && (!liveRp.requireWorkable || workableOk);
+        if (passActive) passSelectedCount += 1;
+
+        const baseEval = {
+          ...cell,
+          rain: rainV,
+          wind: windV,
+          tmin: Math.round(tminV * 10) / 10,
+          workableOk,
+          sim: Math.round(sim * 100) / 100,
+          tempSim: Math.round(tempSim * 10) / 10,
+          mPass,
+          mFails,
+          passActive
+        };
+        baseEval.mScores = computeCellMissionScores(baseEval, mPass, liveRp, target);
+        return baseEval;
+      });
+
+      const nTotal = allEvaluated.length;
+      renderRoverPresetPanel(liveRp, workableCount, nTotal);
+
+      mKeys.forEach(m => {
+        const el = document.getElementById(`mPassStat_${m}`);
+        if (el) {
+          const pct = ((100 * auditStats[m].pass) / Math.max(nTotal, 1)).toFixed(1);
+          el.textContent = `Pass: ${auditStats[m].pass}/${nTotal} (${pct}%)`;
+        }
+      });
+
+      scoredCells = onlyPass ? allEvaluated.filter(c => c.passActive) : allEvaluated;
+      scoredCells.sort((a, b) => b.sim - a.sim);
+
+      const dynamicOptimalZones = buildDynamicOptimalZones(allEvaluated, 5);
+
+      const pctSel = ((100 * passSelectedCount) / Math.max(nTotal, 1)).toFixed(1);
+      document.getElementById("kpiPassCount").textContent = `${passSelectedCount} / ${nTotal} (${pctSel}%)`;
+      document.getElementById("kpiPassSub").textContent = selectedMissions.length
+        ? `Combined AND: ${selectedMissions.map(x => x.toUpperCase()).join(" + ")}${liveRp.requireWorkable ? " + WORKABLE" : ""}`
+        : "No mission gate filter active";
+
+      const auditLines = mKeys.map(m => {
+        const st = auditStats[m];
+        const pct = ((100 * st.pass) / Math.max(nTotal, 1)).toFixed(1);
+        const topFails = Object.entries(st.failBy)
+          .sort((a, b) => b[1] - a[1])
+          .map(([k, v]) => `${k} (${v})`)
+          .join(", ") || "none";
+        const bestZone = (dynamicOptimalZones[m] && dynamicOptimalZones[m][0])
+          ? `${dynamicOptimalZones[m][0].cell.reg} (${dynamicOptimalZones[m][0].score}%)`
+          : "none";
+        return `• <b>[${m.toUpperCase()}]</b> pass <b>${st.pass}</b> (${pct}%) | #1 Zone: <b style="color:${MISSION_STYLE[m].color};">${bestZone}</b> — discarded by: <span style="color:var(--text-muted);">${topFails}</span>`;
+      });
+      document.getElementById("missionAuditCard").innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <b>Mission Gates Audit &amp; Top Optimal Zones (mission_filters.py + rover_preset.py)</b>
+          <span style="color:var(--accent);">ALL (${selectedMissions.join("+") || "none"}): ${passSelectedCount} cells</span>
+        </div>
+        <div>${auditLines.join("<br/>")}</div>
+      `;
+
+      if (scoredCells.length > 0) {
+        const best = scoredCells[0];
+        document.getElementById("kpiBestScore").textContent = `${best.sim.toFixed(1)}%`;
+        document.getElementById("kpiBestCoords").textContent = `${best.reg} (${best.lat.toFixed(1)}°, ${best.lon.toFixed(1)}°)`;
+        document.getElementById("kpiMoonTemp").textContent = `${target.temp_k.toFixed(1)} K`;
+        document.getElementById("kpiMoonElev").textContent = `Rel Elev: ${target.elevation_rel_m.toFixed(0)} m | Slope: ${target.slope_deg.toFixed(1)}°`;
+        document.getElementById("kpiEarthTemp").textContent = `${best.temp.toFixed(1)} K (ΔT ${best.damp} K)`;
+        document.getElementById("kpiThermalMatch").textContent = `Inertia: ${best.tic} | Permafrost: ${best.pfc}`;
+        showCellComparison(best, 1, target);
+      } else {
+        document.getElementById("kpiBestScore").textContent = "0 Sites";
+        document.getElementById("kpiBestCoords").textContent = "Relax mission gate thresholds";
+      }
+
+      renderMapLayers(allEvaluated, target, onlyPass);
+      renderOptimalZonesOnMap(dynamicOptimalZones, target);
+      renderOptimalZonesAtlas(dynamicOptimalZones, target);
+      renderTable(target);
+      renderCanvases();
+    }
+
+    function renderOptimalZonesOnMap(optZones, target) {
+      optimalZoneLayerGroup.clearLayers();
+      Object.keys(zonePopupMap).forEach(k => delete zonePopupMap[k]);
+
+      const showOpt = document.getElementById("chkShowOptZones").checked;
+      if (!showOpt) return;
+
+      const missionsToRender = optMissionFilter === "overview"
+        ? ["rover", "solar", "thermal", "ice", "all"]
+        : [optMissionFilter];
+
+      const maxPerMission = optMissionFilter === "overview" ? 3 : 5;
+
+      missionsToRender.forEach((mKey, mIdx) => {
+        const st = MISSION_STYLE[mKey];
+        const zones = (optZones[mKey] || []).slice(0, maxPerMission);
+
+        zones.forEach(zObj => {
+          const c = zObj.cell;
+          const [latMin, lonMin, latMax, lonMax] = zObj.bbox;
+
+          const poly = L.rectangle([[latMin, lonMin], [latMax, lonMax]], {
+            color: st.color,
+            weight: zObj.rank === 1 ? 2.4 : 1.6,
+            dashArray: zObj.rank === 1 ? "" : "5, 4",
+            fillColor: st.color,
+            fillOpacity: zObj.rank === 1 ? 0.16 : 0.08
+          });
+
+          const latOffset = optMissionFilter === "overview" ? (mIdx - 2) * 0.45 : 0;
+          const lonOffset = optMissionFilter === "overview" ? (mIdx - 2) * 0.65 : 0;
+          const badgeLat = Math.max(-83, Math.min(83, c.lat + latOffset));
+          const badgeLon = Math.max(-178, Math.min(178, c.lon + lonOffset));
+
+          const shortReg = c.reg.split("(")[0].split("&")[0].trim().slice(0, 18);
+          const icon = L.divIcon({
+            className: "",
+            html: `<div class="opt-zone-marker" style="background:${st.color};">
+              <span>${st.label} #${zObj.rank}</span>
+              <span style="font-weight:600; opacity:0.9;">${shortReg} (${zObj.score.toFixed(1)}%)</span>
+            </div>`
+          });
+
+          const marker = L.marker([badgeLat, badgeLon], { icon });
+          const popupHtml = `
+            <div style="min-width:250px; line-height:1.45;">
+              <div style="font-weight:800; color:#0f172a; font-size:13px; margin-bottom:3px;">
+                [${st.label} OPTIMAL ZONE #${zObj.rank}] ${c.reg}
+              </div>
+              <div style="font-size:11.5px; color:#334155; margin-bottom:5px;">
+                <b>Mission:</b> ${st.title}<br/>
+                <b>Mission Optimality Score:</b> <b>${zObj.score.toFixed(1)}%</b> | <b>Lunar Match:</b> ${c.sim.toFixed(1)}%<br/>
+                <b>Zone Footprint:</b> ${zObj.clusterCount} passing cells (${latMin.toFixed(1)}°..${latMax.toFixed(1)}°, ${lonMin.toFixed(1)}°..${lonMax.toFixed(1)}°)<br/>
+                <b>Matched Lunar Analog:</b> ${c.zone}
+              </div>
+              <hr style="border:none; border-top:1px solid #cbd5e1; margin:4px 0;" />
+              <div style="font-size:11px; color:#1e293b;">
+                • <b>Rover Gates:</b> slope_300m = <b>${c.s300}°</b> [0.5–18°] | rough_300m = <b>${c.r300} m</b> [5–650 m]<br/>
+                • <b>Solar Gates:</b> irrad = <b>${c.irr} kWh/m²/d</b> [&ge;1.8] | sun_max = <b>${c.smax}°</b> | low_sun = <b>${c.slow}</b><br/>
+                • <b>Thermal Gates:</b> ΔT amp = <b>${c.damp} K</b> [&ge;16 K] | inertia = <b>${c.tic}</b> | Temp = <b>${c.temp} K</b><br/>
+                • <b>Ice (ISRU) Gate:</b> permafrost = <b>${c.pfc}</b> | mask_fraction = <b>${c.mf}</b>
+              </div>
+            </div>
+          `;
+
+          poly.bindPopup(popupHtml);
+          marker.bindPopup(popupHtml);
+
+          const onSelectZone = () => {
+            showCellComparison(c, zObj.rank, target);
+          };
+          poly.on("click", onSelectZone);
+          marker.on("click", onSelectZone);
+
+          optimalZoneLayerGroup.addLayer(poly);
+          optimalZoneLayerGroup.addLayer(marker);
+          zonePopupMap[`${mKey}_${zObj.rank}`] = { marker, poly, cell: c, zObj };
+        });
+      });
+    }
+
+    function renderOptimalZonesAtlas(optZones, target) {
+      const container = document.getElementById("optimalZonesAtlas");
+      container.innerHTML = "";
+      const mList = ["rover", "solar", "thermal", "ice", "all"];
+
+      document.getElementById("optAtlasSubLabel").textContent =
+        optMissionFilter === "overview"
+          ? "Showing Top 4 Optimal Zones per Mission (All 5 Categories on Map)"
+          : `Focused on [${MISSION_STYLE[optMissionFilter].label}] Optimal Zones on Map`;
+
+      mList.forEach(mKey => {
+        const st = MISSION_STYLE[mKey];
+        const zones = (optZones[mKey] || []).slice(0, 4);
+        const col = document.createElement("div");
+        col.className = "opt-zone-col";
+        col.style.borderColor = optMissionFilter === mKey ? st.color : "var(--border)";
+
+        let itemsHtml = "";
+        if (zones.length === 0) {
+          itemsHtml = `<div style="font-size:11px; color:var(--text-muted);">No cells pass current gate thresholds.</div>`;
+        } else {
+          zones.forEach(zObj => {
+            const c = zObj.cell;
+            let keyMetric = "";
+            if (mKey === "rover") keyMetric = `Slope ${c.s300}° | Rough ${c.r300}m | Bare ${(c.rock * 100).toFixed(0)}%`;
+            else if (mKey === "solar") keyMetric = `Irrad ${c.irr} kWh | LowSun ${c.slow} | Max ${c.smax}°`;
+            else if (mKey === "thermal") keyMetric = `ΔT ${c.damp} K | Inertia: ${c.tic} | ${c.temp} K`;
+            else if (mKey === "ice") keyMetric = `Permafrost: ${c.pfc} | Temp ${c.temp} K`;
+            else keyMetric = `Pass ALL 4 Gates | ${c.tic} / ${c.pfc} | ΔT ${c.damp}K`;
+
+            itemsHtml += `
+              <div class="opt-zone-item" data-jump-m="${mKey}" data-jump-r="${zObj.rank}">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+                  <b style="color:${st.color};">#${zObj.rank} ${c.reg}</b>
+                  <span class="score-pill" style="font-size:10px; padding:1px 6px;">${zObj.score.toFixed(1)}%</span>
+                </div>
+                <div style="color:var(--text-muted); margin-top:2px;">
+                  Lat ${c.lat.toFixed(1)}°, Lon ${c.lon.toFixed(1)}° (${zObj.clusterCount} cells) — ${keyMetric}
+                </div>
+                <div style="color:#93c5fd; font-size:10px; margin-top:1px;">
+                  Moon Analog: ${c.zone}
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        col.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:4px;">
+            <span style="font-size:11.5px; font-weight:800; color:${st.color};">● ${st.label}: ${st.title}</span>
+          </div>
+          ${itemsHtml}
+        `;
+        container.appendChild(col);
+      });
+
+      container.querySelectorAll("[data-jump-m]").forEach(itemEl => {
+        itemEl.addEventListener("click", () => {
+          const mKey = itemEl.dataset.jumpM;
+          const rk = Number(itemEl.dataset.jumpR);
+          const zList = optZones[mKey] || [];
+          const found = zList.find(z => z.rank === rk);
+          if (!found) return;
+          const c = found.cell;
+
+          if (!document.getElementById("chkShowOptZones").checked) {
+            document.getElementById("chkShowOptZones").checked = true;
+            renderOptimalZonesOnMap(optZones, target);
+          }
+
+          map.flyTo([c.lat, c.lon], 5, { duration: 0.75 });
+          showCellComparison(c, rk, target);
+          const ref = zonePopupMap[`${mKey}_${rk}`];
+          if (ref && ref.marker) {
+            setTimeout(() => ref.marker.openPopup(), 450);
+          }
+        });
+      });
+    }
+
+    function formatMissionBadges(cell) {
+      return ["rover", "solar", "thermal", "ice"].map(m => {
+        const ok = cell.mPass[m];
+        const title = ok ? `${m}: PASS` : `${m}: FAIL (${cell.mFails[m].join(", ")})`;
+        return `<span class="m-badge ${ok ? 'm-pass' : 'm-fail'}" title="${title}">${m.slice(0, 3).toUpperCase()}</span>`;
+      }).join("");
+    }
+
+    function renderMapLayers(allCells, target, onlyPass) {
+      gridLayerGroup.clearLayers();
+      markerLayerGroup.clearLayers();
+
+      const halfLat = (data.grid.dlat || 4.0) / 2.0;
+      const halfLon = (data.grid.dlon || 4.0) / 2.0;
+
+      allCells.forEach(cell => {
+        if (onlyPass && !cell.passActive) return;
+        const t = Math.max(0, Math.min(1, (cell.sim - 45) / 50));
+        const col = cell.passActive ? colorRamp(t) : "#334155";
+        const bounds = [
+          [cell.lat - halfLat, cell.lon - halfLon],
+          [cell.lat + halfLat, cell.lon + halfLon]
+        ];
+        const rect = L.rectangle(bounds, {
+          color: col,
+          weight: 0,
+          fillColor: col,
+          fillOpacity: cell.passActive ? 0.52 : 0.18
+        });
+        rect.on("click", () => {
+          const rk = Math.max(1, scoredCells.indexOf(cell) + 1);
+          showCellComparison(cell, rk, target);
+        });
+        gridLayerGroup.addLayer(rect);
+      });
+
+      scoredCells.slice(0, 15).forEach((cell, idx) => {
+        const rank = idx + 1;
+        const marker = L.circleMarker([cell.lat, cell.lon], {
+          radius: rank <= 3 ? 8 : 5.5,
+          color: "#ffffff",
+          weight: 1.8,
+          fillColor: rank === 1 ? "#22c55e" : (rank <= 5 ? "#38bdf8" : "#facc15"),
+          fillOpacity: 0.95
+        });
+        marker.bindPopup(`
+          <b>Global Rank #${rank}: ${cell.reg} (${cell.sim.toFixed(2)}%)</b><br/>
+          Coords: Lat ${cell.lat.toFixed(2)}°, Lon ${cell.lon.toFixed(2)}° | Mask: ${cell.mf}<br/>
+          Matched Lunar Zone: ${cell.zone}<br/>
+          Elev: ${cell.elev} m | Slope: ${cell.slope}° | Roughness: ${cell.rough} m<br/>
+          Temp: ${cell.temp} K | Diurnal ΔT: ${cell.damp} K | Irrad: ${cell.irr} kWh/m²/d<br/>
+          Sun Max: ${cell.smax}° | Low-Sun (0–5°): ${cell.slow} | SAR: ${cell.sar} dB<br/>
+          Thermal Inertia: <b>${cell.tic}</b> | Permafrost: <b>${cell.pfc}</b>
+        `);
+        marker.on("click", () => showCellComparison(cell, rank, target));
+        markerLayerGroup.addLayer(marker);
+      });
+    }
+
+    function renderTable(target) {
+      const tbody = document.getElementById("rankingTableBody");
+      tbody.innerHTML = "";
+      document.getElementById("tableCountLabel").textContent = `Showing Top ${Math.min(35, scoredCells.length)} of ${scoredCells.length} Sites`;
+      scoredCells.slice(0, 35).forEach((cell, idx) => {
+        const rank = idx + 1;
+        const wkBadge = `<span class="m-badge ${cell.workableOk ? 'm-pass' : 'm-fail'}" title="rain=${cell.rain}mm/d, wind=${cell.wind}m/s, Tmin=${cell.tmin}°C">${cell.workableOk ? 'WORKABLE' : 'WEATHER-LIM'}</span>`;
+        const tr = document.createElement("tr");
+        tr.className = "rank-row";
+        tr.innerHTML = `
+          <td><b>#${rank}</b></td>
+          <td><span class="score-pill">${cell.sim.toFixed(2)}%</span></td>
+          <td>${formatMissionBadges(cell)}</td>
+          <td>${wkBadge}</td>
+          <td>${cell.reg}</td>
+          <td>${cell.zone}</td>
+          <td>${cell.lat.toFixed(2)}</td>
+          <td>${cell.lon.toFixed(2)}</td>
+          <td>${cell.elev.toFixed(0)}</td>
+          <td>${cell.slope.toFixed(2)}</td>
+          <td>${cell.rough.toFixed(1)}</td>
+          <td>${cell.temp.toFixed(1)}</td>
+          <td>${cell.damp.toFixed(1)}</td>
+          <td>${cell.irr.toFixed(2)}</td>
+          <td>${cell.smax.toFixed(1)}° / ${cell.slow.toFixed(3)}</td>
+          <td><b>${cell.tic}</b></td>
+          <td><b>${cell.pfc}</b></td>
+        `;
+        tr.addEventListener("click", () => {
+          map.flyTo([cell.lat, cell.lon], 5, { duration: 0.7 });
+          showCellComparison(cell, rank, target);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function showCellComparison(cell, rank, target) {
+      const card = document.getElementById("selectedCellCard");
+      const wkTxt = cell.workableOk ? "PASS" : "LIMITED";
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px; flex-wrap:wrap;">
+          <b>Rank #${rank}: ${cell.reg} (${cell.sim.toFixed(2)}% Match)</b>
+          <span>${formatMissionBadges(cell)}</span>
+        </div>
+        <div>
+          • <b>Relief &amp; Rover Gate:</b> Elev ${cell.elev.toFixed(0)} m | Slope <b>${cell.s300}°</b> | Roughness <b>${cell.r300} m</b> (Moon: ${target.slope_deg.toFixed(2)}° / ${target.roughness_m.toFixed(1)} m)<br/>
+          • <b>Rover Workable Days (rover_preset.py):</b> <b>${wkTxt}</b> (Rain <b>${cell.rain} mm/d</b>, Wind <b>${cell.wind} m/s</b>, Tmin <b>${cell.tmin} °C</b>)<br/>
+          • <b>Solar &amp; Light Gate:</b> Irradiance <b>${cell.irr} kWh/m²/day</b> | Max Sun <b>${cell.smax}°</b> | Low-Sun (0–5°) <b>${cell.slow}</b><br/>
+          • <b>Thermal &amp; Ice Gates:</b> Temp <b>${cell.temp.toFixed(1)} K</b> | Diurnal ΔT <b>${cell.damp} K</b> | Inertia: <b>${cell.tic}</b> | Permafrost: <b>${cell.pfc}</b>
+        </div>
+      `;
+    }
+
+    function renderCanvases() {
+      const mode = document.getElementById("bandViewSelect").value;
+      const nRows = Math.ceil(data.grid.rows / data.grid.stride);
+      const nCols = Math.ceil(data.grid.cols / data.grid.stride);
+
+      const mCanvas = document.getElementById("moonCanvas");
+      mCanvas.width = nCols; mCanvas.height = nRows;
+      const mCtx = mCanvas.getContext("2d");
+
+      function valRange(arr, key) {
+        const vals = arr.map(c => c[key]).filter(v => v !== null && isFinite(v));
+        return [Math.min(...vals), Math.max(...vals)];
+      }
+
+      const keyMap = { elev: "elev", slope: "slope", rough: "rough", temp: "temp", rock: "rock", sar: "sar" };
+      const k = keyMap[mode] || "elev";
+
+      const [mMin, mMax] = valRange(data.moon_cells, k);
+
+      data.moon_cells.forEach(c => {
+        const r = Math.floor(c.r / data.grid.stride);
+        const col = Math.floor(c.c / data.grid.stride);
+        const rawV = c[k];
+        const v = (rawV - mMin) / Math.max(mMax - mMin, 1e-6);
+        mCtx.fillStyle = colorRamp(v);
+        mCtx.fillRect(col, r, 1, 1);
+      });
+
+      if (customMoonTarget && customMoonTarget.colIdx !== undefined) {
+        mCtx.strokeStyle = "#ffffff";
+        mCtx.lineWidth = 1.2;
+        mCtx.strokeRect(customMoonTarget.colIdx - 1, customMoonTarget.rowIdx - 1, 3, 3);
+      }
+    }
+
+    document.getElementById("moonCanvas").addEventListener("click", (ev) => {
+      const canvas = ev.currentTarget;
+      const rect = canvas.getBoundingClientRect();
+      const colIdx = Math.floor(((ev.clientX - rect.left) / rect.width) * canvas.width);
+      const rowIdx = Math.floor(((ev.clientY - rect.top) / rect.height) * canvas.height);
+      const targetRow = rowIdx * data.grid.stride;
+      const targetCol = colIdx * data.grid.stride;
+      const mCell = data.moon_cells.find(c => c.r === targetRow && c.c === targetCol) || data.moon_cells[0];
+      if (!mCell) return;
+
+      customMoonTarget = {
+        label: `Lunar Point (${mCell.lat.toFixed(1)}°, ${mCell.lon.toFixed(1)}°)`,
+        colIdx,
+        rowIdx,
+        elevation_rel_m: mCell.rel,
+        slope_deg: mCell.slope,
+        roughness_m: mCell.rough,
+        temp_k: mCell.temp,
+        rock_or_bare_frac: mCell.rock,
+        sar_sigma0_db: mCell.sar,
+        elevation_rel_m_z: mCell.z[0],
+        slope_deg_z: mCell.z[1],
+        roughness_m_z: mCell.z[2],
+        temp_k_z: mCell.z[3],
+        rock_or_bare_frac_z: mCell.z[4],
+        sar_sigma0_db_z: mCell.z[5]
+      };
+      recomputeAndRender();
+    });
+
+    document.getElementById("bandViewSelect").addEventListener("change", renderCanvases);
+
+    document.getElementById("btnDownloadRoverPreset").addEventListener("click", () => {
+      const rp = computeLiveRoverPreset();
+      const presetObj = {
+        rover: {
+          weights: missionCfg.missions.rover.weights,
+          tolerances: {
+            slope_300m_deg: { scale: rp.tolSlope, unit: "deg", source: "Robotics 1 rover_preset.py" },
+            rough_300m_m: { scale: rp.tolRough, unit: "m", source: "Robotics 1 rover_preset.py" }
+          },
+          gates: missionCfg.missions.rover.gates,
+          workable_days: {
+            rain_mm_max: rp.rainMax,
+            wind_max_ms_max: rp.windMax,
+            tmin_c_min: rp.tminMin,
+            source: "Phase-1 plan model 1 defaults (rover_preset.py)"
+          },
+          author: "Robotics 1 - Mobility Team",
+          rover_reference: {
+            name: rp.name,
+            locomotion: "wheels",
+            mass_kg: rp.mass,
+            cg_m: [0.0, 0.0, rp.cgH],
+            static_tipover: {
+              min_deg: rp.tipMin,
+              stable: rp.slopeSafe,
+              note: "static, rigid, hard ground; independent of g"
+            },
+            physics: rp.physics
+          },
+          transfer_card: data.rover_preset?.preset?.transfer_card || [],
+          notes: rp.notes
+        }
+      };
+      const blob = new Blob([JSON.stringify(presetObj, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "presets.json";
+      a.click();
+    });
+
+    document.getElementById("btnDownloadJson").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(missionCfg, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mission_filters.json";
+      a.click();
+    });
+
+    document.getElementById("btnDownloadCsv").addEventListener("click", () => {
+      const headers = [
+        "rank,similarity_pct,earth_region,matched_lunar_zone,lat_deg,lon_deg,elevation_m,slope_300m_deg,rough_300m_m,temp_k,lst_diurnal_amp_k,irradiance_kwh_m2_day,sun_elev_max_deg,sun_low_frac_0_5deg,thermal_inertia_class,permafrost_class,rain_mm_day,wind_max_ms,tmin_c,workable_rover,pass_rover,pass_solar,pass_thermal,pass_ice,pass_active"
+      ];
+      scoredCells.slice(0, 200).forEach((c, i) => {
+        headers.push(
+          `${i + 1},${c.sim},"${c.reg}","${c.zone}",${c.lat},${c.lon},${c.elev},${c.s300},${c.r300},${c.temp},${c.damp},${c.irr},${c.smax},${c.slow},${c.tic},${c.pfc},${c.rain},${c.wind},${c.tmin},${Number(c.workableOk)},${Number(c.mPass.rover)},${Number(c.mPass.solar)},${Number(c.mPass.thermal)},${Number(c.mPass.ice)},${Number(c.passActive)}`
+        );
+      });
+      const blob = new Blob([headers.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "global_earth_moon_analog_mission_filtered.csv";
+      a.click();
+    });
+
+    buildMissionCards();
+    recomputeAndRender();
+  </script>
+</body>
+</html>

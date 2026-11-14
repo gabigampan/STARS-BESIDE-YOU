@@ -1,0 +1,147 @@
+{
+  "version": "v1.0-spaceapps-2026",
+  "mask_min": 0.3,
+  "missions": {
+    "rover": {
+      "description": "Rover Mobility & Surface Trafficability (Robotics 1 - VIPER Reference)",
+      "gates": {
+        "slope_300m_deg": {
+          "min": 0.5,
+          "max": 15.0,
+          "max_from": "max_operational_slope_deg",
+          "source": "rover.max_operational_slope_deg: NASA VIPER operational slope limit (15 deg < 47.29 deg static tip-over, rover_preset.py)"
+        },
+        "rough_300m_m": {
+          "min": 5.0,
+          "max": 650.0,
+          "source": "LRO LOLA & CNSA Yutu/VIPER topographic hazard envelope (5-650 m)"
+        }
+      },
+      "tolerances": {
+        "slope_300m_deg": {
+          "scale": 5.0,
+          "unit": "deg",
+          "source": "Robotics 1 rover_preset.py tolerance scale (5.0 deg)"
+        },
+        "rough_300m_m": {
+          "scale": 10.0,
+          "unit": "m",
+          "source": "Robotics 1 rover_preset.py tolerance scale (10.0 m)"
+        }
+      },
+      "workable_days": {
+        "rain_mm_max": 1,
+        "wind_max_ms_max": 12,
+        "tmin_c_min": -10,
+        "source": "Phase-1 plan model 1 defaults (rover_preset.py)"
+      },
+      "require_present": [
+        "slope_300m_deg",
+        "rough_300m_m"
+      ],
+      "weights": {
+        "relieve": 0.35,
+        "material": 0.3,
+        "termico": 0.1,
+        "luz": 0.1,
+        "agua": 0.15
+      },
+      "weights_note": "Robotics 1 rover_preset.py sector weights: relief (0.35), surface_material (0.30), thermal_regime (0.10), light_and_sky (0.10), water_ice_aridity (0.15).",
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "Robotics 1 - Mobility Team"
+    },
+    "solar": {
+      "description": "Solar Energy & Low-Angle Illumination (Robotics 2)",
+      "gates": {
+        "irradiance_kwh_m2_day": {
+          "min": 1.8,
+          "max": 8.5,
+          "source": "NASA POWER / NOAA NCEP surface shortwave photovoltaic threshold (>=1.8 kWh/m2/day)"
+        },
+        "sun_elev_max_deg": {
+          "min": 5.0,
+          "max": 85.0,
+          "source": "Lunar polar & mid-latitude solar array elevation envelope (5-85 deg)"
+        },
+        "sun_low_frac_0_5deg": {
+          "min": 0.025,
+          "max": 0.4,
+          "source": "Artemis low-horizon grazing illumination regime (0-5 deg solar altitude fraction)"
+        }
+      },
+      "require_present": [
+        "irradiance_kwh_m2_day",
+        "sun_elev_max_deg",
+        "sun_low_frac_0_5deg"
+      ],
+      "weights": {
+        "relieve": 0.15,
+        "material": 0.1,
+        "termico": 0.2,
+        "luz": 0.45,
+        "agua": 0.1
+      },
+      "weights_note": "Emphasizes solar irradiance, low-angle illumination geometry, and thermal regime for solar power generation.",
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "Robotics 2 - Power & Illumination Team"
+    },
+    "thermal": {
+      "description": "Extreme Thermal Environment & Substrate Inertia (Robotics 2)",
+      "gates": {
+        "lst_diurnal_amp_k": {
+          "min": 16.0,
+          "max": 60.0,
+          "source": "MODIS/NCEP bare-regolith diurnal & seasonal surface thermal swing (>=16 K)"
+        },
+        "thermal_inertia_class": {
+          "allow": [
+            "roca",
+            "regolito",
+            "arena",
+            "hielo"
+          ],
+          "source": "LRO Diviner Bandfield et al. (2011) unvegetated substrate thermal inertia classes"
+        }
+      },
+      "require_present": [
+        "thermal_inertia_class",
+        "lst_diurnal_amp_k"
+      ],
+      "weights": {
+        "relieve": 0.15,
+        "material": 0.25,
+        "termico": 0.45,
+        "luz": 0.1,
+        "agua": 0.05
+      },
+      "weights_note": "Focuses on surface thermal cycling amplitude and bare rock/regolith thermal inertia.",
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "Robotics 2 - Thermal Systems Team"
+    },
+    "ice": {
+      "description": "Cryospheric Drilling & Volatiles/Ice Prospecting (ISRU)",
+      "gates": {
+        "permafrost_class": {
+          "exclude": [
+            "ninguno",
+            "none"
+          ],
+          "source": "plan fase 1, parte 3 (IPA Brown et al. permafrost & cryosphere map)"
+        }
+      },
+      "require_present": [
+        "permafrost_class"
+      ],
+      "weights": {
+        "relieve": 0.15,
+        "material": 0.15,
+        "termico": 0.25,
+        "luz": 0.1,
+        "agua": 0.35
+      },
+      "weights_note": "Targets cryospheric permafrost substrates and cold-trap thermal conditions for ISRU ice drilling.",
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "ISRU & Cryosphere Prospecting Team"
+    }
+  }
+}

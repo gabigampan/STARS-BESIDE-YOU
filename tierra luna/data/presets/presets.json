@@ -1,0 +1,197 @@
+{
+  "rover": {
+    "weights": {
+      "relief": 0.35,
+      "surface_material": 0.3,
+      "thermal_regime": 0.1,
+      "light_and_sky": 0.1,
+      "water_ice_aridity": 0.15
+    },
+    "weight_sources": {
+      "relief": "ILUSTRATIVO - plan sec. 3 order only (relief and material weigh more)",
+      "surface_material": "ILUSTRATIVO - plan sec. 3 order only",
+      "thermal_regime": "ILUSTRATIVO",
+      "light_and_sky": "ILUSTRATIVO",
+      "water_ice_aridity": "ILUSTRATIVO"
+    },
+    "tolerances": {
+      "slope_300m_deg": {
+        "scale": 5.0,
+        "unit": "deg",
+        "source": "ILUSTRATIVO - set by Robotics 1"
+      },
+      "rough_300m_m": {
+        "scale": 10.0,
+        "unit": "m",
+        "source": "ILUSTRATIVO - set by Robotics 1"
+      }
+    },
+    "gates": {
+      "slope_300m_deg": {
+        "min": null,
+        "max": 15,
+        "source": "rover.max_operational_slope_deg: ESTIMADO - replace from project DB"
+      },
+      "rough_300m_m": {
+        "min": null,
+        "max": null,
+        "source": "no gate until Robotics 1 sets one"
+      }
+    },
+    "frozen_at": "2026-11-14T18:34:24+00:00",
+    "author": "Robotics 1 - Mobility Team",
+    "unverified": [
+      "rover field cg_height_m is not verified",
+      "rover field wheelbase_m is not verified",
+      "rover field track_m is not verified",
+      "rover field contact_patch_length_m is not verified",
+      "rover field contact_patch_width_m is not verified",
+      "rover field max_speed_mps is not verified",
+      "weight relief: source missing or illustrative",
+      "weight surface_material: source missing or illustrative",
+      "weight thermal_regime: source missing or illustrative",
+      "weight light_and_sky: source missing or illustrative",
+      "weight water_ice_aridity: source missing or illustrative",
+      "tolerance slope_300m_deg: source missing or illustrative",
+      "tolerance rough_300m_m: source missing or illustrative",
+      "gate slope_300m_deg: rover field max_operational_slope_deg is not verified"
+    ],
+    "rover_reference": {
+      "name": "VIPER (approximation)",
+      "locomotion": "wheels",
+      "mass_kg": 440.0,
+      "cg_m": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "static_tipover": {
+        "min_deg": 47.29,
+        "edges": [
+          {
+            "direction": "right",
+            "normal_deg": -90.0,
+            "lever_arm_m": 0.65,
+            "angle_deg": 47.29
+          },
+          {
+            "direction": "forward",
+            "normal_deg": -0.0,
+            "lever_arm_m": 0.65,
+            "angle_deg": 47.29
+          },
+          {
+            "direction": "left",
+            "normal_deg": 90.0,
+            "lever_arm_m": 0.65,
+            "angle_deg": 47.29
+          },
+          {
+            "direction": "rearward",
+            "normal_deg": -180.0,
+            "lever_arm_m": 0.65,
+            "angle_deg": 47.29
+          }
+        ],
+        "stable": true,
+        "note": "static, rigid, hard ground; independent of g"
+      },
+      "physics": {
+        "earth": {
+          "weight_n": 4316.4,
+          "ground_pressure_pa": 53955.0
+        },
+        "moon": {
+          "g_mps2": 1.62,
+          "weight_n": 712.8,
+          "ground_pressure_pa": 8910.0,
+          "earth_twin_mass_kg": 72.7,
+          "earth_load_ratio": 6.06,
+          "froude_speed_factor": 2.46,
+          "earth_test_speed_mps": 0.492
+        },
+        "mars": {
+          "g_mps2": 3.73,
+          "weight_n": 1641.2,
+          "ground_pressure_pa": 20515.0,
+          "earth_twin_mass_kg": 167.3,
+          "earth_load_ratio": 2.63,
+          "froude_speed_factor": 1.62,
+          "earth_test_speed_mps": 0.324
+        }
+      }
+    },
+    "transfer_card": [
+      {
+        "level": "A",
+        "item": "Static tip-over angle (min)",
+        "value": 47.29,
+        "unit": "deg",
+        "note": "independent of gravity"
+      },
+      {
+        "level": "A",
+        "item": "Weight on tool, Moon / Mars / Earth",
+        "value": [
+          712.8,
+          1641.2,
+          4316.4
+        ],
+        "unit": "N",
+        "note": "m * g; an Earth test pushes harder than on the target"
+      },
+      {
+        "level": "A",
+        "item": "Earth twin mass for equal ground load, Moon / Mars",
+        "value": [
+          72.7,
+          167.3
+        ],
+        "unit": "kg",
+        "note": "m * g_target / g_earth"
+      },
+      {
+        "level": "A",
+        "item": "Earth test speed (Froude), Moon / Mars",
+        "value": [
+          0.492,
+          0.324
+        ],
+        "unit": "m/s",
+        "note": "v_target * sqrt(g_earth / g_target)"
+      },
+      {
+        "level": "B",
+        "item": "Energy per km",
+        "value": null,
+        "unit": null,
+        "note": "range only, about +/-30 % (Apollo 15 LRV, Costes et al. 1972)"
+      },
+      {
+        "level": "B",
+        "item": "Slip",
+        "value": null,
+        "unit": null,
+        "note": "granular scaling, cohesionless sand only; a lightened rover at 1 g is optimistic (arXiv 2405.11001)"
+      },
+      {
+        "level": "C",
+        "item": "Traction and sinkage on target, thermal control, dust adhesion, radiation on electronics",
+        "value": null,
+        "unit": null,
+        "note": "declared limit, no prediction"
+      }
+    ],
+    "notes": [
+      "Gates act on slope averaged over the baseline in the feature name; local slopes inside a cell are steeper. Prefer a p90 slope column for the gate when it exists.",
+      "No slip, sinkage, traction or maximum climbable slope is predicted for the Moon or Mars."
+    ],
+    "workable_days": {
+      "rain_mm_max": 1,
+      "wind_max_ms_max": 12,
+      "tmin_c_min": -10,
+      "source": "ILUSTRATIVO - phase-1 plan, model 1 defaults"
+    },
+    "refrozen_from": "2026-11-14T18:34:23+00:00"
+  }
+}
