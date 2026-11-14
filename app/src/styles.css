@@ -1,0 +1,444 @@
+/* Stars Beside You: a quiet instrument shell around two real globes.
+   Tokens: deep black sky, smoked-glass panels, regolith white type, one sodium-lamp accent
+   (the colour of the night lights on the Earth globe) for focus and active state only. */
+
+:root {
+  --sky: #000000;
+  --glass: rgba(10, 12, 15, 0.82);
+  --glass-solid: #0d0f13;
+  --edge: rgba(214, 210, 200, 0.18);
+  --edge-strong: rgba(214, 210, 200, 0.34);
+  --text: #ebe8e1;
+  --text-dim: #aeb0b3;
+  --sodium: #d6b072;
+  --danger: #e59a8c;
+
+  --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Barlow Semi Condensed', 'Barlow', system-ui, sans-serif;
+
+  --pad: clamp(12px, 1.4vw, 28px);
+  --header-h: auto;
+  --step--1: clamp(0.8125rem, 0.78rem + 0.12vw, 0.9375rem);
+  --step-0: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.02rem + 0.45vw, 1.6rem);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--sky);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--text);
+  text-decoration-color: var(--edge-strong);
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-color: var(--sodium);
+}
+
+:focus-visible {
+  outline: 2px solid var(--sodium);
+  outline-offset: 2px;
+}
+
+/* ---------- header ---------- */
+
+.topbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pad);
+  padding: 10px var(--pad);
+  background: var(--glass-solid);
+  border-bottom: 1px solid var(--edge);
+  position: relative;
+  z-index: 5;
+}
+
+.brand {
+  min-width: 0;
+}
+
+.brand-name {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-1);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.brand-line {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+  margin-top: 2px;
+  max-width: 62ch;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.sun-time {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  font: 500 var(--step--1) / 1 var(--font-body);
+  letter-spacing: 0.01em;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.btn[aria-pressed='true'] {
+  border-color: var(--sodium);
+  box-shadow: inset 0 -2px 0 var(--sodium);
+}
+.btn[aria-pressed='false'] {
+  color: var(--text-dim);
+}
+
+.btn-quiet {
+  background: var(--glass);
+  border-color: var(--edge);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- stage: two globes ---------- */
+
+.stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  background: var(--edge);
+}
+
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) {
+  .stage {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+.pane {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--sky);
+}
+
+.globe,
+.globe .cesium-widget {
+  position: absolute;
+  inset: 0;
+}
+.globe .cesium-widget canvas {
+  display: block;
+  touch-action: none;
+}
+
+.pane-caption {
+  position: absolute;
+  top: var(--pad);
+  left: var(--pad);
+  max-width: calc(100% - 2 * var(--pad) - 120px);
+  padding: 8px 12px 9px;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.pane-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-0);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.pane-note {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+  line-height: 1.3;
+}
+
+.pane-reset {
+  position: absolute;
+  top: var(--pad);
+  right: var(--pad);
+}
+
+/* Cesium's own credit line stays visible; it just gets type that matches the shell. */
+.cesium-widget-credits {
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  color: #d9d7d2 !important;
+  text-shadow: 0 0 3px #000, 0 0 2px #000;
+  max-width: calc(100% - 12px);
+}
+.cesium-widget-credits a {
+  color: #e8e6e1 !important;
+}
+
+/* ---------- reserved panels (built by the next stage) ---------- */
+
+.panel {
+  position: absolute;
+  z-index: 3;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  overflow: auto;
+}
+.panel[hidden] {
+  display: none;
+}
+.panel-mission {
+  left: var(--pad);
+  top: calc(var(--pad) + 72px);
+  bottom: calc(var(--pad) + 28px);
+  width: min(340px, calc(100% - 2 * var(--pad)));
+}
+.panel-detail {
+  right: var(--pad);
+  top: calc(var(--pad) + 72px);
+  bottom: calc(var(--pad) + 28px);
+  width: min(380px, calc(100% - 2 * var(--pad)));
+}
+@media (max-width: 899px) {
+  .panel-detail {
+    top: auto;
+    left: var(--pad);
+    width: auto;
+    max-height: 45%;
+  }
+}
+
+/* ---------- loading screen ---------- */
+
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--sky);
+  transition: opacity 0.4s ease;
+}
+.loading[data-state='done'] {
+  opacity: 0;
+  pointer-events: none;
+}
+.loading[hidden] {
+  display: none;
+}
+
+.loading-inner {
+  width: min(460px, 100%);
+}
+
+.loading-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-1);
+}
+
+.loading-lead {
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.loading-list {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--edge);
+}
+.loading-list li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--edge);
+  font-size: var(--step--1);
+}
+.loading-list .state {
+  flex: none;
+  width: 4.5em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.loading-list li[data-state='ready'] .state {
+  color: var(--sodium);
+}
+.loading-list li[data-state='failed'] .state {
+  color: var(--danger);
+}
+
+.loading-error {
+  margin-top: 16px;
+  color: var(--danger);
+  font-size: var(--step--1);
+}
+.loading .btn {
+  margin-top: 16px;
+}
+
+/* ---------- credits dialog ---------- */
+
+.credits {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(84dvh, 900px);
+  padding: 0;
+  color: var(--text);
+  background: var(--glass-solid);
+  border: 1px solid var(--edge-strong);
+  border-radius: 4px;
+}
+.credits::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+.credits-head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--glass-solid);
+  border-bottom: 1px solid var(--edge);
+}
+.credits-head h2 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-1);
+}
+.credits-body {
+  padding: 4px 20px 20px;
+}
+.credits-list {
+  margin: 0;
+}
+.credits-list dt {
+  margin-top: 18px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-0);
+}
+.credits-list dd {
+  margin: 4px 0 0;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+  max-width: 70ch;
+}
+.credits-list dd.credit-line {
+  color: var(--text);
+}
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 899px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .topbar-tools {
+    justify-content: flex-start;
+  }
+  .sun-time {
+    flex: 1 1 100%;
+    margin: 0;
+    order: 3;
+  }
+  .pane-caption {
+    padding: 6px 10px 7px;
+  }
+  .pane-note {
+    display: none;
+  }
+}
+
+@media (min-width: 2400px) {
+  html {
+    font-size: 125%; /* 4K screens at 1x: keep type readable from a normal distance */
+  }
+  :root {
+    --pad: 32px;
+  }
+  .btn {
+    min-height: 52px;
+  }
+  .brand-line {
+    max-width: 80ch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading {
+    transition: none;
+  }
+}
