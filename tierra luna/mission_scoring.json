@@ -1,7 +1,7 @@
 {
   "version": "v1-draft",
   "note": "Motor unico de filtros por mision (sustituye a mission_filters.json). 'gates' = filtros duros (si falla uno, la zona se descarta). 'soft' = criterios ponderados 0-100: 'good' da utilidad 1 y 'bad' utilidad 0 (interpolacion lineal; si good < bad, menos es mejor). 'weights' (relieve/material/termico/luz/agua) solo los usa la web para el boton 'Use Weights' de la similitud. Umbrales de solar y thermal = valores de diseno NO validados con fuente externa.",
-  "on_missing_gate": "keep",
+  "on_missing_gate": "drop",
   "common_gates": {
     "elevation_m":   {"min": 1.0, "why": "solo tierra firme (descarta oceano, que el modelo fija en -250 m)"},
     "mask_fraction": {"min": 0.3, "why": "celda con dato suficiente"}
