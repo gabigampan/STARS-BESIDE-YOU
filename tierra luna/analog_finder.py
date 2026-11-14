@@ -313,13 +313,16 @@ def compute_mission_optimality_scores(
 
         pass_mask = df[f"pass_{m_name}"].to_numpy(dtype=np.float64) > 0
         combined = 0.65 * analog_sim + 0.35 * gate_q
-        score = np.where(pass_mask, combined, combined * 0.35)
+        # A cell that fails any hard filter of this mission has no score for it and
+        # cannot be ranked for it (team lead's rule; replaces the old x0.35 penalty).
+        score = np.where(pass_mask, combined, np.nan)
         df[f"score_{m_name}"] = np.round(score, 2)
 
     m_cols = [f"score_{m}" for m in missions.keys()]
     pass_all_mask = df["pass_all"].to_numpy(dtype=np.float64) > 0
     mean_all = df[m_cols].mean(axis=1).to_numpy(dtype=np.float64)
-    df["score_all"] = np.round(np.where(pass_all_mask, mean_all, mean_all * 0.35), 2)
+    # Same rule for the combined score: only cells passing every mission get one.
+    df["score_all"] = np.round(np.where(pass_all_mask, mean_all, np.nan), 2)
     return df
 
 
@@ -416,6 +419,34 @@ def build_optimal_mission_zones(
     return optimal_zones
 
 
+def _apply_mission_scoring_gates(earth_df: pd.DataFrame, mission_names: List[str]) -> Tuple[pd.DataFrame, Dict]:
+    """Set pass_<mission> and pass_all from mission_scoring.json through the engine's
+    gate module (engine.gates.evaluate_gates, Earth body rules). Returns the frame and
+    stats in the old {mission: {"pass", "fail_by": {column: n}}, "_all": n} format."""
+    from engine.config import load_engine_config, load_mission_config
+    from engine.gates import evaluate_gates
+
+    ecfg = load_engine_config()
+    mcfg = load_mission_config(engine_cfg=ecfg)
+    df = earth_df.copy()
+    stats: Dict = {}
+    all_ok = np.ones(len(df), dtype=bool)
+    for m_name in mission_names:
+        if m_name not in mcfg["missions"]:
+            raise KeyError(f"mission '{m_name}' is not defined in mission_scoring.json")
+        g = evaluate_gates(df.reset_index(drop=True), "EARTH", m_name, mcfg, ecfg)
+        df[f"pass_{m_name}"] = g.passed.astype(int)
+        fail_by: Dict[str, int] = {}
+        for reasons in g.reasons:
+            for col in dict.fromkeys(code.split(":")[0] for code in reasons):
+                fail_by[col] = fail_by.get(col, 0) + 1
+        stats[m_name] = {"pass": int(g.passed.sum()), "fail_by": fail_by}
+        all_ok &= g.passed
+    df["pass_all"] = all_ok.astype(int)
+    stats["_all"] = int(all_ok.sum())
+    return df, stats
+
+
 def compute_analog_ranking(
     moon_df: pd.DataFrame,
     earth_df: pd.DataFrame,
@@ -501,18 +532,18 @@ def compute_analog_ranking(
         & (earth_norm["tmin_c"] >= tmin_min)
     ).astype(int)
 
-    raw_rows = earth_norm.to_dict(orient="records")
-    evaluated_rows, mission_stats = apply_missions(
-        raw_rows, mission_cfg, mission_names, on_missing="keep"
-    )
-    for m_name in mission_names:
-        earth_norm[f"pass_{m_name}"] = [int(r[f"pass_{m_name}"]) for r in evaluated_rows]
-    earth_norm["pass_all"] = [int(r["pass_all"]) for r in evaluated_rows]
+    # Hard filters come from mission_scoring.json (the team's new filter system, which
+    # replaces mission_filters.json), applied by the engine exactly as for the static
+    # bundle, so this legacy output never scores or ranks a cell the engine eliminates.
+    earth_norm, mission_stats = _apply_mission_scoring_gates(earth_norm, mission_names)
 
     earth_norm = compute_mission_optimality_scores(earth_norm, lunar_zones, mission_cfg)
     optimal_mission_zones = build_optimal_mission_zones(earth_norm, mission_cfg)
 
-    ranked = earth_norm.sort_values("similarity_pct", ascending=False).reset_index(drop=True)
+    # Only cells that pass every mission's hard filters are ranked (a gate-failed
+    # cell cannot be ranked); ties keep the earlier row order (stable sort).
+    ranked = (earth_norm[earth_norm["pass_all"] == 1]
+              .sort_values("similarity_pct", ascending=False, kind="mergesort").reset_index(drop=True))
     ranked["rank"] = np.arange(1, len(ranked) + 1)
 
     mission_cols = [
@@ -595,6 +626,11 @@ def export_web_bundle(
         (moon_norm["row"] % stride == 0) & (moon_norm["col"] % stride == 0)
     ].copy()
 
+    def _score_or_none(value) -> Optional[float]:
+        # Gate-failed cells carry NaN scores; JSON gets null, never a number.
+        v = float(value) if value is not None else float("nan")
+        return round(v, 2) if np.isfinite(v) else None
+
     def pack_cells(df: pd.DataFrame, include_match: bool = False) -> List[Dict]:
         records = []
         for _, r in df.iterrows():
@@ -633,11 +669,11 @@ def export_web_bundle(
                 item["p_ice"] = int(r.get("pass_ice", 1))
                 item["p_all"] = int(r.get("pass_all", 1))
                 item["wk_rov"] = int(r.get("workable_rover", 1))
-                item["s_rov"] = round(float(r.get("score_rover", 0.0)), 2)
-                item["s_sol"] = round(float(r.get("score_solar", 0.0)), 2)
-                item["s_thm"] = round(float(r.get("score_thermal", 0.0)), 2)
-                item["s_ice"] = round(float(r.get("score_ice", 0.0)), 2)
-                item["s_all"] = round(float(r.get("score_all", 0.0)), 2)
+                item["s_rov"] = _score_or_none(r.get("score_rover"))
+                item["s_sol"] = _score_or_none(r.get("score_solar"))
+                item["s_thm"] = _score_or_none(r.get("score_thermal"))
+                item["s_ice"] = _score_or_none(r.get("score_ice"))
+                item["s_all"] = _score_or_none(r.get("score_all"))
             records.append(item)
         return records
 
