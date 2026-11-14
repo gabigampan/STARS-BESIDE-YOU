@@ -67,6 +67,16 @@ def _block_similarity_general(earth: Dict[str, np.ndarray], moon: Dict[str, np.n
     return np.where(den > 0, num / np.where(den > 0, den, 1.0), -np.inf)
 
 
+def _take_best(sim: np.ndarray, moon_ids: np.ndarray, twin: np.ndarray, best: np.ndarray,
+               rows: np.ndarray) -> None:
+    """Write the first maximum of each row of ``sim`` (lowest id on ties) into twin/best."""
+    idx = np.argmax(sim, axis=1)
+    val = sim[np.arange(sim.shape[0]), idx]
+    has = np.isfinite(val)
+    twin[rows] = np.where(has, moon_ids[idx], -1)
+    best[rows] = np.where(has, 100.0 * val, np.nan)
+
+
 def pair_twins(earth: Dict[str, np.ndarray], moon: Dict[str, np.ndarray], kinds: Dict[str, str],
                scales: Dict[str, Optional[float]], weights: Dict[str, float], moon_ids: np.ndarray,
                chunk_rows: int = 512) -> Tuple[np.ndarray, np.ndarray]:
@@ -87,16 +97,31 @@ def pair_twins(earth: Dict[str, np.ndarray], moon: Dict[str, np.ndarray], kinds:
     best = np.full(n_e, np.nan)
     if n_e == 0 or moon_ids.size == 0 or not weights:
         return twin, best
-    complete = not any(_has_missing(earth[v], kinds[v]) or _has_missing(moon[v], kinds[v]) for v in weights)
-    for start in range(0, n_e, chunk_rows):
-        stop = min(start + chunk_rows, n_e)
-        if complete:
-            sim = _block_similarity_complete(earth, moon, kinds, scales, weights, start, stop, moon_ids.size)
-        else:
+    moon_complete = not any(_has_missing(moon[v], kinds[v]) for v in weights)
+    if not moon_complete:
+        # Missing lunar values: renormalise per pair (general path, slower).
+        for start in range(0, n_e, chunk_rows):
+            stop = min(start + chunk_rows, n_e)
             sim = _block_similarity_general(earth, moon, kinds, scales, weights, start, stop)
-        idx = np.argmax(sim, axis=1)                      # first maximum = lowest id
-        val = sim[np.arange(stop - start), idx]
-        has = np.isfinite(val)
-        twin[start:stop] = np.where(has, moon_ids[idx], -1)
-        best[start:stop] = np.where(has, 100.0 * val, np.nan)
+            _take_best(sim, moon_ids, twin, best, np.arange(start, stop))
+        return twin, best
+    # Lunar values complete: group Earth rows by which variables they have, and run the
+    # fast path on each group with the weights of its present variables. This is the
+    # same arithmetic as the general path (missing variables drop out, weights renormalise).
+    names = list(weights)
+    miss = np.column_stack([(earth[v] < 0) if kinds[v] == "categorical" else ~np.isfinite(earth[v])
+                            for v in names])
+    patterns, inverse = np.unique(miss, axis=0, return_inverse=True)
+    inverse = np.asarray(inverse).reshape(-1)
+    for k, pat in enumerate(patterns):
+        rows = np.flatnonzero(inverse == k)
+        present = [v for v, m in zip(names, pat) if not m]
+        if not present:
+            continue  # no comparable variable: no twin
+        w = {v: weights[v] for v in present}
+        sub_e = {v: earth[v][rows] for v in present}
+        for start in range(0, rows.size, chunk_rows):
+            stop = min(start + chunk_rows, rows.size)
+            sim = _block_similarity_complete(sub_e, moon, kinds, scales, w, start, stop, moon_ids.size)
+            _take_best(sim, moon_ids, twin, best, rows[start:stop])
     return twin, best

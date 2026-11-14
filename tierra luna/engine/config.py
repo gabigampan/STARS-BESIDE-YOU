@@ -24,6 +24,7 @@ from pydantic import BaseModel, ConfigDict, field_validator
 ENGINE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(ENGINE_DIR)  # ".../tierra luna"
 ENGINE_CONFIG_PATH = os.path.join(ENGINE_DIR, "engine_config.json")
+DATASETS_PATH = os.path.join(ENGINE_DIR, "datasets.json")
 PROVENANCE_PATH = os.path.join(ENGINE_DIR, "provenance.json")
 
 if PROJECT_DIR not in sys.path:  # mission_scoring.py lives next to the package
@@ -32,9 +33,13 @@ if PROJECT_DIR not in sys.path:  # mission_scoring.py lives next to the package
 import mission_scoring  # noqa: E402  (team module, used unchanged)
 
 BODIES = ("EARTH", "MOON")
-GRID_ROWS = 90
-GRID_COLS = 180
-CELL_DEG = 2.0
+
+# Settings that depend on the input table. They are NOT in engine_config.json: they
+# come from the dataset descriptor (engine/datasets.json) chosen at load time.
+DATASET_SETTINGS = ("inputs", "input_csv", "grid", "provenance", "column_aliases", "column_overrides",
+                    "variables", "comparability", "bundle_format", "bundle_version", "output_dir",
+                    "earth_land_cells", "earth_ocean_fill", "region_max_place_km", "export_columns",
+                    "lunar_named_sites", "credits", "mission_notes")
 
 
 class Setting(BaseModel):
@@ -57,10 +62,7 @@ class EngineConfig(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
     engine_version: Setting
-    bundle_version: Setting
-    input_csv: Setting
     mission_config: Setting
-    output_dir: Setting
     missions: Setting
     gate_body_applicability: Setting
     on_invalid_value: Setting
@@ -77,27 +79,88 @@ class EngineConfig(BaseModel):
     antarctic_label_lat_max: Setting
     export_decimals: Setting
     mission_titles: Setting
-    credits: Setting
     similarity_comparability: Setting
     explain_helps_n: Setting
     explain_hurts_n: Setting
     coordinate_tolerance_deg: Setting
-    earth_ocean_fill: Setting
-    region_max_place_km: Setting
     earth_country_polygons: Setting
     not_used_by_engine_why: Setting
-    mission_notes: Setting
+    missing_data_reason: Setting
+    binary_encoding: Setting
+    first_view_budget_bytes: Setting
+    # filled from the dataset descriptor (engine/datasets.json)
+    dataset: Optional[Setting] = None
+    inputs: Optional[Setting] = None
+    input_csv: Optional[Setting] = None
+    grid: Optional[Setting] = None
+    provenance: Optional[Setting] = None
+    column_aliases: Optional[Setting] = None
+    column_overrides: Optional[Setting] = None
+    variables: Optional[Setting] = None
+    comparability: Optional[Setting] = None
+    bundle_format: Optional[Setting] = None
+    bundle_version: Optional[Setting] = None
+    output_dir: Optional[Setting] = None
+    earth_land_cells: Optional[Setting] = None
+    earth_ocean_fill: Optional[Setting] = None
+    region_max_place_km: Optional[Setting] = None
+    export_columns: Optional[Setting] = None
+    lunar_named_sites: Optional[Setting] = None
+    credits: Optional[Setting] = None
+    mission_notes: Optional[Setting] = None
 
     def v(self, name: str) -> Any:
         """Return the value of a setting (deep copy, so callers cannot mutate config)."""
-        return copy.deepcopy(getattr(self, name).value)
+        s = getattr(self, name)
+        if s is None:
+            raise KeyError(f"setting {name!r} is not set (dataset settings come from engine/datasets.json)")
+        return copy.deepcopy(s.value)
+
+    @property
+    def dataset_id(self) -> str:
+        """Id of the dataset descriptor these settings were loaded with."""
+        return str(self.v("dataset"))
 
 
-def load_engine_config(path: Optional[str] = None) -> EngineConfig:
-    """Load and validate engine_config.json."""
+def load_datasets(path: Optional[str] = None) -> Dict:
+    """Load engine/datasets.json (dataset descriptors)."""
+    with open(path or DATASETS_PATH, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def dataset_ids(path: Optional[str] = None) -> List[str]:
+    """Ids of the available dataset descriptors, in file order."""
+    return list(load_datasets(path)["datasets"].keys())
+
+
+def default_dataset(path: Optional[str] = None) -> str:
+    """The dataset used when none is named (engine/datasets.json 'default_dataset')."""
+    return str(load_datasets(path)["default_dataset"]["value"])
+
+
+def load_engine_config(path: Optional[str] = None, dataset: Optional[str] = None,
+                       datasets_path: Optional[str] = None) -> EngineConfig:
+    """Load engine_config.json and overlay the settings of one dataset descriptor.
+
+    ``dataset`` defaults to datasets.json 'default_dataset'. Every descriptor must set
+    every dataset setting (DATASET_SETTINGS), each with a value and a why.
+    """
     with open(path or ENGINE_CONFIG_PATH, encoding="utf-8") as fh:
         raw = json.load(fh)
     raw = {k: v for k, v in raw.items() if not k.startswith("_")}
+    clash = sorted(set(raw) & set(DATASET_SETTINGS))
+    if clash:
+        raise ValueError(f"engine_config.json must not hold dataset settings (they belong in datasets.json): {clash}")
+    ds_all = load_datasets(datasets_path)
+    ds_id = dataset or str(ds_all["default_dataset"]["value"])
+    if ds_id not in ds_all["datasets"]:
+        raise KeyError(f"unknown dataset {ds_id!r}; known: {list(ds_all['datasets'])}")
+    desc = ds_all["datasets"][ds_id]
+    missing = [k for k in DATASET_SETTINGS if k not in desc["settings"]]
+    if missing:
+        raise KeyError(f"dataset {ds_id!r} lacks settings {missing}")
+    raw.update({k: desc["settings"][k] for k in DATASET_SETTINGS})
+    raw["dataset"] = {"value": ds_id, "why": desc["why"]}
     return EngineConfig.model_validate(raw)
 
 

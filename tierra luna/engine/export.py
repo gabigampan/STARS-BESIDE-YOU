@@ -20,11 +20,10 @@ import pandas as pd
 
 import mission_scoring
 from engine import provenance
-from engine.config import BODIES, CELL_DEG, GRID_COLS, GRID_ROWS, EngineConfig, sha256_bytes
+from engine.config import BODIES, EngineConfig, sha256_bytes
 from engine.explain import explain_cell
 from engine.gates import GateResult, effective_gates, gate_origin, top_reasons
 from engine.pipeline import MissionResult
-from engine.places import cell_size_km
 from engine.suitability import soft_weights
 
 FILES_ORDER = ["missions.json", "variables.json", "earth_cells.json", "moon_cells.json",
@@ -409,14 +408,15 @@ def build_iau_features(features: pd.DataFrame, engine_cfg: EngineConfig, source_
 
 
 def build_manifest(files: Dict[str, bytes], engine_cfg: EngineConfig, input_info: Dict,
-                   config_hashes: Dict[str, str], counts: Dict, build_time: str) -> Dict:
-    """manifest.json content."""
+                   config_hashes: Dict[str, str], counts: Dict, build_time: str, grid) -> Dict:
+    """manifest.json content (v1). ``grid`` is the dataset's engine.dataset.Grid."""
     radii = engine_cfg.v("body_radius_km")
     dkm = _dec(engine_cfg, "distance_km")
     grid_bodies = {b: {"radius_km": radii[b],
-                       "cell_ns_km": rnd(cell_size_km(radii[b], CELL_DEG), dkm),
-                       "cell_ew_km_at_equator": rnd(cell_size_km(radii[b], CELL_DEG), dkm),
+                       "cell_ns_km": rnd(grid.cell_ns_km(radii[b]), dkm),
+                       "cell_ew_km_at_equator": rnd(grid.cell_ns_km(radii[b]), dkm),
                        "cell_ew_km_rule": "cell_ns_km * cos(latitude)"} for b in BODIES}
+    cd = grid.cell_deg
     return {
         "bundle_version": engine_cfg.v("bundle_version"),
         "engine_version": engine_cfg.v("engine_version"),
@@ -424,10 +424,10 @@ def build_manifest(files: Dict[str, bytes], engine_cfg: EngineConfig, input_info
         "input": input_info,
         "config_sha256": config_hashes,
         "grid": {
-            "rows": GRID_ROWS, "cols": GRID_COLS, "cell_deg": CELL_DEG,
-            "cell_id": "row * 180 + col",
-            "lat_center": "90 - (row + 0.5) * 2",
-            "lon_center": "-180 + (col + 0.5) * 2 (positive east)",
+            "rows": grid.rows, "cols": grid.cols, "cell_deg": cd,
+            "cell_id": f"row * {grid.cols} + col",
+            "lat_center": f"90 - (row + 0.5) * {cd:g}",
+            "lon_center": f"-180 + (col + 0.5) * {cd:g} (positive east)",
             "bodies": grid_bodies,
             "note": "The CSV column resolution_m = 500 and the x_m/y_m columns are wrong; true cell sizes are given here.",
         },

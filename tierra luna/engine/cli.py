@@ -1,10 +1,14 @@
-"""Command line.
+"""Command line. Run from the "tierra luna" directory.
 
-    python -m engine build      [--input CSV] [--out DIR] [--build-time TEXT]
-    python -m engine validate   [--input CSV]
+    python -m engine build      [--dataset ID] [--out DIR] [--build-time TEXT] [--input CSV]
+    python -m engine validate   [--dataset ID]
+    python -m engine report     [--dataset ID] [--benchmark CSV] [--top N] [--out JSON]
+    python -m engine datasets
     python -m engine gazetteer  --shp MOON_nomenclature_center_pts.shp [--zip MOON_nomenclature_center_pts.zip]
 
-Run from the "tierra luna" directory.
+Datasets are defined in engine/datasets.json. The default (real_1deg) writes the v2
+bundle the app ships to app/public/data/v2; legacy_2deg writes the v1 JSON bundle to
+build/legacy_2deg (not shipped), for before-and-after comparison.
 """
 from __future__ import annotations
 
@@ -13,35 +17,65 @@ import json
 import os
 from typing import List, Optional
 
-from engine.config import ENGINE_DIR, load_engine_config, resolve_path
+from engine.config import ENGINE_DIR, dataset_ids, default_dataset, load_datasets, load_engine_config, resolve_path
 
 
 def _cmd_build(a: argparse.Namespace) -> int:
     from engine.build import build_and_write
 
-    b = build_and_write(out_dir=a.out, input_csv=a.input, build_time=a.build_time)
+    b = build_and_write(out_dir=a.out, dataset=a.dataset, input_csv=a.input, build_time=a.build_time)
     m = b["manifest"]
-    print(f"bundle {m['bundle_version']} -> {b['out_dir']}")
+    print(f"dataset {b['engine_cfg'].dataset_id}: bundle {m['bundle_version']} -> {b['out_dir']}")
+    total = 0
     for f in m["files"]:
-        print(f"  {f['name']:24s} {f['bytes']:>10,d} B  {f['sha256'][:12]}")
-    total = sum(f["bytes"] for f in m["files"]) + len(b["files"]["manifest.json"])
+        total += f["bytes"]
+        print(f"  {f['name']:26s} {f['bytes']:>10,d} B  {f['sha256'][:12]}  {f.get('load', '')}")
+    total += len(b["files"]["manifest.json"])
+    print(f"  manifest.json              {len(b['files']['manifest.json']):>10,d} B")
     print(f"  total {total:,d} B")
+    if "sizes" in m:
+        fv = m["sizes"]["first_view_bytes_without_manifest"] + len(b["files"]["manifest.json"])
+        print(f"  first view (with manifest) {fv:,d} B; budget {m['sizes']['budget']}")
     for mid, c in m["counts"]["missions"].items():
-        print(f"  {mid:8s} pass EARTH {c['pass_EARTH']:5d}  MOON {c['pass_MOON']:5d}  ranked {c['ranked_EARTH']:5d}")
-    print(f"  validity: {'OK' if b['objects']['validity.json']['valid'] else 'FAILURES (see validity.json)'}")
+        print(f"  {mid:8s} pass EARTH {c['pass_EARTH']:6d}  MOON {c['pass_MOON']:6d}  ranked {c['ranked_EARTH']:6d}")
+    print(f"  validity: {'OK' if b['validity']['valid'] else 'FAILURES (see validity.json)'}")
     return 0
 
 
 def _cmd_validate(a: argparse.Namespace) -> int:
-    from engine import provenance, schema
-    from engine.table import load_cells
+    from engine import schema
+    from engine.dataset import load_dataset
 
-    ecfg = load_engine_config()
-    cells = load_cells(a.input or resolve_path(ecfg.v("input_csv")))
-    rep = schema.validate_table(cells, provenance.load_registry())
+    ecfg = load_engine_config(dataset=a.dataset)
+    ds = load_dataset(ecfg)
+    rep = schema.validate_table(ds.cells, ds.reg, float(ecfg.v("coordinate_tolerance_deg")), ds.grid)
     for b, r in rep["bodies"].items():
         print(f"{b}: {r['records']} records, {r['failing_records']} failing, fields {r['field_failures']}")
     return 0 if rep["valid"] else 1
+
+
+def _cmd_report(a: argparse.Namespace) -> int:
+    from engine.build import compute
+    from engine.report import run_report
+
+    c = compute(a.dataset)
+    rep = run_report(c, a.benchmark, a.top)
+    text = json.dumps(rep, ensure_ascii=False, indent=1)
+    if a.out:
+        with open(a.out, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+        print(f"report -> {a.out}")
+    else:
+        print(text)
+    return 0
+
+
+def _cmd_datasets(a: argparse.Namespace) -> int:
+    d = load_datasets()
+    for k, v in d["datasets"].items():
+        mark = " (default)" if k == d["default_dataset"]["value"] else ""
+        print(f"{k}{mark}: {v['title']}")
+    return 0
 
 
 def _cmd_gazetteer(a: argparse.Namespace) -> int:
@@ -59,14 +93,24 @@ def main(argv: Optional[List[str]] = None) -> int:
     p = argparse.ArgumentParser(prog="python -m engine", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
+    ids = dataset_ids()
+    dflt = default_dataset()
     b = sub.add_parser("build", help="compute everything and write the static bundle")
-    b.add_argument("--input", default=None)
-    b.add_argument("--out", default=None)
+    b.add_argument("--dataset", choices=ids, default=dflt)
+    b.add_argument("--input", default=None, help="replace a one-file dataset's input CSV")
+    b.add_argument("--out", default=None, help="output folder (default: the dataset's output_dir)")
     b.add_argument("--build-time", default=None, help="text stored as build_time (default: input sha256)")
-    v = sub.add_parser("validate", help="validate the cell table against the schema")
-    v.add_argument("--input", default=None)
+    v = sub.add_parser("validate", help="validate the dataset's cell tables against the schema")
+    v.add_argument("--dataset", choices=ids, default=dflt)
+    r = sub.add_parser("report", help="counts, failure reasons, distributions, top cells and benchmark sites")
+    r.add_argument("--dataset", choices=ids, default=dflt)
+    r.add_argument("--benchmark", default=None, help="CSV of analog sites (id, name, lat, lon, ...)")
+    r.add_argument("--top", type=int, default=15)
+    r.add_argument("--out", default=None)
+    sub.add_parser("datasets", help="list the dataset descriptors")
     g = sub.add_parser("gazetteer", help="extract the IAU lunar gazetteer to engine/data")
     g.add_argument("--shp", required=True)
     g.add_argument("--zip", default=None)
     a = p.parse_args(argv)
-    return {"build": _cmd_build, "validate": _cmd_validate, "gazetteer": _cmd_gazetteer}[a.cmd](a)
+    return {"build": _cmd_build, "validate": _cmd_validate, "report": _cmd_report, "datasets": _cmd_datasets,
+            "gazetteer": _cmd_gazetteer}[a.cmd](a)

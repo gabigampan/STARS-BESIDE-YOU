@@ -54,6 +54,12 @@ class MissionResult:
     extra: Dict = field(default_factory=dict)
 
 
+def _present(s: pd.Series) -> np.ndarray:
+    """True where a cell has a value (numeric finite or a non-empty category)."""
+    txt = s.astype(str).str.strip().str.lower()
+    return (s.notna() & ~txt.isin(["", "nan"])).to_numpy()
+
+
 def rank_scores(final: np.ndarray, ids: np.ndarray) -> np.ndarray:
     """Rank 1..n by final score descending, ties by cell id ascending; 0 when NaN."""
     final = np.asarray(final, dtype=np.float64)
@@ -136,12 +142,14 @@ def run_mission(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_c
     e_levels = {v: provenance.level(reg, v, "EARTH") for v in svars}
     m_levels = {v: provenance.level(reg, v, "MOON") for v in svars}
     cell_km = max(provenance.resolution_km(reg, v, b) for v in svars for b in ("EARTH", "MOON"))
+    m_has = {v: _present(moon[v]) for v in svars}
     conf: List[Optional[str]] = [None] * len(earth)
     conf_s = np.full(len(earth), np.nan)
     for i in np.flatnonzero(rank > 0):
-        avail = [v for v in svars if np.isfinite(es.utilities[v][i])
-                 and (v not in sim_vars or np.isfinite(sims[v][i]))]
-        label, score = pair_confidence(e_levels, m_levels, weights_all, avail, cell_km, rule)
+        e_av = [v for v in svars if np.isfinite(es.utilities[v][i])]
+        m_av = [v for v in svars if m_has[v][tpos[i]]]
+        both = [v for v in e_av if v in m_av]
+        label, score = pair_confidence(e_levels, m_levels, weights_all, both, cell_km, rule, e_av, m_av)
         conf[i], conf_s[i] = label, (np.nan if score is None else score)
 
     twin_count = np.zeros(len(moon), dtype=np.int64)

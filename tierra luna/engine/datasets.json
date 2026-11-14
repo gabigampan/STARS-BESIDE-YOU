@@ -1,0 +1,420 @@
+{
+ "_note": "Dataset descriptors. Everything that depends on the input table (files, grid, provenance, column aliases, comparability, bundle format and folder, dataset-specific notes) lives here, never in the engine modules. Each setting has a value and a why, like engine_config.json. Every setting is also listed in /ASSUMPTIONS.md. Paths are relative to the 'tierra luna' directory.",
+ "default_dataset": {
+  "value": "real_1deg",
+  "why": "The app ships the bundle built from the real 1-degree tables (open products, per-variable provenance). The legacy 2-degree table stays available for before-and-after comparison with --dataset legacy_2deg."
+ },
+ "datasets": {
+  "legacy_2deg": {
+   "title": "Legacy harmonized table, 2-degree grid",
+   "why": "The team's committed table (output_py/earth_moon_harmonized_clean.csv). Almost every variable is a latitude formula or of undocumented origin (audit A2); kept only to compare before and after.",
+   "settings": {
+    "inputs": {
+     "value": {
+      "ALL": "output_py/earth_moon_harmonized_clean.csv"
+     },
+     "why": "One CSV with both bodies (column 'body'), produced by main.py --pds per audit A2. The engine reads it and never regenerates it, because main.py rewrites tracked files."
+    },
+    "input_csv": {
+     "value": "output_py/earth_moon_harmonized_clean.csv",
+     "why": "Same file as 'inputs' (kept under this name for the v1 code paths and tests that read it)."
+    },
+    "grid": {
+     "value": {
+      "rows": 90,
+      "cols": 180,
+      "cell_deg": 2.0
+     },
+     "why": "90 x 180 cells of 2 degrees, row 0 at the north, column 0 at the west; centre lat = 90 - (row + 0.5) * cell_deg, lon = -180 + (col + 0.5) * cell_deg; id = row * cols + col. The CSV column resolution_m = 500 is wrong (audit A2)."
+    },
+    "provenance": {
+     "value": {
+      "kind": "registry",
+      "path": "engine/provenance.json"
+     },
+     "why": "Levels, sources and comparability of the legacy table come from the audit-built registry (engine/build_provenance.py)."
+    },
+    "column_aliases": {
+     "value": null,
+     "why": "The legacy table already uses the mission variable names: every variable is read from the column of the same name."
+    },
+    "column_overrides": {
+     "value": {},
+     "why": "No column substitution on the legacy table."
+    },
+    "variables": {
+     "value": null,
+     "why": "Labels, units, kinds and descriptions come from the legacy registry (engine/provenance.json)."
+    },
+    "comparability": {
+     "value": null,
+     "why": "Comparability of the legacy variables is in the legacy registry (provenance.json comparable_across_bodies, built by engine/build_provenance.py COMPARABILITY)."
+    },
+    "bundle_format": {
+     "value": "v1",
+     "why": "The legacy table is exported in the v1 JSON format (docs/DATA_CONTRACT.md, appendix) so that the before-and-after comparison uses the code that produced the v1 bundle."
+    },
+    "bundle_version": {
+     "value": "v1",
+     "why": "Version of the v1 file structure, written in every v1 file."
+    },
+    "output_dir": {
+     "value": "build/legacy_2deg",
+     "why": "The legacy build is for comparison only and is not shipped: it goes to a folder outside app/public. Pass --out to write it elsewhere."
+    },
+    "earth_land_cells": {
+     "value": {
+      "rule": "common_gate",
+      "variable": "elevation_m"
+     },
+     "why": "Earth land cells of the legacy table are the cells passing the team's common land gate (elevation_m >= 1, written for the -250 m ocean fill)."
+    },
+    "earth_ocean_fill": {
+     "value": {
+      "cells": "Earth cells that fail the common elevation_m land gate of mission_scoring.json (land = 0)",
+      "variables": [
+       "elevation_m",
+       "elevation_rel_m",
+       "slope_deg",
+       "roughness_m",
+       "temp_k",
+       "rock_or_bare_frac",
+       "sar_sigma0_db",
+       "slope_300m_deg",
+       "rough_300m_m"
+      ],
+      "export_as": "null"
+     },
+     "why": "Audit A2 section 2a: the 10,273 ocean cells of earth_global_real.npz carry constant fills (-250 m, -1000 m, 0.01 deg, 0.1 m, 285 K, 0, -24 dB), and slope_300m_deg / rough_300m_m copy them. A fill is not a value, so the bundle writes null there and records the fill constants in earth_cells.json 'ocean_fill'. The engine itself still evaluates the team's land gate on the fill, as its why intends ('descarta oceano, que el modelo fija en -250 m'). Formula columns computed on the ocean (irradiance, rain, wind, mask_fraction, classes) are MODELLED values, not fills, and are kept."
+    },
+    "region_max_place_km": {
+     "value": 222.4,
+     "why": "A first-level region is exported only when the nearest GeoNames place is at most one Earth cell (222.4 km north-south for 2 degrees) from the cell centre and lies in the same country as the cell; farther away the region names another part of the country (review: Tibetan cells labelled 'Hebei', Franz Josef Land labelled 'Nenetskiy'). Otherwise region is null."
+    },
+    "export_columns": {
+     "value": "all registry variables",
+     "why": "The v1 bundle writes every registry variable as JSON."
+    },
+    "lunar_named_sites": {
+     "value": null,
+     "why": "No named-site table was built for the legacy grid."
+    },
+    "credits": {
+     "value": [
+      "Lunar feature names: Gazetteer of Planetary Nomenclature, International Astronomical Union (IAU) Working Group for Planetary System Nomenclature, and USGS Astrogeology Science Center (planetarynames.wr.usgs.gov).",
+      "Earth place names: GeoNames (geonames.org, CC BY 4.0) cities1000 list as packaged by the reverse_geocoder Python library (offline). Labels are the nearest populated place to the cell centre, not a boundary test.",
+      "Country names: ISO 3166 table iso3166.tab of the IANA time zone database (public domain), as shipped by the tzdata Python package.",
+      "Lunar elevation: LRO LOLA LDEM_4 (LRO-L-LOLA-4-GDR-V1.0), 8x8 block mean, NASA PDS Geosciences Node."
+     ],
+     "why": "Credits exported in manifest.json for the app's about box."
+    },
+    "mission_notes": {
+     "value": {
+      "rover": [
+       "Provisional team block. Interior Greenland ice-sheet cells rank near the top: the soft criteria have no surface-type term, ice counts as bare ground in rock_or_bare_frac, and 2-degree slope and roughness are smooth on an ice sheet. Whether ice or snow cells (thermal_inertia_class 'hielo') should be gated out is a question for Robotics 1; the engine does not change the gates."
+      ],
+      "solar": [
+       "The solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of the latitude given in facts.moon_pass_abs_lat_max, so no lunar polar ridge or rim can be a twin. R2 section 1 and R3 section 4 say a lunar solar test should target those lit polar ridges. The gates are kept as written, pending a team decision (R3 open question 3)."
+      ],
+      "thermal": [
+       "Lunar diurnal amplitude is a latitude-only formula (MODELLED) that Diviner contradicts at low and mid latitudes (R2 section 3, R3 F10 and F12). Earth amplitudes are closest to its clipped polar minimum, so thermal twins are a few cells near the lunar poles (facts.twins)."
+      ],
+      "ice": [
+       "Provisional team block. permafrost_class has no lunar equivalent (R3, ice row) and is left out of the similarity. With temp_k alone, twins are the warmest passing lunar cells, at the warm edge of the MODELLED lunar permafrost-class temperature thresholds, because those are closest to Earth temperatures. Ice twins therefore say little until a lunar cold-trap variable exists."
+      ]
+     },
+     "why": "Known limitations of each mission's results on the legacy table, exported in missions.json 'known_limitations'. They describe the data and the team configuration; nothing is tuned to hide them."
+    }
+   }
+  },
+  "real_1deg": {
+   "title": "Real open-data tables, 1-degree grid",
+   "why": "Earth from ETOPO 2022, ESA CCI land cover, the MODIS land surface temperature climatology, WorldClim 2.1 and the Obu permafrost maps; Moon from LOLA LDEM_16, Diviner and LOLA polar illumination (real_data/README.md). Every column has a provenance row with its level.",
+   "settings": {
+    "inputs": {
+     "value": {
+      "EARTH": "output_real/earth_real_1deg.csv",
+      "MOON": "output_real/moon_real_1deg.csv"
+     },
+     "why": "The two per-body tables written by real_data/build_earth.py and real_data/build_moon.py (earth_moon_real_1deg.csv is their concatenation). They are read at build time, never copied into code; an independent verifier may still correct them, so the bundle must be rebuilt after any change."
+    },
+    "input_csv": {
+     "value": null,
+     "why": "Not used: this dataset has one input per body ('inputs')."
+    },
+    "grid": {
+     "value": {
+      "rows": 180,
+      "cols": 360,
+      "cell_deg": 1.0
+     },
+     "why": "180 x 360 cells of 1 degree per body, row 0 at the north (centre 89.5), column 0 at the west (centre -179.5), longitudes -180..180 east-positive; id = row * 360 + col. True cell size: 111.2 km north-south on Earth (6371 km sphere) and 30.3 km on the Moon; east-west it shrinks with cos(latitude). Earth latitudes are the products' WGS84 geodetic latitudes (at most 0.19 deg from geocentric, provenance_earth.csv)."
+    },
+    "provenance": {
+     "value": {
+      "kind": "csv",
+      "EARTH": "real_data/provenance_earth.csv",
+      "MOON": "real_data/provenance_moon.csv"
+     },
+     "why": "Levels (MEASURED, DERIVED, MODELLED or no data), products, versions, licences, native resolutions, aggregation and caveats come from the builders' provenance files, read at build time. A level is never inferred from a column name; the row used is that of the real column a mission variable is read from."
+    },
+    "column_aliases": {
+     "value": "real_data/column_aliases.json",
+     "why": "Mission variable name (mission_scoring.json) to real column, with the true baseline and a caveat per body, written by the table builders."
+    },
+    "column_overrides": {
+     "value": {
+      "slope_deg": "slope_iso_deg",
+      "slope_p90_deg": "slope_iso_p90_deg"
+     },
+     "why": "Every slope variable the missions name (rover slope_300m_deg and solar slope_deg, both aliased to slope_deg) is read from the isotropic-baseline column instead, on both bodies. The literal slope_deg uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this (provenance rows of slope_deg, slope_p90_deg and slope_iso_deg). slope_iso_deg keeps the same baseline in both directions at every latitude (true baseline read from the provenance row). Equal to slope_deg at low latitudes."
+    },
+    "variables": {
+     "value": {
+      "elevation_m": {
+       "label": "Elevation",
+       "unit": "m",
+       "kind": "numeric",
+       "description": "Mean surface height of the cell. Earth: land only, above the EGM2008 geoid (sea level). Moon: above the 1737.4 km reference sphere."
+      },
+      "mask_fraction": {
+       "label": "Land share",
+       "unit": "fraction 0-1",
+       "kind": "numeric",
+       "description": "Earth: share of the cell that is land (ESA CCI land cover; inland water counts as water). Moon: 1 by definition."
+      },
+      "slope_300m_deg": {
+       "label": "Slope (rover)",
+       "unit": "deg",
+       "kind": "numeric",
+       "description": "The rover's slope variable. No global product has a 300 m baseline: it is read from the isotropic km-baseline slope (see true_baseline)."
+      },
+      "rough_300m_m": {
+       "label": "Roughness (rover)",
+       "unit": "m",
+       "kind": "numeric",
+       "description": "The rover's roughness variable. RMS height difference (deviogram) at a lag of about 1.9 km, not 300 m (see true_baseline)."
+      },
+      "slope_deg": {
+       "label": "Slope",
+       "unit": "deg",
+       "kind": "numeric",
+       "description": "Mean slope of the cell at a km baseline (isotropic column, see true_baseline)."
+      },
+      "roughness_m": {
+       "label": "Roughness",
+       "unit": "m",
+       "kind": "numeric",
+       "description": "RMS height difference (deviogram) at a lag of one DEM pixel, about 1.9 km."
+      },
+      "rock_or_bare_frac": {
+       "label": "Bare or sparsely vegetated fraction",
+       "unit": "fraction 0-1",
+       "kind": "numeric",
+       "description": "Earth: bare plus sparse-vegetation share of the land pixels (ESA CCI land cover). Moon: 1 by definition (no vegetation); not rock abundance."
+      },
+      "temp_k": {
+       "label": "Mean surface temperature",
+       "unit": "K",
+       "kind": "numeric",
+       "description": "Earth: annual mean clear-sky land surface temperature (mean of the ~10:30 and ~22:30 MODIS overpasses). Moon: diurnal mean Diviner bolometric brightness temperature."
+      },
+      "lst_diurnal_amp_k": {
+       "label": "Diurnal surface temperature amplitude",
+       "unit": "K",
+       "kind": "numeric",
+       "description": "Earth: ~10:30 minus ~22:30 clear-sky land surface temperature (understates the daily range). Moon: maximum minus minimum of the Diviner diurnal curve."
+      },
+      "tmin_c": {
+       "label": "Minimum temperature",
+       "unit": "degC",
+       "kind": "numeric",
+       "description": "Earth: coldest-month mean daily minimum AIR temperature (WorldClim 2.1, interpolated). Moon: minimum SURFACE brightness temperature (Diviner)."
+      },
+      "irradiance_kwh_m2_day": {
+       "label": "Solar irradiance",
+       "unit": "kWh/m2/day",
+       "kind": "numeric",
+       "description": "Daily solar energy on a horizontal surface. Earth: surface value under the atmosphere (WorldClim srad). Moon: geometry with no atmosphere, with the LOLA topographic lit fraction near the poles."
+      },
+      "sun_elev_max_deg": {
+       "label": "Maximum sun elevation",
+       "unit": "deg",
+       "kind": "numeric",
+       "description": "Highest sun elevation over the year at the cell-centre latitude (formula, flat horizon)."
+      },
+      "sun_low_frac_0_5deg": {
+       "label": "Low-sun fraction",
+       "unit": "fraction 0-1",
+       "kind": "numeric",
+       "description": "Share of daylight time with the sun 0-5 degrees above a flat horizon (formula)."
+      },
+      "thermal_inertia_class": {
+       "label": "Thermal inertia class",
+       "unit": "category",
+       "kind": "categorical",
+       "description": "Earth: ASSUMED mapping from ESA CCI land-cover classes (class_mappings.json). Moon: 'regolito' everywhere by assumption."
+      },
+      "permafrost_class": {
+       "label": "Permafrost class",
+       "unit": "category",
+       "kind": "categorical",
+       "description": "Earth: class from the Obu et al. modelled permafrost probability. Moon: no data (not applicable)."
+      },
+      "rain_mm_day": {
+       "label": "Precipitation",
+       "unit": "mm/day",
+       "kind": "numeric",
+       "description": "Earth: WorldClim 2.1 annual precipitation / 365.25. Moon: not applicable. Not used by the engine (only by rover workable_days, which mission_scoring.py does not read)."
+      },
+      "wind_max_ms": {
+       "label": "Windiest-month mean wind",
+       "unit": "m/s",
+       "kind": "numeric",
+       "description": "Earth: WorldClim 2.1 windiest-month mean 10 m wind. Moon: not applicable. Not used by the engine (only by rover workable_days)."
+      }
+     },
+     "why": "Display label, unit, kind and a short definition of each mission variable on this dataset. Definitions summarise real_data/provenance_*.csv and column_aliases.json; levels, sources and caveats are read from those files, not from here."
+    },
+    "comparability": {
+     "value": {
+      "elevation_m": {
+       "status": "not_comparable",
+       "reason": "Earth heights are above the geoid (sea level) and only over land; lunar heights are above an arbitrary 1737.4 km sphere. Not weighted by any mission (only the Earth land gate uses it)."
+      },
+      "mask_fraction": {
+       "status": "not_comparable",
+       "reason": "Earth land share against a lunar value that is 1 by definition. Gate only."
+      },
+      "slope_300m_deg": {
+       "status": "comparable",
+       "reason": "Same definition on both bodies (central differences, isotropic baseline, cos-lat weighted cell mean) and near-equal baselines (3.7 km on Earth, 3.8 km on the Moon; true_baseline per body). Both are km-baseline slopes, not 300 m slopes."
+      },
+      "rough_300m_m": {
+       "status": "comparable",
+       "reason": "Same deviogram definition on both bodies at near-equal lags (1.853 km on Earth, 1.895 km on the Moon). Both are km-lag roughness, not 300 m roughness."
+      },
+      "slope_deg": {
+       "status": "comparable",
+       "reason": "Same definition and near-equal isotropic baselines on both bodies (see slope_300m_deg)."
+      },
+      "roughness_m": {
+       "status": "comparable",
+       "reason": "Same deviogram definition at near-equal lags on both bodies (see rough_300m_m)."
+      },
+      "rock_or_bare_frac": {
+       "status": "not_comparable",
+       "reason": "Earth bare-or-sparse-vegetation share from a land-cover classification against a lunar value that is 1 by definition; Moon-likeness would only measure how bare an Earth cell is."
+      },
+      "temp_k": {
+       "status": "comparable_with_caveat",
+       "reason": "Both are surface (skin) temperatures averaged over the day, but Earth is the mean of two clear-sky overpasses (~10:30 and ~22:30) and the Moon a full diurnal mean of a brightness temperature; Earth has no Antarctic values."
+      },
+      "lst_diurnal_amp_k": {
+       "status": "comparable_with_caveat",
+       "reason": "Both describe the daily swing of the surface temperature, but Earth is the difference between two satellite overpasses (~10:30 minus ~22:30), which understates the true daily range, while the lunar one is maximum minus minimum of the diurnal curve."
+      },
+      "tmin_c": {
+       "status": "not_comparable",
+       "reason": "Earth is an interpolated AIR temperature (coldest-month mean daily minimum, 2 m, WorldClim) while the lunar one is a SURFACE brightness temperature minimum; there is no air on the Moon. Different physical quantities."
+      },
+      "irradiance_kwh_m2_day": {
+       "status": "comparable_with_caveat",
+       "reason": "Daily energy on a horizontal surface on both bodies, but the Earth value is measured under the atmosphere and clouds (interpolated climatology) while the Moon has none, and the lunar value is a 24-hour mean over a 29.5-day lunar day."
+      },
+      "sun_elev_max_deg": {
+       "status": "comparable",
+       "reason": "Same formula on both bodies (90 - max(0, |lat| - obliquity), flat horizon), each with its own obliquity."
+      },
+      "sun_low_frac_0_5deg": {
+       "status": "comparable",
+       "reason": "Same formula on both bodies (share of daylight with the sun 0-5 degrees high, flat horizon), each with its own obliquity."
+      },
+      "thermal_inertia_class": {
+       "status": "not_comparable",
+       "reason": "Earth classes are an assumed mapping from land cover; the lunar value is 'regolito' everywhere by assumption. A label match would say nothing physical."
+      },
+      "permafrost_class": {
+       "status": "not_comparable",
+       "reason": "Permafrost has no lunar data (not applicable): there is no seasonal thaw or ground ice map in the lunar table."
+      },
+      "rain_mm_day": {
+       "status": "not_comparable",
+       "reason": "No lunar data (no atmosphere)."
+      },
+      "wind_max_ms": {
+       "status": "not_comparable",
+       "reason": "No lunar data (no atmosphere)."
+      }
+     },
+     "why": "One row per variable: whether the Earth and lunar values are the same physical quantity, decided from the definitions in the provenance files (pending team confirmation). 'not_comparable' variables are left out of the Earth-Moon similarity and the twin search but stay in suitability; 'comparable_with_caveat' variables are used and carry the reason to the interface."
+    },
+    "bundle_format": {
+     "value": "v2",
+     "why": "Compact v2 bundle: JSON metadata plus little-endian binary typed arrays split into a small first view and on-demand files (docs/DATA_CONTRACT.md). The 1-degree tables are four times the legacy size, too big as JSON for a phone."
+    },
+    "bundle_version": {
+     "value": "v2",
+     "why": "Version of the v2 file structure; also the folder name app/public/data/v2."
+    },
+    "output_dir": {
+     "value": "../app/public/data/v2",
+     "why": "Static folder served by the browser app with no server (relative to the 'tierra luna' directory)."
+    },
+    "earth_land_cells": {
+     "value": {
+      "rule": "positive",
+      "variable": "mask_fraction"
+     },
+     "why": "The v2 bundle stores Earth cells that have any land (mask_fraction > 0: 25,497 of 64,800 when built), so the app can show why a coastal or lake cell fails (for example mask_fraction below the 0.3 gate, or elevation_m with no data). Pure-ocean cells (no land pixel) are left out of every Earth file; they fail every mission on the land gates."
+    },
+    "earth_ocean_fill": {
+     "value": null,
+     "why": "The real tables have no ocean fills: a value without land is empty, and empty stays null."
+    },
+    "region_max_place_km": {
+     "value": 111.2,
+     "why": "A first-level region is shown only when the nearest GeoNames place is within one Earth cell (111.2 km north-south for 1 degree on the 6371 km sphere) and in the same country; same rule as the legacy 222.4 km for 2-degree cells."
+    },
+    "export_columns": {
+     "value": "variables used by any mission gate, require_present or soft criterion",
+     "why": "Per-cell value columns written to the binary base files. rain_mm_day and wind_max_ms are only named by rover workable_days, which mission_scoring.py does not read, so they are described in variables.json but not stored (saves 0.2 MB). A column that is empty on a body (permafrost_class on the Moon) is not stored either; variables.json says so."
+    },
+    "lunar_named_sites": {
+     "value": "real_data/lunar_named_sites.csv",
+     "why": "IAU features that matter to the missions, with the 1-degree cell each falls in (written by real_data/build_moon.py). Exported with each site's per-mission pass flag and twin count; cell values are read from moon_base.bin, not copied."
+    },
+    "credits": {
+     "value": [
+      "Lunar feature names: Gazetteer of Planetary Nomenclature, International Astronomical Union (IAU) Working Group for Planetary System Nomenclature, and USGS Astrogeology Science Center (planetarynames.wr.usgs.gov).",
+      "Earth place names: GeoNames (geonames.org, CC BY 4.0) cities1000 list as packaged by the reverse_geocoder Python library (offline). Labels are the nearest populated place to the cell centre, not a boundary test.",
+      "Country names: ISO 3166 table iso3166.tab of the IANA time zone database (public domain), as shipped by the tzdata Python package; country borders: Natural Earth 1:110m admin-0 (public domain)."
+     ],
+     "why": "Credits for place names, exported in manifest.json. Data credits and licences are added at build time from the 'licence_credit' column of the provenance files, one entry per distinct product actually used."
+    },
+    "mission_notes": {
+     "value": {
+      "rover": [
+       "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
+       "Similarity is close to 100 for almost every passing cell (distributions.similarity): with two relief variables and tens of thousands of candidate lunar cells, nearly every Earth cell finds an almost exact lunar match, so the rover ranking is driven by suitability. The soft criteria have no surface-type term: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale. rock_or_bare_frac is not in the similarity (1 by definition on the Moon).",
+       "Many cells reach the maximum final score (facts and distributions.final): suitability 100 (flat, smooth and bare at the km scale) and similarity near 100. Cells tied on the published final are ordered by cell id, i.e. from north to south, so the order among the tied top cells carries no information."
+      ],
+      "solar": [
+       "Earth irradiance is surface solar energy under the atmosphere and clouds (interpolated WorldClim climatology); lunar irradiance is airless geometry. Earth values are therefore well below low-latitude lunar values, and the irradiance term pairs sunny Earth deserts with mid- and high-latitude lunar cells (facts.twin_abs_lat_range). The similarity uses irradiance with that caveat.",
+       "The gates on irradiance, maximum sun elevation and low-sun fraction are kept as written; facts.moon_pass_abs_lat_max gives the most poleward passing lunar cell, so the lit polar ridges are excluded. A 1-degree polar cell is also a strip that averages lit ridges with shadowed floors (real_data/README.md)."
+      ],
+      "thermal": [
+       "tmin_c is left out of the similarity: on Earth it is an interpolated air temperature, on the Moon a surface temperature. Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range; Earth amplitudes (tens of kelvin) are far below most lunar amplitudes (hundreds of kelvin), so every Earth cell is closest to the few lunar cells with the smallest amplitude and lowest irradiance, near the south pole (facts.twins). Thermal twins say little beyond that.",
+       "Antarctica has no land surface temperature product here, so its cells fail on lst_diurnal_amp_k with 'no data' (missing_data)."
+      ],
+      "ice": [
+       "permafrost_class has no lunar data. The ice block requires it (require_present and a gate), so every lunar cell is eliminated with 'no data' and no Earth cell can have a lunar twin, a similarity, a final score or a rank. Earth suitability is still computed for the passing Earth cells. A lunar cold-trap variable would be needed; that is a team decision, not made here.",
+       "Earth permafrost_class is empty where the Obu maps have no pixel (south of about 18-25 N except Antarctic outcrops, and on ice sheets), so those cells fail with 'no data', not 'ninguno'."
+      ]
+     },
+     "why": "Known limitations of each mission's results on the real tables, exported in missions.json 'known_limitations' next to computed 'facts'. They describe the data and the team configuration; nothing was tuned."
+    }
+   }
+  }
+ }
+}

@@ -270,15 +270,16 @@ def map_level(audit_level: str) -> str:
     raise ValueError(f"unknown audit level: {audit_level!r}")
 
 
-def cell_size_km(radius_km: float, cell_deg: float = 2.0) -> float:
+def cell_size_km(radius_km: float, cell_deg: float) -> float:
     """North-south size of a cell of ``cell_deg`` degrees on a sphere of ``radius_km``."""
     return 2.0 * math.pi * radius_km * cell_deg / 360.0
 
 
 def build(dictionary_csv: str) -> Dict:
     """Return the provenance registry as a dict (see module docstring)."""
-    ecfg = load_engine_config()
+    ecfg = load_engine_config(dataset="legacy_2deg")  # this registry describes the legacy table
     radii = ecfg.v("body_radius_km")
+    cell_deg = float(ecfg.v("grid")["cell_deg"])
     dd = pd.read_csv(dictionary_csv)
     out: Dict[str, Dict] = {}
     for var, spec in VARIABLES.items():
@@ -310,7 +311,7 @@ def build(dictionary_csv: str) -> Dict:
                 "claimed_source": str(r["claimed_source"]),
                 "code": str(r["what_code_does_file_line"]),
                 "unit_in_dictionary": str(r["unit"]),
-                "resolution_km": round(cell_size_km(radii[body]), 1),
+                "resolution_km": round(cell_size_km(radii[body], cell_deg), 1),
                 "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
                 "caveat": spec["caveat"][body],
             }

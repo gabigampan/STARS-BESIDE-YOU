@@ -2,9 +2,12 @@
 
 Wires the team's mission_scoring.py/json (gates and soft criteria) to a physical
 Earth-Moon similarity, lunar twin pairing, confidence labels, computed place
-names and a static JSON bundle for the browser app.
+names and a static bundle for the browser app. Datasets (input tables, grid,
+provenance, column aliases, bundle format) are described in engine/datasets.json.
 
-Run ``python -m engine build`` from the "tierra luna" directory.
+Run ``python -m engine build`` from the "tierra luna" directory (default dataset
+real_1deg -> app/public/data/v2); ``--dataset legacy_2deg`` builds the legacy table
+(v1 JSON, not shipped) for comparison.
 """
 import json as _json
 import os as _os

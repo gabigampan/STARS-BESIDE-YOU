@@ -27,15 +27,22 @@ from engine.pipeline import rank_scores, run_mission  # noqa: E402
 from engine.similarity import (categorical_similarity, numeric_similarity, pooled_scale,  # noqa: E402
                                weighted_similarity)
 from engine.suitability import evaluate_suitability, recompute_from_utilities, soft_weights  # noqa: E402
+from engine.dataset import grid_of  # noqa: E402
 from engine.table import load_cells, split_bodies  # noqa: E402
 
 MISSIONS = ["rover", "solar", "thermal", "ice"]
+LEGACY = "legacy_2deg"  # these tests check the engine on the legacy 2-degree table (test_real_data.py: real tables)
 
 
 # ----------------------------------------------------------------------------- fixtures
 @pytest.fixture(scope="module")
 def ecfg():
-    return load_engine_config()
+    return load_engine_config(dataset=LEGACY)
+
+
+@pytest.fixture(scope="module")
+def grid(ecfg):
+    return grid_of(ecfg)
 
 
 @pytest.fixture(scope="module")
@@ -49,14 +56,14 @@ def reg():
 
 
 @pytest.fixture(scope="module")
-def cells(ecfg):
-    return load_cells(resolve_path(ecfg.v("input_csv")))
+def cells(ecfg, grid):
+    return load_cells(resolve_path(ecfg.v("input_csv")), grid)
 
 
 @pytest.fixture(scope="module")
 def bundle():
     from engine.build import build_bundle
-    return build_bundle()
+    return build_bundle(dataset=LEGACY)
 
 
 def _passing_row(df, body, mission, mcfg, ecfg, n=1):
@@ -237,15 +244,15 @@ def test_confidence_rule(ecfg):
 
 
 # ----------------------------------------------------------------------------- schema
-def test_schema_reports_and_does_not_fix(cells, reg):
+def test_schema_reports_and_does_not_fix(cells, reg, grid):
     m = cells["MOON"].iloc[:3].copy()
     e = cells["EARTH"].iloc[:3].copy()
     m.loc[m.index[0], "temp_k"] = -5.0
     m.loc[m.index[1], "lat_deg"] = 12.0
     e.loc[e.index[2], "thermal_inertia_class"] = "lava"
     before_m, before_e = m.copy(), e.copy()
-    rm = schema.validate_body(m, "MOON", reg)
-    re = schema.validate_body(e, "EARTH", reg)
+    rm = schema.validate_body(m, "MOON", reg, grid=grid)
+    re = schema.validate_body(e, "EARTH", reg, grid=grid)
     fields_m = {(f["id"], f["field"]) for f in rm["failures"]}
     assert (int(m["id"].iloc[0]), "temp_k") in fields_m
     assert any(f["id"] == int(m["id"].iloc[1]) for f in rm["failures"])
@@ -254,8 +261,8 @@ def test_schema_reports_and_does_not_fix(cells, reg):
     pd.testing.assert_frame_equal(e, before_e)
 
 
-def test_schema_accepts_the_committed_table_and_units(cells, reg):
-    rep = schema.validate_table(cells, reg)
+def test_schema_accepts_the_committed_table_and_units(cells, reg, grid):
+    rep = schema.validate_table(cells, reg, grid=grid)
     assert rep["valid"], rep["bodies"]["EARTH"]["field_failures"]
     assert reg["variables"]["temp_k"]["unit"] == "K" and reg["variables"]["tmin_c"]["unit"] == "degC"
     assert reg["variables"]["elevation_m"]["bodies"]["MOON"]["level"] == "MEASURED"
@@ -343,7 +350,7 @@ def test_old_analog_finder_uses_the_engine_gates(cells, mcfg, ecfg, monkeypatch)
 
 def test_bundle_is_deterministic(bundle):
     from engine.build import build_bundle
-    again = build_bundle()
+    again = build_bundle(dataset=LEGACY)
     assert again["files"].keys() == bundle["files"].keys()
     for name, data in bundle["files"].items():
         assert data == again["files"][name], name
@@ -358,10 +365,20 @@ def test_bundle_validates_against_contract(bundle, tmp_path):
 
 
 def test_published_bundle_matches_a_fresh_build(bundle, ecfg):
+    """The last v1 bundle (app/public/data/v1, built by engine 1.1.0) has the same content
+    as a fresh legacy build: the dataset refactor changed no legacy result. The manifest
+    differs (engine version, config hashes) and is not compared. The legacy build now goes
+    to a folder outside app/public (it is not shipped)."""
     out = resolve_path(ecfg.v("output_dir"))
+    assert "public" not in os.path.normpath(out).split(os.sep)
+    v1 = resolve_path("../app/public/data/v1")
+    if not os.path.isdir(v1):
+        pytest.skip("app/public/data/v1 was removed")
     for name, data in bundle["files"].items():
-        with open(os.path.join(out, name), "rb") as fh:
-            assert fh.read() == data, f"{name} in app/public/data/v1 is stale: run python -m engine build"
+        if name == "manifest.json":
+            continue
+        with open(os.path.join(v1, name), "rb") as fh:
+            assert fh.read() == data, f"{name}: a fresh legacy build differs from app/public/data/v1"
 
 
 def _browser_scores(p, w, k, alpha):

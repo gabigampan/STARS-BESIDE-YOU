@@ -2,7 +2,8 @@
 
 Rule (all numbers in engine_config.json "confidence"):
     body score  = sum(w_v * level_score[level(v, body)]) / sum(w_v)  over the mission's
-                  weighted variables with data on that cell
+                  weighted variables with data on that body's cell (the Earth cell, or
+                  its lunar twin)
     pair score  = min(Earth score, Moon score) * coverage
     coverage    = share of the mission's soft weight with data on both cells
     label       = high   if pair score >= high_min and the coarser cell <= high_max_cell_km
@@ -30,15 +31,23 @@ def body_score(levels: Dict[str, str], weights: Dict[str, float], available: Ite
 
 
 def pair_confidence(earth_levels: Dict[str, str], moon_levels: Dict[str, str], weights: Dict[str, float],
-                    available: Iterable[str], cell_km: float,
-                    rule: Dict) -> Tuple[Optional[str], Optional[float]]:
-    """Return (label, score) for an Earth cell and its twin; (None, None) without data."""
+                    available: Iterable[str], cell_km: float, rule: Dict,
+                    earth_available: Optional[Iterable[str]] = None,
+                    moon_available: Optional[Iterable[str]] = None) -> Tuple[Optional[str], Optional[float]]:
+    """Return (label, score) for an Earth cell and its twin; (None, None) without data.
+
+    ``available``: variables with data on both cells (sets the coverage).
+    ``earth_available`` / ``moon_available``: variables with data on each cell (set each
+    body score); both default to ``available``.
+    """
     avail = [v for v in available if v in weights]
+    e_av = avail if earth_available is None else [v for v in earth_available if v in weights]
+    m_av = avail if moon_available is None else [v for v in moon_available if v in weights]
     total = sum(weights.values())
     ls = rule["level_scores"]
-    e_s = body_score(earth_levels, weights, avail, ls)
-    m_s = body_score(moon_levels, weights, avail, ls)
-    if e_s is None or m_s is None or total <= 0:
+    e_s = body_score(earth_levels, weights, e_av, ls)
+    m_s = body_score(moon_levels, weights, m_av, ls)
+    if e_s is None or m_s is None or total <= 0 or not avail:
         return None, None
     coverage = sum(weights[v] for v in avail) / total
     score = min(e_s, m_s) * coverage

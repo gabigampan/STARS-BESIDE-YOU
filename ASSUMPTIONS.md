@@ -1,8 +1,13 @@
 # Assumptions, engine settings and open decisions
 
-Scope: the analog engine in `tierra luna/engine/` and the bundle it writes to `app/public/data/v1/`. The file structure is in `docs/DATA_CONTRACT.md`. The audit evidence behind every statement is in the Phase-0 audit (A1 to A4) and in `docs/integration/R1..R4`.
+Scope: the analog engine in `tierra luna/engine/` and the bundles it writes. Since engine 2.0.0 the engine is dataset-aware (`tierra luna/engine/datasets.json`):
 
-The engine reads mission thresholds, weights, utility bounds, category tables and tolerances **only** from `tierra luna/mission_scoring.json`. Settings that belong to the engine alone are in `tierra luna/engine/engine_config.json`, and each one carries a `why`. Every entry below says what was assumed, why, what it does to the results, and where to change it.
+- `real_1deg` (default): the real 1-degree tables in `tierra luna/output_real/`, exported as the v2 bundle in `app/public/data/v2/` that the app ships. Sections 10 and 11.
+- `legacy_2deg`: the committed 2-degree table, exported as the v1 JSON bundle to `tierra luna/build/legacy_2deg/` (not shipped) for before-and-after comparison: `python -m engine build --dataset legacy_2deg`. Sections 1 to 9 describe this table; their numbers are unchanged, because a fresh legacy build reproduces the v1 bundle byte for byte except its manifest. `app/public/data/v1/` is that last v1 bundle; the app code does not read it.
+
+The file structures are in `docs/DATA_CONTRACT.md` (v2, with v1 as an appendix). The audit evidence behind sections 1 to 9 is in the Phase-0 audit (A1 to A4) and in `docs/integration/R1..R4`; the evidence behind section 10 is in `tierra luna/real_data/` (READMEs, provenance files, column aliases).
+
+The engine reads mission thresholds, weights, utility bounds, category tables and tolerances **only** from `tierra luna/mission_scoring.json`. Settings that belong to the engine alone are in `tierra luna/engine/engine_config.json`; settings that depend on the input table are in `tierra luna/engine/datasets.json`, one descriptor per dataset. Each setting carries a `why`, and `load_engine_config` refuses a dataset setting placed in `engine_config.json`. Every entry below says what was assumed, why, what it does to the results, and where to change it.
 
 Entries marked **pending team confirmation** are defaults the engine took on open team questions.
 
@@ -107,11 +112,9 @@ Each variable also carries `comparable_across_bodies` and a `comparability_note`
 
 | setting | value | reason | effect on results |
 |---|---|---|---|
-| `engine_version` | 1.1.0 | Traces a bundle to the code; `engine.__version__` is read from it. | Written into `manifest.json`. No effect on scores. |
-| `bundle_version` | v1 | Version of the file structure; also the folder name. An incompatible structure goes to v2. | Folder `app/public/data/v1` and the `bundle_version` key of every file. No effect on scores. |
-| `input_csv` | `output_py/earth_moon_harmonized_clean.csv` | The committed table, from `main.py --pds`. `main.py` is never run, because it rewrites tracked files. | Every number comes from this file. Its sha256 is written into `manifest.json`. |
+| `engine_version` | 2.0.0 | Traces a bundle to the code; `engine.__version__` is read from it. 2.0.0 adds dataset descriptors, the real tables and the v2 bundle. | Written into `manifest.json`. No effect on scores. |
+| `bundle_version`, `input_csv`, `output_dir`, `earth_ocean_fill`, `region_max_place_km`, `mission_notes`, `credits` | moved to `datasets.json` | They depend on the input table. The `legacy_2deg` descriptor keeps the values listed in this table (v1, the legacy CSV, ocean fills, 222.4 km, the legacy notes and credits); its output folder is now `build/legacy_2deg` (not shipped). | None on legacy results (byte-identical). |
 | `mission_config` | `mission_scoring.json` | The team's filter system: the only source of thresholds, weights and bounds. | Every gate and soft criterion. Its sha256 is in `manifest.json`. |
-| `output_dir` | `../app/public/data/v1` | Where the static app reads the bundle. | Location only. |
 | `missions` | rover, solar, thermal, ice | All four missions in the JSON. | Order of the missions in the bundle. |
 | `gate_body_applicability` | `elevation_m`: EARTH; `mask_fraction`: EARTH, MOON | See section 3, item 3. | Lunar pass counts (table in section 3). |
 | `on_invalid_value` | `report` | A value is never fixed silently. | Invalid values stay as they are, are listed in `validity.json` and are flagged in `invalid_fields`. Today 0 records fail. |
@@ -119,8 +122,11 @@ Each variable also carries `comparable_across_bodies` and a `comparability_note`
 | `similarity_zero_scale` | `exact_match` | Avoids a division by zero when every passing cell has the same value. | No variable has a zero scale today. |
 | `similarity_comparability` | `exclude_non_comparable: true` | Section 3, item 5. | Similarity variables per mission: rover 2 of 3, solar 5 of 6, thermal 2 of 6, ice 1 of 2. |
 | `mix_factor` | 0.5 | `combine_with_similarity`'s own default; pending (section 3, item 6). | final = 0.5 x similarity + 0.5 x suitability. |
-| `pairing_chunk_rows` | 512 | Memory and speed only. | None on results. A full build takes about 15 s. |
-| `confidence` | level scores MEASURED 1.0, DERIVED 0.7, UNDOCUMENTED 0.3, MODELLED 0.2; high_min 0.8; medium_min 0.5; high_max_cell_km 1.0; pair score = min(Earth, Moon) x coverage | Section 6; pending (section 3, item 9). | **Every ranked cell is "low"**, and the score is one constant per mission: rover 0.30, solar 0.225, thermal 0.21, ice 0.255. Levels are per variable and body and no value is missing, so the score cannot vary between cells; `missions.json` → `facts.confidence_constant = true` tells the app to show it once per mission. With no weighted variable with data, confidence is `null`, never 0. |
+| `pairing_chunk_rows` | 128 (was 512) | Memory and speed only: 128 Earth rows x 64,800 lunar cells x 8 bytes = 66 MB per temporary array on the 1-degree grid. | None on results (the legacy bundle is byte-identical). A legacy build takes about 8 s, a real build about 55 s. |
+| `missing_data_reason` | code suffix `missing`, label `no data` | A missing gated or required value eliminates the cell (`on_missing_gate = drop`); the interface must be able to say so and count it. | Reason code `<variable>:missing`, label `no data: <variable>` in `missions.json` `reason_codes`; per-mission counts in `missing_data`. |
+| `binary_encoding` | little-endian; Float32 with NaN for cell values; Int32 with -2147483648 as the missing sentinel; quantised decimals: utility 6, similarity 6, score 2, confidence score 3 | v2 binary columns. Quantised Int32 (value = q / 10^d) stores exactly the published value, so the browser reproduces the engine's scores; a Float32 utility would not. | Bundle layout only; scores unchanged. |
+| `first_view_budget_bytes` | first view 2,500,000; total 14,000,000 | Size targets for a phone (decimal MB, so they hold under either reading of "MB"). | Checked by the tests; nothing is cut silently. Today: first view 2,282,069 bytes, total 9,696,959. |
+| `confidence` | level scores MEASURED 1.0, DERIVED 0.7, UNDOCUMENTED 0.3, MODELLED 0.2; high_min 0.8; medium_min 0.5; high_max_cell_km 1.0; pair score = min(Earth, Moon) x coverage. Since 2.0.0 each body's score uses the variables with data on that body's cell (the Earth cell or its twin) and coverage is the weight with data on both; identical to before when nothing is missing | Section 6; pending (section 3, item 9). | **Every ranked cell is "low"**, and the score is one constant per mission: rover 0.30, solar 0.225, thermal 0.21, ice 0.255. Levels are per variable and body and no value is missing, so the score cannot vary between cells; `missions.json` → `facts.confidence_constant = true` tells the app to show it once per mission. With no weighted variable with data, confidence is `null`, never 0. |
 | `explain_top_n` | 25 | Size of the "why" panel. | Only the size of `explain.json`, and the `top_n_country_counts` fact. |
 | `explain_helps_n`, `explain_hurts_n` | 2, 2 | One line of "helps most" and "hurts most" per cell. | Only `explain.json`. |
 | `top_failure_reasons_n` | 5 | Summary length. | Only `missions.json`. |
@@ -207,3 +213,115 @@ These come from the data or from the team's configuration, not from engine bugs.
 - **Ice: one twin for every Earth cell.** With `permafrost_class` out of the similarity, only `temp_k` remains, and every Earth cell's twin is W. Bond (65 N, 7 E), temp_k 88.11 K, class `discontinuo`: the warmest lunar cell that passes the ice gate, at the warm edge of the MODELLED lunar class thresholds, because it is the closest to the temperatures of the passing Earth cells (217-278 K). Ice similarity is therefore a temperature distance to one cell. Until a lunar cold-trap variable exists (R3 F13: PSRs as low as 25 K), the ice twin says little. Engine 1.0.0 described ice twins as "the coldest lunar cells with continuo permafrost"; that was wrong: its two twins were the warmest cells of each class (74.99 K continuo, 88.11 K discontinuo), and its similarity was dominated by a match on the permafrost label.
 - **Temperature mixes times of day.** Earth `temp_k` is described as daytime and lunar `temp_k` as night-time-like (A2 section 3). The ice and thermal comparisons keep it, with that caveat in `variables.json`.
 - **Confidence is "low" everywhere** and constant per mission (section 4).
+
+## 10. The real 1-degree dataset (`real_1deg`, default since engine 2.0.0)
+
+Inputs: `tierra luna/output_real/earth_real_1deg.csv` and `moon_real_1deg.csv` (64,800 cells each), built by `tierra luna/real_data/build_earth.py` and `build_moon.py` from open products. The engine reads them, their provenance files and `column_aliases.json` at build time and never copies a value into code. An independent verifier may still correct the tables or provenance rows: rebuild the bundle after any change (`python -m engine build`; the test `test_published_v2_matches_a_fresh_build` fails while the shipped bundle is stale).
+
+### 10.1 Dataset settings (`tierra luna/engine/datasets.json` → `real_1deg`)
+
+| setting | value | reason | effect on results |
+|---|---|---|---|
+| `inputs` | the two per-body CSVs | The builders' primary products; `earth_moon_real_1deg.csv` is their concatenation. | Every number. Their sha256 are in `manifest.json` `inputs`. |
+| `grid` | 180 x 360, 1 degree | The tables' grid. | `id = row * 360 + col`; cells 111.2 km (Earth) and 30.3 km (Moon) north-south. |
+| `provenance` | `real_data/provenance_earth.csv`, `provenance_moon.csv` | Levels, products, licences, resolutions and caveats from the builders, row of the real column actually read. `no data` becomes level `NO_DATA`; `DERIVED (...)` becomes DERIVED with the text kept as `level_note`; any other text is refused. | Levels in `variables.json` and in confidence. |
+| `column_aliases` | `real_data/column_aliases.json` | Mission variable name to real column, with true baseline and caveat per body. | `slope_300m_deg` and `rough_300m_m` are read from km-baseline columns (below). |
+| `column_overrides` | `slope_deg` → `slope_iso_deg`, `slope_p90_deg` → `slope_iso_p90_deg` | Every slope variable the missions name (rover `slope_300m_deg`, solar `slope_deg`) is read from the isotropic-baseline column on both bodies. The literal `slope_deg` uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this. The isotropic column keeps 3.706 km (Earth) and 3.79 km (Moon) in both directions; these baselines are read from the provenance rows, not typed. | Equal to the literal slope at low latitudes; changes polar cells only. No mission uses a p90 slope today. |
+| `variables` | label, unit, kind, short definition per mission variable | Display text; definitions summarise the provenance files. | None on scores. Categories are taken from the data. |
+| `comparability` | one row per variable (10.3) | Decided from the definitions; **pending team confirmation**. | Which variables enter the similarity and the twin search. |
+| `bundle_format`, `bundle_version`, `output_dir` | v2, v2, `../app/public/data/v2` | Compact bundle for a phone (section 11). | Layout only. |
+| `earth_land_cells` | `mask_fraction > 0` | The Earth files hold every cell with any land (25,497), so the app can show why a coastal or lake cell fails. | Pure-ocean cells (no land pixel) are absent from the Earth files; they fail every mission. |
+| `earth_ocean_fill` | none | The real tables have no fills: a value without land is empty. | - |
+| `region_max_place_km` | 111.2 | One 1-degree Earth cell, same rule as the legacy 222.4 km for 2 degrees. | Regions farther than one cell are null. |
+| `export_columns` | variables used by any gate, `require_present` or soft criterion | `rain_mm_day` and `wind_max_ms` are named only by rover `workable_days`, which `mission_scoring.py` does not read. | They are described in `variables.json` but not stored (about 0.2 MB saved). |
+| `lunar_named_sites` | `real_data/lunar_named_sites.csv` | The lunar sites that matter to the missions. | `lunar_named_sites.json` with each site's cell and per-mission outcome. |
+| `credits` | place-name credits | Data credits are added at build time from the provenance files' `licence_credit` text, one entry per product used. | `manifest.json` `credits`. |
+| `mission_notes` | per mission | Known limitations of each mission on these tables (10.6). Written after seeing the results; nothing was tuned. | `missions.json` `known_limitations`. |
+
+### 10.2 Levels (from the provenance files)
+
+| variable (column read) | Earth | Moon |
+|---|---|---|
+| `elevation_m` | MEASURED (ETOPO 2022) | MEASURED (LOLA LDEM_16) |
+| `mask_fraction` | MEASURED (ESA CCI land cover) | MODELLED (1 by definition) |
+| `slope_300m_deg`, `slope_deg` (`slope_iso_deg`) | DERIVED | DERIVED |
+| `rough_300m_m`, `roughness_m` (`roughness_m`) | DERIVED | DERIVED |
+| `rock_or_bare_frac` | MEASURED (land-cover share) | MODELLED (1 by definition) |
+| `temp_k`, `lst_diurnal_amp_k` | DERIVED (MODIS LST climatology) | DERIVED (Diviner) |
+| `tmin_c` | MODELLED (WorldClim, interpolated air) | DERIVED (Diviner surface) |
+| `irradiance_kwh_m2_day` | MODELLED (WorldClim srad) | DERIVED (geometry, LOLA lit fraction near the poles) |
+| `sun_elev_max_deg`, `sun_low_frac_0_5deg` | DERIVED (formula) | DERIVED (formula) |
+| `thermal_inertia_class` | MODELLED (assumed land-cover mapping) | MODELLED ('regolito' everywhere) |
+| `permafrost_class` | MODELLED (Obu permafrost probability) | NO_DATA |
+| `rain_mm_day`, `wind_max_ms` | MODELLED (WorldClim) | NO_DATA |
+
+Confidence uses these levels with the unchanged rule (section 4) and the 1 km limit for "high", which no 1-degree cell meets. Result: rover "medium" for every ranked cell (0.575); solar 12,717 "medium" (0.525) and 6,060 "low" (0.455: cells with no land surface temperature, whose `lst_diurnal_amp_k` weight is missing); thermal "low" everywhere (0.432-0.445); ice none (no ranked cell). The rover score is limited by the Moon, where `rock_or_bare_frac` is 1 by definition (MODELLED).
+
+### 10.3 Comparability (pending team confirmation)
+
+| variable | status | reason |
+|---|---|---|
+| `slope_300m_deg`, `slope_deg` | comparable | Same definition (central differences, isotropic baseline, cos-lat weighted mean) and near-equal baselines: 3.706 km (Earth), 3.79 km (Moon). Both are km-baseline slopes. |
+| `rough_300m_m`, `roughness_m` | comparable | Same deviogram definition at near-equal lags: 1.853 km (Earth), 1.895 km (Moon). |
+| `sun_elev_max_deg`, `sun_low_frac_0_5deg` | comparable | Same formula on both bodies, each with its own obliquity, flat horizon. |
+| `irradiance_kwh_m2_day` | comparable with caveat | Daily energy on a horizontal surface on both, but Earth is under the atmosphere and clouds (interpolated climatology) and the Moon has none. |
+| `temp_k` | comparable with caveat | Both are mean surface temperatures, but Earth is the mean of two clear-sky overpasses (~10:30, ~22:30) and the Moon a full diurnal mean; no Antarctic Earth values. |
+| `lst_diurnal_amp_k` | comparable with caveat | Both describe the daily swing of the surface temperature, but Earth is ~10:30 minus ~22:30, which understates the true daily range, while the Moon is maximum minus minimum. |
+| `tmin_c` | not comparable | Earth is an interpolated air temperature; the Moon a surface brightness temperature (there is no air). |
+| `rock_or_bare_frac` | not comparable | Earth bare-ground share against a lunar 1 by definition. |
+| `thermal_inertia_class` | not comparable | Earth assumed land-cover mapping against 'regolito' everywhere by assumption. |
+| `permafrost_class`, `rain_mm_day`, `wind_max_ms` | not comparable | No lunar data. |
+| `elevation_m`, `mask_fraction` | not comparable | Geoid against sphere; land share against 1 by definition (gates only). |
+
+Effect: similarity variables are rover `slope_300m_deg`, `rough_300m_m`; solar all six weighted variables; thermal `lst_diurnal_amp_k`, `irradiance_kwh_m2_day` (`tmin_c`, `thermal_inertia_class`, `rock_or_bare_frac`, `permafrost_class` left out); ice `temp_k` (but no lunar cell passes ice). The caveat of every "comparable with caveat" variable is exported with it (`variables.json` `comparability`, `missions.json` `weighted_variables[].comparability_note`). Change: `datasets.json` → `real_1deg` → `comparability`.
+
+### 10.4 Hard filters on the real tables
+
+- The common land gate `elevation_m >= 1` stays Earth-only (`gate_body_applicability`): lunar heights are above a sphere and 43,502 of 64,800 lunar cells are below 1 m. On Earth it now also removes land below sea level (177 land cells for ice, for example) and cells with no land DEM pixel (252 land cells have no `elevation_m`: "no data").
+- `mask_fraction >= 0.3` now means "at least 30 % of the cell is land" (ESA CCI; inland water counts as water). 3,275 land cells fail it, including small islands (the Lanzarote and Tenerife benchmark sites).
+- **Missing data eliminates the cell** (`on_missing_gate = drop`) with the reason `no data: <variable>`. Cells lost per mission:
+
+| mission | Earth land cells with a missing gated value | of which only because of missing data | main variable | Moon |
+|---|---|---|---|---|
+| rover | 714 | 0 | `slope_300m_deg` (714), `rough_300m_m` (376) | 0 |
+| solar | 720 | 0 | `slope_deg` (714), `elevation_m` (252), `irradiance_kwh_m2_day` (49) | 0 |
+| thermal | 6,870 | 6,060 | `lst_diurnal_amp_k` (6,761; 6,581 of them at or south of 60 S: no land surface temperature in Antarctica) | 0 |
+| ice | 13,052 | 11,338 | `permafrost_class` (13,013: the Obu maps stop at about 18-25 N and on ice sheets) | **64,800 (all)**: `permafrost_class` has no lunar data |
+
+### 10.5 Known limitations of the real dataset
+
+- **Licences.** WorldClim 2.1 (`tmin_c`, `irradiance_kwh_m2_day`, and the unstored `rain_mm_day`, `wind_max_ms`): "freely available for academic use and other non-commercial use. Redistribution or commercial use is not allowed without prior permission." The v2 bundle ships cell aggregates of `tmin_c` and `irradiance_kwh_m2_day` in `earth_base.bin`; whether a public hackathon app may redistribute them, or whether permission must be asked or the columns dropped, is a **team decision (pending)**. The MODIS LST climatology (`temp_k`, `lst_diurnal_amp_k`; Hengl 2018) is CC BY-SA 4.0: derived data shared from it must carry the same licence. Obu permafrost: CC BY 3.0 (NH) and CC BY 4.0 (Antarctic). ESA CCI land cover: free use with attribution. ETOPO 2022 and the NASA PDS products: no restrictions. Every licence text is exported verbatim (`variables.json` `licence_credit`, `manifest.json` `credits`).
+- **Land surface temperature is clear-sky** (cloudy days are missing, biasing warm in cloudy climates) and the mean of two overpasses, not a 24 h mean; the amplitude is a day-minus-night difference that understates the daily range.
+- **No land surface temperature in Antarctica** (the product ends near 62 S): 6,581 Antarctic land cells have no `temp_k` or `lst_diurnal_amp_k` and fail thermal with "no data"; in solar the amplitude weight drops out (lower confidence).
+- **Cell size.** A cell is 1 degree: 111 km north-south on Earth and 30 km on the Moon. Every value is a cell aggregate (mean, share or percentile of finer pixels). Nothing here describes a landing site or a rover traverse.
+- **Thresholds written for 300 m applied at kilometre baselines.** The rover gates and utilities (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied **unchanged** to slopes over 3.7-3.8 km and roughness at a 1.85-1.9 km lag. km-baseline slopes are much gentler and km-lag roughness larger than at 300 m, so the gates do not mean what their authors intended. Nothing was adjusted; the true baseline is exported for every relief variable so the interface never says "300 m".
+- **Polar strips.** East-west a cell is 111 x cos(lat) km on Earth and 30.3 x cos(lat) km on the Moon: 0.26 km wide next to the lunar pole. A polar cell is a strip that crosses rims, slopes and floors and averages lit ridges with shadowed craters; the best-lit points of the lunar south pole do not appear (real_data/README.md).
+- **Earth irradiance is under the atmosphere** (WorldClim surface radiation, at most 6.4 kWh/m2/day) while lunar irradiance is airless (up to 10.4 at the equator): sunny Earth deserts are closest to lunar cells at 51.5-74.5 deg latitude.
+- **Ice has no lunar side.** No lunar cell passes the ice mission (no lunar permafrost data), so no Earth cell gets a twin, a similarity, a final score or a rank; only Earth suitability is computed (5,750 passing Earth cells). A lunar cold-trap criterion would be a new team rule.
+- **Earth permafrost is empty, not 'ninguno', where the Obu maps have no pixel** (south of about 18-25 N except Antarctic outcrops, ice sheets).
+- **`thermal_inertia_class`** on Earth is an assumed mapping from land-cover classes (MODELLED); the dominant class of a coastal cell can be `agua` although at least 30 % of it is land (4,421 land cells fail solar and thermal on `agua`).
+- **Earth latitudes are geodetic** (WGS84), not planetocentric: at most 0.19 deg (21 km) apart, a fifth of a cell.
+- **No physically-valid ranges** are given by the provenance files, so `validity.json` checks only the grid, coordinates and category vocabularies on these tables.
+
+### 10.6 Results on the real tables (engine 2.0.0; inputs sha256 3eb11d43... and 906de058...)
+
+| mission | Earth pass (of 25,497 land cells) | Moon pass (of 64,800) | ranked | distinct twins | top of the ranking | physically sensible? |
+|---|---|---|---|---|---|---|
+| rover | 10,337 | 60,988 | 10,337 | 7,215 | Canadian Arctic Archipelago (78.5 N), Russian Arctic, Gobi (Mongolia); top 25: CA 8, DZ 5, MN 4, CN 3, RU 3 | Partly. Bare, km-smooth polar deserts and stony deserts are reasonable trafficability analogs at the km scale (Devon Island's Haughton crater ranks 436), but the ranking is driven by suitability alone: similarity is 97.5-100 for every cell (median 99.95), because two relief variables and 61,000 candidate lunar cells always give a near-exact match. 26 cells tie at final 100.0 and are ordered by cell id (north to south), so the top 25 order carries no information. Rover-scale hazards are not seen at all (10.5). |
+| solar | 18,777 | 52,400 | 18,777 | 1,980 | Kimberley (north-western Australia), Somalia, Borkou (Chad), Madagascar; top 25: AU 15, SO 5 | Suitability yes: sunny, flat, low-latitude deserts. Twins no: Earth irradiance under the atmosphere matches airless lunar irradiance only at 51.5-74.5 deg lunar latitude (Manzinus alone is the twin of 2,412 Earth cells), and the lunar polar ridges fail the solar gates (most poleward passing lunar cell 74.5 deg). |
+| thermal | 2,419 | 64,800 | 2,419 | 8 | Altiplano and Puna (Bolivia, Chile, Argentina; Atacama ranks 12), Qaidam Basin and Tibetan Plateau (Qinghai); top 25: CL 9, CN 9, BO 4, AR 3 | Earth side yes: high, dry, bare plateaus with cold nights are classic thermal-cycling analogs. Twins no: Earth amplitudes (tens of kelvin, understated) are far below lunar ones (median 266 K), so every Earth cell's twin is one of 8 cells at 87.5 S near Haworth, the lunar cells with the smallest amplitude. |
+| ice | 5,750 | 0 | 0 | 0 | none (suitability only: continuous permafrost cells score 100) | No ranking can exist: the lunar side has no permafrost data (10.5). |
+
+Before and after (legacy 2-degree table, section 9): the top solar analog was equatorial Africa and, before engine 1.1.0, the Amazon; the top rover analogs were the Greenland ice sheet and Antarctica. On the real tables the rover top cells are ice-free bare polar deserts and stony deserts (345 of Greenland's 749 land cells, the flat ice-sheet interior, now fail `slope_300m_deg:below_min`, flatter than 0.5 deg at a 3.7 km baseline; 353 Greenland cells still pass and none is in the top 25), and solar moves to arid north-western Australia, Somalia and the Sahara's edge. Thermal moves from Antarctica (formula amplitudes) to the Altiplano and Tibet (MODIS amplitudes; Antarctica has no data).
+
+Analog benchmark (`/home/user/NASA/docs/research/02_analog_benchmark.csv`, 44 sites, `python -m engine report --benchmark ...`): rover 35 of 44 sites pass, best ranks Makhtesh Ramon 368, Merzouga 395, Qaidam 418, Haughton 436 (of 10,337); solar 32 pass, best Pilbara 29 (of 18,777); thermal 14 pass, best Atacama Yungay 12, Qaidam 22, Salar de Pajonales 33 (of 2,419); ice 9 pass (Arctic and subarctic sites) but none can be ranked. Island sites (Lanzarote, Tenerife) fail `mask_fraction` (< 30 % land in their 1-degree cell) and Aquarius Reef Base is under the sea.
+
+## 11. The v2 bundle (choices)
+
+- **Binary, split, on demand.** Per-cell numbers are little-endian Float32 / Int32 arrays indexed in `manifest.json`; the first view (manifest, missions, variables, places, Earth base, the default mission) is 2,282,069 bytes and the whole bundle 9,696,959 bytes. Lunar data, other missions, explanations, nearest places and the IAU table load on demand.
+- **Exact recompute.** Utilities and per-variable similarities are stored as Int32 q (value = q / 10^6), scores as q / 100, so the browser decodes the exact published numbers and reproduces suitability, similarity, final and rank (tested on all 37,283 passing cells).
+- **Coordinates as grid axes.** `lat` (180 values) and `lon` (360 values) per base file instead of two arrays per cell: exact (cell centres are multiples of 0.5 deg) and 0.2 MB smaller.
+- **Per-grid-row columns.** A value column that is constant along every grid row on the whole body (detected from the data: the sun-geometry formulas, and the lunar values set by definition) is stored once per row. Saves 0.2 MB on Earth and 1.3 MB on the Moon; values are unchanged.
+- **Moved off the first view.** The country `label_rule` and the nearest populated place (name and distance) are in `earth_place_detail.bin` and `place_detail.json` (on demand); the top 25 cells of `explain.json` carry the nearest place too.
+- **Not stored.** `rain_mm_day`, `wind_max_ms` (not used by the engine) and columns with no data on a body (lunar `permafrost_class`); `variables.json` says why.
+- **Deterministic.** No clock is read; arrays are in id order; two builds are byte-identical (`test_bundle_is_deterministic` in tests/test_real_data.py).

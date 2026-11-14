@@ -101,6 +101,7 @@ def nearest_lunar_feature(lat: np.ndarray, lon: np.ndarray, features: pd.DataFra
     f = features.iloc[idx]
     dist = great_circle_km(np.asarray(lat), np.asarray(lon), f["lat"].to_numpy(), f["lon"].to_numpy(), radius_km)
     return {
+        "index": [int(i) for i in np.asarray(idx).reshape(-1)],
         "name": f["name"].tolist(),
         "type": f["type"].tolist(),
         "diameter_km": [None if not np.isfinite(d) else float(d) for d in f["diameter_km"].to_numpy(dtype=float)],
@@ -228,6 +229,6 @@ def write_gazetteer_source(out_json: str, shp_path: str, zip_path: Optional[str]
         fh.write("\n")
 
 
-def cell_size_km(radius_km: float, cell_deg: float = 2.0) -> float:
+def cell_size_km(radius_km: float, cell_deg: float) -> float:
     """North-south size of a cell (2*pi*R*deg/360)."""
     return 2.0 * math.pi * radius_km * cell_deg / 360.0
