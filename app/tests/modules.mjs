@@ -606,8 +606,9 @@ async function run(name, viewport, { touch = false } = {}) {
     const e = pair.earth;
     const m = pair.moon;
     const cell = (p) => ({ west: Math.floor(p.lon), east: Math.floor(p.lon) + 1, south: Math.floor(p.lat), north: Math.floor(p.lat) + 1 });
-    const focusE = { lat: Math.floor(e.lat) + 0.5, lon: Math.floor(e.lon) + 0.5, cell: cell(e) };
-    const focusM = { lat: Math.floor(m.lat) + 0.5, lon: Math.floor(m.lon) + 0.5, cell: cell(m) };
+    // Focus on the marked sites themselves; the caller passes the 1-degree cell that holds each one.
+    const focusE = { lat: e.lat, lon: e.lon, cell: cell(e) };
+    const focusM = { lat: m.lat, lon: m.lon, cell: cell(m) };
     const savedCams = await page.evaluate(() => ['earth', 'moon'].map((b) => window.starsBesideYou.scene(b).camera.positionWC.clone()));
     const res = await page.evaluate(async ({ focusE, focusM }) => {
       const api = window.starsBesideYou;

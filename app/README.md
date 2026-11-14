@@ -41,9 +41,11 @@ direction is computed in the Moon's body-fixed frame from the shared clock (Simo
 and the IAU WGCCRE lunar orientation model, `src/scene/sun.ts`) and set as the Moon scene's
 `DirectionalLight`. A small globe material makes the night side dark (airless body, hard
 terminator). Shading and night lights fade out when the camera is close (below ~650 km on the
-Moon, ~2,500 km on Earth) so any site can be inspected whatever the local time of day. Add
-`?time=2026-11-24T12:00:00Z` (any ISO time) to the page URL to light both globes for that moment
-(for demos and recordings); otherwise the clock starts at the current time and runs in real time.
+Moon, ~2,500 km on Earth) so any site can be inspected whatever the local time of day. The
+header's **Sunlight** control picks the instant (see "Sunlight and time" below); the default is
+the computed Full Moon instant, **24 Nov 2026, 10:45 UTC**. Add `?time=2026-11-24T12:00:00Z`
+(any ISO time) to the page URL to light both globes for that moment instead, or
+`?light=now|even|full-moon` to start on one of the three choices.
 
 **Not included (and why).** Clouds: the NASA Visible Earth host for the Blue Marble cloud composite
 (eoimages.gsfc.nasa.gov) reset every connection from the build container, so no cloud image could
