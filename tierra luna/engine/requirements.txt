@@ -1,0 +1,9 @@
+# Engine dependencies (in addition to ../requirements.txt).
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+pydantic>=2.5
+reverse_geocoder>=1.5     # offline GeoNames cities1000 (Earth place names)
+tzdata                    # iso3166.tab for country names (falls back to /usr/share/zoneinfo)
+# Only for 'python -m engine gazetteer' (re-extracting the IAU shapefile):
+# geopandas>=0.14

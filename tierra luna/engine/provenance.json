@@ -1,0 +1,683 @@
+{
+ "_note": "Built by engine/build_provenance.py from audit A2_data_dictionary.csv (and A2/A4 notes). Levels come from the audit, never from column names.",
+ "levels": {
+  "MEASURED": "Verified against a named data product in the repository.",
+  "DERIVED": "A stated formula applied to a measured value (or a copy of a derived value). A formula on an UNDOCUMENTED or MODELLED value takes that weaker level.",
+  "MODELLED": "A formula or constant invented in code; not data.",
+  "UNDOCUMENTED": "A cached array whose product, date and method are not documented (the audit's 'NOT DETERMINED'). It may be real data, but it cannot be presented as measured."
+ },
+ "variables": {
+  "elevation_m": {
+   "label": "Elevation",
+   "unit": "m",
+   "kind": "numeric",
+   "description": "Surface height. Earth: above sea level (ocean cells are a constant -250 m fill). Moon: above the 1737.4 km reference sphere.",
+   "range_source": "config.py:80 (Earth) and config.py:90 (Moon), per the data dictionary; no external source cited",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED (land) / MODELLED fill (ocean)",
+     "claimed_source": "SRTM gap-filled with ASTER GDEM (README.md:39); web says NOAA ETOPO1/SRTM30 (web/index.html:372)",
+     "code": "earth_extractor.py:137-152 loads earth_global_real.npz['elevation_m'] (origin undocumented); land values match real geography; ocean = constant -250 (10,273 cells)",
+     "unit_in_dictionary": "m",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Loaded from earth_global_real.npz of undocumented origin; land pattern matches real geography, ocean is a -250 m fill.",
+     "valid_min": -500.0,
+     "valid_max": 9000.0
+    },
+    "MOON": {
+     "level": "MEASURED",
+     "audit_level": "MEASURED",
+     "claimed_source": "LOLA GDR DEM (README.md:39)",
+     "code": "lunar_extractor.py:61-84 loads moon_global_pds.npz['elevation_m'] = exact 8x8 block mean of data/cache/ldem_4.img rolled to -180..180 (max abs diff 0.0, a2scripts/moon2.py)",
+     "unit_in_dictionary": "m",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Exact 8x8 block mean of LOLA LDEM_4 (verified); a 2-degree cell hides all relief below about 61 km.",
+     "valid_min": -9200.0,
+     "valid_max": 10800.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "elevation_rel_m": {
+   "label": "Relative elevation",
+   "unit": "m",
+   "kind": "numeric",
+   "description": "Elevation minus a mean (Earth: minus the land mean, ocean fixed at -1000 m; Moon: minus the global mean).",
+   "range_source": "config.py:81 and config.py:91 per the data dictionary; no external source cited",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "DERIVED (inconsistent on ocean)",
+     "claimed_source": "DEM minus local mean (README.md:40)",
+     "code": "npz array: land = elevation_m - 1047.422 (land mean); ocean = constant -1000 (not -250-1047.4) (a2scripts/npzcheck.py)",
+     "unit_in_dictionary": "m",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Land = elevation_m - 1047.4 m; the ocean value -1000 m is inconsistent with the -250 m fill.",
+     "level_note": "The audit calls this DERIVED, but it is a formula on elevation_m, whose level on this body is UNDOCUMENTED; a derived value cannot be stronger than its input.",
+     "valid_min": -6000.0,
+     "valid_max": 6000.0
+    },
+    "MOON": {
+     "level": "DERIVED",
+     "audit_level": "DERIVED",
+     "claimed_source": "DEM minus local mean",
+     "code": "elevation_m - global mean (verified exact)",
+     "unit_in_dictionary": "m",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Elevation minus the global mean, exact; inherits the 2-degree block mean.",
+     "valid_min": -9000.0,
+     "valid_max": 9000.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "slope_deg": {
+   "label": "Slope",
+   "unit": "deg",
+   "kind": "numeric",
+   "description": "Mean terrain slope of the cell.",
+   "range_source": "definition (0-90 degrees)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "2D gradient of DEM (README.md:41)",
+     "code": "npz array, method not reproducible: corr 0.60 with compute_slope_and_roughness(elev,225 m) (npzcheck.py); ocean = 0.01",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array; cannot be reproduced from its elevation (corr 0.60). Method unknown.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    },
+    "MOON": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "2D gradient of DEM (README.md:41); web says LOLA LDSM_16 (web/index.html:619)",
+     "code": "npz array; not the code formula (corr 0.31) nor mean 4-ppd ldem_4 gradient (corr 0.63) (moon3.py)",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array; neither the repo formula nor the 4-ppd LOLA gradient reproduces it. Method unknown.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity name, but measured over different areas: a 2-degree cell is about 222 km on Earth and 61 km on the Moon, and the methods behind the cached arrays differ or are undocumented (A2 sections 2a and 3). Kept, with this caveat."
+  },
+  "roughness_m": {
+   "label": "Roughness",
+   "unit": "m",
+   "kind": "numeric",
+   "description": "Spread of elevation inside the cell.",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "local 3x3 std (README.md:42; GeoTIFF band label harmonizer_cleaner.py:166)",
+     "code": "npz array, method not determined; ocean = 0.1",
+     "unit_in_dictionary": "m",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array, method undocumented; ocean is a 0.1 m fill. Labelled 'local 3x3 std' in code, which is not verified.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "DERIVED",
+     "audit_level": "DERIVED",
+     "claimed_source": "local 3x3 std",
+     "code": "npz = std of the 64 ldem_4 pixels (7.58 km each) in each 2-deg cell (max diff 2e-4, moon3.py) - not a 3x3 std",
+     "unit_in_dictionary": "m",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Standard deviation of the 64 LDEM_4 pixels (7.6 km each) in the cell, not a 3x3 std as labelled.",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity name, but measured over different areas: a 2-degree cell is about 222 km on Earth and 61 km on the Moon, and the methods behind the cached arrays differ or are undocumented (A2 sections 2a and 3). Kept, with this caveat."
+  },
+  "temp_k": {
+   "label": "Surface temperature",
+   "unit": "K",
+   "kind": "numeric",
+   "description": "Surface temperature. Earth: described as a daytime land surface temperature. Moon: a night-time-like value.",
+   "range_source": "config.py:84 and config.py:94 per the data dictionary (> 0 K by definition)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "MODIS LST x0.02 with ASTER fallback (README.md:43); web: NOAA NCEP (web/index.html:622)",
+     "code": "npz array, origin undocumented; R2 0.92 vs cos(lat)^1.1+elevation; ocean = constant 285",
+     "unit_in_dictionary": "K",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array of undocumented origin; ocean is a constant 285 K.",
+     "valid_min": 180.0,
+     "valid_max": 360.0
+    },
+    "MOON": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "Diviner (README.md:43); cited products dgdr_st_clc/st_avg cover 60S-60N only (labels)",
+     "code": "npz array, origin undocumented; has values to +-89 deg; Tycho cell 109.8 K vs row mean 92.8 K",
+     "unit_in_dictionary": "K",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array; values reach +-89 deg although the cited Diviner products cover only 60 S-60 N. Source not determined.",
+     "valid_min": 20.0,
+     "valid_max": 420.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity name on both bodies, but Earth is described as a daytime land surface temperature and the Moon as a night-time-like value (A2 section 3), so the comparison mixes times of day. Kept, with this caveat, because the ice and thermal missions have no other temperature."
+  },
+  "rock_or_bare_frac": {
+   "label": "Rock or bare-ground fraction",
+   "unit": "fraction",
+   "kind": "numeric",
+   "description": "Earth: fraction of bare ground. Moon: rock abundance.",
+   "range_source": "definition (0-1)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "ASTER 1-NDVI (README.md:44)",
+     "code": "npz array, origin undocumented; ocean = 0.0",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array of undocumented origin (claimed ASTER 1-NDVI); ocean is 0.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    },
+    "MOON": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED",
+     "claimed_source": "Diviner rock abundance (README.md:44); cited RA product covers 60S-60N only",
+     "code": "npz array; Tycho cell = max 0.0463; values exist poleward of 60 deg",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Cached array; values exist poleward of 60 deg where the cited Diviner product has none.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    }
+   },
+   "comparable_across_bodies": false,
+   "comparability_note": "Different quantities: bare-ground fraction on Earth (0-0.98) and rock abundance on the Moon (0.0015-0.046) (A2 section 2a). Their similarity measured how vegetated an Earth cell is."
+  },
+  "sar_sigma0_db": {
+   "label": "Radar backscatter",
+   "unit": "dB",
+   "kind": "numeric",
+   "description": "Radar backscatter coefficient.",
+   "range_source": "config.py:85 and config.py:95 per the data dictionary; no external source cited",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED (probable)",
+     "claimed_source": "C-band SAR Sentinel-1/RADARSAT (README.md:45)",
+     "code": "npz array; land values = -18.29 + 7.97*rock + 0.452*slope with R2 0.9905 (moon3.py); ocean = -24",
+     "unit_in_dictionary": "dB",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Fits -18.29 + 7.97*rock + 0.452*slope with R2 0.99: behaves as a formula, not as radar data.",
+     "valid_min": -35.0,
+     "valid_max": 15.0
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "radar backscatter (README.md:45)",
+     "code": "npz array = -19.2 + 45*rock + 0.22*slope exactly (residual 2e-6, npzcheck.py); 17 cells IQR-replaced (audit csv)",
+     "unit_in_dictionary": "dB",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Exactly -19.2 + 45*rock + 0.22*slope: a formula; no lunar radar product is read.",
+     "valid_min": -35.0,
+     "valid_max": 15.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "mask_fraction": {
+   "label": "Mask fraction",
+   "unit": "fraction",
+   "kind": "numeric",
+   "description": "Formula used by the common gate as 'cell with enough data'.",
+   "range_source": "definition (0-1)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "'celda con dato suficiente' (mission_scoring.json:7)",
+     "code": "harmonizer_cleaner.py:243-247 elev>0: clip(0.35+0.65*min(elev/150,1),0.35,1) else 0",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "A formula on elevation (0 on ocean), not a data-coverage fraction.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "same",
+     "code": "harmonizer_cleaner.py:241 constant 1.0",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Constant 1.0, not a data-coverage fraction.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "slope_300m_deg": {
+   "label": "Slope (named 300 m baseline)",
+   "unit": "deg",
+   "kind": "numeric",
+   "description": "Rover gate and soft variable. Despite the name it is a copy of slope_deg at 2-degree resolution.",
+   "range_source": "definition (0-90 degrees)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED (copy)",
+     "claimed_source": "300 m baseline slope (name); VIPER limit source mission_filters.json:12",
+     "code": "harmonizer_cleaner.py:303 copy of slope_deg (2-deg cell)",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Copy of slope_deg (2-degree cell), not a 300 m baseline slope.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    },
+    "MOON": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED (copy)",
+     "claimed_source": "300 m baseline",
+     "code": "copy of slope_deg",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Copy of slope_deg (2-degree cell), not a 300 m baseline slope; no LOLA product uses 300 m.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity name, but measured over different areas: a 2-degree cell is about 222 km on Earth and 61 km on the Moon, and the methods behind the cached arrays differ or are undocumented (A2 sections 2a and 3). Kept, with this caveat."
+  },
+  "rough_300m_m": {
+   "label": "Roughness (named 300 m baseline)",
+   "unit": "m",
+   "kind": "numeric",
+   "description": "Rover gate and soft variable. Despite the name it is a copy of roughness_m at 2-degree resolution.",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "UNDOCUMENTED",
+     "audit_level": "NOT DETERMINED (copy)",
+     "claimed_source": "300 m baseline roughness (name)",
+     "code": "harmonizer_cleaner.py:304 copy of roughness_m",
+     "unit_in_dictionary": "m",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Copy of roughness_m (2-degree cell), not a 300 m baseline value.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "DERIVED",
+     "audit_level": "DERIVED (copy)",
+     "claimed_source": "300 m baseline",
+     "code": "copy of roughness_m",
+     "unit_in_dictionary": "m",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Copy of roughness_m (std of 7.6 km pixels in a 2-degree cell), not a 300 m baseline value.",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity name, but measured over different areas: a 2-degree cell is about 222 km on Earth and 61 km on the Moon, and the methods behind the cached arrays differ or are undocumented (A2 sections 2a and 3). Kept, with this caveat."
+  },
+  "irradiance_kwh_m2_day": {
+   "label": "Solar irradiance",
+   "unit": "kWh/m2/day",
+   "kind": "numeric",
+   "description": "Daily solar energy on a horizontal surface, from a fitted formula.",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "NASA POWER / NOAA NCEP (mission_filters.json:59)",
+     "code": "harmonizer_cleaner.py:249-255 clip((1.6+4.8*cos_lat^0.75)*(0.78+0.32*bare+0.04*clip(max(elev,0)/3000,0,1.5)),0.8,8.2)",
+     "unit_in_dictionary": "kWh/m2/day",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula on latitude, bare fraction and elevation; no NASA POWER data was downloaded.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "same column",
+     "code": "same Earth-style formula applied to the Moon",
+     "unit_in_dictionary": "kWh/m2/day",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "The same Earth-style atmospheric formula applied to the airless Moon.",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": false,
+   "comparability_note": "The lunar value is the Earth atmospheric formula fed with rock abundance where Earth uses bare-ground fraction (A2 sections 2c and 3); it is not a lunar irradiance, and its similarity tracked Earth bare fraction."
+  },
+  "sun_elev_max_deg": {
+   "label": "Maximum sun elevation",
+   "unit": "deg",
+   "kind": "numeric",
+   "description": "Highest sun elevation over the year, from latitude.",
+   "range_source": "definition (0-90 degrees)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED (wrong constant)",
+     "claimed_source": "illumination envelope (mission_filters.json:64)",
+     "code": "harmonizer_cleaner.py:256 clip(90-|lat|+11.7,1.5,90) - 11.7 is half the 23.44 deg obliquity",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "90 - |lat| + 11.7 deg; the constant is about half Earth's 23.44 deg obliquity.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    },
+    "MOON": {
+     "level": "DERIVED",
+     "audit_level": "DERIVED (latitude geometry)",
+     "claimed_source": "same",
+     "code": "harmonizer_cleaner.py:256 clip(90-|lat|+1.54,1.5,90)",
+     "unit_in_dictionary": "deg",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "90 - |lat| + 1.54 deg (lunar axis tilt); geometry only, no topographic shading.",
+     "valid_min": 0.0,
+     "valid_max": 90.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "sun_low_frac_0_5deg": {
+   "label": "Low-sun fraction (0-5 deg)",
+   "unit": "fraction",
+   "kind": "numeric",
+   "description": "Share of time with the sun between 0 and 5 degrees, from a fitted formula on latitude.",
+   "range_source": "definition (0-1)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "Artemis grazing regime (mission_filters.json:69)",
+     "code": "harmonizer_cleaner.py:257 clip(0.028+0.26*(|lat|/90)^2.2,0.025,0.35)",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Invented fit on latitude, identical for both bodies.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "same",
+     "code": "same formula (identical values to Earth)",
+     "unit_in_dictionary": "fraction",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Invented fit on latitude, identical to Earth; no horizon or polar-ridge illumination.",
+     "valid_min": 0.0,
+     "valid_max": 1.0
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "lst_diurnal_amp_k": {
+   "label": "Diurnal temperature amplitude",
+   "unit": "K",
+   "kind": "numeric",
+   "description": "Day-night surface temperature swing.",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "MODIS/NCEP (mission_filters.json:94)",
+     "code": "harmonizer_cleaner.py:262-266 elev>0: clip(8+22*bare+0.0022*max(elev,0),6,48) else 2.5",
+     "unit_in_dictionary": "K",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula 8 + 22*bare + 0.0022*elev (land, max 38.75 K), 2.5 K on ocean; not MODIS.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "same",
+     "code": "harmonizer_cleaner.py:260 clip(180*cos_lat^0.35,25,210), cos_lat=clip(cos(lat),0.05,1)",
+     "unit_in_dictionary": "K",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula 180*cos(lat)^0.35 (63-180 K): latitude only.",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same quantity on both bodies, but both are MODELLED formulas and the lunar one (latitude only, 63-180 K) is contradicted by Diviner (R2 section 3, R3 F10 and F12)."
+  },
+  "thermal_inertia_class": {
+   "label": "Thermal inertia class",
+   "unit": "category",
+   "kind": "categorical",
+   "description": "Surface class from thresholds on bare fraction, roughness, slope and temperature.",
+   "range_source": "code categories (harmonizer_cleaner.py:268-274)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "Diviner Bandfield et al. 2011 classes (mission_filters.json:103)",
+     "code": "harmonizer_cleaner.py:268-274 thresholds on bare (0.22/0.42/0.55), rough>=110 or slope>=4; hielo if temp<261 K; agua if elev<=0",
+     "unit_in_dictionary": "category",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Thresholds on modelled inputs; no thermal-inertia data is used."
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED (constant)",
+     "claimed_source": "same",
+     "code": "harmonizer_cleaner.py:268-271 (moon rock max 0.046 so all 'suelo')",
+     "unit_in_dictionary": "category",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Every lunar cell is 'suelo' because lunar rock never reaches the 0.22 threshold."
+    }
+   },
+   "categories": [
+    "suelo",
+    "arena",
+    "regolito",
+    "roca",
+    "hielo",
+    "agua"
+   ],
+   "comparable_across_bodies": false,
+   "comparability_note": "Classes are thresholds on rock_or_bare_frac, a different quantity on each body; every lunar cell is 'suelo' (A2 section 3)."
+  },
+  "permafrost_class": {
+   "label": "Permafrost class",
+   "unit": "category",
+   "kind": "categorical",
+   "description": "Permafrost continuity class from temperature thresholds (Earth) or latitude and temperature (Moon).",
+   "range_source": "code categories (harmonizer_cleaner.py:276-284)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "IPA Brown et al. map (mission_filters.json:129)",
+     "code": "harmonizer_cleaner.py:280-284 land & temp_k<=274.15 (or elev>=3400 & <=278) esporadico; <=270.15 discontinuo; <=265.15 continuo",
+     "unit_in_dictionary": "category",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Thresholds on temp_k and elevation; the cited IPA permafrost map was not used."
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "same",
+     "code": "harmonizer_cleaner.py:277-279 |lat|>=75 & T<=75 continuo; |lat|>=65 & 75<T<=90 discontinuo",
+     "unit_in_dictionary": "category",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Thresholds on |lat| and temp_k; a label borrowed from Earth, not lunar ice data."
+    }
+   },
+   "categories": [
+    "ninguno",
+    "esporadico",
+    "discontinuo",
+    "continuo"
+   ],
+   "comparable_across_bodies": false,
+   "comparability_note": "Permafrost is ground at or below 0 deg C for two years and has no lunar equivalent by definition (R3, ice row and F17); the lunar label is a latitude and temperature threshold."
+  },
+  "rain_mm_day": {
+   "label": "Rain",
+   "unit": "mm/day",
+   "kind": "numeric",
+   "description": "Daily rain from a formula (Moon: constant 0).",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "none cited in code (workable_days source: rover_preset ILUSTRATIVO)",
+     "code": "harmonizer_cleaner.py:290-294 clip(4.2*clip(1-bare,0,1)^1.8*clip(cos_lat+0.15,0.2,1.1),0.01,12)",
+     "unit_in_dictionary": "mm/day",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula on bare fraction and latitude; no source cited.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED (constant, physically 0)",
+     "claimed_source": "-",
+     "code": "harmonizer_cleaner.py:287 constant 0",
+     "unit_in_dictionary": "mm/day",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Constant 0 (physically right, but set by code).",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "wind_max_ms": {
+   "label": "Maximum wind",
+   "unit": "m/s",
+   "kind": "numeric",
+   "description": "Maximum wind speed from a formula (Moon: constant 0).",
+   "range_source": "definition (>= 0)",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "none cited",
+     "code": "harmonizer_cleaner.py:295-299 clip(4.5+0.0012*max(elev,0)+3.8*(|lat|/90)^1.4,2.5,15.5)",
+     "unit_in_dictionary": "m/s",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula on elevation and latitude; no source cited.",
+     "valid_min": 0.0,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED (constant, physically 0)",
+     "claimed_source": "-",
+     "code": "harmonizer_cleaner.py:288 constant 0",
+     "unit_in_dictionary": "m/s",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Constant 0 (physically right, but set by code).",
+     "valid_min": 0.0,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same physical quantity on both bodies; see each body's level and caveat for how far the values can be trusted."
+  },
+  "tmin_c": {
+   "label": "Minimum temperature",
+   "unit": "degC",
+   "kind": "numeric",
+   "description": "temp_k - 273.15 - 0.35 * diurnal amplitude.",
+   "range_source": "absolute zero",
+   "bodies": {
+    "EARTH": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "'estimaciones del modelo' (author notes)",
+     "code": "harmonizer_cleaner.py:300 (temp_k-273.15)-0.35*lst_diurnal_amp_k",
+     "unit_in_dictionary": "degC",
+     "resolution_km": 222.4,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Formula on temp_k and the modelled amplitude; not an observed minimum.",
+     "valid_min": -273.15,
+     "valid_max": null
+    },
+    "MOON": {
+     "level": "MODELLED",
+     "audit_level": "MODELLED",
+     "claimed_source": "-",
+     "code": "same formula on Moon (subtracts up to 63 K from the night-time temp_k)",
+     "unit_in_dictionary": "degC",
+     "resolution_km": 60.6,
+     "resolution_note": "2-degree cell (90 x 180 grid); the CSV column resolution_m = 500 is wrong",
+     "caveat": "Subtracts up to 63 K from a night-time temp_k; not an observed minimum.",
+     "valid_min": -273.15,
+     "valid_max": null
+    }
+   },
+   "comparable_across_bodies": true,
+   "comparability_note": "Same formula on both bodies (temp_k - 273.15 - 0.35 * amplitude); it inherits the caveats of temp_k and lst_diurnal_amp_k."
+  }
+ }
+}

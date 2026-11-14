@@ -1,0 +1,231 @@
+{
+  "_note": "Engine-only settings. Every threshold, weight, utility bound and tolerance of the missions lives in mission_scoring.json and is NOT repeated here. Each setting has a value and a why; every one is also listed in /ASSUMPTIONS.md with its effect on results.",
+  "engine_version": {
+    "value": "1.1.0",
+    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 1.1.0: review fixes (unrounded final score, rank on published final, comparability exclusions, ocean fills exported as null, polygon country labels)."
+  },
+  "bundle_version": {
+    "value": "v1",
+    "why": "Version of the exported file structure (docs/DATA_CONTRACT.md). It is also the folder name app/public/data/v1, so a future incompatible structure goes to v2 without breaking the app."
+  },
+  "input_csv": {
+    "value": "output_py/earth_moon_harmonized_clean.csv",
+    "why": "The committed harmonized table (16,200 EARTH + 16,200 MOON rows, produced by main.py --pds per audit A2). The engine reads it and never regenerates it, because main.py rewrites tracked files."
+  },
+  "mission_config": {
+    "value": "mission_scoring.json",
+    "why": "The team's new filter system. All gates, soft weights, bad/good bounds and category tables come from this file."
+  },
+  "output_dir": {
+    "value": "../app/public/data/v1",
+    "why": "Static folder served by the browser app with no server (relative to the 'tierra luna' directory)."
+  },
+  "missions": {
+    "value": [
+      "rover",
+      "solar",
+      "thermal",
+      "ice"
+    ],
+    "why": "All four missions defined in mission_scoring.json, in its order. rover and ice are marked provisional by their authors and are kept exactly as written, with the provisional flag exported (pending team confirmation)."
+  },
+  "gate_body_applicability": {
+    "value": {
+      "elevation_m": {
+        "bodies": [
+          "EARTH"
+        ],
+        "reason": "The common gate elevation_m >= 1 is a land mask written for Earth (its why says 'solo tierra firme, descarta oceano, que el modelo fija en -250 m'). Lunar elevation_m is height relative to a datum (LOLA, 1737.4 km sphere), so on the Moon the same gate would remove 11,041 of 16,200 cells for no physical reason (audit A3 section 2)."
+      },
+      "mask_fraction": {
+        "bodies": [
+          "EARTH",
+          "MOON"
+        ],
+        "reason": "Kept on both bodies exactly as written. On the Moon mask_fraction is the constant 1.0, so the gate never removes a lunar cell."
+      }
+    },
+    "why": "Which body each COMMON gate applies to. Thresholds are untouched; only applicability is set here. Mission gates always apply to both bodies. Pending team confirmation."
+  },
+  "on_invalid_value": {
+    "value": "report",
+    "why": "A value outside its physically valid range is reported in validity.json and flagged on the cell; it is never clipped, replaced or silently fixed. With today's data no value fails."
+  },
+  "similarity_scale": {
+    "value": {
+      "method": "pooled_percentile_range",
+      "lower_percentile": 5,
+      "upper_percentile": 95,
+      "population": "all cells of both bodies that pass the mission's hard filters (concatenated, each cell counted once)",
+      "percentile_method": "numpy linear interpolation"
+    },
+    "why": "Per-variable physical scale for sim = max(0, 1 - |earth - moon| / scale). A pooled robust physical range keeps real Earth-Moon differences visible: per-body z-scores or percentile ranks would score Earth's largest MODELLED thermal amplitude (38.75 K, formula 8 + 22*bare + 0.0022*elev) as a perfect match for the MODELLED lunar values (63-180 K, formula 180*cos(lat)^0.35). Both ranges are formula output, and the lunar one is contradicted by Diviner (about 250-300 K at low and mid latitudes, R2 section 3; 95-390 K at the equator and about 220 K at polar rims, R3 F10/F12). The population is all passing cells of both bodies concatenated, so the body with more passing cells sets most of the scale (thermal: 16,200 lunar against 2,613 Earth cells); this is pending team confirmation. The rover 'tolerances' in mission_scoring.json are not used as scales because they are defined for 300 m baselines and the *_300m_* columns are copies of 2-degree-cell values."
+  },
+  "similarity_zero_scale": {
+    "value": "exact_match",
+    "why": "If a pooled range is zero (every passing cell has the same value), sim is 1 when the two values are equal and 0 otherwise, instead of dividing by zero."
+  },
+  "mix_factor": {
+    "value": 0.5,
+    "why": "alpha in mission_scoring.combine_with_similarity: final = alpha * similarity_pct + (1 - alpha) * suitability. 0.5 is that function's own default (mission_scoring.py line 207). Adopting the library default is still a decision on an open question (how much lunar likeness against mission fitness), so it is pending team confirmation; ASSUMPTIONS.md section 3 gives the effect of 0.3 and 0.7 on each mission's top 10."
+  },
+  "pairing_chunk_rows": {
+    "value": 512,
+    "why": "Number of Earth cells compared with all lunar cells per vectorised block. Performance only; it does not change results."
+  },
+  "confidence": {
+    "value": {
+      "level_scores": {
+        "MEASURED": 1.0,
+        "DERIVED": 0.7,
+        "UNDOCUMENTED": 0.3,
+        "MODELLED": 0.2
+      },
+      "body_rule": "weighted mean of level_scores over the mission's weighted variables that have data, using the mission's soft weights",
+      "pair_rule": "min(Earth score, Moon score) * coverage, where coverage = share of the mission's soft weight with data on both cells",
+      "high_min": 0.8,
+      "medium_min": 0.5,
+      "high_max_cell_km": 1.0
+    },
+    "why": "Confidence must say how much the numbers behind a ranking can be trusted. A MEASURED value counts fully, a DERIVED one (a stated formula on a measured value) a little less, an UNDOCUMENTED cached array less, and a MODELLED formula least. The weaker body limits the pair. The criteria act at rover-to-site scale, so a cell larger than high_max_cell_km (every 2-degree cell: about 222 km on Earth, about 61 km on the Moon) can never be 'high'. With today's data almost every cell is expected to come out 'low'."
+  },
+  "explain_top_n": {
+    "value": 25,
+    "why": "Number of top-ranked Earth cells per mission written with a full per-variable explanation in explain.json; enough for a top-N panel and small on disk."
+  },
+  "top_failure_reasons_n": {
+    "value": 5,
+    "why": "Number of commonest failure reasons per mission and body listed in missions.json."
+  },
+  "body_radius_km": {
+    "value": {
+      "EARTH": 6371.0,
+      "MOON": 1737.4
+    },
+    "why": "Mean radii used for the true cell size (2*pi*R/180 per 2 degrees) and for great-circle distances. 1737.4 km is the sphere of the LOLA DEM and of the IAU gazetteer .prj; 6371.0 km is the IUGG mean Earth radius."
+  },
+  "lunar_gazetteer_csv": {
+    "value": "engine/data/iau_moon_nomenclature.csv",
+    "why": "Offline extract of the USGS/IAU Gazetteer of Planetary Nomenclature (MOON_nomenclature_center_pts, 9,087 features, longitudes 0-360 positive east) made by 'python -m engine gazetteer'. Source file and hash are in engine/data/iau_source.json."
+  },
+  "lunar_feature_exclude_types": {
+    "value": [
+      "Satellite Feature"
+    ],
+    "why": "Satellite features are lettered craters named after a parent (e.g. 'Tycho K'); 7,064 of 9,087 entries. Excluding them labels a cell with a primary named feature, which is what a map reader recognises (audit A4 used the same rule for 'nearest primary')."
+  },
+  "antarctic_label_lat_max": {
+    "value": -60.0,
+    "why": "reverse_geocoder returns the nearest populated GeoNames place, and there are none in Antarctica, so cells there were labelled 'TF Kerguelen' or 'ZA' (audit A3). Land cells whose centre is at or south of 60 S (the Antarctic Treaty area) are labelled Antarctica (AQ) instead, with no first-level region."
+  },
+  "export_decimals": {
+    "value": {
+      "default": 4,
+      "lat_lon": 3,
+      "elevation_m": 1,
+      "elevation_rel_m": 1,
+      "roughness_m": 2,
+      "rough_300m_m": 2,
+      "temp_k": 2,
+      "tmin_c": 2,
+      "lst_diurnal_amp_k": 2,
+      "sun_elev_max_deg": 2,
+      "slope_deg": 3,
+      "slope_300m_deg": 3,
+      "sar_sigma0_db": 3,
+      "utility": 6,
+      "similarity": 6,
+      "score": 2,
+      "scale": 6,
+      "distance_km": 1,
+      "confidence_score": 3,
+      "weight": 6,
+      "diameter_km": 2,
+      "iau_lat_lon": 4
+    },
+    "why": "Rounding of floats in the bundle. Utilities and per-variable similarities are published with 6 decimals and the engine computes suitability, similarity and the final score from exactly these published values, so the browser reproduces them with the DATA_CONTRACT formulas to about 1e-4 points. Scores are published with 2 decimals and the rank is computed on the published final score (ties by id), so the stored rank follows the contract rule on stored values. Other keys keep the input precision of the CSV (variable values), the IAU gazetteer's precision (iau_lat_lon, diameter_km) and the soft weights (weight). The bundle stays under 12 MB."
+  },
+  "mission_titles": {
+    "value": {
+      "rover": "Rover mobility and trafficability",
+      "solar": "Solar array placement",
+      "thermal": "Thermal stress testing",
+      "ice": "Ice prospecting and drilling"
+    },
+    "why": "Short English titles for the app. The team's own descriptions in mission_scoring.json are exported verbatim as 'description'."
+  },
+  "credits": {
+    "value": [
+      "Lunar feature names: Gazetteer of Planetary Nomenclature, International Astronomical Union (IAU) Working Group for Planetary System Nomenclature, and USGS Astrogeology Science Center (planetarynames.wr.usgs.gov).",
+      "Earth place names: GeoNames (geonames.org, CC BY 4.0) cities1000 list as packaged by the reverse_geocoder Python library (offline). Labels are the nearest populated place to the cell centre, not a boundary test.",
+      "Country names: ISO 3166 table iso3166.tab of the IANA time zone database (public domain), as shipped by the tzdata Python package.",
+      "Lunar elevation: LRO LOLA LDEM_4 (LRO-L-LOLA-4-GDR-V1.0), 8x8 block mean, NASA PDS Geosciences Node."
+    ],
+    "why": "Credits exported in manifest.json for the app's about box."
+  },
+  "similarity_comparability": {
+    "value": {
+      "exclude_non_comparable": true
+    },
+    "why": "A variable whose registry entry (provenance.json, comparable_across_bodies = false) says it is not the same physical quantity on the two bodies is left out of the Earth-Moon similarity and of the twin search; it still counts fully in suitability. Comparing bare-ground fraction with lunar rock abundance, or an Earth permafrost label with a lunar latitude label, made 'Moon-likeness' measure vegetation cover or a label match (review finding). Pending team confirmation; set false to restore the comparison."
+  },
+  "explain_helps_n": {
+    "value": 2,
+    "why": "Number of variables listed in explain.json 'helps_most' (largest final points): enough for a one-line 'why' in the panel."
+  },
+  "explain_hurts_n": {
+    "value": 2,
+    "why": "Number of variables listed in explain.json 'hurts_most' (largest lost points above 0)."
+  },
+  "coordinate_tolerance_deg": {
+    "value": 1e-06,
+    "why": "Largest difference, in degrees, accepted by the schema between a CSV lat/lon and the cell centre computed from row/col. The CSV stores centres with float rounding only; 1e-6 deg is about 0.1 m on Earth."
+  },
+  "earth_ocean_fill": {
+    "value": {
+      "cells": "Earth cells that fail the common elevation_m land gate of mission_scoring.json (land = 0)",
+      "variables": [
+        "elevation_m",
+        "elevation_rel_m",
+        "slope_deg",
+        "roughness_m",
+        "temp_k",
+        "rock_or_bare_frac",
+        "sar_sigma0_db",
+        "slope_300m_deg",
+        "rough_300m_m"
+      ],
+      "export_as": "null"
+    },
+    "why": "Audit A2 section 2a: the 10,273 ocean cells of earth_global_real.npz carry constant fills (-250 m, -1000 m, 0.01 deg, 0.1 m, 285 K, 0, -24 dB), and slope_300m_deg / rough_300m_m copy them. A fill is not a value, so the bundle writes null there and records the fill constants in earth_cells.json 'ocean_fill'. The engine itself still evaluates the team's land gate on the fill, as its why intends ('descarta oceano, que el modelo fija en -250 m'). Formula columns computed on the ocean (irradiance, rain, wind, mask_fraction, classes) are MODELLED values, not fills, and are kept."
+  },
+  "region_max_place_km": {
+    "value": 222.4,
+    "why": "A first-level region is exported only when the nearest GeoNames place is at most one Earth cell (222.4 km north-south) from the cell centre and lies in the same country as the cell; farther away the region names another part of the country (review: Tibetan cells labelled 'Hebei', Franz Josef Land labelled 'Nenetskiy'). Otherwise region is null."
+  },
+  "earth_country_polygons": {
+    "value": "engine/data/ne_110m_admin_0_countries.geojson",
+    "why": "Country of an Earth land cell by point-in-polygon on Natural Earth 1:110m admin-0 countries (public domain). The nearest GeoNames place gave the wrong country for 229 of 5,359 land cells inside a polygon (review). Cells outside every polygon (coasts at 110m resolution, small islands) fall back to the nearest GeoNames place. Source and sha256 in engine/data/ne_source.json."
+  },
+  "not_used_by_engine_why": {
+    "value": "tolerances: defined for 300 m baselines while the *_300m_* columns are 2-degree copies. workable_days: not read by mission_scoring.py. domain weights (relieve/material/termico/luz/agua): the team note in mission_scoring.json says they are used only by the web 'Use Weights' button of the similarity; the engine instead weights the similarity with the mission's soft weights, because no mapping from these domains to the new variables exists. This departure is pending team confirmation (ASSUMPTIONS.md section 3).",
+    "why": "Text exported in missions.json 'not_used_by_engine.why' so the app can say why these team settings have no effect."
+  },
+  "mission_notes": {
+    "value": {
+      "rover": [
+        "Provisional team block. Interior Greenland ice-sheet cells rank near the top: the soft criteria have no surface-type term, ice counts as bare ground in rock_or_bare_frac, and 2-degree slope and roughness are smooth on an ice sheet. Whether ice or snow cells (thermal_inertia_class 'hielo') should be gated out is a question for Robotics 1; the engine does not change the gates."
+      ],
+      "solar": [
+        "The solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of the latitude given in facts.moon_pass_abs_lat_max, so no lunar polar ridge or rim can be a twin. R2 section 1 and R3 section 4 say a lunar solar test should target those lit polar ridges. The gates are kept as written, pending a team decision (R3 open question 3)."
+      ],
+      "thermal": [
+        "Lunar diurnal amplitude is a latitude-only formula (MODELLED) that Diviner contradicts at low and mid latitudes (R2 section 3, R3 F10 and F12). Earth amplitudes are closest to its clipped polar minimum, so thermal twins are a few cells near the lunar poles (facts.twins)."
+      ],
+      "ice": [
+        "Provisional team block. permafrost_class has no lunar equivalent (R3, ice row) and is left out of the similarity. With temp_k alone, twins are the warmest passing lunar cells, at the warm edge of the MODELLED lunar permafrost-class temperature thresholds, because those are closest to Earth temperatures. Ice twins therefore say little until a lunar cold-trap variable exists."
+      ]
+    },
+    "why": "Known limitations of each mission's results, exported in missions.json 'known_limitations' so the app shows them next to the ranking. They describe the data and the team configuration; nothing is tuned to hide them. Numbers that depend on the data are computed at build time and exported next to the notes ('facts')."
+  }
+}

@@ -1,0 +1,11 @@
+{
+ "product": "USGS/IAU Gazetteer of Planetary Nomenclature, MOON_nomenclature_center_pts",
+ "url": "https://asc-planetarynames-data.s3.us-west-2.amazonaws.com/MOON_nomenclature_center_pts.zip",
+ "downloaded": "2026-11-14 (during the audit; Last-Modified 14 Nov 2026 per R4)",
+ "zip_sha256": "bcb1a37a195babb159ee1f720a6c64d03842de87d10a7ba7d754f8873477606b",
+ "shapefile": "MOON_nomenclature_center_pts.shp",
+ "rows": 9087,
+ "longitude_convention": "0-360 positive east in the source; converted to -180..180 by the engine",
+ "sphere_radius_m": 1737400,
+ "credit": "Gazetteer of Planetary Nomenclature, IAU WGPSN and USGS Astrogeology Science Center"
+}

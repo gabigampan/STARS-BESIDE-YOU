@@ -1,0 +1,9 @@
+{
+ "product": "Natural Earth 1:110m Cultural Vectors, Admin 0 - Countries (ne_110m_admin_0_countries), public domain (naturalearthdata.com)",
+ "obtained_from": "Local copy shipped as an example dataset in the three-globe npm package (example/country-polygons/ne_110m_admin_0_countries.geojson); byte-identical copies in globe.gl and three-geojson-geometry. Not downloaded from naturalearthdata.com in this session.",
+ "file": "ne_110m_admin_0_countries.geojson",
+ "sha256": "a4d67eac9c75d5b6f20170d2b07bb53ea791536b0c8e5ebae3ba94df093f76e0",
+ "features": 177,
+ "fields_used": {"ISO_A2": "ISO 3166 alpha-2 code ('-99' means none: France, Norway, Northern Cyprus, Somaliland in this version)", "ADMIN": "country name, used when the ISO table has no name for the code or the code is missing"},
+ "credit": "Made with Natural Earth. Free vector and raster map data @ naturalearthdata.com."
+}
