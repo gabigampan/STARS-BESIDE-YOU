@@ -1,0 +1,90 @@
+{
+  "version": "v1-draft",
+  "note": "Motor unico de filtros por mision (sustituye a mission_filters.json). 'gates' = filtros duros (si falla uno, la zona se descarta). 'soft' = criterios ponderados 0-100: 'good' da utilidad 1 y 'bad' utilidad 0 (interpolacion lineal; si good < bad, menos es mejor). 'weights' (relieve/material/termico/luz/agua) solo los usa la web para el boton 'Use Weights' de la similitud. Umbrales de solar y thermal = valores de diseno NO validados con fuente externa.",
+  "on_missing_gate": "keep",
+  "common_gates": {
+    "elevation_m":   {"min": 1.0, "why": "solo tierra firme (descarta oceano, que el modelo fija en -250 m)"},
+    "mask_fraction": {"min": 0.3, "why": "celda con dato suficiente"}
+  },
+  "missions": {
+    "rover": {
+      "description": "Rover Mobility & Surface Trafficability (Robotics 1 - VIPER Reference)",
+      "provisional": "Gates y tolerancias migrados tal cual del mission_filters.json anterior. 'soft' es una aproximacion lineal de la formula antigua: sustituir por la definitiva del equipo de Robotica 1.",
+      "require_present": ["slope_300m_deg", "rough_300m_m"],
+      "gates": {
+        "slope_300m_deg": {"min": 0.5, "max": 15.0, "max_from": "max_operational_slope_deg", "source": "rover.max_operational_slope_deg: NASA VIPER operational slope limit (15 deg < 47.29 deg static tip-over, rover_preset.py)"},
+        "rough_300m_m":   {"min": 5.0, "max": 650.0, "source": "LRO LOLA & CNSA Yutu/VIPER topographic hazard envelope (5-650 m)"}
+      },
+      "soft": {
+        "slope_300m_deg":    {"weight": 0.45, "bad": 15.0,  "good": 1.0,  "why": "menos pendiente = mas traficable"},
+        "rough_300m_m":      {"weight": 0.30, "bad": 650.0, "good": 30.0, "why": "menos rugosidad = menos obstaculos"},
+        "rock_or_bare_frac": {"weight": 0.25, "bad": 0.0,   "good": 0.7,  "why": "suelo expuesto firme frente a vegetacion"}
+      },
+      "tolerances": {
+        "slope_300m_deg": {"scale": 5.0,  "unit": "deg", "source": "Robotics 1 rover_preset.py tolerance scale (5.0 deg)"},
+        "rough_300m_m":   {"scale": 10.0, "unit": "m",   "source": "Robotics 1 rover_preset.py tolerance scale (10.0 m)"}
+      },
+      "workable_days": {"rain_mm_max": 1, "wind_max_ms_max": 12, "tmin_c_min": -10, "source": "Phase-1 plan model 1 defaults (rover_preset.py)"},
+      "weights": {"relieve": 0.35, "material": 0.3, "termico": 0.1, "luz": 0.1, "agua": 0.15},
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "Robotics 1 - Mobility Team"
+    },
+    "solar": {
+      "description": "Colocacion de placas solares",
+      "require_present": ["irradiance_kwh_m2_day", "sun_elev_max_deg", "sun_low_frac_0_5deg", "slope_deg"],
+      "gates": {
+        "irradiance_kwh_m2_day": {"min": 2.5,  "source": "diseno: por debajo, la generacion no compensa"},
+        "slope_deg":             {"max": 15.0, "source": "diseno: el campo de placas necesita terreno practicamente plano"},
+        "sun_elev_max_deg":      {"min": 10.0, "source": "diseno: sol siempre rasante = sombras permanentes"},
+        "sun_low_frac_0_5deg":   {"max": 0.25, "source": "diseno: demasiado tiempo con sol a <5 grados"},
+        "thermal_inertia_class": {"exclude": ["agua"], "source": "diseno: no se instala sobre agua"}
+      },
+      "soft": {
+        "irradiance_kwh_m2_day": {"weight": 0.35, "bad": 2.5,   "good": 6.0,  "why": "energia disponible"},
+        "sun_elev_max_deg":      {"weight": 0.15, "bad": 10.0,  "good": 70.0, "why": "mejor captacion con sol alto"},
+        "sun_low_frac_0_5deg":   {"weight": 0.15, "bad": 0.25,  "good": 0.03, "why": "menos tiempo de sol rasante"},
+        "slope_deg":             {"weight": 0.15, "bad": 12.0,  "good": 1.0,  "why": "menos movimiento de tierras"},
+        "lst_diurnal_amp_k":     {"weight": 0.10, "bad": 35.0,  "good": 10.0, "why": "menos ciclado termico en los paneles"},
+        "roughness_m":           {"weight": 0.10, "bad": 400.0, "good": 30.0, "why": "terreno llano = montaje mas facil"}
+      },
+      "weights": {"relieve": 0.15, "material": 0.1, "termico": 0.2, "luz": 0.45, "agua": 0.1},
+      "frozen_at": null,
+      "author": "Robotics 2 - Power & Illumination Team"
+    },
+    "thermal": {
+      "description": "Resistencia termica (ensayo de hardware bajo estres tipo lunar)",
+      "require_present": ["lst_diurnal_amp_k", "tmin_c", "thermal_inertia_class"],
+      "gates": {
+        "lst_diurnal_amp_k":     {"min": 15.0, "source": "diseno: sin ciclo termico fuerte no hay ensayo util"},
+        "tmin_c":                {"max": 5.0,  "source": "diseno: hace falta frio real para estresar el equipo"},
+        "thermal_inertia_class": {"exclude": ["agua"], "source": "diseno: el agua amortigua los ciclos"}
+      },
+      "soft": {
+        "lst_diurnal_amp_k":     {"weight": 0.35, "bad": 15.0, "good": 35.0,  "why": "amplitud termica diaria (estres por ciclado)"},
+        "tmin_c":                {"weight": 0.25, "bad": 5.0,  "good": -50.0, "why": "minimas extremas"},
+        "thermal_inertia_class": {"weight": 0.15, "map": {"roca": 1.0, "regolito": 1.0, "arena": 0.9, "suelo": 0.6, "hielo": 0.4}, "default": 0.5, "why": "superficie de baja inercia, parecida al regolito"},
+        "rock_or_bare_frac":     {"weight": 0.10, "bad": 0.10, "good": 0.70,  "why": "superficie expuesta, sin vegetacion que amortigue"},
+        "irradiance_kwh_m2_day": {"weight": 0.10, "bad": 3.0,  "good": 6.0,   "why": "mayor carga solar = mayor calentamiento diurno"},
+        "permafrost_class":      {"weight": 0.05, "map": {"esporadico": 1.0, "discontinuo": 1.0, "continuo": 0.7, "ninguno": 0.3}, "default": 0.5, "why": "ciclos congelacion-deshielo"}
+      },
+      "weights": {"relieve": 0.15, "material": 0.25, "termico": 0.45, "luz": 0.1, "agua": 0.05},
+      "frozen_at": null,
+      "author": "Robotics 2 - Thermal Systems Team"
+    },
+    "ice": {
+      "description": "Perforacion y prospeccion de hielo (solo si sobra tiempo)",
+      "provisional": "Gate migrado tal cual; 'soft' = formula antigua (frio + permafrost) expresada en el nuevo esquema.",
+      "require_present": ["permafrost_class"],
+      "gates": {
+        "permafrost_class": {"exclude": ["ninguno", "none"], "source": "plan fase 1, parte 3 (IPA Brown et al. permafrost & cryosphere map)"}
+      },
+      "soft": {
+        "temp_k":           {"weight": 0.55, "bad": 280.0, "good": 220.0, "why": "mas frio = hielo mas estable"},
+        "permafrost_class": {"weight": 0.45, "map": {"continuo": 1.0, "discontinuo": 0.85, "esporadico": 0.7}, "default": 0.55, "why": "continuidad del permafrost"}
+      },
+      "weights": {"relieve": 0.15, "material": 0.15, "termico": 0.25, "luz": 0.1, "agua": 0.35},
+      "frozen_at": "2026-11-14T16:30:00+00:00",
+      "author": "ISRU & Cryosphere Prospecting Team"
+    }
+  }
+}
