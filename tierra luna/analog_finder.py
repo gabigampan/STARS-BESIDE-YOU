@@ -256,7 +256,9 @@ def compute_mission_optimality_scores(
     )
 
     mission_targets = {
-        "rover": rocky_target,
+        # [AI-assisted] Plan decision 2: the lunar target is the Shackleton
+        # region (the only Moon Base site NASA has named), not Tycho.
+        "rover": polar_target,
         "solar": polar_target,
         "thermal": default_target,
         "ice": polar_target,
@@ -614,6 +616,8 @@ def export_web_bundle(
     os.makedirs(web_dir, exist_ok=True)
 
     top_ranking, earth_scored, meta = compute_analog_ranking(moon_df, earth_df, top_k=100)
+    from rover_integration import apply_rover_extras
+    meta = apply_rover_extras(earth_scored, meta)
     ranking_csv_path = os.path.join(out_dir, "analog_ranking.csv")
     top_ranking.to_csv(ranking_csv_path, index=False)
 

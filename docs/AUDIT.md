@@ -510,3 +510,21 @@ An independent verifier re-checked the three documents (AUDIT.md, DATA_DICTIONAR
 - A4's geocoding of all 1,607 Earth points, the IAU gazetteer distances, "92 cells within Mare Tranquillitatis" and the median of 672 km to the label anchor. These were not re-run; only the top-10 solar and top-4 thermal cells were re-geocoded.
 - The origin of `earth_global_real.npz` and of the Moon slope, temperature and rock arrays. Nothing in the repository documents it, so it cannot be verified.
 - Python 3.12, the version of the committed `.pyc` files, is not installed here. `--use-gee` was not run (no credentials).
+
+---
+
+## Differences between the team lead's description of the data and the committed files
+
+Added 2026-11-14 for the similarity proposal ([SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md)). Each fact was re-counted on the committed legacy table `tierra luna/output_py/earth_moon_harmonized_clean.csv` (unchanged since commit ca72d0b; 16,200 EARTH and 16,200 MOON rows, no missing values) with `scratchpad/stars/venv/bin/python`. Nothing in the repository was changed.
+
+| Item | The description said | The committed table (re-counted) |
+|---|---|---|
+| Lunar `elevation_m` | -3,626 to -677 m, so the land mask `elevation_m >= 1` would remove every lunar cell | **-7,609.7 to +8,301.9 m**; **5,159** lunar cells are at or above 1 m (the land mask would remove 11,041, not all) |
+| Lunar `permafrost_class` | `ninguno` everywhere | `ninguno` **11,520**, `discontinuo` **2,922**, `continuo` **1,758** (a latitude formula) |
+| Lunar `thermal_inertia_class` | `suelo` 15,306 and `arena` 894 | `suelo` in **all 16,200** cells |
+| Lunar `tmin_c` | -161 to -45 C | **-251.78 to -219.83 C** |
+| Rover target in the old optimality score | the south-pole zone | the **Tycho zone**: `compute_mission_optimality_scores` maps `"rover": rocky_target`, and `rocky_target` is "Tycho & Southern Rocky Craters (35°S–55°S, 30°W–0°)" (`git show main:"tierra luna/analog_finder.py"`, lines 254-263). Solar and ice use the south-pole zone, thermal the global mean. |
+
+**Probable cause (an inference, then checked).** The audit found that `main.py` without `--pds` builds a different, synthetic Moon (`moon_source = "synthetic"` when no LOLA file is given, `main.py:140`), and that the committed table comes from a `--pds` run (the Verification section above reproduced it exactly with `main.py --pds`). The described values therefore probably came from a run without `--pds`. To test this, the default pipeline was run in a scratch copy (`scratchpad/stars/proposal/run_default`, `python main.py --out-dir out_default`, never inside the repository). Its lunar rows (`source = synthetic`) give exactly the described values: `elevation_m` -3,625.53 to -676.73 m with **0** cells at or above 1 m; `permafrost_class` `ninguno` in all 16,200 cells; `thermal_inertia_class` `suelo` 15,306 and `arena` 894; `tmin_c` -161.33 to -45.08 C. Its Earth rows are identical to the committed ones (checked on `elevation_m`, `slope_deg`, `temp_k`, `rock_or_bare_frac`). So the four data facts in the description match the default (synthetic-Moon) run and not the committed table. That the team lead's numbers were taken from such a run remains an inference; the match is exact. The fifth item (rover target) is code, not data, and is the same in both runs.
+
+**Possible labelling fault, left unchanged.** In the committed table every lunar cell has `thermal_inertia_class = suelo` ("soil"). The lunar surface is regolith, and the class list used by the missions has a `regolito` class (`mission_scoring.json`, thermal soft map). The real 1-degree lunar table (`output_real/moon_real_1deg.csv`) uses `regolito` everywhere. The legacy label is probably wrong; it was not changed. It matters for any similarity that compares this class across bodies: with `suelo` on the Moon, Earth cells labelled `suelo` match and Earth cells labelled `regolito` do not.

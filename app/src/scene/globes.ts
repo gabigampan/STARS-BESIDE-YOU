@@ -54,6 +54,9 @@ export interface Globes {
   moon: BodyView;
   earthImagery: EarthImagery;
   moonLabels: MoonLabels;
+  /** Day/night shading on both globes: true = physical (Sun from the shared clock), false = even light. */
+  setPhysicalLighting(on: boolean): void;
+  physicalLighting(): boolean;
 }
 
 const RESOLUTION_CAP = 1.5;
@@ -221,6 +224,8 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
   });
   mg.material = nightMaterial;
 
+  let physical = true;
+
   // Sun direction for the Moon, in its body-fixed frame, from the shared clock.
   const sunDir = new Cartesian3();
   let lastLit: JulianDate | undefined;
@@ -242,7 +247,7 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
     scene: es,
     ellipsoid: Ellipsoid.WGS84,
     radiusM: EARTH_RADIUS_M,
-    // Home faces the daylit hemisphere, with the evening terminator and first city lights in view to the east.
+    // Home faces the daylit hemisphere (src/modules/sunlight.ts moves it when the light changes).
     home: earthHome(clock.currentTime),
     status: { ready: false },
     atHome: true,
@@ -254,7 +259,7 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
     scene: ms,
     ellipsoid: Ellipsoid.MOON,
     radiusM: MOON_RADIUS_M,
-    home: { lat: 0, lon: 0 },
+    home: moonHome(clock.currentTime),
     status: { ready: false },
     atHome: true,
     onStatus: () => undefined,
@@ -268,7 +273,9 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
     let changed = updateSharpLayer(earthImagery.sharp, h);
     // Cesium applies nightAlpha without the distance fade; match it to the shading fade.
     const dist = Cartesian3.magnitude(es.camera.positionWC);
-    const t = Math.min(1, Math.max(0, (dist - eg.lightingFadeOutDistance) / (eg.lightingFadeInDistance - eg.lightingFadeOutDistance)));
+    const t = physical
+      ? Math.min(1, Math.max(0, (dist - eg.lightingFadeOutDistance) / (eg.lightingFadeInDistance - eg.lightingFadeOutDistance)))
+      : 0;
     if (Math.abs(earthImagery.night.nightAlpha - t) > 0.01) {
       earthImagery.night.nightAlpha = t;
       earthImagery.night.show = t > 0;
@@ -282,7 +289,7 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
   const updateMoonCamera = () => {
     const dist = Cartesian3.magnitude(ms.camera.positionWC);
     const t = (dist - mg.lightingFadeOutDistance) / (mg.lightingFadeInDistance - mg.lightingFadeOutDistance);
-    nightMaterial.uniforms.strength = 0.78 * Math.min(1, Math.max(0, t));
+    nightMaterial.uniforms.strength = physical ? 0.78 * Math.min(1, Math.max(0, t)) : 0;
     moonLabels.update();
   };
   ms.camera.changed.addEventListener(updateMoonCamera);
@@ -306,7 +313,20 @@ export function createGlobes(earthEl: HTMLElement, moonEl: HTMLElement, reducedM
     }).observe(view.widget.container);
   }
 
-  return { clock, earth, moon, earthImagery, moonLabels };
+  const setPhysicalLighting = (on: boolean) => {
+    physical = on;
+    eg.enableLighting = on;
+    eg.dynamicAtmosphereLighting = on;
+    eg.dynamicAtmosphereLightingFromSun = on;
+    mg.enableLighting = on;
+    mg.material = on ? nightMaterial : undefined;
+    updateEarthCamera();
+    updateMoonCamera();
+    es.requestRender();
+    ms.requestRender();
+  };
+
+  return { clock, earth, moon, earthImagery, moonLabels, setPhysicalLighting, physicalLighting: () => physical };
 }
 
 /** Simulation start: now, or the ISO time in the page URL (?time=2026-11-24T12:00:00Z). */
@@ -319,11 +339,21 @@ function startTime(): JulianDate {
   return JulianDate.now();
 }
 
-function earthHome(time: JulianDate): { lat: number; lon: number } {
+/**
+ * Home view centre on Earth that faces the sunlit hemisphere: the sub-solar meridian, with the
+ * latitude pulled 25 degrees north (most land is in the north) and kept within 25 degrees of the equator.
+ */
+export function earthHome(time: JulianDate): { lat: number; lon: number } {
   const sub = subsolarPointEarth(time);
-  let lon = sub.lon + 55;
-  if (lon > 180) lon -= 360;
-  return { lat: Math.max(-35, Math.min(35, sub.lat + 12)), lon };
+  return { lat: Math.max(-25, Math.min(25, sub.lat + 25)), lon: sub.lon };
+}
+
+/** Home view centre on the Moon that faces the sunlit hemisphere: the sub-solar point (latitude kept within 30 degrees). */
+export function moonHome(time: JulianDate): { lat: number; lon: number } {
+  const d = sunDirectionMoonFixed(time, new Cartesian3());
+  const lat = CesiumMath.toDegrees(Math.asin(Math.max(-1, Math.min(1, d.z))));
+  const lon = CesiumMath.toDegrees(Math.atan2(d.y, d.x));
+  return { lat: Math.max(-30, Math.min(30, lat)), lon };
 }
 
 export function homeDestination(view: BodyView): Cartesian3 {

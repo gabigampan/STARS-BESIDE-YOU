@@ -9,7 +9,12 @@ import { bindGlobes, globesApi, settleImagery } from './api';
 import { IMAGERY_TIMEOUT_MS } from './config';
 import { createGlobes, resetView } from './scene/globes';
 import { applyIonUpgrade, ionEnabled } from './scene/ionUpgrade';
-import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupSunTime } from './ui/shell';
+import { Beams } from './modules/beams';
+import { Focus } from './modules/focus';
+import { Markers } from './modules/markers';
+import { Sunlight, bindSunlightControl } from './modules/sunlight';
+import { VideoDialog } from './modules/video';
+import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons } from './ui/shell';
 
 declare global {
   interface Window {
@@ -34,6 +39,10 @@ function main(): void {
     return;
   }
 
+  const reduced = () => globesApi.prefersReducedMotion();
+  // Light first (it sets the home views to face the sunlit side), then the home views.
+  const sunlight = new Sunlight(globes, reduced);
+  sunlight.start();
   resetView(globes.earth, true);
   resetView(globes.moon, true);
 
@@ -42,7 +51,13 @@ function main(): void {
     globes.earth.scene.requestRender();
     globes.moonLabels.setEnabled(visible);
   };
-  bindGlobes(globes, setLabels);
+  bindGlobes(globes, setLabels, {
+    sunlight,
+    markers: new Markers(globes),
+    focus: new Focus(globes, reduced),
+    beams: new Beams(globes, reduced),
+    video: new VideoDialog(),
+  });
   window.starsBesideYou = globesApi;
 
   globes.earth.onStatus((s) => loading.update('earth', s));
@@ -70,7 +85,7 @@ function main(): void {
   );
   setupLabelsToggle(setLabels);
   setupResetButtons((body) => globesApi.resetView(body));
-  setupSunTime(globes.clock);
+  bindSunlightControl(sunlight);
 
   // Keep the home view fitted when panes change size (rotation, window resize, stacked/side-by-side).
   let resizeTimer = 0;

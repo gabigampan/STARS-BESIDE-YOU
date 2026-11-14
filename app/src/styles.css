@@ -18,7 +18,7 @@
 
   --pad: clamp(12px, 1.4vw, 28px);
   --header-h: auto;
-  --step--1: clamp(0.8125rem, 0.78rem + 0.12vw, 0.9375rem);
+  --step--1: clamp(0.875rem, 0.84rem + 0.12vw, 0.9375rem); /* never below 14 px */
   --step-0: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
   --step-1: clamp(1.125rem, 1.02rem + 0.45vw, 1.6rem);
 
@@ -38,13 +38,19 @@ body {
   background: var(--sky);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: var(--step-0);
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* The root keeps the browser's size (rem = 16 px unless the user changed it), so the type scale
+   below never drops under its stated minimums. */
+html {
+  font-size: 100%;
+}
+
 body {
+  font-size: var(--step-0);
   display: flex;
   flex-direction: column;
   height: 100dvh;
@@ -113,12 +119,105 @@ a:hover {
   justify-content: flex-end;
 }
 
+/* ---------- sunlight control (src/modules/sunlight.ts) ---------- */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sunlight {
+  margin: 0 8px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 3px;
+}
+.sunlight-label {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.sunlight-options {
+  display: flex;
+  gap: 8px;
+}
+.seg {
+  position: relative;
+  display: block;
+}
+.seg input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.seg span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px 0 12px;
+  font: 500 var(--step--1) / 1 var(--font-body);
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+/* State shown by shape as well as colour: an empty ring, or a filled dot when chosen. */
+.seg span::before {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  box-sizing: border-box;
+}
+.seg input:hover + span {
+  background: rgba(255, 255, 255, 0.09);
+}
+.seg input:checked + span {
+  color: var(--text);
+  border-color: var(--sodium);
+  box-shadow: inset 0 -2px 0 var(--sodium);
+}
+.seg input:checked + span::before {
+  background: var(--sodium);
+  border-color: var(--sodium);
+  box-shadow: 0 0 0 2px var(--glass-solid) inset;
+}
+.seg input:focus-visible + span {
+  outline: 2px solid var(--sodium);
+  outline-offset: 2px;
+}
+
 .sun-time {
+  grid-column: 1 / -1;
+  justify-self: end;
   color: var(--text-dim);
   font-size: var(--step--1);
+  line-height: 1.25;
   font-variant-numeric: tabular-nums;
-  margin-right: 8px;
   white-space: nowrap;
+}
+.sunlight[data-mode='even'] .sun-time {
+  color: var(--text);
 }
 
 /* ---------- buttons ---------- */
@@ -409,10 +508,14 @@ a:hover {
   .topbar-tools {
     justify-content: flex-start;
   }
-  .sun-time {
+  .sunlight {
     flex: 1 1 100%;
     margin: 0;
-    order: 3;
+    grid-template-columns: auto 1fr;
+  }
+  .sun-time {
+    justify-self: start;
+    white-space: normal;
   }
   .pane-caption {
     padding: 6px 10px 7px;
@@ -435,6 +538,142 @@ a:hover {
   .brand-line {
     max-width: 80ch;
   }
+}
+
+/* ---------- comparison focus (src/modules/focus.ts): room for #detail-panel ---------- */
+
+/* Wide screens: the panel becomes a third column beside the globes. */
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) {
+  body.is-focused .stage:has(#detail-panel:not([hidden])) {
+    grid-template-columns: 1fr 1fr clamp(320px, 26vw, 440px);
+  }
+  body.is-focused .stage .panel-detail {
+    position: relative;
+    inset: auto;
+    grid-column: 3;
+    grid-row: 1;
+    width: auto;
+    border-radius: 0;
+    border-width: 0 0 0 1px;
+    background: var(--glass-solid);
+  }
+}
+/* Phones and portrait screens: a bottom sheet over the lower part; the globes shrink above it. */
+@media not ((min-width: 900px) and (min-aspect-ratio: 1/1)) {
+  body.is-focused {
+    --sheet-h: min(42dvh, 380px);
+  }
+  body.is-focused .stage:has(#detail-panel:not([hidden])) {
+    margin-bottom: var(--sheet-h);
+  }
+  body.is-focused .stage .panel-detail {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    width: auto;
+    height: var(--sheet-h);
+    max-height: none;
+    border-radius: 10px 10px 0 0;
+    border-width: 1px 0 0;
+    background: var(--glass-solid);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ---------- light beam overlay (src/modules/beams.ts) ---------- */
+
+.beam-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ---------- mission video dialog (src/modules/video.ts) ---------- */
+
+.video-dialog {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  color: var(--text);
+  background: var(--glass-solid);
+  border: 1px solid var(--edge-strong);
+  border-radius: 4px;
+  overflow: auto;
+}
+.video-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+.video-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px 10px 20px;
+  border-bottom: 1px solid var(--edge);
+}
+.video-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--step-1);
+  line-height: 1.15;
+}
+.video-close {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: 44px;
+  flex: none;
+}
+.video-frame {
+  background: #000;
+}
+.video-frame video {
+  display: block;
+  width: 100%;
+  max-height: min(62dvh, 540px);
+  background: #000;
+}
+.video-frame video::cue {
+  font-family: var(--font-body);
+  font-size: 1.05em;
+  background: rgba(0, 0, 0, 0.78);
+  color: #f3efe6;
+}
+.video-error {
+  padding: 28px 20px;
+  background: #000;
+  border-bottom: 1px solid var(--edge);
+}
+.video-error[hidden],
+.video-frame[hidden],
+.video-credit[hidden],
+.video-note[hidden] {
+  display: none;
+}
+.video-error-text {
+  color: var(--danger);
+  max-width: 62ch;
+}
+.video-error .btn {
+  margin-top: 16px;
+}
+.video-credit {
+  padding: 14px 20px 0;
+  font-size: var(--step--1);
+}
+.video-note {
+  padding: 6px 20px 18px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+  max-width: 80ch;
+}
+.video-credit:last-child {
+  padding-bottom: 18px;
 }
 
 @media (prefers-reduced-motion: reduce) {

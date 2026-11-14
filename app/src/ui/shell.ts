@@ -1,6 +1,5 @@
-// Header controls, credits dialog, loading screen and the shared-Sun time line.
+// Header controls, credits dialog and loading screen (the sunlight control is in modules/sunlight.ts).
 
-import { JulianDate, type Clock } from 'cesium';
 import { renderCredits, type CreditEntry } from './credits';
 import type { Body, ImageryStatus } from '../scene/globes';
 
@@ -51,30 +50,6 @@ export function setupResetButtons(reset: (body?: Body) => void): void {
       e.preventDefault();
     }
   });
-}
-
-const timeFormat = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'short',
-  year: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-  timeZone: 'UTC',
-  hour12: false,
-});
-
-export function setupSunTime(clock: Clock): void {
-  const el = $('sun-time');
-  let last = '';
-  const update = () => {
-    const text = `Sunlight for ${timeFormat.format(JulianDate.toDate(clock.currentTime))} UTC`;
-    if (text !== last) {
-      el.textContent = text;
-      last = text;
-    }
-  };
-  update();
-  window.setInterval(update, 15_000);
 }
 
 export class LoadingScreen {

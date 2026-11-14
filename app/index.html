@@ -16,7 +16,17 @@
         <p class="brand-line">Find the places on Earth that best stand in for sites on the Moon, mission by mission.</p>
       </div>
       <div class="topbar-tools">
-        <p class="sun-time" id="sun-time" aria-live="off"></p>
+        <fieldset class="sunlight" id="sunlight">
+          <legend class="sr-only">Sunlight on both globes</legend>
+          <span class="sunlight-label" aria-hidden="true">Sunlight</span>
+          <div class="sunlight-options">
+            <label class="seg"><input type="radio" name="sunlight" value="full-moon" checked aria-describedby="sun-time" /><span>Full Moon</span></label>
+            <label class="seg"><input type="radio" name="sunlight" value="now" aria-describedby="sun-time" /><span>Now</span></label>
+            <label class="seg"><input type="radio" name="sunlight" value="even" aria-describedby="sun-time" /><span>Even light</span></label>
+          </div>
+          <p class="sun-time" id="sun-time"></p>
+        </fieldset>
+        <p class="sr-only" id="sunlight-status" role="status" aria-live="polite"></p>
         <button type="button" class="btn" id="labels-toggle" aria-pressed="true">Place names</button>
         <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Credits</button>
       </div>

@@ -12,7 +12,8 @@
     "build": "tsc --noEmit -p . && vite build",
     "preview": "vite preview",
     "iau": "node scripts/build_iau_features.mjs",
-    "smoke": "node tests/smoke.mjs"
+    "smoke": "node tests/smoke.mjs",
+    "test:modules": "node tests/modules.mjs"
   },
   "dependencies": {
     "@fontsource/barlow": "5.3.0",

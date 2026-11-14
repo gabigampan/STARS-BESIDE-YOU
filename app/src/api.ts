@@ -8,8 +8,18 @@
 
 import { Cartesian2, Cartesian3, Math as CesiumMath, SceneTransforms, type CesiumWidget, type Scene } from 'cesium';
 import { resetView, type Body, type BodyView, type Globes } from './scene/globes';
+import type { BeamsApi } from './modules/beams';
+import type { FocusApi } from './modules/focus';
+import type { MarkersApi } from './modules/markers';
+import type { SunlightApi } from './modules/sunlight';
+import type { VideoApi } from './modules/video';
 
 export type { Body } from './scene/globes';
+export type { Beam, BeamEnd, BeamsApi, LatLon } from './modules/beams';
+export type { CellFootprint, FlightReport, FocusApi, FocusOptions, FocusPoint } from './modules/focus';
+export type { MarkerId, MarkerItem, MarkerOptions, MarkerScreenState, MarkersApi, PickListener, PickSource } from './modules/markers';
+export type { SunlightApi, SunlightChoice, SunlightMode } from './modules/sunlight';
+export type { VideoApi, VideoSource, VideoSpec, VideoTrack } from './modules/video';
 
 export interface CanvasPoint {
   /** CSS pixels from the left edge of that body's canvas. */
@@ -47,6 +57,30 @@ export interface GlobesApi {
   setLabelsVisible(visible: boolean): void;
   /** True while the user asks for reduced motion (flights become instant). */
   prefersReducedMotion(): boolean;
+
+  /** Sunlight and time (header control): 'full-moon' (default), 'now', 'even'. */
+  readonly sunlight: SunlightApi;
+  /** Result markers on both globes. */
+  readonly markers: MarkersApi;
+  /** Paired fly-to for the comparison view. */
+  readonly focus: FocusApi;
+  /** Light beams between Earth points and their lunar twins. */
+  readonly beams: BeamsApi;
+  /** Mission video dialog. */
+  readonly video: VideoApi;
+}
+
+export interface Modules {
+  sunlight: SunlightApi;
+  markers: MarkersApi;
+  focus: FocusApi;
+  beams: BeamsApi;
+  video: VideoApi;
+}
+let modules: Modules | undefined;
+function mod<K extends keyof Modules>(key: K): Modules[K] {
+  if (!modules) throw new Error(`globesApi.${key} used before the globes were created; await globesApi.ready`);
+  return modules[key];
 }
 
 const scratch = new Cartesian2();
@@ -137,12 +171,29 @@ export const globesApi: GlobesApi = {
   prefersReducedMotion() {
     return reducedQuery?.matches ?? false;
   },
+
+  get sunlight() {
+    return mod('sunlight');
+  },
+  get markers() {
+    return mod('markers');
+  },
+  get focus() {
+    return mod('focus');
+  },
+  get beams() {
+    return mod('beams');
+  },
+  get video() {
+    return mod('video');
+  },
 };
 
 /** Internal: called once by main.ts after the scenes are built. */
-export function bindGlobes(g: Globes, setLabels: (v: boolean) => void): void {
+export function bindGlobes(g: Globes, setLabels: (v: boolean) => void, m: Modules): void {
   globes = g;
   labelsSetter = setLabels;
+  modules = m;
   for (const v of [g.earth, g.moon]) {
     const fire = () => listeners.forEach((l) => l(v.body));
     v.scene.camera.changed.addEventListener(fire);
