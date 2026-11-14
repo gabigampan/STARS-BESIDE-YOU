@@ -1,0 +1,36 @@
+Sí, puedo hacerlo. Primero reviso cómo está estructurado lo que ya existe (mission_filters.py/json y el uso en main.py) para integrarlo sin duplicar, y miro la distribución de los datos terrestres para fijar umbrales razonables.
+
+Sí, lo he creado, y lo dejé separado del mission_filters.py anterior, que no toqué. Son dos archivos nuevos, mission_scoring.py y mission_scoring.json. La mejor opción es copiarlos a la carpeta “tierra luna”. Probé el código con 5 comprobaciones propias, que pasan, y con los datos reales de la Tierra.
+
+Cómo funciona
+
+Filtro duro: si una celda incumple un solo criterio, la zona se descarta para esa misión (pass_<misión> = 0). El motivo queda en fail_<misión>, por ejemplo “irradiance fuera de [2.5, inf]”.
+Filtro ponderado: las celdas que pasan reciben una puntuación de 0 a 100, que es la media ponderada de una utilidad por variable. Cada variable tiene un valor bad (utilidad 0) y un valor good (utilidad 1), con interpolación lineal. Las variables categóricas usan una tabla, por ejemplo roca = 1,0 y suelo = 0,6.
+Dato ausente: nunca cuenta como 0. En un filtro duro la celda se descarta, y en uno ponderado esa variable se ignora y se renormalizan los pesos.
+Filtros comunes: solo tierra firme (elevation_m ≥ 1) y mask_fraction ≥ 0,3.
+
+Misiones
+
+Misión	Filtros duros (descartan)	Más peso (ponderados)
+Placas solares	irradiancia ≥ 2,5, pendiente ≤ 15°, elevación solar máxima ≥ 10°, sol rasante ≤ 25 %, no agua	irradiancia 0,35; elevación solar, sol rasante y pendiente 0,15 cada una; amplitud térmica y rugosidad 0,10 cada una
+Resistencia térmica	amplitud térmica diaria ≥ 15 K, temperatura mínima ≤ 5 °C, no agua	amplitud térmica 0,35, temperatura mínima 0,25, tipo de superficie 0,15, roca expuesta 0,10, irradiancia 0,10, permafrost 0,05
+Rover	pendiente por definir	Hueco para tu compañero: solo tiene que rellenar gates y soft con el mismo esquema, sin tocar código
+
+Resultados sobre las 16.200 celdas terrestres
+
+Solar: 5.192 pasan los filtros duros, y los mejores sitios están en el Sahel y el Sahara.
+Térmico: 2.613 pasan, con la meseta tibetana y la Antártida arriba.
+Pasan ambas misiones: 1.986.
+
+Uso
+
+python mission_scoring.py run --cells output_py/earth_moon_harmonized_clean.csv --missions solar,thermal --out output_py/mission_scores.csv
+python mission_scoring.py selftest
+
+También puedes llamar a evaluate(df, ["solar","thermal"]) desde código. Acepta pesos nuevos en caliente, por ejemplo para los sliders de la web. combine_with_similarity mezcla la puntuación de misión con similarity_pct.
+
+Qué tienes que revisar
+
+Umbrales y pesos: son valores de diseño míos, no vienen de una fuente externa. Están todos en el JSON, cada uno con su campo why, para que el equipo los valide o cambie.
+Amplitud térmica en la Tierra: llega como máximo a 39 K, frente a 63–180 K en la Luna. El good de la misión térmica está fijado en 35 K, porque ningún sitio terrestre iguala a la Luna.
+Variables del modelo: tmin_c y las variables derivadas son estimaciones del modelo local, no datos reales. Por eso los resultados orientan más que miden.
