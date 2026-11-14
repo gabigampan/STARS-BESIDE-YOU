@@ -1,0 +1,92 @@
+rows 64800; unique cell_id 64800
+land cells (mask_fraction > 0): 25497; >= 0.3: 22222
+
+range of numeric columns (land cells):
+  row                          n= 25497  min=         6  p50=        70  max=       179
+  col                          n= 25497  min=         0  p50=       206  max=       359
+  lat_deg                      n= 25497  min=     -89.5  p50=      19.5  max=      83.5
+  lon_deg                      n= 25497  min=    -179.5  p50=      26.5  max=     179.5
+  cell_km                      n= 25497  min=     110.6  p50=     111.3  max=     111.7
+  elevation_m                  n= 25245  min=     -2570  p50=     465.6  max=      5420
+  mask_fraction                n= 25497  min=    0.0001  p50=    0.9954  max=         1
+  slope_deg                    n= 24918  min=     0.007  p50=     0.557  max=     18.93
+  slope_p90_deg                n= 24918  min=     0.013  p50=     1.091  max=      32.1
+  slope_iso_deg                n= 24783  min=     0.004  p50=      0.48  max=     17.19
+  slope_iso_p90_deg            n= 24783  min=     0.004  p50=     0.906  max=     22.86
+  roughness_m                  n= 25121  min=      0.01  p50=     18.09  max=     559.1
+  rock_or_bare_frac            n= 25497  min=         0  p50=    0.0011  max=         1
+  temp_k                       n= 18736  min=     238.1  p50=     284.5  max=     309.7
+  lst_diurnal_amp_k            n= 18736  min=      -4.6  p50=      8.54  max=      35.7
+  lst_diurnal_amp_max_k        n= 18729  min=     -0.25  p50=     13.53  max=     44.74
+  lst_diurnal_amp_max_month    n= 18729  min=         1  p50=         6  max=        12
+  tmin_c                       n= 25448  min=    -72.28  p50=    -19.34  max=      26.2
+  irradiance_kwh_m2_day        n= 25448  min=     1.412  p50=     3.688  max=      6.44
+  sun_elev_max_deg             n= 25497  min=     23.94  p50=     58.94  max=        90
+  sun_low_frac_0_5deg          n= 25497  min=    0.0579  p50=    0.1124  max=     0.211
+  permafrost_area_frac         n= 12484  min=         0  p50=   0.02945  max=         1
+  rain_mm_day                  n= 25448  min=         0  p50=     0.994  max=     17.57
+  wind_max_ms                  n= 25448  min=       0.8  p50=      4.09  max=     25.87
+  elevation_all_m              n= 25497  min=     -6277  p50=     420.7  max=      5413
+  bare_frac                    n= 25497  min=         0  p50=         0  max=         1
+  snow_ice_frac                n= 25497  min=         0  p50=         0  max=         1
+  lc_dominant_cci_code         n= 25497  min=        10  p50=       200  max=       220
+  n_dem_land_px                n= 25497  min=         0  p50=      3596  max=      3600
+  n_dem_slope_px               n= 25497  min=         0  p50=      3580  max=      3600
+  n_lst_px                     n= 25497  min=         0  p50=  1.44e+04  max=  1.44e+04
+  n_worldclim_px               n= 25497  min=         0  p50=        36  max=        36
+  n_permafrost_px              n= 25497  min=         0  p50=         0  max= 2.787e+04
+
+thermal_inertia_class: {'suelo': 11470, 'hielo': 6706, 'agua': 4421, 'regolito': 2898, 'roca': 2}
+
+permafrost_class: {'<empty>': 13013, 'ninguno': 5829, 'continuo': 3976, 'esporadico': 1954, 'discontinuo': 725}
+
+mission-variable completeness on land cells:
+  elevation_m              0.990
+  mask_fraction            1.000
+  slope_deg                0.977
+  roughness_m              0.985
+  rock_or_bare_frac        1.000
+  temp_k                   0.735
+  lst_diurnal_amp_k        0.735
+  tmin_c                   0.998
+  irradiance_kwh_m2_day    0.998
+  sun_elev_max_deg         1.000
+  sun_low_frac_0_5deg      1.000
+  thermal_inertia_class    1.000
+  permafrost_class         0.490
+  rain_mm_day              0.998
+  wind_max_ms              0.998
+land cells with every mission variable present: 11425 of 25497
+... ignoring permafrost_class: 18362
+
+largest annual-mean diurnal amplitude 35.70 K at cell E40430 (-22.5, -69.5)
+largest monthly diurnal amplitude 44.74 K at cell E41511 (-25.5, -68.5) month 12.0
+top 5 annual amplitude:
+      cell_id  lat_deg  lon_deg  lst_diurnal_amp_k  lst_diurnal_amp_max_k  elevation_m  mask_fraction
+40430  E40430    -22.5    -69.5              35.70                  43.53       1653.0         1.0000
+40790  E40790    -23.5    -69.5              35.30                  43.42       1677.4         0.9999
+41511  E41511    -25.5    -68.5              34.74                  44.74       4229.9         0.9979
+41150  E41150    -24.5    -69.5              34.44                  42.38       2205.7         1.0000
+40070  E40070    -21.5    -69.5              33.88                  41.40       1365.6         1.0000
+
+places:
+- Mount Everest (27.988, 86.925) -> cell_id=E22586; elevation_m=2562.7; mask_fraction=0.9993; slope_deg=10.498; slope_p90_deg=17.826; roughness_m=339.13; rock_or_bare_frac=0.0072; temp_k=284.63; lst_diurnal_amp_k=11.21; lst_diurnal_amp_max_k=14.11; tmin_c=-1.94; irradiance_kwh_m2_day=4.673; rain_mm_day=3.792; wind_max_ms=2.73; sun_elev_max_deg=85.939; sun_low_frac_0_5deg=0.06624; thermal_inertia_class=suelo; permafrost_class=esporadico; permafrost_area_frac=0.0958
+- Central Sahara (Algeria-Libya border) (25.5, 10.5) -> cell_id=E23230; elevation_m=713.2; mask_fraction=1.0; slope_deg=0.682; slope_p90_deg=1.442; roughness_m=31.05; rock_or_bare_frac=0.9851; temp_k=302.7; lst_diurnal_amp_k=21.82; lst_diurnal_amp_max_k=24.26; tmin_c=5.7; irradiance_kwh_m2_day=6.059; rain_mm_day=0.044; wind_max_ms=4.37; sun_elev_max_deg=87.939; sun_low_frac_0_5deg=0.06494; thermal_inertia_class=regolito; permafrost_class=nan; permafrost_area_frac=nan
+- Atacama (Yungay) (-24.08, -69.92) -> cell_id=E41150; elevation_m=2205.7; mask_fraction=1.0; slope_deg=2.467; slope_p90_deg=4.95; roughness_m=76.82; rock_or_bare_frac=0.9884; temp_k=296.01; lst_diurnal_amp_k=34.44; lst_diurnal_amp_max_k=42.38; tmin_c=2.64; irradiance_kwh_m2_day=5.985; rain_mm_day=0.018; wind_max_ms=4.62; sun_elev_max_deg=88.939; sun_low_frac_0_5deg=0.06436; thermal_inertia_class=regolito; permafrost_class=nan; permafrost_area_frac=nan
+- Tibet (Changtang) (33.5, 86.5) -> cell_id=E20426; elevation_m=5062.2; mask_fraction=0.9747; slope_deg=2.325; slope_p90_deg=4.832; roughness_m=79.18; rock_or_bare_frac=0.1933; temp_k=273.26; lst_diurnal_amp_k=25.14; lst_diurnal_amp_max_k=31.98; tmin_c=-24.21; irradiance_kwh_m2_day=4.552; rain_mm_day=0.359; wind_max_ms=4.92; sun_elev_max_deg=79.939; sun_low_frac_0_5deg=0.07106; thermal_inertia_class=suelo; permafrost_class=discontinuo; permafrost_area_frac=0.8525
+- Death Valley (Badwater) (36.25, -116.83) -> cell_id=E19143; elevation_m=893.8; mask_fraction=0.9999; slope_deg=3.242; slope_p90_deg=7.14; roughness_m=111.73; rock_or_bare_frac=0.0536; temp_k=296.14; lst_diurnal_amp_k=20.56; lst_diurnal_amp_max_k=26.29; tmin_c=-1.37; irradiance_kwh_m2_day=5.423; rain_mm_day=0.335; wind_max_ms=4.74; sun_elev_max_deg=76.939; sun_low_frac_0_5deg=0.07415; thermal_inertia_class=suelo; permafrost_class=ninguno; permafrost_area_frac=0.0
+- Dome C (Concordia) (-75.1, 123.35) -> cell_id=E59703; elevation_m=3239.6; mask_fraction=1.0; slope_deg=0.044; slope_p90_deg=0.065; roughness_m=1.09; rock_or_bare_frac=0.0; temp_k=nan; lst_diurnal_amp_k=nan; lst_diurnal_amp_max_k=nan; tmin_c=-49.27; irradiance_kwh_m2_day=3.708; rain_mm_day=0.117; wind_max_ms=3.21; sun_elev_max_deg=37.939; sun_low_frac_0_5deg=0.16107; thermal_inertia_class=hielo; permafrost_class=nan; permafrost_area_frac=nan
+- Amazon (Manaus) (-3.1, -60.02) -> cell_id=E33599; elevation_m=30.5; mask_fraction=0.8218; slope_deg=0.1; slope_p90_deg=0.216; roughness_m=4.41; rock_or_bare_frac=0.0001; temp_k=298.95; lst_diurnal_amp_k=4.41; lst_diurnal_amp_max_k=6.6; tmin_c=22.33; irradiance_kwh_m2_day=4.019; rain_mm_day=6.18; wind_max_ms=1.21; sun_elev_max_deg=90.0; sun_low_frac_0_5deg=0.05814; thermal_inertia_class=suelo; permafrost_class=nan; permafrost_area_frac=nan
+- Iceland interior (64.8, -18.5) -> cell_id=E9161; elevation_m=781.4; mask_fraction=0.9211; slope_deg=1.722; slope_p90_deg=3.863; roughness_m=56.31; rock_or_bare_frac=0.7759; temp_k=269.45; lst_diurnal_amp_k=5.93; lst_diurnal_amp_max_k=14.55; tmin_c=-7.4; irradiance_kwh_m2_day=2.071; rain_mm_day=3.455; wind_max_ms=8.7; sun_elev_max_deg=48.939; sun_low_frac_0_5deg=0.19832; thermal_inertia_class=regolito; permafrost_class=esporadico; permafrost_area_frac=0.1829
+- Tabernas, Spain (37.05, -2.39) -> cell_id=E18897; elevation_m=1043.6; mask_fraction=0.9975; slope_deg=3.358; slope_p90_deg=7.254; roughness_m=110.71; rock_or_bare_frac=0.1463; temp_k=290.18; lst_diurnal_amp_k=15.59; lst_diurnal_amp_max_k=21.34; tmin_c=-0.52; irradiance_kwh_m2_day=4.732; rain_mm_day=1.194; wind_max_ms=3.84; sun_elev_max_deg=75.939; sun_low_frac_0_5deg=0.07529; thermal_inertia_class=suelo; permafrost_class=ninguno; permafrost_area_frac=0.0
+- Devon Island (Haughton) (75.38, -89.68) -> cell_id=E5130; elevation_m=263.9; mask_fraction=0.7644; slope_deg=1.707; slope_p90_deg=3.562; roughness_m=52.19; rock_or_bare_frac=0.9991; temp_k=253.03; lst_diurnal_amp_k=2.5; lst_diurnal_amp_max_k=5.76; tmin_c=-37.87; irradiance_kwh_m2_day=2.427; rain_mm_day=0.502; wind_max_ms=4.05; sun_elev_max_deg=37.939; sun_low_frac_0_5deg=0.16107; thermal_inertia_class=regolito; permafrost_class=continuo; permafrost_area_frac=1.0
+- Mauna Kea, Hawaii (19.82, -155.47) -> cell_id=E25224; elevation_m=1345.1; mask_fraction=0.7459; slope_deg=5.12; slope_p90_deg=8.741; roughness_m=135.55; rock_or_bare_frac=0.2196; temp_k=293.82; lst_diurnal_amp_k=16.8; lst_diurnal_amp_max_k=18.37; tmin_c=10.87; irradiance_kwh_m2_day=4.961; rain_mm_day=4.889; wind_max_ms=6.36; sun_elev_max_deg=90.0; sun_low_frac_0_5deg=0.06188; thermal_inertia_class=suelo; permafrost_class=ninguno; permafrost_area_frac=0.0
+- Hanksville, Utah (38.37, -110.71) -> cell_id=E18429; elevation_m=1619.4; mask_fraction=0.9992; slope_deg=2.045; slope_p90_deg=4.37; roughness_m=74.14; rock_or_bare_frac=0.2075; temp_k=288.7; lst_diurnal_amp_k=19.63; lst_diurnal_amp_max_k=27.19; tmin_c=-9.9; irradiance_kwh_m2_day=4.86; rain_mm_day=0.541; wind_max_ms=3.38; sun_elev_max_deg=74.939; sun_low_frac_0_5deg=0.07652; thermal_inertia_class=suelo; permafrost_class=ninguno; permafrost_area_frac=0.0
+- Yakutsk (62.03, 129.73) -> cell_id=E10029; elevation_m=167.4; mask_fraction=0.9361; slope_deg=0.376; slope_p90_deg=0.958; roughness_m=16.04; rock_or_bare_frac=0.0442; temp_k=262.32; lst_diurnal_amp_k=8.53; lst_diurnal_amp_max_k=13.15; tmin_c=-43.49; irradiance_kwh_m2_day=2.922; rain_mm_day=0.736; wind_max_ms=2.73; sun_elev_max_deg=50.939; sun_low_frac_0_5deg=0.181; thermal_inertia_class=suelo; permafrost_class=continuo; permafrost_area_frac=0.999
+- Longyearbyen, Svalbard (78.22, 15.65) -> cell_id=E4155; elevation_m=374.5; mask_fraction=0.6744; slope_deg=8.705; slope_p90_deg=16.548; roughness_m=203.25; rock_or_bare_frac=0.7811; temp_k=262.72; lst_diurnal_amp_k=1.86; lst_diurnal_amp_max_k=5.22; tmin_c=-19.63; irradiance_kwh_m2_day=1.872; rain_mm_day=1.121; wind_max_ms=5.79; sun_elev_max_deg=34.939; sun_low_frac_0_5deg=0.15188; thermal_inertia_class=regolito; permafrost_class=continuo; permafrost_area_frac=0.9906
+- Dead Sea (31.5, 35.5) -> cell_id=E21095; elevation_m=473.0; mask_fraction=0.9159; slope_deg=2.643; slope_p90_deg=6.023; roughness_m=93.61; rock_or_bare_frac=0.6027; temp_k=297.38; lst_diurnal_amp_k=15.53; lst_diurnal_amp_max_k=19.77; tmin_c=6.1; irradiance_kwh_m2_day=5.362; rain_mm_day=0.707; wind_max_ms=3.25; sun_elev_max_deg=81.939; sun_low_frac_0_5deg=0.06927; thermal_inertia_class=regolito; permafrost_class=ninguno; permafrost_area_frac=0.0
+- Greenland Summit (72.58, -38.46) -> cell_id=E6261; elevation_m=3187.6; mask_fraction=1.0; slope_deg=0.076; slope_p90_deg=0.103; roughness_m=1.79; rock_or_bare_frac=0.0; temp_k=238.14; lst_diurnal_amp_k=5.2; lst_diurnal_amp_max_k=9.05; tmin_c=-41.68; irradiance_kwh_m2_day=2.207; rain_mm_day=2.525; wind_max_ms=10.2; sun_elev_max_deg=40.939; sun_low_frac_0_5deg=0.17879; thermal_inertia_class=hielo; permafrost_class=nan; permafrost_area_frac=nan
+- South Pole (-89.99, 0.0) -> cell_id=E64620; elevation_m=2758.4; mask_fraction=0.9972; slope_deg=0.58; slope_p90_deg=2.203; roughness_m=7.12; rock_or_bare_frac=0.0; temp_k=nan; lst_diurnal_amp_k=nan; lst_diurnal_amp_max_k=nan; tmin_c=-62.06; irradiance_kwh_m2_day=3.683; rain_mm_day=0.054; wind_max_ms=6.35; sun_elev_max_deg=23.939; sun_low_frac_0_5deg=0.14081; thermal_inertia_class=hielo; permafrost_class=nan; permafrost_area_frac=nan
+- Equatorial Pacific (ocean) (0.5, -150.5) -> cell_id=E32069; elevation_m=nan; mask_fraction=0.0; slope_deg=nan; slope_p90_deg=nan; roughness_m=nan; rock_or_bare_frac=nan; temp_k=nan; lst_diurnal_amp_k=nan; lst_diurnal_amp_max_k=nan; tmin_c=nan; irradiance_kwh_m2_day=nan; rain_mm_day=nan; wind_max_ms=nan; sun_elev_max_deg=90.0; sun_low_frac_0_5deg=0.05799; thermal_inertia_class=agua; permafrost_class=nan; permafrost_area_frac=nan
+- Lut Desert, Iran (30.5, 58.5) -> cell_id=E21478; elevation_m=357.0; mask_fraction=1.0; slope_deg=0.567; slope_p90_deg=1.161; roughness_m=20.5; rock_or_bare_frac=0.9998; temp_k=305.72; lst_diurnal_amp_k=27.14; lst_diurnal_amp_max_k=31.35; tmin_c=5.65; irradiance_kwh_m2_day=5.344; rain_mm_day=0.371; wind_max_ms=4.57; sun_elev_max_deg=82.939; sun_low_frac_0_5deg=0.06846; thermal_inertia_class=regolito; permafrost_class=ninguno; permafrost_area_frac=0.0
+- McMurdo Dry Valleys (-77.5, 162.5) -> cell_id=E60462; elevation_m=926.9; mask_fraction=0.9927; slope_deg=8.58; slope_p90_deg=17.551; roughness_m=250.79; rock_or_bare_frac=0.0; temp_k=nan; lst_diurnal_amp_k=nan; lst_diurnal_amp_max_k=nan; tmin_c=-33.78; irradiance_kwh_m2_day=3.462; rain_mm_day=0.243; wind_max_ms=7.15; sun_elev_max_deg=35.939; sun_low_frac_0_5deg=0.15439; thermal_inertia_class=hielo; permafrost_class=continuo; permafrost_area_frac=1.0

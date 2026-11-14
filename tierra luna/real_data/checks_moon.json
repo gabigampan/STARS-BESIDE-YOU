@@ -1,0 +1,488 @@
+{
+ "elevation_vs_committed_2deg": {
+  "matched_cells": 16200,
+  "ref_cells": 16200,
+  "mean_diff_m": -4.977073065379399,
+  "median_abs_diff_m": 10.393006009952842,
+  "p99_abs_diff_m": 253.88548550650077,
+  "max_abs_diff_m": 1098.1143118969524,
+  "corr": 0.9995288165361771,
+  "max_abs_diff_m_excluding_rows_at_|lat|=89": 519.9541854422815
+ },
+ "elevation_committed_table_explained": {
+  "LDEM_4_version": "V3.0",
+  "committed_minus_unweighted_LDEM4_2deg_max_abs_m": 0.0006874999999126885,
+  "committed_minus_weighted_LDEM4_2deg_max_abs_m": 1059.9595787120804,
+  "this_table_minus_weighted_LDEM4_2deg_median_abs_m": 8.428331543503816,
+  "this_table_minus_weighted_LDEM4_2deg_max_abs_m": 143.5263520272017,
+  "reading": "The committed table is an UNWEIGHTED block mean of LDEM_4. Toward the poles an unweighted mean over-counts the small high-latitude pixels of each 2-degree cell, hence differences of 100-1100 m poleward of ~73 deg (largest at -89). Below 80 deg the median difference is ~9 m. Area-weighted, LDEM_4 (V3.0) and this LDEM_16 (V3.1) table agree to a median of ~8 m."
+ },
+ "temperature_vs_R2_profile": {
+  "0-10N": {
+   "this_max": 391.4,
+   "R2_max": 391.8,
+   "this_min": 94.4,
+   "R2_min": 94.4,
+   "this_amp": 297.3,
+   "R2_amp": 297.7
+  },
+  "0-10S": {
+   "this_max": 391.1,
+   "R2_max": 391.3,
+   "this_min": 94.2,
+   "R2_min": 94.6,
+   "this_amp": 297.1,
+   "R2_amp": 297.0
+  },
+  "20-30N": {
+   "this_max": 379.8,
+   "R2_max": 379.4,
+   "this_min": 92.6,
+   "R2_min": 92.3,
+   "this_amp": 287.2,
+   "R2_amp": 286.5
+  },
+  "40-50N": {
+   "this_max": 353.7,
+   "R2_max": 353.8,
+   "this_min": 87.9,
+   "R2_min": 87.6,
+   "this_amp": 265.7,
+   "R2_amp": 265.7
+  },
+  "60-70N": {
+   "this_max": 308.1,
+   "R2_max": 307.3,
+   "this_min": 79.5,
+   "R2_min": 79.3,
+   "this_amp": 228.6,
+   "R2_amp": 228.1
+  },
+  "70-80N": {
+   "this_max": 274.9,
+   "R2_max": 275.8,
+   "this_min": 71.0,
+   "R2_min": 71.5,
+   "this_amp": 204.0,
+   "R2_amp": 204.2
+  },
+  "70-80S": {
+   "this_max": 277.7,
+   "R2_max": 275.4,
+   "this_min": 70.8,
+   "R2_min": 71.7,
+   "this_amp": 207.5,
+   "R2_amp": 204.1
+  },
+  "80-90N": {
+   "this_max": 221.2,
+   "R2_max": 222.4,
+   "this_min": 55.1,
+   "R2_min": 55.4,
+   "this_amp": 165.7,
+   "R2_amp": 164.8
+  },
+  "80-90S": {
+   "this_max": 231.9,
+   "R2_max": 229.3,
+   "this_min": 54.9,
+   "R2_min": 51.4,
+   "this_amp": 176.9,
+   "R2_amp": 175.7
+  }
+ },
+ "equator_published_check": {
+  "median_tmax_k_|lat|<5": 391.73,
+  "median_tmin_k_|lat|<5": 94.41499999999999,
+  "published": "95 K to 390 K (NSSDC Moon fact sheet); ~387-397 K noon, ~95 K pre-dawn (Williams et al. 2017)"
+ },
+ "ranges": {
+  "body": {
+   "values": [
+    "MOON"
+   ],
+   "empty": 0
+  },
+  "row": {
+   "min": 0.0,
+   "max": 179.0,
+   "empty": 0
+  },
+  "col": {
+   "min": 0.0,
+   "max": 359.0,
+   "empty": 0
+  },
+  "cell_id": {
+   "values": [
+    "M0",
+    "M1",
+    "M10",
+    "M100",
+    "M1000",
+    "M10000",
+    "M10001",
+    "M10002"
+   ],
+   "empty": 0
+  },
+  "lat_deg": {
+   "min": -89.5,
+   "max": 89.5,
+   "empty": 0
+  },
+  "lon_deg": {
+   "min": -179.5,
+   "max": 179.5,
+   "empty": 0
+  },
+  "cell_km": {
+   "min": 30.323,
+   "max": 30.323,
+   "empty": 0
+  },
+  "elevation_m": {
+   "min": -8175.5,
+   "max": 9101.9,
+   "empty": 0
+  },
+  "slope_deg": {
+   "min": 0.057,
+   "max": 24.563,
+   "empty": 0
+  },
+  "slope_p90_deg": {
+   "min": 0.091,
+   "max": 84.057,
+   "empty": 0
+  },
+  "slope_iso_deg": {
+   "min": 0.051,
+   "max": 22.846,
+   "empty": 0
+  },
+  "slope_iso_p90_deg": {
+   "min": 0.088,
+   "max": 31.512,
+   "empty": 0
+  },
+  "roughness_m": {
+   "min": 1.57,
+   "max": 616.28,
+   "empty": 0
+  },
+  "mask_fraction": {
+   "min": 1.0,
+   "max": 1.0,
+   "empty": 0
+  },
+  "rock_or_bare_frac": {
+   "min": 1.0,
+   "max": 1.0,
+   "empty": 0
+  },
+  "rock_abundance_frac": {
+   "min": 0.0015,
+   "max": 0.0762,
+   "empty": 21608
+  },
+  "temp_k": {
+   "min": 41.12,
+   "max": 223.86,
+   "empty": 0
+  },
+  "tmax_k": {
+   "min": 59.4,
+   "max": 405.61,
+   "empty": 0
+  },
+  "tmin_k": {
+   "min": 26.84,
+   "max": 114.04,
+   "empty": 0
+  },
+  "lst_diurnal_amp_k": {
+   "min": 30.68,
+   "max": 311.75,
+   "empty": 0
+  },
+  "tmin_c": {
+   "min": -246.31,
+   "max": -159.11,
+   "empty": 0
+  },
+  "temp_n_subcells": {
+   "min": 4.0,
+   "max": 4.0,
+   "empty": 0
+  },
+  "illum_frac": {
+   "min": 0.0,
+   "max": 0.5034,
+   "empty": 0
+  },
+  "illum_frac_level": {
+   "values": [
+    "DERIVED_FLAT_GEOMETRY",
+    "DERIVED_LOLA_TOPOGRAPHY"
+   ],
+   "empty": 0
+  },
+  "irradiance_kwh_m2_day": {
+   "min": 0.0,
+   "max": 10.395,
+   "empty": 0
+  },
+  "sun_elev_max_deg": {
+   "min": 2.04,
+   "max": 90.0,
+   "empty": 0
+  },
+  "sun_low_frac_0_5deg": {
+   "min": 0.0556,
+   "max": 1.0,
+   "empty": 0
+  },
+  "thermal_inertia_class": {
+   "values": [
+    "regolito"
+   ],
+   "empty": 0
+  },
+  "permafrost_class": {
+   "values": [],
+   "empty": 64800
+  },
+  "rain_mm_day": {
+   "min": null,
+   "max": null,
+   "empty": 64800
+  },
+  "wind_max_ms": {
+   "min": null,
+   "max": null,
+   "empty": 64800
+  }
+ },
+ "gcp_nonpositive_tbol_values_dropped": 0,
+ "gcp_labels_with_swapped_min_max_latitude": [
+  "40s30s"
+ ],
+ "gcp_halfdeg_bins_too_few_valid": 0,
+ "gcp_halfdeg_bins_gap_too_long": 0,
+ "rock_raw_pixel_max": 1.062,
+ "illum_info": {
+  "65S": {
+   "dtype_max": 23369.0,
+   "nodata": -32768.0,
+   "scales": [
+    4e-05
+   ],
+   "offsets": [
+    0.0
+   ],
+   "crs": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJEC",
+   "pixels_used": 32366728
+  },
+  "65N": {
+   "dtype_max": 22271.0,
+   "nodata": -32768.0,
+   "scales": [
+    4e-05
+   ],
+   "offsets": [
+    0.0
+   ],
+   "crs": "PROJCS[\"Moon2000_npole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJEC",
+   "pixels_used": 32366728
+  }
+ },
+ "slope_literal_vs_isotropic_by_lat": {
+  "0-30": {
+   "literal": 4.728,
+   "isotropic": 4.685
+  },
+  "30-60": {
+   "literal": 4.923,
+   "isotropic": 4.681
+  },
+  "60-80": {
+   "literal": 5.772,
+   "isotropic": 5.226
+  },
+  "80-85": {
+   "literal": 6.465,
+   "isotropic": 5.545
+  },
+  "85-88": {
+   "literal": 6.917,
+   "isotropic": 5.549
+  },
+  "88-89": {
+   "literal": 7.388,
+   "isotropic": 5.466
+  },
+  "89-90": {
+   "literal": 9.776,
+   "isotropic": 6.056
+  }
+ },
+ "sun_geometry_samples": {
+  "0.5": {
+   "sun_elev_max_deg": 90.0,
+   "day_frac": 0.5,
+   "disc_frac": 0.50139,
+   "low_frac": 0.05556,
+   "mean_sin_pos": 0.31824,
+   "mean_sin_day": 0.63648,
+   "irr_geo_kwh": 10.395
+  },
+  "45.5": {
+   "sun_elev_max_deg": 46.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.50213,
+   "low_frac": 0.07945,
+   "mean_sin_pos": 0.22311,
+   "mean_sin_day": 0.44622,
+   "irr_geo_kwh": 7.2876
+  },
+  "60.5": {
+   "sun_elev_max_deg": 31.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.50303,
+   "low_frac": 0.11338,
+   "mean_sin_pos": 0.1568,
+   "mean_sin_day": 0.31361,
+   "irr_geo_kwh": 5.1218
+  },
+  "80.5": {
+   "sun_elev_max_deg": 11.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.50903,
+   "low_frac": 0.35791,
+   "mean_sin_pos": 0.05287,
+   "mean_sin_day": 0.10573,
+   "irr_geo_kwh": 1.7268
+  },
+  "85.5": {
+   "sun_elev_max_deg": 6.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.51951,
+   "low_frac": 0.86638,
+   "mean_sin_pos": 0.0257,
+   "mean_sin_day": 0.05141,
+   "irr_geo_kwh": 0.8396
+  },
+  "88.5": {
+   "sun_elev_max_deg": 3.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.58554,
+   "low_frac": 1.0,
+   "mean_sin_pos": 0.01075,
+   "mean_sin_day": 0.02151,
+   "irr_geo_kwh": 0.3512
+  },
+  "89.5": {
+   "sun_elev_max_deg": 2.04,
+   "day_frac": 0.5,
+   "disc_frac": 0.55706,
+   "low_frac": 1.0,
+   "mean_sin_pos": 0.00878,
+   "mean_sin_day": 0.01756,
+   "irr_geo_kwh": 0.2868
+  }
+ },
+ "summary": {
+  "rows": 64800,
+  "elevation": {
+   "matched_cells": 16200,
+   "ref_cells": 16200,
+   "mean_diff_m": -4.977073065379399,
+   "median_abs_diff_m": 10.393006009952842,
+   "p99_abs_diff_m": 253.88548550650077,
+   "max_abs_diff_m": 1098.1143118969524,
+   "corr": 0.9995288165361771,
+   "max_abs_diff_m_excluding_rows_at_|lat|=89": 519.9541854422815
+  },
+  "empty_counts": {
+   "rock_abundance_frac": 21608,
+   "permafrost_class": 64800,
+   "rain_mm_day": 64800,
+   "wind_max_ms": 64800
+  },
+  "temperature_profile": {
+   "0-10N": {
+    "this_max": 391.4,
+    "R2_max": 391.8,
+    "this_min": 94.4,
+    "R2_min": 94.4,
+    "this_amp": 297.3,
+    "R2_amp": 297.7
+   },
+   "0-10S": {
+    "this_max": 391.1,
+    "R2_max": 391.3,
+    "this_min": 94.2,
+    "R2_min": 94.6,
+    "this_amp": 297.1,
+    "R2_amp": 297.0
+   },
+   "20-30N": {
+    "this_max": 379.8,
+    "R2_max": 379.4,
+    "this_min": 92.6,
+    "R2_min": 92.3,
+    "this_amp": 287.2,
+    "R2_amp": 286.5
+   },
+   "40-50N": {
+    "this_max": 353.7,
+    "R2_max": 353.8,
+    "this_min": 87.9,
+    "R2_min": 87.6,
+    "this_amp": 265.7,
+    "R2_amp": 265.7
+   },
+   "60-70N": {
+    "this_max": 308.1,
+    "R2_max": 307.3,
+    "this_min": 79.5,
+    "R2_min": 79.3,
+    "this_amp": 228.6,
+    "R2_amp": 228.1
+   },
+   "70-80N": {
+    "this_max": 274.9,
+    "R2_max": 275.8,
+    "this_min": 71.0,
+    "R2_min": 71.5,
+    "this_amp": 204.0,
+    "R2_amp": 204.2
+   },
+   "70-80S": {
+    "this_max": 277.7,
+    "R2_max": 275.4,
+    "this_min": 70.8,
+    "R2_min": 71.7,
+    "this_amp": 207.5,
+    "R2_amp": 204.1
+   },
+   "80-90N": {
+    "this_max": 221.2,
+    "R2_max": 222.4,
+    "this_min": 55.1,
+    "R2_min": 55.4,
+    "this_amp": 165.7,
+    "R2_amp": 164.8
+   },
+   "80-90S": {
+    "this_max": 231.9,
+    "R2_max": 229.3,
+    "this_min": 54.9,
+    "R2_min": 51.4,
+    "this_amp": 176.9,
+    "R2_amp": 175.7
+   }
+  }
+ }
+}

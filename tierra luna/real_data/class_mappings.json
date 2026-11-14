@@ -1,0 +1,222 @@
+{
+ "EARTH": {
+  "thermal_inertia_class_from_esa_cci_lccs": {
+   "level": "MODELLED",
+   "assumption": "This mapping is an ASSUMPTION of the build, not a measured thermal inertia. ESA CCI land cover classes describe cover type, not thermal inertia; each class is assigned to the team category whose thermal behaviour it most resembles. The cell's thermal_inertia_class is the category that holds the largest number of 300 m CCI pixels in the 1-degree cell (water pixels included, CCI 'no data' (0) excluded).",
+   "source": "ESA CCI / C3S Land Cover 2020 v2.1.1 LCCS legend (Product User Guide v2, https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf)",
+   "classes": {
+    "10": {
+     "cci_label": "Cropland, rainfed",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "11": {
+     "cci_label": "Cropland, rainfed, herbaceous cover",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "12": {
+     "cci_label": "Cropland, rainfed, tree or shrub cover",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "20": {
+     "cci_label": "Cropland, irrigated or post-flooding",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category; irrigation raises soil moisture and thermal inertia further"
+    },
+    "30": {
+     "cci_label": "Mosaic cropland (>50%) / natural vegetation",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "40": {
+     "cci_label": "Mosaic natural vegetation (>50%) / cropland",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "50": {
+     "cci_label": "Tree cover, broadleaved, evergreen, closed to open (>15%)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "60": {
+     "cci_label": "Tree cover, broadleaved, deciduous (60)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "61": {
+     "cci_label": "Tree cover, broadleaved, deciduous (61)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "62": {
+     "cci_label": "Tree cover, broadleaved, deciduous (62)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "70": {
+     "cci_label": "Tree cover, needleleaved, evergreen (70)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "71": {
+     "cci_label": "Tree cover, needleleaved, evergreen (71)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "72": {
+     "cci_label": "Tree cover, needleleaved, evergreen (72)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "80": {
+     "cci_label": "Tree cover, needleleaved, deciduous (80)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "81": {
+     "cci_label": "Tree cover, needleleaved, deciduous (81)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "82": {
+     "cci_label": "Tree cover, needleleaved, deciduous (82)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "90": {
+     "cci_label": "Tree cover, mixed leaf type",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "100": {
+     "cci_label": "Mosaic tree and shrub (>50%) / herbaceous cover",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "110": {
+     "cci_label": "Mosaic herbaceous cover (>50%) / tree and shrub",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "120": {
+     "cci_label": "Shrubland (120)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "121": {
+     "cci_label": "Shrubland (121)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "122": {
+     "cci_label": "Shrubland (122)",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "130": {
+     "cci_label": "Grassland",
+     "category": "suelo",
+     "reason": "vegetated surface: the thermal response is governed by moist soil and canopy, closest to the team's 'suelo' (soil) category"
+    },
+    "140": {
+     "cci_label": "Lichens and mosses",
+     "category": "suelo",
+     "reason": "thin organic cover over soil or rock (tundra); no class for exposed rock, so treated as soil"
+    },
+    "150": {
+     "cci_label": "Sparse vegetation (tree, shrub, herbaceous cover) (<15%) (150)",
+     "category": "regolito",
+     "reason": "more than 85 % of the surface is bare mineral ground; the class does not say whether it is rock, gravel or sand, so the generic loose-surface category 'regolito' is used"
+    },
+    "151": {
+     "cci_label": "Sparse vegetation (tree, shrub, herbaceous cover) (<15%) (151)",
+     "category": "regolito",
+     "reason": "more than 85 % of the surface is bare mineral ground; the class does not say whether it is rock, gravel or sand, so the generic loose-surface category 'regolito' is used"
+    },
+    "152": {
+     "cci_label": "Sparse vegetation (tree, shrub, herbaceous cover) (<15%) (152)",
+     "category": "regolito",
+     "reason": "more than 85 % of the surface is bare mineral ground; the class does not say whether it is rock, gravel or sand, so the generic loose-surface category 'regolito' is used"
+    },
+    "153": {
+     "cci_label": "Sparse vegetation (tree, shrub, herbaceous cover) (<15%) (153)",
+     "category": "regolito",
+     "reason": "more than 85 % of the surface is bare mineral ground; the class does not say whether it is rock, gravel or sand, so the generic loose-surface category 'regolito' is used"
+    },
+    "160": {
+     "cci_label": "Tree cover, flooded, fresh or brackish water",
+     "category": "suelo",
+     "reason": "wetland: saturated soil with vegetation; high thermal inertia like wet soil (not open water)"
+    },
+    "170": {
+     "cci_label": "Tree cover, flooded, saline water",
+     "category": "suelo",
+     "reason": "wetland (mangrove): saturated soil with vegetation"
+    },
+    "180": {
+     "cci_label": "Shrub or herbaceous cover, flooded",
+     "category": "suelo",
+     "reason": "wetland: saturated soil with vegetation"
+    },
+    "190": {
+     "cci_label": "Urban areas",
+     "category": "roca",
+     "reason": "impervious surfaces (concrete, asphalt, buildings) have high thermal inertia comparable to rock"
+    },
+    "200": {
+     "cci_label": "Bare areas",
+     "category": "regolito",
+     "reason": "bare mineral surface of unspecified consolidation (global CCI maps rarely split 201/202): loose weathered material and desert pavement dominate, so 'regolito'; this cannot distinguish rock outcrop from sand"
+    },
+    "201": {
+     "cci_label": "Consolidated bare areas",
+     "category": "roca",
+     "reason": "bare consolidated material = rock outcrop"
+    },
+    "202": {
+     "cci_label": "Unconsolidated bare areas",
+     "category": "arena",
+     "reason": "bare unconsolidated material = sand or loose sediment"
+    },
+    "210": {
+     "cci_label": "Water bodies",
+     "category": "agua",
+     "reason": "open water (ocean, lakes, rivers)"
+    },
+    "220": {
+     "cci_label": "Permanent snow and ice",
+     "category": "hielo",
+     "reason": "glaciers and ice sheets"
+    }
+   },
+   "level_note": "Relabelled from DERIVED to MODELLED during verification (2026-11-14): the mapping is an assumption."
+  },
+  "rock_or_bare_frac_classes": {
+   "codes": [
+    150,
+    151,
+    152,
+    153,
+    200,
+    201,
+    202
+   ],
+   "definition": "share of the cell's land (non-water, non-no-data) CCI pixels that are bare areas (200-202) or sparse vegetation <15% cover (150-153). It is a bare-or-sparsely-vegetated fraction from a land-cover classification, NOT a rock abundance; bare_frac keeps 200-202 only."
+  },
+  "permafrost_class_from_obu_probability": {
+   "level": "MODELLED",
+   "input": "permafrost_area_frac = mean Obu et al. permafrost probability (PERPROB, 0-1) over the 1 km map pixels whose centre falls in the cell = expected share of the mapped exposed ground underlain by permafrost",
+   "thresholds": {
+    "continuo": ">= 0.90",
+    "discontinuo": "0.50 - 0.90",
+    "esporadico": "0.01 - 0.50 (IPA sporadic 0.10-0.50 merged with isolated patches 0.01-0.10, because the team has no 'isolated' category)",
+    "ninguno": "< 0.01 inside the mapped area"
+   },
+   "reason": "IPA / Brown et al. (1997) zone definitions by areal extent (continuous 90-100 %, discontinuous 50-90 %, sporadic 10-50 %, isolated 0-10 %), as used by Obu et al. (2019) for their zonation",
+   "missing": "empty where the maps have no valid pixel: south of about 18-25 N outside Antarctica (mountain permafrost of the Andes, East Africa, etc. is NOT mapped), Greenland and other ice sheets/glaciers, and the Antarctic ice sheet (only ice-free rock outcrops are mapped); also empty on cells with no CCI land pixel",
+   "level_note": "Obu et al. permafrost probability is a model output (CryoGrid equilibrium run); the zone thresholds are assumed from IPA/Brown et al. definitions. Relabelled from DERIVED during verification."
+  }
+ }
+}

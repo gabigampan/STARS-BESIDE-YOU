@@ -1,0 +1,479 @@
+{
+ "EARTH_fill_values": {},
+ "EARTH_summary": {
+  "body": {
+   "EARTH": 64800
+  },
+  "cell_id": "many",
+  "lat_deg": {
+   "n": 64800,
+   "min": -89.5,
+   "p1": -88.5,
+   "med": 0.0,
+   "p99": 88.5,
+   "max": 89.5
+  },
+  "lon_deg": {
+   "n": 64800,
+   "min": -179.5,
+   "p1": -176.5,
+   "med": 0.0,
+   "p99": 176.5,
+   "max": 179.5
+  },
+  "cell_km": {
+   "n": 64800,
+   "min": 110.574,
+   "p1": 110.574,
+   "med": 111.132,
+   "p99": 111.694,
+   "max": 111.694
+  },
+  "elevation_m": {
+   "n": 25245,
+   "min": -2569.9,
+   "p1": 2.6,
+   "med": 465.6,
+   "p99": 3974.772,
+   "max": 5420.3
+  },
+  "mask_fraction": {
+   "n": 64800,
+   "min": 0.0,
+   "p1": 0.0,
+   "med": 0.0,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "slope_deg": {
+   "n": 24918,
+   "min": 0.007,
+   "p1": 0.031,
+   "med": 0.557,
+   "p99": 8.8618,
+   "max": 18.927
+  },
+  "slope_p90_deg": {
+   "n": 24918,
+   "min": 0.013,
+   "p1": 0.054,
+   "med": 1.091,
+   "p99": 16.5927,
+   "max": 32.102
+  },
+  "slope_iso_deg": {
+   "n": 24783,
+   "min": 0.004,
+   "p1": 0.029,
+   "med": 0.48,
+   "p99": 7.6004,
+   "max": 17.19
+  },
+  "slope_iso_p90_deg": {
+   "n": 24783,
+   "min": 0.004,
+   "p1": 0.05,
+   "med": 0.906,
+   "p99": 13.8928,
+   "max": 22.863
+  },
+  "roughness_m": {
+   "n": 25121,
+   "min": 0.01,
+   "p1": 1.052,
+   "med": 18.09,
+   "p99": 269.092,
+   "max": 559.11
+  },
+  "rock_or_bare_frac": {
+   "n": 25570,
+   "min": 0.0,
+   "p1": 0.0,
+   "med": 0.0011,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "temp_k": {
+   "n": 18738,
+   "min": 238.14,
+   "p1": 243.6537,
+   "med": 284.51,
+   "p99": 305.3263,
+   "max": 309.68
+  },
+  "lst_diurnal_amp_k": {
+   "n": 18738,
+   "min": -4.6,
+   "p1": 0.93,
+   "med": 8.54,
+   "p99": 25.1563,
+   "max": 35.7
+  },
+  "lst_diurnal_amp_max_k": {
+   "n": 18731,
+   "min": -0.25,
+   "p1": 1.98,
+   "med": 13.53,
+   "p99": 31.02,
+   "max": 44.74
+  },
+  "lst_diurnal_amp_max_month": {
+   "n": 18731,
+   "min": 1.0,
+   "p1": 2.0,
+   "med": 6.0,
+   "p99": 12.0,
+   "max": 12.0
+  },
+  "tmin_c": {
+   "n": 25484,
+   "min": -72.28,
+   "p1": -69.5551,
+   "med": -19.27,
+   "p99": 22.97,
+   "max": 26.29
+  },
+  "irradiance_kwh_m2_day": {
+   "n": 25484,
+   "min": 1.412,
+   "p1": 1.9738,
+   "med": 3.688,
+   "p99": 6.202,
+   "max": 6.44
+  },
+  "sun_elev_max_deg": {
+   "n": 64800,
+   "min": 23.939,
+   "p1": 23.939,
+   "med": 68.439,
+   "p99": 90.0,
+   "max": 90.0
+  },
+  "sun_low_frac_0_5deg": {
+   "n": 64800,
+   "min": 0.0579,
+   "p1": 0.0579,
+   "med": 0.0865,
+   "p99": 0.211,
+   "max": 0.211
+  },
+  "thermal_inertia_class": {
+   "agua": 43724,
+   "suelo": 11470,
+   "hielo": 6706,
+   "regolito": 2898,
+   "roca": 2
+  },
+  "permafrost_class": {
+   "<empty>": 52303,
+   "ninguno": 5836,
+   "continuo": 3981,
+   "esporadico": 1955,
+   "discontinuo": 725
+  },
+  "permafrost_area_frac": {
+   "n": 12497,
+   "min": 0.0,
+   "p1": 0.0,
+   "med": 0.0294,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "rain_mm_day": {
+   "n": 25484,
+   "min": 0.0,
+   "p1": 0.005,
+   "med": 0.996,
+   "p99": 8.9065,
+   "max": 17.572
+  },
+  "wind_max_ms": {
+   "n": 25484,
+   "min": 0.8,
+   "p1": 1.2,
+   "med": 4.09,
+   "p99": 13.07,
+   "max": 25.87
+  },
+  "elevation_all_m": {
+   "n": 64800,
+   "min": -7527.0,
+   "p1": -5806.505,
+   "med": -2506.7,
+   "p99": 3586.205,
+   "max": 5413.0
+  },
+  "bare_frac": {
+   "n": 25570,
+   "min": 0.0,
+   "p1": 0.0,
+   "med": 0.0,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "snow_ice_frac": {
+   "n": 25570,
+   "min": 0.0,
+   "p1": 0.0,
+   "med": 0.0,
+   "p99": 1.0,
+   "max": 1.0
+  }
+ },
+ "MOON_fill_values": {},
+ "MOON_summary": {
+  "body": {
+   "MOON": 64800
+  },
+  "cell_id": "many",
+  "lat_deg": {
+   "n": 64800,
+   "min": -89.5,
+   "p1": -88.5,
+   "med": 0.0,
+   "p99": 88.5,
+   "max": 89.5
+  },
+  "lon_deg": {
+   "n": 64800,
+   "min": -179.5,
+   "p1": -176.5,
+   "med": 0.0,
+   "p99": 176.5,
+   "max": 179.5
+  },
+  "cell_km": {
+   "n": 64800,
+   "min": 30.323,
+   "p1": 30.323,
+   "med": 30.323,
+   "p99": 30.323,
+   "max": 30.323
+  },
+  "elevation_m": {
+   "n": 64800,
+   "min": -8175.5,
+   "p1": -5224.505,
+   "med": -776.3,
+   "p99": 5481.204,
+   "max": 9101.9
+  },
+  "slope_deg": {
+   "n": 64800,
+   "min": 0.057,
+   "p1": 0.201,
+   "med": 5.296,
+   "p99": 13.629,
+   "max": 24.563
+  },
+  "slope_p90_deg": {
+   "n": 64800,
+   "min": 0.091,
+   "p1": 0.329,
+   "med": 10.5135,
+   "p99": 31.2126,
+   "max": 84.057
+  },
+  "slope_iso_deg": {
+   "n": 64800,
+   "min": 0.051,
+   "p1": 0.195,
+   "med": 4.91,
+   "p99": 12.726,
+   "max": 22.846
+  },
+  "slope_iso_p90_deg": {
+   "n": 64800,
+   "min": 0.088,
+   "p1": 0.321,
+   "med": 9.7445,
+   "p99": 23.7031,
+   "max": 31.512
+  },
+  "roughness_m": {
+   "n": 64800,
+   "min": 1.57,
+   "p1": 6.15,
+   "med": 159.745,
+   "p99": 373.5701,
+   "max": 616.28
+  },
+  "rock_abundance_frac": {
+   "n": 43192,
+   "min": 0.0015,
+   "p1": 0.0022,
+   "med": 0.0034,
+   "p99": 0.0092,
+   "max": 0.0762
+  },
+  "temp_k": {
+   "n": 64800,
+   "min": 41.12,
+   "p1": 82.5596,
+   "med": 197.7,
+   "p99": 219.39,
+   "max": 223.86
+  },
+  "tmax_k": {
+   "n": 64800,
+   "min": 59.4,
+   "p1": 172.6399,
+   "med": 353.58,
+   "p99": 394.75,
+   "max": 405.61
+  },
+  "tmin_k": {
+   "n": 64800,
+   "min": 26.84,
+   "p1": 40.9,
+   "med": 87.815,
+   "p99": 95.59,
+   "max": 114.04
+  },
+  "lst_diurnal_amp_k": {
+   "n": 64800,
+   "min": 30.68,
+   "p1": 129.5397,
+   "med": 265.56,
+   "p99": 300.31,
+   "max": 311.75
+  },
+  "tmin_c": {
+   "n": 64800,
+   "min": -246.31,
+   "p1": -232.25,
+   "med": -185.335,
+   "p99": -177.56,
+   "max": -159.11
+  },
+  "illum_frac": {
+   "n": 64800,
+   "min": 0.0,
+   "p1": 0.1017,
+   "med": 0.5016,
+   "p99": 0.5034,
+   "max": 0.5034
+  },
+  "illum_frac_level": {
+   "DERIVED_FLAT_GEOMETRY": 46800,
+   "DERIVED_LOLA_TOPOGRAPHY": 18000
+  },
+  "irradiance_kwh_m2_day": {
+   "n": 64800,
+   "min": 0.0,
+   "p1": 0.079,
+   "med": 7.352,
+   "p99": 10.395,
+   "max": 10.395
+  },
+  "sun_elev_max_deg": {
+   "n": 64800,
+   "min": 2.04,
+   "p1": 2.04,
+   "med": 46.54,
+   "p99": 90.0,
+   "max": 90.0
+  },
+  "sun_low_frac_0_5deg": {
+   "n": 64800,
+   "min": 0.0556,
+   "p1": 0.0556,
+   "med": 0.0788,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "thermal_inertia_class": {
+   "regolito": 64800
+  }
+ },
+ "relations": {
+  "earth_temp_vs_abslat_spearman": -0.9198,
+  "earth_temp_anom_vs_elev_anom_pearson": -0.7082,
+  "earth_lapse_K_per_km": -4.3775,
+  "earth_tminc_vs_temp_k_pearson": 0.9362,
+  "earth_amp_vs_rain_spearman": -0.3103,
+  "earth_bare_vs_rain_spearman": 0.0004,
+  "earth_irr_vs_abslat_spearman": -0.6437,
+  "earth_slope_vs_rough_spearman": 0.9743,
+  "earth_within_row_sd_median_temp_k": 3.6717,
+  "earth_within_row_sd_median_lst_diurnal_amp_k": 3.389,
+  "earth_within_row_sd_median_tmin_c": 4.5693,
+  "earth_within_row_sd_median_irradiance_kwh_m2_day": 0.3199,
+  "earth_within_row_sd_median_rain_mm_day": 1.1146,
+  "moon_temp_vs_abslat_spearman": -0.9892,
+  "moon_tmax_vs_abslat_spearman": -0.9934,
+  "moon_within_row_sd_median_temp_k": 2.2639,
+  "moon_within_row_sd_median_tmax_k": 3.3004,
+  "moon_within_row_sd_median_tmin_k": 1.1672,
+  "moon_within_row_sd_median_lst_diurnal_amp_k": 3.2405,
+  "moon_within_row_sd_median_elevation_m": 2059.4513,
+  "moon_within_row_sd_median_rock_abundance_frac": 0.0013,
+  "moon_within_row_sd_median_irradiance_kwh_m2_day": 0.0,
+  "moon_within_row_sd_median_sun_low_frac_0_5deg": 0.0,
+  "moon_rock_vs_tmin_anom_spearman_|lat|<30": 0.5805,
+  "contrast_amp_median_earth_land": 9.67,
+  "contrast_amp_max_earth": 35.7,
+  "contrast_amp_median_moon": 265.56,
+  "contrast_amp_min_moon": 30.68,
+  "moon_cells_amp_le_earth_max": 11,
+  "contrast_slope_deg_median_earth_land": 0.49,
+  "contrast_slope_deg_median_moon": 5.296,
+  "contrast_slope_deg_p99_earth_land": 8.5169,
+  "contrast_slope_deg_p99_moon": 13.629,
+  "contrast_slope_iso_deg_median_earth_land": 0.418,
+  "contrast_slope_iso_deg_median_moon": 4.91,
+  "contrast_slope_iso_deg_p99_earth_land": 7.3781,
+  "contrast_slope_iso_deg_p99_moon": 12.726,
+  "contrast_roughness_m_median_earth_land": 15.26,
+  "contrast_roughness_m_median_moon": 159.745,
+  "contrast_roughness_m_p99_earth_land": 268.4242,
+  "contrast_roughness_m_p99_moon": 373.5701,
+  "contrast_slope_p90_deg_median_earth_land": 0.944,
+  "contrast_slope_p90_deg_median_moon": 10.5135,
+  "contrast_slope_p90_deg_p99_earth_land": 16.3934,
+  "contrast_slope_p90_deg_p99_moon": 31.2126,
+  "moon_0-10N_median_tmax_tmin_amp": [
+   391.4,
+   94.4,
+   297.3
+  ],
+  "moon_40-50N_median_tmax_tmin_amp": [
+   353.7,
+   87.9,
+   265.7
+  ],
+  "moon_80-90N_median_tmax_tmin_amp": [
+   221.2,
+   55.1,
+   165.8
+  ],
+  "moon_80-90S_median_tmax_tmin_amp": [
+   231.9,
+   54.9,
+   176.9
+  ],
+  "moon_min_tmin_k_and_cell": [
+   26.84,
+   [
+    -86.5,
+    24.5
+   ]
+  ],
+  "moon_cells_tmax_below_110K": 23,
+  "earth_temp_k_max_and_cell": [
+   309.68,
+   [
+    13.5,
+    40.5
+   ]
+  ],
+  "earth_elev_max_min": [
+   5420.3,
+   -2569.9
+  ],
+  "moon_elev_max_min": [
+   9101.9,
+   -8175.5
+  ]
+ }
+}

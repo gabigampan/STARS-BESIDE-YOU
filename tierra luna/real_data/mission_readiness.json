@@ -1,0 +1,247 @@
+{
+ "_note": "Cells where every variable a mission needs is present (non-empty). 'needed' = common gates + require_present + gates + soft criteria, mission names mapped to real columns with column_aliases.json. 'with_workable_days' also needs rain_mm_day, wind_max_ms and tmin_c (rover workable_days). 'soft_defaults_allowed' does not require soft criteria that have a 'default' utility in mission_scoring.json (e.g. permafrost_class in the thermal mission). Earth counts are over land cells (mask_fraction > 0); Moon over all cells. 'pass_gates' applies min/max/exclude gates literally (on_missing_gate = drop), for information only: the engine's own implementation decides.",
+ "earth_land_cells": 25497,
+ "moon_cells": 64800,
+ "missions": {
+  "rover": {
+   "needed_mission_names": [
+    "elevation_m",
+    "mask_fraction",
+    "slope_300m_deg",
+    "rough_300m_m",
+    "rock_or_bare_frac"
+   ],
+   "workable_days_extra": [
+    "rain_mm_day",
+    "wind_max_ms",
+    "tmin_c"
+   ],
+   "EARTH": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "slope_300m_deg": "slope_deg",
+     "rough_300m_m": "roughness_m",
+     "rock_or_bare_frac": "rock_or_bare_frac",
+     "rain_mm_day": "rain_mm_day",
+     "wind_max_ms": "wind_max_ms",
+     "tmin_c": "tmin_c"
+    },
+    "cells_all_needed_present": 24918,
+    "cells_all_needed_present_with_workable_days": 24909,
+    "cells_present_soft_defaults_allowed": 24918,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 252,
+     "mask_fraction->mask_fraction": 0,
+     "slope_300m_deg->slope_deg": 579,
+     "rough_300m_m->roughness_m": 376,
+     "rock_or_bare_frac->rock_or_bare_frac": 0
+    },
+    "cells_passing_all_gates_literal": 11141
+   },
+   "MOON": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "slope_300m_deg": "slope_deg",
+     "rough_300m_m": "roughness_m",
+     "rock_or_bare_frac": "rock_or_bare_frac",
+     "rain_mm_day": "rain_mm_day",
+     "wind_max_ms": "wind_max_ms",
+     "tmin_c": "tmin_c"
+    },
+    "cells_all_needed_present": 64800,
+    "cells_all_needed_present_with_workable_days": 0,
+    "cells_present_soft_defaults_allowed": 64800,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 0,
+     "mask_fraction->mask_fraction": 0,
+     "slope_300m_deg->slope_deg": 0,
+     "rough_300m_m->roughness_m": 0,
+     "rock_or_bare_frac->rock_or_bare_frac": 0
+    },
+    "cells_passing_all_gates_literal": 21135
+   }
+  },
+  "solar": {
+   "needed_mission_names": [
+    "elevation_m",
+    "mask_fraction",
+    "irradiance_kwh_m2_day",
+    "sun_elev_max_deg",
+    "sun_low_frac_0_5deg",
+    "slope_deg",
+    "thermal_inertia_class",
+    "lst_diurnal_amp_k",
+    "roughness_m"
+   ],
+   "workable_days_extra": [],
+   "EARTH": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "irradiance_kwh_m2_day": "irradiance_kwh_m2_day",
+     "sun_elev_max_deg": "sun_elev_max_deg",
+     "sun_low_frac_0_5deg": "sun_low_frac_0_5deg",
+     "slope_deg": "slope_deg",
+     "thermal_inertia_class": "thermal_inertia_class",
+     "lst_diurnal_amp_k": "lst_diurnal_amp_k",
+     "roughness_m": "roughness_m"
+    },
+    "cells_all_needed_present": 18362,
+    "cells_all_needed_present_with_workable_days": 18362,
+    "cells_present_soft_defaults_allowed": 18362,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 252,
+     "mask_fraction->mask_fraction": 0,
+     "irradiance_kwh_m2_day->irradiance_kwh_m2_day": 49,
+     "sun_elev_max_deg->sun_elev_max_deg": 0,
+     "sun_low_frac_0_5deg->sun_low_frac_0_5deg": 0,
+     "slope_deg->slope_deg": 579,
+     "thermal_inertia_class->thermal_inertia_class": 0,
+     "lst_diurnal_amp_k->lst_diurnal_amp_k": 6761,
+     "roughness_m->roughness_m": 376
+    },
+    "cells_passing_all_gates_literal": 12717
+   },
+   "MOON": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "irradiance_kwh_m2_day": "irradiance_kwh_m2_day",
+     "sun_elev_max_deg": "sun_elev_max_deg",
+     "sun_low_frac_0_5deg": "sun_low_frac_0_5deg",
+     "slope_deg": "slope_deg",
+     "thermal_inertia_class": "thermal_inertia_class",
+     "lst_diurnal_amp_k": "lst_diurnal_amp_k",
+     "roughness_m": "roughness_m"
+    },
+    "cells_all_needed_present": 64800,
+    "cells_all_needed_present_with_workable_days": 64800,
+    "cells_present_soft_defaults_allowed": 64800,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 0,
+     "mask_fraction->mask_fraction": 0,
+     "irradiance_kwh_m2_day->irradiance_kwh_m2_day": 0,
+     "sun_elev_max_deg->sun_elev_max_deg": 0,
+     "sun_low_frac_0_5deg->sun_low_frac_0_5deg": 0,
+     "slope_deg->slope_deg": 0,
+     "thermal_inertia_class->thermal_inertia_class": 0,
+     "lst_diurnal_amp_k->lst_diurnal_amp_k": 0,
+     "roughness_m->roughness_m": 0
+    },
+    "cells_passing_all_gates_literal": 19152
+   }
+  },
+  "thermal": {
+   "needed_mission_names": [
+    "elevation_m",
+    "mask_fraction",
+    "lst_diurnal_amp_k",
+    "tmin_c",
+    "thermal_inertia_class",
+    "rock_or_bare_frac",
+    "irradiance_kwh_m2_day",
+    "permafrost_class"
+   ],
+   "workable_days_extra": [],
+   "EARTH": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "lst_diurnal_amp_k": "lst_diurnal_amp_k",
+     "tmin_c": "tmin_c",
+     "thermal_inertia_class": "thermal_inertia_class",
+     "rock_or_bare_frac": "rock_or_bare_frac",
+     "irradiance_kwh_m2_day": "irradiance_kwh_m2_day",
+     "permafrost_class": "permafrost_class"
+    },
+    "cells_all_needed_present": 11520,
+    "cells_all_needed_present_with_workable_days": 11520,
+    "cells_present_soft_defaults_allowed": 18627,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 252,
+     "mask_fraction->mask_fraction": 0,
+     "lst_diurnal_amp_k->lst_diurnal_amp_k": 6761,
+     "tmin_c->tmin_c": 49,
+     "thermal_inertia_class->thermal_inertia_class": 0,
+     "rock_or_bare_frac->rock_or_bare_frac": 0,
+     "irradiance_kwh_m2_day->irradiance_kwh_m2_day": 49,
+     "permafrost_class->permafrost_class": 13013
+    },
+    "cells_passing_all_gates_literal": 2419
+   },
+   "MOON": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "lst_diurnal_amp_k": "lst_diurnal_amp_k",
+     "tmin_c": "tmin_c",
+     "thermal_inertia_class": "thermal_inertia_class",
+     "rock_or_bare_frac": "rock_or_bare_frac",
+     "irradiance_kwh_m2_day": "irradiance_kwh_m2_day",
+     "permafrost_class": "permafrost_class"
+    },
+    "cells_all_needed_present": 0,
+    "cells_all_needed_present_with_workable_days": 0,
+    "cells_present_soft_defaults_allowed": 64800,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 0,
+     "mask_fraction->mask_fraction": 0,
+     "lst_diurnal_amp_k->lst_diurnal_amp_k": 0,
+     "tmin_c->tmin_c": 0,
+     "thermal_inertia_class->thermal_inertia_class": 0,
+     "rock_or_bare_frac->rock_or_bare_frac": 0,
+     "irradiance_kwh_m2_day->irradiance_kwh_m2_day": 0,
+     "permafrost_class->permafrost_class": 64800
+    },
+    "cells_passing_all_gates_literal": 21298
+   }
+  },
+  "ice": {
+   "needed_mission_names": [
+    "elevation_m",
+    "mask_fraction",
+    "permafrost_class",
+    "temp_k"
+   ],
+   "workable_days_extra": [],
+   "EARTH": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "permafrost_class": "permafrost_class",
+     "temp_k": "temp_k"
+    },
+    "cells_all_needed_present": 11521,
+    "cells_all_needed_present_with_workable_days": 11521,
+    "cells_present_soft_defaults_allowed": 11521,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 252,
+     "mask_fraction->mask_fraction": 0,
+     "permafrost_class->permafrost_class": 13013,
+     "temp_k->temp_k": 6761
+    },
+    "cells_passing_all_gates_literal": 4964
+   },
+   "MOON": {
+    "columns_used": {
+     "elevation_m": "elevation_m",
+     "mask_fraction": "mask_fraction",
+     "permafrost_class": "permafrost_class",
+     "temp_k": "temp_k"
+    },
+    "cells_all_needed_present": 0,
+    "cells_all_needed_present_with_workable_days": 0,
+    "cells_present_soft_defaults_allowed": 0,
+    "cells_missing_each_variable": {
+     "elevation_m->elevation_m": 0,
+     "mask_fraction->mask_fraction": 0,
+     "permafrost_class->permafrost_class": 64800,
+     "temp_k->temp_k": 0
+    },
+    "cells_passing_all_gates_literal": 0
+   }
+  }
+ }
+}

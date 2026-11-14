@@ -1,0 +1,163 @@
+{
+ "EARTH": {
+  "_note": "Mission variable name (mission_scoring.json) -> real column in output_real/earth_real_1deg.csv. Identity entries are listed so every mission variable is accounted for.",
+  "slope_300m_deg": {
+   "column": "slope_deg",
+   "true_baseline_km": "central difference over 2 DEM pixels: 3.706 km N-S, 3.706*cos(lat) km E-W (DEM pixel 1.853 km, ETOPO 2022 60 arc-second)",
+   "caveat": "no open global DEM-derived product at a 300 m baseline is used here; slopes at a ~3.7 km baseline are systematically LOWER than 300 m slopes, so the mission's 300 m thresholds (0.5-15 deg) are not directly comparable. slope_p90_deg is a stricter alternative. Poleward of ~85 deg use slope_iso_deg (3.706 km baseline in both directions), as for the Moon."
+  },
+  "rough_300m_m": {
+   "column": "roughness_m",
+   "true_baseline_km": "lag of one DEM pixel = 1.853 km in both directions (east pairs taken 1/cos(lat) pixels apart, linear interpolation), same definition as the Moon (1.895 km)",
+   "caveat": "RMS height difference (deviogram) at a ~1.85 km lag, not 300 m; values grow with lag, so they are larger than a 300 m roughness would be. The mission thresholds (5-650 m) were written for 300 m."
+  },
+  "elevation_m": {
+   "column": "elevation_m",
+   "caveat": "area-weighted mean land elevation above the EGM2008 geoid (sea level); empty for cells with no land pixel. The Moon's elevation_m is relative to a 1737.4 km sphere, so the common gate elevation_m >= 1 has no physical meaning there."
+  },
+  "mask_fraction": {
+   "column": "mask_fraction",
+   "caveat": "land share of the cell from ESA CCI LC 2020 (inland water counts as water); the engine's gate >= 0.3 now means '>= 30 % land'"
+  },
+  "slope_deg": {
+   "column": "slope_deg",
+   "caveat": "see slope_300m_deg baseline"
+  },
+  "roughness_m": {
+   "column": "roughness_m",
+   "caveat": "see rough_300m_m baseline"
+  },
+  "rock_or_bare_frac": {
+   "column": "rock_or_bare_frac",
+   "caveat": "bare (CCI 200-202) + sparse vegetation <15% (CCI 150-153) share of land pixels; a land-cover classification, not rock abundance"
+  },
+  "temp_k": {
+   "column": "temp_k",
+   "caveat": "annual mean clear-sky LAND SURFACE temperature (mean of day and night MODIS climatologies), not air temperature; empty in Antarctica"
+  },
+  "lst_diurnal_amp_k": {
+   "column": "lst_diurnal_amp_k",
+   "caveat": "annual mean ~10:30 minus ~22:30 clear-sky LST; underestimates the true daily amplitude; lst_diurnal_amp_max_k = largest monthly value"
+  },
+  "tmin_c": {
+   "column": "tmin_c",
+   "caveat": "WorldClim 2.1 coldest-month mean daily minimum AIR temperature (1970-2000), interpolated; MODELLED; WorldClim licence is non-commercial, no redistribution without permission"
+  },
+  "irradiance_kwh_m2_day": {
+   "column": "irradiance_kwh_m2_day",
+   "caveat": "WorldClim 2.1 srad annual mean (interpolated), global horizontal"
+  },
+  "sun_elev_max_deg": {
+   "column": "sun_elev_max_deg",
+   "caveat": "formula"
+  },
+  "sun_low_frac_0_5deg": {
+   "column": "sun_low_frac_0_5deg",
+   "caveat": "formula; fraction of daylight time with the Sun 0-5 deg high"
+  },
+  "thermal_inertia_class": {
+   "column": "thermal_inertia_class",
+   "caveat": "ASSUMED mapping from ESA CCI land-cover classes (class_mappings.json); MODELLED, not a measured thermal inertia"
+  },
+  "permafrost_class": {
+   "column": "permafrost_class",
+   "caveat": "from Obu et al. modelled permafrost probability (MODELLED); empty (no data) south of about 18-25 N except Antarctic outcrops, on ice sheets, and on cells without CCI land"
+  },
+  "rain_mm_day": {
+   "column": "rain_mm_day",
+   "caveat": "WorldClim 2.1 annual precipitation / 365.25"
+  },
+  "wind_max_ms": {
+   "column": "wind_max_ms",
+   "caveat": "windiest-month MEAN 10 m wind speed (WorldClim 2.1), not a gust or daily maximum"
+  }
+ },
+ "MOON": {
+  "_note": "Mission variable name -> real column in output_real/moon_real_1deg.csv. Written by real_data/build_moon.py.",
+  "slope_300m_deg": {
+   "column": "slope_deg",
+   "true_baseline_km": "central differences over 2 pixels: 3.79 km north-south, 3.79 km x cos(lat) east-west",
+   "caveat": "Not a 300 m slope. km-baseline slopes are much gentler than rover-scale slopes; a 15 deg gate means something different here. slope_p90_deg is the steeper tail. Poleward of ~85 deg the literal 1-pixel east-west spacing shrinks to metres and inflates slope_deg/slope_p90_deg; slope_iso_deg/slope_iso_p90_deg (3.79 km baseline in both directions) are the reliable values there."
+  },
+  "rough_300m_m": {
+   "column": "roughness_m",
+   "true_baseline_km": "1.895 km",
+   "caveat": "RMS height difference at one LOLA pixel (deviogram), not at 300 m. Values grow with baseline (Hurst exponent ~0.5-0.9), so it is larger than a 300 m roughness."
+  },
+  "slope_deg": {
+   "column": "slope_deg",
+   "true_baseline_km": "3.79 km",
+   "caveat": "see slope_300m_deg"
+  },
+  "roughness_m": {
+   "column": "roughness_m",
+   "true_baseline_km": "1.895 km",
+   "caveat": "see rough_300m_m"
+  },
+  "rock_or_bare_frac": {
+   "column": "rock_or_bare_frac",
+   "true_baseline_km": "cell",
+   "caveat": "1 by definition (no vegetation). Measured rock abundance is rock_abundance_frac (60S-60N)."
+  },
+  "temp_k": {
+   "column": "temp_k",
+   "true_baseline_km": "0.5 deg bins averaged to 1 deg",
+   "caveat": "Diurnal mean surface bolometric brightness temperature, not air temperature."
+  },
+  "lst_diurnal_amp_k": {
+   "column": "lst_diurnal_amp_k",
+   "true_baseline_km": "0.5 deg",
+   "caveat": "tmax_k - tmin_k of the season-averaged diurnal curve."
+  },
+  "tmin_c": {
+   "column": "tmin_c",
+   "true_baseline_km": "0.5 deg",
+   "caveat": "Surface minimum, not air."
+  },
+  "irradiance_kwh_m2_day": {
+   "column": "irradiance_kwh_m2_day",
+   "true_baseline_km": "cell centre latitude",
+   "caveat": "Horizontal surface, per 24 h, DERIVED; uses the LOLA topographic illum_frac (Mazarico 2011 simulation) at |lat| >= 65.5."
+  },
+  "sun_elev_max_deg": {
+   "column": "sun_elev_max_deg",
+   "true_baseline_km": "cell centre latitude",
+   "caveat": "Exact geometry, flat horizon."
+  },
+  "sun_low_frac_0_5deg": {
+   "column": "sun_low_frac_0_5deg",
+   "true_baseline_km": "cell centre latitude",
+   "caveat": "Exact geometry, flat horizon."
+  },
+  "mask_fraction": {
+   "column": "mask_fraction",
+   "true_baseline_km": "cell",
+   "caveat": "1 by definition."
+  },
+  "elevation_m": {
+   "column": "elevation_m",
+   "true_baseline_km": "cell mean of 1.9 km pixels",
+   "caveat": "Relative to the 1737.4 km sphere."
+  },
+  "thermal_inertia_class": {
+   "column": "thermal_inertia_class",
+   "true_baseline_km": "global",
+   "caveat": "'regolito' everywhere, MODELLED assumption."
+  },
+  "permafrost_class": {
+   "column": "permafrost_class",
+   "true_baseline_km": "",
+   "caveat": "Empty: not applicable on the Moon."
+  },
+  "rain_mm_day": {
+   "column": "rain_mm_day",
+   "true_baseline_km": "",
+   "caveat": "Empty: not applicable (no atmosphere)."
+  },
+  "wind_max_ms": {
+   "column": "wind_max_ms",
+   "true_baseline_km": "",
+   "caveat": "Empty: not applicable (no atmosphere)."
+  }
+ }
+}
