@@ -1,8 +1,8 @@
 {
   "_note": "Engine-only settings. Every threshold, weight, utility bound and tolerance of the missions lives in mission_scoring.json and is NOT repeated here. Each setting has a value and a why; every one is also listed in /ASSUMPTIONS.md with its effect on results.",
   "engine_version": {
-    "value": "2.0.0",
-    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 2.0.0: dataset descriptors (engine/datasets.json), the real 1-degree tables, column aliases, provenance from the builders' CSV files, three-level comparability, the v2 binary bundle. 1.1.0: review fixes (unrounded final score, rank on published final, comparability exclusions, ocean fills exported as null, polygon country labels)."
+    "value": "3.0.0",
+    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
   },
   "mission_config": {
     "value": "mission_scoring.json",
@@ -12,10 +12,9 @@
     "value": [
       "rover",
       "solar",
-      "thermal",
-      "ice"
+      "lunar_base"
     ],
-    "why": "All four missions defined in mission_scoring.json, in its order. rover and ice are marked provisional by their authors and are kept exactly as written, with the provisional flag exported (pending team confirmation)."
+    "why": "Team lead decision 1 (2026-11-14): exactly three missions are offered, in this order: rover, solar and lunar_base. lunar_base is an exact copy of the thermal block of mission_scoring.json (checked at load time and by a test); thermal and ice stay in that file untouched as components of lunar_base (mission_scoring.json lunar_base.components) and are not offered as missions. The ice component is evaluated on every Earth cell and exported as information only: it never changes the lunar_base ranking. The JSON's own 'offered_missions' list must equal this one."
   },
   "gate_body_applicability": {
     "value": {
@@ -137,10 +136,9 @@
     "value": {
       "rover": "Rover mobility and trafficability",
       "solar": "Solar array placement",
-      "thermal": "Thermal stress testing",
-      "ice": "Ice prospecting and drilling"
+      "lunar_base": "Lunar base (thermal endurance)"
     },
-    "why": "Short English titles for the app. The team's own descriptions in mission_scoring.json are exported verbatim as 'description'."
+    "why": "Short English titles for the app. The team's own descriptions in mission_scoring.json are exported verbatim as 'description'. lunar_base is the lunar base mission whose core is the thermal-endurance configuration."
   },
   "similarity_comparability": {
     "value": {
@@ -198,5 +196,89 @@
       "total_max": 14000000
     },
     "why": "Size targets of the v2 bundle (2.5 MB = 2,500,000 bytes for manifest, missions, variables, places, Earth base and the default mission; 14 MB = 14,000,000 bytes in total, decimal megabytes so the target holds under either reading), set for loading on a phone. The build reports the sizes and the tests check them; nothing is cut silently to meet them."
+  },
+  "mission_threshold_status": {
+    "value": {
+      "rover": {
+        "status": "provisional",
+        "text": "Provisional: the rover block of mission_scoring.json says its gates and tolerances were migrated as they were and its soft criteria approximate the old formula until Robotics 1 provides the final one (the block's 'provisional' text is exported verbatim)."
+      },
+      "solar": {
+        "status": "team_design_values",
+        "text": "Team design values: the solar thresholds have no external source (mission_scoring.json note: 'Umbrales de solar y thermal = valores de diseno NO validados con fuente externa')."
+      },
+      "lunar_base": {
+        "status": "team_design_values",
+        "text": "Team design values: lunar_base is the thermal block, whose thresholds have no external source (mission_scoring.json note: 'Umbrales de solar y thermal = valores de diseno NO validados con fuente externa')."
+      }
+    },
+    "why": "Team lead decision 1: rover is shown as provisional (its JSON block says so) and the solar and thermal thresholds are team design values with no external source (the JSON note says so). Both labels are carried into missions.json so the app shows them next to every number of the mission."
+  },
+  "similarity_rule": {
+    "value": "repo_global_mean",
+    "why": "Team lead decision 4: two similarity rules behind one setting, DEFAULT repo_global_mean until the team lead approves zone_twin. Switching this value and rebuilding ('python -m engine build') is all it takes to ship twins. Pending team confirmation."
+  },
+  "similarity_rule_options": {
+    "value": {
+      "repo_global_mean": "What the repository does today (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin.",
+      "zone_twin": "Approved in principle by the team lead, to be switched on only after the team lead has seen docs/SIMILARITY_PROPOSAL.md: the same formula against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id) and its similarity is the one used in the final score. Lunar cells are not passed through the mission filters.",
+      "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default."
+    },
+    "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers."
+  },
+  "repo_similarity": {
+    "value": {
+      "function": "analog_finder.compute_analog_ranking + analog_finder.normalize_planetary_features",
+      "features_and_weights": "analog_finder.ANALOG_FEATURES and analog_finder.DEFAULT_WEIGHTS, imported at build time (not copied)",
+      "decay": 0.45,
+      "earth_population": {
+        "variable": "elevation_m",
+        "greater_than": 0.0
+      },
+      "moon_population": "every lunar cell",
+      "zero_variation_threshold": 1e-06,
+      "z_decimals": 4,
+      "target_decimals": 4,
+      "similarity_decimals": 2
+    },
+    "why": "Team lead decision 3: similarity is computed with the repository's own formula. decay 0.45 is the constant of compute_analog_ranking ('similarity_pct = 100.0 * np.exp(-0.45 * rms_dist)'); the Earth population is its land filter ('earth_df[\"elevation_m\"] > 0.0'); the Moon is normalised over all its cells as the function does. zero_variation_threshold is the function's own scale threshold (normalize_planetary_features falls back to the std, then to 1, when a scale is <= 1e-6); it is used only to REPORT variables with zero or near-zero variation on a body (similarity.json variation), never to drop one silently. z-scores are rounded to 4 decimals and similarity_pct to 2 by the function itself (np.round); the bundle stores exactly those published values. A test runs analog_finder.compute_analog_ranking on the legacy table and checks the engine's similarity equals its similarity_pct on every land cell."
+  },
+  "similarity_zones": {
+    "value": {
+      "rover": {
+        "kind": "lat_max",
+        "lat_max": -75.0,
+        "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+        "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
+      },
+      "solar": {
+        "kind": "lat_max",
+        "lat_max": -75.0,
+        "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+        "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
+      },
+      "lunar_base": {
+        "kind": "artemis_regions",
+        "regions_file": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/artemis/artemis_iii_regions.geojson",
+        "verified_flag": "verified",
+        "name": "NASA Artemis III candidate landing regions (9, announced 2024-10-28)",
+        "source": "USGS outlines, DOI 10.5066/P1MEQ6UK, CC0",
+        "fallback": {
+          "kind": "lat_max",
+          "lat_max": -75.0,
+          "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+          "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
+        }
+      }
+    },
+    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS outlines, if a verified outline file (GeoJSON whose top-level 'verified' is true) is present; otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Pending team confirmation."
+  },
+  "twin_tie_rule": {
+    "value": "lowest_lunar_id",
+    "why": "zone_twin: when two zone cells are at exactly the same distance (double precision) from an Earth cell, the one with the lowest lunar cell id is the twin, so the result does not depend on processing order."
+  },
+  "detail_tile_rows": {
+    "value": 10,
+    "why": "Per-cell funnel detail (utilities, z-scores, the ice component) is split into files of this many grid rows (18 files on the 180-row grid), so the app loads about one eighteenth of the detail to show any land cell instead of every mission file. Layout only; no effect on results."
   }
 }

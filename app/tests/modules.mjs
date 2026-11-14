@@ -377,6 +377,15 @@ async function run(name, viewport, { touch = false } = {}) {
     // inside the 44 px target; mouse: 2 px).
     const off = touch ? 15 : 2.2;
     const vis = states[body].filter((s) => s.visible && s.fade > 0.99 && s.x > 30 && s.y > 30 && s.x < rect.width - 30 && s.y < rect.height - 30);
+    // Caption and Reset button sit over the canvas: never aim a click or tap at them.
+    const covers = await page.evaluate((b) => {
+      const c = window.starsBesideYou.scene(b).canvas.getBoundingClientRect();
+      return Array.from(document.querySelectorAll(`#${b}-pane .pane-caption, #${b}-pane .pane-reset`)).map((el) => {
+        const r = el.getBoundingClientRect();
+        return { l: r.left - c.left - 4, t: r.top - c.top - 4, r: r.right - c.left + 4, b: r.bottom - c.top + 4 };
+      });
+    }, body);
+    const covered = (x, y) => covers.some((q) => x >= q.l && x <= q.r && y >= q.t && y <= q.b);
     let target = null;
     let tap = null;
     for (const t of vis) {
@@ -384,6 +393,7 @@ async function run(name, viewport, { touch = false } = {}) {
         const px = t.x + off * Math.cos((a * Math.PI) / 4);
         const py = t.y + off * Math.sin((a * Math.PI) / 4);
         const dt = Math.hypot(px - t.x, py - t.y);
+        if (covered(px, py) || covered(t.x, t.y)) continue;
         if (vis.every((o) => o === t || Math.hypot(px - o.x, py - o.y) > dt + 8)) {
           target = t;
           tap = { x: px, y: py };
@@ -574,7 +584,8 @@ async function run(name, viewport, { touch = false } = {}) {
   // Far-side lunar end: the beam stops at the Moon's limb.
   {
     const c = earthHome.moon;
-    const farMoon = { lat: c.lat, lon: c.lon > 0 ? c.lon - 130 : c.lon + 130 };
+    // 130 degrees west of the view centre: behind the western limb, the side facing the Earth pane.
+    const farMoon = { lat: c.lat, lon: c.lon - 130 < -180 ? c.lon + 230 : c.lon - 130 };
     await page.evaluate(({ e, m }) => window.starsBesideYou.beams.setBeams([{ earth: e, moon: m, strength: 1 }]), { e: pair.earth, m: farMoon });
     await page.waitForTimeout(400);
     const drawn = (await page.evaluate(() => window.starsBesideYou.beams.lastDrawn()))[0];

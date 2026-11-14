@@ -1,6 +1,6 @@
 """Command line. Run from the "tierra luna" directory.
 
-    python -m engine build      [--dataset ID] [--out DIR] [--build-time TEXT] [--input CSV]
+    python -m engine build      [--dataset ID] [--out DIR] [--build-time TEXT] [--input CSV] [--similarity-rule RULE]
     python -m engine validate   [--dataset ID]
     python -m engine report     [--dataset ID] [--benchmark CSV] [--top N] [--out JSON]
     python -m engine datasets
@@ -17,13 +17,14 @@ import json
 import os
 from typing import List, Optional
 
-from engine.config import ENGINE_DIR, dataset_ids, default_dataset, load_datasets, load_engine_config, resolve_path
+from engine.config import SIMILARITY_RULES, ENGINE_DIR, dataset_ids, default_dataset, load_datasets, load_engine_config, resolve_path
 
 
 def _cmd_build(a: argparse.Namespace) -> int:
     from engine.build import build_and_write
 
-    b = build_and_write(out_dir=a.out, dataset=a.dataset, input_csv=a.input, build_time=a.build_time)
+    b = build_and_write(out_dir=a.out, dataset=a.dataset, input_csv=a.input, build_time=a.build_time,
+                        similarity_rule=a.similarity_rule)
     m = b["manifest"]
     print(f"dataset {b['engine_cfg'].dataset_id}: bundle {m['bundle_version']} -> {b['out_dir']}")
     total = 0
@@ -100,6 +101,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     b.add_argument("--input", default=None, help="replace a one-file dataset's input CSV")
     b.add_argument("--out", default=None, help="output folder (default: the dataset's output_dir)")
     b.add_argument("--build-time", default=None, help="text stored as build_time (default: input sha256)")
+    b.add_argument("--similarity-rule", default=None, choices=SIMILARITY_RULES,
+                   help="override engine_config similarity_rule for this build only (e.g. a zone_twin preview to --out)")
     v = sub.add_parser("validate", help="validate the dataset's cell tables against the schema")
     v.add_argument("--dataset", choices=ids, default=dflt)
     r = sub.add_parser("report", help="counts, failure reasons, distributions, top cells and benchmark sites")

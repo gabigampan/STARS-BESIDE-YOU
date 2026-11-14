@@ -124,6 +124,43 @@
       ]
      },
      "why": "Known limitations of each mission's results on the legacy table, exported in missions.json 'known_limitations'. They describe the data and the team configuration; nothing is tuned to hide them."
+    },
+    "similarity_columns": {
+     "value": {
+      "elevation_rel_m": {
+       "EARTH": "elevation_rel_m",
+       "MOON": "elevation_rel_m"
+      },
+      "slope_deg": {
+       "EARTH": "slope_deg",
+       "MOON": "slope_deg"
+      },
+      "roughness_m": {
+       "EARTH": "roughness_m",
+       "MOON": "roughness_m"
+      },
+      "temp_k": {
+       "EARTH": "temp_k",
+       "MOON": "temp_k"
+      },
+      "rock_or_bare_frac": {
+       "EARTH": "rock_or_bare_frac",
+       "MOON": "rock_or_bare_frac"
+      },
+      "sar_sigma0_db": {
+       "EARTH": "sar_sigma0_db",
+       "MOON": "sar_sigma0_db"
+      }
+     },
+     "why": "The legacy table has every analog_finder variable under its own name; the repository similarity reads them as they are."
+    },
+    "similarity_excluded": {
+     "value": {},
+     "why": "No exclusion on the legacy table: the repository formula is reproduced exactly (the test compares it with analog_finder.compute_analog_ranking on this table)."
+    },
+    "lunar_info_columns": {
+     "value": {},
+     "why": "No extra lunar information column on the legacy table."
     }
    }
   },
@@ -259,7 +296,7 @@
        "label": "Permafrost class",
        "unit": "category",
        "kind": "categorical",
-       "description": "Earth: class from the Obu et al. modelled permafrost probability. Moon: no data (not applicable)."
+       "description": "Earth: class from the Obu et al. modelled permafrost probability. Moon: the label 'ninguno' (none) on every cell, a MODELLED label set by definition (team lead decision 5), not a measurement."
       },
       "rain_mm_day": {
        "label": "Precipitation",
@@ -336,7 +373,7 @@
       },
       "permafrost_class": {
        "status": "not_comparable",
-       "reason": "Permafrost has no lunar data (not applicable): there is no seasonal thaw or ground ice map in the lunar table."
+       "reason": "Earth classes come from the Obu et al. modelled permafrost probability; the lunar value is the label 'ninguno' on every cell, a MODELLED label set by definition (team lead decision 5), not a measurement. A label match would say nothing physical."
       },
       "rain_mm_day": {
        "status": "not_comparable",
@@ -413,6 +450,57 @@
       ]
      },
      "why": "Known limitations of each mission's results on the real tables, exported in missions.json 'known_limitations' next to computed 'facts'. They describe the data and the team configuration; nothing was tuned."
+    },
+    "similarity_columns": {
+     "value": {
+      "elevation_rel_m": {
+       "EARTH": "elevation_m",
+       "MOON": "elevation_m",
+       "note": "The real tables have no elevation_rel_m. The repository defines it as elevation_m minus the body's mean (earth_extractor.py, lunar_extractor.py; on the legacy table the difference is the constant -1047.422 m on every Earth land cell). A per-body z-score is unchanged by subtracting a constant (median and spread shift with it), so z is computed from elevation_m; the absolute value exported is elevation_m (Earth above the geoid, Moon above the 1737.4 km sphere)."
+      },
+      "slope_deg": {
+       "EARTH": "slope_deg",
+       "MOON": "slope_deg",
+       "note": "The mission-view slope_deg, i.e. the isotropic-baseline column slope_iso_deg on both bodies (column_overrides)."
+      },
+      "roughness_m": {
+       "EARTH": "roughness_m",
+       "MOON": "roughness_m",
+       "note": "Deviogram roughness at a ~1.9 km lag on both bodies."
+      },
+      "temp_k": {
+       "EARTH": "temp_k",
+       "MOON": "temp_k",
+       "note": "Earth: mean of two clear-sky MODIS overpasses (empty in Antarctica); Moon: Diviner diurnal mean."
+      },
+      "rock_or_bare_frac": {
+       "EARTH": "rock_or_bare_frac",
+       "MOON": "rock_or_bare_frac",
+       "note": "1 on every lunar cell by definition; removed from the similarity (similarity_excluded)."
+      },
+      "sar_sigma0_db": {
+       "EARTH": null,
+       "MOON": null,
+       "note": "No radar column in the real tables: the variable has no data on either body and the repository rule (valid on both bodies) drops it; its weight is renormalised away."
+      }
+     },
+     "why": "Real column read for each analog_finder similarity variable on each body (team lead decision 3). The repository's six variables keep their names; only elevation_rel_m is read from elevation_m (note) and sar_sigma0_db has no column."
+    },
+    "similarity_excluded": {
+     "value": {
+      "rock_or_bare_frac": "Team lead decision 3: rock_or_bare_frac is 1 on every lunar cell by definition (provenance_moon.csv: MODELLED), so it has no variation on the Moon; the repository's normaliser would give every lunar cell z = 0 and still count the variable. It is removed from the similarity on the real tables and its weight is redistributed among the remaining variables in proportion to their weights; it is shown as information only. Diviner rock abundance (rock_abundance_frac) is a different quantity and is not substituted."
+     },
+     "why": "Variables removed from the repository similarity on this dataset, each with the team lead's reason. The remaining DEFAULT_WEIGHTS are divided by their sum (proportional redistribution)."
+    },
+    "lunar_info_columns": {
+     "value": {
+      "rock_abundance_frac": {
+       "label": "Diviner rock abundance",
+       "unit": "fraction 0-1",
+       "note": "Areal fraction of the surface covered by rocks larger than about 1 m (Diviner, 60S-60N only; empty poleward). A different quantity from rock_or_bare_frac: information only, never used by a mission or the similarity."
+      }
+     },
+     "why": "Lunar columns exported as information next to the lunar values (team lead decision 3 allows the Diviner rock abundance as a separate lunar information value with its source). Level and source come from provenance_moon.csv."
     }
    }
   }

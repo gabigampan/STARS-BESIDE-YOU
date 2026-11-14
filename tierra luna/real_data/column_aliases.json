@@ -146,8 +146,8 @@
   },
   "permafrost_class": {
    "column": "permafrost_class",
-   "true_baseline_km": "",
-   "caveat": "Empty: not applicable on the Moon."
+   "true_baseline_km": "global",
+   "caveat": "'ninguno' on every cell: a MODELLED label set by definition (no terrestrial-type permafrost on the Moon), not a measurement."
   },
   "rain_mm_day": {
    "column": "rain_mm_day",

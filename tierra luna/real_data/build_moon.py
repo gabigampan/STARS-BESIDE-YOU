@@ -58,6 +58,11 @@ SOLAR_CONSTANT_W_M2 = 1361.0  # NSSDC Moon fact sheet, "Solar irradiance (W/m2) 
 SUN_SEMIDIAMETER_DEG = 0.2666  # mean angular radius of the Sun at 1 au (959.6 arcsec)
 SYNODIC_DAYS = 29.53        # NSSDC Moon fact sheet, synodic period
 
+# Team lead decision (2026-11-14): permafrost_class is the label 'ninguno' (none) on every lunar
+# cell, recorded in the provenance as a MODELLED label, not a measurement. The word is the
+# team's own class name for "no permafrost" (mission_scoring.json permafrost maps and ice gate).
+PERMAFROST_LABEL = "ninguno"
+
 URL_PIA13720 = "https://science.nasa.gov/photojournal/south-pole-illumination-map"
 URL_MOONFACT = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
 URL_MOONFACTS_REGOLITH = "https://science.nasa.gov/moon/facts/"
@@ -621,7 +626,9 @@ def main() -> int:
         "sun_elev_max_deg": np.round(sg["sun_elev_max_deg"][rr], 3),
         "sun_low_frac_0_5deg": np.round(sg["low_frac"][rr], 4),
         "thermal_inertia_class": np.full(rr.shape, "regolito", dtype=object),
-        "permafrost_class": np.full(rr.shape, np.nan, dtype=object),
+        # Team lead decision (2026-11-14): the label 'ninguno' on every cell, a MODELLED
+        # label (no liquid water or seasonal thaw on the Moon), not a measurement.
+        "permafrost_class": np.full(rr.shape, PERMAFROST_LABEL, dtype=object),
         "rain_mm_day": np.full(rr.shape, np.nan),
         "wind_max_ms": np.full(rr.shape, np.nan),
     }
@@ -873,10 +880,14 @@ def write_provenance(sg, lola, gcp, rock, ill) -> None:
              native_resolution="global", aggregation="none", formula="'regolito' in every cell",
              caveats="Stated assumption. Rocky exposures (e.g. fresh crater walls, Tycho) exist locally; see "
                      "rock_abundance_frac. Regolith thermal inertia ~55 J m-2 K-1 s-1/2 (Hayne et al. 2017)."),
-        dict(variable="permafrost_class", level="no data", product="not applicable", version="", url="",
-             licence_credit="", native_resolution="", aggregation="",
-             formula="empty", caveats="No liquid water or seasonal thaw on the Moon; the cold-trap analogue is "
-                                      "tmin_k / tmax_k < 110 K. Not estimated."),
+        dict(variable="permafrost_class", level="MODELLED", product="model label (team lead decision 2026-11-14)",
+             version="", url=URL_MOONFACTS_REGOLITH, licence_credit="NASA Science, Moon facts page",
+             native_resolution="global", aggregation="none",
+             formula=f"'{PERMAFROST_LABEL}' in every cell (label set by definition)",
+             caveats="MODELLED label, not a measurement: terrestrial permafrost (ground frozen for two or more "
+                     "years, with seasonal thaw of liquid water) does not exist on the Moon, so every cell is "
+                     f"labelled '{PERMAFROST_LABEL}' (none). It says nothing about lunar cold traps or buried ice; "
+                     "the cold-trap analogue is tmin_k / tmax_k < 110 K, not estimated here."),
         dict(variable="rain_mm_day", level="no data", product="not applicable", version="", url="",
              licence_credit="", native_resolution="", aggregation="", formula="empty",
              caveats="No atmosphere, no precipitation. Empty, not 0 (the engine must treat it as not applicable)."),
@@ -922,7 +933,8 @@ def write_aliases(dy_m: float) -> None:
         "mask_fraction": {"column": "mask_fraction", "true_baseline_km": "cell", "caveat": "1 by definition."},
         "elevation_m": {"column": "elevation_m", "true_baseline_km": "cell mean of 1.9 km pixels", "caveat": "Relative to the 1737.4 km sphere."},
         "thermal_inertia_class": {"column": "thermal_inertia_class", "true_baseline_km": "global", "caveat": "'regolito' everywhere, MODELLED assumption."},
-        "permafrost_class": {"column": "permafrost_class", "true_baseline_km": "", "caveat": "Empty: not applicable on the Moon."},
+        "permafrost_class": {"column": "permafrost_class", "true_baseline_km": "global",
+                             "caveat": f"'{PERMAFROST_LABEL}' on every cell: a MODELLED label set by definition (no terrestrial-type permafrost on the Moon), not a measurement."},
         "rain_mm_day": {"column": "rain_mm_day", "true_baseline_km": "", "caveat": "Empty: not applicable (no atmosphere)."},
         "wind_max_ms": {"column": "wind_max_ms", "true_baseline_km": "", "caveat": "Empty: not applicable (no atmosphere)."},
     }

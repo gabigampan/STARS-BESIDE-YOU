@@ -39,7 +39,8 @@ BODIES = ("EARTH", "MOON")
 DATASET_SETTINGS = ("inputs", "input_csv", "grid", "provenance", "column_aliases", "column_overrides",
                     "variables", "comparability", "bundle_format", "bundle_version", "output_dir",
                     "earth_land_cells", "earth_ocean_fill", "region_max_place_km", "export_columns",
-                    "lunar_named_sites", "credits", "mission_notes")
+                    "lunar_named_sites", "credits", "mission_notes", "similarity_columns", "similarity_excluded",
+                    "lunar_info_columns")
 
 
 class Setting(BaseModel):
@@ -88,6 +89,13 @@ class EngineConfig(BaseModel):
     missing_data_reason: Setting
     binary_encoding: Setting
     first_view_budget_bytes: Setting
+    mission_threshold_status: Setting
+    similarity_rule: Setting
+    similarity_rule_options: Setting
+    repo_similarity: Setting
+    similarity_zones: Setting
+    twin_tie_rule: Setting
+    detail_tile_rows: Setting
     # filled from the dataset descriptor (engine/datasets.json)
     dataset: Optional[Setting] = None
     inputs: Optional[Setting] = None
@@ -108,6 +116,9 @@ class EngineConfig(BaseModel):
     lunar_named_sites: Optional[Setting] = None
     credits: Optional[Setting] = None
     mission_notes: Optional[Setting] = None
+    similarity_columns: Optional[Setting] = None
+    similarity_excluded: Optional[Setting] = None
+    lunar_info_columns: Optional[Setting] = None
 
     def v(self, name: str) -> Any:
         """Return the value of a setting (deep copy, so callers cannot mutate config)."""
@@ -177,14 +188,58 @@ def load_mission_config(path: Optional[str] = None, engine_cfg: Optional[EngineC
     return mission_scoring.load_config(path)
 
 
+SIMILARITY_RULES = ("repo_global_mean", "zone_twin", "physical_pooled")
+# Fields of a mission block that define its filters and scores (a component copy must match them all).
+MISSION_DEFINITION_KEYS = ("require_present", "gates", "soft", "weights")
+
+
 def mission_ids(mission_cfg: Dict, engine_cfg: EngineConfig) -> List[str]:
-    """Missions to build, in the configured order, restricted to missions defined in the JSON."""
+    """Missions to build (the offered missions), in the configured order.
+
+    Every listed mission must be defined in the JSON, the JSON's own
+    ``offered_missions`` (when present) must list the same missions, and every
+    mission with ``components.core`` must be an exact copy of its core block
+    (:func:`check_components`).
+    """
     defined = mission_scoring.mission_names(mission_cfg)
     wanted = engine_cfg.v("missions")
     missing = [m for m in wanted if m not in defined]
     if missing:
         raise KeyError(f"engine_config lists missions not defined in mission_scoring.json: {missing}")
+    offered = mission_cfg.get("offered_missions")
+    if offered is not None and list(offered) != list(wanted):
+        raise ValueError(f"mission_scoring.json offered_missions {offered} differs from engine_config missions {wanted}")
+    check_components(mission_cfg, wanted)
     return list(wanted)
+
+
+def mission_components(mission_cfg: Dict, mission: str) -> Dict[str, Any]:
+    """{"core": id or None, "info": [ids]} of a mission (mission_scoring.json 'components')."""
+    c = mission_cfg["missions"][mission].get("components") or {}
+    return {"core": c.get("core"), "info": list(c.get("info", []))}
+
+
+def check_components(mission_cfg: Dict, missions: List[str]) -> None:
+    """A mission with a core component must equal that block on every definition field
+    (require_present, gates, soft, weights); info components must be defined."""
+    for m in missions:
+        comp = mission_components(mission_cfg, m)
+        for c in ([comp["core"]] if comp["core"] else []) + comp["info"]:
+            if c not in mission_cfg["missions"]:
+                raise KeyError(f"{m}: component {c!r} is not defined in mission_scoring.json")
+        if comp["core"]:
+            a, b = mission_cfg["missions"][m], mission_cfg["missions"][comp["core"]]
+            diff = [k for k in MISSION_DEFINITION_KEYS if a.get(k) != b.get(k)]
+            if diff:
+                raise ValueError(f"{m} must be an exact copy of {comp['core']}; differs in {diff}")
+
+
+def similarity_rule(engine_cfg: EngineConfig) -> str:
+    """The active similarity rule (engine_config similarity_rule)."""
+    r = str(engine_cfg.v("similarity_rule"))
+    if r not in SIMILARITY_RULES:
+        raise ValueError(f"unknown similarity_rule {r!r}; known: {SIMILARITY_RULES}")
+    return r
 
 
 def gate_applies(variable: str, body: str, engine_cfg: EngineConfig) -> bool:

@@ -393,3 +393,25 @@ R3 was written from values reported by the team lead. Every value below was re-r
 | lunar target | "South Pole PSR & Shackleton Rim (75°S–90°S)" = every cell with lat <= -75 (1,440 cells), a latitude band, not a PSR map | none |
 
 R3 notes that permafrost has no lunar equivalent by definition. The lunar analogue is cold-trap temperature: surfaces below 110 K (R2 section 3), with PSR floors as low as 25 K (R3 F13).
+
+## (i) Effective weights of the domain mapping
+
+Added 2026-11-14 with [SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md) (section 4.1 there has every variant on both datasets). Domain weights from `mission_scoring.json` (relieve / material / termico / luz / agua): rover 0.35 / 0.30 / 0.10 / 0.10 / 0.15; solar 0.15 / 0.10 / 0.20 / 0.45 / 0.10; lunar base = thermal 0.15 / 0.25 / 0.45 / 0.10 / 0.05. Percent of the similarity weight per variable.
+
+**Today** (`map_domain_weights_to_features`, the web page's "Use Weights", six variables; recomputed with the module's own function, confirming section (e)):
+
+| Mission | slope | roughness | relative elevation | temperature | bare fraction | radar |
+|---|---|---|---|---|---|---|
+| Rover | 17.25 | 18.25 | 13.50 | 18.25 | 20.00 | 12.75 |
+| Solar panels | 13.50 | 7.25 | 20.75 | 36.25 | 16.25 | 6.00 |
+| Lunar base (thermal) | 8.25 | 10.25 | 7.50 | 41.75 | 24.25 | 8.00 |
+
+"luz" and "agua" have no variable among the six, so the matrix spreads them over slope, relative elevation, temperature, bare fraction and radar: for the rover, temperature (18.25) outweighs slope (17.25) although relieve is 0.35 and termico 0.10.
+
+**Proposed (A3a, pending approval):** each domain spends its weight only on its own variables among those in the similarity (relieve: slope, roughness, relative elevation; material: bare fraction, radar; termico: temperature), split inside a domain in proportion to `DEFAULT_WEIGHTS`; "luz" and "agua" are dropped and the rest renormalised.
+
+| Mission | dataset | slope | roughness | relative elevation | temperature | bare fraction | radar |
+|---|---|---|---|---|---|---|---|
+| Rover | legacy 2-degree (six variables) | 19.44 | 15.56 | 11.67 | 13.33 | 24.00 | 16.00 |
+| Rover | real 1-degree (no radar; bare fraction removed) | 32.41 | 25.93 | 19.44 | 22.22 | | |
+| Solar panels | legacy 2-degree | 8.33 | 6.67 | 5.00 | 26.67 | ... | ... |

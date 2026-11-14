@@ -116,3 +116,139 @@ for every Moon coordinate conversion. `Ellipsoid.default` is left as WGS84.
   to -180..180 E. Built by `scripts/build_iau_features.mjs` (no dependencies) from
   `MOON_nomenclature_center_pts.dbf` (USGS, https://planetarynames.wr.usgs.gov/GIS_Downloads).
 - `public/data/v1/` - written by the Python engine (not by this app).
+
+## Interaction modules (`src/modules/`)
+
+Five small typed modules, reached through `globesApi` (after `await globesApi.ready`) and
+`window.starsBesideYou`. None of them shows anything until it is given data: no markers, no
+beam canvas, no outline and no video dialog exist in the page before the first call.
+Types are exported from `src/api.ts`.
+
+### Sunlight and time (`modules/sunlight.ts`, `scene/fullMoon.ts`)
+
+A radio group in the header (`#sunlight`, native radios: Tab to reach it, arrow keys to change)
+with three choices, a visible line that states the active one in words (`#sun-time`) and a polite
+live region (`#sunlight-status`) that announces each change.
+
+| Choice | Light | Header line |
+|---|---|---|
+| `full-moon` (default) | Physical, clock stopped at the Full Moon instant | `Full Moon light, 24 Nov 2026, 10:45 UTC` |
+| `now` | Physical, real time, running | `Light now, <date time> UTC` |
+| `even` | Day/night shading, night lights and dynamic atmosphere off on both globes | `Even light: day and night shading off (not physical)` |
+
+The Full Moon instant is **computed at start-up, not typed in**: `computeFullMoonInstant()` scans
+Cesium's own `Simon1994PlanetaryPositions` Sun and Moon positions hourly from
+`FULL_MOON_SEARCH_FROM` (2026-11-14) for the first maximum of the Sun-Earth-Moon elongation
+(opposition, refined by golden-section search), then moves to the nearest instant at which the
+sub-solar point is on 15 deg E (central Europe and central Africa), rounded to the minute. Result
+for this build: opposition (maximum elongation, 175.0 deg; the Moon is about 5 deg off the
+ecliptic, so it is not 180) on 24 Nov 2026 at about 15:10 UTC; chosen instant
+**2026-11-24T10:45:00Z**, elongation 174.4 deg (99.8 % of the near side lit), Sun overhead near
+20.6 S, 15 E. Both values come from the same Cesium functions the app uses.
+On load, and on every change, cameras still on their home view turn to face the sunlit hemisphere
+(Earth: the sub-solar meridian, latitude pulled north; Moon: the sub-solar point).
+
+```ts
+globesApi.sunlight.mode();            // 'full-moon' | 'now' | 'even' | 'link' (opened with ?time=)
+globesApi.sunlight.set('even');
+globesApi.sunlight.fullMoonDate();    // Date (UTC)
+globesApi.sunlight.describe();        // the header sentence
+globesApi.sunlight.subsolar('moon');  // { lat, lon } where the Sun is overhead now
+const off = globesApi.sunlight.onChange((mode) => {});
+```
+
+### Marker layers (`modules/markers.ts`)
+
+One `PointPrimitiveCollection` per body (no entity per marker), rank numbers in a
+`LabelCollection`. Encoding without colour alone: size (3 to 10 px) and brightness/opacity follow
+the score on a single warm-white ramp (readable in greyscale and for every colour-vision type); the
+`topLabels` best ranks carry their number with a dark halo; the selected marker gets a ring and its
+label (`"<rank>  <label>"`). Markers on the far side are hidden, markers within ~12 deg of the limb
+fade. Desktop: pointer cursor and a hover look (bigger, white outline, label) within 6 px. Touch and
+pen: a tap picks the nearest marker within 22 px of its edge (a 44 px target). Drags do not pick.
+
+```ts
+type MarkerItem = { id: string | number; lat: number; lon: number; score: number; rank?: number; label?: string };
+globesApi.markers.setMarkers('earth', items, { topLabels: 10 });   // replaces that body's markers
+globesApi.markers.clearMarkers('moon');
+globesApi.markers.setSelected('earth', id);    // or null
+globesApi.markers.selected('earth');
+globesApi.markers.setHighlighted('moon', id);  // hover look, e.g. while its list row has focus
+const off = globesApi.markers.onPick((body, id, source) => {});   // source: 'mouse' | 'touch' | 'pen' | 'keyboard'
+globesApi.markers.activate('moon', id);        // call on Enter in the results list: fires onPick ('keyboard')
+globesApi.markers.setAutoSelect(false);        // default true: a pick also selects
+globesApi.markers.screenState('earth', id);    // { x, y, visible, fade, size } in canvas CSS px
+```
+
+### Paired fly-to (`modules/focus.ts`)
+
+```ts
+const cell = { west: 12, south: 23, east: 13, north: 24 };            // passed by the caller, never assumed
+await globesApi.focus.focusPair(
+  { earth: { lat: 23.4, lon: 12.6, cell }, moon: { lat: -43.3, lon: -11.2, cell: moonCell } },
+  { durationMs: 1000, fill: 0.4 },     // defaults; duration capped at 1400 ms
+);                                     // resolves true when both cameras arrive (false if interrupted)
+await globesApi.focus.exitFocus();     // both cameras back to the views they had, layout restored
+globesApi.focus.isFocused();
+globesApi.focus.lastFlight();          // { plannedMs, animationMs, wallMs, completed }
+```
+
+Both cameras move in one animation loop with one clock, look straight down, and stop at a height
+at which the cell spans `fill` of the smaller canvas side (a 1-degree cell, about 111 km on Earth
+and 30 km on the Moon, when no cell is given). Instant under reduced motion. A pointer down or
+wheel on a globe stops a running flight. A thin light outline with a dark underlay is drawn for each
+`cell`. While focused, `body.is-focused` gives room to `#detail-panel` (when it is not `hidden`):
+a third column beside the globes on wide landscape screens (900 px and up), a bottom sheet
+(`min(42dvh, 380px)`) on phones and portrait screens, with the globes shrunk above it so the two
+points stay visible. `options.timeSource` (a function returning ms) drives the flight from another
+clock, for frame-exact tests and recordings.
+
+### Light beam (`modules/beams.ts`)
+
+```ts
+globesApi.beams.setBeams([
+  { earth: { lat, lon }, moon: { lat, lon }, strength: 1 },      // the selected pair
+  { earth: ..., moon: ..., strength: 0.25 },                     // optional faint companions
+]);
+globesApi.beams.clearBeams();
+globesApi.beams.lastDrawn();   // ends as drawn, page px, kind 'point' | 'limb' | 'edge' | 'hidden'
+```
+
+A full-page `canvas.beam-overlay` (created on first use, `pointer-events: none`, `aria-hidden`,
+z-index above the globes and below the panels). Additive light: five stacked strokes from a wide
+faint halo to a narrow core (soft falloff across), a gradient along it that is brighter near both
+ends, and a small radial glow on each surface point; no line caps or arrowheads. An end on the far
+side stops at the body's limb and fades out; an end outside its globe's canvas stops at the canvas
+edge and fades. Redrawn only when a camera moved (checked after each render), on resize, or when
+the list changes; otherwise a slow +-5 % breath (7 s period), none under reduced motion.
+
+### Mission video dialog (`modules/video.ts`)
+
+```ts
+await globesApi.video.openVideo({
+  title: 'Rover mission',
+  sources: [{ src: 'media/rover/rover.webm', type: 'video/webm' }, { src: 'media/rover/rover.mp4', type: 'video/mp4' }],
+  poster: 'media/rover/rover-poster.jpg',
+  tracks: [{ src: 'media/rover/rover.en.vtt', srclang: 'en', label: 'English', default: true },
+           { src: 'media/rover/rover.es.vtt', srclang: 'es', label: 'Español' }],
+  credit: 'Rover mission video: 3D simulation by the Stars Beside You team (not real footage)',
+  note: '...',
+});                                     // resolves when the dialog closes
+globesApi.video.closeVideo();
+globesApi.video.isOpen();
+```
+
+A modal `<dialog>` built on first call: native controls, captions on (the `default` track, else
+the first), credit and note under the player, focus starts on the 44 px close button (an X with
+the accessible name "Close video"), Tab is trapped, Escape, the X or a backdrop click closes, and
+focus returns to the element that opened it. If no source can be loaded, the player is replaced by
+an alert that names the file, says what happened and offers **Try again**.
+
+### Tests
+
+`npm run test:modules` (`tests/modules.mjs`, add `--no-build` to reuse `dist/`,
+`--only=desktop,phone,reduced`) drives every module through `window.starsBesideYou` with synthetic
+items made inside the test, at 1440x900 (mouse) and 375x812 (touch), plus a reduced-motion run,
+fails on any console error or failed request, and saves screenshots to `$SHOTS_DIR`. The video
+checks use `public/media/rover/` when present, else a clip in `$TEST_MEDIA_DIR` served as
+`/test-media/clip.webm` and `/test-media/clip.en.vtt`.

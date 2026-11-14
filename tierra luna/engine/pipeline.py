@@ -18,10 +18,11 @@ import pandas as pd
 
 import mission_scoring
 from engine import provenance
-from engine.config import EngineConfig, mission_ids
+from engine.config import EngineConfig, mission_components, mission_ids, similarity_rule
 from engine.confidence import pair_confidence
 from engine.gates import GateResult, evaluate_gates
 from engine.pairing import pair_twins
+from engine.repo_similarity import RepoContext, published_similarity_check, zone_twins
 from engine.similarity import (categorical_similarity, encode_categories, numeric_similarity,
                                pooled_scale, similarity_variables, weighted_similarity)
 from engine.suitability import (SuitabilityResult, evaluate_suitability, round_like_export, soft_variables,
@@ -51,7 +52,21 @@ class MissionResult:
     confidence_score: np.ndarray
     moon_twin_count: np.ndarray         # Moon cells: Earth cells that chose it as twin
     alpha: float
+    rule: str = "physical_pooled"       # similarity rule that produced sims / similarity_pct / twins
+    components: Dict[str, "ComponentResult"] = field(default_factory=dict)  # info components (lunar_base: ice)
     extra: Dict = field(default_factory=dict)
+
+
+@dataclass
+class ComponentResult:
+    """An information component of a mission (lunar_base: ice): gates and suitability
+    on Earth, gates on the Moon. Never changes the mission's ranking."""
+
+    mission: str
+    earth_gates: GateResult
+    moon_gates: GateResult
+    earth_suit: SuitabilityResult
+    soft_vars: List[str]
 
 
 def _present(s: pd.Series) -> np.ndarray:
@@ -72,8 +87,14 @@ def rank_scores(final: np.ndarray, ids: np.ndarray) -> np.ndarray:
 
 
 def run_mission(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_cfg: Dict,
-                engine_cfg: EngineConfig, reg: Dict) -> MissionResult:
-    """Compute one mission for both bodies (see module docstring)."""
+                engine_cfg: EngineConfig, reg: Dict, ctx: Optional[RepoContext] = None) -> MissionResult:
+    """Compute one mission for both bodies (see module docstring).
+
+    The similarity rule comes from engine_config ``similarity_rule``; the two
+    repository rules need ``ctx`` (built once by :func:`run_all`)."""
+    rule = similarity_rule(engine_cfg)
+    if rule != "physical_pooled":
+        return _run_mission_repo(mission, earth, moon, mission_cfg, engine_cfg, reg, ctx, rule)
     eg = evaluate_gates(earth, "EARTH", mission, mission_cfg, engine_cfg)
     mg = evaluate_gates(moon, "MOON", mission, mission_cfg, engine_cfg)
     es = evaluate_suitability(earth, "EARTH", mission, mission_cfg, engine_cfg)
@@ -158,18 +179,111 @@ def run_mission(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_c
         mission=mission, earth_gates=eg, moon_gates=mg, earth_suit=es, soft_vars=svars,
         sim_vars=sim_vars, sim_excluded=sim_excluded, kinds=kinds, scales=scales, twin_id=twin_full, sims=sims,
         similarity_pct=sim_pct, final=final, final_published=final_pub, rank=rank, confidence=conf, confidence_score=conf_s,
-        moon_twin_count=twin_count, alpha=alpha,
+        moon_twin_count=twin_count, alpha=alpha, rule="physical_pooled",
         extra={"cell_km_for_confidence": cell_km, "earth_levels": e_levels, "moon_levels": m_levels},
     )
 
 
+def _confidence(mission: str, svars: List[str], weights_all: Dict[str, float], earth: pd.DataFrame,
+                moon: pd.DataFrame, es: SuitabilityResult, rank: np.ndarray, tpos: Optional[np.ndarray],
+                engine_cfg: EngineConfig, reg: Dict):
+    """Confidence of every ranked Earth cell (engine_config 'confidence'). The Moon side
+    is the twin's cell when there is one; without a twin (repo_global_mean, whose
+    target is the whole Moon) a variable counts on the Moon when it has data on the
+    lunar table at all."""
+    rule = engine_cfg.v("confidence")
+    e_levels = {v: provenance.level(reg, v, "EARTH") for v in svars}
+    m_levels = {v: provenance.level(reg, v, "MOON") for v in svars}
+    cell_km = max(provenance.resolution_km(reg, v, b) for v in svars for b in ("EARTH", "MOON"))
+    m_has = {v: _present(moon[v]) for v in svars}
+    m_any = [v for v in svars if m_has[v].any()]
+    conf: List[Optional[str]] = [None] * len(earth)
+    conf_s = np.full(len(earth), np.nan)
+    for i in np.flatnonzero(rank > 0):
+        e_av = [v for v in svars if np.isfinite(es.utilities[v][i])]
+        m_av = [v for v in svars if m_has[v][tpos[i]]] if tpos is not None else m_any
+        both = [v for v in e_av if v in m_av]
+        label, score = pair_confidence(e_levels, m_levels, weights_all, both, cell_km, rule, e_av, m_av)
+        conf[i], conf_s[i] = label, (np.nan if score is None else score)
+    return conf, conf_s, {"cell_km_for_confidence": cell_km, "earth_levels": e_levels, "moon_levels": m_levels}
+
+
+def _run_mission_repo(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_cfg: Dict,
+                      engine_cfg: EngineConfig, reg: Dict, ctx: Optional[RepoContext], rule: str) -> MissionResult:
+    """One mission with the repository's similarity (repo_global_mean or zone_twin).
+
+    Funnel: gates (both bodies) -> suitability of the surviving Earth cells ->
+    similarity -> final = alpha * similarity + (1 - alpha) * suitability -> rank.
+    The similarity of an eliminated cell is never used: it has no final and no rank."""
+    if ctx is None:
+        raise ValueError("the repository similarity rules need a RepoContext")
+    eg = evaluate_gates(earth, "EARTH", mission, mission_cfg, engine_cfg)
+    mg = evaluate_gates(moon, "MOON", mission, mission_cfg, engine_cfg)
+    es = evaluate_suitability(earth, "EARTH", mission, mission_cfg, engine_cfg)
+    if not np.array_equal(es.passed, eg.passed):
+        raise AssertionError("evaluate() and the gate module disagree on Earth pass flags")
+    svars = soft_variables(mission_cfg, mission)
+    weights_all = soft_weights(mission_cfg, mission)
+    moon_ids = moon["id"].to_numpy()
+    twin = np.full(len(earth), -1, dtype=np.int64)
+    sim = np.full(len(earth), np.nan)
+    passing = np.flatnonzero(eg.passed)
+    if rule == "repo_global_mean":
+        sim[passing] = ctx.global_similarity[passing]
+    elif rule == "zone_twin":
+        zone = ctx.zones[mission]["mask"]
+        tw, s = zone_twins(ctx, passing, zone, moon_ids, int(engine_cfg.v("pairing_chunk_rows")))
+        twin[passing], sim[passing] = tw, s
+    else:
+        raise ValueError(rule)
+    published_similarity_check(sim)
+    alpha = float(engine_cfg.v("mix_factor"))
+    frame = pd.DataFrame({"similarity_pct": sim, f"score_{mission}": es.score})
+    final = mission_scoring.combine_with_similarity(frame, mission, alpha=alpha).to_numpy(dtype=np.float64)
+    final = np.where(eg.passed, final, np.nan)  # an eliminated cell never gets a final score
+    final_pub = round_like_export(final, int(engine_cfg.v("export_decimals")["score"]))
+    rank = rank_scores(final_pub, earth["id"].to_numpy())
+    has_twin = twin >= 0
+    tpos = np.where(has_twin, np.searchsorted(moon_ids, np.maximum(twin, 0)), 0) if rule == "zone_twin" else None
+    conf, conf_s, extra = _confidence(mission, svars, weights_all, earth, moon, es, rank, tpos, engine_cfg, reg)
+    twin_count = np.zeros(len(moon), dtype=np.int64)
+    if tpos is not None:
+        np.add.at(twin_count, tpos[has_twin], 1)
+    return MissionResult(
+        mission=mission, earth_gates=eg, moon_gates=mg, earth_suit=es, soft_vars=svars,
+        sim_vars=list(ctx.active), sim_excluded=dict(ctx.excluded), kinds={v: "numeric" for v in ctx.active},
+        scales={}, twin_id=twin, sims={}, similarity_pct=sim, final=final, final_published=final_pub, rank=rank,
+        confidence=conf, confidence_score=conf_s, moon_twin_count=twin_count, alpha=alpha, rule=rule, extra=extra,
+    )
+
+
+def run_component(component: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_cfg: Dict,
+                  engine_cfg: EngineConfig) -> ComponentResult:
+    """Gates and Earth suitability of an information component (e.g. ice for lunar_base)."""
+    eg = evaluate_gates(earth, "EARTH", component, mission_cfg, engine_cfg)
+    mg = evaluate_gates(moon, "MOON", component, mission_cfg, engine_cfg)
+    es = evaluate_suitability(earth, "EARTH", component, mission_cfg, engine_cfg)
+    return ComponentResult(mission=component, earth_gates=eg, moon_gates=mg, earth_suit=es,
+                           soft_vars=soft_variables(mission_cfg, component))
+
+
 def run_all(cells: Dict[str, pd.DataFrame], mission_cfg: Dict, engine_cfg: EngineConfig,
-            reg: Dict) -> Dict[str, MissionResult]:
-    """Run every configured mission. ``cells`` must come from table.split_bodies (sorted by id)."""
+            reg: Dict, ctx: Optional[RepoContext] = None) -> Dict[str, MissionResult]:
+    """Run every offered mission and its information components. ``cells`` must come
+    from table.split_bodies (sorted by id). ``ctx`` (the repository similarity) is
+    built here when the rule needs it and none is given."""
     earth, moon = cells["EARTH"], cells["MOON"]
     for body, df in cells.items():
         ids = df["id"].to_numpy()
         if ids.size and np.any(np.diff(ids) <= 0):
             raise ValueError(f"{body} cells must be sorted by unique id")
-    return {m: run_mission(m, earth, moon, mission_cfg, engine_cfg, reg)
-            for m in mission_ids(mission_cfg, engine_cfg)}
+    missions = mission_ids(mission_cfg, engine_cfg)
+    if similarity_rule(engine_cfg) != "physical_pooled" and ctx is None:
+        from engine.similarity_context import build_repo_context
+        ctx = build_repo_context(earth, moon, engine_cfg, missions)
+    out = {m: run_mission(m, earth, moon, mission_cfg, engine_cfg, reg, ctx) for m in missions}
+    for m, res in out.items():
+        res.components = {c: run_component(c, earth, moon, mission_cfg, engine_cfg)
+                          for c in mission_components(mission_cfg, m)["info"]}
+        res.extra["repo_context"] = ctx
+    return out

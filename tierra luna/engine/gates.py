@@ -84,6 +84,46 @@ def _reasons_for_gate(s: pd.Series, gate: Dict, var: str) -> List[Optional[str]]
     return out
 
 
+# Funnel steps (team lead decision 2). A reason code belongs to exactly one step.
+STEP_COMMON = 1      # common gates (land mask on Earth only, mask_fraction)
+STEP_REQUIRED = 2    # required variables present
+STEP_MISSION = 3     # the mission's hard filters
+
+
+def reason_step(code: str, mission_cfg: Dict, mission: str) -> int:
+    """Funnel step of a reason code: a common-gate variable (1), a missing required
+    variable (2) or the mission's own hard filters (3)."""
+    var, kind = code.rsplit(":", 1)
+    m = mission_cfg["missions"][mission]
+    if var in mission_cfg.get("common_gates", {}) and var not in m.get("gates", {}):
+        return STEP_COMMON
+    if kind == "missing" and var in m.get("require_present", []):
+        return STEP_REQUIRED
+    return STEP_MISSION
+
+
+def _bounds(g: Dict) -> str:
+    """'[min, max]' exactly as mission_scoring formats a numeric gate."""
+    return f"[{g.get('min', '-inf')}, {g.get('max', 'inf')}]"
+
+
+def reason_texts(code: str, mission_cfg: Dict, mission: str) -> Dict[str, str]:
+    """One-line English reason and mission_scoring's own reason text for a code.
+
+    English: '<variable> outside [min, max]', '<variable> not allowed', '<variable> no data'.
+    Team text (mission_scoring.py, verbatim): '<variable> fuera de [min, max]',
+    '<variable> no permitido', '<variable> sin dato'.
+    """
+    var, kind = code.rsplit(":", 1)
+    m = mission_cfg["missions"][mission]
+    g = m.get("gates", {}).get(var, mission_cfg.get("common_gates", {}).get(var, {}))
+    if kind == "missing":
+        return {"text": f"{var} no data", "team_text": f"{var} sin dato"}
+    if kind in ("below_min", "above_max"):
+        return {"text": f"{var} outside {_bounds(g)}", "team_text": f"{var} fuera de {_bounds(g)}"}
+    return {"text": f"{var} not allowed", "team_text": f"{var} no permitido"}
+
+
 def evaluate_gates(df: pd.DataFrame, body: str, mission: str, mission_cfg: Dict,
                    engine_cfg: EngineConfig) -> GateResult:
     """Apply the hard filters of ``mission`` to the cells of ``body``.
@@ -96,7 +136,7 @@ def evaluate_gates(df: pd.DataFrame, body: str, mission: str, mission_cfg: Dict,
     gates = effective_gates(mission_cfg, mission, body, engine_cfg)
     require = list(cfg["missions"][mission].get("require_present", []))
     on_missing = cfg.get("on_missing_gate", "drop")
-    passed, _, _ = mission_scoring.apply_gates(df, gates, require, on_missing)
+    passed, team_reasons, _ = mission_scoring.apply_gates(df, gates, require, on_missing)
 
     per_cell: List[List[str]] = [[] for _ in range(len(df))]
     for col in require:
@@ -115,6 +155,15 @@ def evaluate_gates(df: pd.DataFrame, body: str, mission: str, mission_cfg: Dict,
     if not np.array_equal(mine, np.asarray(passed, dtype=bool)):
         bad = int(np.flatnonzero(mine != np.asarray(passed, dtype=bool))[0])
         raise AssertionError(f"gate reasons disagree with mission_scoring.apply_gates at row {bad}")
+    # The team module's own reason text must be the join of the codes' team texts.
+    texts = {}
+    for i, r in enumerate(reasons):
+        if not r:
+            continue
+        joined = "; ".join(dict.fromkeys(texts.setdefault(c, reason_texts(c, mission_cfg, mission)["team_text"])
+                                         for c in r))
+        if joined != team_reasons[i]:
+            raise AssertionError(f"reason text {joined!r} differs from mission_scoring's {team_reasons[i]!r} at row {i}")
     return GateResult(passed=np.asarray(passed, dtype=bool), reasons=reasons)
 
 

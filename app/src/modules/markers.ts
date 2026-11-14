@@ -384,7 +384,7 @@ class BodyMarkers {
 
   /** Window positions of all markers for the current camera (cached until it moves). */
   private project(): Float32Array {
-    if (this.dirty) this.update();
+    this.update(); // no-op unless the camera moved or the markers changed since the last frame
     if (this.projVersion === this.viewVersion) return this.proj;
     const proj = this.proj;
     for (let i = 0; i < this.entries.length; i++) {
@@ -428,7 +428,7 @@ class BodyMarkers {
   screenState(id: MarkerId): MarkerScreenState | null {
     const e = this.byId.get(id);
     if (!e) return null;
-    if (this.dirty) this.update();
+    this.update();
     const w = SceneTransforms.worldToWindowCoordinates(this.scene, e.point.position, new Cartesian2());
     const canvas = this.scene.canvas;
     const inCanvas = !!w && w.x >= 0 && w.y >= 0 && w.x <= canvas.clientWidth && w.y <= canvas.clientHeight;
@@ -504,6 +504,8 @@ export class Markers implements MarkersApi {
     const layer = this.layers[body];
     const canvas = layer.scene.canvas;
     const radiusFor = (type: string) => (type === 'mouse' ? 6 : 22);
+    // Times come from the events themselves (timeStamp), not from when the handler runs: a slow
+    // frame between pointerdown and pointerup must not turn a tap into a long press.
     let down: { x: number; y: number; t: number; id: number } | null = null;
     const local = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
@@ -512,14 +514,14 @@ export class Markers implements MarkersApi {
     canvas.addEventListener('pointerdown', (e) => {
       if (!e.isPrimary || e.button > 0) return;
       const p = local(e);
-      down = { ...p, t: performance.now(), id: e.pointerId };
+      down = { ...p, t: e.timeStamp, id: e.pointerId };
     });
     canvas.addEventListener('pointerup', (e) => {
       const d = down;
       down = null;
       if (!d || d.id !== e.pointerId || layer.count() === 0) return;
       const p = local(e);
-      if (Math.hypot(p.x - d.x, p.y - d.y) > 6 || performance.now() - d.t > 700) return; // a drag, not a tap
+      if (Math.hypot(p.x - d.x, p.y - d.y) > 6 || e.timeStamp - d.t > 700) return; // a drag, not a tap
       const id = layer.nearest(p.x, p.y, radiusFor(e.pointerType));
       if (id != null) this.emit(body, id, (e.pointerType || 'mouse') as PickSource);
     });

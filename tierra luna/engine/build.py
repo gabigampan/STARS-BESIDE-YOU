@@ -13,7 +13,7 @@ from typing import Dict, Optional
 import numpy as np
 
 from engine import schema
-from engine.config import (DATASETS_PATH, ENGINE_CONFIG_PATH, ENGINE_DIR, load_engine_config, load_mission_config,
+from engine.config import (DATASETS_PATH, Setting, ENGINE_CONFIG_PATH, ENGINE_DIR, load_engine_config, load_mission_config,
                            resolve_path, sha256_bytes, sha256_file)
 from engine.dataset import Dataset, load_dataset, provenance_files
 from engine.export import (build_cells, build_explain, build_iau_features, build_manifest, build_missions,
@@ -37,9 +37,16 @@ def earth_land(ds: Dataset, mission_cfg: Dict, engine_cfg) -> np.ndarray:
 
 
 def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]] = None,
-            engine_config_path: Optional[str] = None, mission_config_path: Optional[str] = None) -> Dict:
-    """Load a dataset and run every mission. Returns the pieces both formats need."""
+            engine_config_path: Optional[str] = None, mission_config_path: Optional[str] = None,
+            similarity_rule: Optional[str] = None) -> Dict:
+    """Load a dataset and run every mission. Returns the pieces both formats need.
+
+    ``similarity_rule`` overrides engine_config similarity_rule for this run only (used
+    to build the unshipped zone_twin preview bundle); the manifest records the rule used."""
     ecfg = load_engine_config(engine_config_path, dataset)
+    if similarity_rule is not None:
+        ecfg.similarity_rule = Setting(value=similarity_rule,
+                                       why=f"command-line override of engine_config similarity_rule ({ecfg.similarity_rule.value!r}) for this build only")
     mpath = mission_config_path or resolve_path(ecfg.v("mission_config"))
     mcfg = load_mission_config(mpath)
     ds = load_dataset(ecfg, input_paths)
@@ -123,7 +130,8 @@ def _build_v2(c: Dict, build_time: Optional[str]) -> Dict:
 
 def build_bundle(dataset: Optional[str] = None, input_csv: Optional[str] = None, build_time: Optional[str] = None,
                  engine_config_path: Optional[str] = None, mission_config_path: Optional[str] = None,
-                 input_paths: Optional[Dict[str, str]] = None, bundle_format: Optional[str] = None) -> Dict:
+                 input_paths: Optional[Dict[str, str]] = None, bundle_format: Optional[str] = None,
+                 similarity_rule: Optional[str] = None) -> Dict:
     """Compute the bundle of a dataset (default: datasets.json default_dataset).
 
     ``input_csv`` replaces a one-file dataset's input; ``input_paths`` ({"ALL" | body: path})
@@ -132,7 +140,7 @@ def build_bundle(dataset: Optional[str] = None, input_csv: Optional[str] = None,
     """
     if input_csv is not None:
         input_paths = {"ALL": input_csv}
-    c = compute(dataset, input_paths, engine_config_path, mission_config_path)
+    c = compute(dataset, input_paths, engine_config_path, mission_config_path, similarity_rule)
     fmt = bundle_format or c["engine_cfg"].v("bundle_format")
     if fmt == "v1":
         out = _build_v1(c, build_time)

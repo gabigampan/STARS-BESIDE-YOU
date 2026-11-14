@@ -2,6 +2,7 @@
   "version": "v1-draft",
   "note": "Motor unico de filtros por mision (sustituye a mission_filters.json). 'gates' = filtros duros (si falla uno, la zona se descarta). 'soft' = criterios ponderados 0-100: 'good' da utilidad 1 y 'bad' utilidad 0 (interpolacion lineal; si good < bad, menos es mejor). 'weights' (relieve/material/termico/luz/agua) solo los usa la web para el boton 'Use Weights' de la similitud. Umbrales de solar y thermal = valores de diseno NO validados con fuente externa.",
   "on_missing_gate": "drop",
+  "offered_missions": ["rover", "solar", "lunar_base"],
   "common_gates": {
     "elevation_m":   {"min": 1.0, "why": "solo tierra firme (descarta oceano, que el modelo fija en -250 m)"},
     "mask_fraction": {"min": 0.3, "why": "celda con dato suficiente"}
@@ -53,6 +54,27 @@
     },
     "thermal": {
       "description": "Resistencia termica (ensayo de hardware bajo estres tipo lunar)",
+      "require_present": ["lst_diurnal_amp_k", "tmin_c", "thermal_inertia_class"],
+      "gates": {
+        "lst_diurnal_amp_k":     {"min": 15.0, "source": "diseno: sin ciclo termico fuerte no hay ensayo util"},
+        "tmin_c":                {"max": 5.0,  "source": "diseno: hace falta frio real para estresar el equipo"},
+        "thermal_inertia_class": {"exclude": ["agua"], "source": "diseno: el agua amortigua los ciclos"}
+      },
+      "soft": {
+        "lst_diurnal_amp_k":     {"weight": 0.35, "bad": 15.0, "good": 35.0,  "why": "amplitud termica diaria (estres por ciclado)"},
+        "tmin_c":                {"weight": 0.25, "bad": 5.0,  "good": -50.0, "why": "minimas extremas"},
+        "thermal_inertia_class": {"weight": 0.15, "map": {"roca": 1.0, "regolito": 1.0, "arena": 0.9, "suelo": 0.6, "hielo": 0.4}, "default": 0.5, "why": "superficie de baja inercia, parecida al regolito"},
+        "rock_or_bare_frac":     {"weight": 0.10, "bad": 0.10, "good": 0.70,  "why": "superficie expuesta, sin vegetacion que amortigue"},
+        "irradiance_kwh_m2_day": {"weight": 0.10, "bad": 3.0,  "good": 6.0,   "why": "mayor carga solar = mayor calentamiento diurno"},
+        "permafrost_class":      {"weight": 0.05, "map": {"esporadico": 1.0, "discontinuo": 1.0, "continuo": 0.7, "ninguno": 0.3}, "default": 0.5, "why": "ciclos congelacion-deshielo"}
+      },
+      "weights": {"relieve": 0.15, "material": 0.25, "termico": 0.45, "luz": 0.1, "agua": 0.05},
+      "frozen_at": null,
+      "author": "Robotics 2 - Thermal Systems Team"
+    },
+    "lunar_base": {
+      "description": "Base lunar: mision cuyo nucleo es la configuracion de resistencia termica (copia exacta del bloque thermal). El componente ice se muestra por punto solo como informacion y no cambia el orden.",
+      "components": {"core": "thermal", "info": ["ice"], "rule": "lunar_base = copia exacta de thermal (require_present, gates, soft, weights); thermal e ice siguen en este fichero como componentes y no se ofrecen como misiones"},
       "require_present": ["lst_diurnal_amp_k", "tmin_c", "thermal_inertia_class"],
       "gates": {
         "lst_diurnal_amp_k":     {"min": 15.0, "source": "diseno: sin ciclo termico fuerte no hay ensayo util"},
