@@ -37,17 +37,21 @@
   #card .sentence { margin-top: 28px; font-size: 28px; line-height: 40px; color: #e6e9ee; max-width: 1640px; }
   #card .legend { margin-top: 18px; font-size: 22px; line-height: 30px; color: #9aa3b1; }
   #panel .site.zone { font-size: 20px; line-height: 26px; }
-  #card table.pair { font-size: 24px; line-height: 32px; }
-  #card table.pair th { font-size: 25px; line-height: 32px; }
+  #card table.pair { font-size: 24px; line-height: 30px; table-layout: fixed; }
+  #card.pair h1 { font-size: 40px; line-height: 48px; }
+  #card.pair .sub { font-size: 23px; line-height: 30px; margin-bottom: 16px; }
+  #card.pair .sentence { margin-top: 16px; font-size: 25px; line-height: 34px; }
+  #card.pair .legend { margin-top: 10px; font-size: 19px; line-height: 25px; }
+  #card.pair .disclaimer { bottom: 26px; font-size: 24px; }
+  #card table.pair th { font-size: 24px; line-height: 30px; padding-right: 14px; vertical-align: bottom; }
+  #card table.pair th:nth-child(1) { width: 22%; } #card table.pair th:nth-child(2), #card table.pair th:nth-child(3) { width: 29%; } #card table.pair th:nth-child(4) { width: 20%; }
   #card table.pair th .lv { display: block; margin: 2px 0 0; font-weight: 400; }
-  #card table.pair td { padding: 6px 12px 6px 0; }
-  #card table.pair td.var { width: 22%; }
-  #card table.pair td.num { width: 26%; font-size: 23px; }
-  #card table.pair td.num:last-child { width: 26%; }
+  #card table.pair td { padding: 4px 14px 4px 0; }
+  #card table.pair td.num { font-size: 23px; }
   #card table.pair .lv { display: block; margin: 0; font-size: 19px; line-height: 24px; }
   #card table.pair .pct { font-family: "Inter", sans-serif; font-size: 19px; line-height: 24px; color: #8fc1e3; }
   #card table.pair .c { color: #b9c0cc; }
-  #card.pair .inner { top: 56px; }
+  #card.pair .inner { top: 40px; }
   #card .disclaimer { position: absolute; left: 120px; bottom: 60px; font-size: 26px; color: #f2a33a; font-weight: 500; }
 </style>
 <script type="importmap">{ "imports": { "three": "/three/build/three.module.js" } }</script>

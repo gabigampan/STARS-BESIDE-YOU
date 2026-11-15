@@ -129,6 +129,15 @@ function captions() {
   const vals = fs.readFileSync(path.join(TW, 'values.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
   const at = (t) => vals[Math.min(vals.length - 1, Math.round(t * SC.fps))];
   const C = SC.captions;
+  if (C.cue_rule) {            // the panel status must not change inside a cue (it is quoted from the cue's start)
+    C.cue_times.forEach((t0, k) => {
+      const t1 = k + 1 < C.cue_times.length ? C.cue_times[k + 1] : SC.duration_s;
+      if (t0 >= SC.sun.sim_end_s) return;
+      const f0 = Math.round(t0 * SC.fps), f1 = Math.round(Math.min(t1, SC.sun.sim_end_s) * SC.fps);
+      for (let f = f0; f < f1; f++) if (vals[f].status !== vals[f0].status) throw new Error(`caption cue ${k + 1} (${t0}-${t1} s): status changes at frame ${f} to "${vals[f].status}"`);
+      if (!C.en.status[vals[f0].status] || !C.es.status[vals[f0].status]) throw new Error(`no caption label for status "${vals[f0].status}"`);
+    });
+  }
   for (const lang of ['en', 'es']) {
     const L = C[lang], dec = lang === 'es' ? ',' : '.';
     const num = (x, d = 1) => (Math.abs(x) < 0.5 * Math.pow(10, -d) ? 0 : x).toFixed(d).replace('.', dec);

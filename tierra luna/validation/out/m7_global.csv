@@ -1,0 +1,4 @@
+mission,coverage,validity,external_agreement,stability,coordinates,reproduction,global_figure,external_measured,global_without_external,lowest_component
+rover,100,100,40,96.92,99.61,100,84.3,True,99.1,external_agreement
+solar,86.66,100,,98.6,100,100,96.1,False,96.1,coverage
+lunar_base,68.75,100,0,92.36,100,100,67.2,True,89.6,external_agreement

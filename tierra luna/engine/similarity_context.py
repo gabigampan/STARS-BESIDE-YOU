@@ -73,7 +73,7 @@ def resolve_zones(moon: pd.DataFrame, engine_cfg: EngineConfig, missions: List[s
             fb = z["fallback"]
             out[m] = {"name": fb["name"], "kind": fb["kind"], "lat_max": fb.get("lat_max"), "source": fb["source"],
                       "used": "fallback_south_pole",
-                      "reason": f"Artemis III region outlines not available ({status}); the configured fallback, the code's south-pole zone, is used (never the global mean).",
+                      "reason": f"outlines of NASA's nine candidate landing regions near the lunar south pole not available ({status}); the configured fallback, the code's south-pole zone, is used (never the global mean).",
                       "mask": zone_mask(moon, fb)}
         else:
             out[m] = {"name": z["name"], "kind": z["kind"], "lat_max": z.get("lat_max"), "source": z["source"],

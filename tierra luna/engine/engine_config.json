@@ -267,7 +267,7 @@
         "kind": "artemis_regions",
         "regions_file": "engine/data/artemis_iii_regions.geojson",
         "verified_flag": "verified",
-        "name": "NASA Artemis III candidate landing regions (9, announced 2024-10-28)",
+        "name": "NASA's nine candidate landing regions near the lunar south pole",
         "source": "USGS navigational grids (McClernan 2024, DOI 10.5066/P1MEQ6UK, CC0): each region's footprint is the union of its 1 km grid squares, an upper bound of the region (the exact outline file is not published)",
         "fallback": {
           "kind": "lat_max",
@@ -277,7 +277,7 @@
         }
       }
     },
-    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS data release (DOI 10.5066/P1MEQ6UK; the exact outlines are not published, so each footprint is the union of the region's 1 km navigational grid squares, an upper bound), if a verified region file is present in the repository (engine/data/artemis_iii_regions.geojson: GeoJSON in planetocentric degrees, longitude -180..180 east-positive, top-level 'verified': true, copied from the proposal agent's verified outlines); otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Confirmed by the team on 2026-11-15 (rover and solar stay on the south-pole zone, the branch's version from analog_finder.py commit ff6f1ae, not Tycho; lunar_base on the nine NASA regions)."
+    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine candidate landing regions near the lunar south pole (announced 2024-10-28, NASA RELEASE24-136) from the USGS data release (DOI 10.5066/P1MEQ6UK; the exact outlines are not published, so each footprint is the union of the region's 1 km navigational grid squares, an upper bound), if a verified region file is present in the repository (engine/data/artemis_iii_regions.geojson: GeoJSON in planetocentric degrees, longitude -180..180 east-positive, top-level 'verified': true, copied from the proposal agent's verified outlines); otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Confirmed by the team on 2026-11-15 (rover and solar stay on the south-pole zone, the branch's version from analog_finder.py commit ff6f1ae, not Tycho; lunar_base on the nine NASA regions)."
   },
   "twin_tie_rule": {
     "value": "lowest_lunar_id",
@@ -368,6 +368,7 @@
         "replaces": "the solar limitation of decision 5 (2026-11-15 night), superseded: the solar twin is no longer chosen by terrain and temperature",
         "text": "This pair is matched on sunlight above the atmosphere: {toa_earth} kWh/m²/day at the top of Earth's atmosphere here and {toa_moon} kWh/m²/day on the lunar surface. At the Earth site only {ground_earth} of those {toa_earth} kWh/m²/day reach the ground ({loss_pct} % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts {lunar_day} Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion.",
         "where": "on every solar pair (earth_solar.bin twin present), in the panel next to the twin",
+        "display_rule": "every number is printed as the browser displays its stored float32 (the shortest decimal of the float32, written with the placeholder's decimals, half up); {loss_pct} is computed from the printed {toa_earth} and {ground_earth} (its 'formula'), so the three numbers agree. explain.json missions.solar[].similarity.pair_sentence is this text filled by the engine with the same rule (engine/display.py).",
         "placeholders": {
           "toa_earth": {
             "file": "earth_solar_pairs.bin",
@@ -389,10 +390,15 @@
           },
           "loss_pct": {
             "file": "earth_solar_pairs.bin",
-            "column": "atm.lost_share",
+            "columns": {
+              "above": "atm.toa_kwh_m2_day",
+              "ground": "atm.ground_kwh_m2_day"
+            },
+            "rule": "share_lost_of_displayed_tenths",
             "decimals": 0,
-            "multiply": 100,
-            "meaning": "share of the sunlight above the atmosphere that does not reach the ground at the Earth site, in percent"
+            "meaning": "share of the sunlight above the atmosphere that does not reach the ground at the Earth site, in percent, computed from the two numbers printed beside it ({toa_earth} and {ground_earth}) so that it agrees with them",
+            "formula": "A = {toa_earth} and G = {ground_earth} as displayed (each column's float32 written with 1 decimal, half up, as the other placeholders), as integers of tenths (6.2 -> 62); loss_pct = 100 x (A - G) / A rounded half up = floor((200 x (A - G) + A) / (2 x A)), in integer arithmetic. Python: (200 * (A - G) + A) // (2 * A). JavaScript: Math.floor((200 * (A - G) + A) / (2 * A)). Tenths in JavaScript: const s = f32Decimal(raw).toFixed(12), i = s.indexOf('.'); A = Number(s.slice(0, i)) * 10 + Number(s[i + 1]) + (Number(s[i + 2]) >= 5 ? 1 : 0). Number 1 pair: 6.2 of 9.6 -> A = 96, G = 62 -> floor(6896 / 192) = 35.",
+            "changed": "wording and display rounding, 2026-11-15: before, 100 x atm.lost_share (from the unrounded values) with 0 decimals, which could disagree with the two printed numbers (number 1 pair: '6.2 of 9.6' with 36 %, where 6.2 / 9.6 gives 35.4 %); atm.lost_share is unchanged in the pairs file"
           },
           "lunar_day": {
             "filled_at_build": true,

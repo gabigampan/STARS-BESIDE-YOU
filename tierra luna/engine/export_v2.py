@@ -637,12 +637,15 @@ def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> st
     """Fill a per-pair text template (approved_texts entry with placeholders {file, column,
     decimals[, subtract][, multiply]}) from the pair's values {column: value}; the browser
     does the same from the pairs file."""
+    from engine.display import fill_placeholder
+
     text = template["text"]
     for name, ph in (template.get("placeholders") or {}).items():
         if not isinstance(ph, dict) or ph.get("filled_at_build"):
             continue
-        x = float(values[ph["column"]]) * float(ph.get("multiply", 1.0)) - float(ph.get("subtract", 0.0))
-        text = text.replace("{" + name + "}", f"{x:.{int(ph['decimals'])}f}")
+        # displayed exactly as the browser displays it; the share lost from the two
+        # displayed values (engine/display.py, wording and display rounding 2026-11-15)
+        text = text.replace("{" + name + "}", fill_placeholder(ph, values))
     return text
 
 
@@ -999,6 +1002,12 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
                     tpl = (engine_cfg.v("approved_texts") or {}).get(key) if key else None
                     if tpl:
                         sim["pair_sentence"] = fill_pair_sentence(tpl, pair_columns_of_row(res, i))
+                else:
+                    # the mission's per-pair template (solar: texts.solar_limitation), filled for
+                    # this pair as the browser fills it (wording and display rounding, 2026-11-15)
+                    for key in per_pair_text_keys(engine_cfg, mid):
+                        sim["pair_sentence"] = fill_pair_sentence(approved_texts_json(engine_cfg)[key],
+                                                                  pair_columns_of_row(res, i))
             elif ctx is not None:
                 sim["earth"] = {f: {"z": rnd(ctx.earth.z[f][i], 4), "value": rnd(ctx.earth.values[f][i], 4)} for f in ctx.active}
                 if res.rule == "zone_twin":
@@ -1044,6 +1053,19 @@ def pair_columns_of_row(res: MissionResult, i: int) -> Dict[str, float]:
     for v, x in real["info"].items():
         for side in ("earth", "moon", "diff"):
             out[f"info.{v}.{side}"] = float(np.float32(x[side][i]))
+    for k, a in (real.get("atm") or {}).items():
+        out[f"atm.{k}"] = float(np.float32(a[i]))
+    return out
+
+
+def per_pair_text_keys(engine_cfg: EngineConfig, mission: str) -> List[str]:
+    """Keys of the approved per-pair templates of a mission whose placeholders are read
+    from a pairs file (solar: solar_limitation; lunar_base: lunar_base_pair_sentence)."""
+    out = []
+    for k, t in (engine_cfg.v("approved_texts") or {}).items():
+        ms = t.get("missions") or ([t["mission"]] if t.get("mission") else [])
+        if mission in ms and any(isinstance(p, dict) and "file" in p for p in (t.get("placeholders") or {}).values()):
+            out.append(k)
     return out
 
 

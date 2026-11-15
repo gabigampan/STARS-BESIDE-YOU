@@ -439,16 +439,15 @@ function baseStatus(t, s) {
   if (s.vis < 1) return t < st[0].t0 ? S.rising : S.partly;
   return t < st[0].t0 ? S.day_before : S.day_after;
 }
-// Display exposure: 1 while the habitat site is sunlit; raised to render.shadow_exposure while it is in
-// shadow, like a camera's exposure, following the shadowed share of the last exposure_adapt_s seconds
-// (a deterministic function of t). Stated on screen whenever it is above 1.25.
+// Display exposure (a camera setting, not a change of the light): 1 while the habitat site sees the
+// whole solar disc, render.shadow_exposure (EX) while it sees none of it, and in between the value that
+// keeps the site's light level constant on screen: 1 / (1/EX + (1 - 1/EX) * visible disc fraction).
+// A function of t only (no adaptation lag). Stated on screen whenever it is above 1.25.
 function exposureAt(t) {
-  const EX = SC.render?.shadow_exposure ?? 1, A = SC.render?.exposure_adapt_s ?? 1.0, n = 24;
+  const EX = SC.render?.shadow_exposure ?? 1;
   if (EX === 1) return 1;
-  let sh = 0;
-  for (let k = 0; k < n; k++) { const tt = Math.max(0, t - A * k / (n - 1)); sh += 1 - M.smooth(sunAt(Math.min(tt, SIM_END)).vis); }
-  sh /= n;
-  return 1 + (EX - 1) * M.smooth(sh);
+  const v = sunAt(Math.min(t, SIM_END)).vis;
+  return 1 / (1 / EX + (1 - 1 / EX) * v);
 }
 window.statusAt = function (t) {
   const s = sunAt(Math.min(t, SIM_END));
@@ -548,8 +547,8 @@ window.renderAt = function (t) {
     rows = row('Surface temp.', `${f1(T)} K  ${f1(T - 273.15)} °C`) + row('Measured min', tm.tmin_k.value + ' K') + row('Measured max', tm.tmax_k.value + ' K') +
       row('Diurnal amplitude', tm.lst_diurnal_amp_k.value + ' K') + row('Sun elevation', f1(s.elev) + '°') + row('Sun azimuth', f1(s.az) + '°') +
       row('Terrain horizon', f1(s.hz) + '°') + row('Habitat site', lit) + row('Elapsed', f1(M.simDays(SC, tc)) + ' Earth days') + row('Time', compStr) +
-      row('Earth', TR.earth.draw ? `az ${f1(TR.earth.az_deg, 0)}° el ${f1(TR.earth.elev_deg)}°` : 'behind the terrain');
-    const exTag = ex > 1.25 ? `<br><span style="color:#f2a33a">Site in shadow: exposure raised ×${f1(ex)} to show the ground (not to scale).</span>` : '';
+      row('Earth', TR.earth.draw ? `az ${f1(TR.earth.az_deg, 0)}° el ${f1(TR.earth.elev_deg)}°` : 'behind terrain (mean pos.)');
+    const exTag = ex > 1.25 ? `<br><span style="color:#f2a33a">Exposure raised ×${f1(ex)} to show the ground in shadow (not to scale).</span>` : '';
     panel.innerHTML = `<div class="title">Lunar base · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div>` +
       (SC.site.zone ? `<div class="site zone">${SC.site.zone.name}</div>` : '') + `<div class="status">${status}</div>${rows}` +
       `<div class="tag" style="margin-top:8px">Surface temp.: model curve between the measured Diviner min and max. Sun: computed.${night > 0.5 ? '<br><span style=\"color:#f2a33a\">Night view: exposure raised to show earthshine (not to scale).</span>' : ''}${exTag}</div>`;

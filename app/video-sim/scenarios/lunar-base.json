@@ -250,9 +250,9 @@
     "keys": [
       {
         "t": 0.0,
-        "dist": 2000,
-        "elev_deg": 22,
-        "az_deg": 20,
+        "dist": 1500,
+        "elev_deg": 20,
+        "az_deg": 25,
         "target_z": 0
       },
       {
@@ -277,17 +277,24 @@
         "target_z": 2
       },
       {
-        "t": 28.5,
+        "t": 27.0,
+        "dist": 64,
+        "elev_deg": 9,
+        "az_deg": 345,
+        "target_z": 2
+      },
+      {
+        "t": 34.0,
         "dist": 70,
-        "elev_deg": 8,
-        "az_deg": 110,
+        "elev_deg": 12,
+        "az_deg": 40,
         "target_z": 2
       },
       {
         "t": 40.0,
         "dist": 80,
         "elev_deg": 10,
-        "az_deg": 30,
+        "az_deg": 70,
         "target_z": 2
       }
     ],
@@ -399,28 +406,29 @@
   },
   "render": {
     "earthshine_display_fraction": 0.2,
-    "shadow_exposure": 6.0,
-    "exposure_adapt_s": 1.0,
-    "lighting_note": "Sun: one parallel light; terrain shadows from the real LOLA horizons; 3.5 % uniform fill standing in for light reflected by the surrounding ground (assumption). While the habitat site is in shadow the display exposure is raised to x6 (like a camera's exposure), stated on screen; the light itself is not changed."
+    "shadow_exposure": 16.0,
+    "lighting_note": "Sun: one parallel light (the real low Sun, at most 5.04 deg up); terrain shadows from the real LOLA horizons; 3.5 % uniform fill standing in for light reflected by the surrounding sunlit ground (assumption). Display exposure (a camera setting, the light is not changed): 1 while the habitat site sees the whole solar disc, x16 while it sees none, and 1/(1/16 + (15/16) x visible disc fraction) in between; stated on screen whenever it is above 1.25."
   },
   "captions": {
     "cue_times": [
       0,
-      4,
-      8,
-      12,
-      16,
-      20,
-      24,
-      28,
-      32,
-      36,
+      4.067,
+      5.5,
+      9.5,
+      11.0,
+      15.5,
+      16.5,
+      22.5,
+      24.0,
+      27.967,
+      29.1,
+      34.5,
       40,
       43
     ],
     "en": {
       "header": "Lunar base mission video (3D simulation), English descriptive captions",
-      "note": "No speech. Each cue gives the values on the on-screen panel at its start time. The surface temperature follows a stated model curve between the cell's measured Diviner minimum (68.5 K) and maximum (255.56 K); the Sun is computed; habitat shapes, sizes and timing are illustrative.",
+      "note": "No speech. Each cue gives the values on the on-screen panel at its start time; the panel status does not change within a cue. The surface temperature follows a stated model curve between the cell's measured Diviner minimum (41.23 K) and maximum (194.51 K); the Sun is computed; habitat shapes, sizes and timing are illustrative. While the site is in shadow the display exposure is raised (not to scale).",
       "sun": "Sun",
       "az": "azimuth",
       "hz": "terrain horizon",
@@ -430,33 +438,40 @@
       "temp": "Surface temperature",
       "model": "model",
       "status": {
-        "Lunar night": "Lunar night",
-        "Night ending: sunrise": "Night ending: sunrise",
-        "Module placed": "Placing the module",
+        "Sun up, behind the northern terrain": "Sun up, behind the northern terrain",
+        "Sun rising over the terrain": "Sun rising over the terrain",
+        "Sunlit": "Sunlit",
+        "Lowering the module": "Lowering the module",
+        "Module placed": "Module placed",
         "Inflatable section deploying": "Inflatable section deploying",
-        "Regolith berm built": "Building the regolith berm",
-        "Habitat assembled, daylight": "Habitat assembled, daylight",
-        "Sun blocked by terrain": "Sun blocked by terrain",
-        "Night: surface cooling": "Night: surface cooling"
+        "Inflatable section deployed": "Inflatable section deployed",
+        "Building the regolith berm": "Building the regolith berm",
+        "Regolith berm built": "Regolith berm built",
+        "Habitat assembled, sunlit": "Habitat assembled, sunlit",
+        "Sun partly behind the terrain": "Sun partly behind the terrain",
+        "Sun behind the terrain: site in shadow": "Sun behind the terrain: site in shadow",
+        "Lunar night: Sun below the horizon": "Lunar night: Sun below the horizon"
       },
       "text": [
-        "3D simulation driven by table data, not real footage. Lunar night over the real LOLA relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the north-west sky.",
-        "The camera descends to the site. Night view: exposure raised to show earthshine.",
-        "Sunrise: the Sun skims the eastern horizon; the cylindrical module is lowered onto its legs.",
+        "3D simulation driven by table data, not real footage. Lunar cell M63528, 86.5° S 11.5° W, 25.1 km from Mons Malapert, in NASA's nine candidate landing regions near the lunar south pole, over real LOLA relief. The camera descends to the site. The Sun is up but behind the northern terrain: the site is in shadow (exposure raised, not to scale).",
+        "The Sun rises over the northern terrain.",
+        "The cylindrical module is lowered onto its legs.",
+        "The module rests on the ground.",
         "The inflatable section expands from the end of the module.",
+        "The inflatable section is deployed.",
         "A regolith berm rises in a ring around the habitat.",
-        "The Sun stays below about 7° all day and moves west along the horizon; shadows are very long.",
-        "The Sun goes behind the western terrain while still above the flat horizon; the surface starts to cool.",
-        "The Sun sets below the horizon: lunar night begins.",
-        "Lunar night, lit only by earthshine (exposure raised, not to scale).",
-        "The surface temperature approaches the measured minimum, 68.5 K.",
-        "Closing card: Earth analog Kunlun Mountains, Xinjiang, China (cell E19345) against the lunar cell M62859 on Mons Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against −204.65 °C (surface); lunar maximum 255.56 K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Earth (modelled).",
-        "Kunlun reproduces a high plateau on frozen ground, not the lunar thermal range. 3D simulation driven by table data. Not real footage."
+        "The berm is complete.",
+        "The habitat is assembled. The Sun stays below about 5° and moves west, low over the terrain; shadows are very long.",
+        "The Sun starts to go behind the western terrain.",
+        "The Sun is behind the western terrain while still above the flat horizon: the site is in shadow and its surface cools. Exposure raised to show the ground (not to scale).",
+        "The site stays in shadow. At its mean position the Earth is hidden behind the terrain from here, so there is no earthshine.",
+        "Closing card: the Earth analog in Xinjiang Uygur Zizhiqu, China (cell E17538, 41.5° N 78.5° E) and its lunar twin, cell M63528 near Mons Malapert, paired by relative thermal position, not by equal temperatures. Coldest temperature 248.61 K (−24.54 °C, modelled air) against 41.23 K (−231.92 °C, measured surface), percentiles 8.37 and 8.04; daily swing 15.60 K against 153.27 K, percentiles 6.72 and 10.18; slope 6.652° against 7.179°; roughness 238.81 m against 238.49 m; mean temperature 272.06 K against 77.49 K (not part of the similarity).",
+        "This pair matches by relative thermal position, not by equal temperatures. In real values the twin is 195 K colder on average (minimum −232 °C at the surface against −24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m. 3D simulation driven by table data. Not real footage."
       ]
     },
     "es": {
       "header": "Vídeo de la misión base lunar (simulación 3D), subtítulos descriptivos en español",
-      "note": "Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. La temperatura de la superficie sigue una curva de modelo declarada entre el mínimo (68,5 K) y el máximo (255,56 K) medidos por Diviner en la celda; el Sol es calculado; formas, tamaños y tiempos del hábitat son ilustrativos.",
+      "note": "Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo; el estado del panel no cambia dentro de un subtítulo. La temperatura de la superficie sigue una curva de modelo declarada entre el mínimo (41,23 K) y el máximo (194,51 K) medidos por Diviner en la celda; el Sol es calculado; formas, tamaños y tiempos del hábitat son ilustrativos. Mientras el punto está en sombra se aumenta la exposición de la imagen (no a escala).",
       "sun": "Sol",
       "az": "acimut",
       "hz": "horizonte del terreno",
@@ -466,30 +481,38 @@
       "temp": "Temperatura de la superficie",
       "model": "modelo",
       "status": {
-        "Lunar night": "Noche lunar",
-        "Night ending: sunrise": "Fin de la noche: amanecer",
-        "Module placed": "Colocando el módulo",
+        "Sun up, behind the northern terrain": "Sol sobre el horizonte, tapado por el relieve del norte",
+        "Sun rising over the terrain": "El Sol asoma sobre el relieve",
+        "Sunlit": "Al sol",
+        "Lowering the module": "Bajando el módulo",
+        "Module placed": "Módulo colocado",
         "Inflatable section deploying": "Desplegando la sección inflable",
-        "Regolith berm built": "Construyendo el muro de regolito",
-        "Habitat assembled, daylight": "Hábitat montado, de día",
-        "Sun blocked by terrain": "Sol tapado por el relieve",
-        "Night: surface cooling": "Noche: la superficie se enfría"
+        "Inflatable section deployed": "Sección inflable desplegada",
+        "Building the regolith berm": "Construyendo el muro de regolito",
+        "Regolith berm built": "Muro de regolito construido",
+        "Habitat assembled, sunlit": "Hábitat montado, al sol",
+        "Sun partly behind the terrain": "Sol en parte tapado por el relieve",
+        "Sun behind the terrain: site in shadow": "Sol tapado por el relieve: el punto queda en sombra",
+        "Lunar night: Sun below the horizon": "Noche lunar: Sol bajo el horizonte"
       },
       "text": [
-        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Noche lunar sobre el relieve real LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo, al noroeste.",
-        "La cámara desciende hasta el punto. Vista nocturna: exposición aumentada para mostrar la luz cenicienta.",
-        "Amanecer: el Sol roza el horizonte del este; el módulo cilíndrico se baja sobre sus patas.",
+        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Celda lunar M63528, 86,5° S 11,5° O, a 25,1 km de Mons Malapert, en las nueve regiones candidatas de alunizaje de la NASA cerca del polo sur lunar, sobre el relieve real LOLA. La cámara desciende hasta el punto. El Sol está sobre el horizonte pero tapado por el relieve del norte: el punto está en sombra (exposición aumentada, no a escala).",
+        "El Sol asoma sobre el relieve del norte.",
+        "El módulo cilíndrico se baja sobre sus patas.",
+        "El módulo queda apoyado en el suelo.",
         "La sección inflable se expande desde el extremo del módulo.",
+        "La sección inflable está desplegada.",
         "Un muro de regolito se levanta en anillo alrededor del hábitat.",
-        "El Sol no pasa de unos 7° en todo el día y se desplaza al oeste a ras del horizonte; las sombras son muy largas.",
-        "El Sol se oculta tras el relieve del oeste aunque sigue sobre el horizonte plano; la superficie empieza a enfriarse.",
-        "El Sol se pone bajo el horizonte: empieza la noche lunar.",
-        "Noche lunar, iluminada solo por la luz cenicienta de la Tierra (exposición aumentada, no a escala).",
-        "La temperatura de la superficie se acerca al mínimo medido, 68,5 K.",
-        "Tarjeta final: el análogo terrestre montes Kunlun, Xinjiang, China (celda E19345) frente a la celda lunar M62859 en Mons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (superficie); máxima lunar 255,56 K; temperatura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la Tierra (modelado).",
-        "Kunlun reproduce una meseta alta sobre suelo helado, no el rango térmico lunar. Simulación 3D basada en datos de las tablas. No son imágenes reales."
+        "El muro está terminado.",
+        "El hábitat está montado. El Sol no pasa de unos 5° y se desplaza al oeste a ras del relieve; las sombras son muy largas.",
+        "El Sol empieza a ocultarse tras el relieve del oeste.",
+        "El Sol está tras el relieve del oeste aunque sigue sobre el horizonte plano: el punto queda en sombra y su superficie se enfría. Exposición aumentada para mostrar el suelo (no a escala).",
+        "El punto sigue en sombra. En su posición media, la Tierra queda oculta tras el relieve desde aquí, así que no hay luz cenicienta.",
+        "Tarjeta final: el análogo terrestre en Xinjiang Uygur Zizhiqu, China (celda E17538, 41,5° N 78,5° E) y su gemela lunar, la celda M63528 cerca de Mons Malapert, emparejadas por posición térmica relativa, no por temperaturas iguales. Temperatura más fría 248,61 K (−24,54 °C, aire, modelada) frente a 41,23 K (−231,92 °C, superficie, medida), percentiles 8,37 y 8,04; oscilación diaria 15,60 K frente a 153,27 K, percentiles 6,72 y 10,18; pendiente 6,652° frente a 7,179°; rugosidad 238,81 m frente a 238,49 m; temperatura media 272,06 K frente a 77,49 K (no forma parte de la similitud).",
+        "Este par se parece por posición térmica relativa, no por temperaturas iguales. En valores reales la gemela es 195 K más fría de media (mínima −232 °C en la superficie frente a −24,5 °C de temperatura del aire aquí) y su oscilación entre el día y la noche es 138 K mayor; la pendiente difiere en 0,5° y la rugosidad en 0,3 m. Simulación 3D basada en datos de las tablas. No son imágenes reales."
       ]
-    }
+    },
+    "cue_rule": "Cue boundaries are the frames where the panel status changes (render.js --timeline), plus 34.5 s and the closing card; render.js refuses to write captions if the status changes inside a cue."
   },
   "pair_values": {
     "source": "app/public/data/v2/explain.json, missions.lunar_base item with rank 1 (the same values as earth_lunar_base_pairs.bin and twins.json); prepare.py checks every number here against that file",

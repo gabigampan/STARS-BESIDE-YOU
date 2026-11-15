@@ -104,18 +104,99 @@
 | lunar_base | weight | permafrost_class | 1.2 | 0.05 | 0.059 | 450 | 5 | 49 | 1.0 | 0.99 | True | E17538-M63528 |
 | lunar_base | weight | permafrost_class | 0.8 | 0.05 | 0.04 | 450 | 4 | 48 | 0.999 | 0.993 | False | E16830-M63841 |
 
+## m4_sensitivity_thresholds.csv
+
+| mission | change | variable | factor | value_from | value_to | funnel_pass_base | funnel_pass_new | cells_entering | cells_leaving | pairs_base | pairs_new | pairs_gained | pairs_lost | twin_changed_on_kept_pairs | top5_overlap | top50_overlap | spearman_all_common | spearman_base_top50 | number1_same | number1_new |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| rover | threshold | common:elevation_m:min | 0.9 | 1.0 | 0.9 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | common:elevation_m:min | 1.1 | 1.0 | 1.1 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | common:mask_fraction:min | 0.9 | 0.3 | 0.27 | 10337 | 10455 | 118 | 0 | 10192 | 10310 | 118 | 0 | 0 | 5 | 48 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | common:mask_fraction:min | 1.1 | 0.3 | 0.33 | 10337 | 10225 | 0 | 112 | 10192 | 10080 | 0 | 112 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:slope_300m_deg:min | 0.9 | 0.5 | 0.45 | 10337 | 10941 | 604 | 0 | 10192 | 10621 | 429 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:slope_300m_deg:min | 1.1 | 0.5 | 0.55 | 10337 | 9854 | 0 | 483 | 10192 | 9774 | 0 | 418 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:slope_300m_deg:max | 0.9 | 15.0 | 13.5 | 10337 | 10336 | 0 | 1 | 10192 | 10191 | 0 | 1 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:slope_300m_deg:max | 1.1 | 15.0 | 16.5 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:rough_300m_m:min | 0.9 | 5.0 | 4.5 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:rough_300m_m:min | 1.1 | 5.0 | 5.5 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:rough_300m_m:max | 0.9 | 650.0 | 585.0 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| rover | threshold | mission:rough_300m_m:max | 1.1 | 650.0 | 715.0 | 10337 | 10337 | 0 | 0 | 10192 | 10192 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17566-M59895 |
+| solar | threshold | common:elevation_m:min | 0.9 | 1.0 | 0.9 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | common:elevation_m:min | 1.1 | 1.0 | 1.1 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | common:mask_fraction:min | 0.9 | 0.3 | 0.27 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | common:mask_fraction:min | 1.1 | 0.3 | 0.33 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:irradiance_kwh_m2_day:min | 0.9 | 2.5 | 2.25 | 18777 | 20089 | 1312 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:irradiance_kwh_m2_day:min | 1.1 | 2.5 | 2.75 | 18777 | 17461 | 0 | 1316 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:slope_deg:max | 0.9 | 15.0 | 13.5 | 18777 | 18776 | 0 | 1 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:slope_deg:max | 1.1 | 15.0 | 16.5 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:sun_elev_max_deg:min | 0.9 | 10.0 | 9.0 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:sun_elev_max_deg:min | 1.1 | 10.0 | 11.0 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:sun_low_frac_0_5deg:max | 0.9 | 0.25 | 0.225 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | threshold | mission:sun_low_frac_0_5deg:max | 1.1 | 0.25 | 0.275 | 18777 | 18777 | 0 | 0 | 6360 | 6360 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| lunar_base | threshold | common:elevation_m:min | 0.9 | 1.0 | 0.9 | 2419 | 2419 | 0 | 0 | 450 | 450 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17538-M63528 |
+| lunar_base | threshold | common:elevation_m:min | 1.1 | 1.0 | 1.1 | 2419 | 2419 | 0 | 0 | 450 | 450 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17538-M63528 |
+| lunar_base | threshold | common:mask_fraction:min | 0.9 | 0.3 | 0.27 | 2419 | 2419 | 0 | 0 | 450 | 450 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17538-M63528 |
+| lunar_base | threshold | common:mask_fraction:min | 1.1 | 0.3 | 0.33 | 2419 | 2419 | 0 | 0 | 450 | 450 | 0 | 0 | 0 | 5 | 50 | 1.0 | 1.0 | True | E17538-M63528 |
+| lunar_base | threshold | mission:lst_diurnal_amp_k:min | 0.9 | 15.0 | 13.5 | 2419 | 2826 | 407 | 0 | 450 | 529 | 137 | 58 | 306 | 1 | 31 | 0.721 | 0.519 | False | E17538-M62880 |
+| lunar_base | threshold | mission:lst_diurnal_amp_k:min | 1.1 | 15.0 | 16.5 | 2419 | 1998 | 0 | 421 | 450 | 347 | 73 | 176 | 230 | 0 | 29 | 0.655 | 0.266 | False | E17898-M63835 |
+| lunar_base | threshold | mission:tmin_c:max | 0.9 | 5.0 | 4.5 | 2419 | 2255 | 0 | 164 | 450 | 441 | 23 | 32 | 127 | 2 | 40 | 0.906 | 0.841 | False | E18627-M62479 |
+| lunar_base | threshold | mission:tmin_c:max | 1.1 | 5.0 | 5.5 | 2419 | 2570 | 151 | 0 | 450 | 451 | 17 | 16 | 100 | 3 | 41 | 0.946 | 0.754 | False | E16830-M63841 |
+
+## m4_sensitivity_tolerances.csv
+
+| mission | change | variable | role | factor | value_from | value_to | pairs_base | pairs_new | pairs_gained | pairs_lost | twin_changed_on_kept_pairs | top5_overlap | top50_overlap | spearman_all_common | spearman_base_top50 | number1_same | number1_new |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| rover | tolerance | slope_deg | key | 0.8 | 2.0 | 1.6 | 10192 | 10185 | 0 | 7 | 848 | 5 | 48 | 0.996 | 0.991 | True | E17566-M59895 |
+| rover | tolerance | slope_deg | key | 1.2 | 2.0 | 2.4 | 10192 | 10192 | 0 | 0 | 624 | 4 | 47 | 0.998 | 0.993 | True | E17566-M59895 |
+| rover | tolerance | roughness_m | key | 0.8 | 30.0 | 24.0 | 10192 | 9667 | 0 | 525 | 759 | 5 | 44 | 0.992 | 0.933 | True | E17566-M59895 |
+| rover | tolerance | roughness_m | key | 1.2 | 30.0 | 36.0 | 10192 | 10299 | 107 | 0 | 771 | 4 | 46 | 0.995 | 0.961 | True | E17566-M59895 |
+| rover | tolerance | elevation_rel_m | secondary | 0.8 | 500.0 | 400.0 | 10192 | 9863 | 0 | 329 | 1395 | 4 | 42 | 0.983 | 0.928 | True | E17566-M59895 |
+| rover | tolerance | elevation_rel_m | secondary | 1.2 | 500.0 | 600.0 | 10192 | 10299 | 107 | 0 | 923 | 5 | 44 | 0.988 | 0.957 | True | E17566-M59895 |
+| solar | tolerance | irradiance_toa_kwh_m2_day | key | 0.8 | 0.6 | 0.48 | 6360 | 5956 | 0 | 404 | 60 | 5 | 49 | 0.995 | 0.988 | True | E38464-M24296 |
+| solar | tolerance | irradiance_toa_kwh_m2_day | key | 1.2 | 0.6 | 0.72 | 6360 | 6546 | 186 | 0 | 53 | 5 | 49 | 0.997 | 0.997 | True | E38464-M24296 |
+| solar | tolerance | slope_deg | secondary | 0.8 | 2.0 | 1.6 | 6360 | 6360 | 0 | 0 | 548 | 5 | 50 | 1.0 | 0.999 | True | E38464-M24296 |
+| solar | tolerance | slope_deg | secondary | 1.2 | 2.0 | 2.4 | 6360 | 6360 | 0 | 0 | 459 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | tolerance | roughness_m | secondary | 0.8 | 30.0 | 24.0 | 6360 | 6360 | 0 | 0 | 569 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| solar | tolerance | roughness_m | secondary | 1.2 | 30.0 | 36.0 | 6360 | 6361 | 1 | 0 | 432 | 5 | 50 | 1.0 | 1.0 | True | E38464-M24296 |
+| lunar_base | tolerance | tmin_k | key | 0.8 | 10.0 | 8.0 | 450 | 425 | 0 | 25 | 46 | 5 | 47 | 0.99 | 0.971 | True | E17538-M63528 |
+| lunar_base | tolerance | tmin_k | key | 1.2 | 10.0 | 12.0 | 450 | 469 | 19 | 0 | 28 | 3 | 48 | 0.991 | 0.987 | False | E16830-M63841 |
+| lunar_base | tolerance | lst_diurnal_amp_k | key | 0.8 | 10.0 | 8.0 | 450 | 420 | 0 | 30 | 26 | 5 | 48 | 0.993 | 0.952 | False | E16830-M63841 |
+| lunar_base | tolerance | lst_diurnal_amp_k | key | 1.2 | 10.0 | 12.0 | 450 | 483 | 33 | 0 | 35 | 4 | 47 | 0.99 | 0.979 | True | E17538-M63528 |
+| lunar_base | tolerance | slope_deg | secondary | 0.8 | 2.0 | 1.6 | 450 | 445 | 0 | 5 | 14 | 4 | 48 | 0.997 | 0.983 | True | E17538-M63528 |
+| lunar_base | tolerance | slope_deg | secondary | 1.2 | 2.0 | 2.4 | 450 | 453 | 3 | 0 | 12 | 5 | 48 | 0.993 | 0.992 | False | E16830-M63841 |
+| lunar_base | tolerance | roughness_m | secondary | 0.8 | 30.0 | 24.0 | 450 | 392 | 0 | 58 | 43 | 4 | 46 | 0.994 | 0.98 | True | E17538-M63528 |
+| lunar_base | tolerance | roughness_m | secondary | 1.2 | 30.0 | 36.0 | 450 | 530 | 80 | 0 | 36 | 4 | 48 | 0.992 | 0.985 | False | E16830-M63841 |
+
+## m4_sensitivity_summary.csv
+
+| mission | weights_min_top5_overlap | weights_min_top50_overlap | weights_min_spearman_all | weights_number1_changes | weights_variants | thresholds_max_entering | thresholds_max_leaving | thresholds_number1_changes | thresholds_variants | tolerances_max_gained | tolerances_max_lost | tolerances_number1_changes | tolerances_variants |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| rover | 5 | 48 | 0.995 | 0 | 6 | 604 | 483 | 0 | 12 | 107 | 525 | 0 | 6 |
+| solar | 4 | 46 | 0.997 | 0 | 12 | 1312 | 1316 | 0 | 12 | 186 | 404 | 0 | 6 |
+| lunar_base | 3 | 44 | 0.996 | 6 | 12 | 407 | 421 | 4 | 8 | 80 | 58 | 4 | 8 |
+
+## m7_global.csv
+
+| mission | coverage | validity | external_agreement | stability | coordinates | reproduction | global_figure | external_measured | global_without_external | lowest_component |
+|---|---|---|---|---|---|---|---|---|---|---|
+| rover | 100.0 | 100 | 40.0 | 96.92 | 99.61 | 100 | 84.3 | True | 99.1 | external_agreement |
+| solar | 86.66 | 100 |  | 98.6 | 100.0 | 100 | 96.1 | False | 96.1 | coverage |
+| lunar_base | 68.75 | 100 | 0.0 | 92.36 | 100.0 | 100 | 67.2 | True | 89.6 | external_agreement |
+
 ## m8_improvements.csv
 
-| id | mission | kind | change | why | funnel_pass | pairs | cells_entering | pairs_gained | pairs_lost | bench_recall_D1 | bench_precision_D1 | bench_recovered_pos | bench_recovered_neg | bench_rover_preset_ok | bench_rover_preset_problems | top50_overlap_with_base | solar_passing_with_negative_amp | solar_ranked_with_negative_amp | lunar_base_passing_with_negative_amp | lunar_base_ranked_with_negative_amp | rover_passes | solar_passes | lunar_base_passes | bench_recall_D1_now | bench_precision_D1_now | bench_recall_D1_if_verified | bench_precision_D1_if_verified |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| P1 | rover | TEAM SETTING (threshold) | drop the rover gates slope_300m_deg >= 0.5 and rough_300m_m >= 5 (keep the maxima) | minimums written for a 300 m baseline; the table's slope is at 3.7 km and roughness at 1.85 km (column_aliases.json caveat); they remove Dhofar (AMADEE-18) and Concordia | 10337 -> 22185 | 10192 -> 15132 | 11848.0 | 4940.0 | 0.0 | 40.0 | 57.1 | ES04 MA01 MA06 MA11 | ES07 MA02 MA13 | False | Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site) |  |  |  |  |  |  |  |  |  |  |  |  |
-| P2 | rover | TEAM SETTING (weight) | rover soft weight of rock_or_bare_frac 0.25 -> 0 (slope and roughness renormalised to 0.6 / 0.4) | a 1-degree land-cover share is near 0 at Bardenas (0.018), Tabernas, Death Valley: the cell is mostly vegetated even where the test site is bare | unchanged | unchanged |  |  |  | 20.0 | 50.0 | MA06 MO04 | ES07 MA13 | True |  | 10.0 |  |  |  |  |  |  |  |  |  |  |  |
-| P3 | solar, lunar_base | no team setting (data validity flag) | mark lst_diurnal_amp_k < 0 as invalid (missing) on Earth, as the schema of section 2 does | 9 Earth cells have a negative amplitude (min -4.60 K); an amplitude below 0 is not physical for this variable's use as a thermal-cycling stress |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 | 0.0 | 0.0 | 0.0 |  |  |  |  |  |  |  |
-| P4 | all | no team setting (data validity flag) | mark Earth elevation_m below -430 m as invalid | cells E38522 (-2569.9 m, land 0.0002) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 | 0.0 | 0.0 |  |  |  |  |
-| P5 | rover | no team setting (benchmark) | verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted | 15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 40.0 | 57.1 | 46.7 | 63.6 |
-| P5 | lunar_base | no team setting (benchmark) | verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted | 15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 |  | 0.0 |  |
-| P6 | lunar_base | TEAM SETTING (threshold) | lunar_base gate lst_diurnal_amp_k >= 13.5 K (today 15 K) | every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat) | 2419 -> 2826 | 450 -> 529 | 407.0 | 137.0 | 58.0 | 0.0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| P6 | lunar_base | TEAM SETTING (threshold) | lunar_base gate lst_diurnal_amp_k >= 0 K (today 15 K) | every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat) | 2419 -> 9981 | 450 -> 2109 | 7562.0 | 2014.0 | 355.0 | 20.0 | 100.0 | MA19 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| id | mission | kind | change | why | funnel_pass | pairs | cells_entering | pairs_gained | pairs_lost | bench_recall_D1 | bench_precision_D1 | bench_recovered_pos | bench_recovered_neg | bench_rover_preset_ok | bench_rover_preset_problems | top50_overlap_with_base | solar_passing_with_negative_amp | solar_ranked_with_negative_amp | lunar_base_passing_with_negative_amp | lunar_base_ranked_with_negative_amp | rover_passes | solar_passes | lunar_base_passes | bench_recall_D1_now | bench_precision_D1_now | bench_recall_D1_if_verified | bench_precision_D1_if_verified | number1_same |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| P1 | rover | TEAM SETTING (threshold) | drop the rover gates slope_300m_deg >= 0.5 and rough_300m_m >= 5 (keep the maxima) | minimums written for a 300 m baseline; the table's slope is at 3.7 km and roughness at 1.85 km (column_aliases.json caveat); they remove Dhofar (AMADEE-18) and Concordia | 10337 -> 22185 | 10192 -> 15132 | 11848.0 | 4940.0 | 0.0 | 40.0 | 57.1 | ES04 MA01 MA06 MA11 | ES07 MA02 MA13 | False | Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site) |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| P2 | rover | TEAM SETTING (weight) | rover soft weight of rock_or_bare_frac 0.25 -> 0 (slope and roughness renormalised to 0.6 / 0.4) | a 1-degree land-cover share is near 0 at Bardenas (0.018), Tabernas, Death Valley: the cell is mostly vegetated even where the test site is bare | unchanged | unchanged |  |  |  | 20.0 | 50.0 | MA06 MO04 | ES07 MA13 | True |  | 10.0 |  |  |  |  |  |  |  |  |  |  |  |  |
+| P3 | solar, lunar_base | no team setting (data validity flag) | mark lst_diurnal_amp_k < 0 as invalid (missing) on Earth, as the schema of section 2 does | 9 Earth cells have a negative amplitude (min -4.60 K); an amplitude below 0 is not physical for this variable's use as a thermal-cycling stress |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 | 0.0 | 0.0 | 0.0 |  |  |  |  |  |  |  |  |
+| P4 | all | no team setting (data validity flag) | mark Earth elevation_m below -430 m as invalid | cells E38522 (-2569.9 m, land 0.0002) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 | 0.0 | 0.0 |  |  |  |  |  |
+| P5 | rover | no team setting (benchmark) | verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted | 15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 40.0 | 57.1 | 46.7 | 63.6 |  |
+| P5 | lunar_base | no team setting (benchmark) | verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted | 15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.0 |  | 0.0 |  |  |
+| P6 | lunar_base | TEAM SETTING (threshold) | lunar_base gate lst_diurnal_amp_k >= 13.5 K (today 15 K) | every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat) | 2419 -> 2826 | 450 -> 529 | 407.0 | 137.0 | 58.0 | 0.0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| P6 | lunar_base | TEAM SETTING (threshold) | lunar_base gate lst_diurnal_amp_k >= 0 K (today 15 K) | every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat) | 2419 -> 9981 | 450 -> 2109 | 7562.0 | 2014.0 | 355.0 | 20.0 | 100.0 | MA19 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| P7 | lunar_base | TEAM SETTING (tolerance) | tmin_k tolerance x1.2 (10 -> 12) | share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4 |  | 450 -> 469 |  | 19.0 | 0.0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | False |
+| P7 | lunar_base | TEAM SETTING (tolerance) | lst_diurnal_amp_k tolerance x1.2 (10 -> 12) | share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4 |  | 450 -> 483 |  | 33.0 | 0.0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | True |
+| P8 | solar | TEAM SETTING (tolerance) | irradiance_toa_kwh_m2_day tolerance x1.2 (0.6 -> 0.72) | share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4 |  | 6360 -> 6546 |  | 186.0 | 0.0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | True |
 
 ## m6_coordinates_summary.csv
 
