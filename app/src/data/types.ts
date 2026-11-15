@@ -281,7 +281,11 @@ export interface ZoneTwinTarget {
 
 export interface PlaceholderSpec {
   file: string;
-  column: string;
+  /** A single column; absent on a placeholder computed by a named rule (see `rule`). */
+  column?: string;
+  /** Contract 2026-11-15: a named display rule computed from several columns. */
+  rule?: string;
+  columns?: Record<string, string>;
   decimals?: number;
   multiply?: number;
   subtract?: number;

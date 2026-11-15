@@ -290,6 +290,30 @@ export interface MissionOutcome {
 }
 
 /** The shortest decimal that reads back as the same float32 (30.02 stays 30.02, not 30.0200004). */
+/** Tenths of a stored float32 as the browser displays it with 1 decimal, half up (DATA_CONTRACT, 2026-11-15). */
+export function displayedTenths(raw: number): number {
+  const s = f32Decimal(raw).toFixed(12);
+  const i = s.indexOf('.');
+  return Number(s.slice(0, i)) * 10 + Number(s[i + 1]) + (Number(s[i + 2]) >= 5 ? 1 : 0);
+}
+
+/**
+ * A placeholder computed by a named display rule of the contract; null when the rule is unknown or a
+ * value is missing (the sentence is then not shown half-filled).
+ */
+export function applyDisplayRule(spec: PlaceholderSpec, read: (column: string | undefined) => number | null): number | null {
+  if (spec.rule === 'share_lost_of_displayed_tenths') {
+    const above = read(spec.columns?.above);
+    const ground = read(spec.columns?.ground);
+    if (above == null || ground == null || above < 0 || ground < 0) return null;
+    const A = displayedTenths(above);
+    const G = displayedTenths(ground);
+    if (A <= 0) return null;
+    return Math.floor((200 * (A - G) + A) / (2 * A));
+  }
+  return null;
+}
+
 export function f32Decimal(x: number): number {
   if (!Number.isFinite(x)) return x;
   for (let d = 1; d <= 9; d++) {
@@ -667,20 +691,32 @@ export class DataStore {
     if (!md.pairs || p < 0 || !md.twin || md.twin[p] === this.manifest.encoding.int32_missing) return out;
     for (const [key, t] of Object.entries(this.similarity.texts ?? {})) {
       const forThis = (t.missions ?? (t.mission ? [t.mission] : [])).includes(missionId);
-      const specs = Object.entries(t.placeholders ?? {}).filter((e): e is [string, PlaceholderSpec] => typeof e[1] === 'object' && e[1] !== null && 'column' in e[1]);
+      const specs = Object.entries(t.placeholders ?? {}).filter(
+        (e): e is [string, PlaceholderSpec] => typeof e[1] === 'object' && e[1] !== null && ('column' in e[1] || 'rule' in e[1]),
+      );
       if (!forThis || !specs.length) continue;
       let text = t.text;
       let completed = true;
       for (const [name, spec] of specs) {
         const fileTable = spec.file === md.pairs.entry.name ? md.pairs : spec.file === md.table.entry.name ? md.table : null;
-        const raw = fileTable ? this.q(fileTable, spec.column, p) : null;
-        if (raw == null) {
+        const read = (col: string | undefined) => (fileTable && col ? this.q(fileTable, col, p) : null);
+        let shown: string | null = null;
+        if (spec.rule) {
+          const v = applyDisplayRule(spec, read);
+          if (v != null) shown = String(v);
+        } else {
+          const raw = read(spec.column);
+          if (raw != null) {
+            const v = (f32Decimal(raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
+            const d = spec.decimals ?? 1;
+            shown = new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+          }
+        }
+        if (shown == null) {
           completed = false;
           break;
         }
-        const v = (f32Decimal(raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
-        const d = spec.decimals ?? 1;
-        text = text.split(`{${name}}`).join(new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v));
+        text = text.split(`{${name}}`).join(shown);
       }
       if (completed && !/\{[a-z_]+\}/.test(text)) out.push({ key, text });
     }
