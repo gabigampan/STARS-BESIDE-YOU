@@ -403,4 +403,88 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
                 "in_min_pct": f"{100 * float(tz[mid]['in_min_share']):g}"}
         texts[f"zone_edge_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"], "source": t["source"],
                                      "text": fill(t["text"], vals), "figures": vals}
+    # (i) texts of the decisions of 11:28, 11:36 and 11:51 CET (kind 'static' or 'computed:<name>')
+    applied = ((engine_cfg.v("criteria_sets") or {}).get("applied", {}) if engine_cfg.criteria_sets is not None else {})
+    for key, t in lt.items():
+        kind = t.get("kind") or ""
+        if not (kind == "static" or kind.startswith("computed:")):
+            continue
+        mids = [m for m in t.get("missions", list(results)) if m in results]
+        if t.get("missions") and not mids:
+            continue
+        vals = _computed_figures(kind.split(":", 1)[1], t, results, earth, mission_cfg, engine_cfg, top5, applied) \
+            if kind.startswith("computed:") else {}
+        if vals is None:
+            continue
+        texts[key] = {**({"missions": mids} if t.get("missions") else {}), "show": t["show"], "decision": t["decision"],
+                      "source": t["source"], "text": fill(t["text"], vals), "figures": vals}
     return {"texts": texts, "top5": top5, "top5_rows": rows5, "external_validation": ext, "region_share": region_share}
+
+
+def _cell_rows(earth: pd.DataFrame, sites: List[Dict[str, Any]], grid_deg: float = 1.0) -> List[Optional[int]]:
+    """Row of the 1-degree Earth cell holding each site (lat, lon), or None."""
+    ids = earth["id"].to_numpy()
+    out = []
+    for st in sites:
+        r = int((90.0 - float(st["lat"])) // grid_deg)
+        c = int((float(st["lon"]) + 180.0) // grid_deg)
+        k = np.flatnonzero(ids == r * int(360 / grid_deg) + c)
+        out.append(int(k[0]) if k.size else None)
+    return out
+
+
+def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], earth: pd.DataFrame,
+                      mission_cfg: Dict[str, Any], engine_cfg: EngineConfig, top5: Dict[str, Any],
+                      applied: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Figures of one computed limits text (recomputed at every build; never typed)."""
+    if name == "soft_column_percentiles":  # p10 / p90 of a soft column over the mission's passing points
+        res = results[t["mission"]]
+        ok = np.isfinite(res.earth_suit.score)
+        v = pd.to_numeric(earth[t["column"]], errors="coerce").to_numpy(dtype=np.float64)[ok]
+        fin = np.isfinite(v)
+        return {"passing_n": fmt_int(ok.sum()), "missing_n": fmt_int((~fin).sum()),
+                "p10": f"{np.percentile(v[fin], 10):.3f}", "p90": f"{np.percentile(v[fin], 90):.3f}"}
+    if name == "site_values":  # a column at named sites (polar stations)
+        rows = _cell_rows(earth, t["sites"])
+        col = pd.to_numeric(earth[t["column"]], errors="coerce").to_numpy(dtype=np.float64)
+        parts = []
+        for st, k in zip(t["sites"], rows):
+            v = col[k] if k is not None else np.nan
+            parts.append(f"{st['name']} {v:.1f} {t['unit']}" if np.isfinite(v) else f"{st['name']} no value in the table")
+        res = results[t["mission"]]
+        gmin = float(mission_cfg["missions"][t["mission"]]["gates"][t["column"]]["min"])
+        return {"sites": "; ".join(parts), "gate_min": f"{gmin:g}"}
+    if name == "spearman_soft":  # Spearman between two utilities over the passing points
+        res = results[t["mission"]]
+        a, b = (res.earth_suit.utilities[x] for x in t["variables"])
+        ok = np.isfinite(a) & np.isfinite(b) & np.isfinite(res.earth_suit.score)
+        ra = pd.Series(a[ok]).rank().to_numpy()
+        rb = pd.Series(b[ok]).rank().to_numpy()
+        rho = float(np.corrcoef(ra, rb)[0, 1])
+        w = res.earth_suit.weights
+        return {"rho": f"{rho:.2f}", "w1_pct": f"{100 * w[t['variables'][0]]:g}", "w2_pct": f"{100 * w[t['variables'][1]]:g}",
+                "passing_n": fmt_int(ok.sum())}
+    if name == "rover_tie":
+        res = results[t["mission"]]
+        tb = top5[t["mission"]]
+        ranked = res.rank > 0
+        best = float(res.final_published[ranked].max())
+        return {"tied_n": fmt_int(tb["top_tie_n"]), "tied_kept_n": fmt_int(tb["top_tie_n_after_skips"]),
+                "score": f"{best:.2f}", "ranked_n": fmt_int(ranked.sum()), "rule": tb["rule"]}
+    if name == "deviations_table":
+        rows = []
+        for mid, info in applied.items():
+            for d in info["deviations"]:
+                def show(x):
+                    if x is None:
+                        return "not used (weight 0)"
+                    return ", ".join(f"{k} {x[k]:g}" if isinstance(x[k], (int, float)) else f"{k} {x[k]}"
+                                     for k in ("weight", "bad", "good") if k in x) or "map " + ", ".join(
+                        f"{k} {v:g}" for k, v in x.get("map", {}).items())
+                rows.append(f"{engine_cfg.v('mission_titles_short').get(mid, mid)} | {d['criterion']} | {show(d['team'])} | "
+                            f"{show(d['ours'])} | {d['reason']} | {d['source']}")
+        if not rows:
+            return None
+        sets = "; ".join(f"{engine_cfg.v('mission_titles_short').get(m, m)}: {i['set']}" for m, i in applied.items())
+        return {"rows": " || ".join(rows), "n": fmt_int(len(rows)), "sets": sets}
+    raise ValueError(f"unknown computed limits text {name!r}")
