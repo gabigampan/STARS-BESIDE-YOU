@@ -97,6 +97,10 @@ opts = {
  "C2_kt_worldclim": {**keep, "kt_worldclim": {"weight": 0.30, "bad": kt_bad, "good": kt_good}},
  "E_clear_frac_replaces_irr_and_geometry": {**{k: v for k, v in keep.items() if k != "irradiance_kwh_m2_day"},
                                             "clear_frac_isccp": {"weight": 0.65, "bad": cf_bad, "good": cf_good}},
+ "E2_clear_frac_in_irr_slot": {**{k: v for k, v in keep.items() if k != "irradiance_kwh_m2_day"},
+                                            "clear_frac_isccp": {"weight": 0.35, "bad": cf_bad, "good": cf_good}},
+ "E2_p5p95": {**{k: v for k, v in keep.items() if k != "irradiance_kwh_m2_day"},
+                                            "clear_frac_isccp": {"weight": 0.35, "bad": dist["clear_frac_isccp"][5], "good": dist["clear_frac_isccp"][95]}},
  "F_kt_replaces_irr_and_geometry": {**{k: v for k, v in keep.items() if k != "irradiance_kwh_m2_day"},
                                             "kt_worldclim": {"weight": 0.65, "bad": kt_bad, "good": kt_good}},
 }
@@ -113,16 +117,15 @@ for nme, soft in opts.items():
     d["weight_share_latitude_driven(|rho|>=0.5)"] = round(latw / ws, 3)
     d["soft"] = soft
     res[nme] = d
-# sites (coordinates given in the report with their source); cell lookup
-sites = {"Plataforma Solar de Almeria (CIEMAT)": (37.09, -2.36), "NREL Solar Radiation Research Laboratory, Golden": (39.742, -105.18),
-         "Noor Ouarzazate (MASEN)": (31.0, -6.86)}
-site_out = {}
-for sn, (la, lo) in sites.items():
-    cid = int(np.floor(90 - la)) * 360 + int(np.floor(lo + 180)); row = {}
-    for nme, soft in opts.items():
-        r = run(with_soft(soft)); w = np.flatnonzero(r["pass_ids"] == cid)
-        row[nme] = None if not len(w) else {"rank": int(r["rank"][w[0]]), "of": int((r["rank"] > 0).sum()), "suit": round(float(r["suit"][w[0]]), 1)}
-    site_out[sn] = {"cell": f"E{cid}", "ranks": row}
+# sites: no official coordinates could be fetched today (psa.es 503, midcdmz.nrel.gov blocked): not established
+site_out = "not established: official coordinate pages not reachable from this session on 2026-11-15"
+# share of spread per criterion for every option
+for nme, soft in opts.items():
+    r = run(with_soft(soft)); ws = sum(v["weight"] for v in soft.values()); sv = np.var(r["suit"])
+    res[nme]["share_of_spread"] = {k: round(float(np.cov(v["weight"]/ws*100*np.nan_to_num(r["utils"][k]), r["suit"])[0, 1]/sv), 3) for k, v in soft.items()}
+    pi_ = r["pass_ids"]; pr = r["rank"] > 0
+    res[nme]["rho_suit_abslat_paired"] = round(float(spearmanr(r["suit"][pr], np.abs(lat[pi_][pr])).correlation), 3)
+    res[nme]["missing_new_var_in_passing"] = int(sum(np.isnan(r["utils"][k]).sum() for k in soft if k in ("clear_frac_isccp", "kt_worldclim")))
 json.dump({"reproduction": repro, "decomposition": dec, "spearman_matrix": inter.to_dict(), "new_criteria_distribution_passing": dist,
            "options": res, "sites": site_out, "corr_clear_vs_kt_spearman": round(float(X[["clear_frac_isccp", "kt_worldclim"]].corr(method="spearman").iloc[0, 1]), 3)},
           open(os.path.join(OUT, "r2_solar_options.json"), "w"), indent=1, default=str)

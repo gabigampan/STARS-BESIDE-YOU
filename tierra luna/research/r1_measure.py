@@ -33,7 +33,15 @@ for b in ("EARTH", "MOON"):
         D.setdefault("r1_" + k, {})[b] = d[k]
 
 # ---- baseline reproduction (shipped rule, commit 42d8bba state) ----
-r0 = C.run_mission(T, D, "rover", P0)
+def shipped42(P):
+    """Rover similarity as at commit 42d8bba: slope 0.4, roughness 0.4 (key), relative elevation 0.2 (secondary, 500 m)."""
+    P = copy.deepcopy(P)
+    vs = [v for v in P["missions"]["rover"]["sim"]["variables"] if v["variable"] in ("slope_deg", "roughness_m")]
+    for v in vs: v["weight"] = 0.4
+    vs.append({"variable": "elevation_rel_m", "role": "secondary", "weight": 0.2, "tolerance": 500.0})
+    P["missions"]["rover"]["sim"]["variables"] = vs
+    return P
+r0 = C.run_mission(T, D, "rover", shipped42(P0))
 w0 = json.load(open(os.path.join(TL, "audit/out/w0_reproduce.json")))["rover"]
 res["checks"]["baseline"] = {"passing": int(r0["passed"].sum()), "paired": int((r0["twin"] >= 0).sum()),
                              "distinct_twins": int(len(set(r0["twin"][r0["twin"] >= 0]))),

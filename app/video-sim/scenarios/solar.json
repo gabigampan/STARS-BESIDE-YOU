@@ -214,8 +214,8 @@
   },
   "panel_text": {
     "earth_row": "not drawn (~67° up, mean pos.)",
-    "graph_caption": "Power per m², flat panel, one lunar cycle (0–1,400 W/m²)",
-    "model_tag": "Model: power per m² of a flat panel = S0 1361 W/m² × sin(Sun elevation) × visible solar disc, before cell efficiency. The lunar day lasts 29.5 Earth days; about half of it is night."
+    "graph_caption": "Power per m², one lunar cycle (0–1,400)",
+    "model_tag": "Model: S0 1361 W/m² × sin(Sun elev.) × visible disc, flat panel, before cell efficiency. Lunar day: 29.5 Earth days, about half of it night."
   },
   "camera": {
     "keys": [

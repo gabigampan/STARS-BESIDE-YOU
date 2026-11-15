@@ -1,4 +1,16 @@
 {
+ "ballypatrick": {
+  "lat": 55.181,
+  "lon": -6.153,
+  "years_complete": 0,
+  "mean_annual_sun_h_1991_2020": null
+ },
+ "braemar": {
+  "lat": 57.006,
+  "lon": -3.396,
+  "years_complete": 13,
+  "mean_annual_sun_h_1991_2020": 1210.4
+ },
  "camborne": {
   "lat": 50.218,
   "lon": -5.327,
