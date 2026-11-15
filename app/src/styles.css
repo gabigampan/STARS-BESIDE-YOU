@@ -369,10 +369,18 @@ a:hover {
   pointer-events: auto;
 }
 .cesium-widget-credits .cesium-credit-logoContainer a {
+  /* hit area of at least 44x44 around the small third-party logo: transparent borders outside the
+     dark pill, cancelled by negative margins, so the drawing and its place stay the same */
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  border-block: 8px solid transparent;
+  margin-block: -8px;
   margin-right: 0;
   padding: 0 4px;
   border-radius: 3px;
   background: rgba(10, 12, 15, 0.55);
+  background-clip: padding-box;
 }
 .cesium-widget-credits .cesium-credit-logoContainer img {
   height: 14px !important;
@@ -439,6 +447,10 @@ a:hover {
   background: var(--glass);
   border: 1px solid var(--edge);
   border-radius: 3px;
+  pointer-events: none; /* pinch and drag reach the globe through the loading line */
+}
+.pane-status .pane-retry {
+  pointer-events: auto;
 }
 .pane-status[hidden],
 .pane-retry[hidden] {

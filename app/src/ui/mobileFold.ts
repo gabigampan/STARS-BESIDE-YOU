@@ -58,6 +58,7 @@ export function setupMobileFold(): void {
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape' || !body.classList.contains('mf-open')) return;
     if (document.querySelector('dialog[open]')) return;
+    e.preventDefault(); // this Escape folds the sheet only: src/a11y/keys.ts skips handled events
     setOpen(false);
     optBtn.focus();
   });

@@ -70,7 +70,14 @@ export const CREDITS: CreditEntry[] = [
   },
 ];
 
-export function renderCredits(container: HTMLElement, extra: CreditEntry[] = []): void {
+export function renderCredits(body: HTMLElement, extra: CreditEntry[] = []): void {
+  // Only this wrapper is ours: the data sections and the audio-guide texts live beside it in #credits-body.
+  let container = body.querySelector<HTMLElement>(':scope > .credits-own');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'credits-own';
+    body.insertBefore(container, body.querySelector(':scope > .guide-texts'));
+  }
   container.replaceChildren();
   const list = document.createElement('dl');
   list.className = 'credits-list';
