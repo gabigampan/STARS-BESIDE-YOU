@@ -1,0 +1,3408 @@
+{
+ "generated_on": "2026-11-15",
+ "generated_by": "tierra luna/tools/make_audio_top5.py",
+ "bundle": "app/public/data/v2",
+ "contract_revision": 6,
+ "engine_version": "3.2.0",
+ "dataset": "real_1deg",
+ "similarity_rules": {
+  "rover": "real_value_tolerance",
+  "solar": "real_value_tolerance",
+  "lunar_base": "percentile_and_real_tolerance"
+ },
+ "how_to_read": {
+  "similarity": "How alike the Earth point and its lunar twin are, 0 to 100, from the mission's variables compared within stated tolerances.",
+  "suitability": "How well the Earth point meets the mission's own needs as a test site, 0 to 100, from its weighted criteria.",
+  "final": "The ranking score: half similarity and half suitability (alpha 0.5).",
+  "rules": "Rover and Solar panels pair on real values within tolerances; Lunar base pairs on thermal position (coldest temperature and daily swing ranked within each world's own population) plus slope and roughness in real values.",
+  "levels": "MEASURED = from a named measured product; DERIVED = a stated formula on measured values; MODELLED = a model or climatology, not a measurement of the cell (variables.json).",
+  "percentile_words": "Words such as gentle, smooth, coldest are used only when both sides fall in the same quarter (or tenth) of their own population; the population is named in each trait's basis."
+ },
+ "status": {
+  "rover": "verified",
+  "solar": "verified",
+  "lunar_base": "built, independent verification in progress"
+ },
+ "caveats": [
+  "Each place is a 1-degree cell, about 111 km north-south on Earth (about 30 km on the Moon); values are cell averages.",
+  "Earth temperatures and ground sunlight are modelled climatologies (WorldClim, MODIS-based amplitude, modelled irradiance), not site measurements.",
+  "Names are the nearest named feature or populated place to the cell centre, not a landing site or the cell's own name.",
+  "Lunar base pairs are a likeness of thermal position within each world's population, not of temperature: the real temperatures are about 200 K apart.",
+  "Sunlight above the atmosphere is alike for Solar panels pairs, but on Earth a large share is lost in the atmosphere; panels would not charge the same."
+ ],
+ "missions": {
+  "rover": {
+   "name": "Rover mobility and trafficability",
+   "similarity_rule": "real_value_tolerance",
+   "zone": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+   "similarity_variables": [
+    {
+     "variable": "slope_deg",
+     "role": "key",
+     "weight": 0.4,
+     "tolerance": 2.0,
+     "bound": 2.0,
+     "unit": "deg"
+    },
+    {
+     "variable": "roughness_m",
+     "role": "key",
+     "weight": 0.4,
+     "tolerance": 30.0,
+     "bound": 30.0,
+     "unit": "m"
+    },
+    {
+     "variable": "elevation_rel_m",
+     "role": "secondary",
+     "weight": 0.2,
+     "tolerance": 500.0,
+     "bound": 1000.0,
+     "unit": "m"
+    }
+   ],
+   "pair_filter": {
+    "key": "|difference| <= 1 x tolerance",
+    "secondary": "|difference| <= 2 x tolerance",
+    "missing_key": "a key variable without a value on either side fails the filter (no pair)",
+    "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised"
+   },
+   "status": "verified",
+   "pairs": [
+    {
+     "mission": {
+      "id": "rover",
+      "name": "Rover mobility and trafficability"
+     },
+     "rank": 1,
+     "earth_cell_id": "E17566",
+     "moon_cell_id": "M59895",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 66 km north-west of Bayinbaolige, Inner Mongolia, China",
+      "nearest_named_place": "Bayinbaolige",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Inner Mongolia",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 65.6,
+      "distance_km_recomputed": 65.6,
+      "direction_from_place": "north-west",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Inner Mongolia",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 41.5,
+      "cell_centre_lon": 106.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Casatus",
+      "feature_type": "Crater, craters",
+      "distance_km": 159.2,
+      "distance_km_recomputed": 159.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -76.5,
+      "cell_centre_lon": -44.5,
+      "lunar_region_code": "B",
+      "lunar_region_label": "South-polar region outside the nine NASA regions"
+     },
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39,
+     "variables": [
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 2.0,
+       "bound": 2.0,
+       "unit": "deg",
+       "earth": 1.038,
+       "moon": 1.148,
+       "difference": 0.11,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.998489
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 30.0,
+       "bound": 30.0,
+       "unit": "m",
+       "earth": 43.53,
+       "moon": 44.2,
+       "difference": 0.67,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999751
+      },
+      {
+       "variable": "elevation_rel_m",
+       "label": "Relative elevation",
+       "role": "secondary",
+       "weight": 0.2,
+       "tolerance": 500.0,
+       "bound": 1000.0,
+       "unit": "m",
+       "earth": 737.5,
+       "moon": 833.3,
+       "difference": 95.8,
+       "earth_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m MOON",
+        "note": null
+       },
+       "score": 0.981807
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 284.67,
+       "moon": 142.47,
+       "difference": 142.2
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 20.62,
+       "moon": 196.63,
+       "difference": 176.01
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.575,
+       "moon": 1.774,
+       "difference": 2.801
+      }
+     },
+     "common_traits": [
+      {
+       "text": "Similar slopes: 1.04 degrees on Earth and 1.15 on the Moon, 0.11 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 1.038,
+        "moon": 1.148,
+        "difference": 0.11,
+        "earth_percentile_in_population": 66.4,
+        "moon_percentile_in_population": 12.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 43.5 metres on Earth and 44.2 on the Moon, 0.7 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 43.53,
+        "moon": 44.2,
+        "difference": 0.67,
+        "earth_percentile_in_population": 67.4,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar height relative to each world's mean level: 740 metres above Earth's mean and 830 metres above the Moon's, 96 metres apart.",
+       "basis": {
+        "columns": [
+         "elevation_rel_m.earth",
+         "elevation_rel_m.moon",
+         "elevation_rel_m.diff"
+        ],
+        "earth": 737.5,
+        "moon": 833.3,
+        "difference": 95.8,
+        "note": "elevation minus the body's area-weighted mean elevation (Earth 695.9244 m, Moon -248.3894 m)"
+       }
+      }
+     ],
+     "say": "Number one for the rover: a site about 66 kilometres north-west of Bayinbaolige, in Inner Mongolia, China, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.0 degrees and a roughness of 44 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.6 out of 100."
+    },
+    {
+     "mission": {
+      "id": "rover",
+      "name": "Rover mobility and trafficability"
+     },
+     "rank": 2,
+     "earth_cell_id": "E23945",
+     "moon_cell_id": "M59895",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 80 km north of Tamanrasset, Tamanghasset, Algeria",
+      "nearest_named_place": "Tamanrasset",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Tamanghasset",
+      "nearest_named_place_country_code_in_geonames": "DZ",
+      "distance_km": 79.5,
+      "distance_km_recomputed": 79.5,
+      "direction_from_place": "north",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Tamanghasset",
+      "country": "Algeria",
+      "country_code": "DZ",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 23.5,
+      "cell_centre_lon": 5.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Casatus",
+      "feature_type": "Crater, craters",
+      "distance_km": 159.2,
+      "distance_km_recomputed": 159.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -76.5,
+      "cell_centre_lon": -44.5,
+      "lunar_region_code": "B",
+      "lunar_region_label": "South-polar region outside the nine NASA regions"
+     },
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21,
+     "variables": [
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 2.0,
+       "bound": 2.0,
+       "unit": "deg",
+       "earth": 1.215,
+       "moon": 1.148,
+       "difference": 0.067,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.999439
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 30.0,
+       "bound": 30.0,
+       "unit": "m",
+       "earth": 43.37,
+       "moon": 44.2,
+       "difference": 0.83,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999617
+      },
+      {
+       "variable": "elevation_rel_m",
+       "label": "Relative elevation",
+       "role": "secondary",
+       "weight": 0.2,
+       "tolerance": 500.0,
+       "bound": 1000.0,
+       "unit": "m",
+       "earth": 761.9,
+       "moon": 833.3,
+       "difference": 71.4,
+       "earth_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m MOON",
+        "note": null
+       },
+       "score": 0.989852
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 300.7,
+       "moon": 142.47,
+       "difference": 158.23
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 21.82,
+       "moon": 196.63,
+       "difference": 174.81
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 6.246,
+       "moon": 1.774,
+       "difference": 4.472
+      }
+     },
+     "common_traits": [
+      {
+       "text": "Similar slopes: 1.22 degrees on Earth and 1.15 on the Moon, 0.07 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 1.215,
+        "moon": 1.148,
+        "difference": 0.067,
+        "earth_percentile_in_population": 69.6,
+        "moon_percentile_in_population": 12.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 43.4 metres on Earth and 44.2 on the Moon, 0.8 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 43.37,
+        "moon": 44.2,
+        "difference": 0.83,
+        "earth_percentile_in_population": 67.3,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar height relative to each world's mean level: 760 metres above Earth's mean and 830 metres above the Moon's, 71 metres apart.",
+       "basis": {
+        "columns": [
+         "elevation_rel_m.earth",
+         "elevation_rel_m.moon",
+         "elevation_rel_m.diff"
+        ],
+        "earth": 761.9,
+        "moon": 833.3,
+        "difference": 71.4,
+        "note": "elevation minus the body's area-weighted mean elevation (Earth 695.9244 m, Moon -248.3894 m)"
+       }
+      }
+     ],
+     "say": "Number two for the rover: a site about 80 kilometres north of Tamanrasset, in Tamanghasset, Algeria, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.2 degrees and a roughness of 43 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.8 out of 100."
+    },
+    {
+     "mission": {
+      "id": "rover",
+      "name": "Rover mobility and trafficability"
+     },
+     "rank": 3,
+     "earth_cell_id": "E18282",
+     "moon_cell_id": "M59895",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 78 km north-east of Ehen Hudag, Inner Mongolia, China",
+      "nearest_named_place": "Ehen Hudag",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Inner Mongolia",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 78.4,
+      "distance_km_recomputed": 78.4,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Inner Mongolia",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 39.5,
+      "cell_centre_lon": 102.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Casatus",
+      "feature_type": "Crater, craters",
+      "distance_km": 159.2,
+      "distance_km_recomputed": 159.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -76.5,
+      "cell_centre_lon": -44.5,
+      "lunar_region_code": "B",
+      "lunar_region_label": "South-polar region outside the nine NASA regions"
+     },
+     "similarity": 98.77,
+     "suitability": 99.58,
+     "final": 99.17,
+     "variables": [
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 2.0,
+       "bound": 2.0,
+       "unit": "deg",
+       "earth": 0.908,
+       "moon": 1.148,
+       "difference": 0.24,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.992826
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 30.0,
+       "bound": 30.0,
+       "unit": "m",
+       "earth": 38.75,
+       "moon": 44.2,
+       "difference": 5.45,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.983634
+      },
+      {
+       "variable": "elevation_rel_m",
+       "label": "Relative elevation",
+       "role": "secondary",
+       "weight": 0.2,
+       "tolerance": 500.0,
+       "bound": 1000.0,
+       "unit": "m",
+       "earth": 747.7,
+       "moon": 833.3,
+       "difference": 85.6,
+       "earth_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m MOON",
+        "note": null
+       },
+       "score": 0.985447
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 288.75,
+       "moon": 142.47,
+       "difference": 146.28
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 24.82,
+       "moon": 196.63,
+       "difference": 171.81
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.621,
+       "moon": 1.774,
+       "difference": 2.847
+      }
+     },
+     "common_traits": [
+      {
+       "text": "Similar slopes: 0.91 degrees on Earth and 1.15 on the Moon, 0.24 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 0.908,
+        "moon": 1.148,
+        "difference": 0.24,
+        "earth_percentile_in_population": 63.7,
+        "moon_percentile_in_population": 12.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 38.8 metres on Earth and 44.2 on the Moon, 5.5 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 38.75,
+        "moon": 44.2,
+        "difference": 5.45,
+        "earth_percentile_in_population": 65.2,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar height relative to each world's mean level: 750 metres above Earth's mean and 830 metres above the Moon's, 86 metres apart.",
+       "basis": {
+        "columns": [
+         "elevation_rel_m.earth",
+         "elevation_rel_m.moon",
+         "elevation_rel_m.diff"
+        ],
+        "earth": 747.7,
+        "moon": 833.3,
+        "difference": 85.6,
+        "note": "elevation minus the body's area-weighted mean elevation (Earth 695.9244 m, Moon -248.3894 m)"
+       }
+      }
+     ],
+     "say": "Number three for the rover: a site about 78 kilometres north-east of Ehen Hudag, in Inner Mongolia, China, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 0.9 degrees and a roughness of 39 metres, the Moon spot 1.1 degrees and 44 metres; similarity 98.8 out of 100."
+    },
+    {
+     "mission": {
+      "id": "rover",
+      "name": "Rover mobility and trafficability"
+     },
+     "rank": 4,
+     "earth_cell_id": "E18280",
+     "moon_cell_id": "M59895",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 28 km north-east of Banqiao, Gansu Sheng, China",
+      "nearest_named_place": "Banqiao",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Gansu Sheng",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 27.8,
+      "distance_km_recomputed": 27.8,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Gansu Sheng",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 39.5,
+      "cell_centre_lon": 100.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Casatus",
+      "feature_type": "Crater, craters",
+      "distance_km": 159.2,
+      "distance_km_recomputed": 159.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -76.5,
+      "cell_centre_lon": -44.5,
+      "lunar_region_code": "B",
+      "lunar_region_label": "South-polar region outside the nine NASA regions"
+     },
+     "similarity": 99.5,
+     "suitability": 98.66,
+     "final": 99.08,
+     "variables": [
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 2.0,
+       "bound": 2.0,
+       "unit": "deg",
+       "earth": 1.131,
+       "moon": 1.148,
+       "difference": 0.017,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.999964
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 30.0,
+       "bound": 30.0,
+       "unit": "m",
+       "earth": 48.91,
+       "moon": 44.2,
+       "difference": 4.71,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.987751
+      },
+      {
+       "variable": "elevation_rel_m",
+       "label": "Relative elevation",
+       "role": "secondary",
+       "weight": 0.2,
+       "tolerance": 500.0,
+       "bound": 1000.0,
+       "unit": "m",
+       "earth": 851.5,
+       "moon": 833.3,
+       "difference": 18.2,
+       "earth_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m MOON",
+        "note": null
+       },
+       "score": 0.999339
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 287.33,
+       "moon": 142.47,
+       "difference": 144.86
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 23.44,
+       "moon": 196.63,
+       "difference": 173.19
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.637,
+       "moon": 1.774,
+       "difference": 2.863
+      }
+     },
+     "common_traits": [
+      {
+       "text": "Similar slopes: 1.13 degrees on Earth and 1.15 on the Moon, 0.02 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 1.131,
+        "moon": 1.148,
+        "difference": 0.017,
+        "earth_percentile_in_population": 68.2,
+        "moon_percentile_in_population": 12.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 48.9 metres on Earth and 44.2 on the Moon, 4.7 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 48.91,
+        "moon": 44.2,
+        "difference": 4.71,
+        "earth_percentile_in_population": 69.7,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar height relative to each world's mean level: 850 metres above Earth's mean and 830 metres above the Moon's, 18 metres apart.",
+       "basis": {
+        "columns": [
+         "elevation_rel_m.earth",
+         "elevation_rel_m.moon",
+         "elevation_rel_m.diff"
+        ],
+        "earth": 851.5,
+        "moon": 833.3,
+        "difference": 18.2,
+        "note": "elevation minus the body's area-weighted mean elevation (Earth 695.9244 m, Moon -248.3894 m)"
+       }
+      }
+     ],
+     "say": "Number four for the rover: a site about 28 kilometres north-east of Banqiao, in Gansu Sheng, China, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.1 degrees and a roughness of 49 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.5 out of 100."
+    },
+    {
+     "mission": {
+      "id": "rover",
+      "name": "Rover mobility and trafficability"
+     },
+     "rank": 5,
+     "earth_cell_id": "E15395",
+     "moon_cell_id": "M59895",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 41 km south-east of Buga, Govi-Altay, Mongolia",
+      "nearest_named_place": "Buga",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Govi-Altay",
+      "nearest_named_place_country_code_in_geonames": "MN",
+      "distance_km": 41.0,
+      "distance_km_recomputed": 41.0,
+      "direction_from_place": "south-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Govi-Altay",
+      "country": "Mongolia",
+      "country_code": "MN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 47.5,
+      "cell_centre_lon": 95.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Casatus",
+      "feature_type": "Crater, craters",
+      "distance_km": 159.2,
+      "distance_km_recomputed": 159.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -76.5,
+      "cell_centre_lon": -44.5,
+      "lunar_region_code": "B",
+      "lunar_region_label": "South-polar region outside the nine NASA regions"
+     },
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91,
+     "variables": [
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 2.0,
+       "bound": 2.0,
+       "unit": "deg",
+       "earth": 1.236,
+       "moon": 1.148,
+       "difference": 0.088,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.999032
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 30.0,
+       "bound": 30.0,
+       "unit": "m",
+       "earth": 41.33,
+       "moon": 44.2,
+       "difference": 2.87,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.995434
+      },
+      {
+       "variable": "elevation_rel_m",
+       "label": "Relative elevation",
+       "role": "secondary",
+       "weight": 0.2,
+       "tolerance": 500.0,
+       "bound": 1000.0,
+       "unit": "m",
+       "earth": 962.5,
+       "moon": 833.3,
+       "difference": 129.2,
+       "earth_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "MEASURED",
+        "from": "variables.json elevation_m MOON",
+        "note": null
+       },
+       "score": 0.967173
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 276.58,
+       "moon": 142.47,
+       "difference": 134.11
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 21.88,
+       "moon": 196.63,
+       "difference": 174.75
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 3.963,
+       "moon": 1.774,
+       "difference": 2.189
+      }
+     },
+     "common_traits": [
+      {
+       "text": "Similar slopes: 1.24 degrees on Earth and 1.15 on the Moon, 0.09 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 1.236,
+        "moon": 1.148,
+        "difference": 0.088,
+        "earth_percentile_in_population": 69.9,
+        "moon_percentile_in_population": 12.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 41.3 metres on Earth and 44.2 on the Moon, 2.9 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 41.33,
+        "moon": 44.2,
+        "difference": 2.87,
+        "earth_percentile_in_population": 66.4,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar height relative to each world's mean level: 960 metres above Earth's mean and 830 metres above the Moon's, 129 metres apart.",
+       "basis": {
+        "columns": [
+         "elevation_rel_m.earth",
+         "elevation_rel_m.moon",
+         "elevation_rel_m.diff"
+        ],
+        "earth": 962.5,
+        "moon": 833.3,
+        "difference": 129.2,
+        "note": "elevation minus the body's area-weighted mean elevation (Earth 695.9244 m, Moon -248.3894 m)"
+       }
+      }
+     ],
+     "say": "Number five for the rover: a site about 41 kilometres south-east of Buga, in Govi-Altay, Mongolia, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.2 degrees and a roughness of 41 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.1 out of 100."
+    }
+   ],
+   "note_for_narration": "All five of the top five pairs share the same lunar twin, the spot near Casatus, so the Moon side is the same place each time."
+  },
+  "solar": {
+   "name": "Solar array placement",
+   "similarity_rule": "real_value_tolerance",
+   "zone": "Mare Tranquillitatis & Equatorial Maria",
+   "similarity_variables": [
+    {
+     "variable": "irradiance_toa_kwh_m2_day",
+     "role": "key",
+     "weight": 0.8,
+     "tolerance": 0.6,
+     "bound": 0.6,
+     "unit": "kWh/m2/day"
+    },
+    {
+     "variable": "slope_deg",
+     "role": "secondary",
+     "weight": 0.1,
+     "tolerance": 2.0,
+     "bound": 4.0,
+     "unit": "deg"
+    },
+    {
+     "variable": "roughness_m",
+     "role": "secondary",
+     "weight": 0.1,
+     "tolerance": 30.0,
+     "bound": 60.0,
+     "unit": "m"
+    }
+   ],
+   "pair_filter": {
+    "key": "|difference| <= 1 x tolerance",
+    "secondary": "|difference| <= 2 x tolerance",
+    "missing_key": "a key variable without a value on either side fails the filter (no pair)",
+    "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised"
+   },
+   "status": "verified",
+   "pairs": [
+    {
+     "mission": {
+      "id": "solar",
+      "name": "Solar array placement"
+     },
+     "rank": 1,
+     "earth_cell_id": "E38464",
+     "moon_cell_id": "M24296",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 129 km north-east of Derby, Australia",
+      "nearest_named_place": "Derby",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Western Australia",
+      "nearest_named_place_country_code_in_geonames": "AU",
+      "distance_km": 128.7,
+      "distance_km_recomputed": 128.7,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": null,
+      "country": "Australia",
+      "country_code": "AU",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": -16.5,
+      "cell_centre_lon": 124.5,
+      "region_note": "the bundle gives no first-level region for this cell (the nearest place is farther than the engine's region_max_place_km or in another country)"
+     },
+     "moon_place": {
+      "nearest_named_feature": "Huxley",
+      "feature_type": "Crater, craters",
+      "distance_km": 75.8,
+      "distance_km_recomputed": 75.8,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": 22.5,
+      "cell_centre_lon": -3.5,
+      "lunar_region_code": "D",
+      "lunar_region_label": "Low equatorial plains (the maria)"
+     },
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45,
+     "variables": [
+      {
+       "variable": "irradiance_toa_kwh_m2_day",
+       "label": "Sunlight without atmosphere",
+       "role": "key",
+       "weight": 0.8,
+       "tolerance": 0.6,
+       "bound": 0.6,
+       "unit": "kWh/m2/day",
+       "earth": 9.6005,
+       "moon": 9.604,
+       "difference": 0.0035,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "missions.json similarity.variables[irradiance_toa_kwh_m2_day].sides.EARTH.level"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json irradiance_kwh_m2_day MOON",
+        "note": null
+       },
+       "score": 0.999983
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "unit": "deg",
+       "earth": 0.976,
+       "moon": 1.047,
+       "difference": 0.071,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.99937
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "unit": "m",
+       "earth": 39.2,
+       "moon": 39.03,
+       "difference": 0.17,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999984
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 302.37,
+       "moon": 213.39,
+       "difference": 88.98
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 11.89,
+       "moon": 293.36,
+       "difference": 281.47
+      }
+     },
+     "earth_atmosphere": {
+      "ground_kwh_m2_day": 6.177,
+      "ground_level": "MODELLED",
+      "above_atmosphere_kwh_m2_day": 9.6005,
+      "above_atmosphere_level": "DERIVED",
+      "lost_share_bundle": 0.3566,
+      "display": {
+       "ground_kwh_m2_day": 6.2,
+       "above_atmosphere_kwh_m2_day": 9.6,
+       "lost_percent": 35,
+       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+      },
+      "lost_percent_from_bundle_share": 36
+     },
+     "common_traits": [
+      {
+       "text": "Nearly the same sunlight above the atmosphere: 9.60 kWh per square metre per day at the Earth site and 9.60 on the Moon (less than 0.01 apart). On Earth only about 6.2 of 9.6 reaches the ground, about 35 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
+       "basis": {
+        "columns": [
+         "irradiance_toa_kwh_m2_day.earth",
+         "irradiance_toa_kwh_m2_day.moon",
+         "irradiance_toa_kwh_m2_day.diff",
+         "atm.ground_kwh_m2_day",
+         "atm.toa_kwh_m2_day"
+        ],
+        "earth": 9.6005,
+        "moon": 9.604,
+        "difference": 0.0035,
+        "ground": 6.177,
+        "lost_percent_display": 35
+       }
+      },
+      {
+       "text": "Similar slopes: 0.98 degrees on Earth and 1.05 on the Moon, 0.07 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 0.976,
+        "moon": 1.047,
+        "difference": 0.071,
+        "earth_percentile_in_population": 65.2,
+        "moon_percentile_in_population": 11.3,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 39.2 metres on Earth and 39.0 on the Moon, 0.2 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 39.2,
+        "moon": 39.03,
+        "difference": 0.17,
+        "earth_percentile_in_population": 65.4,
+        "moon_percentile_in_population": 10.7,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      }
+     ],
+     "say": "Number one for solar panels: a site about 129 kilometres north-east of Derby, in Australia, pairs with a spot about 76 kilometres from the crater Huxley, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 35 percent is lost in the air and only 6.2 reach the ground; similarity 99.99 out of 100."
+    },
+    {
+     "mission": {
+      "id": "solar",
+      "name": "Solar array placement"
+     },
+     "rank": 2,
+     "earth_cell_id": "E38105",
+     "moon_cell_id": "M24583",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 283 km north-east of Derby, Australia",
+      "nearest_named_place": "Derby",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Western Australia",
+      "nearest_named_place_country_code_in_geonames": "AU",
+      "distance_km": 282.9,
+      "distance_km_recomputed": 282.9,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": null,
+      "country": "Australia",
+      "country_code": "AU",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": -15.5,
+      "cell_centre_lon": 125.5,
+      "region_note": "the bundle gives no first-level region for this cell (the nearest place is farther than the engine's region_max_place_km or in another country)"
+     },
+     "moon_place": {
+      "nearest_named_feature": "Struve",
+      "feature_type": "Crater, craters",
+      "distance_km": 58.2,
+      "distance_km_recomputed": 58.2,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": 21.5,
+      "cell_centre_lon": -76.5,
+      "lunar_region_code": "D",
+      "lunar_region_label": "Low equatorial plains (the maria)"
+     },
+     "similarity": 99.88,
+     "suitability": 96.9,
+     "final": 98.39,
+     "variables": [
+      {
+       "variable": "irradiance_toa_kwh_m2_day",
+       "label": "Sunlight without atmosphere",
+       "role": "key",
+       "weight": 0.8,
+       "tolerance": 0.6,
+       "bound": 0.6,
+       "unit": "kWh/m2/day",
+       "earth": 9.644,
+       "moon": 9.672,
+       "difference": 0.028,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "missions.json similarity.variables[irradiance_toa_kwh_m2_day].sides.EARTH.level"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json irradiance_kwh_m2_day MOON",
+        "note": null
+       },
+       "score": 0.998915
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "unit": "deg",
+       "earth": 1.132,
+       "moon": 1.038,
+       "difference": 0.094,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.998896
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "unit": "m",
+       "earth": 42.53,
+       "moon": 44.43,
+       "difference": 1.9,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.997996
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 301.52,
+       "moon": 214.17,
+       "difference": 87.35
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 11.27,
+       "moon": 292.9,
+       "difference": 281.63
+      }
+     },
+     "earth_atmosphere": {
+      "ground_kwh_m2_day": 6.11,
+      "ground_level": "MODELLED",
+      "above_atmosphere_kwh_m2_day": 9.644,
+      "above_atmosphere_level": "DERIVED",
+      "lost_share_bundle": 0.3664,
+      "display": {
+       "ground_kwh_m2_day": 6.1,
+       "above_atmosphere_kwh_m2_day": 9.6,
+       "lost_percent": 36,
+       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+      },
+      "lost_percent_from_bundle_share": 37
+     },
+     "common_traits": [
+      {
+       "text": "Nearly the same sunlight above the atmosphere: 9.64 kWh per square metre per day at the Earth site and 9.67 on the Moon (0.03 apart). On Earth only about 6.1 of 9.6 reaches the ground, about 36 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
+       "basis": {
+        "columns": [
+         "irradiance_toa_kwh_m2_day.earth",
+         "irradiance_toa_kwh_m2_day.moon",
+         "irradiance_toa_kwh_m2_day.diff",
+         "atm.ground_kwh_m2_day",
+         "atm.toa_kwh_m2_day"
+        ],
+        "earth": 9.644,
+        "moon": 9.672,
+        "difference": 0.028,
+        "ground": 6.11,
+        "lost_percent_display": 36
+       }
+      },
+      {
+       "text": "Similar slopes: 1.13 degrees on Earth and 1.04 on the Moon, 0.09 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 1.132,
+        "moon": 1.038,
+        "difference": 0.094,
+        "earth_percentile_in_population": 68.2,
+        "moon_percentile_in_population": 11.2,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 42.5 metres on Earth and 44.4 on the Moon, 1.9 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 42.53,
+        "moon": 44.43,
+        "difference": 1.9,
+        "earth_percentile_in_population": 66.9,
+        "moon_percentile_in_population": 11.8,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      }
+     ],
+     "say": "Number two for solar panels: a site about 283 kilometres north-east of Derby, in Australia, pairs with a spot about 58 kilometres from the crater Struve, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 36 percent is lost in the air and only 6.1 reach the ground; similarity 99.9 out of 100."
+    },
+    {
+     "mission": {
+      "id": "solar",
+      "name": "Solar array placement"
+     },
+     "rank": 3,
+     "earth_cell_id": "E38744",
+     "moon_cell_id": "M40854",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 80 km north-east of Maintirano, Melaky, Madagascar",
+      "nearest_named_place": "Maintirano",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Melaky",
+      "nearest_named_place_country_code_in_geonames": "MG",
+      "distance_km": 80.1,
+      "distance_km_recomputed": 80.1,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Melaky",
+      "country": "Madagascar",
+      "country_code": "MG",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": -17.5,
+      "cell_centre_lon": 44.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Thebit",
+      "feature_type": "Crater, craters",
+      "distance_km": 61.3,
+      "distance_km_recomputed": 61.3,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -23.5,
+      "cell_centre_lon": -5.5,
+      "lunar_region_code": "D",
+      "lunar_region_label": "Low equatorial plains (the maria)"
+     },
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36,
+     "variables": [
+      {
+       "variable": "irradiance_toa_kwh_m2_day",
+       "label": "Sunlight without atmosphere",
+       "role": "key",
+       "weight": 0.8,
+       "tolerance": 0.6,
+       "bound": 0.6,
+       "unit": "kWh/m2/day",
+       "earth": 9.5543,
+       "moon": 9.534,
+       "difference": 0.0203,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "missions.json similarity.variables[irradiance_toa_kwh_m2_day].sides.EARTH.level"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json irradiance_kwh_m2_day MOON",
+        "note": null
+       },
+       "score": 0.99943
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "unit": "deg",
+       "earth": 0.706,
+       "moon": 0.649,
+       "difference": 0.057,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.999594
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "unit": "m",
+       "earth": 29.64,
+       "moon": 29.0,
+       "difference": 0.64,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999772
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 300.41,
+       "moon": 211.99,
+       "difference": 88.42
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 11.95,
+       "moon": 288.34,
+       "difference": 276.39
+      }
+     },
+     "earth_atmosphere": {
+      "ground_kwh_m2_day": 5.967,
+      "ground_level": "MODELLED",
+      "above_atmosphere_kwh_m2_day": 9.5543,
+      "above_atmosphere_level": "DERIVED",
+      "lost_share_bundle": 0.3755,
+      "display": {
+       "ground_kwh_m2_day": 6.0,
+       "above_atmosphere_kwh_m2_day": 9.6,
+       "lost_percent": 38,
+       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+      },
+      "lost_percent_from_bundle_share": 38
+     },
+     "common_traits": [
+      {
+       "text": "Nearly the same sunlight above the atmosphere: 9.55 kWh per square metre per day at the Earth site and 9.53 on the Moon (0.02 apart). On Earth only about 6.0 of 9.6 reaches the ground, about 38 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
+       "basis": {
+        "columns": [
+         "irradiance_toa_kwh_m2_day.earth",
+         "irradiance_toa_kwh_m2_day.moon",
+         "irradiance_toa_kwh_m2_day.diff",
+         "atm.ground_kwh_m2_day",
+         "atm.toa_kwh_m2_day"
+        ],
+        "earth": 9.5543,
+        "moon": 9.534,
+        "difference": 0.0203,
+        "ground": 5.967,
+        "lost_percent_display": 38
+       }
+      },
+      {
+       "text": "Similar slopes: 0.71 degrees on Earth and 0.65 on the Moon, 0.06 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 0.706,
+        "moon": 0.649,
+        "difference": 0.057,
+        "earth_percentile_in_population": 58.6,
+        "moon_percentile_in_population": 7.6,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 29.6 metres on Earth and 29.0 on the Moon, 0.6 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 29.64,
+        "moon": 29.0,
+        "difference": 0.64,
+        "earth_percentile_in_population": 60.1,
+        "moon_percentile_in_population": 8.5,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      }
+     ],
+     "say": "Number three for solar panels: a site about 80 kilometres north-east of Maintirano, in Melaky, Madagascar, pairs with a spot about 61 kilometres from the crater Thebit, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 38 percent is lost in the air and only 6.0 reach the ground; similarity 99.95 out of 100."
+    },
+    {
+     "mission": {
+      "id": "solar",
+      "name": "Solar array placement"
+     },
+     "rank": 4,
+     "earth_cell_id": "E37746",
+     "moon_cell_id": "M24761",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 280 km north-west of Kununurra, Australia",
+      "nearest_named_place": "Kununurra",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Western Australia",
+      "nearest_named_place_country_code_in_geonames": "AU",
+      "distance_km": 279.7,
+      "distance_km_recomputed": 279.7,
+      "direction_from_place": "north-west",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": null,
+      "country": "Australia",
+      "country_code": "AU",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": -14.5,
+      "cell_centre_lon": 126.5,
+      "region_note": "the bundle gives no first-level region for this cell (the nearest place is farther than the engine's region_max_place_km or in another country)"
+     },
+     "moon_place": {
+      "nearest_named_feature": "Dziewulski",
+      "feature_type": "Crater, craters",
+      "distance_km": 71.9,
+      "distance_km_recomputed": 71.9,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": 21.5,
+      "cell_centre_lon": 101.5,
+      "lunar_region_code": "D",
+      "lunar_region_label": "Low equatorial plains (the maria)"
+     },
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "final": 98.3,
+     "variables": [
+      {
+       "variable": "irradiance_toa_kwh_m2_day",
+       "label": "Sunlight without atmosphere",
+       "role": "key",
+       "weight": 0.8,
+       "tolerance": 0.6,
+       "bound": 0.6,
+       "unit": "kWh/m2/day",
+       "earth": 9.685,
+       "moon": 9.672,
+       "difference": 0.013,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "missions.json similarity.variables[irradiance_toa_kwh_m2_day].sides.EARTH.level"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json irradiance_kwh_m2_day MOON",
+        "note": null
+       },
+       "score": 0.999766
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "unit": "deg",
+       "earth": 0.757,
+       "moon": 0.711,
+       "difference": 0.046,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.999736
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "unit": "m",
+       "earth": 26.93,
+       "moon": 27.55,
+       "difference": 0.62,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999786
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 302.27,
+       "moon": 213.79,
+       "difference": 88.48
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 13.33,
+       "moon": 288.37,
+       "difference": 275.04
+      }
+     },
+     "earth_atmosphere": {
+      "ground_kwh_m2_day": 6.071,
+      "ground_level": "MODELLED",
+      "above_atmosphere_kwh_m2_day": 9.685,
+      "above_atmosphere_level": "DERIVED",
+      "lost_share_bundle": 0.3732,
+      "display": {
+       "ground_kwh_m2_day": 6.1,
+       "above_atmosphere_kwh_m2_day": 9.7,
+       "lost_percent": 37,
+       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+      },
+      "lost_percent_from_bundle_share": 37
+     },
+     "common_traits": [
+      {
+       "text": "Nearly the same sunlight above the atmosphere: 9.69 kWh per square metre per day at the Earth site and 9.67 on the Moon (0.01 apart). On Earth only about 6.1 of 9.7 reaches the ground, about 37 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
+       "basis": {
+        "columns": [
+         "irradiance_toa_kwh_m2_day.earth",
+         "irradiance_toa_kwh_m2_day.moon",
+         "irradiance_toa_kwh_m2_day.diff",
+         "atm.ground_kwh_m2_day",
+         "atm.toa_kwh_m2_day"
+        ],
+        "earth": 9.685,
+        "moon": 9.672,
+        "difference": 0.013,
+        "ground": 6.071,
+        "lost_percent_display": 37
+       }
+      },
+      {
+       "text": "Similar slopes: 0.76 degrees on Earth and 0.71 on the Moon, 0.05 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 0.757,
+        "moon": 0.711,
+        "difference": 0.046,
+        "earth_percentile_in_population": 60.2,
+        "moon_percentile_in_population": 8.3,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 26.9 metres on Earth and 27.6 on the Moon, 0.6 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 26.93,
+        "moon": 27.55,
+        "difference": 0.62,
+        "earth_percentile_in_population": 58.2,
+        "moon_percentile_in_population": 8.1,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      }
+     ],
+     "say": "Number four for solar panels: a site about 280 kilometres north-west of Kununurra, in Australia, pairs with a spot about 72 kilometres from the crater Dziewulski, on the lunar equatorial plains. Above the atmosphere both get about 9.7 kilowatt hours per square metre a day, but on Earth about 37 percent is lost in the air and only 6.1 reach the ground; similarity 99.98 out of 100."
+    },
+    {
+     "mission": {
+      "id": "solar",
+      "name": "Solar array placement"
+     },
+     "rank": 5,
+     "earth_cell_id": "E38465",
+     "moon_cell_id": "M40406",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 218 km north-east of Derby, Australia",
+      "nearest_named_place": "Derby",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Western Australia",
+      "nearest_named_place_country_code_in_geonames": "AU",
+      "distance_km": 218.2,
+      "distance_km_recomputed": 218.2,
+      "direction_from_place": "north-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": null,
+      "country": "Australia",
+      "country_code": "AU",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": -16.5,
+      "cell_centre_lon": 125.5,
+      "region_note": "the bundle gives no first-level region for this cell (the nearest place is farther than the engine's region_max_place_km or in another country)"
+     },
+     "moon_place": {
+      "nearest_named_feature": "Rimae Pettit",
+      "feature_type": "Rima, rimae",
+      "distance_km": 82.5,
+      "distance_km_recomputed": 82.5,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -22.5,
+      "cell_centre_lon": -93.5,
+      "lunar_region_code": "D",
+      "lunar_region_label": "Low equatorial plains (the maria)"
+     },
+     "similarity": 100.0,
+     "suitability": 96.48,
+     "final": 98.24,
+     "variables": [
+      {
+       "variable": "irradiance_toa_kwh_m2_day",
+       "label": "Sunlight without atmosphere",
+       "role": "key",
+       "weight": 0.8,
+       "tolerance": 0.6,
+       "bound": 0.6,
+       "unit": "kWh/m2/day",
+       "earth": 9.6005,
+       "moon": 9.604,
+       "difference": 0.0035,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "missions.json similarity.variables[irradiance_toa_kwh_m2_day].sides.EARTH.level"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json irradiance_kwh_m2_day MOON",
+        "note": null
+       },
+       "score": 0.999983
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "unit": "deg",
+       "earth": 0.92,
+       "moon": 0.951,
+       "difference": 0.031,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.99988
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "unit": "m",
+       "earth": 33.25,
+       "moon": 32.92,
+       "difference": 0.33,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.99994
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 302.06,
+       "moon": 213.94,
+       "difference": 88.12
+      },
+      "lst_diurnal_amp_k": {
+       "earth": 13.35,
+       "moon": 293.15,
+       "difference": 279.8
+      }
+     },
+     "earth_atmosphere": {
+      "ground_kwh_m2_day": 6.14,
+      "ground_level": "MODELLED",
+      "above_atmosphere_kwh_m2_day": 9.6005,
+      "above_atmosphere_level": "DERIVED",
+      "lost_share_bundle": 0.3604,
+      "display": {
+       "ground_kwh_m2_day": 6.1,
+       "above_atmosphere_kwh_m2_day": 9.6,
+       "lost_percent": 36,
+       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+      },
+      "lost_percent_from_bundle_share": 36
+     },
+     "common_traits": [
+      {
+       "text": "Nearly the same sunlight above the atmosphere: 9.60 kWh per square metre per day at the Earth site and 9.60 on the Moon (less than 0.01 apart). On Earth only about 6.1 of 9.6 reaches the ground, about 36 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
+       "basis": {
+        "columns": [
+         "irradiance_toa_kwh_m2_day.earth",
+         "irradiance_toa_kwh_m2_day.moon",
+         "irradiance_toa_kwh_m2_day.diff",
+         "atm.ground_kwh_m2_day",
+         "atm.toa_kwh_m2_day"
+        ],
+        "earth": 9.6005,
+        "moon": 9.604,
+        "difference": 0.0035,
+        "ground": 6.14,
+        "lost_percent_display": 36
+       }
+      },
+      {
+       "text": "Similar slopes: 0.92 degrees on Earth and 0.95 on the Moon, 0.03 apart.",
+       "basis": {
+        "columns": [
+         "slope_deg (Earth)",
+         "slope_deg (Moon)",
+         "earth_base.bin v.slope_iso_deg",
+         "moon_base.bin v.slope_iso_deg"
+        ],
+        "earth": 0.92,
+        "moon": 0.951,
+        "difference": 0.031,
+        "earth_percentile_in_population": 64.0,
+        "moon_percentile_in_population": 10.5,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+       }
+      },
+      {
+       "text": "Similar roughness: 33.2 metres on Earth and 32.9 on the Moon, 0.3 apart.",
+       "basis": {
+        "columns": [
+         "roughness_m (Earth)",
+         "roughness_m (Moon)",
+         "earth_base.bin v.roughness_m",
+         "moon_base.bin v.roughness_m"
+        ],
+        "earth": 33.25,
+        "moon": 32.92,
+        "difference": 0.33,
+        "earth_percentile_in_population": 62.3,
+        "moon_percentile_in_population": 9.3,
+        "populations": {
+         "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+         "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+        },
+        "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+       }
+      }
+     ],
+     "say": "Number five for solar panels: a site about 218 kilometres north-east of Derby, in Australia, pairs with a spot about 82 kilometres from Rimae Pettit, a rima, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 36 percent is lost in the air and only 6.1 reach the ground; similarity 100 (rounded) out of 100."
+    }
+   ]
+  },
+  "lunar_base": {
+   "name": "Lunar base (thermal endurance)",
+   "similarity_rule": "percentile_and_real_tolerance",
+   "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+   "similarity_variables": [
+    {
+     "variable": "tmin_k",
+     "role": "key",
+     "weight": 0.4,
+     "tolerance": 10.0,
+     "bound": 10.0,
+     "unit": "percentile points"
+    },
+    {
+     "variable": "lst_diurnal_amp_k",
+     "role": "key",
+     "weight": 0.4,
+     "tolerance": 10.0,
+     "bound": 10.0,
+     "unit": "percentile points"
+    },
+    {
+     "variable": "slope_deg",
+     "role": "secondary",
+     "weight": 0.1,
+     "tolerance": 2.0,
+     "bound": 4.0,
+     "unit": "deg"
+    },
+    {
+     "variable": "roughness_m",
+     "role": "secondary",
+     "weight": 0.1,
+     "tolerance": 30.0,
+     "bound": 60.0,
+     "unit": "m"
+    }
+   ],
+   "pair_filter": {
+    "key": "|difference| <= 1 x tolerance (percentile points for the percentile variables)",
+    "secondary": "|difference| <= 2 x tolerance (real values)",
+    "missing_key": "a key variable without a value on either side fails the filter (no pair); a cell without a value has no percentile",
+    "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised"
+   },
+   "status": "built, independent verification in progress",
+   "pairs": [
+    {
+     "mission": {
+      "id": "lunar_base",
+      "name": "Lunar base (thermal endurance)"
+     },
+     "rank": 1,
+     "earth_cell_id": "E17538",
+     "moon_cell_id": "M63528",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+      "nearest_named_place": "Aheqi",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 62.3,
+      "distance_km_recomputed": 62.3,
+      "direction_from_place": "north",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Xinjiang Uygur Zizhiqu",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 41.5,
+      "cell_centre_lon": 78.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Mons Malapert",
+      "feature_type": "Mons, montes",
+      "distance_km": 25.1,
+      "distance_km_recomputed": 25.1,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -86.5,
+      "cell_centre_lon": -11.5,
+      "lunar_region_code": "A",
+      "lunar_region_label": "The nine NASA candidate regions",
+      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "nasa_candidate_regions_intersected": [
+       "Haworth"
+      ],
+      "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
+     },
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29,
+     "variables": [
+      {
+       "variable": "tmin_k",
+       "label": "Coldest temperature (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 248.61,
+       "moon_real": 41.23,
+       "difference_real": 207.38,
+       "earth_level": {
+        "level": "MODELLED",
+        "from": "variables.json tmin_c EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json tmin_c MOON",
+        "note": null
+       },
+       "score": 0.999437,
+       "compared_unit": "percentile points",
+       "earth_percentile": 8.3712,
+       "moon_percentile": 8.0357,
+       "difference_points": 0.3355,
+       "earth_real_c": -24.54,
+       "moon_real_c": -231.92,
+       "population_earth": 2419,
+       "population_moon": 280
+      },
+      {
+       "variable": "lst_diurnal_amp_k",
+       "label": "Daily temperature swing (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 15.6,
+       "moon_real": 153.27,
+       "difference_real": 137.67,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k MOON"
+       },
+       "score": 0.941868,
+       "compared_unit": "percentile points",
+       "earth_percentile": 6.72,
+       "moon_percentile": 10.18,
+       "difference_points": 3.46,
+       "population_earth": 2419,
+       "population_moon": 280,
+       "c_note": "a temperature difference: 1 K = 1 degree C, so the swing in degrees C equals the value in K",
+       "earth_real_c_swing": 15.6,
+       "moon_real_c_swing": 153.27
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "real_unit": "deg",
+       "earth_real": 6.652,
+       "moon_real": 7.179,
+       "difference_real": 0.527,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.96588
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "real_unit": "m",
+       "earth_real": 238.81,
+       "moon_real": 238.49,
+       "difference_real": 0.32,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.999943
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 272.06,
+       "moon": 77.49,
+       "difference": 194.57
+      },
+      "elevation_rel_m": {
+       "earth": 2807.0,
+       "moon": 680.7,
+       "difference": 2126.3
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.093,
+       "moon": 0.103,
+       "difference": 3.99
+      }
+     },
+     "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 195 K colder on average (minimum -232 °C at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m.",
+     "common_traits": [
+      {
+       "text": "Both rank in the coldest tenth of their own population by coldest temperature (8th percentile on Earth, 8th on the Moon, 0.3 points apart), although the temperatures themselves are far apart: about -25 degrees C air on Earth against -232 degrees C surface on the Moon, 207 K.",
+       "basis": {
+        "columns": [
+         "tmin_k.earth_pct",
+         "tmin_k.moon_pct",
+         "tmin_k.diff_pct",
+         "tmin_k.earth",
+         "tmin_k.moon",
+         "tmin_k.diff"
+        ],
+        "earth_percentile": 8.3712,
+        "moon_percentile": 8.0357,
+        "difference_points": 0.3355,
+        "earth_k": 248.61,
+        "moon_k": 41.23,
+        "difference_k": 207.38,
+        "populations": {
+         "EARTH": "2,419 Earth points passing the Lunar base funnel",
+         "MOON": "280 lunar cells of NASA's nine candidate regions"
+        },
+        "percentile_direction": "low percentile = colder"
+       }
+      },
+      {
+       "text": "Both have one of the smallest daily temperature swings of their own population (the smallest quarter): 7th percentile on Earth, 10th on the Moon, 3.5 points apart; in real terms the swing is 16 K on Earth and 153 K on the Moon, 138 K apart.",
+       "basis": {
+        "columns": [
+         "lst_diurnal_amp_k.earth_pct",
+         "lst_diurnal_amp_k.moon_pct",
+         "lst_diurnal_amp_k.diff_pct",
+         "lst_diurnal_amp_k.earth",
+         "lst_diurnal_amp_k.moon",
+         "lst_diurnal_amp_k.diff"
+        ],
+        "earth_percentile": 6.72,
+        "moon_percentile": 10.18,
+        "difference_points": 3.46,
+        "earth_k": 15.6,
+        "moon_k": 153.27,
+        "difference_k": 137.67,
+        "percentile_direction": "low percentile = smaller swing"
+       }
+      },
+      {
+       "text": "Similar terrain: slope 6.7 against 7.2 degrees (0.5 apart) and roughness 239 against 238 metres (0.3 apart). By slope both are steep: 98th percentile of Earth land cells, 76th of lunar cells. By roughness both are rugged: 98th percentile of Earth land cells, 81st of lunar cells.",
+       "basis": {
+        "columns": [
+         "slope_deg.earth",
+         "slope_deg.moon",
+         "slope_deg.diff",
+         "roughness_m.earth",
+         "roughness_m.moon",
+         "roughness_m.diff"
+        ],
+        "slope": {
+         "columns": [
+          "slope_deg (Earth)",
+          "slope_deg (Moon)",
+          "earth_base.bin v.slope_iso_deg",
+          "moon_base.bin v.slope_iso_deg"
+         ],
+         "earth": 6.652,
+         "moon": 7.179,
+         "difference": 0.527,
+         "earth_percentile_in_population": 98.4,
+         "moon_percentile_in_population": 75.8,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+        },
+        "roughness": {
+         "columns": [
+          "roughness_m (Earth)",
+          "roughness_m (Moon)",
+          "earth_base.bin v.roughness_m",
+          "moon_base.bin v.roughness_m"
+         ],
+         "earth": 238.81,
+         "moon": 238.49,
+         "difference": 0.32,
+         "earth_percentile_in_population": 98.3,
+         "moon_percentile_in_population": 80.9,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+        }
+       }
+      }
+     ],
+     "say": "Number one for a lunar base: a site about 62 kilometres north of Aheqi, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 25 kilometres from Mons Malapert, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 138 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.5 degrees and roughness by less than 1 metre; similarity 97.3 out of 100."
+    },
+    {
+     "mission": {
+      "id": "lunar_base",
+      "name": "Lunar base (thermal endurance)"
+     },
+     "rank": 2,
+     "earth_cell_id": "E16830",
+     "moon_cell_id": "M63841",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+      "nearest_named_place": "Mori",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 43.6,
+      "distance_km_recomputed": 43.6,
+      "direction_from_place": "south-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Xinjiang Uygur Zizhiqu",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 43.5,
+      "cell_centre_lon": 90.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Cartwright",
+      "feature_type": "Crater, craters",
+      "distance_km": 15.5,
+      "distance_km_recomputed": 15.5,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -87.5,
+      "cell_centre_lon": -58.5,
+      "lunar_region_code": "A",
+      "lunar_region_label": "The nine NASA candidate regions",
+      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "nasa_candidate_regions_intersected": [
+       "de Gerlache Rim 2"
+      ],
+      "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
+     },
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28,
+     "variables": [
+      {
+       "variable": "tmin_k",
+       "label": "Coldest temperature (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 254.29,
+       "moon_real": 46.11,
+       "difference_real": 208.18,
+       "earth_level": {
+        "level": "MODELLED",
+        "from": "variables.json tmin_c EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json tmin_c MOON",
+        "note": null
+       },
+       "score": 0.963531,
+       "compared_unit": "percentile points",
+       "earth_percentile": 21.4758,
+       "moon_percentile": 18.75,
+       "difference_points": 2.7258,
+       "earth_real_c": -18.86,
+       "moon_real_c": -227.04,
+       "population_earth": 2419,
+       "population_moon": 280
+      },
+      {
+       "variable": "lst_diurnal_amp_k",
+       "label": "Daily temperature swing (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 18.01,
+       "moon_real": 172.62,
+       "difference_real": 154.61,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k MOON"
+       },
+       "score": 0.998248,
+       "compared_unit": "percentile points",
+       "earth_percentile": 33.09,
+       "moon_percentile": 32.5,
+       "difference_points": 0.59,
+       "population_earth": 2419,
+       "population_moon": 280,
+       "c_note": "a temperature difference: 1 K = 1 degree C, so the swing in degrees C equals the value in K",
+       "earth_real_c_swing": 18.01,
+       "moon_real_c_swing": 172.62
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "real_unit": "deg",
+       "earth_real": 3.066,
+       "moon_real": 4.151,
+       "difference_real": 1.085,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.863162
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "real_unit": "m",
+       "earth_real": 118.63,
+       "moon_real": 128.19,
+       "difference_real": 9.56,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.950493
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 282.43,
+       "moon": 98.73,
+       "difference": 183.7
+      },
+      "elevation_rel_m": {
+       "earth": 888.3,
+       "moon": -1254.7,
+       "difference": 2143.0
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.368,
+       "moon": 0.174,
+       "difference": 4.194
+      }
+     },
+     "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 184 K colder on average (minimum -227 °C at the surface against -18.9 °C air temperature here) and its day-night swing is 155 K larger; slope differs by 1.1° and roughness by 9.6 m.",
+     "common_traits": [
+      {
+       "text": "Both rank in the coldest quarter of their own population by coldest temperature (21st percentile on Earth, 19th on the Moon, 2.7 points apart), although the temperatures themselves are far apart: about -19 degrees C air on Earth against -227 degrees C surface on the Moon, 208 K.",
+       "basis": {
+        "columns": [
+         "tmin_k.earth_pct",
+         "tmin_k.moon_pct",
+         "tmin_k.diff_pct",
+         "tmin_k.earth",
+         "tmin_k.moon",
+         "tmin_k.diff"
+        ],
+        "earth_percentile": 21.4758,
+        "moon_percentile": 18.75,
+        "difference_points": 2.7258,
+        "earth_k": 254.29,
+        "moon_k": 46.11,
+        "difference_k": 208.18,
+        "populations": {
+         "EARTH": "2,419 Earth points passing the Lunar base funnel",
+         "MOON": "280 lunar cells of NASA's nine candidate regions"
+        },
+        "percentile_direction": "low percentile = colder"
+       }
+      },
+      {
+       "text": "A similar position for the daily temperature swing within their own population: 33rd percentile on Earth, 32nd on the Moon, 0.6 points apart; in real terms the swing is 18 K on Earth and 173 K on the Moon, 155 K apart.",
+       "basis": {
+        "columns": [
+         "lst_diurnal_amp_k.earth_pct",
+         "lst_diurnal_amp_k.moon_pct",
+         "lst_diurnal_amp_k.diff_pct",
+         "lst_diurnal_amp_k.earth",
+         "lst_diurnal_amp_k.moon",
+         "lst_diurnal_amp_k.diff"
+        ],
+        "earth_percentile": 33.09,
+        "moon_percentile": 32.5,
+        "difference_points": 0.59,
+        "earth_k": 18.01,
+        "moon_k": 172.62,
+        "difference_k": 154.61,
+        "percentile_direction": "low percentile = smaller swing"
+       }
+      },
+      {
+       "text": "Similar terrain: slope 3.1 against 4.2 degrees (1.1 apart) and roughness 119 against 128 metres (9.6 apart).",
+       "basis": {
+        "columns": [
+         "slope_deg.earth",
+         "slope_deg.moon",
+         "slope_deg.diff",
+         "roughness_m.earth",
+         "roughness_m.moon",
+         "roughness_m.diff"
+        ],
+        "slope": {
+         "columns": [
+          "slope_deg (Earth)",
+          "slope_deg (Moon)",
+          "earth_base.bin v.slope_iso_deg",
+          "moon_base.bin v.slope_iso_deg"
+         ],
+         "earth": 3.066,
+         "moon": 4.151,
+         "difference": 1.085,
+         "earth_percentile_in_population": 88.0,
+         "moon_percentile_in_population": 40.7,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+        },
+        "roughness": {
+         "columns": [
+          "roughness_m (Earth)",
+          "roughness_m (Moon)",
+          "earth_base.bin v.roughness_m",
+          "moon_base.bin v.roughness_m"
+         ],
+         "earth": 118.63,
+         "moon": 128.19,
+         "difference": 9.56,
+         "earth_percentile_in_population": 88.2,
+         "moon_percentile_in_population": 36.3,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+        }
+       }
+      }
+     ],
+     "say": "Number two for a lunar base: a site about 44 kilometres south-east of Mori, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 16 kilometres from the crater Cartwright, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 155 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.1 degrees and roughness by 10 metres; similarity 96.6 out of 100."
+    },
+    {
+     "mission": {
+      "id": "lunar_base",
+      "name": "Lunar base (thermal endurance)"
+     },
+     "rank": 3,
+     "earth_cell_id": "E15751",
+     "moon_cell_id": "M64018",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+      "nearest_named_place": "Burenhayrhan",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Hovd",
+      "nearest_named_place_country_code_in_geonames": "MN",
+      "distance_km": 45.5,
+      "distance_km_recomputed": 45.5,
+      "direction_from_place": "north",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Hovd",
+      "country": "Mongolia",
+      "country_code": "MN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 46.5,
+      "cell_centre_lon": 91.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Slater",
+      "feature_type": "Crater, craters",
+      "distance_km": 19.4,
+      "distance_km_recomputed": 19.4,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -87.5,
+      "cell_centre_lon": 118.5,
+      "lunar_region_code": "A",
+      "lunar_region_label": "The nine NASA candidate regions",
+      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "nasa_candidate_regions_intersected": [
+       "Slater Plain"
+      ],
+      "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
+     },
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "final": 71.73,
+     "variables": [
+      {
+       "variable": "tmin_k",
+       "label": "Coldest temperature (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 247.3,
+       "moon_real": 40.65,
+       "difference_real": 206.65,
+       "earth_level": {
+        "level": "MODELLED",
+        "from": "variables.json tmin_c EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json tmin_c MOON",
+        "note": null
+       },
+       "score": 0.997134,
+       "compared_unit": "percentile points",
+       "earth_percentile": 5.8495,
+       "moon_percentile": 6.6071,
+       "difference_points": 0.7576,
+       "earth_real_c": -25.85,
+       "moon_real_c": -232.5,
+       "population_earth": 2419,
+       "population_moon": 280
+      },
+      {
+       "variable": "lst_diurnal_amp_k",
+       "label": "Daily temperature swing (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 16.04,
+       "moon_real": 153.31,
+       "difference_real": 137.27,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k MOON"
+       },
+       "score": 0.993954,
+       "compared_unit": "percentile points",
+       "earth_percentile": 11.64,
+       "moon_percentile": 10.54,
+       "difference_points": 1.1,
+       "population_earth": 2419,
+       "population_moon": 280,
+       "c_note": "a temperature difference: 1 K = 1 degree C, so the swing in degrees C equals the value in K",
+       "earth_real_c_swing": 16.04,
+       "moon_real_c_swing": 153.31
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "real_unit": "deg",
+       "earth_real": 4.673,
+       "moon_real": 6.26,
+       "difference_real": 1.587,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.729919
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "real_unit": "m",
+       "earth_real": 164.12,
+       "moon_real": 167.9,
+       "difference_real": 3.78,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.992093
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 273.78,
+       "moon": 79.66,
+       "difference": 194.12
+      },
+      "elevation_rel_m": {
+       "earth": 1565.1,
+       "moon": -571.8,
+       "difference": 2136.9
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.015,
+       "moon": 0.087,
+       "difference": 3.928
+      }
+     },
+     "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 194 K colder on average (minimum -232 °C at the surface against -25.8 °C air temperature here) and its day-night swing is 137 K larger; slope differs by 1.6° and roughness by 3.8 m.",
+     "common_traits": [
+      {
+       "text": "Both rank in the coldest tenth of their own population by coldest temperature (6th percentile on Earth, 7th on the Moon, 0.8 points apart), although the temperatures themselves are far apart: about -26 degrees C air on Earth against -232 degrees C surface on the Moon, 207 K.",
+       "basis": {
+        "columns": [
+         "tmin_k.earth_pct",
+         "tmin_k.moon_pct",
+         "tmin_k.diff_pct",
+         "tmin_k.earth",
+         "tmin_k.moon",
+         "tmin_k.diff"
+        ],
+        "earth_percentile": 5.8495,
+        "moon_percentile": 6.6071,
+        "difference_points": 0.7576,
+        "earth_k": 247.3,
+        "moon_k": 40.65,
+        "difference_k": 206.65,
+        "populations": {
+         "EARTH": "2,419 Earth points passing the Lunar base funnel",
+         "MOON": "280 lunar cells of NASA's nine candidate regions"
+        },
+        "percentile_direction": "low percentile = colder"
+       }
+      },
+      {
+       "text": "Both have one of the smallest daily temperature swings of their own population (the smallest quarter): 12th percentile on Earth, 11th on the Moon, 1.1 points apart; in real terms the swing is 16 K on Earth and 153 K on the Moon, 137 K apart.",
+       "basis": {
+        "columns": [
+         "lst_diurnal_amp_k.earth_pct",
+         "lst_diurnal_amp_k.moon_pct",
+         "lst_diurnal_amp_k.diff_pct",
+         "lst_diurnal_amp_k.earth",
+         "lst_diurnal_amp_k.moon",
+         "lst_diurnal_amp_k.diff"
+        ],
+        "earth_percentile": 11.64,
+        "moon_percentile": 10.54,
+        "difference_points": 1.1,
+        "earth_k": 16.04,
+        "moon_k": 153.31,
+        "difference_k": 137.27,
+        "percentile_direction": "low percentile = smaller swing"
+       }
+      },
+      {
+       "text": "Similar terrain: slope 4.7 against 6.3 degrees (1.6 apart) and roughness 164 against 168 metres (3.8 apart).",
+       "basis": {
+        "columns": [
+         "slope_deg.earth",
+         "slope_deg.moon",
+         "slope_deg.diff",
+         "roughness_m.earth",
+         "roughness_m.moon",
+         "roughness_m.diff"
+        ],
+        "slope": {
+         "columns": [
+          "slope_deg (Earth)",
+          "slope_deg (Moon)",
+          "earth_base.bin v.slope_iso_deg",
+          "moon_base.bin v.slope_iso_deg"
+         ],
+         "earth": 4.673,
+         "moon": 6.26,
+         "difference": 1.587,
+         "earth_percentile_in_population": 94.9,
+         "moon_percentile_in_population": 66.3,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+        },
+        "roughness": {
+         "columns": [
+          "roughness_m (Earth)",
+          "roughness_m (Moon)",
+          "earth_base.bin v.roughness_m",
+          "moon_base.bin v.roughness_m"
+         ],
+         "earth": 164.12,
+         "moon": 167.9,
+         "difference": 3.78,
+         "earth_percentile_in_population": 94.1,
+         "moon_percentile_in_population": 53.5,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+        }
+       }
+      }
+     ],
+     "say": "Number three for a lunar base: a site about 46 kilometres north of Burenhayrhan, in Hovd, Mongolia, pairs with a spot about 19 kilometres from the crater Slater, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 137 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.6 degrees and roughness by 4 metres; similarity 96.9 out of 100."
+    },
+    {
+     "mission": {
+      "id": "lunar_base",
+      "name": "Lunar base (thermal endurance)"
+     },
+     "rank": 4,
+     "earth_cell_id": "E21054",
+     "moon_cell_id": "M62517",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+      "nearest_named_place": "Tinghir",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Souss-Massa-Draa",
+      "nearest_named_place_country_code_in_geonames": "MA",
+      "distance_km": 3.5,
+      "distance_km_recomputed": 3.5,
+      "direction_from_place": "south-east",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Souss-Massa-Draa",
+      "country": "Morocco",
+      "country_code": "MA",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 31.5,
+      "cell_centre_lon": -5.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Wapowski",
+      "feature_type": "Crater, craters",
+      "distance_km": 18.3,
+      "distance_km_recomputed": 18.3,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -83.5,
+      "cell_centre_lon": 57.5,
+      "lunar_region_code": "A",
+      "lunar_region_label": "The nine NASA candidate regions",
+      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "nasa_candidate_regions_intersected": [
+       "Nobile Rim 2"
+      ],
+      "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
+     },
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63,
+     "variables": [
+      {
+       "variable": "tmin_k",
+       "label": "Coldest temperature (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 271.63,
+       "moon_real": 63.03,
+       "difference_real": 208.6,
+       "earth_level": {
+        "level": "MODELLED",
+        "from": "variables.json tmin_c EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json tmin_c MOON",
+        "note": null
+       },
+       "score": 0.999985,
+       "compared_unit": "percentile points",
+       "earth_percentile": 62.7325,
+       "moon_percentile": 62.6786,
+       "difference_points": 0.054,
+       "earth_real_c": -1.52,
+       "moon_real_c": -210.12,
+       "population_earth": 2419,
+       "population_moon": 280
+      },
+      {
+       "variable": "lst_diurnal_amp_k",
+       "label": "Daily temperature swing (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 18.71,
+       "moon_real": 176.89,
+       "difference_real": 158.18,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k MOON"
+       },
+       "score": 0.988262,
+       "compared_unit": "percentile points",
+       "earth_percentile": 41.86,
+       "moon_percentile": 43.39,
+       "difference_points": 1.54,
+       "population_earth": 2419,
+       "population_moon": 280,
+       "c_note": "a temperature difference: 1 K = 1 degree C, so the swing in degrees C equals the value in K",
+       "earth_real_c_swing": 18.71,
+       "moon_real_c_swing": 176.89
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "real_unit": "deg",
+       "earth_real": 3.257,
+       "moon_real": 3.481,
+       "difference_real": 0.224,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.993748
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "real_unit": "m",
+       "earth_real": 119.49,
+       "moon_real": 115.01,
+       "difference_real": 4.48,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.988912
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 293.19,
+       "moon": 130.4,
+       "difference": 162.79
+      },
+      "elevation_rel_m": {
+       "earth": 1037.2,
+       "moon": 886.4,
+       "difference": 150.8
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 5.386,
+       "moon": 0.844,
+       "difference": 4.542
+      }
+     },
+     "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 163 K colder on average (minimum -210 °C at the surface against -1.5 °C air temperature here) and its day-night swing is 158 K larger; slope differs by 0.2° and roughness by 4.5 m.",
+     "common_traits": [
+      {
+       "text": "A similar cold position within their own population by coldest temperature (63rd percentile on Earth, 63rd on the Moon, 0.1 points apart), although the temperatures themselves are far apart: about -2 degrees C air on Earth against -210 degrees C surface on the Moon, 209 K.",
+       "basis": {
+        "columns": [
+         "tmin_k.earth_pct",
+         "tmin_k.moon_pct",
+         "tmin_k.diff_pct",
+         "tmin_k.earth",
+         "tmin_k.moon",
+         "tmin_k.diff"
+        ],
+        "earth_percentile": 62.7325,
+        "moon_percentile": 62.6786,
+        "difference_points": 0.054,
+        "earth_k": 271.63,
+        "moon_k": 63.03,
+        "difference_k": 208.6,
+        "populations": {
+         "EARTH": "2,419 Earth points passing the Lunar base funnel",
+         "MOON": "280 lunar cells of NASA's nine candidate regions"
+        },
+        "percentile_direction": "low percentile = colder"
+       }
+      },
+      {
+       "text": "A similar position for the daily temperature swing within their own population: 42nd percentile on Earth, 43rd on the Moon, 1.5 points apart; in real terms the swing is 19 K on Earth and 177 K on the Moon, 158 K apart.",
+       "basis": {
+        "columns": [
+         "lst_diurnal_amp_k.earth_pct",
+         "lst_diurnal_amp_k.moon_pct",
+         "lst_diurnal_amp_k.diff_pct",
+         "lst_diurnal_amp_k.earth",
+         "lst_diurnal_amp_k.moon",
+         "lst_diurnal_amp_k.diff"
+        ],
+        "earth_percentile": 41.86,
+        "moon_percentile": 43.39,
+        "difference_points": 1.54,
+        "earth_k": 18.71,
+        "moon_k": 176.89,
+        "difference_k": 158.18,
+        "percentile_direction": "low percentile = smaller swing"
+       }
+      },
+      {
+       "text": "Similar terrain: slope 3.3 against 3.5 degrees (0.2 apart) and roughness 119 against 115 metres (4.5 apart).",
+       "basis": {
+        "columns": [
+         "slope_deg.earth",
+         "slope_deg.moon",
+         "slope_deg.diff",
+         "roughness_m.earth",
+         "roughness_m.moon",
+         "roughness_m.diff"
+        ],
+        "slope": {
+         "columns": [
+          "slope_deg (Earth)",
+          "slope_deg (Moon)",
+          "earth_base.bin v.slope_iso_deg",
+          "moon_base.bin v.slope_iso_deg"
+         ],
+         "earth": 3.257,
+         "moon": 3.481,
+         "difference": 0.224,
+         "earth_percentile_in_population": 89.0,
+         "moon_percentile_in_population": 32.9,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+        },
+        "roughness": {
+         "columns": [
+          "roughness_m (Earth)",
+          "roughness_m (Moon)",
+          "earth_base.bin v.roughness_m",
+          "moon_base.bin v.roughness_m"
+         ],
+         "earth": 119.49,
+         "moon": 115.01,
+         "difference": 4.48,
+         "earth_percentile_in_population": 88.4,
+         "moon_percentile_in_population": 31.2,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+        }
+       }
+      }
+     ],
+     "say": "Number four for a lunar base: a site about 4 kilometres south-east of Tinghir, in Souss-Massa-Draa, Morocco, pairs with a spot about 18 kilometres from the crater Wapowski, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 209 kelvin lower and its daily swing 158 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.2 degrees and roughness by 4 metres; similarity 99.4 out of 100."
+    },
+    {
+     "mission": {
+      "id": "lunar_base",
+      "name": "Lunar base (thermal endurance)"
+     },
+     "rank": 5,
+     "earth_cell_id": "E17187",
+     "moon_cell_id": "M62523",
+     "ids_note": "reference only, not to be read aloud",
+     "earth_place": {
+      "speakable": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+      "nearest_named_place": "Ewirgol",
+      "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
+      "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
+      "nearest_named_place_country_code_in_geonames": "CN",
+      "distance_km": 53.3,
+      "distance_km_recomputed": 53.3,
+      "direction_from_place": "south",
+      "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
+      "region": "Xinjiang Uygur Zizhiqu",
+      "country": "China",
+      "country_code": "CN",
+      "country_label_rule": "natural_earth_polygon",
+      "region_country_source": "bundle places.json (indexed by earth_base.bin country / region)",
+      "cell_centre_lat": 42.5,
+      "cell_centre_lon": 87.5
+     },
+     "moon_place": {
+      "nearest_named_feature": "Oberbeck",
+      "feature_type": "Crater, craters",
+      "distance_km": 15.9,
+      "distance_km_recomputed": 15.9,
+      "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
+      "cell_centre_lat": -83.5,
+      "cell_centre_lon": 63.5,
+      "lunar_region_code": "A",
+      "lunar_region_label": "The nine NASA candidate regions",
+      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "nasa_candidate_regions_intersected": [
+       "Nobile Rim 2"
+      ],
+      "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
+     },
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "final": 71.28,
+     "variables": [
+      {
+       "variable": "tmin_k",
+       "label": "Coldest temperature (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 254.8,
+       "moon_real": 47.0,
+       "difference_real": 207.8,
+       "earth_level": {
+        "level": "MODELLED",
+        "from": "variables.json tmin_c EARTH",
+        "note": null
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json tmin_c MOON",
+        "note": null
+       },
+       "score": 0.9964,
+       "compared_unit": "percentile points",
+       "earth_percentile": 23.1707,
+       "moon_percentile": 22.3214,
+       "difference_points": 0.8493,
+       "earth_real_c": -18.35,
+       "moon_real_c": -226.15,
+       "population_earth": 2419,
+       "population_moon": 280
+      },
+      {
+       "variable": "lst_diurnal_amp_k",
+       "label": "Daily temperature swing (position)",
+       "role": "key",
+       "weight": 0.4,
+       "tolerance": 10.0,
+       "bound": 10.0,
+       "real_unit": "K",
+       "earth_real": 18.16,
+       "moon_real": 174.6,
+       "difference_real": 156.44,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json lst_diurnal_amp_k MOON"
+       },
+       "score": 0.962979,
+       "compared_unit": "percentile points",
+       "earth_percentile": 34.93,
+       "moon_percentile": 37.68,
+       "difference_points": 2.75,
+       "population_earth": 2419,
+       "population_moon": 280,
+       "c_note": "a temperature difference: 1 K = 1 degree C, so the swing in degrees C equals the value in K",
+       "earth_real_c_swing": 18.16,
+       "moon_real_c_swing": 174.6
+      },
+      {
+       "variable": "slope_deg",
+       "label": "Slope",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 2.0,
+       "bound": 4.0,
+       "real_unit": "deg",
+       "earth_real": 4.665,
+       "moon_real": 6.214,
+       "difference_real": 1.549,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json slope_deg MOON"
+       },
+       "score": 0.740874
+      },
+      {
+       "variable": "roughness_m",
+       "label": "Roughness",
+       "role": "secondary",
+       "weight": 0.1,
+       "tolerance": 30.0,
+       "bound": 60.0,
+       "real_unit": "m",
+       "earth_real": 173.53,
+       "moon_real": 161.62,
+       "difference_real": 11.91,
+       "earth_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m EARTH"
+       },
+       "moon_level": {
+        "level": "DERIVED",
+        "from": "variables.json roughness_m MOON"
+       },
+       "score": 0.924221
+      }
+     ],
+     "not_part_of_similarity": {
+      "temp_k": {
+       "earth": 281.89,
+       "moon": 89.59,
+       "difference": 192.3
+      },
+      "elevation_rel_m": {
+       "earth": 1311.3,
+       "moon": -995.4,
+       "difference": 2306.7
+      },
+      "irradiance_kwh_m2_day": {
+       "earth": 4.252,
+       "moon": 0.312,
+       "difference": 3.94
+      }
+     },
+     "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 192 K colder on average (minimum -226 °C at the surface against -18.3 °C air temperature here) and its day-night swing is 156 K larger; slope differs by 1.5° and roughness by 11.9 m.",
+     "common_traits": [
+      {
+       "text": "Both rank in the coldest quarter of their own population by coldest temperature (23rd percentile on Earth, 22nd on the Moon, 0.8 points apart), although the temperatures themselves are far apart: about -18 degrees C air on Earth against -226 degrees C surface on the Moon, 208 K.",
+       "basis": {
+        "columns": [
+         "tmin_k.earth_pct",
+         "tmin_k.moon_pct",
+         "tmin_k.diff_pct",
+         "tmin_k.earth",
+         "tmin_k.moon",
+         "tmin_k.diff"
+        ],
+        "earth_percentile": 23.1707,
+        "moon_percentile": 22.3214,
+        "difference_points": 0.8493,
+        "earth_k": 254.8,
+        "moon_k": 47.0,
+        "difference_k": 207.8,
+        "populations": {
+         "EARTH": "2,419 Earth points passing the Lunar base funnel",
+         "MOON": "280 lunar cells of NASA's nine candidate regions"
+        },
+        "percentile_direction": "low percentile = colder"
+       }
+      },
+      {
+       "text": "A similar position for the daily temperature swing within their own population: 35th percentile on Earth, 38th on the Moon, 2.8 points apart; in real terms the swing is 18 K on Earth and 175 K on the Moon, 156 K apart.",
+       "basis": {
+        "columns": [
+         "lst_diurnal_amp_k.earth_pct",
+         "lst_diurnal_amp_k.moon_pct",
+         "lst_diurnal_amp_k.diff_pct",
+         "lst_diurnal_amp_k.earth",
+         "lst_diurnal_amp_k.moon",
+         "lst_diurnal_amp_k.diff"
+        ],
+        "earth_percentile": 34.93,
+        "moon_percentile": 37.68,
+        "difference_points": 2.75,
+        "earth_k": 18.16,
+        "moon_k": 174.6,
+        "difference_k": 156.44,
+        "percentile_direction": "low percentile = smaller swing"
+       }
+      },
+      {
+       "text": "Similar terrain: slope 4.7 against 6.2 degrees (1.5 apart) and roughness 174 against 162 metres (11.9 apart).",
+       "basis": {
+        "columns": [
+         "slope_deg.earth",
+         "slope_deg.moon",
+         "slope_deg.diff",
+         "roughness_m.earth",
+         "roughness_m.moon",
+         "roughness_m.diff"
+        ],
+        "slope": {
+         "columns": [
+          "slope_deg (Earth)",
+          "slope_deg (Moon)",
+          "earth_base.bin v.slope_iso_deg",
+          "moon_base.bin v.slope_iso_deg"
+         ],
+         "earth": 4.665,
+         "moon": 6.214,
+         "difference": 1.549,
+         "earth_percentile_in_population": 94.9,
+         "moon_percentile_in_population": 65.8,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'gentle' if both <= 25th percentile, 'steep' if both >= 75th, else no word"
+        },
+        "roughness": {
+         "columns": [
+          "roughness_m (Earth)",
+          "roughness_m (Moon)",
+          "earth_base.bin v.roughness_m",
+          "moon_base.bin v.roughness_m"
+         ],
+         "earth": 173.53,
+         "moon": 161.62,
+         "difference": 11.91,
+         "earth_percentile_in_population": 94.9,
+         "moon_percentile_in_population": 50.8,
+         "populations": {
+          "EARTH": "all 24,783 Earth land cells with a value (earth_base.bin)",
+          "MOON": "all 64,800 lunar cells with a value (moon_base.bin)"
+         },
+         "word_rule": "'smooth' if both <= 25th percentile, 'rugged' if both >= 75th, else no word"
+        }
+       }
+      }
+     ],
+     "say": "Number five for a lunar base: a site about 53 kilometres south of Ewirgol, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 16 kilometres from the crater Oberbeck, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 156 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.5 degrees and roughness by 12 metres; similarity 95.0 out of 100."
+    }
+   ]
+  }
+ },
+ "checks": [
+  "rover: ranks 1..5 found once each, all paired, list_order 1..5; ids, scores, variables, places and features equal across explain.json, twins.json and the binary files",
+  "solar: ranks 1..5 found once each, all paired, list_order 1..5; ids, scores, variables, places and features equal across explain.json, twins.json and the binary files",
+  "lunar_base: ranks 1..5 found once each, all paired, list_order 1..5; ids, scores, variables, places and features equal across explain.json, twins.json and the binary files"
+ ]
+}

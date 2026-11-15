@@ -345,3 +345,77 @@ def test_zone_texts_file_absent_incomplete_or_missing_a_text(tmp_path, ecfg):
     (tmp_path / "gap.json").write_text(json.dumps(full), encoding="utf-8")
     with pytest.raises(ValueError, match="outside.solar.E"):
         load_zone_texts(cfg_with(tmp_path / "gap.json"))
+
+
+# ----------------------------------------------------------------------------- independent verification (2026-11-15)
+def test_lunar_base_known_limitations_describe_the_shipped_rule(lb):
+    """Verification of 2026-11-15: the Lunar base card (missions.json known_limitations,
+    from datasets.json mission_notes) still described the z-score rule (analog_finder,
+    zone_twin) and called the coldest temperature 'a suitability criterion only'."""
+    _, m, _ = lb
+    text = " ".join(m["known_limitations"])
+    for gone in ("z-score", "analog_finder", "zone_twin", "repo_global_mean", "suitability criterion only"):
+        assert gone not in text, gone
+    assert "POSITION" in text and "not of temperature" in text
+    assert "MODELLED air temperature" in text and "MEASURED surface temperature" in text
+    assert "Artemis" not in text
+
+
+def test_similarity_level_texts_quote_their_source(lb):
+    """A level string that quotes variables.json must quote it right (the lunar coldest
+    temperature was labelled 'variables.json tmin_c: MEASURED' while variables.json lists
+    the lunar tmin_c as DERIVED; the MEASURED value is the provenance's tmin_k)."""
+    b, _, _ = lb
+    reg = {v["name"]: v for v in b.json("variables.json")["variables"]}
+    seen = 0
+    for mis in b.json("missions.json")["missions"]:
+        for v in mis["similarity"].get("variables", []):
+            for body, side in v["sides"].items():
+                for col, lvl in re.findall(r"variables\.json (\w+): ([A-Z]+)", side.get("level") or ""):
+                    assert reg[col]["bodies"][body]["level"] == lvl, (mis["id"], v["variable"], body)
+                    seen += 1
+    lb_tmin = next(v for v in next(x for x in b.json("missions.json")["missions"] if x["id"] == "lunar_base")
+                   ["similarity"]["variables"] if v["variable"] == "tmin_k")
+    assert lb_tmin["sides"]["MOON"]["level"].startswith("MEASURED") and "tmin_k" in lb_tmin["sides"]["MOON"]["level"]
+    assert lb_tmin["sides"]["EARTH"]["level"].endswith("MODELLED)")
+    prov = pd.read_csv(os.path.join(ROOT, "real_data", "provenance_moon.csv"))
+    assert prov.loc[prov.iloc[:, 0] == "tmin_k"].iloc[0, 2] == "MEASURED"
+    assert seen >= 1
+
+
+def test_pairs_file_earth_side_is_set_on_every_passing_point(lb):
+    """Contract: '<v>.earth' and '<v>.earth_pct' hold the point's own value on every
+    passing point (paired or not); the twin side, differences and info columns are NaN
+    without a twin."""
+    b, m, paired = lb
+    pf = m["similarity"]["pairs_file"]
+    for v in m["similarity"]["variables"]:
+        for k, col in v["pairs_columns"].items():
+            x = b.column(pf, col)
+            if k in ("earth", "earth_pct"):
+                assert np.all(np.isfinite(x)), col
+            else:
+                assert np.all(np.isfinite(x[paired])) and np.all(np.isnan(x[~paired])), col
+    for x in m["similarity"]["info_columns"]:
+        for col in x["columns"].values():
+            assert np.all(np.isnan(b.column(pf, col)[~paired])), col
+
+
+def test_documents_write_temperature_differences_in_kelvin():
+    """Decision of 2026-11-15 08:55 CET: every temperature difference is written in K.
+    The difference tables ('mediana / p90') and the gaps ('hueco de') of the two
+    internal documents must not use degrees C (absolute values may)."""
+    docs = os.path.join(os.path.dirname(ROOT), "docs")
+    for name in ("ANALOG_PRINCIPLE.md", "LUNAR_BASE_PROPOSAL.md"):
+        with open(os.path.join(docs, name), encoding="utf-8") as fh:
+            text = fh.read()
+        assert not re.search(r"hueco de [\d.,]+ °C", text), name
+        assert not re.search(r"(diferencia|dif\. real)[^|\n]{0,40}\(°C\)", text), name
+        in_diff_table = False
+        for line in text.splitlines():
+            if line.startswith("| variable |"):
+                in_diff_table = "mediana / p90" in line or "D4b" in line or "regiones" in line
+            elif not line.startswith("|"):
+                in_diff_table = False
+            elif in_diff_table:
+                assert not line.startswith("| temperatura mínima (°C)"), (name, line)

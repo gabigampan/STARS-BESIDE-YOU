@@ -1,0 +1,19 @@
+mission,definition,positives,negatives,recovered_positives,recovered_negatives,recall_pct,precision_pct,negatives_rejected_pct,recovered_positive_ids,recovered_negative_ids
+rover,D1_top25,10,5,4,3,40,57.1,40,ES04 MA01 MA06 MA11,ES07 MA02 MA13
+rover,D2_top10,10,5,2,1,20,66.7,80,MA01 MA06,MA13
+rover,D3_top50,10,5,8,3,80,72.7,40,ES04 ES06 MA01 MA05 MA06 MA11 MO04 MO11,ES07 MA02 MA13
+rover,D4_paired,10,5,8,4,80,66.7,20,ES04 ES06 MA01 MA05 MA06 MA11 MO04 MO11,ES07 ES09 MA02 MA13
+rover,D5_funnel,10,5,8,4,80,66.7,20,ES04 ES06 MA01 MA05 MA06 MA11 MO04 MO11,ES07 ES09 MA02 MA13
+rover,D6_suit25,10,5,4,2,40,66.7,60,MA01 MA05 MA06 MA11,ES09 MA13
+solar,D1_top25,0,0,0,0,,,,,
+solar,D2_top10,0,0,0,0,,,,,
+solar,D3_top50,0,0,0,0,,,,,
+solar,D4_paired,0,0,0,0,,,,,
+solar,D5_funnel,0,0,0,0,,,,,
+solar,D6_suit25,0,0,0,0,,,,,
+lunar_base,D1_top25,5,11,0,0,0,,100,,
+lunar_base,D2_top10,5,11,0,0,0,,100,,
+lunar_base,D3_top50,5,11,0,0,0,,100,,
+lunar_base,D4_paired,5,11,0,1,0,0,90.9,,MA05
+lunar_base,D5_funnel,5,11,0,5,0,0,54.5,,ES04 ES09 MA01 MA02 MA05
+lunar_base,D6_suit25,5,11,0,2,0,0,81.8,,MA01 MA02

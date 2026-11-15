@@ -1,0 +1,9 @@
+table,records,failing_records,table_level_failures,pass_pct
+earth_real_1deg.csv,64800,10,0,99.9846
+moon_real_1deg.csv,64800,0,0,100
+earth_moon_real_1deg.csv,129600,64800,0,50
+earth_base.bin,25497,0,0,100
+earth_rover.bin,10337,0,0,100
+earth_solar.bin,18777,0,0,100
+earth_lunar_base.bin,2419,0,0,100
+moon_base.bin,64800,0,0,100

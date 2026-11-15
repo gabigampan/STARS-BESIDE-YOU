@@ -268,7 +268,7 @@ All columns follow `passing` (the same rows as `earth_<mission>.bin`).
 | column | type | content |
 |---|---|---|
 | `list_order` | int32 | display order of the passing points: 1..P = the paired points by `rank`; P+1.. = the points without a twin by published `suitability` descending, ties by Earth cell id |
-| `<v>.earth`, `<v>.moon`, `<v>.diff` | float32 | for every similarity variable `v` (`missions.json` `similarity.variables[].pairs_columns`): the real value of the Earth cell, of the twin, and `|Earth - twin|` computed in double precision; NaN = no twin (or no value). Display values; the recompute uses `s.<v>` |
+| `<v>.earth`, `<v>.moon`, `<v>.diff` | float32 | for every similarity variable `v` (`missions.json` `similarity.variables[].pairs_columns`): the real value of the Earth cell, of the twin, and `|Earth - twin|` computed in double precision; `.earth` is set on every passing point, with or without a twin (NaN only when the Earth cell has no value); `.moon` and `.diff` are NaN on a point without a twin (or with no value). Display values; the recompute uses `s.<v>` |
 | `nopair_kind` | int32 | sentinel = paired; otherwise index into `missions.json` `similarity.nopair_kinds`: `key_value_missing_on_earth`, `no_zone_cell_within_bound` (no zone cell has that variable within its bound), `no_joint_match` (each variable alone can be matched, no single cell meets every bound) |
 | `nopair_var` | int32 | sentinel = paired; otherwise the index of the blocking variable in `similarity.variables` |
 | `nopair_gap` | float32 | the smallest gap found for that variable, in its unit (`no_zone_cell_within_bound`: distance to the closest zone value; `no_joint_match`: its difference at the zone cell nearest to meeting every bound); NaN = paired or no Earth value |
@@ -278,7 +278,7 @@ Variables in the shipped bundle: rover `slope_deg`, `roughness_m`, `elevation_re
 
 ## earth_lunar_base_pairs.bin (on demand; revision 6, rule percentile_and_real_tolerance)
 
-All columns follow `passing` (2,419 rows, the same rows as `earth_lunar_base.bin`). Float32 NaN = no twin or no value.
+All columns follow `passing` (2,419 rows, the same rows as `earth_lunar_base.bin`). The Earth-side columns `<v>.earth` and `<v>.earth_pct` hold the point's own value and percentile on **every** passing point, with or without a twin (as in the rover and solar pairs files; NaN only when the point has no value); every other float32 column (`.moon`, `.diff`, `.moon_pct`, `.diff_pct`, `info.<v>.*`) is NaN on a point without a twin (or with no value).
 
 | column | unit | content |
 |---|---|---|
@@ -298,7 +298,7 @@ All columns follow `passing` (2,419 rows, the same rows as `earth_lunar_base.bin
 
 Today: 450 paired; without a twin 237 thermal position, 943 terrain, 196 both, 593 no single cell (`missions.json` `similarity.unpaired_by_kind`).
 
-**Per-pair sentence** (`similarity.json` `texts.lunar_base_pair_sentence`, approved by the team on 2026-11-15 08:55 CET; show it on every pair): placeholders `{temp_diff_k}` = `info.temp_k.diff` (0 decimals), `{tmin_moon_c}` = `tmin_k.moon` - 273.15 (0 decimals), `{tmin_earth_c}` = `tmin_k.earth` - 273.15 (1 decimal), `{amp_diff_k}` = `lst_diurnal_amp_k.diff` (0 decimals), `{slope_diff}` = `slope_deg.diff` (1 decimal), `{rough_diff}` = `roughness_m.diff` (1 decimal); each placeholder's `file`, `column`, `subtract` and `decimals` are in the template. The words "colder" and "larger" hold on every pair (the twin is colder and swings more; checked by a test). Number 1 (E17538 with M63528), as in `explain.json`: "... the twin is 195 K colder on average (minimum -232 °C at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m."
+**Per-pair sentence** (`similarity.json` `texts.lunar_base_pair_sentence`, approved by the team on 2026-11-15 08:55 CET; show it on every pair): placeholders `{temp_diff_k}` = `info.temp_k.diff` (0 decimals), `{tmin_moon_c}` = `tmin_k.moon` - 273.15 (0 decimals), `{tmin_earth_c}` = `tmin_k.earth` - 273.15 (1 decimal), `{amp_diff_k}` = `lst_diurnal_amp_k.diff` (0 decimals), `{slope_diff}` = `slope_deg.diff` (1 decimal), `{rough_diff}` = `roughness_m.diff` (1 decimal); each placeholder's `file`, `column`, `subtract` and `decimals` are in the template. Fill it from the stored float32 values (value, minus `subtract`, shown with `decimals` digits: `toFixed(decimals)`; the engine fills `explain.json` with Python's `f"{x:.{d}f}"` from the same float32 values, identical except on an exact binary tie), and show the values beside it from the same columns, so the sentence and the panel agree. Some source values sit on a decimal half (e.g. a lunar minimum of -232.50 °C, a roughness difference of 27.35 m): in 30 of the 450 pairs the last digit shown follows the stored float32 value rather than the CSV's double; both are correct roundings of the same number. The words "colder" and "larger" hold on every pair (the twin is colder and swings more; checked by a test). Number 1 (E17538 with M63528), as in `explain.json`: "... the twin is 195 K colder on average (minimum -232 °C at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m."
 
 ## earth_detail_NN.bin (on demand, one tile per 10 grid rows)
 
@@ -581,9 +581,10 @@ Scores are 0-100; utilities and confidence scores 0-1; distances km.
 | `z.<f>` | sentinel | no value for `f`, or outside the normalised population; the variable drops out of the distance |
 | `similarity`, `final`, `rank` | sentinel | no twin (real-value missions: no lunar analog, reason in `earth_<m>_pairs.bin`) or no similarity variable with a value |
 | `twin` | sentinel | no lunar analog (real-value missions and lunar_base) |
-| `<v>.earth_pct/.moon_pct/.diff_pct`, `info.<v>.*`, `nopair_gap2` | NaN | no twin / no value; not set |
+| `<v>.moon_pct/.diff_pct`, `info.<v>.*`, `nopair_gap2` | NaN | no twin / no value; not set |
+| `<v>.earth`, `<v>.earth_pct` (pairs files) | NaN | the Earth point has no value (set on every passing point, paired or not) |
 | `s.<v>` | sentinel | no twin, or no value for that secondary variable on a side (dropped, weights renormalised) |
-| `<v>.earth/.moon/.diff`, `nopair_gap` | NaN | no twin / no value; paired |
+| `<v>.moon/.diff`, `nopair_gap` | NaN | no twin / no value; paired |
 | `country`, `region`, `label_rule`, `nearest_place` | sentinel | no label |
 | JSON | `null` | missing |
 

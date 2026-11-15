@@ -670,6 +670,7 @@ async function panelData(page) {
       coords: d.querySelector('.panel-head .coords')?.textContent ?? '',
       head: d.querySelector('.panel-head')?.innerText ?? '',
       result: d.querySelector('.result')?.innerText ?? '',
+      engine: d.querySelector('.result .reason')?.dataset.engineReason ?? null,
       rank: d.querySelector('.result')?.dataset.rank ?? '',
       gates: rows('table.gates tbody tr'),
       required: [...d.querySelectorAll('table.required tbody tr')].map((r) => r.innerText),
@@ -719,7 +720,7 @@ async function checkPanel(page, label, store, m, id, twins) {
     if (!/no lunar twin/.test(p.result) || !p.result.includes(f2(o.suitability)) || p.finalSec) bad.push(`result of a point without a twin "${p.result}"`);
   } else if (o.pass) {
     if (Number(p.rank) !== o.rank || !p.result.includes(`Rank ${int(o.rank)} of ${int(m.ranked_count)}`) || !p.result.includes(f2(o.final))) bad.push(`result "${p.result}"`);
-  } else if (!p.result.includes(o.line)) bad.push('elimination line');
+  } else if (p.engine !== o.line || p.result.includes(o.line) || !/Eliminated for this mission/.test(p.result)) bad.push('elimination line (plain words shown, the engine line kept in data-engine-reason)');
   // hard filters: limit, value, pass/fail with the word
   const gates = [...o.common, ...o.gates];
   if (p.gates.length !== gates.length) bad.push(`gate rows ${p.gates.length} vs ${gates.length}`);
