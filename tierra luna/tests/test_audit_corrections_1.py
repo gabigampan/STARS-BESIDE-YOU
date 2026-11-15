@@ -149,13 +149,14 @@ def test_rover_limitation_states_the_ice_cells_with_recomputed_figures(b, ecfg):
     countries = [c["name"] for c in b.json("places.json")["countries"]]
     cc = np.array([countries[i] for i in b.int_column("earth_base.bin", "country")[li[ranked]]])
     r_ice = rank[ranked][ice]
-    text = " ".join(m["known_limitations"])
+    # since 2026-11-15 11:23 CET the text is computed at build (similarity.json
+    # texts.surface_classes_rover, also on the mission card); its figures are recomputed here
+    text = b.json("similarity.json")["texts"]["surface_classes_rover"]["text"]
+    assert text in m["known_limitations"]
     assert "no surface-type gate" in text
-    assert f"{int(ice.sum()):,} of the {len(ranked):,} ranked Rover points" in text
-    assert f"{int((cc[ice] == 'Antarctica').sum()):,} in Antarctica" in text
-    assert f"{int((cc[ice] == 'Greenland').sum()):,} in Greenland" in text
-    assert int((r_ice <= 500).sum()) == 0 and "None of them ranks in the top 500" in text
-    assert f"the best is number {int(r_ice.min())}" in text
+    assert f"{int(ice.sum()):,} of the {len(ranked):,} ranked points are ice-sheet or snow-and-ice cells" in text
+    assert f"the best of them is number {int(r_ice.min()):,}, {int((r_ice <= 50).sum())} are in the top 50" in text
+    assert (cc[ice] == "Antarctica").sum() > 0
 
 
 def _solar_candidates(b):

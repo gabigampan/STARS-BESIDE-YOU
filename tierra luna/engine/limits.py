@@ -210,6 +210,12 @@ def stability_sentence(mid: str, top5_ids: List[int], cfg: Dict[str, Any]) -> Di
     return {"text": text, "status": "audited", "reason": None, "source": e["source"]}
 
 
+def _reasons(codes: List[str], mission_cfg: Dict[str, Any], mid: str) -> str:
+    from engine.gates import reason_texts
+
+    return ", ".join(reason_texts(c, mission_cfg, mid)["text"] for c in codes)
+
+
 # ----------------------------------------------------------------------------- the build step
 def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engine_cfg: EngineConfig,
                  land: np.ndarray) -> Dict[str, Any]:
@@ -263,14 +269,14 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
                     pos.append(mv["ranked_item"].replace("{name}", r["name"]).replace("{pct}", fmt_pct(r["rank_percentile"])))
                 else:
                     pos.append(mv["unranked_item"].replace("{name}", r["name"]).replace(
-                        "{reasons}", ", ".join(c.replace(":", " ").replace("_", " ") for c in r["fail"]) or "not paired"))
+                        "{reasons}", _reasons(r["fail"], mission_cfg, mid) or "not paired"))
             mis = []
             for r in ev["mismatches"]:
                 if not r["verified_coordinates"]:
                     continue
                 mis.append(mv["ranked_item"].replace("{name}", r["name"]).replace("{pct}", fmt_pct(r["rank_percentile"]))
                            if r["rank"] else mv["unranked_item"].replace("{name}", r["name"]).replace(
-                               "{reasons}", ", ".join(c.replace(":", " ").replace("_", " ") for c in r["fail"])))
+                               "{reasons}", _reasons(r["fail"], mission_cfg, mid)))
             unver = [r["name"] for r in ev["positives"] + ev["mismatches"] if not r["verified_coordinates"]]
             texts[f"external_validation_{mid}"] = {
                 "missions": [mid], "show": ev_cfg["show"], "decision": ev_cfg["decision"], "source": mv["source"],
@@ -306,6 +312,20 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
                 vals[f"{cname}_shown_ids"] = ", ".join(f"E{ids[i]} (number {int(rk[i])})" for i in rows5[mid] if classes[cname][i]) or "none"
             texts[f"{key}_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"], "source": t["source"],
                                      "text": fill(t["text"], vals), "figures": vals}
+    # ties at the head of the ranking (the fragility of the five)
+    t = lt.get("ties_at_top")
+    if t:
+        sd = int(engine_cfg.v("export_decimals")["score"])
+        for mid, res in results.items():
+            rk = res.rank
+            if not (rk == 1).any():
+                continue
+            top = float(res.final_published[rk == 1][0])
+            tied = int(np.sum((rk > 0) & (res.final_published == top)))
+            if tied >= int(t["min_tied"]):
+                vals = {"tied_n": fmt_int(tied), "score": f"{top:.{sd}f}"}
+                texts[f"ties_at_top_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"],
+                                               "source": t["source"], "text": fill(t["text"], vals), "figures": vals}
     # (f) the common elevation gate on Earth land below sea level
     t = lt["gate_elevation_land"]
     el = pd.to_numeric(earth[t["elevation_column"]], errors="coerce").to_numpy(dtype=np.float64)

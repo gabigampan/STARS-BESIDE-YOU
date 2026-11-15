@@ -1038,7 +1038,7 @@
               "equals": 210
             }
           ],
-          "why": "ESA CCI land cover class 210 'water bodies' is the commonest class of the cell (open sea along a coast, or lakes); such a cell still passes mask_fraction >= 0.3. Salt flats have no class of their own in ESA CCI (they fall in the bare classes 200-202), so they cannot be counted from these columns."
+          "why": "ESA CCI land cover class 210 'water bodies' is the single commonest class of the cell (sea along a coast, or lakes). Such a cell passes mask_fraction >= 0.3 with at least 30 % land and can even be mostly land when its land is split among several classes. Salt flats have no class of their own in ESA CCI (they fall in the bare classes 200-202), so they cannot be counted from these columns."
         }
       }
     },
@@ -1120,7 +1120,7 @@
         ],
         "decision": "2026-11-15 11:23 CET, point 4 (ice cells in the Rover ranking)",
         "source": "computed at build from the Earth table columns snow_ice_frac, thermal_inertia_class and lc_dominant_cci_code (engine_config limit_facts)",
-        "text": "Ice sheets are not excluded: the funnel has no surface-type gate and the soft criteria have no surface-type term. {ice_n} of the {ranked_n} ranked points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'); the best of them is number {ice_best}, {ice_top} are in the top {top_n} and {ice_shown} among the five shown. {water_n} ranked points are cells whose commonest land cover is water (open sea along a coast, or lakes; ESA CCI class 210); the best is number {water_best}, {water_top} are in the top {top_n} and {water_shown} among the five shown ({water_shown_ids})."
+        "text": "Ice sheets are not excluded: the funnel has no surface-type gate and the soft criteria have no surface-type term. {ice_n} of the {ranked_n} ranked points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'); the best of them is number {ice_best}, {ice_top} are in the top {top_n} and {ice_shown} among the five shown. Water is not excluded either: {water_n} ranked points are cells whose single commonest land-cover class is water (ESA CCI class 210, sea along a coast or lakes); the best is number {water_best}, {water_top} are in the top {top_n} and {water_shown} among the five shown ({water_shown_ids})."
       },
       "gate_elevation_land": {
         "gate": "elevation_m",
@@ -1160,6 +1160,17 @@
         "decision": "2026-11-15 11:23 CET, decision 3 (the Lunar base zone is kept)",
         "source": "computed at build from engine/data/artemis_iii_regions.geojson (engine_config twin_zone_regions)",
         "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions ({zone_cells} cells), so a twin may lie mostly outside the region nearest to it: {edge_n} of the {twins_n} Lunar base twins have less than {in_min_pct} % of their cell inside a region. Each twin says whether it is 'in' or 'at the edge of' NASA's candidate region it touches most (twins.json nasa_region)."
+      },
+      "ties_at_top": {
+        "kind": "ties_at_top",
+        "show": [
+          "top5",
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 11:23 CET, point 4 (the fragility of each top 5)",
+        "source": "computed at build from the published final scores (2 decimals) and the rank rule (ties by Earth cell id)",
+        "text": "{tied_n} points share the published final score of number 1 ({score}). Among tied points the order is by Earth cell id, so the five shown are not better than the other tied points.",
+        "min_tied": 5
       }
     },
     "why": "Decision of 2026-11-15 11:23 CET, point 4 (taken by the delegate on the team lead's behalf): keep and state honestly, in the web's 'Data and limits', the ice cells in the Rover ranking, the common gate elevation >= 1 m, the saturation of the Solar panels similarity (approved_texts.solar_similarity_saturation), the fragility of each top 5 (top5_stability) and the numbers that have no effect; point 5: 'five of the highest-scoring analogs in our model', ordered by final score; decision 3: 'at the edge of' a NASA region. Templates only: every figure is computed at build (engine/limits.py) or taken from the audit file named in 'source'. Exported in similarity.json 'texts' with 'missions' (absent = every mission) and 'show' (mission_card, top5, pair_panel, data_and_limits)."

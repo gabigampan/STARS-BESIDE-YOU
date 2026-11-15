@@ -30,19 +30,14 @@ REAL = "real_1deg"
 
 # The shipped bundle of contract revision 5 (built 2026-11-15, morning, from the same
 # inputs; a copy was kept in the scratchpad as ref-rev5 before the Lunar base change of
-# 08:55 CET): the Rover and Solar panels files and JSON parts must stay exactly as they were.
+# 08:55 CET): the Solar panels files and JSON parts must stay exactly as they were. The Rover
+# entries were removed on 2026-11-15 11:23 CET (decision 1: Rover similarity on slope and
+# roughness only); the new Rover rule is tested in tests/test_decisions_1123.py.
 ROVER_SOLAR_REV5 = {
-    "earth_rover.bin": "ab199f5c62ea709242449bcaca60b43a8c76a296073ba3a83fe41a7c5235c5ce",
-    "earth_rover_pairs.bin": "5f5637b79e710f7ee96022efed85ff15c2564db184cf57b6b1af499c745f9104",
-    "moon_rover.bin": "9abf5276f5182b0084976ad3cb973701d9723f59929327d4ee4ad7f22e17d8ea",
     "earth_solar.bin": "a07219d6bcd5198d47b836893277a4dd7bd8143dcbfbe77f522b41fc3aa0d5fd",
     "earth_solar_pairs.bin": "f0658d8b938ae99e6ad2cab46a58f2d7f4241bc46b707cff95e4edcb58487834",
     "moon_solar.bin": "7d4b328f4ead1e8de974d6f12ff1a090be14bfc76b2441387d42598660cd2516",
     "earth_base.bin without country, region": "78c9f8c97383f12df94ab4185c6a1904f21a08b47403b77f981ce688aae6e9b9",
-    "twins.json/missions/rover": "9080f4c605aebde0805d16366af8055ca4e21d2e196c040dbc2ed24142754ec7",
-    "explain.json/missions/rover": "1f85042ff65bdf298941cbea6fdc98588447f3d11a6c93d7232c676a88a8a492",
-    "missions.json/missions[rover]": "6e50fc8d9237f54eb27d2fa0e35b2c839e4dfd955691371930ec6a53bf64ae48",
-    "lunar_named_sites.json rover": "e5870fb266f43225c7af792e7450e4eaf63aa1991e27f1a0991dd0233bf228b2",
     "twins.json/missions/solar": "5c0a0dc20a2e4ecbf8cd0869f1180bffcefd9043fb8519b7467aeed6a7a57276",
     "explain.json/missions/solar": "9e2d082c993e430b1701f32b55f95c88bceec8af3c325af244dbde226199a21b",
     "missions.json/missions[solar]": "5d2686835e82265906ce77cf27cea6d6f673544b845cdc9125c9151f10fb4c39",
@@ -61,9 +56,8 @@ ROVER_SOLAR_REV5 = {
 KNOWN_LIMITATIONS = {
     "rover": [
         "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
-        "Similarity is computed on real values within stated tolerances (team decision of 2026-11-15, morning; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline) and whose relative elevation is within 1,000 m (twice 500 m), with the highest similarity. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
-        "Temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K).",
-        "The soft criteria have no surface-type term and the funnel has no surface-type gate: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale, and ice sheets are not excluded. 1,445 of the 10,192 ranked Rover points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'): 1,101 in Antarctica and 201 in Greenland. None of them ranks in the top 500; the best is number 722.",  # audit correction 2b (2026-11-15)
+        "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
+        "Relative elevation, temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K).",
     ],
     "solar": [
         "The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability.",  # audit correction 2c (2026-11-15)
@@ -114,7 +108,8 @@ def test_every_tolerance_weight_and_zone_is_configured_with_who_set_it(ecfg):
         m = rv["missions"][mid]
         assert m["zone"]["source"] and m["zone"]["why"] and m["weights_why"]
         keys = [v for v in m["variables"] if v["role"] == "key"]
-        assert sum(v["weight"] for v in keys) == pytest.approx(0.8)            # key variables carry 80 %
+        # key variables carry 80 % (morning decision); Rover 100 % since 2026-11-15 11:23 CET (decision 1)
+        assert sum(v["weight"] for v in keys) == pytest.approx(1.0 if mid == "rover" else 0.8)
         assert sum(v["weight"] for v in m["variables"]) == pytest.approx(1.0)
         for v in m["variables"]:
             assert v["tolerance"] > 0 and v["unit"] and v["tolerance_set_by"] and v["why"]
@@ -122,7 +117,8 @@ def test_every_tolerance_weight_and_zone_is_configured_with_who_set_it(ecfg):
     assert rv["filter_bound_multiplier"] == {"key": 1.0, "secondary": 2.0}
     by = {(mid, v["variable"]): v for mid in ("rover", "solar") for v in rv["missions"][mid]["variables"]}
     assert "illustrative team values" in by[("rover", "slope_deg")]["tolerance_set_by"]
-    assert "delegate" in by[("rover", "elevation_rel_m")]["tolerance_set_by"]
+    assert ("rover", "elevation_rel_m") not in by                              # decision 1 of 11:23 CET
+    assert "11:23 CET" in by[("rover", "slope_deg")]["weight_set_by"]
     assert "delegate" in by[("solar", "irradiance_toa_kwh_m2_day")]["tolerance_set_by"]
     assert "no mission uses them" in json.dumps(rv["reference_tolerances_not_used"])
 
@@ -220,10 +216,12 @@ def test_rover_results_match_the_checked_proposal(real):
     e = real["cells"]["EARTH"]
     p = r.earth_gates.passed
     assert r.rule == "real_value_tolerance"
-    assert int(p.sum()) == 10337 and int((r.twin_id[p] >= 0).sum()) == 10192
+    # decision of 2026-11-15 11:23 CET (slope and roughness 50 % each): every passing point is
+    # paired (before: 10,192 of 10,337 with 401 twins, number 1 E17566 with M59895)
+    assert int(p.sum()) == 10337 and int((r.twin_id[p] >= 0).sum()) == 10337
     top = int(np.flatnonzero(r.rank == 1)[0])
-    assert int(e["id"].iat[top]) == 17566 and int(r.twin_id[top]) == 59895
-    assert len(np.unique(r.twin_id[r.twin_id >= 0])) == 401
+    assert int(e["id"].iat[top]) == 3872 and int(r.twin_id[top]) == 61299
+    assert len(np.unique(r.twin_id[r.twin_id >= 0])) == 1166
 
 
 def test_solar_results_match_the_checked_proposal(real):
@@ -274,9 +272,7 @@ def _rover_solar_digests(files, objs):
     # nearest place) and the text not_used_by_engine.why changed on purpose; the digests leave
     # them out (checked equal on the bundle shipped before the corrections), so every number,
     # pair and twin is still the revision 5 one, byte for byte.
-    out = {f: hashlib.sha256(files[f]).hexdigest() for f in
-           ("earth_rover.bin", "earth_rover_pairs.bin", "moon_rover.bin", "earth_solar.bin", "earth_solar_pairs.bin",
-            "moon_solar.bin")}
+    out = {f: hashlib.sha256(files[f]).hexdigest() for f in ("earth_solar.bin", "earth_solar_pairs.bin", "moon_solar.bin")}
     man0 = objs["manifest.json"]
     eb = next(x for x in man0["files"] if x["name"] == "earth_base.bin")
     hb = hashlib.sha256()
@@ -285,14 +281,19 @@ def _rover_solar_digests(files, objs):
             hb.update(c["name"].encode())
             hb.update(files["earth_base.bin"][c["offset"]:c["offset"] + 4 * c["length"]])
     out["earth_base.bin without country, region"] = hb.hexdigest()
-    for m in ("rover", "solar"):
+    for m in ("solar",):   # Rover changed on purpose at 2026-11-15 11:23 CET (tests/test_decisions_1123.py)
         out[f"twins.json/missions/{m}"] = _digest(objs["twins.json"]["missions"][m])
         out[f"explain.json/missions/{m}"] = _digest([dict({k: v for k, v in it.items() if k != "place"},
                                                           similarity={k: v for k, v in it["similarity"].items() if k != "pair_sentence"})
                                                      for it in objs["explain.json"]["missions"][m]])
         mm = next(x for x in objs["missions.json"]["missions"] if x["id"] == m)
+        # revision 7 (2026-11-15 11:23 CET) adds top5, external_validation and the similarity
+        # info_columns / info_in_explain_only keys; the digest is of everything else
+        rev7 = ("known_limitations", "top5", "external_validation")
+        mm = {k: (v if k != "similarity" else {a: b for a, b in v.items() if a not in ("info_columns", "info_in_explain_only")})
+              for k, v in mm.items()}
         out[f"missions.json/missions[{m}]"] = _digest({k: (v if k != "not_used_by_engine" else {a: b for a, b in v.items() if a != "why"})
-                                                       for k, v in mm.items() if k != "known_limitations"})
+                                                       for k, v in mm.items() if k not in rev7})
         out[f"lunar_named_sites.json {m}"] = _digest([[s["cell_id"], (s["missions"] or {}).get(m)]
                                                       for s in objs["lunar_named_sites.json"]["sites"]])
     man = objs["manifest.json"]
@@ -309,21 +310,26 @@ def _rover_solar_digests(files, objs):
 
 
 def test_rover_and_solar_are_byte_identical_to_revision_5(real):
-    """Decision of 2026-11-15 08:55 CET: Rover and Solar panels do not change. Their files,
+    """Decision of 2026-11-15 08:55 CET: Rover and Solar panels do not change (Rover changed
+    on purpose at 11:23 CET and is left out since; tests/test_decisions_1123.py). Their files,
     their parts of the shared JSON files and every mission's funnel columns are those of
     the revision 5 bundle, byte for byte."""
     assert _rover_solar_digests(real["files"], real["objects"]) == ROVER_SOLAR_REV5
     assert real["results"]["lunar_base"].rule == "percentile_and_real_tolerance"
     ms = {m["id"]: m for m in real["objects"]["missions.json"]["missions"]}
+    lim = real["objects"]["similarity.json"]["texts"]
     for m, texts in KNOWN_LIMITATIONS.items():
-        assert ms[m]["known_limitations"] == texts, m
+        # revision 7 (2026-11-15 11:23 CET): the honest-limits texts shown on the mission card follow
+        card = [t["text"] for t in lim.values() if "mission_card" in t.get("show", []) and "decision" in t
+                and str(t["decision"]).startswith("2026-11-15 11:23") and m in (t.get("missions") or [m])]
+        assert ms[m]["known_limitations"] == texts + card, m
 
 
 # ----------------------------------------------------------------------------- bundle (contract revision 5)
 def test_bundle_carries_the_real_value_pairs(real, real_dir):
     b = load_bundle(real_dir)
     man = b.manifest
-    assert man["contract_revision"] == 6 and man["similarity_rule"] == "per_mission"
+    assert man["contract_revision"] == 7 and man["similarity_rule"] == "per_mission"
     assert man["similarity_rules"] == {"rover": "real_value_tolerance", "solar": "real_value_tolerance",
                                        "lunar_base": "percentile_and_real_tolerance"}
     ms = {m["id"]: m for m in b.json("missions.json")["missions"]}
@@ -485,7 +491,7 @@ def test_slider_on_similarity_weights_recomputes_exactly(real, real_dir):
     same formula applied to the engine's published scores, and the published weights
     reproduce every stored value (validate_bundle_v2)."""
     b = load_bundle(real_dir)
-    new = {"rover": {"slope_deg": 0.2, "roughness_m": 0.2, "elevation_rel_m": 0.6}}
+    new = {"rover": {"slope_deg": 0.2, "roughness_m": 0.8}}
     rep = validate_bundle_v2(real_dir, sim_weights=new)
     r = real["results"]["rover"]
     rc = r.extra["real"]
