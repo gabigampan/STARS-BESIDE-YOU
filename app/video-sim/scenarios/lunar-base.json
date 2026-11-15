@@ -9,112 +9,142 @@
   "card_s": 6,
   "site": {
     "body": "MOON",
-    "cell_id": "M62859",
-    "lat_deg": -84.5,
-    "lon_deg": 39.5,
-    "label": "84.5° S 39.5° E",
-    "place": "Mons Mouton plateau",
+    "cell_id": "M63528",
+    "lat_deg": -86.5,
+    "lon_deg": -11.5,
+    "label": "86.5° S 11.5° W",
+    "place": "25.1 km from Mons Malapert",
     "place_ref": {
-      "feature": "Mons Mouton",
-      "iau_lat": -84.6,
-      "iau_lon_e": 31.0,
-      "diameter_km": 130.0,
-      "source": "IAU/USGS Gazetteer of Planetary Nomenclature, https://planetarynames.wr.usgs.gov/Feature/16070; 'Mons Mouton Plateau' is one of nine candidate Artemis III landing regions, NASA RELEASE24-136 (2024-10-28), https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/"
+      "feature": "Mons Malapert",
+      "iau_lat": -85.98,
+      "iau_lon_e": -1.67,
+      "diameter_km": 67.0,
+      "distance_km": 25.1,
+      "source": "Nearest primary IAU feature of the cell and its distance: bundle app/public/data/v2/explain.json (lunar_base rank 1, similarity.twin.feature / feature_km) and moon_base.bin feature / feature_km; feature data from lunar_named_sites.json (IAU/USGS Gazetteer of Planetary Nomenclature, http://planetarynames.wr.usgs.gov/Feature/16338)."
+    },
+    "zone": {
+      "name": "NASA's nine candidate landing regions near the lunar south pole",
+      "region_code": "A",
+      "nasa_region": "Haworth",
+      "source": "mission_zones.json region A (280 cells; moon_base.bin region column); the cell's 1-degree square intersects the Haworth footprint of tierra luna/engine/data/artemis_iii_regions.geojson (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK; NASA release 24-136, 2024-10-28) at its edge"
     }
   },
   "earth_site": {
     "body": "EARTH",
-    "cell_id": "E19345",
-    "lat_deg": 36.5,
-    "lon_deg": 85.5,
-    "name": "Kunlun Mountains, Xinjiang, China"
+    "cell_id": "E17538",
+    "lat_deg": 41.5,
+    "lon_deg": 78.5,
+    "name": "Xinjiang Uygur Zizhiqu, China",
+    "nearest_place": "Aheqi",
+    "nearest_place_km": 62.3,
+    "source": "explain.json lunar_base rank 1 'place' (Natural Earth admin-1 region; nearest GeoNames populated place)"
   },
   "table_values": {
     "moon": {
       "elevation_m": {
-        "value": 6055.9,
+        "value": 432.3,
         "level": "MEASURED",
         "unit": "m above the 1737.4 km sphere"
       },
-      "slope_deg": {
-        "value": 9.608,
+      "slope_iso_deg": {
+        "value": 7.179,
         "level": "DERIVED",
-        "unit": "deg (3.79 km baseline)"
+        "unit": "deg (LDEM_16 baseline; the mission's slope_deg)"
+      },
+      "roughness_m": {
+        "value": 238.49,
+        "level": "DERIVED",
+        "unit": "m (deviogram, ~1.9 km lag)"
       },
       "temp_k": {
-        "value": 152.45,
+        "value": 77.49,
         "level": "DERIVED",
         "unit": "K, mean surface brightness temperature"
       },
       "tmax_k": {
-        "value": 255.56,
+        "value": 194.51,
         "level": "MEASURED",
         "unit": "K"
       },
       "tmin_k": {
-        "value": 68.5,
+        "value": 41.23,
         "level": "MEASURED",
         "unit": "K"
       },
       "lst_diurnal_amp_k": {
-        "value": 187.06,
+        "value": 153.27,
         "level": "DERIVED",
         "unit": "K"
       },
       "tmin_c": {
-        "value": -204.65,
+        "value": -231.92,
         "level": "DERIVED",
         "unit": "degC"
       },
       "sun_elev_max_deg": {
-        "value": 7.04,
+        "value": 5.04,
         "level": "DERIVED",
         "unit": "deg"
       },
       "illum_frac": {
-        "value": 0.4183,
+        "value": 0.0773,
         "level": "DERIVED",
         "unit": "fraction of time lit (LOLA topography)"
+      },
+      "irradiance_kwh_m2_day": {
+        "value": 0.103,
+        "level": "DERIVED",
+        "unit": "kWh/m2/day"
       }
     },
     "earth": {
       "elevation_m": {
-        "value": 4926,
+        "value": 3502.9,
         "level": "MEASURED",
         "unit": "m above the EGM2008 geoid"
       },
-      "slope_deg": {
-        "value": 2.003,
+      "slope_iso_deg": {
+        "value": 6.652,
         "level": "DERIVED",
-        "unit": "deg (3.71 km baseline)"
+        "unit": "deg (the mission's slope_deg)"
+      },
+      "roughness_m": {
+        "value": 238.81,
+        "level": "DERIVED",
+        "unit": "m (deviogram, ~1.9 km lag)"
       },
       "temp_k": {
-        "value": 271.65,
+        "value": 272.06,
         "level": "DERIVED",
         "unit": "K, mean land surface temperature (MODIS)"
       },
       "lst_diurnal_amp_k": {
-        "value": 27.12,
+        "value": 15.6,
         "level": "DERIVED",
         "unit": "K (MODIS day minus night, annual mean)"
       },
       "tmin_c": {
-        "value": -28.68,
+        "value": -24.54,
         "level": "MODELLED",
         "unit": "degC, air (WorldClim)"
       },
+      "irradiance_kwh_m2_day": {
+        "value": 4.093,
+        "level": "MODELLED",
+        "unit": "kWh/m2/day (WorldClim)"
+      },
       "permafrost_class": {
-        "value": "continuo",
+        "value": "discontinuo",
         "level": "MODELLED",
         "unit": "class"
       },
       "permafrost_area_frac": {
-        "value": 0.9453,
+        "value": 0.5439,
         "level": "MODELLED",
         "unit": "fraction"
       },
       "sun_elev_max_deg": {
-        "value": 76.939,
+        "value": 71.939,
         "level": "DERIVED",
         "unit": "deg"
       }
@@ -172,16 +202,16 @@
     "inset_tint": "small inset only, blue (Tmin) to warm grey (Tmax)"
   },
   "earth_visibility": {
-    "source": "JPL Horizons API (DE441), observer at the site (coord@301, 39.5 E, -84.5, 0 km), target 399, QUANTITIES=4, airless, 2026-01-01..2044-12-31 every 12 h",
-    "elev_min_deg": -3.33,
-    "elev_max_deg": 11.25,
-    "elev_mean_deg": 3.95,
-    "frac_above_flat_horizon": 0.702,
-    "az_min_deg": 311.96,
-    "az_max_deg": 328.68,
-    "az_mean_deg": 320.37,
+    "source": "JPL Horizons API (DE441), observer at the site (coord@301, SITE_COORD 348.5 E, -86.5, 0 km), target 399, QUANTITIES=4, APPARENT=AIRLESS, 2026-01-01..2044-12-31 every 12 h (13,879 rows), queried 2026-11-15",
+    "elev_min_deg": -3.79,
+    "elev_max_deg": 10.09,
+    "elev_mean_deg": 3.14,
+    "frac_above_flat_horizon": 0.655,
+    "az_min_deg": 3.45,
+    "az_max_deg": 19.65,
+    "az_mean_deg": 11.52,
     "draw": "auto",
-    "decision": "Drawn at its 2026-2044 mean position (az 320.37, elev 3.95 deg) only if that is above the real terrain horizon in that direction; its monthly libration wander (az 312-329, elev -3.3..11.3 deg) is not animated."
+    "decision": "Drawn at its 2026-2044 mean position (az 11.52, elev 3.14 deg) only if that is above the real terrain horizon in that direction; its monthly libration wander (az 3.5-19.7, elev -3.8..10.1 deg) is not animated."
   },
   "habitat": {
     "assumption": "Illustrative engineering shapes, not a real design: rigid cylindrical module 4.0 m diameter x 8.0 m long on its side; inflatable section 6.0 m diameter x 5.0 m long attached at one end; regolith berm 1.5 m high, ring of 11 m inner radius. Deployment order and timing are illustrative.",
