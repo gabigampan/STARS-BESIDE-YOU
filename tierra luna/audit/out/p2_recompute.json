@@ -1,0 +1,775 @@
+{
+ "inputs": {
+  "earth_csv": "tierra luna/output_real/earth_real_1deg.csv",
+  "moon_csv": "tierra luna/output_real/moon_real_1deg.csv",
+  "bundle": "app/public/data/v2",
+  "manifest_build_time": "inputs-sha256:e0051cc11b099887"
+ },
+ "missions": {
+  "rover": {
+   "passing_recomputed": 10337,
+   "passing_bundle": 10337,
+   "passing_same_set": true,
+   "zone_cells_recomputed": 5400,
+   "zone_cells_bundle_regions": 5400,
+   "zone_same_cells": true,
+   "paired_recomputed": 10192,
+   "paired_bundle": 10192,
+   "twin": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "twin_differences": [],
+   "twin_in_zone_bundle": true,
+   "rows_with_exact_tie_at_best": 0,
+   "rows_where_published_scores_prefer_other_cell": 0,
+   "best_minus_second_full_precision": {
+    "lt_1e-6": 0,
+    "lt_0.005": 22,
+    "lt_0.01": 40,
+    "paired": 9021,
+    "median": 1.593374531429177
+   },
+   "filter_on_bundle_pairs": {
+    "pairs": 10192,
+    "key_violations": 0,
+    "secondary_violations": 0,
+    "max_ratio_to_bound": {
+     "slope_deg": 0.9855,
+     "roughness_m": 0.9990000000000001,
+     "elevation_rel_m": 0.999986196782546
+    },
+    "secondary_missing_in_pairs": {
+     "elevation_rel_m": 0
+    }
+   },
+   "s.slope_deg": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.roughness_m": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.elevation_rel_m": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "similarity_2dp": {
+    "n": 10337,
+    "equal": 10334,
+    "different": 3,
+    "max_abs_diff": 0.010000000000005116,
+    "first_different_index": [
+     2836,
+     4129,
+     5717
+    ]
+   },
+   "suitability_2dp": {
+    "n": 10337,
+    "equal": 10325,
+    "different": 12,
+    "max_abs_diff": 0.010000000000005116,
+    "first_different_index": [
+     768,
+     1301,
+     1530,
+     1655,
+     2800,
+     5274,
+     5950,
+     5969,
+     6355,
+     7348
+    ]
+   },
+   "final_2dp": {
+    "n": 10337,
+    "equal": 10336,
+    "different": 1,
+    "max_abs_diff": 0.009999999999990905,
+    "first_different_index": [
+     10005
+    ]
+   },
+   "rank": {
+    "n": 10337,
+    "equal": 10327,
+    "different": 10,
+    "max_abs_diff": 9.0,
+    "first_different_index": [
+     2241,
+     2840,
+     2933,
+     3075,
+     3489,
+     3763,
+     6958,
+     7266,
+     8781,
+     10005
+    ]
+   },
+   "pairs.slope_deg.earth": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.moon": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.diff": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.earth": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.moon": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.diff": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.elevation_rel_m.earth": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.elevation_rel_m.moon": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.elevation_rel_m.diff": {
+    "n": 10337,
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "elevation_body_means": {
+    "EARTH": 695.9244011890817,
+    "MOON": -248.3894020283722
+   }
+  },
+  "solar": {
+   "passing_recomputed": 18777,
+   "passing_bundle": 18777,
+   "passing_same_set": true,
+   "zone_cells_recomputed": 6686,
+   "zone_cells_bundle_regions": 6686,
+   "zone_same_cells": true,
+   "paired_recomputed": 6360,
+   "paired_bundle": 6360,
+   "twin": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "twin_differences": [],
+   "twin_in_zone_bundle": true,
+   "rows_with_exact_tie_at_best": 3,
+   "rows_where_published_scores_prefer_other_cell": 1,
+   "best_minus_second_full_precision": {
+    "lt_1e-6": 7,
+    "lt_0.005": 3345,
+    "lt_0.01": 3952,
+    "paired": 6360,
+    "median": 0.004245048035642185
+   },
+   "filter_on_bundle_pairs": {
+    "pairs": 6360,
+    "key_violations": 0,
+    "secondary_violations": 0,
+    "max_ratio_to_bound": {
+     "irradiance_toa_kwh_m2_day": 0.9492928892274015,
+     "slope_deg": 0.48524999999999974,
+     "roughness_m": 0.9689999999999998
+    },
+    "secondary_missing_in_pairs": {
+     "slope_deg": 0,
+     "roughness_m": 0
+    }
+   },
+   "s.irradiance_toa_kwh_m2_day": {
+    "n": 18777,
+    "equal": 18533,
+    "different": 244,
+    "max_abs_diff": 1.0000000000287557e-06,
+    "first_different_index": [
+     6495,
+     6540,
+     6541,
+     6542,
+     6543,
+     6544,
+     6545,
+     6546,
+     6547,
+     6548
+    ]
+   },
+   "s.slope_deg": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.roughness_m": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "similarity_2dp": {
+    "n": 18777,
+    "equal": 18768,
+    "different": 9,
+    "max_abs_diff": 0.010000000000005116,
+    "first_different_index": [
+     6578,
+     6605,
+     6609,
+     6645,
+     7978,
+     9178,
+     9200,
+     12229,
+     12260
+    ]
+   },
+   "suitability_2dp": {
+    "n": 18777,
+    "equal": 18773,
+    "different": 4,
+    "max_abs_diff": 0.010000000000005116,
+    "first_different_index": [
+     3226,
+     5455,
+     8654,
+     9272
+    ]
+   },
+   "final_2dp": {
+    "n": 18777,
+    "equal": 18776,
+    "different": 1,
+    "max_abs_diff": 0.010000000000005116,
+    "first_different_index": [
+     6588
+    ]
+   },
+   "rank": {
+    "n": 18777,
+    "equal": 18771,
+    "different": 6,
+    "max_abs_diff": 5.0,
+    "first_different_index": [
+     6588,
+     6612,
+     6768,
+     9747,
+     11223,
+     12242
+    ]
+   },
+   "pairs.irradiance_toa_kwh_m2_day.earth": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 9.5367431640625e-07,
+    "first_different_index": []
+   },
+   "pairs.irradiance_toa_kwh_m2_day.moon": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.irradiance_toa_kwh_m2_day.diff": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 1.0253861546516418e-06,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.earth": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.moon": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.diff": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.earth": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.moon": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.diff": {
+    "n": 18777,
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "toa_formula_vs_bundle_rows": {
+    "max_abs_diff_kwh": 9.399600511272865e-07,
+    "equator_rows": [
+     9.973927609214712,
+     9.97392760921471
+    ],
+    "bundle_equator_rows": [
+     9.973928451538086,
+     9.973928451538086
+    ],
+    "lat_0.5_29.5_44.5_59.5": [
+     9.973927609214712,
+     8.803790668739243,
+     7.419704279675027,
+     5.728676055672562
+    ]
+   },
+   "elevation_body_means": {
+    "EARTH": 695.9244011890817,
+    "MOON": -248.3894020283722
+   }
+  },
+  "lunar_base": {
+   "passing_recomputed": 2419,
+   "passing_bundle": 2419,
+   "passing_same_set": true,
+   "zone_cells_recomputed": 280,
+   "zone_cells_bundle_regions": 280,
+   "zone_same_cells": true,
+   "zone_cells_with_positive_area_overlap": 280,
+   "zone_cells_touching_only": [],
+   "paired_recomputed": 450,
+   "paired_bundle": 450,
+   "twin": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "twin_differences": [],
+   "twin_in_zone_bundle": true,
+   "rows_with_exact_tie_at_best": 0,
+   "rows_where_published_scores_prefer_other_cell": 0,
+   "best_minus_second_full_precision": {
+    "lt_1e-6": 0,
+    "lt_0.005": 0,
+    "lt_0.01": 0,
+    "paired": 360,
+    "median": 4.040093750812282
+   },
+   "filter_on_bundle_pairs": {
+    "pairs": 450,
+    "key_violations": 0,
+    "secondary_violations": 0,
+    "max_ratio_to_bound": {
+     "tmin_k": 0.9786290084450485,
+     "lst_diurnal_amp_k": 0.9952976436544028,
+     "slope_deg": 0.97925,
+     "roughness_m": 0.9968333333333333
+    },
+    "secondary_missing_in_pairs": {
+     "slope_deg": 0,
+     "roughness_m": 0
+    }
+   },
+   "s.tmin_k": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.lst_diurnal_amp_k": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.slope_deg": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "s.roughness_m": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "similarity_2dp": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "suitability_2dp": {
+    "n": 2419,
+    "equal": 2414,
+    "different": 5,
+    "max_abs_diff": 0.010000000000001563,
+    "first_different_index": [
+     436,
+     888,
+     1354,
+     1556,
+     1673
+    ]
+   },
+   "final_2dp": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "rank": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.earth": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.moon": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.diff": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.earth_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 3.7973505584432132e-06,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.moon_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 3.2697405174531013e-06,
+    "first_different_index": []
+   },
+   "pairs.tmin_k.diff_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 4.7010686188286854e-07,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.earth": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.moon": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.diff": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.earth_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 3.813120287077254e-06,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.moon_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 3.2697405174531013e-06,
+    "first_different_index": []
+   },
+   "pairs.lst_diurnal_amp_k.diff_pct": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 4.7151487336805076e-07,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.earth": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.moon": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.slope_deg.diff": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.earth": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.moon": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "pairs.roughness_m.diff": {
+    "n": 2419,
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
+   },
+   "populations_recomputed": {
+    "tmin_k": {
+     "EARTH": 2419,
+     "MOON": 280
+    },
+    "lst_diurnal_amp_k": {
+     "EARTH": 2419,
+     "MOON": 280
+    }
+   },
+   "moon_tmin_pct_from_tmin_c_vs_tmin_k_column": {
+    "max_abs_diff_points": 0.0,
+    "cells_different": 0,
+    "ties_tmin_c": 15,
+    "ties_tmin_k_column": 15
+   },
+   "earth_ties_in_population": {
+    "tmin_k": 800,
+    "lst_diurnal_amp_k": 1435
+   },
+   "moon_ties_in_zone": {
+    "tmin_k": 15,
+    "lst_diurnal_amp_k": 7
+   },
+   "elevation_body_means": {
+    "EARTH": 695.9244011890817,
+    "MOON": -248.3894020283722
+   }
+  }
+ },
+ "weights": {
+  "rover": {
+   "weights": [
+    0.4,
+    0.4,
+    0.2
+   ],
+   "sum": 1.0,
+   "key_share": 0.8
+  },
+  "solar": {
+   "weights": [
+    0.8,
+    0.1,
+    0.1
+   ],
+   "sum": 1.0,
+   "key_share": 0.8
+  },
+  "lunar_base": {
+   "weights": [
+    0.4,
+    0.4,
+    0.1,
+    0.1
+   ],
+   "sum": 1.0,
+   "key_share": 0.8
+  }
+ },
+ "bundle_weights": {
+  "rover": [
+   [
+    "slope_deg",
+    0.4,
+    2.0,
+    2.0,
+    "real"
+   ],
+   [
+    "roughness_m",
+    0.4,
+    30.0,
+    30.0,
+    "real"
+   ],
+   [
+    "elevation_rel_m",
+    0.2,
+    500.0,
+    1000.0,
+    "real"
+   ]
+  ],
+  "solar": [
+   [
+    "irradiance_toa_kwh_m2_day",
+    0.8,
+    0.6,
+    0.6,
+    "real"
+   ],
+   [
+    "slope_deg",
+    0.1,
+    2.0,
+    4.0,
+    "real"
+   ],
+   [
+    "roughness_m",
+    0.1,
+    30.0,
+    60.0,
+    "real"
+   ]
+  ],
+  "lunar_base": [
+   [
+    "tmin_k",
+    0.4,
+    10.0,
+    10.0,
+    "percentile_within_population"
+   ],
+   [
+    "lst_diurnal_amp_k",
+    0.4,
+    10.0,
+    10.0,
+    "percentile_within_population"
+   ],
+   [
+    "slope_deg",
+    0.1,
+    2.0,
+    4.0,
+    "real"
+   ],
+   [
+    "roughness_m",
+    0.1,
+    30.0,
+    60.0,
+    "real"
+   ]
+  ]
+ },
+ "alpha_bundle": 0.5
+}
