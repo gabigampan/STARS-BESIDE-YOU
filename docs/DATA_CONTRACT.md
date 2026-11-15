@@ -41,10 +41,10 @@ Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
 | file | format | loaded | rows | content | bytes |
 |---|---|---|---|---|---|
 | `manifest.json` | JSON | start | - | index of every file and binary column, grid, encoding, counts, detail tiles, credits | 158,884 |
-| `missions.json` | JSON | start | - | offered missions, funnel steps, gates, weights, reason codes, counts, components, alpha, notes | 37,292 |
-| `similarity.json` | JSON | start | - | the active similarity rule, formula, variables and weights, per-body statistics, variation findings, target | 9,790 |
+| `missions.json` | JSON | start | - | offered missions, funnel steps, gates, weights, reason codes, counts, components, alpha, notes | 37,337 |
+| `similarity.json` | JSON | start | - | the active similarity rule, formula, variables and weights, per-body statistics, variation findings, target | 9,798 |
 | `variables.json` | JSON | start | - | per variable and body: real column, level, source, licence, baseline, caveat, comparability; lunar information columns | 64,922 |
-| `places.json` | JSON | start | - | Earth country and region tables | 34,993 |
+| `places.json` | JSON | start | - | Earth country and region tables | 34,824 |
 | `earth_base.bin` | bin | start | Earth land cells (25,497) | id, coordinates, country, region, values | 1,431,432 |
 | `earth_rover.bin` | bin | start (default mission) | land / passing | fail bits; suitability, similarity, final, rank, confidence | 391,424 |
 | `earth_solar.bin`, `earth_lunar_base.bin` | bin | on demand | land / passing | same layout | 627,744 / 169,720 |
@@ -59,7 +59,7 @@ Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
 | `lunar_named_sites.json` | JSON | on demand | - | named lunar sites, their cell and per-mission outcome | 13,951 |
 | `validity.json` | JSON | on demand | - | schema validation report of the input tables | 251 |
 
-- **First view** (`manifest.load.first_view` plus the manifest): 2,128,737 bytes, under the 2,500,000-byte target. **Total**: 9,392,229 bytes, under 14,000,000. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. The unshipped zone_twin preview (with `twins.json`, 831,574 bytes) totals 11,135,032 bytes and its first view 2,172,955.
+- **First view** (`manifest.load.first_view` plus the manifest): 2,128,621 bytes, under the 2,500,000-byte target. **Total**: 9,392,187 bytes, under 14,000,000. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. The unshipped zone_twin preview (with `twins.json`, 831,574 bytes) totals 11,135,488 bytes and its first view 2,173,337.
 - **Showing the funnel of one land cell** needs the first view (values, gates, reason tables, scores of the default mission), the mission file of each mission shown (fail bits and scores; 0.17-0.63 MB) and **one** detail tile (at most 332,160 bytes): never the whole set of tiles.
 - Earth files hold only **land cells**: cells with any land (`mask_fraction > 0`, datasets.json `earth_land_cells`). Pure-ocean cells are absent; they fail every mission on the land gates.
 
@@ -86,7 +86,7 @@ Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
            "columns":[{"name":"fail_bits","type":"int32","rows":"land","length":25497,"offset":0,"missing":-2147483648,"scale":null,"description":"..."},
                       {"name":"suitability","type":"int32","rows":"passing","length":10337,"offset":...,"missing":-2147483648,
                        "scale":0.01,"divisor":100,"decode":"value = q / divisor"}, ...]}, ...],
- "sizes":{"first_view_bytes_without_manifest":1969853,"total_bytes_without_manifest":9233345,"detail_tile_max_bytes":332160,
+ "sizes":{"first_view_bytes_without_manifest":1969737,"total_bytes_without_manifest":9233303,"detail_tile_max_bytes":332160,
           "budget":{"first_view_max":2500000,"total_max":14000000}},
  "credits":["...place-name credits...","...one entry per data product used, verbatim from the provenance files..."]}
 ```
@@ -175,7 +175,7 @@ function positionInTile(ids: Int32Array, id: number): number {   // binary searc
 
 ## The funnel (team lead decision 2)
 
-Identical for the three missions; `missions.json` `funnel` gives the text of each step.
+Identical for the three missions; `missions.json` `funnel` gives the text of each step, built from the configuration (common-gate limits from `mission_scoring.json`, their bodies from `engine_config.json` `gate_body_applicability`, the decay from `repo_similarity`).
 
 | step | name | where in the bundle |
 |---|---|---|
@@ -263,7 +263,7 @@ Lunar z-scores are not stored per cell: `z = clip((value - median) / scale, -4, 
              "columns":{...},"levels":{"EARTH":"MODELLED","MOON":"DERIVED"},"weight":0.35,"bad":2.5,"good":6.0,"map":null,
              "default":null,"why":"energia disponible","also_in_similarity":false}, ...],
    "reason_codes":[{"bit":2,"code":"irradiance_kwh_m2_day:below_min","variable":"irradiance_kwh_m2_day","kind":"below_min",
-                    "label":"below minimum: irradiance_kwh_m2_day","step":3,
+                    "label":"below minimum: Solar irradiance","step":3,
                     "text":"irradiance_kwh_m2_day outside [2.5, inf]","team_text":"irradiance_kwh_m2_day fuera de [2.5, inf]"}, ...],
    "pass_counts":{"EARTH":18777,"EARTH_LAND_CELLS":25497,"MOON":52400,"MOON_CELLS":64800},
    "ranked_count":18777,"passing_without_similarity":0,
@@ -282,7 +282,7 @@ Lunar z-scores are not stored per cell: `z = clip((value - median) / scale, -4, 
 ```
 
 - **`threshold_status`**: `provisional` (rover: its JSON block says so; `provisional_note` is the block's text) or `team_design_values` (solar and lunar_base: the JSON note says the solar and thermal thresholds have no external source). Show it next to every number of the mission.
-- **`reason_codes`**: the bit table of `fail_bits` (both bodies). `kind` is `missing`, `below_min`, `above_max`, `not_allowed` or `excluded`; `step` is the funnel step; `text` the English line; `team_text` mission_scoring.py's own reason text (the engine checks, on every cell, that the join of the `team_text` of a cell's codes equals the reason string mission_scoring.apply_gates gives). At most 31 codes per mission.
+- **`reason_codes`**: the bit table of `fail_bits` (both bodies). `label` uses the variable's display label (`weighted_variables[].label`, `variables.json` `label`), so mission variable names such as `slope_300m_deg` never reach a label; `variable` and `text` keep the mission variable name, as the team lead's reason format requires. `kind` is `missing`, `below_min`, `above_max`, `not_allowed` or `excluded`; `step` is the funnel step; `text` the English line; `team_text` mission_scoring.py's own reason text (the engine checks, on every cell, that the join of the `team_text` of a cell's codes equals the reason string mission_scoring.apply_gates gives). At most 31 codes per mission.
 - **`gates[].applies_to`**: the land gate `elevation_m` applies to EARTH only; `mask_fraction` to both bodies (it is 1 on the Moon by definition).
 - **`weighted_variables[].also_in_similarity`**: true when the same variable is also one of the repository similarity variables (e.g. solar `slope_deg`, `roughness_m`).
 - **`similarity`**: the rule; with `zone_twin` also `zone` (`name`, `kind`, `used`, `reason`, `cells`, `regions`), `distinct_twins`, `earth_cells_with_twin`, `largest_share` (`twin_id`, `earth_cells`, `share`).
@@ -319,6 +319,7 @@ Lunar z-scores are not stored per cell: `z = clip((value - median) / scale, -4, 
 With `zone_twin`, `target` is `{"kind":"zone_twin","tie_rule":"lowest_lunar_id","lunar_cells_filtered":false,"zones":{"rover":{...},"solar":{...},"lunar_base":{...}}}` and `twins`/`no_twin_reason` are absent.
 
 - **Meaning.** Each body is normalised on its own, so a high similarity means the same **relative** position on each body, not equal absolute values. Show both: the Earth cell's z (tile `z.<v>`) and value (`earth_base.bin` `v.<columns.EARTH>`), and the lunar side's z and value (`target.profile`, or the twin's in `twins.json`).
+- **`columns`**: the real column each similarity variable is read from, after `column_overrides` (e.g. `slope_deg` is read from `slope_iso_deg`); it is always a stored `v.<column>` of `earth_base.bin` / `moon_base.bin` (`test_similarity_columns_are_stored_columns`).
 - **`status`**: `active` (in the distance, `norm_weight` = weight / sum of active weights), `excluded` (a dataset decision; reason given), `inactive` (no values on a body: the repository's own rule drops it).
 - **`variation`** per body: `ok`, `near_zero` (at least half the cells share one value), `zero` (every value equal: the repository would give every cell z = 0 and still count the variable), `no_data`.
 - **Not part of the similarity**: the variables in `not_part_of_similarity` are shown for both points with the mark "not part of the similarity": Earth from `earth_base.bin`, the Moon from `target.info_not_in_similarity` (whole-Moon mean or commonest class) or from the twin (`twins.json` `not_part_of_similarity`).

@@ -53,7 +53,7 @@ def load_region_cells(path: str, flag: str, moon: pd.DataFrame, cell_deg: float)
         b = box(lon[i] - h, lat[i] - h, lon[i] + h, lat[i] + h)
         if any(geoms[k].intersects(b) for k in tree.query(b)):
             mask[i] = True
-    return mask, f"verified outlines read from {path}", names
+    return mask, f"verified region footprints read from {path} (union of each region's 1 km USGS grid squares: an upper bound of the region)", names
 
 
 def resolve_zones(moon: pd.DataFrame, engine_cfg: EngineConfig, missions: List[str]) -> Dict[str, Dict]:

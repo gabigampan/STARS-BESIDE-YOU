@@ -196,15 +196,19 @@ def missing_summary(g: GateResult, suffix: str) -> Dict[str, Any]:
             "by_variable": dict(sorted(by_var.items(), key=lambda kv: (-kv[1], kv[0])))}
 
 
-def reason_entries(codes: List[str], engine_cfg: EngineConfig) -> List[Dict[str, Any]]:
-    """[{bit, code, variable, kind, label}] for a mission's reason codes."""
+def reason_entries(codes: List[str], engine_cfg: EngineConfig,
+                   labels: Optional[Dict[str, str]] = None) -> List[Dict[str, Any]]:
+    """[{bit, code, variable, kind, label}] for a mission's reason codes. ``label`` uses
+    the variable's display label when ``labels`` has one (so a mission variable name such
+    as 'slope_300m_deg' never reaches a label); the variable name stays in ``variable``."""
     md = engine_cfg.v("missing_data_reason")
     text = {"below_min": "below minimum", "above_max": "above maximum", "not_allowed": "class not allowed",
             "excluded": "class excluded", md["code_suffix"]: md["label"]}
     out = []
     for i, c in enumerate(codes):
         var, kind = c.rsplit(":", 1)
-        out.append({"bit": i, "code": c, "variable": var, "kind": kind, "label": f"{text.get(kind, kind)}: {var}"})
+        shown = (labels or {}).get(var) or var
+        out.append({"bit": i, "code": c, "variable": var, "kind": kind, "label": f"{text.get(kind, kind)}: {shown}"})
     return out
 
 
@@ -261,20 +265,39 @@ def build_variables_v2(ds: Dataset, mission_cfg: Dict, missions: List[str], stor
             "variables": out}
 
 
-FUNNEL_STEPS = [
-    {"step": 1, "name": "common gates",
-     "text": "Common hard filters of every mission: the land mask elevation_m >= 1 (Earth only) and mask_fraction >= 0.3 (both bodies). Failing one eliminates the cell for the mission."},
-    {"step": 2, "name": "required variables",
-     "text": "Every variable in the mission's require_present list must have a value; a missing one eliminates the cell with the reason '<variable> no data'."},
-    {"step": 3, "name": "mission hard filters",
-     "text": "The mission's own gates; failing one eliminates the cell for that mission (no score, no rank), with the exact reason, e.g. 'irradiance_kwh_m2_day outside [2.5, inf]'. An eliminated cell may still pass another mission."},
-    {"step": 4, "name": "suitability",
-     "text": "Survivors only: suitability = 100 * sum(w * u) / sum(w over weighted variables with a value); utility u runs linearly from 0 at 'bad' to 1 at 'good', clipped (tables for classes); contribution = w * u; a missing weighted variable is ignored and the remaining weights renormalised; coverage = weight with a value / total weight."},
-    {"step": 5, "name": "similarity",
-     "text": "The repository's similarity (similarity.json): per-body z-scores of the analog_finder variables, weighted distance d, similarity = 100 * exp(-0.45 * d)."},
-    {"step": 6, "name": "final",
-     "text": "final = alpha * similarity + (1 - alpha) * suitability (alpha in missions.json 'alpha'); survivors are ranked by the published final, ties by Earth cell id."},
-]
+def funnel_steps(mission_cfg: Dict, engine_cfg: EngineConfig) -> List[Dict[str, Any]]:
+    """Text of the six funnel steps. Limits and constants are read from the configuration
+    (mission_scoring.json common_gates, engine_config gate_body_applicability and
+    repo_similarity decay), never typed here."""
+    app = engine_cfg.v("gate_body_applicability") or {}
+    parts = []
+    for var, g in mission_cfg.get("common_gates", {}).items():
+        lim = []
+        if g.get("min") is not None:
+            lim.append(f"{var} >= {g['min']}")
+        if g.get("max") is not None:
+            lim.append(f"{var} <= {g['max']}")
+        bodies = app.get(var, {}).get("bodies", list(BODIES))
+        where = "Earth only" if list(bodies) == ["EARTH"] else ("both bodies" if len(bodies) == len(BODIES) else ", ".join(bodies))
+        parts.append(f"{' and '.join(lim) or var} ({where})")
+    rs = engine_cfg.v("repo_similarity") or {}
+    decay = rs.get("decay")
+    sim_text = ("The repository's similarity (similarity.json): per-body z-scores of the analog_finder variables, "
+                f"weighted distance d, similarity = 100 * exp(-{decay} * d)." if decay is not None else
+                "The active similarity rule (similarity.json).")
+    return [
+        {"step": 1, "name": "common gates",
+         "text": "Common hard filters of every mission: " + "; ".join(parts) + ". Failing one eliminates the cell for the mission."},
+        {"step": 2, "name": "required variables",
+         "text": "Every variable in the mission's require_present list must have a value; a missing one eliminates the cell with the reason '<variable> no data'."},
+        {"step": 3, "name": "mission hard filters",
+         "text": "The mission's own gates (missions[].gates, with their limits); failing one eliminates the cell for that mission (no score, no rank), with the exact reason, e.g. '<variable> outside [<min>, <max>]'. An eliminated cell may still pass another mission."},
+        {"step": 4, "name": "suitability",
+         "text": "Survivors only: suitability = 100 * sum(w * u) / sum(w over weighted variables with a value); utility u runs linearly from 0 at 'bad' to 1 at 'good', clipped (tables for classes); contribution = w * u; a missing weighted variable is ignored and the remaining weights renormalised; coverage = weight with a value / total weight."},
+        {"step": 5, "name": "similarity", "text": sim_text},
+        {"step": 6, "name": "final",
+         "text": "final = alpha * similarity + (1 - alpha) * suitability (alpha in missions.json 'alpha'); survivors are ranked by the published final, ties by Earth cell id."},
+    ]
 
 NOT_IN_SIMILARITY = ["irradiance_kwh_m2_day", "lst_diurnal_amp_k", "tmin_c", "thermal_inertia_class", "permafrost_class"]
 
@@ -320,10 +343,13 @@ def weighted_rows(mission_cfg: Dict, mid: str, reg: Dict, sim_vars: List[str]) -
     return out
 
 
-def reason_entries_v2(codes: List[str], mission_cfg: Dict, mid: str, engine_cfg: EngineConfig) -> List[Dict[str, Any]]:
+def reason_entries_v2(codes: List[str], mission_cfg: Dict, mid: str, engine_cfg: EngineConfig,
+                      reg: Optional[Dict] = None) -> List[Dict[str, Any]]:
     """Bit table of a mission's reason codes with funnel step, English text and the
-    team module's own text (mission_scoring.py, verbatim)."""
-    out = reason_entries(codes, engine_cfg)
+    team module's own text (mission_scoring.py, verbatim). Labels use the registry's
+    display labels (``reg``)."""
+    labels = {v: e.get("label") for v, e in (reg or {}).get("variables", {}).items()}
+    out = reason_entries(codes, engine_cfg, labels)
     for e in out:
         e["step"] = reason_step(e["code"], mission_cfg, mid)
         e.update(reason_texts(e["code"], mission_cfg, mid))
@@ -373,7 +399,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
                 "require_present": cm.get("require_present", []),
                 "gates": gate_rows(mission_cfg, cid, reg, engine_cfg),
                 "weighted_variables": weighted_rows(mission_cfg, cid, reg, []),
-                "reason_codes": reason_entries_v2(comp_codes[mid][cid], mission_cfg, cid, engine_cfg),
+                "reason_codes": reason_entries_v2(comp_codes[mid][cid], mission_cfg, cid, engine_cfg, reg),
                 "pass_counts": {"EARTH": int(cpass.sum()), "EARTH_LAND_CELLS": int(land.sum()),
                                 "MOON": int(cres.moon_gates.passed.sum()), "MOON_CELLS": int(len(cres.moon_gates.passed)),
                                 "EARTH_passing_both": int((cpass & passing).sum())},
@@ -399,7 +425,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             "files": {"EARTH": f"earth_{mid}.bin", "MOON": f"moon_{mid}.bin"},
             "gates": gate_rows(mission_cfg, mid, reg, engine_cfg),
             "weighted_variables": weighted_rows(mission_cfg, mid, reg, list(res.sim_vars)),
-            "reason_codes": reason_entries_v2(codes[mid], mission_cfg, mid, engine_cfg),
+            "reason_codes": reason_entries_v2(codes[mid], mission_cfg, mid, engine_cfg, reg),
             "pass_counts": {"EARTH": int(passing.sum()), "EARTH_LAND_CELLS": int(land.sum()),
                             "MOON": int(res.moon_gates.passed.sum()), "MOON_CELLS": int(len(res.moon_gates.passed))},
             "ranked_count": int(ranked.sum()),
@@ -437,7 +463,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
         "alpha": float(engine_cfg.v("mix_factor")),
         "alpha_why": engine_cfg.mix_factor.why,
         "similarity_rule": rule,
-        "funnel": FUNNEL_STEPS,
+        "funnel": funnel_steps(mission_cfg, engine_cfg),
         "elimination_line_rule": "the cell's reason codes (fail_bits) in bit order, their 'text' joined with '; '",
         "confidence_codes": CONF_CODES,
         "missions": out,
@@ -473,7 +499,10 @@ def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine
         return base
     rs = engine_cfg.v("repo_similarity")
     sc = engine_cfg.v("similarity_columns")
-    cols = {v: {b: e.get(b) for b in BODIES} for v, e in sc.items()}
+    ovr = engine_cfg.v("column_overrides") or {}
+    # the real column each similarity variable is read from (after column_overrides, e.g.
+    # slope_deg -> slope_iso_deg), i.e. the stored v.<column> the panel reads
+    cols = {v: {b: (ovr.get(e.get(b), e.get(b)) if e.get(b) else None) for b in BODIES} for v, e in sc.items()}
     feats = []
     for f in ctx.features:
         status = "active" if f in ctx.active else ("excluded" if f in ctx.excluded else "inactive")
@@ -691,7 +720,7 @@ def build_places(earth_places: Dict[str, list], land_idx: np.ndarray) -> Tuple[D
         "label_rules": rules,
         "label_rule_text": {
             "natural_earth_polygon": "Natural Earth 1:110m admin-0 polygon containing the cell centre",
-            "natural_earth_polygon_geonames_code": "inside a polygon without an ISO code in that file: name from the polygon, code from the nearest GeoNames place",
+            "natural_earth_polygon_geonames_code": "inside a polygon without an ISO code in that file: name from the polygon, code = the commonest GeoNames country code of the nearest places of the polygon's cells (one code per polygon)",
             "nearest_geonames_place": "centre outside every 110m polygon: country of the nearest GeoNames populated place",
             "antarctic_treaty_area": "land cell at or south of the configured latitude (60 S): Antarctica, no region",
         },

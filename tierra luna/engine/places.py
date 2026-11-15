@@ -3,8 +3,8 @@
 Earth: for every land cell,
 * country: the Natural Earth 1:110m admin-0 polygon that contains the cell centre
   (label_rule "natural_earth_polygon"); when that polygon has no ISO code (France and
-  Norway in NE 110m) the code comes from the nearest GeoNames place and the name from
-  the polygon ("natural_earth_polygon_geonames_code"); a centre outside every polygon (coasts and
+  Norway in NE 110m) the name comes from the polygon and the code is the polygon's
+  commonest GeoNames country code (one code per polygon; "natural_earth_polygon_geonames_code"); a centre outside every polygon (coasts and
   small islands at 110m) falls back to the nearest populated place in GeoNames
   cities1000 (offline, reverse_geocoder; label_rule "nearest_geonames_place");
 * country name: the ISO 3166 table of the IANA time zone database (tzdata), or the
@@ -159,6 +159,21 @@ def polygon_country(lat: np.ndarray, lon: np.ndarray, polygons: List[Dict]) -> L
     return [best.get(i) for i in range(len(pts))]
 
 
+def polygon_codes_from_places(poly_of: List[Optional[int]], place_codes: List[Optional[str]],
+                              polygons: List[Dict]) -> Dict[int, str]:
+    """{polygon index: code} for polygons without an ISO code: the commonest GeoNames
+    country code of the nearest places of the cells inside the polygon (ties: the
+    alphabetically first code). One code per polygon, so its name and code agree on
+    every cell (NE 110m France and Norway have no ISO_A2)."""
+    counts: Dict[int, Dict[str, int]] = {}
+    for pk, cc in zip(poly_of, place_codes):
+        if pk is None or polygons[pk]["code"] or not cc:
+            continue
+        counts.setdefault(pk, {})
+        counts[pk][cc] = counts[pk].get(cc, 0) + 1
+    return {pk: sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))[0][0] for pk, c in counts.items()}
+
+
 def earth_places(lat: np.ndarray, lon: np.ndarray, land: np.ndarray, antarctic_lat_max: float,
                  radius_km: float, polygons: Optional[List[Dict]] = None,
                  region_max_place_km: Optional[float] = None) -> Dict[str, list]:
@@ -177,6 +192,7 @@ def earth_places(lat: np.ndarray, lon: np.ndarray, land: np.ndarray, antarctic_l
     hits = rg.search(pts, mode=1, verbose=False)  # single process: deterministic
     poly_of = polygon_country(np.asarray(lat)[land_idx], np.asarray(lon)[land_idx], polygons) if polygons else \
         [None] * len(land_idx)
+    poly_code = polygon_codes_from_places(poly_of, [h["cc"] for h in hits], polygons) if polygons else {}
     for k, (i, h) in enumerate(zip(land_idx, hits)):
         d = float(great_circle_km(lat[i], lon[i], float(h["lat"]), float(h["lon"]), radius_km))
         out["nearest_place"][i] = h["name"]
@@ -194,7 +210,9 @@ def earth_places(lat: np.ndarray, lon: np.ndarray, land: np.ndarray, antarctic_l
             out["country"][i] = names.get(cc) or polygons[pk]["name"]
             out["label_rule"][i] = "natural_earth_polygon"
         elif pk is not None:  # polygon without an ISO code (e.g. France, Norway in NE 110m)
-            cc = h["cc"]
+            # one code for the whole polygon (its commonest GeoNames code), so a French
+            # cell whose nearest place is in Andorra is not labelled 'AD France'
+            cc = poly_code.get(pk, h["cc"])
             out["country_code"][i] = cc
             out["country"][i] = polygons[pk]["name"]
             out["label_rule"][i] = "natural_earth_polygon_geonames_code"
