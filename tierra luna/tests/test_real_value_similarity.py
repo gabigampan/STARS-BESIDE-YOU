@@ -86,7 +86,7 @@ def test_every_tolerance_weight_and_zone_is_configured_with_who_set_it(ecfg):
     assert "illustrative team values" in by[("rover", "slope_deg")]["tolerance_set_by"]
     assert "delegate" in by[("rover", "elevation_rel_m")]["tolerance_set_by"]
     assert "delegate" in by[("solar", "irradiance_toa_kwh_m2_day")]["tolerance_set_by"]
-    assert "not used" in json.dumps(rv["reference_tolerances_not_used"])
+    assert "no mission uses them" in json.dumps(rv["reference_tolerances_not_used"])
 
 
 def test_no_tolerance_or_zone_is_typed_in_the_engine_code():
@@ -145,15 +145,15 @@ def _spec(variables):
 def test_score_filter_tie_and_missing_values_by_hand():
     spec = _spec([{"variable": "a", "role": "key", "weight": 0.8, "tolerance": 1.0},
                   {"variable": "b", "role": "secondary", "weight": 0.2, "tolerance": 10.0}])
-    moon = np.array([[0.0, 0.0], [5.0, 0.0], [5.0, 0.0], [9.0, np.nan], [20.0, 0.0]])
-    ids = np.array([3, 7, 8, 11, 12])
+    moon = np.array([[0.0, 0.0], [5.0, 0.0], [5.0, 0.0], [9.0, np.nan], [20.0, 0.0], [40.0, 25.0]])
+    ids = np.array([3, 7, 8, 11, 12, 13])
     earth = np.array([
         [0.5, 15.0],       # zone cell 3: a within 1, b within 2 x 10 -> pair
         [5.0, 0.0],        # cells 7 and 8 tie exactly -> lowest id 7
         [9.2, 50.0],       # cell 11 has no b: the secondary is ignored -> pair with a only
         [2.6, 0.0],        # no cell has a within 1 -> no_zone_cell_within_bound, gap 2.4
         [np.nan, 0.0],     # key missing on Earth -> no pair
-        [20.0, 25.0],      # cell 12: a equal but b at 25 > 20 -> no_joint_match on b
+        [20.0, 25.0],      # a alone matches cell 12, b alone cell 13, none both -> no_joint_match on b (cell 12)
     ])
     rt = find_twins(earth, moon, ids, spec, chunk_rows=2)
     assert rt.twin.tolist() == [3, 7, 11, -1, -1, -1]
@@ -173,7 +173,7 @@ def test_list_order_puts_unpaired_cells_after_the_pairs_by_suitability():
     suit = np.array([50.0, 80.0, 40.0, 80.0, np.nan, 90.0])
     passing = np.array([True, True, True, True, False, True])
     ids = np.array([10, 30, 20, 25, 5, 40])
-    assert list_order(rank, suit, passing, ids).tolist() == [2, 4, 1, 5, 0, 3]
+    assert list_order(rank, suit, passing, ids).tolist() == [2, 5, 1, 4, 0, 3]   # 80 tie: id 25 before id 30
 
 
 # ----------------------------------------------------------------------------- the results (checked proposal)

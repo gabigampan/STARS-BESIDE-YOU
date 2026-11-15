@@ -2,6 +2,8 @@
 
 Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026), rama `final-integration`, 15-11-2026. **Propuesta de método pendiente de respuesta de Facundo; no se ha tocado motor, configuración ni datos, y no se ha reconstruido nada. Nada de lo que sigue está decidido ni implementado.**
 
+**Actualización (15-11-2026, mañana): decidido y aplicado para Rover y Paneles solares; Base lunar sin cambios y pendiente.** Ver la última sección, "Resultado tras implementar (15-11-2026)". Las secciones A-E y la comprobación quedan como el registro de la propuesta.
+
 Responde al principio del análogo que fijó Facundo el 15-11-2026 entre las 04:47 y las 04:49 CET (P1-P9, texto completo en `docs/DECISIONS.md`, sección "Principio del análogo"; resumen en inglés en `ASSUMPTIONS.md` §0.11). **Comprobado por un segundo agente con código propio** (sección "Comprobación" al final): las cifras de Paneles solares con la irradiancia sin atmósfera, las de la opción "solo amplitud" de Base lunar y varias de hoy se han corregido en este texto.
 
 **De dónde salen los números.** Todo calculado hoy sobre las tablas reales de 1 grado (`tierra luna/output_real/earth_real_1deg.csv` y `moon_real_1deg.csv`) con los scripts de `scratchpad/stars/principle/` (`ctx2.py`, `a_today.py`, `b_compare.py`, `cd_method.py`, `e_today_bench.py`, `extra.py`; salidas `*.json` y `out_*.csv`). Los pares de hoy salen de la reimplementación independiente de `decisions-check/cctx.py` con el tratamiento del motor para la temperatura que falta; **coinciden con el paquete publicado** `app/public/data/v2`: el número de puntos de cada gemelo de `twins.json` es idéntico en las tres misiones (744, 721 y 48 gemelos distintos) y los gemelos del top 25 de `explain.json` también (similitud a menos de 0,005, redondeo). Los puntos candidatos de la Tierra son siempre los que pasan el embudo de cada misión, sin cambios (Rover 10.337, Paneles 18.777, Base lunar 2.419).
@@ -331,3 +333,72 @@ Segundo agente, 15-11-2026, con código propio en `scratchpad/stars/principle-ch
 - Las regiones de Artemis: uso la misma lista de 280 celdas (`proposal-verify/out/regions.json`) que el autor; no he vuelto a cruzar las huellas de NASA con la malla.
 - El OVL depende del número de clases del histograma (con 50 clases coincide; con 200 la irradiancia en el suelo baja a 0,23 y la del tope de la atmósfera a 0,33).
 - Que la definición de amplitud de la Tierra (10:30 − 22:30) y la de la Luna (máximo − mínimo) sean comparables: solo se repite la advertencia del autor.
+
+## Resultado tras implementar (15-11-2026)
+
+**Decidido y aplicado** (respuesta de la persona delegada en nombre del líder del equipo, 15-11-2026 por la mañana; registro en `docs/DECISIONS.md`, "Decisiones tomadas (15-11-2026, mañana)"): Rover y Paneles solares usan la similitud sobre valores reales de la sección C (regla `real_value_tolerance`, motor 3.1.0, `tierra luna/engine/real_similarity.py`; variables, pesos, tolerancias y zonas en `engine_config.json` `real_value_similarity`). **Base lunar no cambia** (regla `zone_twin` en z sobre las nueve regiones de la NASA; sus archivos son idénticos a los del paquete anterior) y queda **pendiente** de una propuesta nueva que el equipo tiene que confirmar antes de reconstruirla. Paquete reconstruido: `app/public/data/v2` (revisión 5 del contrato). Todas las cifras de esta sección salen del motor (`compute()` del paquete publicado), no de los scripts de la propuesta; coinciden con la propuesta comprobada.
+
+Cambios respecto a la propuesta de la sección C: la zona de Paneles solares es la de los **mares ecuatoriales** (decisión del equipo; la propuesta recomendaba la Luna entera); la elevación relativa es la centrada (definición de la comprobación); la irradiancia de la Tierra en el tope de la atmósfera es la de la fórmula corregida (9,97 / 8,77 / 7,37 / 5,67 kWh/m²/día a 0 / 30 / 45 / 60°; el motor da 9,9743 / 8,7651 / 7,3667 / 5,6717).
+
+**Recuentos.**
+
+| misión | zona (celdas) | puntos que pasan el embudo | con gemelo | sin gemelo (motivo más común) | gemelos distintos | gemelo más compartido |
+|---|---|---|---|---|---|---|
+| Rover | polo sur, latitud ≤ −75° (5.400) | 10.337 | **10.192** (98,6 %) | 145: 76 sin ninguna celda que cumpla a la vez las dos claves y la secundaria, bloqueados por la rugosidad (la más cercana a 30,0-51,1 m), y 69 bloqueados por la elevación relativa (a 1.003-1.267 m); cada variable por separado sí encuentra celda | 401 | M61116 (79,5 S 96,5 E, Ganswindt a 81 km): 2.033 puntos, 19,9 % |
+| Paneles solares | mares ecuatoriales, \|latitud\| ≤ 30° y elevación ≤ −1.200 m (6.686) | 18.777 | **6.360** (33,9 %) | 12.417: 12.416 porque ninguna celda de los mares tiene la irradiancia sin atmósfera a menos de 0,6 kWh/m²/día (hueco mínimo 0,66, mediano 4,15); 1 por la rugosidad a la vez (60,4 m frente a 60) | 1.704 | M21795 (29,5 N 15,5 E, Banting a 92 km): 159 puntos, 2,5 % |
+| Base lunar (sin cambios) | nueve regiones de Artemis III (280) | 2.419 | 2.419 | 0 | 48 | M62515: 671 puntos, 27,7 % |
+
+**La comprobación que pidió Facundo a las 04:48** (P5, P6): diferencia absoluta en valores reales entre cada punto de la Tierra y su gemelo, solo en los pares que sobreviven. Ninguna variable clave pasa de su tolerancia y ninguna secundaria del doble de la suya (columna "máximo", con los decimales necesarios para que no parezca redondeado a la cota); lo comprueba un test en cada par (`tests/test_real_value_similarity.py::test_every_surviving_pair_is_within_its_bounds`, en el motor en doble precisión y en el paquete).
+
+**Rover** (10.192 pares; temperatura y amplitud solo donde la Tierra tiene dato: 9.091 pares, sin la Antártida):
+
+| variable | papel | tolerancia | cota del filtro | n | mediana | P90 | máximo | ¿máximo ≤ cota? |
+|---|---|---|---|---|---|---|---|---|
+| pendiente (°) | clave | 2,0 ° | 2,0 ° | 10.192 | 0,41 | 0,85 | 1,97 | sí |
+| rugosidad (m) | clave | 30 m | 30 m | 10.192 | 5,3 | 20,5 | 29,97 | sí |
+| elevación relativa (m) | secundaria | 500 m | 1.000 m | 10.192 | 248 | 799 | 999,99 | sí |
+| temperatura media (K) | información (no entra) | — | — | 9.091 | 148,7 | 175,6 | 233,0 | — |
+| amplitud térmica diaria (K) | información (no entra) | — | — | 9.091 | 176,3 | 187,1 | 228,0 | — |
+| irradiancia en el suelo (Tierra) / superficie (Luna) (kWh/m²/día) | información (no entra) | — | — | 10.191 | 2,36 | 4,03 | 6,05 | — |
+
+**Paneles solares** (6.360 pares):
+
+| variable | papel | tolerancia | cota del filtro | n | mediana | P90 | máximo | ¿máximo ≤ cota? |
+|---|---|---|---|---|---|---|---|---|
+| irradiancia sin atmósfera (kWh/m²/día) | clave | 0,6 kWh/m²/día | 0,6 kWh/m²/día | 6.360 | 0,021 | 0,322 | 0,570 | sí |
+| pendiente (°) | secundaria | 2,0 ° | 4,0 ° | 6.360 | 0,03 | 0,15 | 1,94 | sí |
+| rugosidad (m) | secundaria | 30 m | 60 m | 6.360 | 0,5 | 2,4 | 58,1 | sí |
+| temperatura media (K) | información (no entra) | — | — | 6.360 | 84,7 | 89,9 | 100,2 | — |
+| amplitud térmica diaria (K) | información (no entra) | — | — | 6.360 | 275,8 | 287,3 | 293,1 | — |
+
+En Paneles solares, la luz que llega al suelo en la Tierra (no entra en la similitud; va en cada par): mediana 5,14 kWh/m²/día de 9,45 sobre la atmósfera; se pierde en la atmósfera una mediana del 45,3 % (P90 57,4 %, máximo 67,5 %). La temperatura y la amplitud no se parecen y no se presentan como parecidas: se enseñan como diferencia.
+
+**Top 5 por misión** (valores reales Tierra / gemelo).
+
+Rover (pendiente en °, rugosidad en m, elevación relativa en m):
+
+| # | punto de la Tierra | idoneidad | similitud | final | gemelo | pendiente T / L | rugosidad T / L | elevación relativa T / L |
+|---|---|---|---|---|---|---|---|---|
+| 1 | E17566, 41,5 N 106,5 E (Mongolia Interior, China) | 99,22 | 99,57 | 99,39 | M59895, 76,5 S 44,5 O (Casatus a 159 km) | 1,038 / 1,148 | 43,53 / 44,20 | 737,5 / 833,3 |
+| 2 | E23945, 23,5 N 5,5 E (Tamanrasset, Argelia) | 98,66 | 99,76 | 99,21 | M59895 | 1,215 / 1,148 | 43,37 / 44,20 | 761,9 / 833,3 |
+| 3 | E18282, 39,5 N 102,5 E (Mongolia Interior, China) | 99,58 | 98,77 | 99,17 | M59895 | 0,908 / 1,148 | 38,75 / 44,20 | 747,7 / 833,3 |
+| 4 | E18280, 39,5 N 100,5 E (Gansu, China) | 98,66 | 99,50 | 99,08 | M59895 | 1,131 / 1,148 | 48,91 / 44,20 | 851,5 / 833,3 |
+| 5 | E15395, 47,5 N 95,5 E (Govi-Altái, Mongolia) | 98,69 | 99,12 | 98,91 | M59895 | 1,236 / 1,148 | 41,33 / 44,20 | 962,5 / 833,3 |
+
+Información, no entra en la similitud (número 1): temperatura 284,7 K frente a 142,5 K; amplitud diaria 20,6 K frente a 196,6 K; irradiancia en el suelo 4,58 frente a 1,77 kWh/m²/día.
+
+Paneles solares (irradiancia sin atmósfera en kWh/m²/día, entre paréntesis la que llega al suelo en la Tierra y la parte perdida; pendiente en °, rugosidad en m):
+
+| # | punto de la Tierra | idoneidad | similitud | final | gemelo | irradiancia sin atmósfera T / L | pendiente T / L | rugosidad T / L |
+|---|---|---|---|---|---|---|---|---|
+| 1 | E38464, 16,5 S 124,5 E (Kimberley, Australia) | 96,90 | 99,99 | 98,45 | M24296, 22,5 N 3,5 O (Huxley a 76 km) | 9,600 (suelo 6,18; −35,7 %) / 9,604 | 0,976 / 1,047 | 39,20 / 39,03 |
+| 2 | E38105, 15,5 S 125,5 E (Kimberley, Australia) | 96,90 | 99,88 | 98,39 | M24583, 21,5 N 76,5 O (Struve a 58 km) | 9,644 (suelo 6,11; −36,6 %) / 9,672 | 1,132 / 1,038 | 42,53 / 44,43 |
+| 3 | E38744, 17,5 S 44,5 E (Melaky, Madagascar) | 96,77 | 99,95 | 98,36 | M40854, 23,5 S 5,5 O (Thebit a 61 km) | 9,554 (suelo 5,97; −37,5 %) / 9,534 | 0,706 / 0,649 | 29,64 / 29,00 |
+| 4 | E37746, 14,5 S 126,5 E (Kimberley, Australia) | 96,62 | 99,98 | 98,30 | M24761, 21,5 N 101,5 E (Dziewulski a 72 km) | 9,685 (suelo 6,07; −37,3 %) / 9,672 | 0,757 / 0,711 | 26,93 / 27,55 |
+| 5 | E38465, 16,5 S 125,5 E (Kimberley, Australia) | 96,48 | 100,00 | 98,24 | M40406, 22,5 S 93,5 O (Rimae Pettit a 83 km) | 9,600 (suelo 6,14; −36,0 %) / 9,604 | 0,920 / 0,951 | 33,25 / 32,92 |
+
+Información (número 1): temperatura 302,4 K frente a 213,4 K; amplitud diaria 11,9 K frente a 293,4 K. Con la zona de los mares el top 5 coincide con el de la Luna entera de la sección D.2 salvo el gemelo del número 2 (Struve en lugar de Deutsch), como ya decía la propuesta.
+
+**Base lunar sin cambios** (comprobado): `earth_lunar_base.bin` y `moon_lunar_base.bin` tienen el mismo sha256 que en el paquete anterior y la parte de Base lunar de `twins.json`, `explain.json` y `missions.json` es idéntica (`tests/test_real_value_similarity.py::test_lunar_base_is_unchanged_from_the_previous_bundle`). Facundo pidió a las 07:55 que Base lunar tenga análogos en la Tierra y que antes de reconstruirla se le mande una propuesta (variables, pesos y normalización, tolerancia, pares que sobreviven, número 1 y su gemelo, diferencias reales); esa propuesta se prepara aparte (`docs/LUNAR_BASE_PROPOSAL.md`) y no se ha aplicado nada.
+
+**Tests:** `cd "tierra luna" && python -m pytest -q`: **140 passed** (123 antes + 17 nuevos en `tests/test_real_value_similarity.py`: regla por misión, nada tecleado en el código, fórmula del tope de la atmósfera, elevación relativa, zona de los mares, casos a mano del filtro, del empate y de los valores que faltan, orden de la lista, recuentos y número 1 de Rover y Paneles solares, cotas en cada par, Base lunar sin cambios, contenido del paquete, irradiancia en el suelo y texto de Paneles solares, recálculo exacto con otros pesos). Paquete `app/public/data/v2` y paquete de comparación `bundle_global_mean` construidos dos veces cada uno, idénticos byte a byte.

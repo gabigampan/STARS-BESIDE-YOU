@@ -18,8 +18,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from engine import config as engine_config_module  # noqa: E402
-from engine.bundle_v2 import (browser_similarity, browser_suitability, load_bundle, rank_rule,  # noqa: E402
-                              tile_column, validate_bundle_v2)  # noqa: E402
+from engine.bundle_v2 import (browser_real_similarity, browser_similarity, browser_suitability, load_bundle,  # noqa: E402
+                              rank_rule, tile_column, validate_bundle_v2)  # noqa: E402
 from engine.config import (DATASET_SETTINGS, ENGINE_CONFIG_PATH, dataset_ids, default_dataset,  # noqa: E402
                            load_engine_config, load_mission_config, resolve_path)
 from engine.confidence import pair_confidence  # noqa: E402
@@ -273,7 +273,7 @@ def test_binary_round_trip_equals_the_frames(real, real_dir):
         for v in r.soft_vars:
             u = tile_column(b, f"{mid}.u.{v}")
             assert _nan_equal(u, np.where(r.earth_gates.passed[li], r.earth_suit.utilities[v][li], np.nan))
-        assert "twin" in b.columns(ef) and "twin_count" in b.columns(f"moon_{mid}.bin")  # zone_twin (default since 2026-11-15)
+        assert "twin" in b.columns(ef) and "twin_count" in b.columns(f"moon_{mid}.bin")  # twin rules (zone_twin, real_value_tolerance)
         assert np.array_equal(b.int_column(ef, "twin"), np.where(r.twin_id[r.earth_gates.passed] >= 0,
                                                                    r.twin_id[r.earth_gates.passed], -2147483648))
         codes = [e["code"] for e in next(m for m in b.json("missions.json")["missions"] if m["id"] == mid)["reason_codes"]]
@@ -289,7 +289,7 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
     ids_all = b.int_column("earth_base.bin", "id")
     sent = b.manifest["encoding"]["int32_missing"]
     sj = b.json("similarity.json")
-    assert sj["rule"] == "zone_twin"
+    assert sj["rule"] == "per_mission" and sj["rules"]["lunar_base"] == "zone_twin"
     norm_w = {v["variable"]: v["norm_weight"] for v in sj["variables"] if v["status"] == "active"}
     twins = b.json("twins.json")["missions"]
     total = 0
@@ -301,9 +301,15 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
         w = {x["variable"]: x["weight"] for x in m["weighted_variables"]}
         suit = browser_suitability({v: tile_column(b, f"{m['id']}.u.{v}")[li] for v in order}, w, order)
         tw = b.int_column(ef, "twin")
-        tzid = {t["id"]: t["z"] for t in twins[m["id"]]["twins"]}
-        tz = {f: np.array([np.nan if t == sent or tzid[int(t)][f] is None else tzid[int(t)][f] for t in tw]) for f in norm_w}
-        sim = browser_similarity({f: tile_column(b, f"z.{f}")[li] for f in norm_w}, tz, norm_w, sj["formula"]["decay"])
+        if sj["rules"][m["id"]] == "real_value_tolerance":   # contract revision 5: scores on real values
+            sv = [x["variable"] for x in m["similarity"]["variables"]]
+            sw = {x["variable"]: x["weight"] for x in m["similarity"]["variables"]}
+            sim = browser_real_similarity({v: b.column(ef, f"s.{v}") for v in sv}, sw, sv)
+            sim = np.where(tw == sent, np.nan, sim)
+        else:
+            tzid = {t["id"]: t["z"] for t in twins[m["id"]]["twins"]}
+            tz = {f: np.array([np.nan if t == sent or tzid[int(t)][f] is None else tzid[int(t)][f] for t in tw]) for f in norm_w}
+            sim = browser_similarity({f: tile_column(b, f"z.{f}")[li] for f in norm_w}, tz, norm_w, sj["formula"]["decay"])
         fin = m["alpha"] * sim + (1 - m["alpha"]) * suit
         for mine, stored in ((suit, "suitability"), (sim, "similarity"), (fin, "final")):
             assert _nan_equal(r2(mine), b.column(ef, stored)), (m["id"], stored)
@@ -456,7 +462,9 @@ def test_similarity_variables_used_and_missing_per_pair(real_dir):
     lat_row = b.column("earth_base.bin", "lat")
     temp = b.column("earth_base.bin", "v.temp_k")
     no_temp = {}
-    for mid in ("rover", "solar", "lunar_base"):
+    for mid in ("rover", "solar"):   # contract revision 5: the real-value missions do not use temperature
+        assert not {"sim_vars_used", "sim_missing_bits"} & set(b.columns(f"earth_{mid}.bin"))
+    for mid in ("lunar_base",):
         ef = f"earth_{mid}.bin"
         li = b.int_column(ef, "land_index")
         used, bits = b.int_column(ef, "sim_vars_used"), b.int_column(ef, "sim_missing_bits")
@@ -468,26 +476,30 @@ def test_similarity_variables_used_and_missing_per_pair(real_dir):
         assert full.any() and np.all(used[full] == 4) and np.all(bits[full] == 0)
         assert np.array_equal(used, 4 - np.array([bin(int(x)).count("1") for x in bits]))
         no_temp[mid] = int(((bits & t_bit) != 0).sum())
-    assert no_temp["rover"] > 0 and no_temp["solar"] > 0 and no_temp["lunar_base"] == 0
+    assert no_temp["lunar_base"] == 0
 
 
 def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
-    """Decisions 1-5 (2026-11-15): the approved English web texts are copied verbatim from
-    section 8 of docs/DECISIONS.md into similarity.json 'texts'; the solar limitation is the
-    first known limitation of the solar mission."""
+    """Decisions 1-5 (2026-11-15) and the morning decision of 2026-11-15: the English web
+    texts are copied verbatim from docs/DECISIONS.md into similarity.json 'texts' (the
+    lunar day length of the solar template is filled at build time); the solar pair text
+    replaces the solar limitation of decision 5 and is a per-pair template, not a mission
+    card text."""
     decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
-    assert ecfg.v("similarity_rule") == "zone_twin" and real["manifest"]["similarity_rule"] == "zone_twin"
-    assert real["manifest"]["contract_revision"] == 4
+    assert ecfg.v("similarity_rule")["lunar_base"] == "zone_twin" and real["manifest"]["similarity_rule"] == "per_mission"
+    assert real["manifest"]["contract_revision"] == 5
     approved = ecfg.v("approved_texts")
-    assert set(approved) == {"similarity_meaning", "rock_note", "missing_temperature_mark", "missing_temperature_note",
-                             "twin_sharing_note", "solar_limitation"}
+    assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "rock_note", "missing_temperature_mark",
+                             "missing_temperature_note", "twin_sharing_note", "no_twin_note", "solar_limitation"}
     for key, t in approved.items():
         if key != "missing_temperature_mark":  # the short mark comes from the team's answer 3, not section 8
             assert f'> "{t["text"]}"' in decisions, key
     assert approved["missing_temperature_mark"]["text"] == "no temperature data: similarity computed with 3 variables"
     sj = real["objects"]["similarity.json"]
-    assert {k: v["text"] for k, v in sj["texts"].items()} == {k: v["text"] for k, v in approved.items()}
+    filled = {k: v["text"].replace("{lunar_day}", f"{ecfg.v('lunar_day_earth_days'):.1f}") for k, v in approved.items()}
+    assert {k: v["text"] for k, v in sj["texts"].items()} == filled
     solar = next(m for m in real["objects"]["missions.json"]["missions"] if m["id"] == "solar")
-    assert solar["known_limitations"][0] == approved["solar_limitation"]["text"]
+    assert approved["solar_limitation"]["mission_card"] is False
+    assert all(filled["solar_limitation"] != x for x in solar["known_limitations"])
     assert "rock_or_bare_frac" in sj["not_part_of_similarity"]
     assert next(v for v in sj["variables"] if v["variable"] == "rock_or_bare_frac")["status"] == "excluded"
