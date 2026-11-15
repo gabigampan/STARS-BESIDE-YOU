@@ -5,9 +5,10 @@
 // the other two missions; the ice component for Lunar base; then Back and Start mission.
 
 import type { GateRow, MissionOutcome, PairRow, RequiredRow } from '../data/store.ts';
+import { displayedTenths } from '../data/store.ts';
 import type { Level, Mission, ReasonCode } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { REGION_CAVEAT, firstSentence, missionName, plainName, plainText, roleWord, setByWords, statusWords } from './copy';
+import { REGION_CAVEAT, firstSentence, missionName, plainName, plainText, noteText, roleWord, setByWords, statusWords } from './copy';
 import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, limitWords, num, valueText, verdict } from './dom';
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
@@ -239,6 +240,28 @@ function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
 }
 
 /** A value with its unit; a difference of degrees Celsius is a difference in kelvin. */
+/**
+ * Percentile positions are printed with 1 decimal and their difference is computed from the two
+ * values AS PRINTED (integer tenths, half up: the contract's display rule), so the three numbers
+ * always agree; the within / outside verdict stays on the true values.
+ */
+function shownValue(v: number | null, unit: string): string {
+  if (unit !== 'percentile points' || v == null || !Number.isFinite(v)) return valueText(v, unit);
+  return `${tenthsText(signedTenths(v))} percentile points`;
+}
+function signedTenths(v: number): number {
+  return v < 0 ? -displayedTenths(-v) : displayedTenths(v);
+}
+function tenthsText(t: number): string {
+  return `${t < 0 ? '-' : ''}${Math.floor(Math.abs(t) / 10)}.${Math.abs(t) % 10}`;
+}
+function shownDiff(r: PairRow): string {
+  if (r.def.unit === 'percentile points' && r.earth != null && r.moon != null && Number.isFinite(r.earth) && Number.isFinite(r.moon)) {
+    return `${tenthsText(Math.abs(signedTenths(r.earth) - signedTenths(r.moon)))} percentile points`;
+  }
+  return diffText(r.diff, r.def.unit);
+}
+
 function diffText(v: number | null, unit: string): string {
   return valueText(v, unit === 'degC' ? 'K' : unit);
 }
@@ -254,7 +277,8 @@ function sideSub(app: FlowApp, r: PairRow, body: 'EARTH' | 'MOON'): HTMLElement 
 function pairSimilarity(app: FlowApp, o: MissionOutcome): (HTMLElement | null)[] {
   const st = app.store;
   const rows = [...o.pairRows].sort((a, b) => (a.def.role === 'key' ? 0 : 1) - (b.def.role === 'key' ? 0 : 1));
-  const meaning = st.text('similarity_meaning_real_values');
+  // the meaning of THIS mission's rule, from the bundle (never a default)
+  const meaning = meaningText(app);
   const block = (r: PairRow) =>
     h(
       'div',
@@ -264,9 +288,9 @@ function pairSimilarity(app: FlowApp, o: MissionOutcome): (HTMLElement | null)[]
       h(
         'dl',
         { class: 'pair-vals' },
-        h('div', { 'data-k': 'earth' }, h('dt', null, r.real ? 'Earth position' : 'Earth'), h('dd', null, valueText(r.earth, r.def.unit))),
-        h('div', { 'data-k': 'moon' }, h('dt', null, r.real ? 'Moon position' : 'Moon'), h('dd', null, valueText(r.moon, r.def.unit))),
-        h('div', { 'data-k': 'diff' }, h('dt', null, r.real ? 'Difference in position' : 'Difference'), h('dd', null, diffText(r.diff, r.def.unit))),
+        h('div', { 'data-k': 'earth' }, h('dt', null, r.real ? 'Earth position' : 'Earth'), h('dd', null, shownValue(r.earth, r.def.unit))),
+        h('div', { 'data-k': 'moon' }, h('dt', null, r.real ? 'Moon position' : 'Moon'), h('dd', null, shownValue(r.moon, r.def.unit))),
+        h('div', { 'data-k': 'diff' }, h('dt', null, r.real ? 'Difference in position' : 'Difference'), h('dd', null, shownDiff(r))),
         h(
           'div',
           { 'data-k': 'tolerance' },
@@ -403,15 +427,15 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         t.feature ? h('strong', null, `Near ${t.feature.name}`) : h('strong', null, 'Lunar cell'),
         t.feature ? ` (${t.feature.type.replace(/,.*$/, '').toLowerCase()}), ${num(t.feature.distance_km, 1)} km from its centre` : '',
       ),
+      t.nasa_region?.text ? h('p', { class: 'nasa-region', 'data-text': 'nasa_region' }, capitalise(t.nasa_region.text)) : null,
       h('p', { class: 'coords' }, `Twin cell centre ${latLonText(t.lat, t.lon)} · cell of about ${cellSize(app, t.lat, 'MOON')}`),
-      h('p', { class: 'share', 'data-share': String(share) }, store.twinSharingText(m.id, share) ?? `${int(share)} Earth points share this twin.`),
+      h('p', { class: 'share', 'data-share': String(share) }, store.twinSharingText(m.id, share) ?? (share === 1 ? '1 Earth point has this twin.' : `${int(share)} Earth points share this twin.`)),
       t.feature ? h('p', null, h('a', { href: t.feature.url, target: '_blank', rel: 'noopener' }, `${t.feature.name} in the USGS/IAU Gazetteer of Planetary Nomenclature`, icon('ext'))) : null,
       h(
         'p',
         { class: 'muted' },
-        o.valueRule
-          ? `The twin is the lunar cell inside ${app.zoneName(m) ?? "the mission's target zone"} whose real values are closest within the tolerances. It is marked on the Moon globe and joined to this point by the beam.`
-          : `The twin is the most similar lunar cell inside ${app.zoneName(m) ?? "the mission's target zone"}. It is marked on the Moon globe and joined to this point by the beam.`,
+        // how the twin is chosen is said by the bundle's meaning text of this mission's rule (shown with the similarity)
+        `The twin lies inside ${app.zoneName(m) ?? "the mission's target zone"}. It is marked on the Moon globe and joined to this point by the beam.`,
       ),
     );
   } else if (unpaired) {
@@ -508,14 +532,14 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       sec(
         'Similarity to the Moon',
         ...(o.pass && o.final != null && o.pairRows.length
-          ? pairSimilarity(app, o)
+          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, noteText(app.store, n.text, m))))]
           : [
               h(
                 'p',
                 { class: 'lead' },
                 o.pass ? 'No similarity is computed for a point without a lunar twin: it has no rank and no final score.' : 'No similarity and no lunar twin are computed for a cell eliminated for this mission.',
               ),
-              store.text('similarity_meaning_real_values') ? h('p', { class: 'meaning', 'data-note': 'meaning' }, icon('info'), h('span', null, store.text('similarity_meaning_real_values'))) : null,
+              meaningText(app) ? h('p', { class: 'meaning', 'data-note': 'meaning' }, icon('info'), h('span', null, meaningText(app))) : null,
             ]),
       ),
     );
@@ -583,7 +607,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       ),
     );
   }
-  if (o.pass && o.confidence != null) {
+  // revision 8: no per-pair confidence is shown (the team lead removed it; one label per mission said nothing about a pair)
+  if (false as boolean) {
     // 8. confidence
     const levels = m.weighted_variables.map((w) => `${w.label}: Earth ${LEVEL_WORDS[w.levels.EARTH ?? 'NO_DATA']}, Moon ${LEVEL_WORDS[w.levels.MOON ?? 'NO_DATA']}`);
     sections.push(

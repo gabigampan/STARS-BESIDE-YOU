@@ -4,6 +4,7 @@
 // Usage: node tests/smoke.mjs [--no-build] [--skip-4k] [--only=desktop,phone,fullmoon,tablet,uhd]
 // Screenshots go to $SHOTS_DIR (default: the team scratchpad folder below).
 
+import * as FX from './lib/fixtures.mjs';
 import { spawnSync } from 'node:child_process';
 import { createReadStream, existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -17,8 +18,7 @@ const { chromium } = require('playwright');
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(APP, 'dist');
 const SHOTS =
-  process.env.SHOTS_DIR ??
-  '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/shots-frontend';
+  join(FX.SHOTS_DIR, 'smoke');
 const IMAGERY_HOSTS = ['gibs.earthdata.nasa.gov', 'trek.nasa.gov', 'tiles.maps.eox.at'];
 const LOAD_TIMEOUT = 300_000; // SwiftShader (software WebGL) is slow
 const failures = [];

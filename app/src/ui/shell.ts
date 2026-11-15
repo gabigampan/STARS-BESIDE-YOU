@@ -72,7 +72,8 @@ export function setupResetButtons(reset: (body?: Body) => void): void {
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     const target = e.target as HTMLElement | null;
     if (target && (target.closest('dialog[open]') || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
-    if (e.key === 'r' || e.key === 'R' || e.key === 'Home') {
+    // R repeats the audio guide (src/a11y/keys.ts); Home resets both views
+    if (e.key === 'Home') {
       reset();
       e.preventDefault();
     }

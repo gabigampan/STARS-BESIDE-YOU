@@ -10,7 +10,7 @@ const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2',
   '.woff': 'font/woff', '.wasm': 'application/wasm', '.xml': 'application/xml', '.glb': 'model/gltf-binary',
-  '.mp4': 'video/mp4', '.webm': 'video/webm', '.vtt': 'text/vtt; charset=utf-8', '.bin': 'application/octet-stream',
+  '.mp4': 'video/mp4', '.webm': 'video/webm', '.vtt': 'text/vtt; charset=utf-8', '.bin': 'application/octet-stream', '.mp3': 'audio/mpeg',
 };
 
 export async function serve(dist, { dataDir = null } = {}) {

@@ -7,6 +7,7 @@
 // a slow, faint shimmer runs otherwise (none under reduced motion).
 
 import { Cartesian2, Cartesian3, Matrix4, SceneTransforms } from 'cesium';
+import { palette } from '../a11y/palette';
 import type { Body, BodyView, Globes } from '../scene/globes';
 
 export interface LatLon {
@@ -39,7 +40,8 @@ export interface BeamsApi {
   drawCount(): number;
 }
 
-const LIGHT = '255, 239, 214';
+// the beam's light comes from the active palette (src/a11y/palette.ts)
+const lightRgb = () => palette().beam.join(', ');
 // Falloff across the beam: wide faint halo to a narrow core; added together they approximate a
 // soft (roughly Gaussian) profile rather than a drawn line.
 const LAYERS = [
@@ -219,6 +221,7 @@ export class Beams implements BeamsApi {
     for (const layer of LAYERS) {
       const g = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
       const k = layer.alpha * s;
+      const LIGHT = lightRgb();
       const c = (v: number) => `rgba(${LIGHT}, ${Math.max(0, Math.min(1, v * k)).toFixed(4)})`;
       g.addColorStop(0, c(endAlpha(a)));
       g.addColorStop(near, c(a.kind === 'point' ? 0.85 : 0.35));
@@ -233,6 +236,7 @@ export class Beams implements BeamsApi {
       ctx.lineTo(b.x, b.y);
       ctx.stroke();
     }
+    const LIGHT = lightRgb();
     for (const e of [a, b]) {
       if (e.kind !== 'point') continue;
       const r = 10 + 16 * s;

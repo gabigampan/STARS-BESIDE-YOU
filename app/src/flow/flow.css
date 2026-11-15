@@ -36,11 +36,11 @@
 .btn-primary {
   background: var(--sodium);
   border-color: var(--sodium);
-  color: #17130b;
+  color: var(--on-accent);
   font-weight: 600;
 }
 .btn-primary:hover {
-  background: #e2c18c;
+  background: var(--accent-hover);
 }
 .btn-icon {
   padding: 0;
@@ -155,7 +155,7 @@
   border: 1px solid var(--danger);
   border-left-width: 4px;
   border-radius: 3px;
-  background: rgba(229, 154, 140, 0.08);
+  background: var(--danger-wash);
 }
 .alert p {
   margin: 0 0 12px;
@@ -238,7 +238,7 @@ button.step-btn:hover {
 .step.is-current .step-num {
   background: var(--sodium);
   border-color: var(--sodium);
-  color: #17130b;
+  color: var(--on-accent);
 }
 .step.is-current .step-label {
   text-decoration: underline;
@@ -1426,8 +1426,8 @@ body.view-open .topbar {
   display: inline-block;
   width: 16px;
   height: 12px;
-  border: 1px solid rgba(240, 226, 196, 0.95);
-  background: rgba(232, 214, 176, 0.16);
+  border: 1px solid var(--zone-line);
+  background: var(--zone-fill);
   flex: none;
 }
 .zone-caption .btn {
@@ -1479,4 +1479,277 @@ body.view-open .topbar {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px dashed var(--edge);
+}
+
+/* ---------- keyboard guide: key hints, the five analogs, shortcuts (src/a11y/keys.ts) ---------- */
+
+.choice-key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.choice-key .key {
+  font-size: max(0.875rem, 1.05em);
+  min-width: 1.9em;
+}
+.intro-keys {
+  margin-top: 12px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5 h3 {
+  margin: 0 0 4px;
+}
+.top5-note {
+  margin-bottom: 8px;
+}
+.top5-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.top5-btn {
+  width: 100%;
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.top5-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--sodium);
+}
+.top5-key {
+  font-size: 1.15em;
+  min-width: 2em;
+}
+.top5-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.top5-place {
+  font-weight: 600;
+}
+.top5-twin {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5-score {
+  display: grid;
+  justify-items: end;
+}
+.top5-score-label {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5-score-val {
+  font: 600 var(--step-1) / 1 var(--font-head);
+}
+.keys-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--step--1);
+}
+.keys-table th,
+.keys-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--edge);
+  vertical-align: top;
+}
+.keys-table td:first-child {
+  white-space: nowrap;
+}
+
+/* phones: what this is and the three choices fit in the first screen */
+@media (max-width: 520px) {
+  .intro {
+    padding: 8px;
+    place-items: start center;
+    overflow-y: auto;
+  }
+  .intro-card {
+    padding: 12px;
+  }
+  .intro-title {
+    font-size: 1.15rem;
+  }
+  .intro-audience {
+    margin-top: 4px;
+  }
+  .intro-cta {
+    margin-top: 8px;
+  }
+  .choices {
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .choice {
+    min-height: 0;
+    padding: 8px 12px;
+    gap: 2px;
+  }
+  .choice-key {
+    position: absolute;
+    right: 44px;
+    top: 10px;
+  }
+  .choice {
+    position: relative;
+  }
+  .choice-meta {
+    display: none;
+  }
+  .intro-foot,
+  .intro-keys {
+    font-size: var(--step--1);
+  }
+}
+@media (max-height: 500px) {
+  .intro {
+    place-items: start center;
+    overflow-y: auto;
+  }
+}
+.card-notes {
+  margin-top: 10px;
+}
+.card-notes > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.card-notes .bundle-note {
+  margin-top: 6px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+@media (max-height: 500px) {
+  .choice {
+    min-height: 0;
+    padding: 8px 12px;
+    gap: 2px;
+  }
+  .choice-meta,
+  .intro-audience {
+    display: none;
+  }
+}
+
+/* ---------- phones: the globes stay usable in every step (team lead's acceptance list) ---------- */
+/* portrait: Earth above, Moon below, each large enough to see and to touch; the panel scrolls beneath */
+@media (max-width: 899px) and (max-aspect-ratio: 1/1) {
+  body.flow[data-step='pick'] .stage,
+  body.flow[data-step='compare'] .stage {
+    grid-template-areas: 'earth' 'moon' 'side';
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(140px, 19dvh) minmax(140px, 19dvh) minmax(0, 1fr);
+  }
+}
+/* landscape (a phone on its side): the two globes on the left, the panel scrolls on the right */
+@media (max-width: 950px) and (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  body.flow[data-step='pick'] .stage,
+  body.flow[data-step='compare'] .stage {
+    grid-template-areas: 'earth moon side';
+    grid-template-columns: 1fr 1fr minmax(300px, 1.1fr);
+    grid-template-rows: minmax(150px, 1fr);
+  }
+  body.flow[data-step='pick'] .stage > .panel,
+  body.flow[data-step='compare'] .stage > .panel {
+    border-top: 0;
+    border-left: 1px solid var(--edge-strong);
+  }
+  body.flow .stage {
+    min-height: 150px;
+  }
+}
+/* the credit line never covers the gesture area: it sits at the bottom edge and lets touches through */
+@media (max-width: 950px) {
+  body.flow .pane .cesium-widget-credits,
+  body.flow .pane .cesium-credit-wrapper {
+    pointer-events: none;
+    max-width: 50%;
+  }
+  body.flow .pane .cesium-widget-credits {
+    left: 4px !important;
+    bottom: 4px !important;
+    right: auto !important;
+  }
+  body.flow .pane .cesium-credit-logoContainer {
+    pointer-events: auto;
+  }
+  body.flow:not([data-step='choose']) .pane-caption .pane-rule,
+  body.flow:not([data-step='choose']) .pane-caption .pane-note {
+    display: none;
+  }
+}
+/* phone on its side: the first screen still shows what this is and the mission cards */
+@media (max-width: 950px) and (max-height: 500px) {
+  .brand {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .topbar {
+    padding: 4px 12px;
+  }
+  .steps {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  .intro {
+    padding: 6px 12px;
+  }
+  .intro-card {
+    padding: 8px 12px;
+  }
+  .intro-title {
+    font-size: 1rem;
+    max-width: none;
+  }
+  .intro-cta {
+    margin: 4px 0;
+  }
+  .choices {
+    gap: 8px;
+  }
+  .choice-line {
+    font-size: var(--step--1);
+  }
+}
+@media (max-width: 950px) and (max-height: 500px) {
+  .choice {
+    position: relative;
+    padding: 6px 10px;
+  }
+  .choice-key {
+    position: absolute;
+    right: 40px;
+    top: 8px;
+  }
+  .choice-key-text {
+    display: none;
+  }
+  .intro-keys,
+  .intro-foot {
+    margin-top: 6px;
+  }
 }

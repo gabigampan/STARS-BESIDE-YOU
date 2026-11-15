@@ -21,6 +21,7 @@
 // Usage: node tests/flow.mjs [--no-build] [--only=twin|notwin|zones] [--sizes=desktop,phone] [--skip-extra] [--extras-only]
 // Screenshots: $SHOTS_DIR (default below).
 
+import * as FX from './lib/fixtures.mjs';
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -37,14 +38,13 @@ const { chromium } = require('playwright');
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(APP, 'dist');
-const SCRATCH = '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars';
-const SHOTS = process.env.SHOTS_DIR ?? join(SCRATCH, 'shots-frontend3');
-const OTHER = process.env.OTHER_BUNDLE ?? join(SCRATCH, 'bundle_global_mean');
+const SHOTS = join(FX.SHOTS_DIR, 'flow');
+const OTHER = FX.NO_TWIN_BUNDLE;
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 const ONLY = arg('only');
 const SIZES = (arg('sizes') ?? 'desktop,phone').split(',');
 const RED = /\bundefined\b|\bNaN\b|\bnull\b|lorem ipsum|title here|\basdf\b|error \d{3}|\[object object\]/i;
-const ZONES = process.env.ZONE_FIXTURE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/fixture_zones';
+const ZONES = FX.ZONE_FIXTURE;
 
 const failures = [];
 const ok = (m) => console.log(`ok   ${m}`);
@@ -768,7 +768,7 @@ async function checkPanel(page, label, store, m, id, twins) {
       if (!b) return;
       const pct = r.def.unit === 'percentile points';
       const close = (txt, v, p1 = pct) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= (p1 ? 0.051 : 0.006 * Math.abs(v) + 0.006);
-      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
+      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.def.unit === 'percentile points' && r.earth != null && r.moon != null ? Math.abs(Math.round(nums(b.vals.earth)[0] * 10) - Math.round(nums(b.vals.moon)[0] * 10)) / 10 : r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
       if (r.real && (!close(b.vals['earth-real'], r.real.earth, false) || !close(b.vals['moon-real'], r.real.moon, false) || !close(b.vals['diff-real'], r.real.diff, false) || !/\bK\b/.test(b.vals['diff-real'] ?? '') === (r.real.unit === 'K'))) bad.push(`real values ${r.def.variable}: ${b.vals['earth-real']} / ${b.vals['moon-real']} / ${b.vals['diff-real']}`);
       if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${setByWords(r.def.tolerance_set_by)}`)) bad.push(`tolerance ${r.def.variable}`);
       if (!b.vals.within.includes(r.within ? 'Within' : 'Outside') || b.within !== String(r.within)) bad.push(`within ${r.def.variable}`);
@@ -805,7 +805,8 @@ async function checkPanel(page, label, store, m, id, twins) {
     const rock = p.info.find((r) => r.v === 'rock_or_bare_frac');
     if (store.text('rock_note') && (!rock || !rock.cells[0].includes(store.text('rock_note')))) bad.push('bare-ground note');
   }
-  const wantMeaning = o.valueRule ? store.text('similarity_meaning_real_values') : twins ? store.text('similarity_meaning') : store.similarity.meaning.split(/(?<=\.)\s/)[0];
+  // the meaning of the mission's own rule (similarity_meaning_<x> naming the mission), from the bundle
+  const wantMeaning = o.valueRule ? (store.textFor('similarity_meaning', m.id)?.text ?? store.text('similarity_meaning_real_values')) : twins ? store.text('similarity_meaning') : store.similarity.meaning.split(/(?<=\.)\s/)[0];
   if (p.meaning !== wantMeaning) bad.push('meaning sentence');
   // other missions
   const others = store.offeredMissions().filter((x) => x.id !== m.id);
@@ -849,7 +850,8 @@ async function checkTop(page, tag, store, explain, m, top) {
     if (mz != null && !near(nums(r.cells[2].split('z ')[1])[0], mz, 2)) bad.push(`moon z ${r.v}`);
   }
   if (!near(nums(p.arith).at(-1), e.final, 2)) bad.push('final');
-  if (!p.confidence.toLowerCase().startsWith(e.confidence) || !near(nums(p.confidence)[0], e.confidence_score, 3)) bad.push('confidence');
+  // revision 8: no confidence in the bundle, none on screen
+  if (e.confidence == null ? p.confidence != null : !p.confidence?.toLowerCase().startsWith(e.confidence) || !near(nums(p.confidence)[0], e.confidence_score, 3)) bad.push('confidence');
   if (e.similarity.twin && (p.twin !== String(e.similarity.twin.id) || !p.lunar.includes(e.similarity.twin.feature))) bad.push('twin');
   if (m.id === 'lunar_base' && e.components?.ice && !p.ice.includes(e.components.ice.pass ? 'Passes the ice filters' : 'Does not pass')) bad.push('ice');
   check(bad.length === 0, `${tag} ${m.id}: top cell ${top.id} panel equals explain.json${bad.length ? ': ' + bad.join('; ') : ''}`);

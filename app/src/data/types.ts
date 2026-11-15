@@ -203,7 +203,17 @@ export interface IceComponent {
   pass_counts: Record<string, number>;
 }
 
+export interface Top5Spec {
+  rule?: string;
+  min_separation_deg?: number | null;
+  min_separation_km?: number | null;
+  ids: number[];
+  overall_ranks?: number[];
+}
+
 export interface Mission {
+  /** Revision 7: the five shown (ids in order) and the rule, in plain English. */
+  top5?: Top5Spec;
   id: string;
   title: string;
   description: string;
@@ -281,7 +291,11 @@ export interface ZoneTwinTarget {
 
 export interface PlaceholderSpec {
   file: string;
-  column: string;
+  /** A single column; absent on a placeholder computed by a named rule (see `rule`). */
+  column?: string;
+  /** Contract 2026-11-15: a named display rule computed from several columns. */
+  rule?: string;
+  columns?: Record<string, string>;
   decimals?: number;
   multiply?: number;
   subtract?: number;
@@ -408,6 +422,8 @@ export interface Twin {
   values: Record<string, number | null>;
   not_part_of_similarity: Record<string, number | string | null>;
   feature: { name: string; type: string; distance_km: number; url: string } | null;
+  /** Revision 7: where the twin lies against NASA's candidate regions, in words ("in" / "at the edge of"). */
+  nasa_region?: { region?: string; phrase?: string; text?: string } | null;
 }
 
 export interface TwinsJson {

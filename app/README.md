@@ -105,8 +105,93 @@ for every Moon coordinate conversion. `Ellipsoid.default` is left as WGS84.
   Cesium's own credit line stays visible on each globe.
 - Loading screen stays until both globes have drawn their first imagery; a failed or slow source
   is named in the message, with a Reload button.
-- Keyboard: `R` or `Home` resets both views; double click resets one globe. Every control is at
+- Keyboard: `Home` resets both views (`R` now repeats the audio guide, see below); double click resets one globe. Every control is at
   least 44 px and shows a focus ring.
+
+## Accessibility layer (`src/a11y/`)
+
+One product: the layer is built into the flow above, not a second app.
+
+### Keyboard map
+
+| Key | Where | What it does |
+| --- | --- | --- |
+| `1` `2` `3` | Start screen | Choose the Rover, Solar panels or Lunar base mission (the order of the bundle's offered missions); each choice shows "Press 1" ... as a visible key hint |
+| `1` to `5` | Mission screen | Open one of the five best analogs (the five large numbered buttons first in the mission panel) |
+| `Esc` | Anywhere | Back one step: pair to mission, mission to start. An open dialog (shortcuts, Data and limits, zone, video) closes first |
+| `R` | Anywhere | Repeat the audio guide's current track from the start (or start it after a reload, when the browser refused to start sound on its own) |
+| `?` | Anywhere | The list of shortcuts (also the "Keys" button in the header, on every screen) |
+| `Home` | Anywhere | Reset both globe views |
+| `Tab`, `Space`, `Enter` | Anywhere | Move between controls and use them; `↑` `↓` move through the ranked list |
+
+Shortcuts never fire with Ctrl, Alt or Cmd held down, inside a text field (the search), a slider,
+a select or a radio group, or while a dialog is open. Focus moves to the heading of each new step;
+the single live region (`#flow-status`) announces each step in one sentence. The five best analogs
+are the team's (ranks 1 to 5 of the bundle under the team's weights, read at run time); when the
+user's own weights are in use the panel says so in words.
+
+### Audio guide and captions
+
+- Switch "Audio guide" in the header, **off by default**, remembered in `localStorage`
+  (`starsBesideYou.audioGuide`; a browser without storage keeps it for the page only). While it is
+  off nothing sounds and no audio file is requested.
+- `src/a11y/audio.ts` owns the only `<audio>` element of the page. Starting a track pauses and
+  rewinds the previous one; two tracks never sound at once.
+- The files are the team's recordings, in `public/audio/` (served as `audio/` beside
+  `index.html`): `00_welcome.mp3`; `m1_rover.mp3`, `m2_solar.mp3`, `m3_base.mp3` (mission
+  introductions); `rover_1.mp3` ... `rover_5.mp3`, `solar_1.mp3` ... `solar_5.mp3`, `base_1.mp3` ...
+  `base_5.mp3` (the five best pairs of each mission). They were recorded by the team (text to speech,
+  American English voice) and are shipped unchanged; `SHA256SUMS.txt` holds their checksums and
+  `npm run test:a11y` checks them. The app never generates, synthesises or edits audio and does not
+  use the browser's speech synthesis.
+- `transcripts.json` maps each file name to the exact text spoken in it: it is the caption, shown
+  character for character, read at run time.
+- `tracks.json` (written for the app) lists every track: `id`, `step` (`start`, `mission`, `pair`),
+  `file`, and for pair tracks `mission`, `rank`, `earth_cell_id` and `moon_cell_id` (from
+  `docs/AUDIO_TOP5.json`: rank n of each mission there is track `<mission>_n`). It holds no caption
+  text. A pair track plays only when the pair on screen has exactly those two cell ids (and the
+  team's weights are in use); otherwise the caption is built from the data on screen and nothing plays.
+- **The five analogs** come from the bundle: `missions.json` `missions[].top5` (`ids` in order,
+  `overall_ranks`, `rule`, revision 7); without it, ranks 1 to 5. A button whose pair is elsewhere in
+  the full ranking says "Ranked N overall"; the rule text and the notes marked `top5` are shown
+  under the five. A pair track plays only for the button number it was recorded as and the same two
+  cell ids; a mission introduction (which names the five) plays only when all five recordings match
+  the bundle's five, otherwise a caption from the screen is shown.
+- **Tracks awaiting a new recording**: `public/audio/pending.json`
+  (`{"pending_rerecord": ["m1_rover.mp3", ...], "note": "..."}`, maintained by the director; absent
+  or empty = none). A listed track shows its (new) caption with "Text only: new recording pending"
+  and is never requested, not even with R.
+- **Notes from the bundle**: every `similarity.json` text with `show` is rendered verbatim in each
+  place it names (`mission_card`: behind "Limits of this list" in the mission panel; `top5`: under
+  the five; `pair_panel`: next to the similarity of every pair; `data_and_limits`: in the dialog),
+  for the missions it names; no per-key code.
+- **Replacing a track**: overwrite the MP3 under the same name, put its new text in
+  `transcripts.json` under the same key and update `SHA256SUMS.txt`
+  (`sha256sum *.mp3 > SHA256SUMS.txt` in `public/audio`). No code change.
+- The caption area (under the steps, on every screen) shows the title of the step, the state in words
+  (Playing, Paused, Finished, Text only, Press R to play, Audio not available: text shown) and a
+  Repeat control. A missing or failing file shows its caption with "Audio not available: text shown"
+  and no error. **Screen readers**: the caption area is not a live region; the live region only
+  announces the step in one short sentence, so the recording and the screen reader never read the
+  same long text and nothing is heard twice. The caption stays readable as ordinary text (and can be
+  scrolled with the keyboard).
+
+### Colour-blind mode and palettes
+
+- Switch "Colour-blind mode" in the header, off by default, remembered
+  (`starsBesideYou.colourBlind`). It swaps the whole palette at once: interface tokens (text,
+  accent, focus ring, buttons, badges, states, zone swatch) and the globe overlays (marker score ramp,
+  selection ring, beam, zone outline, cell outlines), all defined in `src/a11y/palette.ts`.
+- The colour-blind-safe palette uses the Okabe-Ito colours: M. Okabe and K. Ito, "Color Universal
+  Design (CUD): how to make figures and presentations that are friendly to colorblind people",
+  J*Fly, https://jfly.uni-koeln.de/color/ (orange #E69F00, sky blue #56B4E9, bluish green #009E73,
+  yellow #F0E442, blue #0072B2, vermillion #D55E00, reddish purple #CC79A7).
+- Checked by `npm run test:a11y` with the colour-vision-deficiency simulation of the `culori`
+  package (`filterDeficiencyProt`, `filterDeficiencyDeuter`, `filterDeficiencyTrit`, after Machado,
+  Oliveira and Fernandes 2009; https://culorijs.org) and CIEDE2000 distances: in the colour-blind
+  palette every pair of colours that must be told apart stays at least 10 apart under protanopia,
+  deuteranopia and tritanopia, and text contrast is at least 4.5:1 in both palettes. axe-core runs on
+  every screen in both palettes. Independently of colour, every state carries text or an icon.
 
 ## Data files
 

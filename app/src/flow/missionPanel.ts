@@ -5,7 +5,7 @@
 import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { missionLine, missionName, noPairKindWords, roleWord, statusWords } from './copy';
+import { missionLine, missionName, noPairKindWords, roleWord, statusWords, noteText } from './copy';
 import { ceil2, sentenceUnit, type NoPair } from '../data/store.ts';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
@@ -72,6 +72,7 @@ export class MissionPanel {
         h('button', { type: 'button', class: 'linklike', onclick: () => this.app.openLimits(m.id) }, 'Known limitations'),
       ),
       this.limitationNote(m),
+      this.cardNotes(m),
     );
 
     // the counts sit under the list heading, one line, so the list starts in the first view (checklist 06/03)
@@ -178,7 +179,7 @@ export class MissionPanel {
       h(
         'div',
         { class: 'slider slider-alpha' },
-        h('label', { for: 'w-alpha' }, 'Alpha: share of similarity in the final score'),
+        h('label', { for: 'w-alpha' }, 'Share of similarity in the final score (alpha)'),
         aOut,
         aIn,
         h('p', { class: 'slider-team', id: 'w-alpha-team' }, `Team value ${num(m.alpha, 2)}. Final = alpha x similarity + (1 - alpha) x suitability.`),
@@ -273,7 +274,7 @@ export class MissionPanel {
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, details, ranking, about, elim, funnel, levelLegend()));
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, this.topFive(m), details, ranking, about, elim, funnel, levelLegend()));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
@@ -296,7 +297,7 @@ export class MissionPanel {
     if (!mid || !this.app.store.hasTwins(mid) || it.twinId == null) return null;
     const t = this.app.store.twin(mid, it.twinId);
     if (!t) return null;
-    return t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`;
+    return (t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`) + (t.nasa_region?.text ? `, ${t.nasa_region.text}` : '');
   }
 
   /** The ranking, filtered by the search words (place text and lunar twin name). */
@@ -329,10 +330,85 @@ export class MissionPanel {
   }
 
   /** Keyboard focus on the main action of this screen: the first ranked place. */
+  /** A new step: keyboard focus goes to its heading (the five analogs follow it). */
   focusFirst(): void {
-    const row = this.listEl?.querySelector<HTMLElement>('.rank-row');
-    if (row) row.focus({ preventScroll: true });
-    else (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus();
+    (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus({ preventScroll: true });
+  }
+
+  /**
+   * The five analogs of the mission under the TEAM's weights (read from the bundle at run time):
+   * five large numbered buttons, keys 1 to 5; each opens the comparison of that pair.
+   */
+  topFiveItems(m: Mission): (RankItem & { pos: number })[] {
+    const all = this.app.store.ranked(m.id);
+    // revision 7: the bundle names the five (missions.json top5.ids, in order); else ranks 1 to 5
+    const ids = m.top5?.ids;
+    const picked = ids?.length
+      ? ids.map((id) => all.find((p) => p.id === id)).filter((p): p is (typeof all)[number] => !!p)
+      : all.filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+    return picked.slice(0, 5).map((p, i) => ({ ...p, pos: i + 1, place: this.app.placeText(p.id) }));
+  }
+
+  /** The bundle's notes for the mission card (texts with "show": mission_card), behind one labelled disclosure. */
+  private cardNotes(m: Mission): HTMLElement | null {
+    const notes = this.app.store.notesFor('mission_card', m.id);
+    if (!notes.length) return null;
+    return h(
+      'details',
+      { class: 'card-notes', 'data-notes': 'mission_card' },
+      h('summary', null, `Limits of this list (${notes.length})`),
+      ...notes.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(this.app.store, n.text, m))),
+    );
+  }
+
+  /** The heading of the five, as the team worded it (never "best"); the tie count comes from the bundle. */
+  private topFiveHeading(m: Mission, n: number, twins: boolean): string {
+    const count = n === 5 ? 'Five' : String(n);
+    const tie = (m.top5 as { top_tie_n?: number } | undefined)?.top_tie_n;
+    if (tie != null && tie > n) return `${count} of the ${int(tie)} sites tied at the top of our model`;
+    return `${count} of the highest-scoring ${twins ? 'analogs' : 'places'} in our model`;
+  }
+
+  private topFive(m: Mission): HTMLElement {
+    const items = this.topFiveItems(m);
+    const twins = this.app.missionHasTwins(m);
+    const sec = h('section', { class: 'panel-sec top5', 'aria-labelledby': 'top5-title' });
+    sec.append(
+      h('h3', { id: 'top5-title' }, this.topFiveHeading(m, items.length, twins)),
+      h(
+        'p',
+        { class: 'muted top5-note' },
+        this.app.usingCustom()
+          ? "These are the team's top five, ranked with the team's weights. Your own weights are in use in the full ranking below, so its order differs."
+          : `Chosen with the team's weights. Press a number from 1 to ${items.length} to open one.`,
+      ),
+    );
+    const ol = h('ol', { class: 'top5-list' });
+    for (const it of items) {
+      const tw = this.twinWords(it);
+      const b = h(
+        'button',
+        { type: 'button', class: 'top5-btn', 'data-id': String(it.id), 'data-rank': String(it.pos), 'data-overall': String(it.rank ?? ''), 'aria-keyshortcuts': String(it.pos) },
+        h('kbd', { class: 'key top5-key', 'aria-hidden': 'true' }, String(it.pos)),
+        h(
+          'span',
+          { class: 'top5-text' },
+          h('span', { class: 'top5-place' }, h('span', { class: 'sr-only' }, `Analog ${it.pos}: `), it.place),
+          tw ? h('span', { class: 'top5-twin' }, tw.replace(/^Moon: /, 'Lunar twin: ')) : null,
+          it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `Ranked ${int(it.rank)} overall`) : null,
+        ),
+        h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),
+      );
+      b.addEventListener('click', () => void this.app.select(it.id));
+      ol.append(h('li', null, b));
+    }
+    sec.append(ol);
+    // the rule of the five and the bundle's notes for this list (texts with "show": top5), verbatim
+    if (m.top5?.rule) sec.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
+    const tie = (m.top5 as { top_tie_n?: number } | undefined)?.top_tie_n;
+    if (tie != null && tie > 5 && !(m.top5?.rule ?? '').includes(int(tie))) sec.append(h('p', { class: 'muted', 'data-text': 'top5.top_tie_n' }, `${int(tie)} points are tied at the top score.`));
+    for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, noteText(this.app.store, n.text, m)));
+    return sec;
   }
 
   renderList(): void {

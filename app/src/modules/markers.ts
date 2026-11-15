@@ -23,6 +23,7 @@ import {
   type PerspectiveFrustum,
   type PointPrimitive,
 } from 'cesium';
+import { palette } from '../a11y/palette';
 import type { Body, BodyView, Globes } from '../scene/globes';
 
 export type MarkerId = string | number;
@@ -84,13 +85,14 @@ export interface MarkersApi {
 // ---- encoding ----
 // Single hue (warm white, ~40 degrees), varying in lightness and opacity: readable in greyscale and
 // for every colour-vision type because only brightness and size carry the score.
-const LOW = { r: 150, g: 143, b: 131, a: 0.38 };
-const HIGH = { r: 255, g: 247, b: 230, a: 0.98 };
+// the score ramp, low to high, from the active palette (src/a11y/palette.ts)
+const rampLow = () => { const c = palette().markerLow; return { r: c[0], g: c[1], b: c[2], a: c[3] }; };
+const rampHigh = () => { const c = palette().markerHigh; return { r: c[0], g: c[1], b: c[2], a: c[3] }; };
 const SIZE_MIN = 3;
 const SIZE_MAX = 10;
 const OUTLINE = Color.fromBytes(0, 0, 0, 110);
 const HOVER_OUTLINE = Color.fromBytes(255, 255, 255, 235);
-const RING = Color.fromBytes(255, 250, 240, 255);
+const ringColor = () => { const c = palette().ring; return Color.fromBytes(c[0], c[1], c[2], 255); };
 const TEXT = Color.fromCssColorString('#F3EFE6');
 const HALO = Color.fromBytes(0, 0, 0, 235);
 const FONT = '"Barlow Semi Condensed", "Barlow", system-ui, sans-serif';
@@ -104,6 +106,8 @@ const smooth = (e0: number, e1: number, x: number) => {
 
 function baseColor(score: number): Color {
   const s = Math.pow(clamp01(score), 1.4);
+  const LOW = rampLow();
+  const HIGH = rampHigh();
   return new Color(
     (LOW.r + (HIGH.r - LOW.r) * s) / 255,
     (LOW.g + (HIGH.g - LOW.g) * s) / 255,
@@ -171,7 +175,7 @@ class BodyMarkers {
     this.ring = this.overlay.add({
       show: false,
       color: Color.TRANSPARENT,
-      outlineColor: RING,
+      outlineColor: ringColor(),
       outlineWidth: 2,
       pixelSize: 22,
       disableDepthTestDistance: NO_DEPTH,
@@ -182,7 +186,8 @@ class BodyMarkers {
       font: `500 15px ${FONT}`,
       fillColor: TEXT,
       outlineColor: HALO,
-      outlineWidth: 4,
+      // a wide dark halo keeps the name readable over bright ground (deserts, ice)
+      outlineWidth: 6,
       style: LabelStyle.FILL_AND_OUTLINE,
       horizontalOrigin: HorizontalOrigin.LEFT,
       verticalOrigin: VerticalOrigin.CENTER,
@@ -397,14 +402,14 @@ class BodyMarkers {
     if (sel && sel.fade > 0.02) {
       this.ring.position = sel.point.position;
       this.ring.pixelSize = sel.point.pixelSize + 14;
-      this.ring.outlineColor = Color.fromAlpha(RING, sel.fade, this.ring.outlineColor);
+      this.ring.outlineColor = Color.fromAlpha(ringColor(), sel.fade, this.ring.outlineColor);
       this.ring.show = true;
       const text = textFor(sel.item);
       this.selLabel.show = text !== '';
       if (text) {
         this.selLabel.text = text;
         this.selLabel.position = sel.point.position;
-        this.selLabel.pixelOffset = new Cartesian2((sel.point.pixelSize + 14) / 2 + 6, 0);
+        this.selLabel.pixelOffset = new Cartesian2((sel.point.pixelSize + 14) / 2 + 10, -14);
         this.selLabel.fillColor = Color.fromAlpha(TEXT, sel.fade, new Color());
       }
     } else {

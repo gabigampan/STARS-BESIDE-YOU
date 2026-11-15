@@ -707,3 +707,279 @@ a:hover {
     transition: none;
   }
 }
+
+/* ---------- accessibility switches (src/a11y/switches.ts) ---------- */
+
+.switches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  font: 500 var(--step--1) / 1 var(--font-body);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.switch:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.switch-track {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  border: 2px solid var(--text-dim);
+  background: transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: transform 0.15s;
+}
+.switch[aria-checked='true'] .switch-track {
+  background: var(--switch-on);
+  border-color: var(--switch-on);
+}
+.switch[aria-checked='true'] .switch-thumb {
+  transform: translateX(16px);
+  background: var(--on-accent);
+}
+.switch-state {
+  min-width: 2.2em;
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-track,
+  .switch-thumb {
+    transition: none;
+  }
+}
+:focus-visible {
+  outline-color: var(--focus);
+}
+
+/* ---------- guide caption (src/a11y/audio.ts) ---------- */
+
+.caption {
+  flex: none;
+  padding: 6px var(--pad);
+  background: var(--glass-solid);
+  border-bottom: 1px solid var(--edge);
+  position: relative;
+  z-index: 4;
+}
+.caption-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.caption-title {
+  font: 600 var(--step--1) / 1.2 var(--font-head);
+}
+.caption-state {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.caption-state::before {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 6px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  vertical-align: 0.05em;
+}
+.caption[data-state='playing'] .caption-state {
+  color: var(--text);
+}
+.caption[data-state='playing'] .caption-state::before {
+  background: var(--sodium);
+  border-color: var(--sodium);
+}
+.caption-more {
+  margin-left: auto;
+}
+.caption-repeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+.caption-text {
+  margin-top: 2px;
+  font-size: var(--step--1);
+  max-width: 110ch;
+}
+/* unfolded (the guide is on, or "Show the full text"): the whole transcript; a very long one scrolls
+   inside a box that is reachable with Tab and has a visible scroll bar, never cut */
+.caption[data-expanded='true'] .caption-text {
+  max-height: none;
+  overflow: visible;
+}
+/* folded: two lines and a fade, with "Show the full text" beside the title */
+.caption[data-expanded='false'] .caption-text {
+  max-height: 2.9em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+.caption-more {
+  min-height: 44px;
+}
+kbd.key {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 5px;
+  font: 600 max(0.875rem, 0.85em) / 1.3 var(--font-body);
+  text-align: center;
+  color: var(--text);
+  border: 1px solid var(--edge-strong);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+}
+
+/* ---------- phones: a compact header so that the globes keep their room ---------- */
+@media (max-width: 899px) {
+  .topbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+  }
+  .brand-name {
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  .brand-line {
+    display: none;
+  }
+  .topbar-tools {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .switches {
+    order: 5;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+  .switch {
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .topbar-tools > .btn {
+    padding: 0 10px;
+  }
+  .caption {
+    padding: 8px 12px 4px;
+  }
+  .caption-head {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .caption-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .caption-state {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .caption-repeat {
+    flex: none;
+    padding: 0 10px;
+  }
+  .caption[data-expanded='false'] .caption-text {
+    max-height: 1.45em;
+  }
+  .caption-title {
+    display: none;
+  }
+}
+@media (max-height: 500px) and (max-width: 950px) {
+  /* phone in landscape: one header row, the caption in one line */
+  .switches {
+    order: 0;
+    flex: 0 1 auto;
+  }
+  .caption[data-expanded='false'] .caption-text {
+    max-height: 1.45em;
+  }
+
+}
+@media (max-width: 520px) {
+  /* the name stays the page heading for screen readers; the row goes to the controls */
+  .brand {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .topbar-tools {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 520px) {
+  .switch {
+    padding: 0 6px;
+    gap: 4px;
+  }
+  .switch-track {
+    width: 32px;
+  }
+  .switch[aria-checked='true'] .switch-thumb {
+    transform: translateX(10px);
+  }
+  .switch-state {
+    min-width: 1.7em;
+  }
+}
+/* laptops: the header stays on one row with both switches and Keys */
+@media (min-width: 900px) and (max-width: 1799px) {
+  .brand-line {
+    display: none;
+  }
+  .topbar {
+    gap: 12px;
+  }
+  .switch {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  /* the whole state in words stays visible ("Text only: new recording pending") */
+  .caption-head {
+    flex-wrap: wrap;
+  }
+  .caption-state {
+    white-space: normal;
+    overflow: visible;
+    flex: 1 1 100%;
+    order: 5;
+  }
+}

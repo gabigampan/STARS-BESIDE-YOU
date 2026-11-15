@@ -8,6 +8,7 @@
 // bundle has no zone data.
 
 import { Cartesian2, Ellipsoid, ImageryLayer, Rectangle, SingleTileImageryProvider } from 'cesium';
+import { palette } from '../a11y/palette';
 import { globesApi } from '../api';
 import type { Mission, MissionZonesJson, ZoneRegion } from '../data/types.ts';
 import type { FlowApp } from './app';
@@ -57,6 +58,11 @@ export class ZoneView {
     this.app.updateMoonNote();
   }
 
+  /** Draw the zone again in the active palette. */
+  repaint(): void {
+    if (this.missionId) this.draw(this.missionId);
+  }
+
   hide(): void {
     this.seq++;
     this.missionId = null;
@@ -88,9 +94,10 @@ export class ZoneView {
     canvas.height = H;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    ctx.fillStyle = 'rgba(232, 214, 176, 0.10)';
+    const pal = palette();
+    ctx.fillStyle = `rgba(${pal.zoneLine.join(', ')}, ${pal.zoneFillAlpha})`;
     for (let r = 0; r < g.rows; r++) for (let c = 0; c < g.cols; c++) if (mask[r * g.cols + c]) ctx.fillRect(c * PX_PER_CELL, r * PX_PER_CELL, PX_PER_CELL, PX_PER_CELL);
-    ctx.fillStyle = 'rgba(240, 226, 196, 0.8)';
+    ctx.fillStyle = `rgba(${pal.zoneLine.join(', ')}, 0.85)`;
     const at = (r: number, c: number) => (r < 0 || r >= g.rows ? 0 : mask[r * g.cols + ((c + g.cols) % g.cols)]);
     for (let r = 0; r < g.rows; r++) {
       for (let c = 0; c < g.cols; c++) {

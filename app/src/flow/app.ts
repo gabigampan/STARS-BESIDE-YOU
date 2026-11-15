@@ -15,6 +15,9 @@ import { MissionPanel } from './missionPanel';
 import { renderSteps, type Step } from './steps';
 import { h } from './dom';
 import { ZoneView } from './zones';
+import { a11y } from '../a11y';
+import { onPalette } from '../a11y/palette';
+import { missionLine, purposeText } from './copy';
 
 export interface RankItem extends RankedPoint {
   place: string;
@@ -42,7 +45,7 @@ export class FlowApp {
   private custom: { scores: MissionScores; items: RankItem[]; rankOf: Map<number, number> } | null = null;
   private recomputeTimes: number[] = [];
   private recomputeSeq = 0;
-  private missionPanel!: MissionPanel;
+  missionPanel!: MissionPanel;
   private readonly status = document.getElementById('flow-status') as HTMLElement;
   private readonly intro = document.getElementById('intro') as HTMLElement;
   private readonly detail = document.getElementById('detail-panel') as HTMLElement;
@@ -58,6 +61,19 @@ export class FlowApp {
     this.setStep('choose');
     this.missionPanel = new MissionPanel(this, document.getElementById('mission-panel') as HTMLElement);
     this.renderIntro();
+    this.updateGuide();
+    // colour-blind mode: every overlay of the globes takes the new palette at once
+    onPalette(() => {
+      if (this.state.missionId && this.state.step !== 'choose') this.updateMarkers();
+      this.zones.repaint();
+      try {
+        (globesApi.focus as unknown as { repaint?: () => void }).repaint?.();
+        globesApi.scene('earth').requestRender();
+        globesApi.scene('moon').requestRender();
+      } catch {
+        /* globes not created */
+      }
+    });
     this.ready = this.start();
   }
 
@@ -74,6 +90,7 @@ export class FlowApp {
     if (this.dataReady) document.body.classList.toggle('has-twins', this.store.hasTwins());
     this.renderIntro();
     this.renderSteps();
+    this.updateGuide();
     if (this.dataReady) {
       renderDataDialog(this.store, (m) => this.ruleText(m), (m) => meaningText(this, m));
       // Place names for the list come next; they are small and needed as soon as a mission is open.
@@ -274,6 +291,7 @@ export class FlowApp {
     }
     const m = this.store.mission(id);
     const c = this.store.pairCounts(id);
+    if (!opts.keepSelection) this.updateGuide();
     this.announce(
       `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth pass its filters` +
         (c.unpaired > 0 && this.missionHasTwins(m) ? `; ${c.paired.toLocaleString('en-GB')} of them have a lunar twin.` : '.'),
@@ -317,7 +335,59 @@ export class FlowApp {
     this.setStep('choose');
     globesApi.resetView();
     this.renderIntro();
-    (this.intro.querySelector('.choice[aria-pressed="true"], .choice') as HTMLElement | null)?.focus();
+    (this.intro.querySelector('h2') as HTMLElement | null)?.focus();
+    this.updateGuide();
+    this.announce('Start screen: choose a mission with the keys 1, 2 or 3.');
+  }
+
+  // ---------- audio guide ----------
+
+  /** The caption (and, with the guide on, the recording) of the current step. */
+  updateGuide(): void {
+    const g = a11y().guide;
+    const m = this.mission();
+    const step = this.state.step;
+    if (step === 'choose' || !m) {
+      const lines = this.dataReady ? this.store.offeredMissions().map((x, i) => `Press ${i + 1} for ${missionName(x)}: ${missionLine(x)}`) : [];
+      g.setStep({ track: g.track('start'), title: 'Welcome', fallback: [purposeText(this.dataReady && this.store.hasTwins()), ...lines].join(' ') });
+      return;
+    }
+    if (step === 'pick') {
+      g.setStep({
+        // the introduction names the five analogs: offered only when the five pair tracks match the bundle's five
+        track: this.recordedFiveMatch(m) ? g.track('mission', m.id) : null,
+        title: `${missionName(m)} mission`,
+        fallback: `${missionName(m)}. ${missionLine(m)} Five of its analogs are listed first: press a number from 1 to 5 to open one, or Escape to go back.`,
+      });
+      return;
+    }
+    const id = this.state.selectedId;
+    if (id == null) return;
+    const item = this.ranking().find((r) => r.id === id);
+    const twin = item?.twinId != null ? this.store.twin(m.id, item.twinId) : null;
+    // a pair track plays only for the pair it was recorded for (tracks.json ids against the pair on screen)
+    // ... and it holds the same place among the five (its narration says "analog n")
+    const pos = this.missionPanel.topFiveItems(m).find((x) => x.id === id)?.pos;
+    const rec = twin && !this.usingCustom() ? a11y().guide.pairTrack(m.id, `E${id}`, `M${twin.id}`) : null;
+    const track = rec && pos != null && rec.rank === pos ? rec : null;
+    const parts = [`${this.placeText(id)} on Earth.`];
+    if (item?.rank != null) parts.push(`Rank ${item.rank} for the ${missionName(m)} mission${this.usingCustom() ? ' under your own weights' : ''}, final score ${item.final}.`);
+    if (twin) parts.push(`Its lunar twin is ${twin.feature ? `near ${twin.feature.name}` : 'a cell of the lunar zone'}, at ${Math.abs(twin.lat).toFixed(1)}° ${twin.lat >= 0 ? 'N' : 'S'}.`);
+    else parts.push('It has no lunar twin.');
+    parts.push('Press Escape to go back to the list.');
+    g.setStep({ track, title: pos != null ? `Analog ${pos}` : item?.rank != null ? `Rank ${item.rank}` : 'Selected place', fallback: parts.join(' ') });
+  }
+
+  /** True when the recorded pair tracks of a mission are exactly the bundle's five, place by place. */
+  recordedFiveMatch(m: Mission): boolean {
+    const g = a11y().guide;
+    if (!this.store.hasTwins(m.id)) return false;
+    const five = this.missionPanel.topFiveItems(m);
+    if (five.length !== 5) return false;
+    return five.every((it) => {
+      const t = g.track('pair', m.id, it.pos);
+      return !!t && it.twinId != null && t.earth_cell_id === `E${it.id}` && t.moon_cell_id === `M${it.twinId}`;
+    });
   }
 
   // ---------- markers ----------
@@ -467,6 +537,8 @@ export class FlowApp {
     const seq = ++this.detailSeq;
     this.state.selectedId = id;
     this.setStep('compare');
+    // the guide changes at once (the introduction stops, the pair's caption and track start); the panel follows
+    this.updateGuide();
     const ranked = this.rankOf(id) != null;
     globesApi.markers.setSelected('earth', ranked ? id : null);
     this.zones?.closePanel();
@@ -483,6 +555,7 @@ export class FlowApp {
     if (seq !== this.detailSeq) return;
     const o = this.renderDetailNow(id);
     (this.detail.querySelector('h2') as HTMLElement | null)?.focus({ preventScroll: true });
+    this.updateGuide();
     const r = this.rankOf(id);
     this.announce(`${this.placeText(id)}: ${o.pass ? (r != null ? `rank ${r.toLocaleString('en-GB')}` : 'passes, no lunar twin') : 'eliminated for this mission'}.`);
     // the pair on the globes
@@ -534,7 +607,12 @@ export class FlowApp {
       this.viewTopEarth();
     }
     this.missionPanel.render();
+    // back in the list: focus returns to the row of the pair just left (its place in the list)
     if (id != null) this.missionPanel.focusRow(id);
+    else this.missionPanel.focusFirst();
+    this.updateGuide();
+    const m = this.mission();
+    if (m) this.announce(`Back to the ${missionName(m)} mission: its five analogs and the full ranking.`);
   }
 
   async startMission(): Promise<void> {
@@ -556,7 +634,12 @@ export class FlowApp {
 
   /** Why there is no twin, verbatim from the bundle (the mission's similarity.no_twin_reason, else similarity.json's). */
   noTwinText(m: Mission | null = this.mission()): string {
-    return m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
+    const raw = m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
+    // never a rule's identifier on screen: a sentence that names one (snake_case) is left out
+    return raw
+      .split(/(?<=\.)\s+/)
+      .filter((s) => !/\b[a-z]+_[a-z_]+\b/.test(s))
+      .join(' ');
   }
 
   /** The mission's search zone name on the Moon (missions.json similarity.zone, else similarity.json target.zones). */
@@ -612,7 +695,7 @@ export class FlowApp {
     el.append(h('p', null, `Markers: the ${n.toLocaleString('en-GB')} ${what}; larger and brighter means a higher final score; numbers are the top 10 ranks.`));
   }
 
-  /** Turn the Earth camera to the best-ranked places of the open mission. */
+  /** Turn the Earth camera to the top of the open mission's ranking. */
   private viewTopEarth(): void {
     const top = this.ranking()[0];
     if (top) void globesApi.flyTo('earth', top.lat, top.lon, 9000, 1.2);

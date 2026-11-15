@@ -10,6 +10,7 @@
 // and the zone fixture (when present).
 // Usage: node tests/data.mjs [--bundle=DIR ...]   (default: public/data/v2 and $OTHER_BUNDLE)
 
+import * as FX from './lib/fixtures.mjs';
 import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -21,12 +22,11 @@ import { plainText } from '../src/flow/copy.ts';
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // The no-twin variant (rule repo_global_mean), kept outside public/data.
 const OTHER =
-  process.env.OTHER_BUNDLE ??
-  '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/bundle_global_mean';
+  FX.NO_TWIN_BUNDLE;
 const args = process.argv.filter((a) => a.startsWith('--bundle=')).map((a) => a.slice(9));
-const ZONES = process.env.ZONE_FIXTURE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/fixture_zones';
+const ZONES = FX.ZONE_FIXTURE;
 // the revision 5 bundle as shipped this morning (kept to prove the app still reads it)
-const REV5 = process.env.REV5_BUNDLE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/rev5';
+const REV5 = FX.REV5_BUNDLE;
 const bundles = args.length ? args : [join(APP, 'public/data/v2'), ...[OTHER, REV5, ZONES].filter((d) => existsSync(d))];
 // Technical strings that must never reach the interface (column names, interval notation, code)
 const TECHNICAL = /[a-z0-9]_[a-z0-9]|\binf\b|\bNaN\b|\bundefined\b|\bnull\b|\[[^\]]*,[^\]]*\]|\.json\b|\.py\b|\{[a-z_]+\}/;
@@ -167,6 +167,48 @@ for (const dir of bundles) {
       const top = ranked0[0];
       const ps = store.pairSentencesAt(m.id, top.passPos);
       if (ps.length) console.log(`     ${m.id}: per-pair sentence of the top pair: "${ps[0].text}"`);
+      // the per-pair sentences equal the ones the engine wrote in explain.json (where it has them)
+      const explain = existsSync(join(dir, 'explain.json')) ? JSON.parse(await readFile(join(dir, 'explain.json'), 'utf8')) : null;
+      const items = explain?.missions?.[m.id] ?? [];
+      let cmp = 0, diff = 0;
+      for (const it of items) {
+        const want = it.similarity?.pair_sentence;
+        if (typeof want !== 'string') continue;
+        const r = ranked0.find((x) => x.id === it.id);
+        const got = r ? store.pairSentencesAt(m.id, r.passPos).map((x) => x.text) : [];
+        cmp++;
+        if (!got.includes(want)) {
+          diff++;
+          if (diff <= 2) console.log(`     ${m.id} cell ${it.id}: web "${got[0]}" / engine "${want}"`);
+        }
+      }
+      if (cmp) check(diff === 0, `${m.id}: the per-pair sentence equals the engine's in explain.json on all ${cmp} published pairs (${diff} differ)`);
+      // the share lost agrees with the two numbers printed beside it (contract 2026-11-15), on a sample of 500 pairs
+      const tplLoss = store.similarity.texts?.solar_limitation?.placeholders?.loss_pct;
+      if (tplLoss && typeof tplLoss === 'object' && tplLoss.rule && (store.similarity.texts.solar_limitation.missions ?? []).includes(m.id)) {
+        const pairedPos = ranked0.filter((r) => r.final != null).map((r) => r.passPos);
+        const stepK = Math.max(1, Math.floor(pairedPos.length / 500));
+        let n500 = 0, bad500 = 0;
+        for (let k = 0; k < pairedPos.length && n500 < 500; k += stepK) {
+          n500++;
+          const t = store.pairSentencesAt(m.id, pairedPos[k]).find((x) => x.key === 'solar_limitation')?.text ?? '';
+          const mm = /only ([0-9.]+) of those ([0-9.]+) kWh.*?\((\d+) % is lost/.exec(t);
+          if (!mm) { bad500++; continue; }
+          const G = Math.round(Number(mm[1]) * 10), A = Math.round(Number(mm[2]) * 10);
+          if (Math.floor((200 * (A - G) + A) / (2 * A)) !== Number(mm[3])) bad500++;
+        }
+        check(n500 >= Math.min(500, pairedPos.length) && bad500 === 0, `${m.id}: on a sample of ${n500} pairs the share lost agrees with the two printed numbers (${bad500} differ)`);
+        // and the top 5 carry the same percentage as the team's recorded audio (transcripts.json)
+        const tr = existsSync(join(APP, 'public/audio/transcripts.json')) ? JSON.parse(await readFile(join(APP, 'public/audio/transcripts.json'), 'utf8')) : null;
+        if (tr && dir === join(APP, 'public/data/v2')) {
+          // the bundle's five (missions.json top5.ids, revision 7), else ranks 1 to 5
+          const ids5 = m.top5?.ids;
+          const top5 = ids5?.length ? ids5.map((id) => ranked0.find((r) => r.id === id)).filter(Boolean) : ranked0.filter((r) => r.rank != null && r.rank <= 5).sort((a, b) => a.rank - b.rank);
+          const got = top5.map((r) => /\((\d+) % is lost/.exec(store.pairSentencesAt(m.id, r.passPos).find((x) => x.key === 'solar_limitation')?.text ?? '')?.[1] ?? '?');
+          const heard = top5.map((r, i) => /(\d+) percent (?:less|is lost)/.exec(tr[`solar_${i + 1}.mp3`] ?? '')?.[1] ?? '?');
+          check(got.length === 5 && got.join() === heard.join(), `${m.id}: the top 5 sentences carry the same share lost as the recorded audio (${got.join(', ')} / audio ${heard.join(', ')})`);
+        }
+      }
     }
     if (!valueRule) {
     // revision 4: the per-pair variable count and missing bits agree with the z-scores used

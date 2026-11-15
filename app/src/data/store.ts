@@ -49,8 +49,9 @@ export class DataError extends Error {
   constructor(file: string, detail: string) {
     // The technical detail (HTTP status, network error) goes to the console, not on screen.
     super(
-      `The mission data file "${file}" could not be loaded. ` +
-        'Check the network connection and reload the page; if it keeps failing, the site was published without its data folder.',
+      'The mission data could not be loaded. ' +
+        'Check the network connection and reload the page; if it keeps failing, the site was published without its data folder. ' +
+        `(For the team: the missing file is ${file}.)`,
     );
     if (typeof console !== 'undefined') console.warn(`[data] ${file}: ${detail}`);
     this.name = 'DataError';
@@ -290,6 +291,30 @@ export interface MissionOutcome {
 }
 
 /** The shortest decimal that reads back as the same float32 (30.02 stays 30.02, not 30.0200004). */
+/** Tenths of a stored float32 as the browser displays it with 1 decimal, half up (DATA_CONTRACT, 2026-11-15). */
+export function displayedTenths(raw: number): number {
+  const s = f32Decimal(raw).toFixed(12);
+  const i = s.indexOf('.');
+  return Number(s.slice(0, i)) * 10 + Number(s[i + 1]) + (Number(s[i + 2]) >= 5 ? 1 : 0);
+}
+
+/**
+ * A placeholder computed by a named display rule of the contract; null when the rule is unknown or a
+ * value is missing (the sentence is then not shown half-filled).
+ */
+export function applyDisplayRule(spec: PlaceholderSpec, read: (column: string | undefined) => number | null): number | null {
+  if (spec.rule === 'share_lost_of_displayed_tenths') {
+    const above = read(spec.columns?.above);
+    const ground = read(spec.columns?.ground);
+    if (above == null || ground == null || above < 0 || ground < 0) return null;
+    const A = displayedTenths(above);
+    const G = displayedTenths(ground);
+    if (A <= 0) return null;
+    return Math.floor((200 * (A - G) + A) / (2 * A));
+  }
+  return null;
+}
+
 export function f32Decimal(x: number): number {
   if (!Number.isFinite(x)) return x;
   for (let d = 1; d <= 9; d++) {
@@ -642,7 +667,7 @@ export class DataStore {
     if (!t) return '';
     const template = t.variants?.[kind] ?? (kind === 'no_joint_match' && typeof t.variant_no_joint_match === 'string' ? t.variant_no_joint_match : t.text);
     const label = (d: PairVariable | null) => (d ? midSentence(d.label) : 'a key variable');
-    const gapText = (x: number | null) => (x == null ? 'no value' : nfSentence(ceil2(x), 2));
+    const gapText = (x: number | null) => (x == null ? 'no value' : new Intl.NumberFormat('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(ceil2(x)));
     const filled = template
       .replace(/\{variable2\}/g, label(def2))
       .replace(/\{gap2\}/g, gapText(gap2))
@@ -667,20 +692,36 @@ export class DataStore {
     if (!md.pairs || p < 0 || !md.twin || md.twin[p] === this.manifest.encoding.int32_missing) return out;
     for (const [key, t] of Object.entries(this.similarity.texts ?? {})) {
       const forThis = (t.missions ?? (t.mission ? [t.mission] : [])).includes(missionId);
-      const specs = Object.entries(t.placeholders ?? {}).filter((e): e is [string, PlaceholderSpec] => typeof e[1] === 'object' && e[1] !== null && 'column' in e[1]);
+      const specs = Object.entries(t.placeholders ?? {}).filter(
+        (e): e is [string, PlaceholderSpec] => typeof e[1] === 'object' && e[1] !== null && ('column' in e[1] || 'rule' in e[1]),
+      );
       if (!forThis || !specs.length) continue;
       let text = t.text;
       let completed = true;
       for (const [name, spec] of specs) {
         const fileTable = spec.file === md.pairs.entry.name ? md.pairs : spec.file === md.table.entry.name ? md.table : null;
-        const raw = fileTable ? this.q(fileTable, spec.column, p) : null;
-        if (raw == null) {
+        const read = (col: string | undefined) => (fileTable && col ? this.q(fileTable, col, p) : null);
+        let shown: string | null = null;
+        if (spec.rule) {
+          const v = applyDisplayRule(spec, read);
+          if (v != null) shown = String(v);
+        } else {
+          const raw = read(spec.column);
+          if (raw != null) {
+            const halfUp = !!t.display_rule;
+            const v = ((halfUp ? f32Decimal(raw) : raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
+            const d = spec.decimals ?? 1;
+            // a template with a display_rule (half up, as the browser displays a float32) is filled with
+            // Intl; the others as the contract says: toFixed(decimals) of the stored value, like the
+            // engine's f"{x:.{d}f}" (DATA_CONTRACT, per-pair sentence)
+            shown = halfUp ? new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v) : v.toFixed(d);
+          }
+        }
+        if (shown == null) {
           completed = false;
           break;
         }
-        const v = (f32Decimal(raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
-        const d = spec.decimals ?? 1;
-        text = text.split(`{${name}}`).join(new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v));
+        text = text.split(`{${name}}`).join(shown);
       }
       if (completed && !/\{[a-z_]+\}/.test(text)) out.push({ key, text });
     }
@@ -700,6 +741,22 @@ export class DataStore {
     if (!bits || k < 0 || p < 0) return false;
     const b = bits[p];
     return b !== this.manifest.encoding.int32_missing && ((b >>> k) & 1) === 1;
+  }
+
+  /**
+   * The bundle's notes that must be visible in one place (similarity.json texts with "show"), for one
+   * mission (texts without "missions" apply to all), verbatim, in the bundle's order.
+   */
+  notesFor(place: 'mission_card' | 'top5' | 'pair_panel' | 'data_and_limits', missionId: string | null): { key: string; text: string; missions: string[] | null }[] {
+    const out: { key: string; text: string; missions: string[] | null }[] = [];
+    for (const [key, t] of Object.entries(this.similarity.texts ?? {})) {
+      const show = (t as { show?: unknown }).show;
+      if (!Array.isArray(show) || !show.includes(place) || typeof t.text !== 'string' || /\{[a-z_]+\}/.test(t.text)) continue;
+      const ms = Array.isArray(t.missions) ? (t.missions as string[]) : null;
+      if (missionId != null && ms && !ms.includes(missionId)) continue;
+      out.push({ key, text: t.text, missions: ms });
+    }
+    return out;
   }
 
   /** An approved web text of the bundle (similarity.json texts.<key>.text), verbatim; null when absent. */
@@ -727,7 +784,9 @@ export class DataStore {
       const onlyFor = /about lunar_base/.test(t.where) ? 'lunar_base' : null;
       if (onlyFor && missionId !== onlyFor) template = first;
     }
-    return template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
+    const filled = template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
+    // one Earth point, not "1 Earth points"
+    return earthCells === 1 ? filled.replace(/\b1 Earth points\b/, '1 Earth point') : filled;
   }
 
   // ---------- grid ----------
@@ -812,7 +871,8 @@ export class DataStore {
       const ni = (this.placeTable.cols['nearest_place'] as Int32Array)[landPos];
       const nk = (this.placeTable.cols['nearest_place_km'] as Float32Array)[landPos];
       if (ni !== missing) out.nearest = this.placeDetail.nearest_places[ni] ?? null;
-      if (!Number.isNaN(nk)) out.nearestKm = nk;
+      // the stored float32 as its shortest decimal, rounded once where it is shown
+      if (!Number.isNaN(nk)) out.nearestKm = f32Decimal(nk);
     }
     // The region comes only from a nearby place in the same country (places.json region_rule);
     // without it the label is the country alone (the nearest place may be far away).

@@ -33,10 +33,13 @@
         <p class="sr-only" id="sunlight-status" role="status" aria-live="polite"></p>
         <button type="button" class="btn" id="labels-toggle" aria-pressed="true"><span class="toggle-box" aria-hidden="true"></span><span class="toggle-text">Place names: on</span></button>
         </div>
+        <div class="switches" id="switches" role="group" aria-label="Accessibility"></div>
+        <button type="button" class="btn" id="keys-button" aria-haspopup="dialog" aria-keyshortcuts="?">Keys</button>
         <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Data and limits</button>
       </div>
     </header>
     <nav class="steps" id="steps" aria-label="Steps"></nav>
+    <section class="caption" id="guide-caption"></section>
 
     <main class="stage" id="stage">
       <section class="pane" id="earth-pane" aria-label="Earth globe">
@@ -82,6 +85,14 @@
         <button type="button" class="btn btn-icon" id="credits-close" aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
       <div class="credits-body" id="credits-body"></div>
+    </dialog>
+
+    <dialog class="credits keys-dialog" id="keys-dialog" aria-labelledby="keys-title">
+      <div class="credits-head">
+        <h2 id="keys-title">Keyboard shortcuts</h2>
+        <button type="button" class="btn btn-icon" id="keys-close" aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="credits-body" id="keys-body"></div>
     </dialog>
 
     <p class="sr-only" id="flow-status" role="status" aria-live="polite"></p>

@@ -17,6 +17,8 @@ import { Sunlight, bindSunlightControl } from './modules/sunlight';
 import { VideoDialog } from './modules/video';
 import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupViewMenu } from './ui/shell';
 import { FlowApp } from './flow/app';
+import { a11y, type A11y } from './a11y';
+import { setupKeys } from './a11y/keys';
 
 declare global {
   interface Window {
@@ -24,10 +26,14 @@ declare global {
     starsBesideYou?: typeof globesApi;
     /** The product flow (state, data store, actions), for the console and automated tests. */
     starsFlow?: FlowApp;
+    /** The accessibility layer (switches, audio guide, palette), for the console and tests. */
+    starsA11y?: A11y;
   }
 }
 
 function main(): void {
+  // the switches, caption and palette first: they are on every screen, even when the 3D view fails
+  window.starsA11y = a11y();
   const loading = new LoadingScreen(IMAGERY_TIMEOUT_MS);
   let globes;
   try {
@@ -66,7 +72,13 @@ function main(): void {
 
   globes.earth.onStatus((s) => loading.update('earth', s));
   globes.moon.onStatus((s) => loading.update('moon', s));
-  void loading.finished.then((error) => settleImagery(error));
+  void loading.finished.then((error) => {
+    settleImagery(error);
+    // the loading screen has closed: keyboard focus goes to the heading of the first screen
+    if (!error && window.starsFlow?.state.step === 'choose' && (document.activeElement === document.body || !document.activeElement)) {
+      (document.getElementById('intro-title') as HTMLElement | null)?.focus({ preventScroll: true });
+    }
+  });
 
   globes.moonLabels.load().catch((err: unknown) => {
     // Names are secondary: the Moon stays usable, and the reason is shown in the caption.
@@ -74,8 +86,22 @@ function main(): void {
     if (note) note.textContent = `Feature names unavailable (${err instanceof Error ? err.message : String(err)})`;
   });
 
-  setupCredits(
-    ionEnabled()
+  setupCredits([
+    {
+      source: 'Audio guide (19 recordings)',
+      used: 'The spoken guide of the start screen, the three mission introductions and the five best pairs of each mission (public/audio). Off by default; its text is always shown as a caption.',
+      credit: 'Recorded by the Stars Beside You team (text to speech, American English voice); shipped unchanged, with SHA-256 checksums.',
+      licence: "The team's own recordings for this project.",
+      link: '',
+    },
+    {
+      source: 'Colour-blind mode palette: Okabe-Ito colours',
+      used: 'Every colour of the interface and of the globe overlays when "Colour-blind mode" is on; checked with the culori colour-vision-deficiency simulation (protanopia, deuteranopia, tritanopia).',
+      credit: 'M. Okabe and K. Ito, "Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people", J*Fly.',
+      licence: 'Published colour values.',
+      link: 'https://jfly.uni-koeln.de/color/',
+    },
+    ...(ionEnabled()
       ? [
           {
             source: 'Cesium ion (optional upgrade)',
@@ -85,8 +111,8 @@ function main(): void {
             link: 'https://cesium.com/platform/cesium-ion/',
           },
         ]
-      : [],
-  );
+      : []),
+  ]);
   setupLabelsToggle(setLabels);
   setupViewMenu();
   setupResetButtons((body) => globesApi.resetView(body));
@@ -110,6 +136,7 @@ function main(): void {
 function startFlow(): void {
   if (new URLSearchParams(window.location.search).get('flow') === 'off') return;
   window.starsFlow = new FlowApp();
+  setupKeys(window.starsFlow, a11y());
 }
 
 main();
