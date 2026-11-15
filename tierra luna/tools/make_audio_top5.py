@@ -939,10 +939,10 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
         "the Earth, and pair each Earth site with a lunar twin. There are three missions. Press one for the Rover, matched on slope and "
         "roughness. Press two for Solar panels, matched on sunlight. Press three for the Lunar base, matched on the cold and its daily swing.")
     t["m1_rover"] = (
-        "Rover. A rover needs ground it can drive on, so we match places on slope and roughness only. On the Moon we search near the "
+        "Rover. We match places on slope and roughness only: the ground a rover drives on. On the Moon we search near the "
         "south pole, where NASA plans to look for water ice. Many sites differ from their lunar twin by less than the elevation data can "
-        f"measure, so they all tie at the top score. Here are five of the {with_commas(n_tie)} sites tied at the top of our model, chosen "
-        f"to be spread across the world, leaving out cells that are mostly ice or water. All five share the same final score, half "
+        f"measure, so they tie at the top score. Here are five of the {with_commas(n_tie)} sites tied at the top of our model, chosen "
+        f"to be spread across the world. All five share the same final score, half "
         f"likeness and half suitability. {keys}")
     t["m2_solar"] = (
         "Solar panels. A solar panel lives on sunlight, so we match places on the sunlight that arrives each day above the atmosphere. "
@@ -952,8 +952,8 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
         f"suitability, led by clear skies, decides the order. {keys}")
     pe, pm = M["lunar_base"]["populations"]["EARTH"], M["lunar_base"]["populations"]["MOON"]
     t["m3_base"] = (
-        "Lunar base. A base must endure the cold, so we match places on their coldest temperature and its daily swing. On the Moon we "
-        "search NASA's nine candidate landing regions near the south pole, where NASA plans to land its crews. The Moon is far colder "
+        "Lunar base. A base must endure the cold, so we match on the coldest temperature and its daily swing. On the Moon we "
+        "search NASA's nine candidate landing regions near the south pole, where NASA plans crewed landings. The Moon is far colder "
         "than Earth, so we compare position, not temperature: how each site ranks among Earth's "
         f"{with_commas(pe)} candidates, and its twin among the {pm} lunar cells of those regions. Here are five of the highest-scoring "
         f"analogs in our model, ordered by the final score: half likeness and half suitability. {keys}")

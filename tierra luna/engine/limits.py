@@ -127,6 +127,31 @@ def external_validation(res, earth_ids: np.ndarray, cfg: Dict[str, Any], mcfg: D
     return out
 
 
+def _site_name(name: str) -> str:
+    """Short site name: a second trailing parenthesis (a locality) is dropped."""
+    return re.sub(r"\s*\([^()]*\)$", "", name) if name.count("(") > 1 else name
+
+
+def site_list_validation(res, earth_ids: np.ndarray, mcfg: Dict[str, Any], grid) -> Dict[str, Any]:
+    """Funnel, twin and published rank of the sites of an external validation list
+    (research r4 lists, read as research/r4_rank_sites.py reads them: rows not starting
+    with '#', 1-degree cell of lat/lon). Describes the ranking; changes nothing."""
+    with open(resolve_path(mcfg["sites_csv"]), encoding="utf-8", newline="") as fh:
+        rows = list(csv.DictReader([ln for ln in fh if not ln.startswith("#")]))
+    out = []
+    for r in rows:
+        lat, lon = float(r["lat"]), float(r["lon"])
+        cell = min(int(math.floor(90.0 - lat)), grid.rows - 1) * grid.cols + min(int(math.floor(lon + 180.0)), grid.cols - 1)
+        i = int(np.searchsorted(earth_ids, cell))
+        ok = i < len(earth_ids) and earth_ids[i] == cell
+        rk = int(res.rank[i]) if ok else 0
+        out.append({"site_id": r["site_id"], "role": r["role"], "name": _site_name(r["name"]), "cell": cell,
+                    "passes_funnel": bool(ok and res.earth_gates.passed[i]),
+                    "fail": list(res.earth_gates.reasons[i]) if ok else [], "rank": rk or None})
+    return {"sites": out, "ranked_points": int((res.rank > 0).sum()),
+            "passing_points": int(np.asarray(res.earth_gates.passed).sum())}
+
+
 # ----------------------------------------------------------------------------- lunar zone regions
 def twin_region_shares(moon: pd.DataFrame, twin_ids: List[int], cfg: Dict[str, Any], radius_km: float) -> Dict[int, Dict[str, Any]]:
     """For each lunar cell id: the configured region it shares most area with and that share
@@ -332,6 +357,24 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
                 "missions": [mid], "show": ev_cfg["show"], "decision": ev_cfg["decision"], "source": mv["source"],
                 "text": fill(mv["text"], {"positives": ordinal_list(pos), "mismatches": ordinal_list(mis),
                                           "unverified": ordinal_list(unver), "ranked": fmt_int(ev["ranked_points"])})}
+        elif mv and mv.get("sites_csv"):
+            ev = site_list_validation(res, ids, mv, ds.grid)
+            ext[mid] = ev
+            def item(r, tpl):
+                return tpl.replace("{name}", r["name"]).replace("{rank}", fmt_int(r["rank"] or 0)).replace(
+                    "{reasons}", _reasons(r["fail"], mission_cfg, mid, names))
+            P = [r for r in ev["sites"] if r["role"] == "positive"]
+            N = [r for r in ev["sites"] if r["role"] == "negative"]
+            vals = {"pos_n": fmt_int(len(P)), "neg_n": fmt_int(len(N)),
+                    "pos_pass_n": fmt_int(sum(r["passes_funnel"] for r in P)),
+                    "pos_twin_n": fmt_int(sum(bool(r["rank"]) for r in P)),
+                    "neg_pass_n": fmt_int(sum(r["passes_funnel"] for r in N)),
+                    "ranked": fmt_int(ev["ranked_points"]), "passing": fmt_int(ev["passing_points"]),
+                    "paired": ordinal_list([item(r, mv["paired_item"]) for r in P if r["rank"]]) or "none",
+                    "unpaired": ordinal_list([item(r, mv["unpaired_item"]) for r in P if r["passes_funnel"] and not r["rank"]]) or "none",
+                    "failing": ordinal_list([item(r, mv["failing_item"]) for r in P if not r["passes_funnel"]]) or "none"}
+            texts[f"external_validation_{mid}"] = {"missions": [mid], "show": ev_cfg["show"], "decision": mv.get("decision", ev_cfg["decision"]),
+                                                   "source": mv["source"], "text": fill(mv["text"], vals)}
         elif mv:
             texts[f"external_validation_{mid}"] = {"missions": [mid], "show": ev_cfg["show"], "decision": ev_cfg["decision"],
                                                    "source": mv["source"], "text": mv["text"]}

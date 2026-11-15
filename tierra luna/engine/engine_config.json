@@ -1486,13 +1486,23 @@
           "source": "computed at build from tierra luna/data/benchmark/analog_benchmark.csv and rover_preset.py MOBILITY_POSITIVES / MOBILITY_MISMATCHES, with the auditor's rule for unverified coordinates (docs/stats_audit/3_robustez_validacion_ranking.md section 6.1)"
         },
         "solar": {
-          "text": "No external validation exists for Solar panels: no site of our benchmark was chosen as an analog for solar energy, so there is no list of known places to check the ranking against.",
-          "source": "docs/stats_audit/3_robustez_validacion_ranking.md section 6.1 ('Placas solares ... Ningún sitio del CSV se usó para energía solar, así que no hay positivos propiamente dichos')"
-        },
+            "sites_csv": "data/benchmark/validation_sites_solar.csv",
+            "decision": "2026-11-15 12:10 CET re-audit of Lunar base (docs/stats_audit/9_reauditoria_base.md: the earlier text said the passing sites had no twin, which is false); research r4 site lists",
+            "paired_item": "{name} (number {rank})",
+            "unpaired_item": "{name} (passes, but its sunlight finds no lunar twin)",
+            "failing_item": "{name} (does not pass the funnel: {reasons})",
+            "text": "What was checked against known places: {pos_n} solar radiation stations of the world network (BSRN) in sunny places, and {neg_n} cloudy stations in Scotland and Shetland as a contrast. Of the sunny stations, {pos_pass_n} pass the Solar panels funnel and {pos_twin_n} have a lunar twin; in the ranking of {ranked} paired points they come out as {paired}. Passing without a twin (too far from the equator for the sunlight of the lunar maria): {unpaired}. Not passing: {failing}. Of the {neg_n} cloudy stations, {neg_pass_n} pass the funnel. The check describes the ranking, it does not prove it.",
+            "source": "computed at build from tierra luna/data/benchmark/validation_sites_solar.csv (research r4; the same figures as tierra luna/research/r4_rank_sites.py run on the bundle)"
+          },
         "lunar_base": {
-          "text": "No external validation exists for Lunar base: the cold and polar analog sites of our benchmark do not pass the Lunar base funnel (no land surface temperature in Antarctica, or a daily swing below the 15 K gate), and the benchmark sites that pass it have no twin among the cells of NASA's nine candidate regions.",
-          "source": "docs/stats_audit/3_robustez_validacion_ranking.md section 6.1 ('Base lunar (N = 450) ... No hay, por tanto, validación externa positiva de Base lunar con este benchmark')"
-        }
+            "sites_csv": "data/benchmark/validation_sites_lunar_base.csv",
+            "decision": "2026-11-15 12:10 CET re-audit of Lunar base (docs/stats_audit/9_reauditoria_base.md: the earlier text said the passing sites had no twin, which is false); research r4 site lists",
+            "paired_item": "{name} (number {rank})",
+            "unpaired_item": "{name} (passes, but finds no twin among the cells of NASA's nine candidate regions)",
+            "failing_item": "{name} ({reasons})",
+            "text": "What was checked against known places: {pos_n} stations and analog field sites used for space research in cold, high or thermally harsh places, and {neg_n} warm, humid tropical stations as a contrast. Of the {pos_n}, {pos_pass_n} pass the Lunar base funnel and {pos_twin_n} have a twin; in the ranking of {ranked} paired points they are {paired}. Passing without a twin: {unpaired}. The other sites do not pass the funnel: {failing}. The recognised polar stations are analogs of cold and isolation, not of a large daily temperature swing, so the 15 K swing gate removes them. Of the {neg_n} tropical stations, {neg_pass_n} pass the funnel. The check describes the ranking, it does not prove it.",
+            "source": "computed at build from tierra luna/data/benchmark/validation_sites_lunar_base.csv (research r4; the same figures as tierra luna/research/r4_rank_sites.py run on the bundle: MDRS rank 335, Craters of the Moon rank 179, as found by docs/stats_audit/9_reauditoria_base.md)"
+          }
       }
     },
     "why": "Decision of 2026-11-15 11:23 CET: re-audit Rover with an external validation (Qaidam, Haughton, Ramon and Yungay) and state honestly what was checked. The Rover rank percentiles are recomputed at every build under the shipped rule (100 x (rank - 0.5) / ranked points, the auditor's definition)."
