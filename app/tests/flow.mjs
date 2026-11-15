@@ -850,7 +850,8 @@ async function checkTop(page, tag, store, explain, m, top) {
     if (mz != null && !near(nums(r.cells[2].split('z ')[1])[0], mz, 2)) bad.push(`moon z ${r.v}`);
   }
   if (!near(nums(p.arith).at(-1), e.final, 2)) bad.push('final');
-  if (!p.confidence.toLowerCase().startsWith(e.confidence) || !near(nums(p.confidence)[0], e.confidence_score, 3)) bad.push('confidence');
+  // revision 8: no confidence in the bundle, none on screen
+  if (e.confidence == null ? p.confidence != null : !p.confidence?.toLowerCase().startsWith(e.confidence) || !near(nums(p.confidence)[0], e.confidence_score, 3)) bad.push('confidence');
   if (e.similarity.twin && (p.twin !== String(e.similarity.twin.id) || !p.lunar.includes(e.similarity.twin.feature))) bad.push('twin');
   if (m.id === 'lunar_base' && e.components?.ice && !p.ice.includes(e.components.ice.pass ? 'Passes the ice filters' : 'Does not pass')) bad.push('ice');
   check(bad.length === 0, `${tag} ${m.id}: top cell ${top.id} panel equals explain.json${bad.length ? ': ' + bad.join('; ') : ''}`);
