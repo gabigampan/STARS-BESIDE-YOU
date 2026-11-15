@@ -175,7 +175,8 @@ def test_lunar_base_stability_from_the_auditor(sim, missions):
                 f"and in the top 20 in {100 * e['share_top20']:.1f} %") in t["text"]
     assert f"in {round(a['corrected']['five_identical_set'] * a['runs'])} of the {a['runs']} simulations" in t["text"]
     for mid in ("rover", "solar"):
-        assert sim["texts"][f"top5_stability_{mid}"]["text"] == "Stability figures pending the independent re-audit."
+        # filled by the re-audit text pass (tests/test_texts_reaudit.py checks the figures)
+        assert sim["texts"][f"top5_stability_{mid}"]["status"] == "audited"
 
 
 def test_lunar_base_weights_renormalised_and_rock_level(sim, missions):

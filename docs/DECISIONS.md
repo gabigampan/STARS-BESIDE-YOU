@@ -33,7 +33,7 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 
 ### 2. Idoneidad de Paneles solares (opción E2, aprobada 11:51)
 - Fuera de la suma ponderada: `sun_elev_max_deg` (0,15) y `sun_low_frac_0_5deg` (0,15), geometría de la latitud; `irradiance_kwh_m2_day` (0,35), MODELADA (WorldClim) y repite lo que ya compara la similitud. Sus puertas siguen (incluida irradiancia en suelo ≥ 2,5). La irradiancia en suelo, la luz sobre la atmósfera y la parte perdida siguen en la frase de cada pareja.
-- Dentro: `clear_frac_isccp`, peso 0,35, malo 0,308 y bueno 0,671 = percentiles 10 y 90 entre los 18.777 puntos que pasan el embudo (recalculados: 0,3079 y 0,6711; 3 puntos sin valor, con su peso renormalizado). Fuente: ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016, DERIVADO; Rossow y Schiffer 1999. Leída de `real_data/supplement/earth_cloud_isccp_1deg.csv` por el nuevo mecanismo de columnas suplementarias (`datasets.json` `supplements`, `engine/dataset.py` `load_supplements`).
+- Dentro: `clear_frac_isccp`, peso 0,35 (los pesos suman 0,70 y la idoneidad se divide por esa suma: en la práctica es la mitad de la idoneidad, 0,35 de 0,70), malo 0,308 y bueno 0,671 = percentiles 10 y 90 entre los 18.777 puntos que pasan el embudo (recalculados: 0,3079 y 0,6711; 3 puntos sin valor, con su peso renormalizado). Fuente: ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016, DERIVADO; Rossow y Schiffer 1999. Leída de `real_data/supplement/earth_cloud_isccp_1deg.csv` por el nuevo mecanismo de columnas suplementarias (`datasets.json` `supplements`, `engine/dataset.py` `load_supplements`).
 - Antes / después: pasan 18.777 / 18.777; emparejados 6.360 / 6.360; gemelos distintos 1.704 / 1.704; Spearman idoneidad-|latitud| entre los que pasan +0,337 (investigación: ~+0,34); 7 de los 50 primeros coinciden con la mañana (investigación: 7). Cinco antes (11:23): E38464, E38744, E37746, E37750, E29749; después: E40184, E29749, E23648, E29746, E28670.
 
 ### 3. Idoneidad de Base lunar (opción R, aprobada 11:51)
@@ -1061,3 +1061,53 @@ Reescritos `zone_edge_lunar_base` (la frase que se imprime junto a cada gemelo),
 ### No hecho en este paso
 
 Mover la configuración muerta del motor (la entrada de zona solar "latitude <= -75", las tolerancias de referencia sin uso, la escala por rango agregado) a un bloque `legacy`: exige cambiar las lecturas del código y no cabía en el tiempo sin riesgo; queda pendiente.
+
+## Reauditoría independiente del modelo corregido (15-11-2026)
+
+Un auditor por misión, sobre el modelo d24ebb3 y los textos de final-integration. Cifras leídas de `docs/stats_audit/9_reauditoria_rover.json`, `9_reauditoria_solar.json` y `9_reauditoria_base.json` (y sus `.md`).
+
+### Veredictos
+
+| Misión | Veredicto | Commit | Números | Textos (antes de esta pasada) |
+|---|---|---|---|---|
+| Rover | **GO final** | rama audit-rover, 6c3750c | GO (0 diferencias en 10.337 puntos; vuelta atrás exacta) | NOT YET: T1, T4, T5, T6, T7, T8 |
+| Paneles solares | **GO final** | rama audit-solar, 89a5c52 | GO (0 diferencias en 18.777 puntos; vuelta atrás exacta) | NOT YET: F1, F4, estabilidad pendiente |
+| Base lunar | **GO** | 57ab46a y posteriores | GO (2.419 / 450 / 103; 0 diferencias) | GO tras la primera pasada de textos (0486ad9) |
+
+### Estabilidad y validación externa (como las dan los informes)
+
+- **Rover** (200 simulaciones): cada uno de los cinco está entre los cinco mostrados en el 52,5 / 43,0 / 65,0 / 87,5 / 67,0 % de las corridas y sigue en el grupo empatado arriba en el 72,5 / 43,0 / 88,5 / 100,0 / 74,0 %; los mismos cinco exactos salen en el 10,5 % (60 quintetos distintos); el grupo empatado conserva un 89 % de sus miembros (mediana); el gemelo de cada uno se conserva en el 17,5 a 38 %; con pesos ±10 %, 10 de 10. Validación verificada: mediana 8,1 % frente a 9,2 % por la mañana, separación 0,906 en ambos.
+- **Paneles solares** (200 simulaciones): entre los cinco 9,5 / 7,0 / 13,0 / 1,5 / 0,5 %; en el top 20 40,0 / 37,5 / 31,5 / 14,5 / 12,5 %; los mismos cinco nunca se repiten (0 de 200); con pesos ±10 %, 14 de 14 con el mismo gemelo. Validación BSRN: clasificación completa 8,3 % frente a 14,9 % (mejor); dentro de la fila de latitud 28,8 % frente a 27,9 % (igual); 9 de 11 en el cuartil superior.
+- **Base lunar** (200 simulaciones): entre los cinco 18,0 / 23,0 / 19,0 / 18,0 / 22,5 %; en el top 20 51,5 / 52,5 / 43,5 / 38,0 / 59,0 %; los mismos cinco 0 de 200. Validación: separación 0,615 (igual que por la mañana); MDRS 13,8 % (número 335) y Craters of the Moon 7,4 % (número 179).
+
+### Lo que sigue débil (criterios decididos, no fallos de implementación)
+
+- **Rover:** qué cinco se muestran es inestable (empate de 254 en la cabeza); Bardenas y Tabernas caen a un 68,2 % y un 71,5 % por la fracción de suelo desnudo.
+- **Paneles solares:** dentro de la fila de latitud no es mejor que la latitud sobre las estaciones BSRN; una celda sin dato de nubes (E34142, Sulawesi) es la 16.ª por la renormalización de su peso.
+- **Base lunar:** los cinco nunca se repiten en 200 corridas; E17538 falla el embudo en el 36,5 % de las corridas.
+
+### Correcciones de texto de esta pasada (ningún número cambia)
+
+Todas en el origen (`engine/engine_config.json`, `engine/datasets.json`, `engine/limits.py`, `engine/export_v2.py`); cifras leídas por script de los JSON de la reauditoría o de la configuración:
+
+- **T1** Puntuación de Rover: `missions.json` `similarity.score` de Rover, `similarity.json` `real_value.score_by_mission` (nuevo, por misión), `real_value.meaning`, `rule_options.real_value_tolerance`, `texts.similarity_meaning_real_values`, el texto del embudo y la descripción de `s.slope_deg` / `s.roughness_m` en `manifest.json` describen ahora la banda muerta: s = 1 si |d| ≤ sigma y exp(-0,5·max(0, |d|/sigma − 1)²) fuera de ella, sigma 0,265093° y 17,401661 m. Paneles solares y Base lunar conservan su gaussiana sobre la tolerancia.
+- **T7** `rover_slope_minimum`: cifras de la regla publicada (`slope_min_study_corrected`): 26 de los 50 primeros serían puntos añadidos, todos con pendiente < 0,5°; celdas de agua en el top 50 de 12 a 25; un gemelo con el 16,4 % frente al 2,6 %.
+- **T6** `top5_stability_rover` rellenado (cifras de arriba) y dicho en palabras: qué cinco se muestran no es estable; la pertenencia al grupo empatado, en su mayoría, sí.
+- **T4** Nota de la regla de agua: "confirmada por el líder a las 12:10 CET del 15-11-2026" (los tres conjuntos de criterios).
+- **T5** Lugares lejanos: la pantalla solo nombra el lugar poblado más cercano a 300 km o menos (si no, país o región y coordenadas); ningún texto del bundle presenta un lugar más lejano como nombre de una celda (comprobado por test sobre todos los textos). Celdas clasificadas con el lugar más cercano a más de 300 km: Rover 2.073 de 10.337, Paneles solares 256 de 6.360, Base lunar 0 de 450. `explain.json` conserva el nombre con su distancia (`nearest_place_km`), sin cambio de campo.
+- **T8** `rover_tie` ya no repite la frase de la incertidumbre; la nota de saturación toma como referencia el primer análogo mostrado (número 3 del ranking) y no E3872.
+- **F1** `solar_suitability_clouds` (= `known_limitations[6]`): la fracción de cielo despejado es **la mitad** de la idoneidad (peso 0,35 de 0,70, 50 %), no "35 %".
+- **F2** La misma nota dice que una de las 3 celdas sin dato (Sulawesi, 4,5 S 122,5 E) es la número 16 con idoneidad 96,23 solo por la renormalización, y que no está entre los cinco.
+- **F4** `known_limitations[2]` de Paneles solares reescrita: la irradiancia en el suelo y la geometría solar ya no pesan (la irradiancia solo filtra, ≥ 2,5 kWh/m²/día); criterios: cielo despejado 0,35, pendiente 0,15, amplitud térmica 0,10, rugosidad 0,10.
+- **Nota bajo F3** `external_validation_solar`: dentro de la fila de latitud las estaciones no salen mejor (28,8 % frente a 27,9 %); en la clasificación completa sí (8,3 % frente a 14,9 %): no se demuestra que la idoneidad corregida diga más que la latitud sobre estas estaciones.
+- `top5_stability_solar` rellenado (cifras de arriba).
+- Base lunar: `audit/ra_base_texts.py` sobre el bundle actual; todos los fallos de texto del JSON constan como resueltos en 0486ad9; nada que corregir.
+- Tests: `tierra luna/tests/test_texts_reaudit.py` (nuevo); reparados `test_audit_corrections_1.py::test_audio_top5_places_are_unchanged` y `::test_cell_area_caveat_is_recomputed` para comprobar `docs/AUDIO_TOP5.json` actual contra el bundle (lugar más cercano por círculo máximo, distancia redondeada una vez, áreas de celda recalculadas), sin nombres congelados.
+
+### Vídeo de Base lunar (decisión del líder de las 12:26 CET)
+
+15-11-2026: la tarjeta de cierre del vídeo de Base lunar (40-46 s) se volvió a renderizar después de que se corrigieran los criterios de Base lunar y de que la reauditoría independiente los confirmara. El par no cambia (E17538 con M63528, similitud 97,31), pero ahora es el análogo 2 de los cinco mostrados (puesto 3 en el ranking completo, `missions.json` `top5`), con idoneidad 43,15 y final 70,23, en lugar de "par número 1", 47,27 y 72,29. La parte 3D (0-40 s) no se volvió a renderizar, y `prepare.py` rechaza ahora el vídeo si la posición, el puesto o las puntuaciones de la tarjeta difieren del bundle publicado.
+
+### Punto abierto (punto A de la auditoría)
+
+La configuración muerta que la primera pasada no pudo mover con seguridad (la entrada de zona solar "latitude <= -75", las tolerancias de referencia sin uso, la escala por rango agregado) sigue donde está; moverla a un bloque `legacy` exige cambiar lecturas del código y se deja abierta, sin tocar en esta pasada.
