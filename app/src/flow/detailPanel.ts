@@ -428,7 +428,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         t.feature ? ` (${t.feature.type.replace(/,.*$/, '').toLowerCase()}), ${num(t.feature.distance_km, 1)} km from its centre` : '',
       ),
       h('p', { class: 'coords' }, `Twin cell centre ${latLonText(t.lat, t.lon)} · cell of about ${cellSize(app, t.lat, 'MOON')}`),
-      h('p', { class: 'share', 'data-share': String(share) }, store.twinSharingText(m.id, share) ?? share === 1 ? '1 Earth point has this twin.' : `${int(share)} Earth points share this twin.`),
+      h('p', { class: 'share', 'data-share': String(share) }, store.twinSharingText(m.id, share) ?? (share === 1 ? '1 Earth point has this twin.' : `${int(share)} Earth points share this twin.`)),
       t.feature ? h('p', null, h('a', { href: t.feature.url, target: '_blank', rel: 'noopener' }, `${t.feature.name} in the USGS/IAU Gazetteer of Planetary Nomenclature`, icon('ext'))) : null,
       h(
         'p',

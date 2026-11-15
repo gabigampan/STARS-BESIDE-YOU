@@ -592,9 +592,9 @@ export class FlowApp {
       this.viewTopEarth();
     }
     this.missionPanel.render();
-    // a new step: focus on its heading (the row of the pair stays marked in the list)
-    this.missionPanel.focusFirst();
-    void id;
+    // back in the list: focus returns to the row of the pair just left (its place in the list)
+    if (id != null) this.missionPanel.focusRow(id);
+    else this.missionPanel.focusFirst();
     this.updateGuide();
     const m = this.mission();
     if (m) this.announce(`Back to the ${missionName(m)} mission: its five best analogs and the full ranking.`);

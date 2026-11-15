@@ -1491,7 +1491,7 @@ body.view-open .topbar {
   color: var(--text-dim);
 }
 .choice-key .key {
-  font-size: 1.05em;
+  font-size: max(0.875rem, 1.05em);
   min-width: 1.9em;
 }
 .intro-keys {
@@ -1553,7 +1553,7 @@ body.view-open .topbar {
   justify-items: end;
 }
 .top5-score-label {
-  font-size: 0.75rem;
+  font-size: var(--step--1);
   color: var(--text-dim);
 }
 .top5-score-val {

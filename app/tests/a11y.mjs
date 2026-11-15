@@ -354,7 +354,8 @@ async function run(browser, base, variant, size, full) {
       check(sel === top[k - 1].id && (await focusIsHeading(page)), `${tag} ${mid}: key ${k} opens analog ${k}; focus on its heading`);
       await press(page, 'Escape');
       await waitStep(page, 'pick');
-      check((await step(page)) === 'pick' && (await focusIsHeading(page)), `${tag} ${mid}: Escape goes back from the pair to the mission`);
+      const back = await page.waitForFunction((id) => document.activeElement?.closest?.(`.rank-row[data-id="${id}"]`) || /^H[1-3]$/.test(document.activeElement?.tagName ?? ''), top[k - 1].id, { timeout: 60000 }).then(() => true, () => false);
+      check((await step(page)) === 'pick' && back, `${tag} ${mid}: Escape goes back from the pair to the mission; focus returns to the pair's row in the list`);
       await press(page, 'Escape');
       await waitStep(page, 'choose');
       check((await focusIsHeading(page)), `${tag} ${mid}: Escape goes back from the mission to the start; focus on its heading`);

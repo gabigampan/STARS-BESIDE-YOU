@@ -832,7 +832,7 @@ kbd.key {
   display: inline-block;
   min-width: 1.6em;
   padding: 1px 5px;
-  font: 600 0.85em / 1.3 var(--font-body);
+  font: 600 max(0.875rem, 0.85em) / 1.3 var(--font-body);
   text-align: center;
   color: var(--text);
   border: 1px solid var(--edge-strong);
@@ -874,7 +874,7 @@ kbd.key {
     padding: 0 10px;
   }
   .caption {
-    padding: 2px 12px 4px;
+    padding: 8px 12px 4px;
   }
   .caption-head {
     gap: 8px;
