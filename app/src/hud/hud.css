@@ -1,0 +1,533 @@
+/* Mission Control: the console grows out of the team's mission patch (navy, gold thread, the cyan of
+   the shuttle's plume). Loaded after every other stylesheet: it changes the look and the motion only.
+   Colour tokens that the colour-blind mode swaps live in src/a11y/palette.ts (--text, --text-dim,
+   --sodium = gold accent, --focus, --edge, --hud-cyan, --hud-gold); the rest are here. */
+
+:root {
+  --sky: #050b1a; /* space navy */
+  --glass: rgba(14, 26, 52, 0.6); /* only where nothing WebGL sits underneath */
+  --glass-solid: #0b1530; /* panels beside and over the globes: near-opaque glass, no blur */
+  --glass-over: rgba(5, 11, 26, 0.84); /* the globe tag and reset icon */
+  --hud-cyan: #5fd4f4;
+  --hud-gold: #e9b949;
+  --hair: var(--edge);
+  --font-title: 'Michroma', 'Barlow', system-ui, sans-serif;
+  --font-num: 'IBM Plex Mono', ui-monospace, monospace;
+  /* gold reticle brackets at the four corners, as background layers (no pseudo-element needed) */
+  --brk-c: var(--hud-gold);
+  --brk-l: 10px;
+  --brk-t: 2px;
+  --brackets:
+    linear-gradient(var(--brk-c), var(--brk-c)) top left / var(--brk-l) var(--brk-t) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) top left / var(--brk-t) var(--brk-l) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) top right / var(--brk-l) var(--brk-t) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) top right / var(--brk-t) var(--brk-l) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) bottom left / var(--brk-l) var(--brk-t) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) bottom left / var(--brk-t) var(--brk-l) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) bottom right / var(--brk-l) var(--brk-t) no-repeat,
+    linear-gradient(var(--brk-c), var(--brk-c)) bottom right / var(--brk-t) var(--brk-l) no-repeat;
+}
+
+/* ---------- ground: deep navy and a faint technical grid behind the app ---------- */
+html {
+  background: var(--sky);
+}
+body {
+  background-color: var(--sky);
+  background-image:
+    linear-gradient(rgba(95, 212, 244, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(95, 212, 244, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ---------- square corners everywhere a box is drawn ---------- */
+.btn,
+.switch,
+.switch-track,
+.switch-thumb,
+.seg span,
+.rank-row,
+.top5-btn,
+.choice,
+.tag,
+.level,
+.pair-strip,
+.pair-var,
+.result,
+.meaning,
+.note-box,
+.alert,
+.search-input,
+.panel,
+.credits,
+.video-dialog,
+.intro-card,
+.pane-caption,
+.step-btn,
+.step-num,
+.zone-region,
+.zone-dialog .zone-tapped,
+.list-divider,
+details.panel-sec > summary::before,
+kbd.key,
+body.mf-phone .mf-chip,
+body.is-focused:not(.flow) .stage .panel-detail {
+  border-radius: 0;
+}
+
+/* ---------- type: Michroma (names and titles, sparingly), Barlow (text), Plex Mono (figures) ---------- */
+.brand-name,
+.choice-name,
+.panel-title,
+.pane-title,
+.credits-head h2,
+.video-title,
+.pair-line strong {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+.brand-name {
+  font-size: 1.0625rem;
+  letter-spacing: 0.06em;
+}
+.panel-title {
+  font-size: clamp(1rem, 0.92rem + 0.3vw, 1.25rem);
+  line-height: 1.3;
+}
+.credits-head h2,
+.video-title {
+  font-size: 1.0625rem;
+}
+.choice-name {
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.375rem);
+  line-height: 1.25;
+}
+.pane-title {
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+}
+.pair-line strong {
+  font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.5rem);
+  line-height: 1.3;
+}
+.figs dd,
+.rank-n,
+.rank-final,
+.top5-score-val,
+.slider-val,
+.step-num,
+.coords,
+.reasons .count,
+.arith strong,
+.result .final,
+table.rows .num,
+table.rows .mono,
+table.rows .val,
+.pair-vals dd {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+.figs dd {
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2.25rem);
+  line-height: 1.15;
+}
+.rank-n,
+.top5-score-val,
+.slider-val,
+.result .final,
+.arith strong {
+  font-weight: 500;
+}
+.top5-score-val {
+  font-size: 1.125rem;
+}
+.step-num {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ---------- focus: a 2 px cyan ring on everything interactive ---------- */
+:focus-visible,
+.seg input:focus-visible + span,
+.search-input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- controls ---------- */
+.btn,
+.switch,
+.seg span,
+.search-input {
+  background: rgba(14, 26, 52, 0.55);
+  border-color: var(--edge);
+}
+.btn:hover,
+.switch:hover,
+.seg input:hover + span,
+button.step-btn:hover,
+.rank-row:hover,
+.top5-btn:hover,
+.choice:hover {
+  background: rgba(95, 212, 244, 0.08);
+}
+.btn-primary {
+  background: var(--sodium);
+  border-color: var(--sodium);
+  color: var(--on-accent);
+  box-shadow: 0 0 16px rgba(233, 185, 73, 0.32);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+:root[data-palette='cvd'] .btn-primary {
+  box-shadow: 0 0 16px rgba(86, 180, 233, 0.32);
+}
+.btn[aria-pressed='true'],
+.seg input:checked + span {
+  border-color: var(--sodium);
+  box-shadow: inset 0 -2px 0 var(--sodium);
+}
+/* switches: a square track and a square thumb; on = gold with a soft glow */
+.switch-track {
+  border-width: 1px;
+  border-color: var(--text-dim);
+}
+.switch-thumb {
+  top: 3px;
+  left: 3px;
+}
+.switch[aria-checked='true'] .switch-track {
+  background: rgba(233, 185, 73, 0.18);
+  border-color: var(--switch-on);
+}
+.switch[aria-checked='true'] .switch-thumb {
+  background: var(--switch-on);
+  box-shadow: 0 0 6px var(--switch-on);
+}
+
+/* ---------- panels: near-opaque glass, a cyan hairline, gold corner brackets, no shadows ---------- */
+.topbar,
+.steps,
+.caption {
+  background: var(--glass-solid);
+  border-bottom: 1px solid var(--edge);
+}
+.topbar {
+  position: relative;
+}
+/* the header hairline (drawn from left to right at boot) */
+.topbar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--hud-cyan);
+  opacity: 0.55;
+  transform-origin: left center;
+  pointer-events: none;
+}
+.panel,
+body.flow .stage > .panel {
+  background: var(--brackets), var(--glass-solid);
+  border-color: var(--edge);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.panel-foot {
+  background: var(--glass-solid);
+  border-top-color: var(--edge-strong);
+}
+.credits,
+.video-dialog {
+  background: var(--brackets), var(--glass-solid);
+  border-color: var(--edge-strong);
+}
+.credits-head {
+  background: var(--glass-solid);
+  border-bottom-color: var(--edge);
+}
+.credits::backdrop,
+.video-dialog::backdrop {
+  background: rgba(2, 6, 15, 0.72);
+}
+body.mf-phone .mf-sheet,
+.view-tools {
+  background: var(--glass-solid);
+  border-color: var(--edge-strong);
+  box-shadow: none;
+}
+body.mf-phone .mf-handle {
+  background: var(--glass-solid);
+  border-top-color: var(--edge-strong);
+}
+body.mf-phone .mf-chip {
+  border-color: rgba(233, 185, 73, 0.6);
+}
+
+/* ---------- steps: square numbers; done = cyan, current = gold with a glow ---------- */
+.step-num {
+  border-width: 1px;
+}
+.step.is-current .step-num {
+  background: var(--sodium);
+  border-color: var(--sodium);
+  color: var(--on-accent);
+  box-shadow: 0 0 10px rgba(233, 185, 73, 0.5);
+}
+button.step-btn {
+  border-color: var(--edge);
+}
+button.step-btn .step-num {
+  color: var(--hud-cyan);
+}
+
+/* ---------- the globes are the protagonists: framed by thin corner brackets ---------- */
+.stage {
+  background: var(--sky);
+}
+.pane {
+  background: #000;
+}
+.pane::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  --brk-c: rgba(232, 236, 244, 0.7);
+  --brk-l: 22px;
+  --brk-t: 1px;
+  background: var(--brackets);
+}
+.pane-caption,
+.btn-quiet,
+.pane-reset {
+  background: var(--glass-over);
+  border-color: var(--edge);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) {
+  body.flow .stage {
+    gap: 8px;
+    padding: 8px;
+  }
+}
+
+/* ---------- start screen ---------- */
+.intro {
+  background: radial-gradient(ellipse at center, rgba(5, 11, 26, 0.5), rgba(5, 11, 26, 0.86));
+}
+.intro-card,
+body.mf-phone .intro-card {
+  background: var(--brackets), rgb(11, 21, 48);
+  border-color: var(--edge-strong);
+}
+.choice {
+  background: rgba(14, 26, 52, 0.7);
+  border: 1px solid var(--edge-strong);
+  border-left: 2px solid var(--sodium);
+}
+.choice:hover {
+  border-color: var(--sodium);
+}
+.choice[aria-pressed='true'] {
+  border-color: var(--sodium);
+  box-shadow: 0 0 14px rgba(233, 185, 73, 0.28);
+}
+
+/* ---------- mission panel ---------- */
+.rank-row,
+.top5-btn {
+  background: rgba(14, 26, 52, 0.6);
+  border-color: var(--edge);
+}
+.top5-btn:hover {
+  border-color: var(--sodium);
+}
+details.panel-sec > summary::before {
+  border-color: var(--edge-strong);
+  color: var(--hud-cyan);
+}
+
+/* ---------- the pair card: the three scores as one instrument, the final in gold ---------- */
+.pair-strip {
+  background: rgba(14, 26, 52, 0.5);
+  border-color: var(--edge);
+}
+.figs {
+  gap: 0;
+  border: 1px solid var(--edge);
+}
+.figs .fig {
+  padding: 8px 10px;
+  border-right: 1px solid var(--edge);
+  min-width: 0;
+}
+.figs .fig:last-child {
+  border-right: 0;
+}
+.figs .fig[data-fig='final'] {
+  background: rgba(233, 185, 73, 0.08);
+  box-shadow: inset 0 -2px 0 var(--sodium);
+}
+.figs .fig[data-fig='final'] dd {
+  color: var(--sodium);
+}
+.pair-sentence {
+  border-left-color: var(--hud-cyan);
+}
+.result,
+.meaning,
+.note-box,
+.pair-var {
+  border-color: var(--edge);
+}
+.note-box,
+.zone-dialog .zone-tapped {
+  border-left-color: var(--sodium);
+}
+
+/* 4. count-up: the figure's own text is kept (transparent) and the counting value drawn over it;
+   the generated text has an empty alternative, so assistive technology reads the real figure */
+.figs dd {
+  position: relative;
+}
+.figs dd.hud-counting {
+  color: transparent !important;
+}
+.figs dd.hud-counting::after {
+  content: attr(data-count);
+  content: attr(data-count) / '';
+  position: absolute;
+  inset: 0;
+  color: var(--text);
+  pointer-events: none;
+}
+.figs .fig[data-fig='final'] dd.hud-counting::after {
+  color: var(--sodium);
+}
+
+/* ---------- phones ---------- */
+/* the narrowest phones: the logo and the step chip; the name stays for screen readers */
+@media (max-width: 420px) {
+  body.mf-phone .brand-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+body.mf-phone .brand-name {
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+body.mf-phone .pane::after {
+  --brk-l: 14px;
+}
+
+/* ---------- motion (none of it under reduced motion) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* 1. boot: the header hairline draws, the panels switch on in sequence, the globes fade in.
+        Opacity starts at 0.01, so everything stays clickable from the first frame. */
+  body.hud-boot .topbar::after {
+    animation: hud-draw 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  body.hud-boot .topbar,
+  body.hud-boot .steps,
+  body.hud-boot .stage > .panel,
+  body.hud-boot .intro-card,
+  body.hud-boot .mf-handle {
+    animation: hud-on 420ms ease-out both;
+  }
+  body.hud-boot .steps {
+    animation-delay: 60ms;
+  }
+  body.hud-boot .intro-card,
+  body.hud-boot .stage > .panel,
+  body.hud-boot .mf-handle {
+    animation-delay: 120ms;
+  }
+  body.hud-boot .pane {
+    animation: hud-on 700ms ease-out 180ms both;
+  }
+  body.hud-boot #moon-pane {
+    animation-delay: 240ms;
+  }
+
+  /* 2. choosing a mission: one cyan scan line sweeps once across both globe viewports, and the
+        panel content swaps with a short fade */
+  .pane::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    /* the line is the last 2 px of a full-height layer, with a faint trail above it */
+    background: linear-gradient(to bottom, transparent 72%, rgba(95, 212, 244, 0.1) calc(100% - 2px), var(--hud-cyan) calc(100% - 2px));
+    display: none;
+  }
+  body.hud-scan .pane::before {
+    display: block;
+    animation: hud-scan 450ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  body.hud-scan #mission-panel {
+    animation: hud-on 160ms ease-out both;
+  }
+}
+@keyframes hud-on {
+  from {
+    opacity: 0.01;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hud-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes hud-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+/* reduced motion: direct changes only (the app's own small transitions included) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* the pair's sentence keeps the cyan rule of the mock-up (after .note-box, which it also is) */
+.note-box.pair-sentence,
+.pair-sentence {
+  border-left-color: var(--hud-cyan);
+}

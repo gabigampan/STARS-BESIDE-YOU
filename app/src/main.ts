@@ -2,10 +2,15 @@ import '@fontsource/barlow/latin-400.css';
 import '@fontsource/barlow/latin-500.css';
 import '@fontsource/barlow-semi-condensed/latin-500.css';
 import '@fontsource/barlow-semi-condensed/latin-600.css';
+import '@fontsource/michroma/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
 import 'cesium/Build/Cesium/Widgets/CesiumWidget/CesiumWidget.css';
 import './styles.css';
 import './flow/flow.css';
 import './ui/mobileFold.css';
+import './hud/hud.css';
+import { setupHud } from './hud/hud';
 
 import { bindGlobes, bindNoGlobes, globesApi, settleImagery } from './api';
 import { IMAGERY_TIMEOUT_MS } from './config';
@@ -76,6 +81,16 @@ const CREDITS = () => [
 ];
 
 function main(): void {
+  try {
+    mainInner();
+  } finally {
+    // the Mission Control look's motion (src/hud/hud.ts), started once the synchronous start-up
+    // (Cesium's two viewers) is done, so the boot is not spent behind it; the first paint follows
+    setupHud(() => globesApi.prefersReducedMotion());
+  }
+}
+
+function mainInner(): void {
   // the switches, caption and palette first: they are on every screen, even when the 3D view fails
   window.starsA11y = a11y();
   const loading = new LoadingScreen(IMAGERY_TIMEOUT_MS);

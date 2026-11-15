@@ -3,8 +3,11 @@
 // light: a few soft strokes of decreasing width (falloff across), a gradient along it that is
 // brighter at both ends, and a small glow where it touches each surface. An end on the far side
 // stops at that body's limb and fades; an end outside its globe's canvas fades toward the edge.
-// Redrawn only after a globe renders with a moved camera, on resize, or when the list changes;
-// a slow, faint shimmer runs otherwise (none under reduced motion).
+// Redrawn only after a globe renders with a moved camera, on resize, or when the list changes.
+// Mission Control look: a thin cyan line with a soft halo, and a targeting reticle on the Earth site
+// and on its twin. When a new pair is set, the reticles lock on (scale 1.2 to 1 in 250 ms) and the
+// beam draws from the Earth site to the twin (400 ms); then nothing moves until the camera does.
+// Under reduced motion the pair appears at once.
 
 import { Cartesian2, Cartesian3, Matrix4, SceneTransforms } from 'cesium';
 import { palette } from '../a11y/palette';
@@ -45,12 +48,15 @@ const lightRgb = () => palette().beam.join(', ');
 // Falloff across the beam: wide faint halo to a narrow core; added together they approximate a
 // soft (roughly Gaussian) profile rather than a drawn line.
 const LAYERS = [
-  { width: 30, alpha: 0.03 },
-  { width: 16, alpha: 0.05 },
-  { width: 8, alpha: 0.08 },
-  { width: 3.5, alpha: 0.13 },
-  { width: 1.2, alpha: 0.26 },
+  { width: 10, alpha: 0.06 },
+  { width: 4, alpha: 0.16 },
+  { width: 1.5, alpha: 0.95 },
 ];
+// the reticle's colour: the HUD's gold (the colour-blind palette's accent when that mode is on)
+const reticleColour = () => getComputedStyle(document.documentElement).getPropertyValue('--hud-gold').trim() || '#e9b949';
+const BEAM_MS = 400;
+const LOCK_MS = 250;
+const easeOut = (p: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3);
 
 interface Rect {
   left: number;
@@ -67,8 +73,11 @@ export class Beams implements BeamsApi {
   private draws = 0;
   private readonly lastView: Record<Body, Matrix4> = { earth: new Matrix4(), moon: new Matrix4() };
   private needsDraw = false;
-  private shimmerTimer = 0;
-  private shimmer = 1;
+  /** Start of the lock-on of the current pair (performance.now()), 0 when settled. */
+  private introStart = 0;
+  private introKey = '';
+  private introFrame = 0;
+  private reticle = '#e9b949';
   private readonly scratch = new Cartesian2();
 
   constructor(
@@ -93,8 +102,9 @@ export class Beams implements BeamsApi {
       .map((b) => ({ ...b, strength: Math.min(1, Math.max(0, Number(b.strength) || 0)) }))
       .sort((a, b) => a.strength - b.strength);
     if (this.list.length) this.ensureCanvas();
+    this.reticle = reticleColour();
+    this.startIntro();
     this.schedule();
-    this.updateShimmer();
   }
 
   clearBeams(): void {
@@ -128,17 +138,31 @@ export class Beams implements BeamsApi {
     });
   }
 
-  private updateShimmer(): void {
-    window.clearInterval(this.shimmerTimer);
-    this.shimmerTimer = 0;
-    this.shimmer = 1;
-    if (!this.list.length || this.reducedMotion()) return;
-    // ~8 redraws a second; a 7-second breath of +-5 %.
-    this.shimmerTimer = window.setInterval(() => {
-      if (document.hidden) return;
-      this.shimmer = 1 + 0.05 * Math.sin((performance.now() / 7000) * Math.PI * 2);
+  /** A new selected pair: lock on and draw the beam once (a few hundred ms of frames, then still). */
+  private startIntro(): void {
+    const top = this.list.find((b) => b.strength >= 1);
+    const key = top ? `${top.earth.lat},${top.earth.lon},${top.moon.lat},${top.moon.lon}` : '';
+    if (key === this.introKey) return;
+    this.introKey = key;
+    cancelAnimationFrame(this.introFrame);
+    this.introFrame = 0;
+    this.introStart = 0;
+    if (!key || this.reducedMotion()) return;
+    this.introStart = performance.now();
+    const tick = () => {
+      if (!this.introStart) return;
+      if (performance.now() - this.introStart >= BEAM_MS) this.introStart = 0;
       this.draw(true);
-    }, 125);
+      this.introFrame = this.introStart ? requestAnimationFrame(tick) : 0;
+    };
+    this.introFrame = requestAnimationFrame(tick);
+  }
+
+  /** 0..1 progress of the beam's draw and of the reticles' lock-on (1 when settled). */
+  private progress(): { beam: number; lock: number } {
+    if (!this.introStart) return { beam: 1, lock: 1 };
+    const t = performance.now() - this.introStart;
+    return { beam: easeOut(t / BEAM_MS), lock: easeOut(t / LOCK_MS) };
   }
 
   /** Project a surface point; on the far side, the nearest point of the limb instead. */
@@ -175,7 +199,7 @@ export class Beams implements BeamsApi {
     return { x: rect.left + w.x, y: rect.top + w.y, kind };
   }
 
-  private draw(fromShimmer = false): void {
+  private draw(fromIntro = false): void {
     const canvas = this.canvas;
     const ctx = this.ctx;
     if (!canvas || !ctx) return;
@@ -188,7 +212,7 @@ export class Beams implements BeamsApi {
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    if (!fromShimmer) this.draws++;
+    if (!fromIntro) this.draws++;
     this.drawn = [];
     if (!this.list.length) return;
     const { earth, moon } = this.globes;
@@ -208,12 +232,47 @@ export class Beams implements BeamsApi {
       if (!inside(m, mRect)) m = toEdge(m, mRect);
       this.drawn.push({ earth: a, moon: m, strength: b.strength });
       if (a.kind === 'hidden' || m.kind === 'hidden') continue;
-      this.drawBeam(ctx, a, m, b.strength * this.shimmer);
+      const pr = b.strength >= 1 ? this.progress() : { beam: 1, lock: 1 };
+      this.drawBeam(ctx, a, m, b.strength, pr.beam);
+      if (b.strength >= 1) {
+        ctx.globalCompositeOperation = 'source-over';
+        for (const e of [a, m]) if (e.kind === 'point') this.drawReticle(ctx, e, pr.lock);
+        ctx.globalCompositeOperation = 'lighter';
+      }
     }
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  private drawBeam(ctx: CanvasRenderingContext2D, a: BeamEnd, b: BeamEnd, s: number): void {
+  /** A targeting reticle: a ring, four ticks and four corner brackets; scale 1.2 to 1 while locking on. */
+  private drawReticle(ctx: CanvasRenderingContext2D, e: BeamEnd, lock: number): void {
+    const s = 1.2 - 0.2 * lock;
+    const R = 13 * s;
+    const B = 24 * s; // half size of the bracket square
+    const L = 7 * s; // bracket arm
+    ctx.save();
+    ctx.globalAlpha = 0.35 + 0.65 * lock;
+    ctx.strokeStyle = this.reticle;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(e.x, e.y, R, 0, Math.PI * 2);
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      ctx.moveTo(e.x + dx * (R - 4 * s), e.y + dy * (R - 4 * s));
+      ctx.lineTo(e.x + dx * (R + 6 * s), e.y + dy * (R + 6 * s));
+    }
+    for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+      const cx = e.x + sx * B;
+      const cy = e.y + sy * B;
+      ctx.moveTo(cx - sx * L, cy);
+      ctx.lineTo(cx, cy);
+      ctx.lineTo(cx, cy - sy * L);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  private drawBeam(ctx: CanvasRenderingContext2D, a: BeamEnd, full: BeamEnd, s: number, grow = 1): void {
+    // while drawing in, the beam runs from the Earth site to a point on its way to the twin
+    const b: BeamEnd = grow >= 1 ? full : { x: a.x + (full.x - a.x) * grow, y: a.y + (full.y - a.y) * grow, kind: grow > 0.97 ? full.kind : 'point' };
     const len = Math.hypot(b.x - a.x, b.y - a.y);
     if (len < 1) return;
     const endAlpha = (e: BeamEnd) => (e.kind === 'point' ? 1 : 0);
@@ -225,7 +284,7 @@ export class Beams implements BeamsApi {
       const c = (v: number) => `rgba(${LIGHT}, ${Math.max(0, Math.min(1, v * k)).toFixed(4)})`;
       g.addColorStop(0, c(endAlpha(a)));
       g.addColorStop(near, c(a.kind === 'point' ? 0.85 : 0.35));
-      g.addColorStop(0.5, c(0.42));
+      g.addColorStop(0.5, c(0.7));
       g.addColorStop(1 - near, c(b.kind === 'point' ? 0.85 : 0.35));
       g.addColorStop(1, c(endAlpha(b)));
       ctx.strokeStyle = g;
@@ -236,18 +295,12 @@ export class Beams implements BeamsApi {
       ctx.lineTo(b.x, b.y);
       ctx.stroke();
     }
+    // a small square where the beam touches each surface (the twin's only once the beam reaches it)
     const LIGHT = lightRgb();
-    for (const e of [a, b]) {
+    ctx.fillStyle = `rgba(${LIGHT}, ${(0.95 * s).toFixed(4)})`;
+    for (const e of grow >= 1 ? [a, b] : [a]) {
       if (e.kind !== 'point') continue;
-      const r = 10 + 16 * s;
-      const g = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, r);
-      g.addColorStop(0, `rgba(${LIGHT}, ${(0.45 * s).toFixed(4)})`);
-      g.addColorStop(0.25, `rgba(${LIGHT}, ${(0.16 * s).toFixed(4)})`);
-      g.addColorStop(1, `rgba(${LIGHT}, 0)`);
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(e.x, e.y, r, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillRect(e.x - 2.5, e.y - 2.5, 5, 5);
     }
   }
 }
