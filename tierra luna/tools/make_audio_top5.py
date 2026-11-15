@@ -1181,7 +1181,9 @@ def write_rerecord_md(data: Dict[str, Any], old: Dict[str, str], new: Dict[str, 
         L += [hdr, "|" + "---|" * (hdr.count("|") - 1)]
         for pr in mo["pairs"]:
             ep, mp = pr["earth_place"], pr["moon_place"]
-            place = f"{ep['nearest_named_place']} ({', '.join(x for x in (ep['region'], ep['country']) if x)}), {ep['distance_km_spoken']} km {ep['direction_from_place']}"
+            other = "" if ep["nearest_named_place_same_country"] else f", {ep['nearest_named_place_country']}"
+            place = (f"{', '.join(x for x in (ep['region'], ep['country']) if x)}: {with_commas(ep['distance_km_spoken'])} km "
+                     f"{ep['direction_from_place']} de {ep['nearest_named_place']}{other}")
             twin = f"{mp['nearest_named_feature']}, {mp['distance_km_spoken']} km"
             sc = pr["on_screen_scores"]
             V = {v["variable"]: v for v in pr["variables"]}

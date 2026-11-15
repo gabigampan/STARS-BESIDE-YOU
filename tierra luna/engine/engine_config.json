@@ -1640,17 +1640,17 @@
         "source": "docs/stats_audit/research_3_base_lunar.md and research_4_validacion_externa.md; values recomputed from the Earth table at build; cells as in research/r4_rank_sites.py (data/benchmark/validation_sites_lunar_base.csv)",
         "sites": [
           {
-            "name": "Haughton crater (Devon Island, cell E5130)",
+            "name": "Haughton crater (Devon Island)",
             "lat": 75.5,
             "lon": -89.5
           },
           {
-            "name": "Svalbard, Bockfjorden (cell E3793)",
+            "name": "Svalbard, Bockfjorden",
             "lat": 79.5,
             "lon": 13.5
           },
           {
-            "name": "Kangerlussuaq, ice-sheet margin (cell E8049)",
+            "name": "Kangerlussuaq, ice-sheet margin",
             "lat": 67.5,
             "lon": -50.5
           }

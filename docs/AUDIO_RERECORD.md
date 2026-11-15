@@ -149,11 +149,11 @@ Regla de los cinco (`spread_within_top_tie`): 254 ranked sites share the top pub
 
 | # | Lugar | Coordenadas | Puesto | Gemelo (rasgo, km) | Pendiente T / L (°) | Rugosidad T / L (m) | Sim. | Final |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Gjoa Haven (Canada), 1116 km north | 78.5° N, 102.5° W | 3 | Sverdrup, 69 km | 0.77 / 0.793 | 29.34 / 29.5 | 100.00 | 100.00 |
-| 2 | Comandante Luis Piedra Buena (Santa Cruz, Argentina), 71 km southwest | 50.5° S, 69.5° W | 254 | Zeeman, 51 km | 0.722 / 0.739 | 29.16 / 30.62 | 100.00 | 100.00 |
-| 3 | Peterborough (South Australia, Australia), 81 km northeast | 32.5° S, 139.5° E | 251 | Schrodinger, 24 km | 0.547 / 0.547 | 18.18 / 15.66 | 100.00 | 100.00 |
-| 4 | Dahasuways (Al Mahrah, Yemen), 90 km north | 16.5° N, 50.5° E | 241 | Haynes, 68 km | 0.643 / 0.677 | 21.87 / 19.22 | 100.00 | 100.00 |
-| 5 | Barkewol (Assaba, Mauritania), 96 km north | 17.5° N, 12.5° W | 236 | Drygalski, 29 km | 0.523 / 0.51 | 26.42 / 26.8 | 100.00 | 100.00 |
+| 1 | Canada: 1,116 km north de Gjoa Haven | 78.5° N, 102.5° W | 3 | Sverdrup, 69 km | 0.77 / 0.793 | 29.34 / 29.5 | 100.00 | 100.00 |
+| 2 | Santa Cruz, Argentina: 71 km southwest de Comandante Luis Piedra Buena | 50.5° S, 69.5° W | 254 | Zeeman, 51 km | 0.722 / 0.739 | 29.16 / 30.62 | 100.00 | 100.00 |
+| 3 | South Australia, Australia: 81 km northeast de Peterborough | 32.5° S, 139.5° E | 251 | Schrodinger, 24 km | 0.547 / 0.547 | 18.18 / 15.66 | 100.00 | 100.00 |
+| 4 | Al Mahrah, Yemen: 90 km north de Dahasuways | 16.5° N, 50.5° E | 241 | Haynes, 68 km | 0.643 / 0.677 | 21.87 / 19.22 | 100.00 | 100.00 |
+| 5 | Assaba, Mauritania: 96 km north de Barkewol | 17.5° N, 12.5° W | 236 | Drygalski, 29 km | 0.523 / 0.51 | 26.42 / 26.8 | 100.00 | 100.00 |
 
 ### Solar panels
 
@@ -161,11 +161,11 @@ Regla de los cinco (`rank_with_skips`): The five are ranks 1, 2, 5, 7, 9 of the 
 
 | # | Lugar | Coordenadas | Puesto | Gemelo (rasgo, km) | Luz sobre la atmósfera T / L | Suelo T, perdida | Cielo despejado | Sim. | Final |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | Manja (Menabe, Madagascar), 19 km southeast | 21.5° S, 44.5° E | 1 | Timocharis, 38 km | 9.3 / 9.4 | 5.7, 39 % | 0.675 | 99.83 | 98.88 |
-| 2 | Eyl (Nugaal, Somalia), 64 km southwest | 7.5° N, 49.5° E | 2 | Bessarion, 84 km | 9.9 / 9.9 | 6.2, 37 % | 0.705 | 99.97 | 98.76 |
-| 3 | Jati (Sindh, Pakistan), 29 km northeast | 24.5° N, 68.5° E | 5 | Banting, 58 km | 9.2 / 9.1 | 5.6, 39 % | 0.662 | 99.93 | 98.56 |
-| 4 | Gaalkacyo (Ethiopia), 131 km northwest | 7.5° N, 46.5° E | 7 | Rima Marius, 179 km | 9.9 / 9.9 | 6.1, 38 % | 0.677 | 99.97 | 98.52 |
-| 5 | Iskushuban (Bari, Somalia), 38 km northeast | 10.5° N, 50.5° E | 9 | Catena Dziewulski, 95 km | 9.8 / 9.8 | 6.3, 36 % | 0.792 | 99.94 | 98.37 |
+| 1 | Menabe, Madagascar: 19 km southeast de Manja | 21.5° S, 44.5° E | 1 | Timocharis, 38 km | 9.3 / 9.4 | 5.7, 39 % | 0.675 | 99.83 | 98.88 |
+| 2 | Nugaal, Somalia: 64 km southwest de Eyl | 7.5° N, 49.5° E | 2 | Bessarion, 84 km | 9.9 / 9.9 | 6.2, 37 % | 0.705 | 99.97 | 98.76 |
+| 3 | Sindh, Pakistan: 29 km northeast de Jati | 24.5° N, 68.5° E | 5 | Banting, 58 km | 9.2 / 9.1 | 5.6, 39 % | 0.662 | 99.93 | 98.56 |
+| 4 | Ethiopia: 131 km northwest de Gaalkacyo, Somalia | 7.5° N, 46.5° E | 7 | Rima Marius, 179 km | 9.9 / 9.9 | 6.1, 38 % | 0.677 | 99.97 | 98.52 |
+| 5 | Bari, Somalia: 38 km northeast de Iskushuban | 10.5° N, 50.5° E | 9 | Catena Dziewulski, 95 km | 9.8 / 9.8 | 6.3, 36 % | 0.792 | 99.94 | 98.37 |
 
 ### Lunar base
 
@@ -173,11 +173,11 @@ Regla de los cinco (`rank_with_skips`): The five are ranks 1, 3, 5, 6, 7 of the 
 
 | # | Lugar | Coordenadas | Puesto | Gemelo (rasgo, km), región | Diferencia de mínima (K) | Percentil mínima T / L | Percentil oscilación T / L | Sim. | Final |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | Tinghir (Souss-Massa-Draa, Morocco), 4 km southeast | 31.5° N, 5.5° W | 1 | Wapowski, 18 km; at the edge of NASA's Nobile Rim 2 | 208.6 | 62.7 / 62.7 | 41.9 / 43.4 | 99.36 | 72.00 |
-| 2 | Aheqi (Xinjiang Uygur Zizhiqu, China), 62 km north | 41.5° N, 78.5° E | 3 | Mons Malapert, 25 km; at the edge of NASA's Haworth | 207.4 | 8.4 / 8.0 | 6.7 / 10.2 | 97.31 | 70.23 |
-| 3 | Kherameh (Fars, Iran), 18 km east | 29.5° N, 53.5° E | 5 | Wapowski, 14 km; at the edge of NASA's Nobile Rim 2 | 208.2 | 62.9 / 64.1 | 59.5 / 54.8 | 92.50 | 69.87 |
-| 4 | Waxxari (Xinjiang Uygur Zizhiqu, China), 27 km southeast | 38.5° N, 87.5° E | 6 | Mons Mouton, 49 km; at the edge of NASA's Mons Mouton Plateau | 202.9 | 27.8 / 34.1 | 80.1 / 77.7 | 83.98 | 69.80 |
-| 5 | Aradan (Semnan, Iran), 28 km north | 35.5° N, 52.5° E | 7 | Slater, 49 km; at the edge of NASA's Slater Plain | 207.4 | 53.0 / 54.8 | 55.1 / 51.3 | 93.33 | 69.73 |
+| 1 | Souss-Massa-Draa, Morocco: 4 km southeast de Tinghir | 31.5° N, 5.5° W | 1 | Wapowski, 18 km; at the edge of NASA's Nobile Rim 2 | 208.6 | 62.7 / 62.7 | 41.9 / 43.4 | 99.36 | 72.00 |
+| 2 | Xinjiang Uygur Zizhiqu, China: 62 km north de Aheqi | 41.5° N, 78.5° E | 3 | Mons Malapert, 25 km; at the edge of NASA's Haworth | 207.4 | 8.4 / 8.0 | 6.7 / 10.2 | 97.31 | 70.23 |
+| 3 | Fars, Iran: 18 km east de Kherameh | 29.5° N, 53.5° E | 5 | Wapowski, 14 km; at the edge of NASA's Nobile Rim 2 | 208.2 | 62.9 / 64.1 | 59.5 / 54.8 | 92.50 | 69.87 |
+| 4 | Xinjiang Uygur Zizhiqu, China: 27 km southeast de Waxxari | 38.5° N, 87.5° E | 6 | Mons Mouton, 49 km; at the edge of NASA's Mons Mouton Plateau | 202.9 | 27.8 / 34.1 | 80.1 / 77.7 | 83.98 | 69.80 |
+| 5 | Semnan, Iran: 28 km north de Aradan | 35.5° N, 52.5° E | 7 | Slater, 49 km; at the edge of NASA's Slater Plain | 207.4 | 53.0 / 54.8 | 55.1 / 51.3 | 93.33 | 69.73 |
 
 ## Ficheros que hay que grabar
 

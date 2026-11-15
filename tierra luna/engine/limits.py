@@ -249,7 +249,8 @@ def _plain(var: str, names: Dict[str, str]) -> str:
 def plain_sentence(text: str, names: Dict[str, str]) -> str:
     """A sentence for a user: column names in plain words, file and test references removed
     (they stay in the 'source' fields, which the web does not print)."""
-    text = re.sub(r"\s*\([^()]*\.(?:py|md|json|csv)\b[^()]*\)", "", text)
+    text = re.sub(r"\s*\([^()]*\.(?:py|md|json|csv)\b[^()]*\)", "", text).replace("'agua'", "water").replace(
+        "bad 0.308 and good 0.671", "0.308 (no marks) and 0.671 (full marks)").replace("(bad 0.1 and good 0.7 unchanged)", "(no marks at 0.1 and full marks at 0.7, unchanged)")
     for k in sorted(names, key=len, reverse=True):
         text = re.sub(rf"\b{re.escape(k)}\b", names[k], text)
     return text
@@ -267,9 +268,12 @@ def _reasons(codes: List[str], mission_cfg: Dict[str, Any], mid: str, names: Opt
             out.append(f"no value of {_plain(var, names)}")
         elif kind in ("below_min", "above_max"):
             lo, hi = g.get("min"), g.get("max")
-            rng = (f"{lo:g} to {hi:g}" if lo is not None and hi is not None else
-                   f"at least {lo:g}" if lo is not None else f"at most {hi:g}")
-            out.append(f"{_plain(var, names)} outside {rng}")
+            if lo is not None and hi is not None:
+                out.append(f"{_plain(var, names)} outside {lo:g} to {hi:g}")
+            elif lo is not None:
+                out.append(f"{_plain(var, names)} below {lo:g}")
+            else:
+                out.append(f"{_plain(var, names)} above {hi:g}")
         else:
             out.append(f"{_plain(var, names)} not allowed")
     return ", ".join(out)
@@ -371,8 +375,7 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
                 "text": fill(mv["text"], {"positives": ordinal_list(pos), "mismatches": ordinal_list(mis),
                                           "unverified": ordinal_list(unver), "ranked": fmt_int(ev["ranked_points"])})}
         elif mv and mv.get("sites_csv"):
-            ev = site_list_validation(res, ids, mv, ds.grid)
-            ext[mid] = ev
+            ev = site_list_validation(res, ids, mv, ds.grid)  # text only: not exported as figures
             def item(r, tpl):
                 return tpl.replace("{name}", r["name"]).replace("{rank}", fmt_int(r["rank"] or 0)).replace(
                     "{reasons}", _reasons(r["fail"], mission_cfg, mid, names))
@@ -592,7 +595,7 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
                 v = float(pd.to_numeric(earth[c], errors="coerce").iloc[k])
                 u = float(U[c][k])
                 parts.append(f"{_plain(c, names)} {v:.3g}, utility {u:.2f}, {100 * w[c] * (1 - u):.1f} points lost")
-            return (f"{label} (cell E{int(ids[k])}, number {fmt_int(res.rank[k])}, similarity {res.similarity_pct[k]:.2f}, "
+            return (f"{label} (number {fmt_int(res.rank[k])}, similarity {res.similarity_pct[k]:.2f}, "
                     f"suitability {suit[k]:.2f}): " + "; ".join(parts))
         ex = [site(st["name"], k) for st, k in zip(t["sites"], rows) if k is not None and res.rank[k] > 0]
         ex.append(site("against the tied site " + f"number {int(res.rank[j])}", j))
