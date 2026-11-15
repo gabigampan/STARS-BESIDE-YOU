@@ -94,6 +94,15 @@ a:hover {
 
 .brand {
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-logo {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: block;
 }
 
 .brand-name {

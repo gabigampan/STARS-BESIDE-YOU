@@ -378,6 +378,24 @@ body.flow[data-step='choose'] .pane-rule {
   border: 1px solid var(--edge-strong);
   border-radius: 4px;
 }
+.intro-head {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+}
+.intro-head-text {
+  min-width: 0;
+}
+.intro-logo {
+  flex: none;
+  width: 112px;
+  height: 112px;
+  display: block;
+}
+body.mf-phone .intro-logo {
+  width: 72px;
+  height: 72px;
+}
 .intro-title {
   font: 600 clamp(1.3rem, 1rem + 1.3vw, 2.3rem) / 1.15 var(--font-head);
   max-width: 34ch;
@@ -1900,11 +1918,18 @@ body.view-open .topbar {
   padding-top: 0;
   padding-bottom: 0;
 }
+/* the twin's name may wrap: the overall rank (a number) is never cut */
 .top5-twin {
+  white-space: normal;
+}
+.top5-overall {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .top5-note:empty {
   display: none;
+}
+
+/* phones: the start card is opaque, so the globe's labels and loading notes do not show through it */
+body.mf-phone .intro-card {
+  background: rgb(10, 12, 15);
 }

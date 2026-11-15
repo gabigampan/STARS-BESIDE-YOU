@@ -95,4 +95,8 @@ export function renderCredits(container: HTMLElement, extra: CreditEntry[] = [])
     list.append(dt, used, credit, licence);
   }
   container.append(list);
+  const logo = document.createElement('p');
+  logo.className = 'credit-line';
+  logo.textContent = 'Logo: team Stars Beside You';
+  container.append(logo);
 }

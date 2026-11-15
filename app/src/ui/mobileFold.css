@@ -26,6 +26,10 @@ body.mf-phone .brand {
   clip: auto;
   flex: none;
 }
+body.mf-phone .brand-logo {
+  width: 28px;
+  height: 28px;
+}
 body.mf-phone .brand-name {
   font-size: 1rem;
   white-space: nowrap;

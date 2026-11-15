@@ -8,9 +8,27 @@ import { button, h, icon } from './dom';
 export function renderIntro(root: HTMLElement, app: FlowApp): void {
   const hadFocus = root.contains(document.activeElement) ? (document.activeElement as HTMLElement).dataset.mission : undefined;
   const card = h('div', { class: 'intro-card' });
+  const logo = h('img', {
+    class: 'intro-logo',
+    src: './static/brand/stars-beside-you-logo-192.png',
+    srcset: './static/brand/stars-beside-you-logo-192.png 192w, ./static/brand/stars-beside-you-logo-512.png 512w',
+    sizes: '(max-width: 820px) 72px, 112px',
+    width: '112',
+    height: '112',
+    alt: '',
+  });
   card.append(
-    h('h2', { class: 'intro-title', id: 'intro-title', tabindex: '-1' }, purposeText(app.hasData() && app.store.hasTwins())),
-    h('p', { class: 'intro-audience' }, AUDIENCE),
+    h(
+      'div',
+      { class: 'intro-head' },
+      logo,
+      h(
+        'div',
+        { class: 'intro-head-text' },
+        h('h2', { class: 'intro-title', id: 'intro-title', tabindex: '-1' }, purposeText(app.hasData() && app.store.hasTwins())),
+        h('p', { class: 'intro-audience' }, AUDIENCE),
+      ),
+    ),
   );
   const err = app.error();
   if (err) {
