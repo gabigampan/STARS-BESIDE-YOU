@@ -24,11 +24,17 @@ To change a pair, edit only the scenario JSON (site cell and coordinates, the co
 values, DEM products, Sun season and hour-angle range, object sizes, camera keys, card text,
 captions) and run the same two commands. `prepare.py` refuses to run if a value in
 `table_values` differs from the table row with that `cell_id`, or if the id does not match the
-coordinates.
+coordinates. For the Lunar base video it also refuses to run if a number of the scenario's
+`pair_values` block (the closing card: real values, percentiles, differences, the per-pair
+sentence, the place names, the population sizes and the zone name) differs from the shipped bundle
+(`app/public/data/v2/explain.json`, the item of that rank, and `missions.json`).
 
 Other modes: `--stills 3,14.5` (single frames into `<work>/<name>/stills/`), `--frames a:b`
 (render a range only; already-rendered frames are skipped, so an interrupted render resumes),
-`--encode-only`, `--captions-only`, `--topdown` (straight-down check view, see Checks).
+`--encode-only`, `--captions-only`, `--topdown` (straight-down check view, see Checks),
+`--timeline` (status label, Sun and exposure of every frame without rendering, into
+`<work>/<name>/timeline.json`; prints the frames where the label changes). `prepare.py --checks-only`
+runs the table and bundle checks without the terrain.
 
 ## Files
 
@@ -58,9 +64,18 @@ Other modes: `--stills 3,14.5` (single frames into `<work>/<name>/stills/`), `--
   +/-5 % albedo variation. They change no height, no horizon and no number.
 - **Light.** One Sun (parallel light), a faint 3.5 % ambient fill standing in for light
   reflected by the surrounding ground (assumption), black sky, stars as a dim fixed background
-  (seeded random, not a catalogue). No atmosphere, no glow. Lunar base only: at night a light
-  from the Earth's direction scaled by the Earth's lit fraction is shown with a raised exposure
-  (labelled on screen "exposure raised to show earthshine (not to scale)").
+  (seeded random, not a catalogue). No atmosphere, no glow. Lunar base only: if the Earth is drawn,
+  at night a light from the Earth's direction scaled by the Earth's lit fraction is shown with a
+  raised exposure (labelled "exposure raised to show earthshine (not to scale)"); and, when the
+  scenario sets `render.shadow_exposure` (EX), the display exposure (a camera setting; no light is
+  changed) is 1 while the habitat point sees the whole solar disc, EX while it sees none of it and
+  1 / (1/EX + (1 - 1/EX) x visible disc fraction) in between, a function of t only; the panel says
+  "Exposure raised xN to show the ground in shadow (not to scale)" whenever it is above 1.25.
+- **Status labels (Lunar base).** Each habitat step has an `active` label, shown from `t0` while the
+  part moves, and a `done` label shown only from `t1`, the first frame at which the part is at rest
+  (the motion is a smoothstep that reaches exactly 1 at `t1`). Outside the steps the label follows
+  the Sun at the habitat point (`sun_status`). Captions quote the label at each cue's start;
+  `render.js` refuses to write them if the label changes inside a cue (`captions.cue_rule`).
 - **Earth.** Drawn only where it is above the real terrain horizon: positions from JPL Horizons
   (DE441) for an observer at the site, 2026-2044 every 12 h (see the scenario's
   `earth_visibility`). Lit by the Sun's direction, so its phase is geometric. Libration wander

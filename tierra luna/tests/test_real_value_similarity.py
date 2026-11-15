@@ -41,14 +41,35 @@ ROVER_SOLAR_REV5 = {
     "earth_base.bin": "a3a9787e13e35e04c7c67fd9931781f0a8adc3884353e18feafc0f269eeb0e94",
     "twins.json/missions/rover": "9080f4c605aebde0805d16366af8055ca4e21d2e196c040dbc2ed24142754ec7",
     "explain.json/missions/rover": "0248f0084a20040179a82ef538fe50f6d7004e0ee596cca551f87d2390cc71ec",
-    "missions.json/missions[rover]": "b7325b34db3c1ec1131c9deecfbd694a6cf65780fcaa182ec809ca29be6326d6",
+    "missions.json/missions[rover]": "83dd5f0d09173dff7d88b40e0676db9b149326b461155a4e707bdcaa9b594e8e",
     "lunar_named_sites.json rover": "e5870fb266f43225c7af792e7450e4eaf63aa1991e27f1a0991dd0233bf228b2",
     "twins.json/missions/solar": "5c0a0dc20a2e4ecbf8cd0869f1180bffcefd9043fb8519b7467aeed6a7a57276",
     "explain.json/missions/solar": "3ecb9f2bcfce411336e56a7107de657b620bf6a95725181a246a141357b3e7de",
-    "missions.json/missions[solar]": "38d0fc61b692b812d2a3ab21226694d4bf7febe6d50bd572106b44429dad8b0a",
+    "missions.json/missions[solar]": "c12d01bfc0e09c6273ed9a96112caba9ba12b06805911cbc3518aa6211231482",
     "lunar_named_sites.json solar": "afc05cf7036e65f886e7400ea1fec1d9018fa790566b3f23c50a317bf745178b",
     # the funnel of every mission (utilities and the ice component) did not change either
     "detail tiles: id and the utilities of every mission": "ae49437a90419b1485a2c19a4c1202c8e165ae9bc8742e4ff2234e4e46f99c33",
+}
+
+
+# Wording and display rounding pass of 2026-11-15: the only texts of the Rover and Solar
+# panels parts that changed. The digests above are taken WITHOUT them (missions.json
+# known_limitations; explain.json similarity.pair_sentence, new for solar), so every number,
+# pair, twin and other text is still the revision 5 one, byte for byte; the texts themselves
+# are frozen here. Digests without known_limitations recomputed from the revision 6 bundle
+# shipped before this pass (scratchpad ref-rev6; the full digests were unchanged there).
+KNOWN_LIMITATIONS = {
+    "rover": [
+        "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
+        "Similarity is computed on real values within stated tolerances (team decision of 2026-11-15, morning; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline) and whose relative elevation is within 1,000 m (twice 500 m), with the highest similarity. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
+        "Temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K).",
+        "The soft criteria have no surface-type term: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale.",
+    ],
+    "solar": [
+        "The solar twin is matched on sunlight above the atmosphere (team decision of 2026-11-15, morning): Earth's annual-mean sunlight at the top of the atmosphere (DERIVED from latitude) against the lunar surface irradiance of the equatorial maria (|lat| <= 30 deg, elevation <= -1,200 m), within 0.6 kWh/m2/day, with slope and roughness as secondary criteria. Only part of that sunlight reaches the ground on Earth (shown per pair); on the Moon all of it does, in a lunar day of 29.5 Earth days. The maria receive the sunlight of Earth's tropics, so only points within about 33.5 deg of the equator find a twin; the others keep their suitability with no twin (missions.json similarity.unpaired_reasons).",
+        "Earth irradiance at the ground, sun geometry and the diurnal amplitude are suitability criteria. Earth irradiance at the ground is surface solar energy under the atmosphere and clouds (WorldClim) and lunar irradiance is airless geometry; the solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of facts.moon_pass_abs_lat_max (shown in the lunar fail bits only: lunar cells are not filtered for the similarity).",
+        "Temperature and diurnal amplitude are not part of the solar similarity: their values on both sides and the difference are shown for information. 6,060 passing solar cells (all in Antarctica) have no land surface temperature: the amplitude weight drops out of their suitability with the remaining weights renormalised. None of them has a lunar twin (they lie at 64.5 S or further south, far from the latitudes whose sunlight matches the maria), so they have no similarity, no final score and no confidence.",
+    ],
 }
 
 
@@ -252,8 +273,10 @@ def _rover_solar_digests(files, objs):
             "moon_solar.bin", "earth_base.bin")}
     for m in ("rover", "solar"):
         out[f"twins.json/missions/{m}"] = _digest(objs["twins.json"]["missions"][m])
-        out[f"explain.json/missions/{m}"] = _digest(objs["explain.json"]["missions"][m])
-        out[f"missions.json/missions[{m}]"] = _digest(next(x for x in objs["missions.json"]["missions"] if x["id"] == m))
+        out[f"explain.json/missions/{m}"] = _digest([dict(it, similarity={k: v for k, v in it["similarity"].items() if k != "pair_sentence"})
+                                                      for it in objs["explain.json"]["missions"][m]])
+        out[f"missions.json/missions[{m}]"] = _digest({k: v for k, v in next(x for x in objs["missions.json"]["missions"] if x["id"] == m).items()
+                                                       if k != "known_limitations"})
         out[f"lunar_named_sites.json {m}"] = _digest([[s["cell_id"], (s["missions"] or {}).get(m)]
                                                       for s in objs["lunar_named_sites.json"]["sites"]])
     man = objs["manifest.json"]
@@ -275,6 +298,9 @@ def test_rover_and_solar_are_byte_identical_to_revision_5(real):
     the revision 5 bundle, byte for byte."""
     assert _rover_solar_digests(real["files"], real["objects"]) == ROVER_SOLAR_REV5
     assert real["results"]["lunar_base"].rule == "percentile_and_real_tolerance"
+    ms = {m["id"]: m for m in real["objects"]["missions.json"]["missions"]}
+    for m, texts in KNOWN_LIMITATIONS.items():
+        assert ms[m]["known_limitations"] == texts, m
 
 
 # ----------------------------------------------------------------------------- bundle (contract revision 5)
@@ -328,11 +354,105 @@ def test_solar_pairs_carry_ground_sunlight_and_the_share_lost(real, real_dir, ec
     assert len(re.findall(r"[.!?](?:\s|$)", text["text"])) <= 3
     assert not re.search(r"same (energy|charge|output)|charge(s)? the same|as much (energy|power)", text["text"], re.I)
     for name, ph in text["placeholders"].items():
-        assert "{" + name + "}" in text["text"] and ph["column"] in b.columns(ph["file"])
+        cols = list(ph["columns"].values()) if "columns" in ph else [ph["column"]]
+        assert "{" + name + "}" in text["text"] and set(cols) <= set(b.columns(ph["file"]))
     solar = next(m for m in b.json("missions.json")["missions"] if m["id"] == "solar")
     assert text["text"] not in solar["known_limitations"]                  # a per-pair text, not the mission card
     old = "Read the pair as 'similar terrain', not 'similar sunlight'."
     assert all(old not in x for x in solar["known_limitations"]) and old not in json.dumps(b.json("similarity.json"))
+
+
+def _half_up_tenths_independent(raw: float) -> int:
+    """Tenths of a stored float32 as displayed, computed independently of engine/display.py:
+    the shortest decimal of the float32 (numpy's str) rounded half up with Fraction."""
+    from fractions import Fraction
+    x = Fraction(str(np.float32(raw)))
+    return int(np.floor(x * 10 + Fraction(1, 2)))
+
+
+def test_solar_sentence_share_lost_agrees_with_the_printed_numbers(real, real_dir, ecfg):
+    """Wording and display rounding, 2026-11-15: in texts.solar_limitation the share lost
+    ({loss_pct}) is computed from the two printed numbers ({toa_earth}, {ground_earth},
+    1 decimal each, half up), as integers of tenths, rounded half up; on EVERY solar pair."""
+    from fractions import Fraction
+    from engine.display import SHARE_LOST_RULE, share_lost_percent, tenths
+    from engine.export_v2 import approved_texts_json, fill_pair_sentence
+
+    b = load_bundle(real_dir)
+    pf = "earth_solar_pairs.bin"
+    tpl = b.json("similarity.json")["texts"]["solar_limitation"]
+    ph = tpl["placeholders"]["loss_pct"]
+    assert ph["rule"] == SHARE_LOST_RULE and "column" not in ph and "multiply" not in ph
+    assert ph["columns"] == {"above": "atm.toa_kwh_m2_day", "ground": "atm.ground_kwh_m2_day"}
+    assert "(200 * (A - G) + A) // (2 * A)" in ph["formula"] and "Math.floor((200 * (A - G) + A) / (2 * A))" in ph["formula"]
+    assert approved_texts_json(ecfg)["solar_limitation"] == tpl
+    above, ground = b.column(pf, "atm.toa_kwh_m2_day"), b.column(pf, "atm.ground_kwh_m2_day")
+    col = {c: b.column(pf, c) for c in ("atm.toa_kwh_m2_day", "atm.ground_kwh_m2_day", "irradiance_toa_kwh_m2_day.moon")}
+    lost = b.column(pf, "atm.lost_share")
+    paired = b.int_column("earth_solar.bin", "twin") != b.manifest["encoding"]["int32_missing"]
+    assert paired.sum() == 6360
+    n_changed = 0
+    for p in np.flatnonzero(paired):
+        a, g = _half_up_tenths_independent(above[p]), _half_up_tenths_independent(ground[p])
+        assert (tenths(above[p]), tenths(ground[p])) == (a, g)
+        want = int(np.floor(Fraction(100 * (a - g), a) + Fraction(1, 2)))       # 100 (A - G) / A, half up
+        assert share_lost_percent(above[p], ground[p]) == want
+        filled = fill_pair_sentence(tpl, {c: float(col[c][p]) for c in col})
+        assert f"reach the ground ({want} % is lost" in filled and f"only {g // 10}.{g % 10} of those {a // 10}.{a % 10} kWh/m²/day" in filled
+        n_changed += want != round(100 * float(lost[p]))
+    print(f"solar pairs whose share lost differs from the former rule (100 x atm.lost_share): {n_changed}")
+    # the top 5 read 35, 36, 38, 37, 36 (the team's recorded audio, docs/AUDIO_TOP5.json)
+    lo = b.int_column(pf, "list_order")
+    top = [int(np.flatnonzero(lo == r)[0]) for r in range(1, 6)]
+    assert [share_lost_percent(above[p], ground[p]) for p in top] == [35, 36, 38, 37, 36]
+    # explain.json: the engine fills the same sentence for the published top pairs
+    ex = b.json("explain.json")["missions"]["solar"]
+    assert ex[0]["similarity"]["pair_sentence"].startswith("This pair is matched on sunlight above the atmosphere: 9.6 kWh/m²/day")
+    assert "only 6.2 of those 9.6 kWh/m²/day reach the ground (35 % is lost in the atmosphere)" in ex[0]["similarity"]["pair_sentence"]
+    pos = {int(i): k for k, i in enumerate(b.int_column("earth_base.bin", "id")[b.int_column("earth_solar.bin", "land_index")])}
+    for it in ex:
+        p = pos[it["id"]]
+        assert it["similarity"]["pair_sentence"] == fill_pair_sentence(tpl, {c: float(col[c][p]) for c in col})
+        assert f"({share_lost_percent(above[p], ground[p])} % is lost" in it["similarity"]["pair_sentence"]
+
+
+def test_display_rounding_is_half_up_on_the_shortest_decimal():
+    from engine.display import displayed_text, share_lost_percent, tenths
+    assert [tenths(np.float32(x)) for x in (0.15, 0.25, 6.25, 6.2, 9.6, 0.04, 9.95)] == [2, 3, 63, 62, 96, 0, 100]
+    assert displayed_text(np.float32(-232.4), 0, 0.0) == "-232" and displayed_text(np.float32(41.15), 0, 273.15) == "-232"
+    assert share_lost_percent(9.6, 6.2) == 35 and share_lost_percent(10.0, 6.25) == 37   # 37.0 -> 37 ; 6.25 displays 6.3
+    assert share_lost_percent(8.0, 5.0) == 38 and share_lost_percent(4.0, 2.5) == 38      # 37.5 -> 38 (half up)
+
+
+ARTEMIS_CITATION_KEYS = {"source", "sources", "citation", "doi", "regions_file"}
+
+
+def _strings(obj, path=()):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            yield from _strings(v, path + (k,))
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            yield from _strings(v, path + (i,))
+    elif isinstance(obj, str):
+        yield path, obj
+
+
+def test_no_user_facing_text_names_artemis_iii(real):
+    """Wording pass of 2026-11-15: NASA's pages now give Artemis IV as the first crewed
+    landing; the nine regions were announced in October 2024 for Artemis III. No user-facing
+    text of the bundle says "Artemis III" outside a field that is explicitly a source citation."""
+    objs = real["objects"]
+    hits = []
+    for f in ("missions.json", "similarity.json", "variables.json", "explain.json", "twins.json",
+              "lunar_named_sites.json", "mission_zones.json", "manifest.json"):
+        for path, s in _strings(objs[f]):
+            if "Artemis III" in s and not (set(k for k in path if isinstance(k, str)) & ARTEMIS_CITATION_KEYS):
+                hits.append((f, path, s[:120]))
+    assert not hits, hits
+    names = [s for s in objs["lunar_named_sites.json"]["sites"] if "candidate landing region" in (s.get("why") or "")]
+    assert len(names) == 7 and all(s["why"].startswith("NASA candidate landing region") and s["why"].endswith("(announced October 2024)")
+                                   for s in names)
 
 
 def test_meaning_texts_per_rule(real):

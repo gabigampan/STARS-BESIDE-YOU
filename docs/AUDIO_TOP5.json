@@ -1165,7 +1165,7 @@
        "ground_kwh_m2_day": 6.2,
        "above_atmosphere_kwh_m2_day": 9.6,
        "lost_percent": 35,
-       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+       "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md 'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, from the stored float32), as integers of tenths G and A; lost_percent = (200 * (A - G) + A) // (2 * A) (100 x (A - G) / A rounded half up), so a listener checking by hand gets the same percentage"
       },
       "lost_percent_from_bundle_share": 36
      },
@@ -1362,7 +1362,7 @@
        "ground_kwh_m2_day": 6.1,
        "above_atmosphere_kwh_m2_day": 9.6,
        "lost_percent": 36,
-       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+       "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md 'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, from the stored float32), as integers of tenths G and A; lost_percent = (200 * (A - G) + A) // (2 * A) (100 x (A - G) / A rounded half up), so a listener checking by hand gets the same percentage"
       },
       "lost_percent_from_bundle_share": 37
      },
@@ -1558,7 +1558,7 @@
        "ground_kwh_m2_day": 6.0,
        "above_atmosphere_kwh_m2_day": 9.6,
        "lost_percent": 38,
-       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+       "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md 'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, from the stored float32), as integers of tenths G and A; lost_percent = (200 * (A - G) + A) // (2 * A) (100 x (A - G) / A rounded half up), so a listener checking by hand gets the same percentage"
       },
       "lost_percent_from_bundle_share": 38
      },
@@ -1755,7 +1755,7 @@
        "ground_kwh_m2_day": 6.1,
        "above_atmosphere_kwh_m2_day": 9.7,
        "lost_percent": 37,
-       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+       "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md 'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, from the stored float32), as integers of tenths G and A; lost_percent = (200 * (A - G) + A) // (2 * A) (100 x (A - G) / A rounded half up), so a listener checking by hand gets the same percentage"
       },
       "lost_percent_from_bundle_share": 37
      },
@@ -1952,7 +1952,7 @@
        "ground_kwh_m2_day": 6.1,
        "above_atmosphere_kwh_m2_day": 9.6,
        "lost_percent": 36,
-       "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, so a listener checking by hand gets the same percentage"
+       "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md 'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, from the stored float32), as integers of tenths G and A; lost_percent = (200 * (A - G) + A) // (2 * A) (100 x (A - G) / A rounded half up), so a listener checking by hand gets the same percentage"
       },
       "lost_percent_from_bundle_share": 36
      },

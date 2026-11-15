@@ -643,9 +643,13 @@ def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> st
     for name, ph in (template.get("placeholders") or {}).items():
         if not isinstance(ph, dict) or ph.get("filled_at_build"):
             continue
-        # displayed exactly as the browser displays it; the share lost from the two
-        # displayed values (engine/display.py, wording and display rounding 2026-11-15)
-        text = text.replace("{" + name + "}", fill_placeholder(ph, values))
+        if "display_rule" in template or "rule" in ph:
+            # displayed exactly as the browser displays it; the share lost from the two
+            # displayed values (engine/display.py, wording and display rounding 2026-11-15)
+            text = text.replace("{" + name + "}", fill_placeholder(ph, values))
+        else:  # unchanged rule of the other templates (lunar_base_pair_sentence)
+            x = float(values[ph["column"]]) * float(ph.get("multiply", 1.0)) - float(ph.get("subtract", 0.0))
+            text = text.replace("{" + name + "}", f"{x:.{int(ph['decimals'])}f}")
     return text
 
 

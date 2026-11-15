@@ -18,7 +18,7 @@
 // zone fixture: --only=zones) the Moon shows the mission's zone and the "Why this zone?" panel opens
 // by mouse, by keyboard and from a tap on a lunar cell outside the zone. Every view's text is scanned
 // for technical strings (underscores inside words, "inf", bracketed ranges, Spanish class names).
-// Usage: node tests/flow.mjs [--no-build] [--only=twin|notwin] [--sizes=desktop,phone] [--skip-extra]
+// Usage: node tests/flow.mjs [--no-build] [--only=twin|notwin|zones] [--sizes=desktop,phone] [--skip-extra] [--extras-only]
 // Screenshots: $SHOTS_DIR (default below).
 
 import { spawnSync } from 'node:child_process';
@@ -1090,6 +1090,7 @@ async function extras(browser, srv, exp) {
   // other widths: 768 and 3840
   for (const [w, h] of [[768, 1024], [3840, 2160]]) {
     const { ctx, page } = await page0(w, h);
+    try {
     await page.goto(srv.base);
     await page.waitForFunction(() => window.starsFlow?.hasData() && document.getElementById('loading').hidden, null, { timeout: 300_000 });
     const views = [];
@@ -1121,7 +1122,12 @@ async function extras(browser, srv, exp) {
     check(views.every((v) => !v.hscroll), `${w} px: no horizontal scroll in any view`);
     check(views.every((v) => !v.small.length && !v.smallTargets.length && !v.lowContrast.length && !v.tight.length), `${w} px: text size, contrast, target size and spacing${views.flatMap((v) => [...v.small, ...v.smallTargets, ...v.lowContrast, ...v.tight]).slice(0, 4).map((s) => ': ' + s).join('')}`);
     check(cover.every((c) => c === 'clear'), `${w} px: the panel covers neither selected point (${cover.join(', ')})`);
-    await ctx.close();
+    } catch (e) {
+      fail(`${w} px: stopped: ${e.message.split('\n')[0]}`);
+    } finally {
+      // a page left open keeps software WebGL busy and slows every later run
+      await ctx.close();
+    }
   }
 }
 
@@ -1149,12 +1155,14 @@ try {
     const srv = await serve(DIST, { dataDir: v.dataDir });
     console.log(`\n== ${v.key}: rules ${JSON.stringify(exp.store.manifest.similarity_rules ?? exp.store.similarity.rule)}, contract revision ${exp.store.manifest.contract_revision}`);
     check(exp.store.offeredMissions().every((m) => exp.store.hasTwins(m.id) === !!exp.store.manifest.files.find((f) => f.name === m.files.EARTH).columns.some((c) => c.name === 'twin')), `${v.key}: twins decided from the bundle itself, per mission`);
-    for (const s of sizes) {
+    for (const s of process.argv.includes('--extras-only') ? [] : sizes) {
       try {
         if (v.light) await zoneRun(browser, srv, exp, s);
         else await run(browser, srv, v.key, exp, s);
       } catch (e) {
         fail(`${v.key}-${s.key}: run stopped: ${e.message.split('\n')[0]}`);
+        // close what the stopped run left open: an open page keeps software WebGL busy
+        for (const c of browser.contexts()) await c.close().catch(() => undefined);
       }
     }
     if (v.key === 'twin' && !process.argv.includes('--skip-extra')) {
@@ -1162,6 +1170,7 @@ try {
         await extras(browser, srv, exp);
       } catch (e) {
         fail(`extras stopped: ${e.message.split('\n')[0]}`);
+        for (const c of browser.contexts()) await c.close().catch(() => undefined);
       }
     }
     await srv.close();

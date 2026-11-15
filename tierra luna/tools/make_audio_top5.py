@@ -42,6 +42,8 @@ REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 BUNDLE = os.path.join(REPO, "app", "public", "data", "v2")
 OUT = os.path.join(REPO, "docs", "AUDIO_TOP5.json")
 ENGINE_DATA = os.path.join(REPO, "tierra luna", "engine", "data")
+sys.path.insert(0, os.path.join(REPO, "tierra luna"))
+from engine.display import SHARE_LOST_PYTHON, share_lost_percent, tenths  # noqa: E402  (one display rule with the engine)
 SCRIPT_REL = "tierra luna/tools/make_audio_top5.py"
 GENERATED_ON = "2026-11-15"
 MISSIONS = ["rover", "solar", "lunar_base"]
@@ -469,8 +471,15 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 same(atm["toa_kwh_m2_day"], b.col(pfile, "atm.toa_kwh_m2_day")[p], "atm toa")
                 same(atm["lost_share"], b.col(pfile, "atm.lost_share")[p], "atm lost")
                 same(atm["ground_kwh_m2_day"], e_ground[k], "atm ground vs earth_base")
-                g1, t1 = round(atm["ground_kwh_m2_day"], 1), round(atm["toa_kwh_m2_day"], 1)
-                lost_pct = round(100.0 * (1.0 - g1 / t1))
+                # the two numbers as the web displays them (1 decimal, half up, from the stored
+                # float32) and the share lost from those two numbers, in integers: the rule of
+                # similarity.json texts.solar_limitation {loss_pct} (engine/display.py)
+                g_raw, t_raw = b.col(pfile, "atm.ground_kwh_m2_day")[p], b.col(pfile, "atm.toa_kwh_m2_day")[p]
+                g1, t1 = tenths(g_raw) / 10, tenths(t_raw) / 10
+                lost_pct = share_lost_percent(t_raw, g_raw)
+                if st.get("pair_sentence") is not None:
+                    check(f"only {g1:.1f} of those {t1:.1f} kWh/m²/day reach the ground ({lost_pct} % is lost" in st["pair_sentence"],
+                          f"solar r{r}: the share lost differs from the bundle's per-pair sentence")
                 pair["earth_atmosphere"] = {
                     "ground_kwh_m2_day": atm["ground_kwh_m2_day"],
                     "ground_level": levels[("irradiance_kwh_m2_day", "EARTH")],
@@ -479,7 +488,10 @@ def build(bundle_path: str) -> Dict[str, Any]:
                     "lost_share_bundle": atm["lost_share"],
                     "display": {"ground_kwh_m2_day": g1, "above_atmosphere_kwh_m2_day": t1,
                                 "lost_percent": lost_pct,
-                                "rule": "lost_percent = round(100 * (1 - ground / above)) on the two values rounded to 1 decimal, "
+                                "rule": "the rule of similarity.json texts.solar_limitation {loss_pct} (engine/display.py, docs/DATA_CONTRACT.md "
+                                        "'wording and display rounding, 2026-11-15'): ground and above as displayed (1 decimal, half up, "
+                                        "from the stored float32), as integers of tenths G and A; lost_percent = "
+                                        f"{SHARE_LOST_PYTHON} (100 x (A - G) / A rounded half up), "
                                         "so a listener checking by hand gets the same percentage"},
                     "lost_percent_from_bundle_share": round(100.0 * atm["lost_share"]),
                 }

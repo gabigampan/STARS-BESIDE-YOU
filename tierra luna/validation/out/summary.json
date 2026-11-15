@@ -1,0 +1,1267 @@
+{
+ "m1_coverage": {
+  "by_body": [
+   {
+    "body": "EARTH",
+    "columns": 24,
+    "slots": 611928,
+    "MEASURED_pct": 29.13,
+    "DERIVED_pct": 37.87,
+    "MODELLED_pct": 24.88,
+    "NO_DATA_columns": 0,
+    "missing_pct": 8.13
+   },
+   {
+    "body": "MOON",
+    "columns": 22,
+    "slots": 1425600,
+    "MEASURED_pct": 16.67,
+    "DERIVED_pct": 54.55,
+    "MODELLED_pct": 18.18,
+    "NO_DATA_columns": 2,
+    "missing_pct": 10.61
+   }
+  ],
+  "by_mission": [
+   {
+    "mission": "rover",
+    "ranked_points": 10192,
+    "slots_per_point": 11,
+    "slots": 112112,
+    "MEASURED_pct": 27.27,
+    "DERIVED_pct": 72.73,
+    "MODELLED_pct": 0.0,
+    "MISSING_pct": 0.0
+   },
+   {
+    "mission": "solar",
+    "ranked_points": 6360,
+    "slots_per_point": 15,
+    "slots": 95400,
+    "MEASURED_pct": 13.33,
+    "DERIVED_pct": 73.33,
+    "MODELLED_pct": 13.33,
+    "MISSING_pct": 0.0
+   },
+   {
+    "mission": "lunar_base",
+    "ranked_points": 450,
+    "slots_per_point": 16,
+    "slots": 7200,
+    "MEASURED_pct": 25.0,
+    "DERIVED_pct": 43.75,
+    "MODELLED_pct": 30.43,
+    "MISSING_pct": 0.82
+   }
+  ],
+  "per_point": [
+   {
+    "mission": "rover",
+    "level": "MEASURED",
+    "min_pct": 27.2727,
+    "p10_pct": 27.2727,
+    "median_pct": 27.2727,
+    "p90_pct": 27.2727,
+    "max_pct": 27.2727,
+    "points_with_any": 10192
+   },
+   {
+    "mission": "rover",
+    "level": "DERIVED",
+    "min_pct": 72.7273,
+    "p10_pct": 72.7273,
+    "median_pct": 72.7273,
+    "p90_pct": 72.7273,
+    "max_pct": 72.7273,
+    "points_with_any": 10192
+   },
+   {
+    "mission": "rover",
+    "level": "MODELLED",
+    "min_pct": 0.0,
+    "p10_pct": 0.0,
+    "median_pct": 0.0,
+    "p90_pct": 0.0,
+    "max_pct": 0.0,
+    "points_with_any": 0
+   },
+   {
+    "mission": "rover",
+    "level": "MISSING",
+    "min_pct": 0.0,
+    "p10_pct": 0.0,
+    "median_pct": 0.0,
+    "p90_pct": 0.0,
+    "max_pct": 0.0,
+    "points_with_any": 0
+   },
+   {
+    "mission": "solar",
+    "level": "MEASURED",
+    "min_pct": 13.3333,
+    "p10_pct": 13.3333,
+    "median_pct": 13.3333,
+    "p90_pct": 13.3333,
+    "max_pct": 13.3333,
+    "points_with_any": 6360
+   },
+   {
+    "mission": "solar",
+    "level": "DERIVED",
+    "min_pct": 73.3333,
+    "p10_pct": 73.3333,
+    "median_pct": 73.3333,
+    "p90_pct": 73.3333,
+    "max_pct": 73.3333,
+    "points_with_any": 6360
+   },
+   {
+    "mission": "solar",
+    "level": "MODELLED",
+    "min_pct": 13.3333,
+    "p10_pct": 13.3333,
+    "median_pct": 13.3333,
+    "p90_pct": 13.3333,
+    "max_pct": 13.3333,
+    "points_with_any": 6360
+   },
+   {
+    "mission": "solar",
+    "level": "MISSING",
+    "min_pct": 0.0,
+    "p10_pct": 0.0,
+    "median_pct": 0.0,
+    "p90_pct": 0.0,
+    "max_pct": 0.0,
+    "points_with_any": 0
+   },
+   {
+    "mission": "lunar_base",
+    "level": "MEASURED",
+    "min_pct": 25.0,
+    "p10_pct": 25.0,
+    "median_pct": 25.0,
+    "p90_pct": 25.0,
+    "max_pct": 25.0,
+    "points_with_any": 450
+   },
+   {
+    "mission": "lunar_base",
+    "level": "DERIVED",
+    "min_pct": 43.75,
+    "p10_pct": 43.75,
+    "median_pct": 43.75,
+    "p90_pct": 43.75,
+    "max_pct": 43.75,
+    "points_with_any": 450
+   },
+   {
+    "mission": "lunar_base",
+    "level": "MODELLED",
+    "min_pct": 25.0,
+    "p10_pct": 25.0,
+    "median_pct": 31.25,
+    "p90_pct": 31.25,
+    "max_pct": 31.25,
+    "points_with_any": 450
+   },
+   {
+    "mission": "lunar_base",
+    "level": "MISSING",
+    "min_pct": 0.0,
+    "p10_pct": 0.0,
+    "median_pct": 0.0,
+    "p90_pct": 6.25,
+    "max_pct": 6.25,
+    "points_with_any": 59
+   }
+  ]
+ },
+ "m2_validity": {
+  "by_table": [
+   {
+    "table": "earth_real_1deg.csv",
+    "records": 64800,
+    "failing_records": 10,
+    "table_level_failures": 0,
+    "pass_pct": 99.9846
+   },
+   {
+    "table": "moon_real_1deg.csv",
+    "records": 64800,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   },
+   {
+    "table": "earth_moon_real_1deg.csv",
+    "records": 129600,
+    "failing_records": 64800,
+    "table_level_failures": 0,
+    "pass_pct": 50.0
+   },
+   {
+    "table": "earth_base.bin",
+    "records": 25497,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   },
+   {
+    "table": "earth_rover.bin",
+    "records": 10337,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   },
+   {
+    "table": "earth_solar.bin",
+    "records": 18777,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   },
+   {
+    "table": "earth_lunar_base.bin",
+    "records": 2419,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   },
+   {
+    "table": "moon_base.bin",
+    "records": 64800,
+    "failing_records": 0,
+    "table_level_failures": 0,
+    "pass_pct": 100.0
+   }
+  ],
+  "by_kind": [
+   {
+    "table": "earth_moon_real_1deg.csv",
+    "kind": "differs_from_body_table",
+    "column": "permafrost_class",
+    "count": 64800
+   },
+   {
+    "table": "earth_real_1deg.csv",
+    "kind": "below_physical_min",
+    "column": "elevation_m",
+    "count": 1
+   },
+   {
+    "table": "earth_real_1deg.csv",
+    "kind": "below_physical_min",
+    "column": "lst_diurnal_amp_k",
+    "count": 9
+   },
+   {
+    "table": "earth_real_1deg.csv",
+    "kind": "below_physical_min",
+    "column": "lst_diurnal_amp_max_k",
+    "count": 3
+   }
+  ],
+  "zone_rules": {
+   "rover": "lat <= -75 (engine_config real_value_similarity.missions.rover.zone)",
+   "solar": "|lat| <= 30 and elevation_m <= -1200",
+   "lunar_base": "region A of mission_zones.json (the 280 Artemis cells)"
+  }
+ },
+ "m3_external": {
+  "sites_total": 44,
+  "usable": 29,
+  "excluded": [
+   {
+    "id": "ES01",
+    "unverified": "coord_quality says 'from memory'"
+   },
+   {
+    "id": "MA03",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MA04",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MA09",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MA12",
+    "unverified": "coord_quality says 'from memory'"
+   },
+   {
+    "id": "MA15",
+    "unverified": "source_status: location FROM MEMORY"
+   },
+   {
+    "id": "MA18",
+    "unverified": "coord_quality says 'from memory'"
+   },
+   {
+    "id": "BO01",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MO02",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MO03",
+    "unverified": "coord_quality says 'from memory'"
+   },
+   {
+    "id": "MO08",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MO09",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "MO10",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "OP02",
+    "unverified": "source_status is FROM MEMORY"
+   },
+   {
+    "id": "OP03",
+    "unverified": "source_status is FROM MEMORY"
+   }
+  ],
+  "labels": [
+   {
+    "mission": "lunar_base",
+    "label": "",
+    "sites": 13
+   },
+   {
+    "mission": "lunar_base",
+    "label": "negative",
+    "sites": 11
+   },
+   {
+    "mission": "lunar_base",
+    "label": "positive",
+    "sites": 5
+   },
+   {
+    "mission": "rover",
+    "label": "",
+    "sites": 14
+   },
+   {
+    "mission": "rover",
+    "label": "negative",
+    "sites": 5
+   },
+   {
+    "mission": "rover",
+    "label": "positive",
+    "sites": 10
+   },
+   {
+    "mission": "solar",
+    "label": "",
+    "sites": 29
+   }
+  ],
+  "precision_recall": [
+   {
+    "mission": "rover",
+    "definition": "D1_top25",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 4,
+    "recovered_negatives": 3,
+    "recall_pct": 40.0,
+    "precision_pct": 57.1,
+    "negatives_rejected_pct": 40.0
+   },
+   {
+    "mission": "rover",
+    "definition": "D2_top10",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 2,
+    "recovered_negatives": 1,
+    "recall_pct": 20.0,
+    "precision_pct": 66.7,
+    "negatives_rejected_pct": 80.0
+   },
+   {
+    "mission": "rover",
+    "definition": "D3_top50",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 8,
+    "recovered_negatives": 3,
+    "recall_pct": 80.0,
+    "precision_pct": 72.7,
+    "negatives_rejected_pct": 40.0
+   },
+   {
+    "mission": "rover",
+    "definition": "D4_paired",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 8,
+    "recovered_negatives": 4,
+    "recall_pct": 80.0,
+    "precision_pct": 66.7,
+    "negatives_rejected_pct": 20.0
+   },
+   {
+    "mission": "rover",
+    "definition": "D5_funnel",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 8,
+    "recovered_negatives": 4,
+    "recall_pct": 80.0,
+    "precision_pct": 66.7,
+    "negatives_rejected_pct": 20.0
+   },
+   {
+    "mission": "rover",
+    "definition": "D6_suit25",
+    "positives": 10,
+    "negatives": 5,
+    "recovered_positives": 4,
+    "recovered_negatives": 2,
+    "recall_pct": 40.0,
+    "precision_pct": 66.7,
+    "negatives_rejected_pct": 60.0
+   },
+   {
+    "mission": "solar",
+    "definition": "D1_top25",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "solar",
+    "definition": "D2_top10",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "solar",
+    "definition": "D3_top50",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "solar",
+    "definition": "D4_paired",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "solar",
+    "definition": "D5_funnel",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "solar",
+    "definition": "D6_suit25",
+    "positives": 0,
+    "negatives": 0,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": null,
+    "precision_pct": null,
+    "negatives_rejected_pct": null
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D1_top25",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": 0.0,
+    "precision_pct": null,
+    "negatives_rejected_pct": 100.0
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D2_top10",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": 0.0,
+    "precision_pct": null,
+    "negatives_rejected_pct": 100.0
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D3_top50",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 0,
+    "recall_pct": 0.0,
+    "precision_pct": null,
+    "negatives_rejected_pct": 100.0
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D4_paired",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 1,
+    "recall_pct": 0.0,
+    "precision_pct": 0.0,
+    "negatives_rejected_pct": 90.9
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D5_funnel",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 5,
+    "recall_pct": 0.0,
+    "precision_pct": 0.0,
+    "negatives_rejected_pct": 54.5
+   },
+   {
+    "mission": "lunar_base",
+    "definition": "D6_suit25",
+    "positives": 5,
+    "negatives": 11,
+    "recovered_positives": 0,
+    "recovered_negatives": 2,
+    "recall_pct": 0.0,
+    "precision_pct": 0.0,
+    "negatives_rejected_pct": 81.8
+   }
+  ],
+  "rover_preset": [
+   {
+    "score": "final",
+    "scope": "all_named_sites",
+    "ok": false,
+    "problems": "Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site)"
+   },
+   {
+    "score": "final",
+    "scope": "verified_coordinates_only",
+    "ok": false,
+    "problems": "Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site)"
+   },
+   {
+    "score": "suitability",
+    "scope": "all_named_sites",
+    "ok": false,
+    "problems": "Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site)"
+   },
+   {
+    "score": "suitability",
+    "scope": "verified_coordinates_only",
+    "ok": false,
+    "problems": "Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site)"
+   }
+  ],
+  "definitions": {
+   "D1_top25": "passes the funnel, has a lunar twin, and ranks in the top 25 % of the mission's ranked list (main definition)",
+   "D2_top10": "passes the funnel, has a twin, ranks in the top 10 %",
+   "D3_top50": "passes the funnel, has a twin, ranks in the top 50 %",
+   "D4_paired": "passes the funnel and has a twin (any rank)",
+   "D5_funnel": "passes the funnel (twin and rank ignored)",
+   "D6_suit25": "passes the funnel and its suitability is in the top 25 % of the funnel survivors (pairing ignored)"
+  }
+ },
+ "m4_sensitivity": {
+  "summary": [
+   {
+    "mission": "rover",
+    "weights_min_top5_overlap": 5,
+    "weights_min_top50_overlap": 48,
+    "weights_min_spearman_all": 0.995018,
+    "weights_number1_changes": 0,
+    "weights_variants": 6,
+    "thresholds_max_entering": 604,
+    "thresholds_max_leaving": 483,
+    "thresholds_number1_changes": 0,
+    "thresholds_variants": 12,
+    "tolerances_max_gained": 107,
+    "tolerances_max_lost": 525,
+    "tolerances_number1_changes": 0,
+    "tolerances_variants": 6
+   },
+   {
+    "mission": "solar",
+    "weights_min_top5_overlap": 4,
+    "weights_min_top50_overlap": 46,
+    "weights_min_spearman_all": 0.996726,
+    "weights_number1_changes": 0,
+    "weights_variants": 12,
+    "thresholds_max_entering": 1312,
+    "thresholds_max_leaving": 1316,
+    "thresholds_number1_changes": 0,
+    "thresholds_variants": 12,
+    "tolerances_max_gained": 186,
+    "tolerances_max_lost": 404,
+    "tolerances_number1_changes": 0,
+    "tolerances_variants": 6
+   },
+   {
+    "mission": "lunar_base",
+    "weights_min_top5_overlap": 3,
+    "weights_min_top50_overlap": 44,
+    "weights_min_spearman_all": 0.996406,
+    "weights_number1_changes": 6,
+    "weights_variants": 12,
+    "thresholds_max_entering": 407,
+    "thresholds_max_leaving": 421,
+    "thresholds_number1_changes": 4,
+    "thresholds_variants": 8,
+    "tolerances_max_gained": 80,
+    "tolerances_max_lost": 58,
+    "tolerances_number1_changes": 4,
+    "tolerances_variants": 8
+   }
+  ]
+ },
+ "m5_reproduction": {
+  "declared": {
+   "solar": 5192,
+   "thermal": 2613,
+   "both": 1986
+  },
+  "legacy_earth_cells": 16200,
+  "legacy_committed_618bc45": {
+   "team_module": {
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   "own_code": {
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   }
+  },
+  "legacy_committed_618bc45_kept_by_missing": {
+   "solar": 0,
+   "thermal": 0
+  },
+  "legacy_current": {
+   "team_module": {
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   "own_code": {
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   }
+  },
+  "legacy_current_kept_by_missing": {
+   "solar": 0,
+   "lunar_base": 0
+  },
+  "gate_shares": [
+   {
+    "table": "legacy_2deg",
+    "land_cells": 5927,
+    "amp_ge_15_pct": 59.83,
+    "amp_missing_pct": 0.0,
+    "amp_min": 8.89,
+    "amp_max": 38.75,
+    "tmin_le_5_pct": 61.68,
+    "irr_ge_2_5_pct": 92.42
+   },
+   {
+    "table": "real_1deg",
+    "land_cells": 25497,
+    "amp_ge_15_pct": 17.84,
+    "amp_missing_pct": 26.52,
+    "amp_min": -4.6,
+    "amp_max": 35.7,
+    "tmin_le_5_pct": 73.0,
+    "irr_ge_2_5_pct": 86.23
+   }
+  ],
+  "table": [
+   {
+    "table": "legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",
+    "config": "committed_618bc45",
+    "on_missing_gate": "keep",
+    "method": "team_module",
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   {
+    "table": "legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",
+    "config": "committed_618bc45",
+    "on_missing_gate": "keep",
+    "method": "own_code",
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   {
+    "table": "legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",
+    "config": "current",
+    "on_missing_gate": "drop",
+    "method": "team_module",
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   {
+    "table": "legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",
+    "config": "current",
+    "on_missing_gate": "drop",
+    "method": "own_code",
+    "solar": 5192,
+    "thermal": 2613,
+    "both": 1986
+   },
+   {
+    "table": "real_1deg (shipped)",
+    "config": "current",
+    "on_missing_gate": "drop",
+    "method": "engine",
+    "solar": 18777,
+    "thermal": 2419,
+    "both": 2419
+   },
+   {
+    "table": "real_1deg (shipped)",
+    "config": "current",
+    "on_missing_gate": "drop",
+    "method": "own_code",
+    "solar": 18777,
+    "thermal": 2419,
+    "both": 2419
+   },
+   {
+    "table": "real_1deg (shipped)",
+    "config": "committed_618bc45",
+    "on_missing_gate": "keep",
+    "method": "own_code",
+    "solar": 18777,
+    "thermal": 2419,
+    "both": 2419
+   }
+  ],
+  "legacy_grid": {
+   "rows": 90,
+   "cols": 180,
+   "cell_deg": 2.0
+  },
+  "shipped_land_cells": 25497,
+  "legacy_land_cells_elevation_ge_1": 5927
+ },
+ "m6_coordinates": {
+  "summary": [
+   {
+    "mission": "rover",
+    "ranked_points_checked": 10192,
+    "centre_inside_cell": 10192,
+    "centre_on_NE_land": 9610,
+    "centre_off_land_but_cell_touches_land": 542,
+    "no_land_polygon_in_cell": 40,
+    "country_agrees_centre_polygon": 8668,
+    "country_agrees_polygon_touching_cell": 383,
+    "country_disagrees": 40,
+    "antarctic_label": 1101,
+    "antarctic_label_lat_ok": 1101,
+    "no_country_label": 0,
+    "region_labelled": 6108,
+    "nearest_place_km_median": 61.501,
+    "nearest_place_km_p90": 1337.77,
+    "distinct_twins": 401,
+    "twin_feature_name_agrees": 401,
+    "twin_feature_km_agrees": 401,
+    "twin_feature_km_median": 59.393,
+    "twin_feature_km_max": 189.305
+   },
+   {
+    "mission": "solar",
+    "ranked_points_checked": 6360,
+    "centre_inside_cell": 6360,
+    "centre_on_NE_land": 6339,
+    "centre_off_land_but_cell_touches_land": 21,
+    "no_land_polygon_in_cell": 0,
+    "country_agrees_centre_polygon": 6339,
+    "country_agrees_polygon_touching_cell": 21,
+    "country_disagrees": 0,
+    "antarctic_label": 0,
+    "antarctic_label_lat_ok": 0,
+    "no_country_label": 0,
+    "region_labelled": 4432,
+    "nearest_place_km_median": 51.9864,
+    "nearest_place_km_p90": 209.763,
+    "distinct_twins": 1704,
+    "twin_feature_name_agrees": 1704,
+    "twin_feature_km_agrees": 1704,
+    "twin_feature_km_median": 53.5445,
+    "twin_feature_km_max": 186.298
+   },
+   {
+    "mission": "lunar_base",
+    "ranked_points_checked": 450,
+    "centre_inside_cell": 450,
+    "centre_on_NE_land": 450,
+    "centre_off_land_but_cell_touches_land": 0,
+    "no_land_polygon_in_cell": 0,
+    "country_agrees_centre_polygon": 450,
+    "country_agrees_polygon_touching_cell": 0,
+    "country_disagrees": 0,
+    "antarctic_label": 0,
+    "antarctic_label_lat_ok": 0,
+    "no_country_label": 0,
+    "region_labelled": 428,
+    "nearest_place_km_median": 25.2202,
+    "nearest_place_km_p90": 65.321,
+    "distinct_twins": 103,
+    "twin_feature_name_agrees": 103,
+    "twin_feature_km_agrees": 103,
+    "twin_feature_km_median": 26.48,
+    "twin_feature_km_max": 60.003
+   }
+  ],
+  "failures_by_kind": [
+   {
+    "mission": "rover",
+    "kind": "centre_off_polygons_named_country_not_in_cell",
+    "n": 40
+   }
+  ]
+ },
+ "m7_global": {
+  "weights": {
+   "external_agreement": 0.25,
+   "coverage": 0.2,
+   "stability": 0.2,
+   "validity": 0.15,
+   "coordinates": 0.15,
+   "reproduction": 0.05
+  },
+  "table": [
+   {
+    "mission": "rover",
+    "coverage": 100.0,
+    "validity": 100.0,
+    "external_agreement": 40.0,
+    "stability": 96.92,
+    "coordinates": 99.61,
+    "reproduction": 100.0,
+    "global_figure": 84.3,
+    "external_measured": true,
+    "global_without_external": 99.1,
+    "lowest_component": "external_agreement"
+   },
+   {
+    "mission": "solar",
+    "coverage": 86.66,
+    "validity": 100.0,
+    "external_agreement": null,
+    "stability": 98.6,
+    "coordinates": 100.0,
+    "reproduction": 100.0,
+    "global_figure": 96.1,
+    "external_measured": false,
+    "global_without_external": 96.1,
+    "lowest_component": "coverage"
+   },
+   {
+    "mission": "lunar_base",
+    "coverage": 68.75,
+    "validity": 100.0,
+    "external_agreement": 0.0,
+    "stability": 92.36,
+    "coordinates": 100.0,
+    "reproduction": 100.0,
+    "global_figure": 67.2,
+    "external_measured": true,
+    "global_without_external": 89.6,
+    "lowest_component": "external_agreement"
+   }
+  ]
+ },
+ "m8_improvements": {
+  "proposals": [
+   {
+    "id": "P1",
+    "mission": "rover",
+    "kind": "TEAM SETTING (threshold)",
+    "change": "drop the rover gates slope_300m_deg >= 0.5 and rough_300m_m >= 5 (keep the maxima)",
+    "why": "minimums written for a 300 m baseline; the table's slope is at 3.7 km and roughness at 1.85 km (column_aliases.json caveat); they remove Dhofar (AMADEE-18) and Concordia",
+    "funnel_pass": "10337 -> 22185",
+    "pairs": "10192 -> 15132",
+    "cells_entering": 11848.0,
+    "pairs_gained": 4940.0,
+    "pairs_lost": 0.0,
+    "bench_recall_D1": 40.0,
+    "bench_precision_D1": 57.1,
+    "bench_recovered_pos": "ES04 MA01 MA06 MA11",
+    "bench_recovered_neg": "ES07 MA02 MA13",
+    "bench_rover_preset_ok": false,
+    "bench_rover_preset_problems": "Bardenas scores below the median of mobility analogs; review before the pitch (BASEPROD site)",
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P2",
+    "mission": "rover",
+    "kind": "TEAM SETTING (weight)",
+    "change": "rover soft weight of rock_or_bare_frac 0.25 -> 0 (slope and roughness renormalised to 0.6 / 0.4)",
+    "why": "a 1-degree land-cover share is near 0 at Bardenas (0.018), Tabernas, Death Valley: the cell is mostly vegetated even where the test site is bare",
+    "funnel_pass": "unchanged",
+    "pairs": "unchanged",
+    "cells_entering": null,
+    "pairs_gained": null,
+    "pairs_lost": null,
+    "bench_recall_D1": 20.0,
+    "bench_precision_D1": 50.0,
+    "bench_recovered_pos": "MA06 MO04",
+    "bench_recovered_neg": "ES07 MA13",
+    "bench_rover_preset_ok": true,
+    "bench_rover_preset_problems": "",
+    "top50_overlap_with_base": 10.0,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P3",
+    "mission": "solar, lunar_base",
+    "kind": "no team setting (data validity flag)",
+    "change": "mark lst_diurnal_amp_k < 0 as invalid (missing) on Earth, as the schema of section 2 does",
+    "why": "9 Earth cells have a negative amplitude (min -4.60 K); an amplitude below 0 is not physical for this variable's use as a thermal-cycling stress",
+    "funnel_pass": null,
+    "pairs": null,
+    "cells_entering": null,
+    "pairs_gained": null,
+    "pairs_lost": null,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": 0.0,
+    "solar_ranked_with_negative_amp": 0.0,
+    "lunar_base_passing_with_negative_amp": 0.0,
+    "lunar_base_ranked_with_negative_amp": 0.0,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P4",
+    "mission": "all",
+    "kind": "no team setting (data validity flag)",
+    "change": "mark Earth elevation_m below -430 m as invalid",
+    "why": "cells E38522 (-2569.9 m, land 0.0002)",
+    "funnel_pass": null,
+    "pairs": null,
+    "cells_entering": null,
+    "pairs_gained": null,
+    "pairs_lost": null,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": 0.0,
+    "solar_passes": 0.0,
+    "lunar_base_passes": 0.0,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P5",
+    "mission": "rover",
+    "kind": "no team setting (benchmark)",
+    "change": "verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted",
+    "why": "15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change)",
+    "funnel_pass": null,
+    "pairs": null,
+    "cells_entering": null,
+    "pairs_gained": null,
+    "pairs_lost": null,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": 40.0,
+    "bench_precision_D1_now": 57.1,
+    "bench_recall_D1_if_verified": 46.7,
+    "bench_precision_D1_if_verified": 63.6,
+    "number1_same": null
+   },
+   {
+    "id": "P5",
+    "mission": "lunar_base",
+    "kind": "no team setting (benchmark)",
+    "change": "verify the coordinates flagged FROM MEMORY in the benchmark so those sites can be counted",
+    "why": "15 of 44 sites are left out today; the effect below counts them as if their coordinates were confirmed (an upper bound of what verification can change)",
+    "funnel_pass": null,
+    "pairs": null,
+    "cells_entering": null,
+    "pairs_gained": null,
+    "pairs_lost": null,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": 0.0,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": 0.0,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P6",
+    "mission": "lunar_base",
+    "kind": "TEAM SETTING (threshold)",
+    "change": "lunar_base gate lst_diurnal_amp_k >= 13.5 K (today 15 K)",
+    "why": "every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat)",
+    "funnel_pass": "2419 -> 2826",
+    "pairs": "450 -> 529",
+    "cells_entering": 407.0,
+    "pairs_gained": 137.0,
+    "pairs_lost": 58.0,
+    "bench_recall_D1": 0.0,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": "",
+    "bench_recovered_neg": "",
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P6",
+    "mission": "lunar_base",
+    "kind": "TEAM SETTING (threshold)",
+    "change": "lunar_base gate lst_diurnal_amp_k >= 0 K (today 15 K)",
+    "why": "every cold benchmark site fails this gate or has no amplitude; the Earth amplitude is MODIS 10:30 minus 22:30, which understates the daily range (column_aliases.json caveat)",
+    "funnel_pass": "2419 -> 9981",
+    "pairs": "450 -> 2109",
+    "cells_entering": 7562.0,
+    "pairs_gained": 2014.0,
+    "pairs_lost": 355.0,
+    "bench_recall_D1": 20.0,
+    "bench_precision_D1": 100.0,
+    "bench_recovered_pos": "MA19",
+    "bench_recovered_neg": "",
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": null
+   },
+   {
+    "id": "P7",
+    "mission": "lunar_base",
+    "kind": "TEAM SETTING (tolerance)",
+    "change": "tmin_k tolerance x1.2 (10 -> 12)",
+    "why": "share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4",
+    "funnel_pass": null,
+    "pairs": "450 -> 469",
+    "cells_entering": null,
+    "pairs_gained": 19.0,
+    "pairs_lost": 0.0,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": false
+   },
+   {
+    "id": "P7",
+    "mission": "lunar_base",
+    "kind": "TEAM SETTING (tolerance)",
+    "change": "lst_diurnal_amp_k tolerance x1.2 (10 -> 12)",
+    "why": "share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4",
+    "funnel_pass": null,
+    "pairs": "450 -> 483",
+    "cells_entering": null,
+    "pairs_gained": 33.0,
+    "pairs_lost": 0.0,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": true
+   },
+   {
+    "id": "P8",
+    "mission": "solar",
+    "kind": "TEAM SETTING (tolerance)",
+    "change": "irradiance_toa_kwh_m2_day tolerance x1.2 (0.6 -> 0.72)",
+    "why": "share of passing points with a twin is low (lunar_base 18.6 %, solar 33.9 %); effect taken from metric 4",
+    "funnel_pass": null,
+    "pairs": "6360 -> 6546",
+    "cells_entering": null,
+    "pairs_gained": 186.0,
+    "pairs_lost": 0.0,
+    "bench_recall_D1": null,
+    "bench_precision_D1": null,
+    "bench_recovered_pos": null,
+    "bench_recovered_neg": null,
+    "bench_rover_preset_ok": null,
+    "bench_rover_preset_problems": null,
+    "top50_overlap_with_base": null,
+    "solar_passing_with_negative_amp": null,
+    "solar_ranked_with_negative_amp": null,
+    "lunar_base_passing_with_negative_amp": null,
+    "lunar_base_ranked_with_negative_amp": null,
+    "rover_passes": null,
+    "solar_passes": null,
+    "lunar_base_passes": null,
+    "bench_recall_D1_now": null,
+    "bench_precision_D1_now": null,
+    "bench_recall_D1_if_verified": null,
+    "bench_precision_D1_if_verified": null,
+    "number1_same": true
+   }
+  ]
+ }
+}

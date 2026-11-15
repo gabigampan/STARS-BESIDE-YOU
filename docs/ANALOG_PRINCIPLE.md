@@ -346,7 +346,7 @@ Cambios respecto a la propuesta de la sección C: la zona de Paneles solares es 
 |---|---|---|---|---|---|---|
 | Rover | polo sur, latitud ≤ −75° (5.400) | 10.337 | **10.192** (98,6 %) | 145: 76 sin ninguna celda que cumpla a la vez las dos claves y la secundaria, bloqueados por la rugosidad (la más cercana a 30,0-51,1 m), y 69 bloqueados por la elevación relativa (a 1.003-1.267 m); cada variable por separado sí encuentra celda | 401 | M61116 (79,5 S 96,5 E, Ganswindt a 81 km): 2.033 puntos, 19,9 % |
 | Paneles solares | mares ecuatoriales, \|latitud\| ≤ 30° y elevación ≤ −1.200 m (6.686) | 18.777 | **6.360** (33,9 %) | 12.417: 12.416 porque ninguna celda de los mares tiene la irradiancia sin atmósfera a menos de 0,6 kWh/m²/día (hueco mínimo 0,66, mediano 4,15); 1 por la rugosidad a la vez (60,4 m frente a 60) | 1.704 | M21795 (29,5 N 15,5 E, Banting a 92 km): 159 puntos, 2,5 % |
-| Base lunar (sin cambios) | nueve regiones de Artemis III (280) | 2.419 | 2.419 | 0 | 48 | M62515: 671 puntos, 27,7 % |
+| Base lunar (sin cambios) | las nueve regiones candidatas de la NASA (280) | 2.419 | 2.419 | 0 | 48 | M62515: 671 puntos, 27,7 % |
 
 **La comprobación que pidió Facundo a las 04:48** (P5, P6): diferencia absoluta en valores reales entre cada punto de la Tierra y su gemelo, solo en los pares que sobreviven. Ninguna variable clave pasa de su tolerancia y ninguna secundaria del doble de la suya (columna "máximo", con los decimales necesarios para que no parezca redondeado a la cota); lo comprueba un test en cada par (`tests/test_real_value_similarity.py::test_every_surviving_pair_is_within_its_bounds`, en el motor en doble precisión y en el paquete).
 

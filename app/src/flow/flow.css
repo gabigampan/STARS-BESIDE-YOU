@@ -957,10 +957,14 @@ table.rows tr.is-fail th {
   .view-tools .sunlight-options {
     flex-wrap: wrap;
   }
-  /* the Cesium logo stays, smaller, so the small globes keep room */
+  /* the Cesium logo stays, smaller, so the small globes keep room; it sits 8 px above the pane's
+     lower edge so it never touches a control of the panel below (checklist 06) */
   .cesium-credit-logoContainer img {
     height: 16px !important;
     width: auto !important;
+  }
+  body.flow .pane .cesium-widget-credits {
+    bottom: 8px !important;
   }
   body.flow .topbar {
     flex-direction: row;

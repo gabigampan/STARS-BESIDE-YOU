@@ -3,7 +3,7 @@
     cd "tierra luna" && python validation/run_all.py
 
 Deterministic: no random numbers, no clock in the outputs; every table is sorted.
-About 15 minutes on 4 shared CPUs (metric 4 reruns the engine 70 times in memory).
+About 12 minutes on 4 shared CPUs (metrics 4 and 8 rerun one mission of the engine 56 times in memory).
 Reads only; writes only validation/out/.
 """
 from __future__ import annotations

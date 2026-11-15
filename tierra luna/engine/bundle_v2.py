@@ -259,8 +259,57 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
             if not np.array_equal(np.where(st_rank == sent, 0, st_rank), rr):
                 raise ValueError(f"{mid}: stored rank does not follow the rank rule")
         checked += len(li)
+    if weights is None and sim_weights is None:
+        _check_pair_sentences(b, missions, sim_json, earth_ids, sent)
     return {"ok": True, "cells_checked": checked, "rule": sim_json["rule"], "rules": rules,
             "files": [f["name"] for f in man["files"]], "recomputed": recomputed}
+
+
+def _check_pair_sentences(b: Bundle, missions: Dict[str, Any], sim_json: Dict[str, Any], earth_ids: np.ndarray,
+                          sent: int) -> None:
+    """Per-pair templates (similarity.json texts with placeholders read from a pairs file):
+    every placeholder can be filled on every pair, with the browser's display rounding
+    (engine/display.py; the solar share lost from the two displayed values), and the
+    sentence the engine wrote in explain.json is the template filled from the binary
+    columns (wording and display rounding, 2026-11-15)."""
+    from engine.display import SHARE_LOST_RULE, fill_placeholder, share_lost_percent
+
+    explain = b.json("explain.json")["missions"] if any(f["name"] == "explain.json" for f in b.manifest["files"]) else {}
+    for m in missions["missions"]:
+        mid = m["id"]
+        ef = m["files"]["EARTH"]
+        if "twin" not in b.columns(ef):
+            continue
+        paired = np.flatnonzero(b.int_column(ef, "twin") != sent)
+        for key, t in (sim_json.get("texts") or {}).items():
+            ms = t.get("missions") or ([t["mission"]] if t.get("mission") else [])
+            specs = {n: p for n, p in (t.get("placeholders") or {}).items() if isinstance(p, dict) and "file" in p}
+            if mid not in ms or not specs or not any(f["name"] == next(iter(specs.values()))["file"] for f in b.manifest["files"]):
+                continue
+            need = sorted({c for p in specs.values() for c in (p["columns"].values() if "columns" in p else [p["column"]])})
+            cols = {c: b.column(next(iter(specs.values()))["file"], c) for c in need}
+            for name, p in specs.items():
+                if p.get("rule") == SHARE_LOST_RULE:
+                    a, g = cols[p["columns"]["above"]], cols[p["columns"]["ground"]]
+                    for i in paired:
+                        share_lost_percent(a[i], g[i])          # raises when a value is missing or displays as 0.0
+                elif not np.all(np.isfinite(cols[p["column"]][paired])):
+                    raise ValueError(f"{mid}: texts.{key} {{{name}}} has no value on a pair")
+            li = b.int_column(ef, "land_index")
+            pos = {int(e): k for k, e in enumerate(earth_ids[li])}
+            for it in explain.get(mid, []):
+                if it.get("similarity", {}).get("pair_sentence") is None:
+                    raise ValueError(f"{mid}: explain.json item {it['id']} has no pair_sentence (texts.{key})")
+                k = pos[int(it["id"])]
+                text = t["text"]
+                for name, p in specs.items():
+                    if "display_rule" in t or "rule" in p:
+                        x = fill_placeholder(p, {c: float(v[k]) for c, v in cols.items()})
+                    else:  # the engine's earlier formatting (lunar_base_pair_sentence)
+                        x = f"{float(cols[p['column']][k]) * float(p.get('multiply', 1.0)) - float(p.get('subtract', 0.0)):.{int(p['decimals'])}f}"
+                    text = text.replace("{" + name + "}", x)
+                if text != it["similarity"]["pair_sentence"]:
+                    raise ValueError(f"{mid}: explain.json pair_sentence of {it['id']} is not texts.{key} filled from the bundle")
 
 
 def _check_real_mission(b: Bundle, m: Dict[str, Any], li: np.ndarray, earth_ids: np.ndarray, twins: Dict,
