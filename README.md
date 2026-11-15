@@ -270,3 +270,4 @@ None of the three videos is real footage, and each says so.
 19 tracks (`app/public/audio/*.mp3`) recorded by the team with a text-to-speech service (voice
 Matilda, model eleven_multilingual_v2, as the team states them), re-recorded on 15 November 2026 from the final
 texts; the texts are in `app/public/audio/transcripts.json` and checksums in `app/public/audio/SHA256SUMS.txt`.
+ 
