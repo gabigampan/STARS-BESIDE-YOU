@@ -764,6 +764,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
             "similarity_rule": man["similarity_rules"][mid],
             "criteria_set": mj.get("criteria_set"),
             "zone": sim["zone"]["name"],
+            "zone_definition": sim["zone"],
             "zone_why_on_screen": zones["texts"]["zone_why"][mid] if zones.get("texts") else None,
             "similarity_variables": [{k2: v.get(k2) for k2 in ("variable", "role", "weight", "tolerance", "bound", "unit")} for v in sim["variables"]],
             "pair_filter": sim["filter"],
@@ -777,6 +778,18 @@ def build(bundle_path: str) -> Dict[str, Any]:
             "pairs": pairs,
         }
         if mid == "rover":
+            # independent checker: facts behind "almost every site ... the likeness cannot tell them apart" and "full marks"
+            paired = ~np.isnan(simv)
+            n100 = int(np.sum(simv[paired] == 100.0))
+            check(n100 / int(np.sum(paired)) > 0.99, f"rover: only {n100} paired sites at similarity 100")
+            for pr_ in pairs:
+                p_ = int(np.flatnonzero(ids == int(pr_["earth_id"][1:]) if isinstance(pr_.get("earth_id"), str) else ids == pr_["earth_id"])[0]) if pr_.get("earth_id") is not None else None
+            for eid_ in top5["ids"]:
+                p_ = int(np.flatnonzero(ids == eid_)[0])
+                check(suit[p_] == 100.0 and simv[p_] == 100.0, f"rover E{eid_}: not full marks")
+            mo["similarity_saturation"] = {"paired": int(np.sum(paired)), "similarity_exactly_100": n100,
+                                           "five_suitability_and_similarity": "100.00 and 100.00 each (full marks on every criterion)",
+                                           "tied_suitability_min": float(np.min(suit[final == np.nanmax(final)]))}
             mo["tie_text_on_screen"] = sim_texts["rover_tie"]["text"]
             mo["tie_figures"] = sim_texts["rover_tie"]["figures"]
             check(sim_texts["rover_tie"]["figures"]["tied_n"] == with_commas(top5["top_tie_n"]) and
@@ -936,24 +949,31 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
     t["00_welcome"] = (
         "Welcome to Stars Beside You, a planetary twin finder. Before a rover, a solar panel or a lunar base ever reaches the Moon, "
         "it can be tested here on Earth, if we find the right place. We compare lunar data from NASA missions with data from all over "
-        "the Earth, and pair each Earth site with a lunar twin. There are three missions. Press one for the Rover, matched on slope and "
-        "roughness. Press two for Solar panels, matched on sunlight. Press three for the Lunar base, matched on the cold and its daily swing.")
+        "the Earth, and look for a lunar twin for each Earth site. There are three missions. Press one for the Rover, matched on slope and "
+        "roughness. Press two for Solar panels, matched mainly on sunlight. Press three for the Lunar base, matched mainly on the coldest "
+        "temperature and the daily swing.")
+    # Independent checker, 2026-11-15: the Rover zone is 75 S to the pole (twins up to 440 km from it), so no "near the
+    # south pole" (rule 2); 10,335 of the 10,337 paired Rover sites have similarity exactly 100, so the tie of N sites at the
+    # top comes from the suitability (full marks) on top of a likeness that cannot tell sites apart.
+    rz = M["rover"]["zone"]
     t["m1_rover"] = (
-        "Rover. We match places on slope and roughness only: the ground a rover drives on. On the Moon we search near the "
-        "south pole, where NASA plans to look for water ice. Many sites differ from their lunar twin by less than the elevation data can "
-        f"measure, so they tie at the top score. Here are five of the {with_commas(n_tie)} sites tied at the top of our model, chosen "
-        f"to be spread across the world. All five share the same final score, half "
-        f"likeness and half suitability. {keys}")
+        "Rover. We match places on slope and roughness only: the ground a rover drives on. On the Moon we search the south polar "
+        f"region, from {screen_num(abs(rz['lat_max']), 1)} degrees south to the pole, where NASA plans to look for water ice. Almost every "
+        "site differs from its lunar twin by less than the elevation data can measure, so the likeness cannot tell them apart; "
+        f"{with_commas(n_tie)} of them also get full marks, or nearly, on our Rover criteria. Here are five of the {with_commas(n_tie)} "
+        f"sites tied at the top of our model, chosen to be spread across the world. {keys}")
+    sz = M["solar"]["zone"]
     t["m2_solar"] = (
-        "Solar panels. A solar panel lives on sunlight, so we match places on the sunlight that arrives each day above the atmosphere. "
-        "On the Moon we search the low, flat maria near the equator, where the Sun stands high. "
+        "Solar panels. A solar panel lives on sunlight, so we match places mainly on the sunlight that arrives each day above the "
+        f"atmosphere. On the Moon we search the low, flat maria within {screen_num(sz['abs_lat_max'], 1)} degrees of the equator, where "
+        "the Sun stands high. "
         "Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. "
         "Almost every top site matches its twin's sunlight almost exactly, so the likeness is nearly the same for all of them, and "
         f"suitability, led by clear skies, decides the order. {keys}")
     pe, pm = M["lunar_base"]["populations"]["EARTH"], M["lunar_base"]["populations"]["MOON"]
     t["m3_base"] = (
-        "Lunar base. A base must endure the cold, so we match on the coldest temperature and its daily swing. On the Moon we "
-        "search NASA's nine candidate landing regions near the south pole, where NASA plans crewed landings. The Moon is far colder "
+        "Lunar base. A base must endure the cold, so we match mainly on the coldest temperature and the daily temperature swing. On "
+        "the Moon we search NASA's nine candidate landing regions in the south polar region, where NASA plans crewed landings. The Moon is far colder "
         "than Earth, so we compare position, not temperature: how each site ranks among Earth's "
         f"{with_commas(pe)} candidates, and its twin among the {pm} lunar cells of those regions. Here are five of the highest-scoring "
         f"analogs in our model, ordered by the final score: half likeness and half suitability. {keys}")
@@ -964,7 +984,8 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
             f"Rover, analog {NUM_WORD[pr['number']]}. {earth_phrase(pr['earth_place'])} {moon_phrase(pr['moon_place'])}. "
             f"The slope is {s['earth']} degrees on Earth and {s['moon']} on the Moon; the roughness is {r['earth']} meters on Earth and "
             f"{r['moon']} on the Moon. Similarity: {strip0(pr['on_screen_scores']['similarity'])} out of 100. It is one of the "
-            f"{with_commas(n_tie)} sites tied at the top: within what the elevation data can measure, they all match their twins equally well.")
+            f"{with_commas(n_tie)} sites tied at the top: it matches its twin within what the elevation data can measure, and it gets "
+            f"full marks on our Rover criteria.")
     for pr in M["solar"]["pairs"]:
         a = pr["earth_atmosphere"]["display"]
         c = pr["clear_sky"]
@@ -981,11 +1002,11 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
     for pr in M["lunar_base"]["pairs"]:
         V = {v["variable"]: v for v in pr["variables"]}
         tm, am, sl = V["tmin_k"], V["lst_diurnal_amp_k"], V["slope_deg"]
-        slope_txt = (f" The slope is alike: {sl['on_screen_real']['earth']} degrees on Earth and {sl['on_screen_real']['moon']} on the Moon."
+        slope_txt = (f" The slopes are close enough for our model: {sl['on_screen_real']['earth']} degrees on Earth and {sl['on_screen_real']['moon']} on the Moon."
                      if sl["difference_real"] <= sl["tolerance"] else "")
         t[f"base_{pr['number']}"] = (
             f"Lunar base, analog {NUM_WORD[pr['number']]}. {earth_phrase(pr['earth_place'])} {moon_phrase(pr['moon_place'])}, "
-            f"{pr['moon_place']['nasa_region_phrase']}. The likeness is of position, not temperature: the Moon's coldest temperature is "
+            f"{pr['moon_place']['nasa_region_phrase']}. The likeness is of position, not temperature: its twin's coldest temperature is "
             f"{tm['on_screen_real']['diff']} kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile "
             f"{tm['on_screen_percentile']['earth']} on Earth and {tm['on_screen_percentile']['moon']} on the Moon, and the daily swings "
             f"rank close, at {am['on_screen_percentile']['earth']} and {am['on_screen_percentile']['moon']}.{slope_txt} "
@@ -1009,6 +1030,8 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
     solar_slope = re.search(r"median slope (\d+(?:\.\d+)?)°", zones["texts"]["zone_why"]["solar"]).group(1)
     allowed_by_track: Dict[str, Dict[str, str]] = {k: dict(common) for k in tracks}
     allowed_by_track["m2_solar"][solar_slope] = "mission_zones.json texts.zone_why.solar (on screen)"
+    allowed_by_track["m1_rover"][screen_num(abs(M["rover"]["zone_definition"]["lat_max"]), 1)] = "rover zone lat_max (zone name on screen: 75°S–90°S)"
+    allowed_by_track["m2_solar"][screen_num(M["solar"]["zone_definition"]["abs_lat_max"], 1)] = "solar zone abs_lat_max (zone_why on screen)"
     for bd in ("EARTH", "MOON"):
         allowed_by_track["m3_base"][str(M["lunar_base"]["populations"][bd])] = f"missions.json lunar_base similarity.populations.{bd}.cells"
     for mid in MISSIONS:

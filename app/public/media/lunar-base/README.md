@@ -5,20 +5,20 @@
 
 A 3D simulation, not real footage. The first caption cue and the closing card say so, and a line at the bottom of every frame says "3D simulation driven by table data. Not real footage."
 
-Story (46 s): part of one lunar day, accelerated, at lunar cell **M63528 (86.5° S, 11.5° W)**, 25.1 km from Mons Malapert, in **NASA's nine candidate landing regions near the lunar south pole** (the Lunar base zone; the cell's 1-degree square touches the edge of the Haworth region). The camera descends to the site while the Sun is up but still behind the northern terrain (site in shadow, exposure raised and said so on screen); the Sun rises over the terrain; a cylindrical module is lowered onto its legs and rests on the ground; an inflatable section expands; a regolith berm is built around it; the Sun, never above 5°, moves west low over the terrain and goes behind the western terrain; the site stays in shadow and cools. The panel shows the modelled surface temperature, the measured minimum and maximum, the diurnal amplitude, the Sun's elevation and azimuth, the terrain horizon, whether the habitat point is sunlit, the time compression and the Earth (hidden by the terrain from here at its mean position); a small inset shows a restrained thermal tint (blue at the minimum, warm grey at the maximum) over a shaded relief of the patch. Closing card (40-46 s): the number 1 pair of the Lunar base list, the Earth analog **E17538 (41.5° N, 78.5° E, Xinjiang Uygur Zizhiqu, China; 62.3 km from Aheqi)** against the lunar cell, with real values, percentiles, real differences and the per-pair sentence. The pair matches by relative thermal position, not by equal temperatures.
+Story (46 s): part of one lunar day, accelerated, at lunar cell **M63528 (86.5° S, 11.5° W)**, 25.1 km from Mons Malapert, in **NASA's nine candidate landing regions near the lunar south pole** (the Lunar base zone; the cell's 1-degree square touches the edge of the Haworth region). The camera descends to the site while the Sun is up but still behind the northern terrain (site in shadow, exposure raised and said so on screen); the Sun rises over the terrain; a cylindrical module is lowered onto its legs and rests on the ground; an inflatable section expands; a regolith berm is built around it; the Sun, never above 5°, moves west low over the terrain and goes behind the western terrain; the site stays in shadow and cools. The panel shows the modelled surface temperature, the measured minimum and maximum, the diurnal amplitude, the Sun's elevation and azimuth, the terrain horizon, whether the habitat point is sunlit, the time compression and the Earth (hidden by the terrain from here at its mean position); a small inset shows a restrained thermal tint (blue at the minimum, warm grey at the maximum) over a shaded relief of the patch. Closing card (40-46 s): **analog 2 of the five Lunar base analogs shown (overall rank 3)**, the Earth analog **E17538 (41.5° N, 78.5° E, Xinjiang Uygur Zizhiqu, China; 62.3 km from Aheqi)** against the lunar cell, with real values, percentiles, real differences and the per-pair sentence. The pair matches by relative thermal position, not by equal temperatures.
 
 ## Files
 
 | File | What it is | Size (bytes) |
 |---|---|---|
-| `lunar-base.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, no audio, faststart (`moov` at byte 36, before `mdat`), CRF 25 | 11,103,348 |
-| `lunar-base.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, two-pass CRF 34 | 11,792,467 |
+| `lunar-base.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, no audio, faststart (`moov` at byte 36, before `mdat`), CRF 25 | 11,168,347 |
+| `lunar-base.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, two-pass CRF 34 | 11,824,940 |
 | `lunar-base-poster.jpg` | Frame 600 (t = 20 s): module and inflatable in sunlight, berm being built, long shadows | 332,974 |
 | `lunar-base-poster.webp` | Same frame, WebP quality 88 | 197,072 |
-| `lunar-base.en.vtt` | English descriptive captions, 14 cues, 0-46 s; cue boundaries at every status change | 4,596 |
-| `lunar-base.es.vtt` | Spanish descriptive captions, 14 cues, 0-46 s | 5,250 |
+| `lunar-base.en.vtt` | English descriptive captions, 14 cues, 0-46 s; cue boundaries at every status change | 4,710 |
+| `lunar-base.es.vtt` | Spanish descriptive captions, 14 cues, 0-46 s | 5,400 |
 
-ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 1.93 Mb/s`; webm `vp9 Profile 0 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 2.05 Mb/s`; both VTT files parse in ffmpeg's WebVTT demuxer.
+ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 1.94 Mb/s`; webm `vp9 Profile 0 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 2.06 Mb/s`; both VTT files parse in ffmpeg's WebVTT demuxer.
 
 ```html
 <video controls playsinline preload="metadata" poster="/media/lunar-base/lunar-base-poster.webp">
@@ -28,6 +28,16 @@ ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1380 
   <track kind="captions" src="/media/lunar-base/lunar-base.es.vtt" srclang="es" label="Español">
 </video>
 ```
+
+## Closing card re-rendered on 2026-11-15 (corrected Lunar base criteria)
+
+The Lunar base suitability criteria were corrected on 2026-11-15 and the corrected model was confirmed by the independent re-audit. The pair is unchanged (E17538 with M63528, same values, percentiles, differences and similarity 97.31), but it is no longer the first: it is **analog 2 of the five shown** (`missions.json` `top5.ids` = 21054, 17538, 21833, 18627, 19672; overall ranks 1, 3, 5, 6, 7), with **suitability 43.15 and final 70.23** (before: "pair number 1", suitability 47.27, final 72.29). What changed:
+
+- the card (frames 1200-1379, 40-46 s, fade-in included): title "Earth analog and lunar twin: lunar base, analog 2 of the five shown"; subtitle "Analog 2 of the five shown (overall rank 3). Suitability 43.15, similarity 97.31, final 70.23. ..."; the table, sentence and legend are unchanged;
+- caption cue 13 (40 s, both languages) now starts with the analog's position, overall rank and the three scores;
+- `scenarios/lunar-base.json` `pair_values` (rank 3, `top5_position` 2, suitability, final) and the check in `tools/prepare.py`, which now finds the item by its Earth id and refuses a rank, position, title or score that differs from the bundle.
+
+Only the 180 card frames were rendered again (944 ms per frame); frames 0-1199 are the same PNG files as the first render. After re-encoding with the same settings, decoded frames 0-1164 of the mp4 and 0-1196 of the webm are bit-identical to the previous files (ffmpeg framemd5). Frames 1165-1199 (mp4) and 1197-1199 (webm) differ only by encoder look-ahead near the new frames: PSNR against the previous encode at least 57.9 dB (mp4, mean 61.9 dB on luma) and 74.5 dB (webm), against about 49 dB between either encode and the source PNG. The poster (frame 600) is byte-identical.
 
 ## How to re-render
 
@@ -70,7 +80,7 @@ Render time: 2,198 ms per frame on average (SwiftShader, no GPU, 4 cores shared 
 | Place | 25.1 km from Mons Malapert (IAU centre 85.98° S 1.67° W, diameter 67 km), the cell's nearest primary IAU feature | gazetteer | `explain.json` (`similarity.twin.feature_km`), `lunar_named_sites.json`; http://planetarynames.wr.usgs.gov/Feature/16338 |
 | Measured min / max | 41.23 K / 194.51 K (`tmin_k`, `tmax_k`) | measured (Diviner GCP tbol, bolometric brightness temperature, all seasons 2009-2015) | moon table; `real_data/provenance_moon.csv` |
 | Diurnal amplitude | 153.27 K | derived (tmax − tmin) | moon table |
-| Card, pair values | coldest temperature 248.61 K (−24.54 °C) / 41.23 K (−231.92 °C), real difference 207.38 K, percentiles 8.37 / 8.04 (0.34 points); daily swing 15.60 / 153.27 K, difference 137.67 K, percentiles 6.72 / 10.18 (3.46 points); slope 6.652 / 7.179° (0.527°); roughness 238.81 / 238.49 m (0.32 m); mean temperature 272.06 / 77.49 K (194.57 K) and relative elevation 2,807.0 / 680.7 m (2,126.3 m), both not part of the similarity; suitability 47.27, similarity 97.31, final 72.29; the per-pair sentence verbatim | Earth coldest temperature modelled (WorldClim 2.1 air, non-commercial licence); Moon coldest temperature measured (Diviner surface); the rest derived | `app/public/data/v2/explain.json` (lunar_base, rank 1), checked number by number by `prepare.py`; levels from `variables.json` and `missions.json` |
+| Card, pair values | coldest temperature 248.61 K (−24.54 °C) / 41.23 K (−231.92 °C), real difference 207.38 K, percentiles 8.37 / 8.04 (0.34 points); daily swing 15.60 / 153.27 K, difference 137.67 K, percentiles 6.72 / 10.18 (3.46 points); slope 6.652 / 7.179° (0.527°); roughness 238.81 / 238.49 m (0.32 m); mean temperature 272.06 / 77.49 K (194.57 K) and relative elevation 2,807.0 / 680.7 m (2,126.3 m), both not part of the similarity; card title "lunar base, analog 2 of the five shown" (position 2 of `missions.json` `missions[lunar_base].top5.ids`, overall rank 3); suitability 43.15, similarity 97.31, final 70.23; the per-pair sentence verbatim | Earth coldest temperature modelled (WorldClim 2.1 air, non-commercial licence); Moon coldest temperature measured (Diviner surface); the rest derived | `app/public/data/v2/explain.json` (lunar_base, the item of E17538) and `missions.json` (`top5`), checked number by number by `prepare.py` (it refuses a wrong rank, position, card title or score); levels from `variables.json` and `missions.json` |
 | Earth analog | E17538, 41.5° N 78.5° E, Xinjiang Uygur Zizhiqu, China; nearest populated place Aheqi, 62.3 km | grid / place labels | `explain.json` `place`; `earth_real_1deg.csv` |
 | S0, obliquity, synodic period | 1361.0 W/m², 1.54°, 29.53 d | measured | NSSDC Moon fact sheet; NASA PIA13720 |
 | Earth | not drawn: at its 2026-2044 mean position from JPL Horizons (DE441, observer at 348.5° E −86.5°, every 12 h, 13,879 rows; az 11.52°, elevation 3.14°; range az 3.5-19.7°, elevation −3.79 to +10.09°, above a flat horizon 65.5 % of the time) the real terrain horizon in that direction is 5.41°, so the disc (radius 0.95°) is hidden. Panel: "behind terrain (mean pos.)" | computed | Horizons API, queried 2026-11-15 |

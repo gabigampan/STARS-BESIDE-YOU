@@ -5,9 +5,9 @@
 
 A 3D simulation, not real footage. The first caption cue and the closing card say so, and a line at the bottom of every frame says "3D simulation driven by table data. Not real footage."
 
-Re-rendered on 2026-11-15 for the current number 1 pair of the Solar panels list. It replaces the video of the earlier method (lunar cell M59479 at 75.5° S 100.5° W in the south-polar zone, with Earth cell E44120), which is not a pair of the shipped bundle.
+Re-rendered on 2026-11-15 for the first of the five Solar panels analogs of the shipped bundle after the Solar panels criteria were corrected (`missions.json` `missions[solar].top5.ids[0]` = 40184, overall rank 1; confirmed by the independent re-audit). It replaces the video of the earlier method (lunar cell M59479 at 75.5° S 100.5° W in the south-polar zone, with Earth cell E44120), which is not a pair of the shipped bundle. The scenario is written from the bundle by `app/video-sim/tools/solar_pair.py`; no value of the pair is typed by hand.
 
-Story (44 s): one lunar daytime, accelerated, at lunar cell **M24296 (22.5° N, 3.5° W)**, 75.8 km from the crater Huxley, in the **low equatorial plains (the maria)**, the Solar panels zone (within 30° of the equator and at or below −1,200 m). The camera descends to a stowed array at sunrise; a short mast rises and two wings of hinged panels unfold and come to rest flat (horizontal), as the mission's irradiance (a horizontal surface) assumes; the Sun climbs in the east to 69.0° in the south at local noon and descends to the west; the shadows shorten and lengthen again. The panel shows the Sun's elevation and azimuth, the real terrain horizon, the modelled power and energy per m² of a flat panel, the elapsed Earth days, the time compression and a graph of the power over one whole lunar cycle with the night half shaded. Closing card (38-44 s): the number 1 pair, the Earth analog **E38464 (16.5° S, 124.5° E, Australia; 128.7 km from Derby)** against the lunar cell, with real values, differences, levels, the sunlight reaching the ground at the Earth site and the share lost in the atmosphere, and the per-pair sentence.
+Story (44 s): one lunar daytime, accelerated, at lunar cell **M23206 (25.5° N, 13.5° W)**, 38.5 km from Timocharis, in the **low equatorial plains (the maria)**, the Solar panels zone (within 30° of the equator and at or below −1,200 m). The camera descends to a stowed array at sunrise; a short mast rises and two wings of hinged panels unfold and come to rest flat (horizontal), as the mission's irradiance (a horizontal surface) assumes; the Sun climbs in the east to 66.0° in the south at local noon and descends to the west; the shadows shorten and lengthen again; in the last 0.3 s the Sun goes behind the real terrain to the west (2.5° high there) while still 2° above the flat horizon. The panel shows the Sun's elevation and azimuth, the real terrain horizon, the modelled power and energy per m² of a flat panel, the elapsed Earth days, the time compression and a graph of the power over one whole lunar cycle with the night half shaded. Closing card (38-44 s): pair number 1 (the first of the five shown), the Earth analog **E40184 (21.5° S, 44.5° E, Menabe, Madagascar; 18.8 km from Manja)** against the lunar cell, with real values, differences, levels, the sunlight reaching the ground at the Earth site and the share lost in the atmosphere, and the per-pair sentence.
 
 ## Files
 
@@ -15,10 +15,10 @@ Story (44 s): one lunar daytime, accelerated, at lunar cell **M24296 (22.5° N, 
 |---|---|---|
 | `solar.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, no audio, faststart, CRF 25 | @MP4@ |
 | `solar.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, two-pass CRF 34 | @WEBM@ |
-| `solar-poster.jpg` | Frame 570 (t = 19 s): local noon, Sun 69.0° up in the south, panels flat, short shadows | @JPG@ |
+| `solar-poster.jpg` | Frame 570 (t = 19 s): local noon, Sun 66.0° up in the south, panels flat, short shadows | @JPG@ |
 | `solar-poster.webp` | Same frame, WebP quality 88 | @WEBP@ |
-| `solar.en.vtt` | English descriptive captions, 12 cues, 0-44 s; cue boundaries at every status change | @ENVTT@ |
-| `solar.es.vtt` | Spanish descriptive captions, 12 cues, 0-44 s | @ESVTT@ |
+| `solar.en.vtt` | English descriptive captions, 14 cues, 0-44 s; cue boundaries at every status change | @ENVTT@ |
+| `solar.es.vtt` | Spanish descriptive captions, 14 cues, 0-44 s | @ESVTT@ |
 
 ffprobe (`-count_frames`): @FFPROBE@; both VTT files parse in ffmpeg's WebVTT demuxer.
 
@@ -39,8 +39,10 @@ Renderer and scenario: `app/video-sim/` (see its README). Everything shown comes
 cd app/video-sim && npm install
 W=/path/to/scratch/work; mkdir -p $W/cache
 curl -o $W/cache/sldem2015_512_00n_30n_315_360_float.img https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.img
+python3 -I tools/solar_pair.py                               # scenarios/solar.json from the bundle (first of top5) and the tables
 python3 -I tools/prepare.py scenarios/solar.json --work $W   # ~40 s: table and bundle checks, relief, georeference check, horizons
-node render.js scenarios/solar.json --work $W --timeline     # optional: label of every frame (no rendering)
+node render.js scenarios/solar.json --work $W --timeline     # label of every frame (no rendering)
+python3 -I tools/solar_pair.py --timeline $W/solar/timeline.json   # adds the cues where the real terrain hides the Sun
 node render.js scenarios/solar.json --work $W                # 1320 frames, then encodes, captions, ffprobe
 ```
 
@@ -52,17 +54,19 @@ Render time: @RTIME@
 
 | Label on the panel | From - to (s) | Picture |
 |---|---|---|
-| Sunrise: low Sun in the east, panels stowed | 0.00-1.97 | camera descends from 1.9 km over the plain; Sun 1.5-9.9° up in the east (az 89-92°); the real small craters of the mare throw long shadows; array folded; exposure x8.0 falling to x2.5 stated |
-| Morning: Sun climbing, panels stowed | 1.97-5.00 | camera reaches the folded array; Sun 10.0-22.9°; shadows shorten; exposure stated until 4.23 s |
+| Sunrise: low Sun in the east, panels stowed | 0.00-2.00 | camera descends from 1.9 km over the mare; Sun 1.6-9.9° up in the east (az 89-93°); real craters and ridges throw long shadows; array folded; exposure x8.0 falling to x2.5 stated |
+| Morning: Sun climbing, panels stowed | 2.00-5.00 | camera reaches the folded array; Sun 10.0-22.5°; shadows shorten; exposure stated until 4.33 s |
 | Unfolding the flat panels | 5.00-10.00 | mast rises, the two wings unfold upwards and fold down to flat (they move until 10.00 s) |
 | Panels deployed, lying flat | 10.00-11.50 | array at rest, panels horizontal, cells facing the sky (from frame 300, the first at rest) |
-| Morning: Sun climbing in the east | 11.50-14.30 | Sun 50.0-59.9°, az 117-131°; short shadows under the wings |
-| Sun high in the sky: short shadows, most power | 14.30-23.73 | Sun above 60° (69.0° in the south at 19.0 s, local noon); shadows almost under the panels; power 1,178-1,271 W/m² |
-| Afternoon: Sun descending towards the west | 23.73-36.07 | Sun 59.9° down to 10.0°, az 229-267°; shadows lengthen to the east; exposure stated from 33.80 s |
-| Low Sun in the west: long shadows | 36.07-38.00 (held on the card fade 38.0-38.8) | Sun 9.9° down to 1.7° (az 268-271°); very long shadows of the array and of the craters; exposure x2.5 rising to x8.0 stated |
+| Morning: Sun climbing in the east | 11.50-15.03 | Sun 48.5-60.0°, az 120-140°; short shadows under the wings |
+| Sun high in the sky: short shadows, most power | 15.03-23.00 | Sun above 60° (66.0° in the south at 19.0 s, local noon); shadows almost under the panels; power 1,179-1,244 W/m² |
+| Afternoon: Sun descending towards the west | 23.00-36.03 | Sun 60.0° down to 10.0°, az 220-267°; shadows lengthen to the east; exposure stated from 33.70 s |
+| Low Sun in the west: long shadows | 36.03-37.73 | Sun 9.9° down to 2.8° (az 267-270°); very long shadows of the array and the craters; exposure x2.5 rising to x8.0 stated |
+| Sun partly behind the terrain | 37.73-37.87 | the solar disc goes behind the real western terrain (horizon 2.5° at az 270°); light on the array fades |
+| Sun behind the terrain | 37.87-38.00 (held on the card fade 38.0-38.8) | array and nearby ground in terrain shadow, power 0 W/m², distant sunlit ground still bright; Sun 2.1-1.7° above the flat horizon |
 | (closing card) | 38.0-44.0 | pair card, no panel |
 
-The labels are computed from the same values the picture is rendered from (`page/main.js` `solarStatus`): the deployment labels from the deployment times (the unfolding is a smoothstep that reaches exactly 1 at 10.0 s), the others from the Sun's elevation at the array (below 10° "low", from 60° "high") and the sign of the hour angle (morning or afternoon); a Sun behind the real terrain would be labelled so, but it never is here (the real horizon at the array is 0.07-3.3° and the Sun clears it in every frame). Caption cues start at the frames where the label changes (1.967, 5, 10, 11.5, 14.3, 23.733, 36.067 s, from `render.js --timeline`) plus 19 s (noon), 30 s and the card (38, 41 s); `render.js` refuses to write the captions if the label changes inside a cue.
+The labels are computed from the same values the picture is rendered from (`page/main.js` `solarStatus`): the deployment labels from the deployment times (the unfolding is a smoothstep that reaches exactly 1 at 10.0 s), the others from the Sun's elevation at the array (below 10° "low", from 60° "high") and the sign of the hour angle (morning or afternoon); the real terrain horizon at the array (−0.25° to 3.27°, highest towards az 312°) hides the Sun only at the very end, and the labels say so. Caption cues start at the frames where the label changes (2.0, 5, 10, 11.5, 15.033, 23.0, 36.033, 37.733, 37.867 s, from `render.js --timeline`) plus 19 s (noon), 30 s and the card (38, 41 s); `render.js` refuses to write the captions if the label changes inside a cue.
 
 ## Inputs, sources and levels
 

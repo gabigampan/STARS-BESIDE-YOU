@@ -598,7 +598,7 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
             return (f"{label} (number {fmt_int(res.rank[k])}, similarity {res.similarity_pct[k]:.2f}, "
                     f"suitability {suit[k]:.2f}): " + "; ".join(parts))
         ex = [site(st["name"], k) for st, k in zip(t["sites"], rows) if k is not None and res.rank[k] > 0]
-        ex.append(site("against the tied site " + f"number {int(res.rank[j])}", j))
+        ex.append(site("against the tied site at the top", j))
         return {"tied_n": fmt_int(tied.sum()), "ranked_n": fmt_int(ranked.sum()), "sat_all_n": fmt_int((allsat & tied).sum()),
                 "sat_all_ranked_n": fmt_int(allsat.sum()), "suit100_n": fmt_int((ranked & (np.round(suit, 2) >= 100.0)).sum()),
                 "criteria": crit, "per_criterion": per,

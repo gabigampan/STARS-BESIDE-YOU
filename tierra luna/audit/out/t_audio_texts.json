@@ -1,0 +1,3239 @@
+{
+ "facts": {
+  "rover": {
+   "rule": {
+    "rule_id": "spread_within_top_tie",
+    "top_final": 100.0,
+    "tied_n": 254,
+    "tied_after_skips": 241,
+    "skips": {
+     "ice": 0,
+     "water": 13
+    },
+    "tied_similarity_values": [
+     100.0
+    ],
+    "tied_suitability_values": [
+     99.99,
+     100.0
+    ],
+    "recomputed_ids": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "closest_two_deg": 59.96338524940772,
+    "paired_with_similarity_100": 10335,
+    "tied_with_similarity_exactly_100": 254
+   },
+   "pairs": [
+    {
+     "number": 1,
+     "id": 4037,
+     "rank": 3,
+     "lat": 78.5,
+     "lon": -102.5,
+     "twin": 63714,
+     "similarity": "100.00",
+     "final": "100.00",
+     "suitability": "100.00",
+     "earth": {
+      "country": "Canada",
+      "region": null,
+      "place": "Gjoa Haven",
+      "place_cc": "CA",
+      "place_admin1": "Nunavut",
+      "km_stored": 1115.8004150390625,
+      "km_spoken": 1116,
+      "km_on_screen": null,
+      "km_recomputed": 1115.8,
+      "direction": "north",
+      "bearing": 352.4,
+      "nearest_cities1000": "Gjoa Haven",
+      "nearest_cities1000_km": 1115.8
+     },
+     "moon": {
+      "feature": "Sverdrup",
+      "type": "Crater, craters",
+      "km_stored": 68.56653594970703,
+      "km_spoken": 69,
+      "km_on_screen": "68.6",
+      "twin_lat": -86.5,
+      "twin_lon": 174.5
+     },
+     "slope_deg": {
+      "earth": "0.77",
+      "moon": "0.793",
+      "diff": "0.023"
+     },
+     "roughness_m": {
+      "earth": "29.34",
+      "moon": "29.5",
+      "diff": "0.16"
+     },
+     "s": [
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "number": 2,
+     "id": 50510,
+     "rank": 254,
+     "lat": -50.5,
+     "lon": -69.5,
+     "twin": 59438,
+     "similarity": "100.00",
+     "final": "100.00",
+     "suitability": "100.00",
+     "earth": {
+      "country": "Argentina",
+      "region": "Santa Cruz",
+      "place": "Comandante Luis Piedra Buena",
+      "place_cc": "AR",
+      "place_admin1": "Santa Cruz",
+      "km_stored": 70.78295135498047,
+      "km_spoken": 71,
+      "km_on_screen": "71",
+      "km_recomputed": 70.78,
+      "direction": "southwest",
+      "bearing": 215.8,
+      "nearest_cities1000": "Comandante Luis Piedra Buena",
+      "nearest_cities1000_km": 70.78
+     },
+     "moon": {
+      "feature": "Zeeman",
+      "type": "Crater, craters",
+      "km_stored": 51.26746368408203,
+      "km_spoken": 51,
+      "km_on_screen": "51.3",
+      "twin_lat": -75.5,
+      "twin_lon": -141.5
+     },
+     "slope_deg": {
+      "earth": "0.722",
+      "moon": "0.739",
+      "diff": "0.017"
+     },
+     "roughness_m": {
+      "earth": "29.16",
+      "moon": "30.62",
+      "diff": "1.46"
+     },
+     "s": [
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "number": 3,
+     "id": 44239,
+     "rank": 251,
+     "lat": -32.5,
+     "lon": 139.5,
+     "twin": 59712,
+     "similarity": "100.00",
+     "final": "100.00",
+     "suitability": "100.00",
+     "earth": {
+      "country": "Australia",
+      "region": "South Australia",
+      "place": "Peterborough",
+      "place_cc": "AU",
+      "place_admin1": "South Australia",
+      "km_stored": 80.97875213623047,
+      "km_spoken": 81,
+      "km_on_screen": "81",
+      "km_recomputed": 80.98,
+      "direction": "northeast",
+      "bearing": 49.8,
+      "nearest_cities1000": "Peterborough",
+      "nearest_cities1000_km": 80.98
+     },
+     "moon": {
+      "feature": "Schrodinger",
+      "type": "Crater, craters",
+      "km_stored": 23.504470825195312,
+      "km_spoken": 24,
+      "km_on_screen": "23.5",
+      "twin_lat": -75.5,
+      "twin_lon": 132.5
+     },
+     "slope_deg": {
+      "earth": "0.547",
+      "moon": "0.547",
+      "diff": "0"
+     },
+     "roughness_m": {
+      "earth": "18.18",
+      "moon": "15.66",
+      "diff": "2.52"
+     },
+     "s": [
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "number": 4,
+     "id": 26510,
+     "rank": 241,
+     "lat": 16.5,
+     "lon": 50.5,
+     "twin": 63711,
+     "similarity": "100.00",
+     "final": "100.00",
+     "suitability": "100.00",
+     "earth": {
+      "country": "Yemen",
+      "region": "Al Mahrah",
+      "place": "Dahasuways",
+      "place_cc": "YE",
+      "place_admin1": "Al Mahrah",
+      "km_stored": 89.71261596679688,
+      "km_spoken": 90,
+      "km_on_screen": "90",
+      "km_recomputed": 89.71,
+      "direction": "north",
+      "bearing": 344.2,
+      "nearest_cities1000": "Dahasuways",
+      "nearest_cities1000_km": 89.71
+     },
+     "moon": {
+      "feature": "Haynes",
+      "type": "Crater, craters",
+      "km_stored": 68.37893676757812,
+      "km_spoken": 68,
+      "km_on_screen": "68.4",
+      "twin_lat": -86.5,
+      "twin_lon": 171.5
+     },
+     "slope_deg": {
+      "earth": "0.643",
+      "moon": "0.677",
+      "diff": "0.034"
+     },
+     "roughness_m": {
+      "earth": "21.87",
+      "moon": "19.22",
+      "diff": "2.65"
+     },
+     "s": [
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "number": 5,
+     "id": 26087,
+     "rank": 236,
+     "lat": 17.5,
+     "lon": -12.5,
+     "twin": 61294,
+     "similarity": "100.00",
+     "final": "100.00",
+     "suitability": "100.00",
+     "earth": {
+      "country": "Mauritania",
+      "region": "Assaba",
+      "place": "Barkewol",
+      "place_cc": "MR",
+      "place_admin1": "Assaba",
+      "km_stored": 95.58440399169922,
+      "km_spoken": 96,
+      "km_on_screen": "96",
+      "km_recomputed": 95.58,
+      "direction": "north",
+      "bearing": 359.9,
+      "nearest_cities1000": "Barkewol",
+      "nearest_cities1000_km": 95.58
+     },
+     "moon": {
+      "feature": "Drygalski",
+      "type": "Crater, craters",
+      "km_stored": 29.42840576171875,
+      "km_spoken": 29,
+      "km_on_screen": "29.4",
+      "twin_lat": -80.5,
+      "twin_lon": -85.5
+     },
+     "slope_deg": {
+      "earth": "0.523",
+      "moon": "0.51",
+      "diff": "0.013"
+     },
+     "roughness_m": {
+      "earth": "26.42",
+      "moon": "26.8",
+      "diff": "0.38"
+     },
+     "s": [
+      1.0,
+      1.0
+     ]
+    }
+   ]
+  },
+  "solar": {
+   "rule": {
+    "rule_id": "rank_with_skips",
+    "recomputed_ids": [
+     40184,
+     29749,
+     23648,
+     29746,
+     28670
+    ],
+    "skipped_before_fifth": [
+     [
+      3,
+      "within 2 degrees"
+     ],
+     [
+      4,
+      "within 2 degrees"
+     ],
+     [
+      6,
+      "within 2 degrees"
+     ],
+     [
+      8,
+      "within 2 degrees"
+     ]
+    ],
+    "highest_scoring_the_rule_allows": true
+   },
+   "pairs": [
+    {
+     "number": 1,
+     "id": 40184,
+     "rank": 1,
+     "lat": -21.5,
+     "lon": 44.5,
+     "twin": 23206,
+     "similarity": "99.83",
+     "final": "98.88",
+     "suitability": "97.94",
+     "earth": {
+      "country": "Madagascar",
+      "region": "Menabe",
+      "place": "Manja",
+      "place_cc": "MG",
+      "place_admin1": "Menabe",
+      "km_stored": 18.77299690246582,
+      "km_spoken": 19,
+      "km_on_screen": "19",
+      "km_recomputed": 18.77,
+      "direction": "southeast",
+      "bearing": 113.3,
+      "nearest_cities1000": "Manja",
+      "nearest_cities1000_km": 18.77
+     },
+     "moon": {
+      "feature": "Timocharis",
+      "type": "Crater, craters",
+      "km_stored": 38.48141860961914,
+      "km_spoken": 38,
+      "km_on_screen": "38.5",
+      "twin_lat": 25.5,
+      "twin_lon": -13.5
+     },
+     "toa_earth": "9.3",
+     "ground": "5.7",
+     "toa_moon": "9.4",
+     "loss_pct": 39,
+     "clear": "0.675",
+     "clear_raw": 0.6748999953269958,
+     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.3 kWh/m²/day at the top of Earth's atmosphere here and 9.4 kWh/m²/day on the lunar surface. At the Earth site only 5.7 of those 9.3 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+    },
+    {
+     "number": 2,
+     "id": 29749,
+     "rank": 2,
+     "lat": 7.5,
+     "lon": 49.5,
+     "twin": 26063,
+     "similarity": "99.97",
+     "final": "98.76",
+     "suitability": "97.56",
+     "earth": {
+      "country": "Somalia",
+      "region": "Nugaal",
+      "place": "Eyl",
+      "place_cc": "SO",
+      "place_admin1": "Nugaal",
+      "km_stored": 63.77788162231445,
+      "km_spoken": 64,
+      "km_on_screen": "64",
+      "km_recomputed": 63.78,
+      "direction": "southwest",
+      "bearing": 213.2,
+      "nearest_cities1000": "Eyl",
+      "nearest_cities1000_km": 63.78
+     },
+     "moon": {
+      "feature": "Bessarion",
+      "type": "Crater, craters",
+      "km_stored": 83.6974868774414,
+      "km_spoken": 84,
+      "km_on_screen": "83.7",
+      "twin_lat": 17.5,
+      "twin_lon": -36.5
+     },
+     "toa_earth": "9.9",
+     "ground": "6.2",
+     "toa_moon": "9.9",
+     "loss_pct": 37,
+     "clear": "0.705",
+     "clear_raw": 0.705299973487854,
+     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.2 of those 9.9 kWh/m²/day reach the ground (37 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+    },
+    {
+     "number": 3,
+     "id": 23648,
+     "rank": 5,
+     "lat": 24.5,
+     "lon": 68.5,
+     "twin": 22156,
+     "similarity": "99.93",
+     "final": "98.56",
+     "suitability": "97.20",
+     "earth": {
+      "country": "Pakistan",
+      "region": "Sindh",
+      "place": "Jati",
+      "place_cc": "PK",
+      "place_admin1": "Sindh",
+      "km_stored": 28.63718605041504,
+      "km_spoken": 29,
+      "km_on_screen": "29",
+      "km_recomputed": 28.64,
+      "direction": "northeast",
+      "bearing": 55.4,
+      "nearest_cities1000": "Jati",
+      "nearest_cities1000_km": 28.64
+     },
+     "moon": {
+      "feature": "Banting",
+      "type": "Crater, craters",
+      "km_stored": 58.2102165222168,
+      "km_spoken": 58,
+      "km_on_screen": "58.2",
+      "twin_lat": 28.5,
+      "twin_lon": 16.5
+     },
+     "toa_earth": "9.2",
+     "ground": "5.6",
+     "toa_moon": "9.1",
+     "loss_pct": 39,
+     "clear": "0.662",
+     "clear_raw": 0.6622999906539917,
+     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.2 kWh/m²/day at the top of Earth's atmosphere here and 9.1 kWh/m²/day on the lunar surface. At the Earth site only 5.6 of those 9.2 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+    },
+    {
+     "number": 4,
+     "id": 29746,
+     "rank": 7,
+     "lat": 7.5,
+     "lon": 46.5,
+     "twin": 26056,
+     "similarity": "99.97",
+     "final": "98.52",
+     "suitability": "97.08",
+     "earth": {
+      "country": "Ethiopia",
+      "region": null,
+      "place": "Gaalkacyo",
+      "place_cc": "SO",
+      "place_admin1": "Mudug",
+      "km_stored": 130.92579650878906,
+      "km_spoken": 131,
+      "km_on_screen": "131",
+      "km_recomputed": 130.93,
+      "direction": "northwest",
+      "bearing": 308.4,
+      "nearest_cities1000": "Gaalkacyo",
+      "nearest_cities1000_km": 130.93
+     },
+     "moon": {
+      "feature": "Rima Marius",
+      "type": "Rima, rimae",
+      "km_stored": 178.55641174316406,
+      "km_spoken": 179,
+      "km_on_screen": "178.6",
+      "twin_lat": 17.5,
+      "twin_lon": -43.5
+     },
+     "toa_earth": "9.9",
+     "ground": "6.1",
+     "toa_moon": "9.9",
+     "loss_pct": 38,
+     "clear": "0.677",
+     "clear_raw": 0.6771000027656555,
+     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.1 of those 9.9 kWh/m²/day reach the ground (38 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+    },
+    {
+     "number": 5,
+     "id": 28670,
+     "rank": 9,
+     "lat": 10.5,
+     "lon": 50.5,
+     "twin": 25483,
+     "similarity": "99.94",
+     "final": "98.37",
+     "suitability": "96.81",
+     "earth": {
+      "country": "Somalia",
+      "region": "Bari",
+      "place": "Iskushuban",
+      "place_cc": "SO",
+      "place_admin1": "Bari",
+      "km_stored": 38.08546829223633,
+      "km_spoken": 38,
+      "km_on_screen": "38",
+      "km_recomputed": 38.09,
+      "direction": "northeast",
+      "bearing": 50.8,
+      "nearest_cities1000": "Iskushuban",
+      "nearest_cities1000_km": 38.09
+     },
+     "moon": {
+      "feature": "Catena Dziewulski",
+      "type": "Catena, catenae",
+      "km_stored": 95.12308502197266,
+      "km_spoken": 95,
+      "km_on_screen": "95.1",
+      "twin_lat": 19.5,
+      "twin_lon": 103.5
+     },
+     "toa_earth": "9.8",
+     "ground": "6.3",
+     "toa_moon": "9.8",
+     "loss_pct": 36,
+     "clear": "0.792",
+     "clear_raw": 0.7922000288963318,
+     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.8 kWh/m²/day at the top of Earth's atmosphere here and 9.8 kWh/m²/day on the lunar surface. At the Earth site only 6.3 of those 9.8 kWh/m²/day reach the ground (36 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+    }
+   ]
+  },
+  "lunar_base": {
+   "rule": {
+    "rule_id": "rank_with_skips",
+    "recomputed_ids": [
+     21054,
+     17538,
+     21833,
+     18627,
+     19672
+    ],
+    "skipped_before_fifth": [
+     [
+      2,
+      "within 2 degrees"
+     ],
+     [
+      4,
+      "within 2 degrees"
+     ]
+    ],
+    "highest_scoring_the_rule_allows": true
+   },
+   "pairs": [
+    {
+     "number": 1,
+     "id": 21054,
+     "rank": 1,
+     "lat": 31.5,
+     "lon": -5.5,
+     "twin": 62517,
+     "similarity": "99.36",
+     "final": "72.00",
+     "suitability": "44.64",
+     "earth": {
+      "country": "Morocco",
+      "region": "Souss-Massa-Draa",
+      "place": "Tinghir",
+      "place_cc": "MA",
+      "place_admin1": "Souss-Massa-Draa",
+      "km_stored": 3.512303352355957,
+      "km_spoken": 4,
+      "km_on_screen": "4",
+      "km_recomputed": 3.51,
+      "direction": "southeast",
+      "bearing": 117.8,
+      "nearest_cities1000": "Tinghir",
+      "nearest_cities1000_km": 3.51
+     },
+     "moon": {
+      "feature": "Wapowski",
+      "type": "Crater, craters",
+      "km_stored": 18.348438262939453,
+      "km_spoken": 18,
+      "km_on_screen": "18.3",
+      "twin_lat": -83.5,
+      "twin_lon": 57.5
+     },
+     "tmin_diff_K": "208.6",
+     "tmin_earth_K": 271.6300048828125,
+     "tmin_moon_K": 63.029998779296875,
+     "tmin_pct": [
+      "62.7",
+      "62.7"
+     ],
+     "amp_pct": [
+      "41.9",
+      "43.4"
+     ],
+     "amp_pct_diff": "1.5",
+     "slope": [
+      "3.257",
+      "3.481",
+      0.2240000069141388
+     ],
+     "rough": [
+      "119.5",
+      "115",
+      4.480000019073486
+     ],
+     "region": {
+      "region": "Nobile Rim 2",
+      "share_of_cell": 0.4457,
+      "phrase": "at the edge of",
+      "text": "at the edge of NASA's Nobile Rim 2 candidate region"
+     },
+     "region_share_recomputed": 0.4458
+    },
+    {
+     "number": 2,
+     "id": 17538,
+     "rank": 3,
+     "lat": 41.5,
+     "lon": 78.5,
+     "twin": 63528,
+     "similarity": "97.31",
+     "final": "70.23",
+     "suitability": "43.15",
+     "earth": {
+      "country": "China",
+      "region": "Xinjiang Uygur Zizhiqu",
+      "place": "Aheqi",
+      "place_cc": "CN",
+      "place_admin1": "Xinjiang Uygur Zizhiqu",
+      "km_stored": 62.27783966064453,
+      "km_spoken": 62,
+      "km_on_screen": "62",
+      "km_recomputed": 62.28,
+      "direction": "north",
+      "bearing": 4.3,
+      "nearest_cities1000": "Aheqi",
+      "nearest_cities1000_km": 62.28
+     },
+     "moon": {
+      "feature": "Mons Malapert",
+      "type": "Mons, montes",
+      "km_stored": 25.059415817260742,
+      "km_spoken": 25,
+      "km_on_screen": "25.1",
+      "twin_lat": -86.5,
+      "twin_lon": -11.5
+     },
+     "tmin_diff_K": "207.4",
+     "tmin_earth_K": 248.61000061035156,
+     "tmin_moon_K": 41.22999954223633,
+     "tmin_pct": [
+      "8.4",
+      "8.0"
+     ],
+     "amp_pct": [
+      "6.7",
+      "10.2"
+     ],
+     "amp_pct_diff": "3.5",
+     "slope": [
+      "6.652",
+      "7.179",
+      0.5270000100135803
+     ],
+     "rough": [
+      "238.8",
+      "238.5",
+      0.3199999928474426
+     ],
+     "region": {
+      "region": "Haworth",
+      "share_of_cell": 0.0043,
+      "phrase": "at the edge of",
+      "text": "at the edge of NASA's Haworth candidate region"
+     },
+     "region_share_recomputed": 0.0041
+    },
+    {
+     "number": 3,
+     "id": 21833,
+     "rank": 5,
+     "lat": 29.5,
+     "lon": 53.5,
+     "twin": 62515,
+     "similarity": "92.50",
+     "final": "69.87",
+     "suitability": "47.25",
+     "earth": {
+      "country": "Iran",
+      "region": "Fars",
+      "place": "Kherameh",
+      "place_cc": "IR",
+      "place_admin1": "Fars",
+      "km_stored": 18.195903778076172,
+      "km_spoken": 18,
+      "km_on_screen": "18",
+      "km_recomputed": 18.2,
+      "direction": "east",
+      "bearing": 89.6,
+      "nearest_cities1000": "Kherameh",
+      "nearest_cities1000_km": 18.2
+     },
+     "moon": {
+      "feature": "Wapowski",
+      "type": "Crater, craters",
+      "km_stored": 14.166642189025879,
+      "km_spoken": 14,
+      "km_on_screen": "14.2",
+      "twin_lat": -83.5,
+      "twin_lon": 55.5
+     },
+     "tmin_diff_K": "208.2",
+     "tmin_earth_K": 271.6600036621094,
+     "tmin_moon_K": 63.41999816894531,
+     "tmin_pct": [
+      "62.9",
+      "64.1"
+     ],
+     "amp_pct": [
+      "59.5",
+      "54.8"
+     ],
+     "amp_pct_diff": "4.6",
+     "slope": [
+      "3.738",
+      "5.053",
+      1.315000057220459
+     ],
+     "rough": [
+      "138.8",
+      "123.7",
+      15.069999694824219
+     ],
+     "region": {
+      "region": "Nobile Rim 2",
+      "share_of_cell": 0.1355,
+      "phrase": "at the edge of",
+      "text": "at the edge of NASA's Nobile Rim 2 candidate region"
+     },
+     "region_share_recomputed": 0.1355
+    },
+    {
+     "number": 4,
+     "id": 18627,
+     "rank": 6,
+     "lat": 38.5,
+     "lon": 87.5,
+     "twin": 62479,
+     "similarity": "83.98",
+     "final": "69.80",
+     "suitability": "55.63",
+     "earth": {
+      "country": "China",
+      "region": "Xinjiang Uygur Zizhiqu",
+      "place": "Waxxari",
+      "place_cc": "CN",
+      "place_admin1": "Xinjiang Uygur Zizhiqu",
+      "km_stored": 27.356660842895508,
+      "km_spoken": 27,
+      "km_on_screen": "27",
+      "km_recomputed": 27.36,
+      "direction": "southeast",
+      "bearing": 144.3,
+      "nearest_cities1000": "Waxxari",
+      "nearest_cities1000_km": 27.36
+     },
+     "moon": {
+      "feature": "Mons Mouton",
+      "type": "Mons, montes",
+      "km_stored": 49.02939987182617,
+      "km_spoken": 49,
+      "km_on_screen": "49",
+      "twin_lat": -83.5,
+      "twin_lon": 19.5
+     },
+     "tmin_diff_K": "202.9",
+     "tmin_earth_K": 256.30999755859375,
+     "tmin_moon_K": 53.38999938964844,
+     "tmin_pct": [
+      "27.8",
+      "34.1"
+     ],
+     "amp_pct": [
+      "80.1",
+      "77.7"
+     ],
+     "amp_pct_diff": "2.4",
+     "slope": [
+      "3.167",
+      "5.296",
+      2.128999948501587
+     ],
+     "rough": [
+      "146.3",
+      "172.7",
+      26.469999313354492
+     ],
+     "region": {
+      "region": "Mons Mouton Plateau",
+      "share_of_cell": 0.1768,
+      "phrase": "at the edge of",
+      "text": "at the edge of NASA's Mons Mouton Plateau candidate region"
+     },
+     "region_share_recomputed": 0.1769
+    },
+    {
+     "number": 5,
+     "id": 19672,
+     "rank": 7,
+     "lat": 35.5,
+     "lon": 52.5,
+     "twin": 63657,
+     "similarity": "93.33",
+     "final": "69.73",
+     "suitability": "46.12",
+     "earth": {
+      "country": "Iran",
+      "region": "Semnan",
+      "place": "Aradan",
+      "place_cc": "IR",
+      "place_admin1": "Semnan",
+      "km_stored": 27.869264602661133,
+      "km_spoken": 28,
+      "km_on_screen": "28",
+      "km_recomputed": 27.87,
+      "direction": "north",
+      "bearing": 1.1,
+      "nearest_cities1000": "Aradan",
+      "nearest_cities1000_km": 27.87
+     },
+     "moon": {
+      "feature": "Slater",
+      "type": "Crater, craters",
+      "km_stored": 48.63816833496094,
+      "km_spoken": 49,
+      "km_on_screen": "48.6",
+      "twin_lat": -86.5,
+      "twin_lon": 117.5
+     },
+     "tmin_diff_K": "207.4",
+     "tmin_earth_K": 267.9599914550781,
+     "tmin_moon_K": 60.59000015258789,
+     "tmin_pct": [
+      "53.0",
+      "54.8"
+     ],
+     "amp_pct": [
+      "55.1",
+      "51.3"
+     ],
+     "amp_pct_diff": "3.9",
+     "slope": [
+      "4.198",
+      "5.547",
+      1.3489999771118164
+     ],
+     "rough": [
+      "163.1",
+      "177.5",
+      14.420000076293945
+     ],
+     "region": {
+      "region": "Slater Plain",
+      "share_of_cell": 0.0004,
+      "phrase": "at the edge of",
+      "text": "at the edge of NASA's Slater Plain candidate region"
+     },
+     "region_share_recomputed": 0.0003
+    }
+   ]
+  },
+  "twin_max_km_from_pole": {
+   "rover": 439.6885811501675,
+   "lunar_base": 227.4251281811211
+  }
+ },
+ "results": [
+  {
+   "ok": true,
+   "check": "rover: spread-within-tie recomputed gives the bundle's five (as a set)",
+   "detail": "([4037, 50510, 44239, 26510, 26087], [4037, 50510, 44239, 26510, 26087])"
+  },
+  {
+   "ok": true,
+   "check": "rover: ... and in the bundle's order",
+   "detail": "([4037, 50510, 44239, 26510, 26087], [4037, 50510, 44239, 26510, 26087])"
+  },
+  {
+   "ok": true,
+   "check": "rover: tie counts",
+   "detail": "(254, 241)"
+  },
+  {
+   "ok": true,
+   "check": "rover #1: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #1: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #1: place names explain = binary",
+   "detail": "('Canada', None, 'Gjoa Haven')"
+  },
+  {
+   "ok": true,
+   "check": "rover #1: Earth distance recomputed",
+   "detail": "(np.float64(1115.800399725977), 1115.8004150390625)"
+  },
+  {
+   "ok": true,
+   "check": "rover #1: Gjoa Haven is the nearest cities1000 place",
+   "detail": "Gjoa Haven"
+  },
+  {
+   "ok": true,
+   "check": "rover #1: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Sverdrup', 68.56653263997079, 68.56653594970703)"
+  },
+  {
+   "ok": true,
+   "check": "rover #1: 'Sverdrup' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #1: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #2: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #2: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #2: place names explain = binary",
+   "detail": "('Argentina', 'Santa Cruz', 'Comandante Luis Piedra Buena')"
+  },
+  {
+   "ok": true,
+   "check": "rover #2: Earth distance recomputed",
+   "detail": "(np.float64(70.78294870240495), 70.78295135498047)"
+  },
+  {
+   "ok": true,
+   "check": "rover #2: Comandante Luis Piedra Buena is the nearest cities1000 place",
+   "detail": "Comandante Luis Piedra Buena"
+  },
+  {
+   "ok": true,
+   "check": "rover #2: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Zeeman', 51.26746358478751, 51.26746368408203)"
+  },
+  {
+   "ok": true,
+   "check": "rover #2: 'Zeeman' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #2: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #3: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #3: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #3: place names explain = binary",
+   "detail": "('Australia', 'South Australia', 'Peterborough')"
+  },
+  {
+   "ok": true,
+   "check": "rover #3: Earth distance recomputed",
+   "detail": "(np.float64(80.97874921381478), 80.97875213623047)"
+  },
+  {
+   "ok": true,
+   "check": "rover #3: Peterborough is the nearest cities1000 place",
+   "detail": "Peterborough"
+  },
+  {
+   "ok": true,
+   "check": "rover #3: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Schrodinger', 23.504471457340614, 23.504470825195312)"
+  },
+  {
+   "ok": true,
+   "check": "rover #3: 'Schrodinger' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #3: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #4: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #4: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #4: place names explain = binary",
+   "detail": "('Yemen', 'Al Mahrah', 'Dahasuways')"
+  },
+  {
+   "ok": true,
+   "check": "rover #4: Earth distance recomputed",
+   "detail": "(np.float64(89.71261927616099), 89.71261596679688)"
+  },
+  {
+   "ok": true,
+   "check": "rover #4: Dahasuways is the nearest cities1000 place",
+   "detail": "Dahasuways"
+  },
+  {
+   "ok": true,
+   "check": "rover #4: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Haynes', 68.37893660753934, 68.37893676757812)"
+  },
+  {
+   "ok": true,
+   "check": "rover #4: 'Haynes' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #4: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #5: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #5: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #5: place names explain = binary",
+   "detail": "('Mauritania', 'Assaba', 'Barkewol')"
+  },
+  {
+   "ok": true,
+   "check": "rover #5: Earth distance recomputed",
+   "detail": "(np.float64(95.5844056536253), 95.58440399169922)"
+  },
+  {
+   "ok": true,
+   "check": "rover #5: Barkewol is the nearest cities1000 place",
+   "detail": "Barkewol"
+  },
+  {
+   "ok": true,
+   "check": "rover #5: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Drygalski', 29.42840585183528, 29.42840576171875)"
+  },
+  {
+   "ok": true,
+   "check": "rover #5: 'Drygalski' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover #5: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar: rule of the five recomputed gives the bundle's top5",
+   "detail": "([40184, 29749, 23648, 29746, 28670], [40184, 29749, 23648, 29746, 28670])"
+  },
+  {
+   "ok": true,
+   "check": "solar: overall ranks",
+   "detail": "[1, 2, 5, 7, 9]"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #1: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #1: place names explain = binary",
+   "detail": "('Madagascar', 'Menabe', 'Manja')"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: Earth distance recomputed",
+   "detail": "(np.float64(18.772996764646294), 18.77299690246582)"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: Manja is the nearest cities1000 place",
+   "detail": "Manja"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Timocharis', 38.48141895508865, 38.48141860961914)"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: 'Timocharis' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #1: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #1: clear-sky bundle = ISCCP table",
+   "detail": "(0.6749, np.float32(0.6749))"
+  },
+  {
+   "ok": true,
+   "check": "solar #1: my figures appear in the bundle's pair sentence",
+   "detail": "This pair is matched on sunlight above the atmosphere: 9.3 kWh/m²/day at the top of Earth's atmosphere here and 9.4 kWh/m²/day on the lunar surface. At the Earth site only 5.7 of those 9.3 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+  },
+  {
+   "ok": true,
+   "check": "solar #2: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #2: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #2: place names explain = binary",
+   "detail": "('Somalia', 'Nugaal', 'Eyl')"
+  },
+  {
+   "ok": true,
+   "check": "solar #2: Earth distance recomputed",
+   "detail": "(np.float64(63.77788318595916), 63.77788162231445)"
+  },
+  {
+   "ok": true,
+   "check": "solar #2: Eyl is the nearest cities1000 place",
+   "detail": "Eyl"
+  },
+  {
+   "ok": true,
+   "check": "solar #2: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Bessarion', 83.69749055326852, 83.6974868774414)"
+  },
+  {
+   "ok": true,
+   "check": "solar #2: 'Bessarion' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #2: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #2: clear-sky bundle = ISCCP table",
+   "detail": "(0.7053, np.float32(0.7053))"
+  },
+  {
+   "ok": true,
+   "check": "solar #2: my figures appear in the bundle's pair sentence",
+   "detail": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.2 of those 9.9 kWh/m²/day reach the ground (37 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+  },
+  {
+   "ok": true,
+   "check": "solar #3: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #3: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #3: place names explain = binary",
+   "detail": "('Pakistan', 'Sindh', 'Jati')"
+  },
+  {
+   "ok": true,
+   "check": "solar #3: Earth distance recomputed",
+   "detail": "(np.float64(28.637186190638907), 28.63718605041504)"
+  },
+  {
+   "ok": true,
+   "check": "solar #3: Jati is the nearest cities1000 place",
+   "detail": "Jati"
+  },
+  {
+   "ok": true,
+   "check": "solar #3: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Banting', 58.21021716128964, 58.2102165222168)"
+  },
+  {
+   "ok": true,
+   "check": "solar #3: 'Banting' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #3: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #3: clear-sky bundle = ISCCP table",
+   "detail": "(0.6623, np.float32(0.6623))"
+  },
+  {
+   "ok": true,
+   "check": "solar #3: my figures appear in the bundle's pair sentence",
+   "detail": "This pair is matched on sunlight above the atmosphere: 9.2 kWh/m²/day at the top of Earth's atmosphere here and 9.1 kWh/m²/day on the lunar surface. At the Earth site only 5.6 of those 9.2 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+  },
+  {
+   "ok": true,
+   "check": "solar #4: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #4: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #4: place names explain = binary",
+   "detail": "('Ethiopia', None, 'Gaalkacyo')"
+  },
+  {
+   "ok": true,
+   "check": "solar #4: Earth distance recomputed",
+   "detail": "(np.float64(130.9258006565134), 130.92579650878906)"
+  },
+  {
+   "ok": true,
+   "check": "solar #4: Gaalkacyo is the nearest cities1000 place",
+   "detail": "Gaalkacyo"
+  },
+  {
+   "ok": true,
+   "check": "solar #4: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Rima Marius', 178.5564061093398, 178.55641174316406)"
+  },
+  {
+   "ok": true,
+   "check": "solar #4: 'Rima Marius' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #4: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #4: clear-sky bundle = ISCCP table",
+   "detail": "(0.6771, np.float32(0.6771))"
+  },
+  {
+   "ok": true,
+   "check": "solar #4: my figures appear in the bundle's pair sentence",
+   "detail": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.1 of those 9.9 kWh/m²/day reach the ground (38 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+  },
+  {
+   "ok": true,
+   "check": "solar #5: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #5: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #5: place names explain = binary",
+   "detail": "('Somalia', 'Bari', 'Iskushuban')"
+  },
+  {
+   "ok": true,
+   "check": "solar #5: Earth distance recomputed",
+   "detail": "(np.float64(38.085466896011766), 38.08546829223633)"
+  },
+  {
+   "ok": true,
+   "check": "solar #5: Iskushuban is the nearest cities1000 place",
+   "detail": "Iskushuban"
+  },
+  {
+   "ok": true,
+   "check": "solar #5: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Catena Dziewulski', 95.12308541946517, 95.12308502197266)"
+  },
+  {
+   "ok": true,
+   "check": "solar #5: 'Catena Dziewulski' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #5: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar #5: clear-sky bundle = ISCCP table",
+   "detail": "(0.7922, np.float32(0.7922))"
+  },
+  {
+   "ok": true,
+   "check": "solar #5: my figures appear in the bundle's pair sentence",
+   "detail": "This pair is matched on sunlight above the atmosphere: 9.8 kWh/m²/day at the top of Earth's atmosphere here and 9.8 kWh/m²/day on the lunar surface. At the Earth site only 6.3 of those 9.8 kWh/m²/day reach the ground (36 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+  },
+  {
+   "ok": true,
+   "check": "lunar_base: rule of the five recomputed gives the bundle's top5",
+   "detail": "([21054, 17538, 21833, 18627, 19672], [21054, 17538, 21833, 18627, 19672])"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base: overall ranks",
+   "detail": "[1, 3, 5, 6, 7]"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: place names explain = binary",
+   "detail": "('Morocco', 'Souss-Massa-Draa', 'Tinghir')"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: Earth distance recomputed",
+   "detail": "(np.float64(3.5123033485640427), 3.512303352355957)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: Tinghir is the nearest cities1000 place",
+   "detail": "Tinghir"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Wapowski', 18.348438446688483, 18.348438262939453)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: 'Wapowski' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #1: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base #1: region phrase follows the 50 % rule",
+   "detail": "{'region': 'Nobile Rim 2', 'share_of_cell': 0.4457, 'phrase': 'at the edge of', 'text': \"at the edge of NASA's Nobile Rim 2 candidate region\"}"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: place names explain = binary",
+   "detail": "('China', 'Xinjiang Uygur Zizhiqu', 'Aheqi')"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: Earth distance recomputed",
+   "detail": "(np.float64(62.277840168839404), 62.27783966064453)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: Aheqi is the nearest cities1000 place",
+   "detail": "Aheqi"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Mons Malapert', 25.05941649615665, 25.059415817260742)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: 'Mons Malapert' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #2: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base #2: region phrase follows the 50 % rule",
+   "detail": "{'region': 'Haworth', 'share_of_cell': 0.0043, 'phrase': 'at the edge of', 'text': \"at the edge of NASA's Haworth candidate region\"}"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: place names explain = binary",
+   "detail": "('Iran', 'Fars', 'Kherameh')"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: Earth distance recomputed",
+   "detail": "(np.float64(18.195904623456602), 18.195903778076172)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: Kherameh is the nearest cities1000 place",
+   "detail": "Kherameh"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Wapowski', 14.16664263575722, 14.166642189025879)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: 'Wapowski' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #3: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base #3: region phrase follows the 50 % rule",
+   "detail": "{'region': 'Nobile Rim 2', 'share_of_cell': 0.1355, 'phrase': 'at the edge of', 'text': \"at the edge of NASA's Nobile Rim 2 candidate region\"}"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: place names explain = binary",
+   "detail": "('China', 'Xinjiang Uygur Zizhiqu', 'Waxxari')"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: Earth distance recomputed",
+   "detail": "(np.float64(27.35666098415636), 27.356660842895508)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: Waxxari is the nearest cities1000 place",
+   "detail": "Waxxari"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Mons Mouton', 49.02939856786947, 49.02939987182617)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: 'Mons Mouton' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #4: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base #4: region phrase follows the 50 % rule",
+   "detail": "{'region': 'Mons Mouton Plateau', 'share_of_cell': 0.1768, 'phrase': 'at the edge of', 'text': \"at the edge of NASA's Mons Mouton Plateau candidate region\"}"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: explain matches binary rank/twin",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: explain scores = binary",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: place names explain = binary",
+   "detail": "('Iran', 'Semnan', 'Aradan')"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: Earth distance recomputed",
+   "detail": "(np.float64(27.869264212397958), 27.869264602661133)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: Aradan is the nearest cities1000 place",
+   "detail": "Aradan"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: lunar feature is the nearest primary IAU feature, distance recomputed",
+   "detail": "('Slater', 48.63816824917663, 48.63816833496094)"
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: 'Slater' written so in the engine's IAU file",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "lunar_base #5: explain feature",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base #5: region phrase follows the 50 % rule",
+   "detail": "{'region': 'Slater Plain', 'share_of_cell': 0.0004, 'phrase': 'at the edge of', 'text': \"at the edge of NASA's Slater Plain candidate region\"}"
+  },
+  {
+   "ok": true,
+   "check": "base #1: share of the twin cell inside Nobile Rim 2 recomputed",
+   "detail": "(0.4458, 0.4457)"
+  },
+  {
+   "ok": true,
+   "check": "base #2: share of the twin cell inside Haworth recomputed",
+   "detail": "(0.0041, 0.0043)"
+  },
+  {
+   "ok": true,
+   "check": "base #3: share of the twin cell inside Nobile Rim 2 recomputed",
+   "detail": "(0.1355, 0.1355)"
+  },
+  {
+   "ok": true,
+   "check": "base #4: share of the twin cell inside Mons Mouton Plateau recomputed",
+   "detail": "(0.1769, 0.1768)"
+  },
+  {
+   "ok": true,
+   "check": "base #5: share of the twin cell inside Slater Plain recomputed",
+   "detail": "(0.0003, 0.0004)"
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: 95 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "00_welcome.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: 100 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": false,
+   "check": "m1_rover.mp3: 'near the south pole' (rule 2: check the distance)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: 102 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": false,
+   "check": "m2_solar.mp3: 'near the equator' (rule 2: check the distance)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: 103 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": false,
+   "check": "m3_base.mp3: 'near the south pole' (rule 2: check the distance)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: 87 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: 83 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: 80 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: 80 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: 79 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: 92 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: 87 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: 92 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: 98 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: 90 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: 99 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: 98 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: 99 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: 87 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: 98 words",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'the five best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'the best'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'best analog'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'identical'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'charge the same'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'equally cold'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'gently sloping'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: no 'proven'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: region/country 'Canada'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: Earth place '1,116 km north of Gjoa Haven'",
+   "detail": "{'country': 'Canada', 'region': None, 'place': 'Gjoa Haven', 'place_cc': 'CA', 'place_admin1': 'Nunavut', 'km_stored': 1115.8004150390625, 'km_spoken': 1116, 'km_on_screen': None, 'km_recomputed': 1115.8, 'direction': 'north', 'bearing': 352.4, 'nearest_cities1000': 'Gjoa Haven', 'nearest_cities1000_km': 1115.8}"
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: lunar feature '69 km from the crater Sverdrup'",
+   "detail": "{'feature': 'Sverdrup', 'type': 'Crater, craters', 'km_stored': 68.56653594970703, 'km_spoken': 69, 'km_on_screen': '68.6', 'twin_lat': -86.5, 'twin_lon': 174.5}"
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: slope {'earth': '0.77', 'moon': '0.793', 'diff': '0.023'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: roughness {'earth': '29.34', 'moon': '29.5', 'diff': '0.16'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: similarity 100.00",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: tie count 254",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: region/country 'Santa Cruz, Argentina'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: Earth place '71 km southwest of Comandante Luis Piedra Buena'",
+   "detail": "{'country': 'Argentina', 'region': 'Santa Cruz', 'place': 'Comandante Luis Piedra Buena', 'place_cc': 'AR', 'place_admin1': 'Santa Cruz', 'km_stored': 70.78295135498047, 'km_spoken': 71, 'km_on_screen': '71', 'km_recomputed': 70.78, 'direction': 'southwest', 'bearing': 215.8, 'nearest_cities1000': 'Comandante Luis Piedra Buena', 'nearest_cities1000_km': 70.78}"
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: lunar feature '51 km from the crater Zeeman'",
+   "detail": "{'feature': 'Zeeman', 'type': 'Crater, craters', 'km_stored': 51.26746368408203, 'km_spoken': 51, 'km_on_screen': '51.3', 'twin_lat': -75.5, 'twin_lon': -141.5}"
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: slope {'earth': '0.722', 'moon': '0.739', 'diff': '0.017'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: roughness {'earth': '29.16', 'moon': '30.62', 'diff': '1.46'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: similarity 100.00",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_2.mp3: tie count 254",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: region/country 'South Australia, Australia'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: Earth place '81 km northeast of Peterborough'",
+   "detail": "{'country': 'Australia', 'region': 'South Australia', 'place': 'Peterborough', 'place_cc': 'AU', 'place_admin1': 'South Australia', 'km_stored': 80.97875213623047, 'km_spoken': 81, 'km_on_screen': '81', 'km_recomputed': 80.98, 'direction': 'northeast', 'bearing': 49.8, 'nearest_cities1000': 'Peterborough', 'nearest_cities1000_km': 80.98}"
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: lunar feature '24 km from the crater Schrodinger'",
+   "detail": "{'feature': 'Schrodinger', 'type': 'Crater, craters', 'km_stored': 23.504470825195312, 'km_spoken': 24, 'km_on_screen': '23.5', 'twin_lat': -75.5, 'twin_lon': 132.5}"
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: slope {'earth': '0.547', 'moon': '0.547', 'diff': '0'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: roughness {'earth': '18.18', 'moon': '15.66', 'diff': '2.52'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: similarity 100.00",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_3.mp3: tie count 254",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: region/country 'Al Mahrah, Yemen'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: Earth place '90 km north of Dahasuways'",
+   "detail": "{'country': 'Yemen', 'region': 'Al Mahrah', 'place': 'Dahasuways', 'place_cc': 'YE', 'place_admin1': 'Al Mahrah', 'km_stored': 89.71261596679688, 'km_spoken': 90, 'km_on_screen': '90', 'km_recomputed': 89.71, 'direction': 'north', 'bearing': 344.2, 'nearest_cities1000': 'Dahasuways', 'nearest_cities1000_km': 89.71}"
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: lunar feature '68 km from the crater Haynes'",
+   "detail": "{'feature': 'Haynes', 'type': 'Crater, craters', 'km_stored': 68.37893676757812, 'km_spoken': 68, 'km_on_screen': '68.4', 'twin_lat': -86.5, 'twin_lon': 171.5}"
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: slope {'earth': '0.643', 'moon': '0.677', 'diff': '0.034'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: roughness {'earth': '21.87', 'moon': '19.22', 'diff': '2.65'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: similarity 100.00",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_4.mp3: tie count 254",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: region/country 'Assaba, Mauritania'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: Earth place '96 km north of Barkewol'",
+   "detail": "{'country': 'Mauritania', 'region': 'Assaba', 'place': 'Barkewol', 'place_cc': 'MR', 'place_admin1': 'Assaba', 'km_stored': 95.58440399169922, 'km_spoken': 96, 'km_on_screen': '96', 'km_recomputed': 95.58, 'direction': 'north', 'bearing': 359.9, 'nearest_cities1000': 'Barkewol', 'nearest_cities1000_km': 95.58}"
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: lunar feature '29 km from the crater Drygalski'",
+   "detail": "{'feature': 'Drygalski', 'type': 'Crater, craters', 'km_stored': 29.42840576171875, 'km_spoken': 29, 'km_on_screen': '29.4', 'twin_lat': -80.5, 'twin_lon': -85.5}"
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: slope {'earth': '0.523', 'moon': '0.51', 'diff': '0.013'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: roughness {'earth': '26.42', 'moon': '26.8', 'diff': '0.38'}",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: similarity 100.00",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "rover_5.mp3: tie count 254",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: region/country 'Menabe, Madagascar'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: Earth place '19 km southeast of Manja'",
+   "detail": "{'country': 'Madagascar', 'region': 'Menabe', 'place': 'Manja', 'place_cc': 'MG', 'place_admin1': 'Menabe', 'km_stored': 18.77299690246582, 'km_spoken': 19, 'km_on_screen': '19', 'km_recomputed': 18.77, 'direction': 'southeast', 'bearing': 113.3, 'nearest_cities1000': 'Manja', 'nearest_cities1000_km': 18.77}"
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: lunar feature '38 km from the crater Timocharis'",
+   "detail": "{'feature': 'Timocharis', 'type': 'Crater, craters', 'km_stored': 38.48141860961914, 'km_spoken': 38, 'km_on_screen': '38.5', 'twin_lat': 25.5, 'twin_lon': -13.5}"
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: sunlight 9.3 / 9.4",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: ground 5.7",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: lost 39",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: clear sky 0.675",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: similarity 99.83",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_1.mp3: plain fraction 'two thirds' for 0.675",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: region/country 'Nugaal, Somalia'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: Earth place '64 km southwest of Eyl'",
+   "detail": "{'country': 'Somalia', 'region': 'Nugaal', 'place': 'Eyl', 'place_cc': 'SO', 'place_admin1': 'Nugaal', 'km_stored': 63.77788162231445, 'km_spoken': 64, 'km_on_screen': '64', 'km_recomputed': 63.78, 'direction': 'southwest', 'bearing': 213.2, 'nearest_cities1000': 'Eyl', 'nearest_cities1000_km': 63.78}"
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: lunar feature '84 km from the crater Bessarion'",
+   "detail": "{'feature': 'Bessarion', 'type': 'Crater, craters', 'km_stored': 83.6974868774414, 'km_spoken': 84, 'km_on_screen': '83.7', 'twin_lat': 17.5, 'twin_lon': -36.5}"
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: sunlight both 9.9",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: ground 6.2",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: lost 37",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: clear sky 0.705",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: similarity 99.97",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_2.mp3: plain fraction 'seven tenths' for 0.705",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: region/country 'Sindh, Pakistan'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: Earth place '29 km northeast of Jati'",
+   "detail": "{'country': 'Pakistan', 'region': 'Sindh', 'place': 'Jati', 'place_cc': 'PK', 'place_admin1': 'Sindh', 'km_stored': 28.63718605041504, 'km_spoken': 29, 'km_on_screen': '29', 'km_recomputed': 28.64, 'direction': 'northeast', 'bearing': 55.4, 'nearest_cities1000': 'Jati', 'nearest_cities1000_km': 28.64}"
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: lunar feature '58 km from the crater Banting'",
+   "detail": "{'feature': 'Banting', 'type': 'Crater, craters', 'km_stored': 58.2102165222168, 'km_spoken': 58, 'km_on_screen': '58.2', 'twin_lat': 28.5, 'twin_lon': 16.5}"
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: sunlight 9.2 / 9.1",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: ground 5.6",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: lost 39",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: clear sky 0.662",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: similarity 99.93",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_3.mp3: plain fraction 'two thirds' for 0.662",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: region/country 'Ethiopia'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: Earth place '131 km northwest of Gaalkacyo'",
+   "detail": "{'country': 'Ethiopia', 'region': None, 'place': 'Gaalkacyo', 'place_cc': 'SO', 'place_admin1': 'Mudug', 'km_stored': 130.92579650878906, 'km_spoken': 131, 'km_on_screen': '131', 'km_recomputed': 130.93, 'direction': 'northwest', 'bearing': 308.4, 'nearest_cities1000': 'Gaalkacyo', 'nearest_cities1000_km': 130.93}"
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: lunar feature '179 km from Rima Marius, a lunar rille'",
+   "detail": "{'feature': 'Rima Marius', 'type': 'Rima, rimae', 'km_stored': 178.55641174316406, 'km_spoken': 179, 'km_on_screen': '178.6', 'twin_lat': 17.5, 'twin_lon': -43.5}"
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: sunlight both 9.9",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: ground 6.1",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: lost 38",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: clear sky 0.677",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: similarity 99.97",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_4.mp3: plain fraction 'two thirds' for 0.677",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: region/country 'Bari, Somalia'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: Earth place '38 km northeast of Iskushuban'",
+   "detail": "{'country': 'Somalia', 'region': 'Bari', 'place': 'Iskushuban', 'place_cc': 'SO', 'place_admin1': 'Bari', 'km_stored': 38.08546829223633, 'km_spoken': 38, 'km_on_screen': '38', 'km_recomputed': 38.09, 'direction': 'northeast', 'bearing': 50.8, 'nearest_cities1000': 'Iskushuban', 'nearest_cities1000_km': 38.09}"
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: lunar feature '95 km from Catena Dziewulski, a chain of craters'",
+   "detail": "{'feature': 'Catena Dziewulski', 'type': 'Catena, catenae', 'km_stored': 95.12308502197266, 'km_spoken': 95, 'km_on_screen': '95.1', 'twin_lat': 19.5, 'twin_lon': 103.5}"
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: sunlight both 9.8",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: ground 6.3",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: lost 36",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: clear sky 0.792",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: similarity 99.94",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "solar_5.mp3: plain fraction 'four fifths' for 0.792",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: region/country 'Souss-Massa-Draa, Morocco'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: Earth place '4 km southeast of Tinghir'",
+   "detail": "{'country': 'Morocco', 'region': 'Souss-Massa-Draa', 'place': 'Tinghir', 'place_cc': 'MA', 'place_admin1': 'Souss-Massa-Draa', 'km_stored': 3.512303352355957, 'km_spoken': 4, 'km_on_screen': '4', 'km_recomputed': 3.51, 'direction': 'southeast', 'bearing': 117.8, 'nearest_cities1000': 'Tinghir', 'nearest_cities1000_km': 3.51}"
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: lunar feature '18 km from the crater Wapowski'",
+   "detail": "{'feature': 'Wapowski', 'type': 'Crater, craters', 'km_stored': 18.348438262939453, 'km_spoken': 18, 'km_on_screen': '18.3', 'twin_lat': -83.5, 'twin_lon': 57.5}"
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: region phrase 'at the edge of NASA's Nobile Rim 2 candidate region'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: kelvin 208.6",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: the Moon's coldest is lower",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: tmin pct ['62.7', '62.7']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: swing pct ['41.9', '43.4']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: slope ['3.257', '3.481', 0.2240000069141388]",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_1.mp3: similarity 99.36",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: region/country 'Xinjiang Uygur Zizhiqu, China'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: Earth place '62 km north of Aheqi'",
+   "detail": "{'country': 'China', 'region': 'Xinjiang Uygur Zizhiqu', 'place': 'Aheqi', 'place_cc': 'CN', 'place_admin1': 'Xinjiang Uygur Zizhiqu', 'km_stored': 62.27783966064453, 'km_spoken': 62, 'km_on_screen': '62', 'km_recomputed': 62.28, 'direction': 'north', 'bearing': 4.3, 'nearest_cities1000': 'Aheqi', 'nearest_cities1000_km': 62.28}"
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: lunar feature '25 km from Mons Malapert'",
+   "detail": "{'feature': 'Mons Malapert', 'type': 'Mons, montes', 'km_stored': 25.059415817260742, 'km_spoken': 25, 'km_on_screen': '25.1', 'twin_lat': -86.5, 'twin_lon': -11.5}"
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: region phrase 'at the edge of NASA's Haworth candidate region'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: kelvin 207.4",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: the Moon's coldest is lower",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: tmin pct ['8.4', '8.0']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: swing pct ['6.7', '10.2']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: slope ['6.652', '7.179', 0.5270000100135803]",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_2.mp3: similarity 97.31",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: region/country 'Fars, Iran'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: Earth place '18 km east of Kherameh'",
+   "detail": "{'country': 'Iran', 'region': 'Fars', 'place': 'Kherameh', 'place_cc': 'IR', 'place_admin1': 'Fars', 'km_stored': 18.195903778076172, 'km_spoken': 18, 'km_on_screen': '18', 'km_recomputed': 18.2, 'direction': 'east', 'bearing': 89.6, 'nearest_cities1000': 'Kherameh', 'nearest_cities1000_km': 18.2}"
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: lunar feature '14 km from the crater Wapowski'",
+   "detail": "{'feature': 'Wapowski', 'type': 'Crater, craters', 'km_stored': 14.166642189025879, 'km_spoken': 14, 'km_on_screen': '14.2', 'twin_lat': -83.5, 'twin_lon': 55.5}"
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: region phrase 'at the edge of NASA's Nobile Rim 2 candidate region'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: kelvin 208.2",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: the Moon's coldest is lower",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: tmin pct ['62.9', '64.1']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: swing pct ['59.5', '54.8']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: slope ['3.738', '5.053', 1.315000057220459]",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_3.mp3: similarity 92.50",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: region/country 'Xinjiang Uygur Zizhiqu, China'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: Earth place '27 km southeast of Waxxari'",
+   "detail": "{'country': 'China', 'region': 'Xinjiang Uygur Zizhiqu', 'place': 'Waxxari', 'place_cc': 'CN', 'place_admin1': 'Xinjiang Uygur Zizhiqu', 'km_stored': 27.356660842895508, 'km_spoken': 27, 'km_on_screen': '27', 'km_recomputed': 27.36, 'direction': 'southeast', 'bearing': 144.3, 'nearest_cities1000': 'Waxxari', 'nearest_cities1000_km': 27.36}"
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: lunar feature '49 km from Mons Mouton'",
+   "detail": "{'feature': 'Mons Mouton', 'type': 'Mons, montes', 'km_stored': 49.02939987182617, 'km_spoken': 49, 'km_on_screen': '49', 'twin_lat': -83.5, 'twin_lon': 19.5}"
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: region phrase 'at the edge of NASA's Mons Mouton Plateau candidate region'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: kelvin 202.9",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: the Moon's coldest is lower",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: tmin pct ['27.8', '34.1']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: swing pct ['80.1', '77.7']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: no slope sentence (difference 2.129 > tolerance 2)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_4.mp3: similarity 83.98",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: opening",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: region/country 'Semnan, Iran'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: Earth place '28 km north of Aradan'",
+   "detail": "{'country': 'Iran', 'region': 'Semnan', 'place': 'Aradan', 'place_cc': 'IR', 'place_admin1': 'Semnan', 'km_stored': 27.869264602661133, 'km_spoken': 28, 'km_on_screen': '28', 'km_recomputed': 27.87, 'direction': 'north', 'bearing': 1.1, 'nearest_cities1000': 'Aradan', 'nearest_cities1000_km': 27.87}"
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: lunar feature '49 km from the crater Slater'",
+   "detail": "{'feature': 'Slater', 'type': 'Crater, craters', 'km_stored': 48.63816833496094, 'km_spoken': 49, 'km_on_screen': '48.6', 'twin_lat': -86.5, 'twin_lon': 117.5}"
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: region phrase 'at the edge of NASA's Slater Plain candidate region'",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: kelvin 207.4",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: the Moon's coldest is lower",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: tmin pct ['53.0', '54.8']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: swing pct ['55.1', '51.3']",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: slope ['4.198', '5.547', 1.3489999771118164]",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "base_5.mp3: similarity 93.33",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover: tie sentence with N",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: highest-scoring wording allowed",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m2_solar.mp3: order rule",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: highest-scoring wording allowed",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base.mp3: order rule",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m3_base: populations",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "check": "m1_rover: no 'highest-scoring'",
+   "detail": ""
+  }
+ ]
+}

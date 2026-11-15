@@ -1008,3 +1008,56 @@ Revisión independiente hecha el 15-11-2026 con scripts propios (`scratchpad/sta
 - **P9.** En las variables secundarias los valores pueden diferir, siempre que no sea exagerado (tolerancias razonables). En las variables que llevan el peso de cada misión no: ahí tienen que ser de verdad parecidas, y si no lo son el par se descarta.
 
 **Resultado del análisis (resumen; detalle en `docs/ANALOG_PRINCIPLE.md`):** con la regla de hoy ningún par del Rover tiene la pendiente a menos de 2° ni la rugosidad a menos de 30 m de su gemelo, también entre los de similitud ≥ 90. Propuesta: similitud gaussiana sobre diferencias absolutas con filtro por la variable clave. Rover: polo sur, sobreviven 10.192 de 10.337. Paneles solares: Luna entera con irradiancia sin atmósfera, 18.776 de 18.777 (mares ecuatoriales 6.360; polo sur 0). Base lunar: 0 de 2.419 en cualquier zona; opciones para el equipo en la sección D.3 de ese documento. Cifras comprobadas por un segundo agente con código propio el 15-11-2026 (sección "Comprobación" de `docs/ANALOG_PRINCIPLE.md`); se corrigieron las de Paneles solares sin atmósfera (fórmula del tope de la atmósfera), las de la opción "solo amplitud" de Base lunar y la correlación de hoy en Paneles (−0,92 con el paquete publicado, no −0,68).
+
+## Puntos del líder de las 12:10 (15-11-2026, a través de su delegado)
+
+Solo textos del bundle y documentos: ningún emparejamiento, puntuación, rango, gemelo, peso, tolerancia, filtro ni regla cambia. Comprobado: todos los `.bin` del bundle reconstruido son idénticos byte a byte a los de antes de este paso, y en los JSON solo difieren campos de texto, con una excepción declarada (punto d de la re-auditoría, abajo). Todas las cifras de esta sección salen del bundle reconstruido y las congela `tierra luna/tests/test_texts_1210.py`.
+
+### 1. Escala de Rover: fuentes exactas (comprobadas hoy, 15-11-2026, en la fuente)
+
+- **ETOPO 2022, 7,17 m.** MacFerrin, M., Amante, C., Carignan, K., Love, M. y Lim, E. (2025), "The Earth Topography 2022 (ETOPO 2022) global DEM dataset", *Earth System Science Data* 17(5), 1835-1849, versión publicada el 08-05-2025. https://doi.org/10.5194/essd-17-1835-2025 . Resumen: "ETOPO 2022 measures a global RMSE of 7.17 m." Sección 6 ("Validation results"): "we find that ETOPO has a mean RMSE over land of 7.17 m" (media de los RMSE de las subteselas de 1x1 grado sobre tierra, frente a ICESat-2). Pie de la figura 6: "The mean RMSE of the dataset is 7.17 m." **Confirmado.**
+- **LOLA, unos 10 m.** Smith, D. E., Zuber, M. T., Neumann, G. A., Lemoine, F. G., Mazarico, E., Torrence, M. H., McGarry, J. F., Rowlands, D. D., Head, J. W., Duxbury, T. H. et al. (2010), "Initial observations from the Lunar Orbiter Laser Altimeter (LOLA)", *Geophysical Research Letters* 37(18), L18204, septiembre de 2010. https://doi.org/10.1029/2010GL043751 (la página del editor devolvió 403 hoy; confirmado en la copia abierta del MIT, http://hdl.handle.net/1721.1/74221). Resumen: "have been used to improve the lunar geodetic grid to ∼10 m radial and ∼100 m spatial accuracy" (con respecto al centro de masas de la Luna). **Confirmado**, con una salvedad que ya estaba escrita: es la exactitud absoluta de la red geodésica, no el ruido de un píxel; para una celda es una cota pesimista.
+- Escala resultante: pendiente sqrt((7,17/(√2·1853))² + (10/(√2·1895,2))²) rad = 0,265093°; rugosidad sqrt(2·7,17² + 2·10²) = 17,40 m (fórmula: `docs/stats_audit/research_5_rover_escala.md`, "Para implementar"). La misma referencia está en el campo `source` de la escala en `engine_config.json` (`real_value_similarity`), que el bundle exporta para que la web la enseñe.
+
+### 2. La idoneidad de Rover también está saturada (texto `rover_suitability_saturation`, ficha de Rover y "Data and limits")
+
+Criterios del equipo para Rover (sin cambios): pendiente 45 % (nota máxima a 1° o menos), rugosidad 30 % (nota máxima a 30 m o menos), fracción de suelo desnudo 25 % (nota máxima a 0,7 o más). De los 254 sitios empatados arriba, 250 tienen la nota máxima en los tres criterios; 253 de los 10.337 puntos clasificados muestran idoneidad 100,00. Entre los 10.337 clasificados alcanzan el máximo: pendiente 3.291, rugosidad 2.144, suelo desnudo 930; los tres a la vez, 250. Entre los 254 empatados: pendiente 0,500 a 0,961°, rugosidad 14,61 a 30,19 m, suelo desnudo 0,707 a 1,000.
+
+Ejemplo trabajado: **Bardenas Reales** (número 7.046, similitud 100,00, idoneidad 70,43): pendiente 1,91° (utilidad 0,93, pierde 2,9 puntos), rugosidad 77 m (0,92, pierde 2,3), suelo desnudo 0,018 (0,03, pierde 24,4). **Tabernas** (número 7.390, similitud 100,00, idoneidad 69,36): pendiente 3,17° (0,85, pierde 7,0), rugosidad 111 m (0,87, pierde 3,9), suelo desnudo 0,146 (0,21, pierde 19,8). Frente al primer empatado (idoneidad 100,00: pendiente 0,571°, rugosidad 26,7 m, suelo desnudo 0,824; no pierde nada). Los dos análogos reconocidos pierden casi todo en el suelo desnudo: el mapa ESA CCI los clasifica como matorral o mosaico (ver la nota de `provenance_earth.csv`). **Es una debilidad de los criterios de idoneidad tal como los escribió el equipo**: premian el terreno más suave y más desnudo y no dicen nada más de la movilidad. No se toca; queda para la re-auditoría.
+
+### 3. La regla de tierra (confirmada por el líder)
+
+Al elegir los cinco se salta una celda con menos de la mitad de tierra (pendiente y rugosidad solo significan algo en suelo firme); es una parte de la regla con nombre propio y su propio interruptor (`top5_selection.missions.*.skips.water`, separado de `skips.ice`). Lo que hace cada parte (texto `top5_rule_parts`, "Data and limits"):
+
+| parte | Rover: empatados arriba (254) | Rover: clasificados (10.337) | Paneles solares (6.360) | Base lunar (450) |
+|---|---|---|---|---|
+| hielo (≥ 50 % nieve y hielo) | 0 | 1.485 | 0 | 0 |
+| tierra (< 50 % tierra) | 13 | 671 | 0 | 0 |
+| 2 grados | ninguno (los cinco se eligen lo más separados posible; los dos más cercanos están a 60,0°) | — | 4 puntos por encima del quinto mostrado | 2 puntos por encima del quinto mostrado |
+
+Quedan 241 empatados de Rover tras las dos exclusiones.
+
+### 4. Pendiente mínima de Rover de 0,5°
+
+Se mantiene y se dice qué es (texto `rover_slope_minimum`, ficha de Rover y "Data and limits"): un criterio del equipo **sin fuente oficial**, conservado por su efecto medido (sección "Pendiente mínima de Rover (0,5°)" de arriba): sin él pasan 7.847 puntos más (2.862 de hielo o nieve), 28 de los 50 primeros pasan a ser llanos con menos de 0,5°, las celdas de agua en el top 50 pasan de 4 a 13, un gemelo lunar se lleva el 13,9 % de los pares en vez del 2,6 %, y los análogos conocidos bajan (Qaidam del 4,0 % al 8,3 %, Haughton del 4,2 % al 8,4 %, Ramon del 3,6 % al 8,0 %, Yungay del 8,1 % al 11,6 %).
+
+### 5. Redacción de los cinco
+
+- Rover (`missions.json` `top5.rule`, `list_order_rover`, `rover_tie`): "These are five of the 254 sites tied at the top of our model, chosen to be spread across the world", y después cómo (sin celdas de hielo mayoritario, al menos la mitad de tierra, al menos 2° de separación, los más separados entre los empatados) y que el empate está dentro de la incertidumbre de los modelos de elevación (0,27° y 17,4 m). Ya no dice "five of the highest-scoring analogs".
+- Paneles solares y Base lunar conservan "five of the highest-scoring analogs in our model" porque es cierto de los cinco que elige la regla: la regla recorre la clasificación por nota final y se queda con cada punto permitido, así que son las cinco notas finales más altas entre los puntos que la regla permite (números 1, 2, 5, 7 y 9 en Paneles solares; 1, 3, 5, 6 y 7 en Base lunar). El texto lo dice así.
+
+### 6. Sin referencias técnicas en los textos que lee el usuario
+
+Reescritos `zone_edge_lunar_base` (la frase que se imprime junto a cada gemelo), `external_validation_*`, `numbers_without_effect`, `deviations_from_team` (criterios con nombre en palabras; "the team's scoring file" una vez; fuentes fuera del texto mostrado), `constants_two_values`, `surface_classes_rover`, `lunar_base_swing_gate` (sin identificadores de celda) y el `no_twin_reason` del fixture sin gemelo (sin nombres de reglas). Un test recorre todos los textos que la web imprime y falla si aparece un nombre de fichero, de columna o un código interno (`tests/test_texts_1210.py`).
+
+### Correcciones de texto de la re-auditoría de Base lunar (`docs/stats_audit/9_reauditoria_base.md`)
+
+- (a) `external_validation_lunar_base` decía que los sitios del benchmark que pasan el embudo "no tienen gemelo": falso. Ahora se calcula en cada build con las listas de r4 (mismas cifras que `research/r4_rank_sites.py` sobre el bundle): de 13 sitios fríos o polares pasan 3 y 2 tienen gemelo, MDRS (número 335) y Craters of the Moon (número 179); Black Point pasa sin gemelo. Lo mismo para Paneles solares (13 estaciones BSRN soleadas: pasan 11, 9 con gemelo; 0 de las 6 nubladas pasan) y Rover (ya se calculaba en cada build).
+- (b) Los pesos de Base lunar suman 0,95 y la idoneidad divide por esa suma (en la práctica 36,8 %, 26,3 %, 26,3 % y 10,5 %): dicho en `lunar_base_criteria` y en `deviations_from_team`.
+- (c) `rock_or_bare_frac`: el texto decía DERIVED; ahora dice MEASURED, como `real_data/provenance_earth.csv`, con la salvedad de que es un recuento de píxeles de una clasificación.
+- (d) `weighted_variables[].also_in_similarity` de `tmin_c` en Base lunar pasa de `false` a `true` (la similitud compara `tmin_k`, leído de `tmin_c`). Es un campo descriptivo de `missions.json` que no entra en ningún cálculo ni en ningún `.bin`; es el **único** valor no textual que cambia en este paso. En Rover los criterios de idoneidad se leen de columnas de 300 m y la similitud de las de km, así que allí sigue `false`.
+- (e) Estabilidad de Base lunar (texto `top5_stability_lunar_base`), del JSON del auditor (`stability.corrected`, 200 simulaciones): sigue entre los cinco / en el top 20 — Tinghir 18,0 % / 51,5 %; Aheqi 23,0 % / 52,5 %; Kherameh 19,0 % / 43,5 %; Waxxari 18,0 % / 38,0 %; Aradan 22,5 % / 59,0 %; los mismos cinco salen juntos en 0 de 200. Rover y Paneles solares siguen "pending the independent re-audit".
+
+### No hecho en este paso
+
+Mover la configuración muerta del motor (la entrada de zona solar "latitude <= -75", las tolerancias de referencia sin uso, la escala por rango agregado) a un bloque `legacy`: exige cambiar las lecturas del código y no cabía en el tiempo sin riesgo; queda pendiente.

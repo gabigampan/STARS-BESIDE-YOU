@@ -527,3 +527,12 @@ Analog benchmark (`/home/user/NASA/docs/research/02_analog_benchmark.csv`, 44 si
 - **Moved off the first view.** The country `label_rule` and the nearest populated place (name and distance) are in `earth_place_detail.bin` and `place_detail.json` (on demand); the top 25 cells of `explain.json` carry the nearest place too.
 - **Not stored.** `rain_mm_day`, `wind_max_ms` (not used by the engine) and columns with no data on a body (lunar `permafrost_class`); `variables.json` says why.
 - **Deterministic.** No clock is read; arrays are in id order; two builds are byte-identical (`test_bundle_is_deterministic` in tests/test_real_data.py).
+
+## 12. Points of the team lead of 2026-11-15 12:10 CET (texts only; docs/DECISIONS.md "Puntos del líder de las 12:10")
+
+- **Rover scale sources** (confirmed on the sources today): ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025, ESSD 17, 1835-1849, https://doi.org/10.5194/essd-17-1835-2025, abstract and section 6); LOLA geodetic grid "~10 m radial" (Smith et al. 2010, GRL 37, L18204, https://doi.org/10.1029/2010GL043751, abstract). Scale: 0.265 deg and 17.4 m.
+- **Rover suitability is saturated.** 250 of the 254 points tied at the top score the maximum on all three team criteria (slope 45 %, full at <= 1 deg; roughness 30 %, full at <= 30 m; bare-ground share 25 %, full at >= 0.7); per criterion among the 10,337 ranked: 3,291 / 2,144 / 930, all three 250. Tied points: slope 0.500-0.961 deg, roughness 14.61-30.19 m, bare share 0.707-1.000. Bardenas (70.43) and Tabernas (69.36) lose 24.4 and 19.8 points on the bare-ground share alone. A weakness of the criteria as written by the team, left for the re-audit.
+- **The land rule.** When the five are chosen, a cell with less than half land is skipped (separately switchable from the ice rule). Excluded: Rover 13 of 254 tied, 671 of 10,337 ranked; Solar panels 0 of 6,360; Lunar base 0 of 450. Ice rule: Rover 0 tied, 1,485 ranked; others 0. Two-degree rule: Rover none (the five are spread; closest pair 60.0 deg); Solar panels 4 points, Lunar base 2 points above the fifth shown.
+- **Rover minimum slope 0.5 deg**: a team criterion with no official source, kept for its measured effect (DECISIONS.md).
+- **Lunar base weights** sum to 0.95 and are renormalised (effective 36.8 / 26.3 / 26.3 / 10.5 %).
+- **User texts carry no file, column or rule names**; references stay in the `source` fields (test_texts_1210.py).
