@@ -14,7 +14,7 @@ import type { FlowApp } from './app';
 import { missionName } from './copy';
 import { append, button, h, icon, int, latLonText } from './dom';
 
-const PX_PER_CELL = 4;
+const PX_PER_CELL = 10;
 
 function dateWords(iso: string): string {
   const d = new Date(`${iso}T12:00:00Z`);
@@ -88,9 +88,9 @@ export class ZoneView {
     canvas.height = H;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    ctx.fillStyle = 'rgba(232, 214, 176, 0.16)';
+    ctx.fillStyle = 'rgba(232, 214, 176, 0.10)';
     for (let r = 0; r < g.rows; r++) for (let c = 0; c < g.cols; c++) if (mask[r * g.cols + c]) ctx.fillRect(c * PX_PER_CELL, r * PX_PER_CELL, PX_PER_CELL, PX_PER_CELL);
-    ctx.fillStyle = 'rgba(240, 226, 196, 0.95)';
+    ctx.fillStyle = 'rgba(240, 226, 196, 0.8)';
     const at = (r: number, c: number) => (r < 0 || r >= g.rows ? 0 : mask[r * g.cols + ((c + g.cols) % g.cols)]);
     for (let r = 0; r < g.rows; r++) {
       for (let c = 0; c < g.cols; c++) {
@@ -234,7 +234,7 @@ export class ZoneView {
     d.dataset.region = regionCode ?? '';
     const target = regionCode ? (d.querySelector(`#zone-region-${regionCode} summary`) as HTMLElement | null) : null;
     if (target) {
-      target.scrollIntoView({ block: 'center' });
+      target.scrollIntoView({ block: 'nearest' });
       target.focus({ preventScroll: true });
     } else (d.querySelector('.zone-close') as HTMLElement | null)?.focus();
     d.addEventListener('close', () => window.setTimeout(() => returnTo?.isConnected && returnTo.focus(), 0), { once: true });

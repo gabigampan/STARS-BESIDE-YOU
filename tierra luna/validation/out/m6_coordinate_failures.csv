@@ -1,0 +1,41 @@
+mission,id,kind,detail
+rover,3037,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,3038,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,3118,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3404,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: GL Greenland; rule nearest_geonames_place
+rover,3476,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3477,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3478,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3479,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3480,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3481,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3483,centre_off_polygons_named_country_not_in_cell,bundle RU Russia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,3799,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,3800,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,4159,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,4160,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,4161,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,4409,centre_off_polygons_named_country_not_in_cell,bundle CA Canada; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,4429,centre_off_polygons_named_country_not_in_cell,bundle CA Canada; touching: GL Greenland; rule nearest_geonames_place
+rover,4430,centre_off_polygons_named_country_not_in_cell,bundle CA Canada; touching: GL Greenland; rule nearest_geonames_place
+rover,4521,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,4756,centre_off_polygons_named_country_not_in_cell,bundle CA Canada; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,4839,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,4876,centre_off_polygons_named_country_not_in_cell,bundle SJ Svalbard & Jan Mayen; touching: None Norway; rule nearest_geonames_place
+rover,5101,centre_off_polygons_named_country_not_in_cell,bundle CA Canada; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,5200,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,6994,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,6997,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,7356,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,7712,centre_off_polygons_named_country_not_in_cell,bundle IS Iceland; touching: GL Greenland; rule nearest_geonames_place
+rover,11564,centre_off_polygons_named_country_not_in_cell,bundle US United States; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,11925,centre_off_polygons_named_country_not_in_cell,bundle US United States; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,12286,centre_off_polygons_named_country_not_in_cell,bundle US United States; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,15243,centre_off_polygons_named_country_not_in_cell,bundle PM St Pierre & Miquelon; touching: CA Canada; rule nearest_geonames_place
+rover,16414,centre_off_polygons_named_country_not_in_cell,bundle UA Ukraine; touching: RU Russia; rule nearest_geonames_place
+rover,28664,centre_off_polygons_named_country_not_in_cell,bundle SO Somalia; touching: None Somaliland; rule nearest_geonames_place
+rover,32488,centre_off_polygons_named_country_not_in_cell,bundle EC Ecuador; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,35231,centre_off_polygons_named_country_not_in_cell,bundle ID Indonesia; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,51983,centre_off_polygons_named_country_not_in_cell,bundle GS South Georgia & the South Sandwich Islands; touching: no polygon touches the cell; rule nearest_geonames_place
+rover,52310,centre_off_polygons_named_country_not_in_cell,bundle AR Argentina; touching: CL Chile; rule nearest_geonames_place
+rover,52312,centre_off_polygons_named_country_not_in_cell,bundle AR Argentina; touching: CL Chile; rule nearest_geonames_place

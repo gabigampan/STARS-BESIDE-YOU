@@ -1,0 +1,17 @@
+mission,reason,land_cells_failing
+solar,thermal_inertia_class:excluded,4421
+solar,irradiance_kwh_m2_day:below_min,3462
+solar,mask_fraction:below_min,3275
+solar,slope_deg:missing,714
+solar,elevation_m:missing,252
+solar,elevation_m:below_min,177
+solar,irradiance_kwh_m2_day:missing,49
+solar,slope_deg:above_max,1
+lunar_base,lst_diurnal_amp_k:below_min,14188
+lunar_base,tmin_c:above_max,6835
+lunar_base,lst_diurnal_amp_k:missing,6761
+lunar_base,thermal_inertia_class:excluded,4421
+lunar_base,mask_fraction:below_min,3275
+lunar_base,elevation_m:missing,252
+lunar_base,elevation_m:below_min,177
+lunar_base,tmin_c:missing,49

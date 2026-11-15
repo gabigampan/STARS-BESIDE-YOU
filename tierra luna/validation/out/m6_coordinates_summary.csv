@@ -1,0 +1,4 @@
+mission,ranked_points_checked,centre_inside_cell,centre_on_NE_land,centre_off_land_but_cell_touches_land,no_land_polygon_in_cell,country_agrees_centre_polygon,country_agrees_polygon_touching_cell,country_disagrees,antarctic_label,antarctic_label_lat_ok,no_country_label,region_labelled,nearest_place_km_median,nearest_place_km_p90,distinct_twins,twin_feature_name_agrees,twin_feature_km_agrees,twin_feature_km_median,twin_feature_km_max
+rover,10192,10192,9610,542,40,8668,383,40,1101,1101,0,6108,61.501,1337.77,401,401,401,59.393,189.305
+solar,6360,6360,6339,21,0,6339,21,0,0,0,0,4432,51.9864,209.763,1704,1704,1704,53.5445,186.298
+lunar_base,450,450,450,0,0,450,0,0,0,0,0,428,25.2202,65.321,103,103,103,26.48,60.003

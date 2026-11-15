@@ -1,0 +1,8 @@
+table,config,on_missing_gate,method,solar,thermal,both
+"legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",committed_618bc45,keep,team_module,5192,2613,1986
+"legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",committed_618bc45,keep,own_code,5192,2613,1986
+"legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",current,drop,team_module,5192,2613,1986
+"legacy_2deg (output_py/earth_moon_harmonized_clean.csv, EARTH rows)",current,drop,own_code,5192,2613,1986
+real_1deg (shipped),current,drop,engine,18777,2419,2419
+real_1deg (shipped),current,drop,own_code,18777,2419,2419
+real_1deg (shipped),committed_618bc45,keep,own_code,18777,2419,2419

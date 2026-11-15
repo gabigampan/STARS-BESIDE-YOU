@@ -144,7 +144,7 @@ const UNIT_TEXT: Record<string, string> = {
 export function valueText(v: number | string | null | undefined, unit: string): string {
   if (v == null || (typeof v === 'number' && !Number.isFinite(v))) return 'no data';
   if (typeof v === 'string') return classWord(v);
-  if (unit === 'percentile points') return `${num(v, 1)} percentile points`;
+  if (unit === 'percentile points') return `${fixed(v, 1)} percentile points`;
   const u = UNIT_TEXT[unit] ?? unit;
   const abs = Math.abs(v);
   const d = unit === 'fraction 0-1' ? 3 : abs >= 100 ? 1 : abs >= 10 ? 2 : 3;

@@ -91,7 +91,11 @@ export function roleWord(role: string): string {
  * names files and line numbers, kept for reviewers in "Technical notes").
  */
 export function setByWords(text: string): string {
-  return text.split(':')[0].trim();
+  // up to the first ": " (a clock time such as 08:55 stays), without brackets that point at documents
+  return text
+    .split(': ')[0]
+    .replace(/\s*\([^()]*(?:\/|\.md|\.py|\.json)[^()]*\)/g, '')
+    .trim();
 }
 
 const LEVEL_PLAIN: Record<string, string> = { MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled', NO_DATA: 'no data', UNDOCUMENTED: 'undocumented' };

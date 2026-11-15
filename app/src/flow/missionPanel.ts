@@ -5,8 +5,8 @@
 import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { firstSentence, missionLine, missionName, noPairKindWords, roleWord, statusWords } from './copy';
-import { sentenceUnit } from '../data/store.ts';
+import { missionLine, missionName, noPairKindWords, roleWord, statusWords } from './copy';
+import { ceil2, sentenceUnit, type NoPair } from '../data/store.ts';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
 import { levelLegend } from './legend';
@@ -390,13 +390,20 @@ export class MissionPanel {
     } else if (items.length) this.moreEl.append(h('p', { class: 'muted' }, this.query ? `${int(items.length)} places match "${this.query}".` : `All ${int(items.length)} places are listed.`));
   }
 
+  /** The no-twin reason of a row in a few plain words (the full approved sentence is in the panel). */
+  private shortReason(np: NoPair): string {
+    const d = np.variable;
+    const closest = d && np.gap != null ? ` (closest: ${d.label.toLowerCase()} ${num(ceil2(np.gap), 2)} ${sentenceUnit(d.unit)} away, limit ${num(d.bound, 2)} ${sentenceUnit(d.unit)})` : '';
+    return `${noPairKindWords(np.kind)}${closest}`;
+  }
+
   /** One row of the list: rank, the Earth place and its lunar twin, the final score; or "No lunar twin" with the reason. */
   private row(it: RankItem, mid: string | null): HTMLButtonElement {
     const twin = this.twinWords(it);
     const coords = latLonText(it.lat, it.lon);
     const paired = it.final != null;
     const noPair = !paired && mid ? this.app.store.noPairAt(mid, it.passPos) : null;
-    const reason = noPair ? firstSentence(noPair.sentence).replace(/^No lunar analog:\s*/, '') : '';
+    const reason = noPair ? this.shortReason(noPair) : '';
     const where = paired ? `${coords}${twin ? ` · ${twin}` : ''}` : coords;
     const b = h(
       'button',

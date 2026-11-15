@@ -1,0 +1,2209 @@
+mission,twin,lat,lon,bundle_feature,bundle_km,recomputed_feature,recomputed_km,name_agrees,km_within_0.1
+rover,61116,-79.5,96.5,Ganswindt,81.2,Ganswindt,81.199,True,True
+rover,59895,-76.5,-44.5,Casatus,159.2,Casatus,159.163,True,True
+rover,60992,-79.5,-27.5,Newton,110,Newton,110.025,True,True
+rover,60245,-77.5,-54.5,Le Gentil,185.2,Le Gentil,185.171,True,True
+rover,61352,-80.5,-27.5,Mons Cabeus,102.4,Mons Cabeus,102.436,True,True
+rover,61008,-79.5,-11.5,Newton,97.7,Newton,97.673,True,True
+rover,59619,-75.5,39.5,Boguslawsky,84.7,Boguslawsky,84.65,True,True
+rover,64346,-88.5,86.5,Slater,25.5,Slater,25.512,True,True
+rover,64041,-87.5,141.5,Slater,38.8,Slater,38.826,True,True
+rover,60697,-78.5,37.5,Schomberger,100.5,Schomberger,100.537,True,True
+rover,64056,-87.5,156.5,Haynes,39.2,Haynes,39.245,True,True
+rover,64050,-87.5,150.5,Haynes,41,Haynes,41.043,True,True
+rover,64047,-87.5,147.5,Haynes,42.2,Haynes,42.183,True,True
+rover,62165,-82.5,65.5,Svedberg,24.9,Svedberg,24.89,True,True
+rover,64055,-87.5,155.5,Haynes,39.5,Haynes,39.497,True,True
+rover,61037,-79.5,17.5,Schomberger,97.6,Schomberger,97.602,True,True
+rover,64277,-88.5,17.5,Shoemaker,27.2,Shoemaker,27.202,True,True
+rover,59618,-75.5,38.5,Boguslawsky,88,Boguslawsky,87.987,True,True
+rover,64049,-87.5,149.5,Haynes,41.4,Haynes,41.407,True,True
+rover,59845,-76.5,-94.5,Boltzmann,59.4,Boltzmann,59.393,True,True
+rover,64083,-88.5,-176.5,Haynes,13.9,Haynes,13.887,True,True
+rover,63247,-85.5,67.5,Nobile,35.3,Nobile,35.259,True,True
+rover,64082,-88.5,-177.5,Haynes,13.3,Haynes,13.291,True,True
+rover,64048,-87.5,148.5,Haynes,41.8,Haynes,41.787,True,True
+rover,59580,-75.5,0.5,Short,70.4,Short,70.41,True,True
+rover,60695,-78.5,35.5,Schomberger,90.1,Schomberger,90.11,True,True
+rover,62125,-82.5,25.5,Mons Mouton,66.3,Mons Mouton,66.306,True,True
+rover,64027,-87.5,127.5,Slater,25.7,Slater,25.68,True,True
+rover,62166,-82.5,66.5,Svedberg,25.5,Svedberg,25.475,True,True
+rover,64036,-87.5,136.5,Slater,33.9,Slater,33.902,True,True
+rover,64356,-88.5,96.5,Slater,18.4,Slater,18.392,True,True
+rover,59844,-76.5,-95.5,Boltzmann,63.6,Boltzmann,63.587,True,True
+rover,59866,-76.5,-73.5,Le Gentil,70.2,Le Gentil,70.186,True,True
+rover,61376,-80.5,-3.5,Whitaker,127.4,Whitaker,127.424,True,True
+rover,64032,-87.5,132.5,Slater,30.1,Slater,30.108,True,True
+rover,64273,-88.5,13.5,Shoemaker,30.4,Shoemaker,30.356,True,True
+rover,64051,-87.5,151.5,Haynes,40.7,Haynes,40.697,True,True
+rover,59896,-76.5,-43.5,Casatus,153.8,Casatus,153.797,True,True
+rover,64397,-88.5,137.5,Haynes,22.7,Haynes,22.717,True,True
+rover,63611,-86.5,71.5,Malinkin,23.1,Malinkin,23.075,True,True
+rover,62517,-83.5,57.5,Wapowski,18.3,Wapowski,18.348,True,True
+rover,63999,-87.5,99.5,Slater,22.2,Slater,22.24,True,True
+rover,64043,-87.5,143.5,Slater,40.8,Slater,40.83,True,True
+rover,64276,-88.5,16.5,Shoemaker,28,Shoemaker,27.988,True,True
+rover,61433,-80.5,53.5,von Baeyer,55.4,von Baeyer,55.427,True,True
+rover,62516,-83.5,56.5,Wapowski,16,Wapowski,16.005,True,True
+rover,61316,-80.5,-63.5,Drygalski,126.4,Drygalski,126.39,True,True
+rover,59900,-76.5,-39.5,Casatus,134.9,Casatus,134.865,True,True
+rover,60698,-78.5,38.5,Schomberger,106,Schomberger,105.952,True,True
+rover,61036,-79.5,16.5,Schomberger,100.6,Schomberger,100.6,True,True
+rover,64033,-87.5,133.5,Slater,31,Slater,31.04,True,True
+rover,64035,-87.5,135.5,Slater,32.9,Slater,32.938,True,True
+rover,64359,-88.5,99.5,Slater,16.6,Slater,16.569,True,True
+rover,59867,-76.5,-72.5,Le Gentil,72.6,Le Gentil,72.646,True,True
+rover,62054,-82.5,-45.5,Mons Cabeus,49.1,Mons Cabeus,49.098,True,True
+rover,62794,-84.5,-25.5,Mons Cabeus,41.6,Mons Cabeus,41.648,True,True
+rover,64357,-88.5,97.5,Slater,17.8,Slater,17.761,True,True
+rover,64431,-88.5,171.5,Haynes,8.1,Haynes,8.145,True,True
+rover,60244,-77.5,-55.5,Le Gentil,179.1,Le Gentil,179.073,True,True
+rover,60657,-78.5,-2.5,Newton,114.4,Newton,114.421,True,True
+rover,62162,-82.5,62.5,von Baeyer,21.3,von Baeyer,21.345,True,True
+rover,62844,-84.5,24.5,Mons Mouton,19,Mons Mouton,18.954,True,True
+rover,63527,-86.5,-12.5,Mons Malapert,26.6,Mons Malapert,26.624,True,True
+rover,64042,-87.5,142.5,Slater,39.8,Slater,39.826,True,True
+rover,64057,-87.5,157.5,Haynes,39,Haynes,39.014,True,True
+rover,64152,-88.5,-107.5,Brill,13.9,Brill,13.863,True,True
+rover,64413,-88.5,153.5,Haynes,12.6,Haynes,12.581,True,True
+rover,59850,-76.5,-89.5,Boltzmann,51.3,Boltzmann,51.308,True,True
+rover,62167,-82.5,67.5,Svedberg,26.7,Svedberg,26.706,True,True
+rover,63641,-86.5,101.5,Faustini,35.2,Faustini,35.189,True,True
+rover,63691,-86.5,151.5,Haynes,70.4,Haynes,70.444,True,True
+rover,59581,-75.5,1.5,Short,77.6,Short,77.588,True,True
+rover,59916,-76.5,-23.5,Newton,42.8,Newton,42.841,True,True
+rover,60991,-79.5,-28.5,Newton,113.7,Newton,113.694,True,True
+rover,59846,-76.5,-93.5,Boltzmann,55.9,Boltzmann,55.892,True,True
+rover,60227,-77.5,-72.5,Le Gentil,101.2,Le Gentil,101.185,True,True
+rover,60652,-78.5,-7.5,Newton,88.4,Newton,88.409,True,True
+rover,62264,-82.5,164.5,Braude,31,Braude,31.048,True,True
+rover,64028,-87.5,128.5,Slater,26.5,Slater,26.528,True,True
+rover,60586,-78.5,-73.5,Drygalski,85.1,Drygalski,85.076,True,True
+rover,61436,-80.5,56.5,von Baeyer,46.7,von Baeyer,46.708,True,True
+rover,62518,-83.5,58.5,Wapowski,21,Wapowski,21.029,True,True
+rover,62845,-84.5,25.5,Mons Mouton,16.1,Mons Mouton,16.121,True,True
+rover,62847,-84.5,27.5,Mons Mouton,10.5,Mons Mouton,10.524,True,True
+rover,64358,-88.5,98.5,Slater,17.2,Slater,17.153,True,True
+rover,60040,-76.5,100.5,Rittenhouse,84.7,Rittenhouse,84.696,True,True
+rover,60587,-78.5,-72.5,Drygalski,90.4,Drygalski,90.385,True,True
+rover,60666,-78.5,6.5,Schomberger,130.7,Schomberger,130.739,True,True
+rover,60693,-78.5,33.5,Schomberger,80.4,Schomberger,80.407,True,True
+rover,61035,-79.5,15.5,Schomberger,103.9,Schomberger,103.881,True,True
+rover,61056,-79.5,36.5,Scott,103.4,Scott,103.414,True,True
+rover,61353,-80.5,-26.5,Mons Cabeus,103.9,Mons Cabeus,103.916,True,True
+rover,64000,-87.5,100.5,Slater,21.6,Slater,21.552,True,True
+rover,64034,-87.5,134.5,Slater,32,Slater,31.984,True,True
+rover,64396,-88.5,136.5,Haynes,23.4,Haynes,23.377,True,True
+rover,59532,-75.5,-47.5,Casatus,162.3,Casatus,162.254,True,True
+rover,59944,-76.5,4.5,Short,109.6,Short,109.593,True,True
+rover,60676,-78.5,16.5,Schomberger,77.6,Schomberger,77.602,True,True
+rover,61384,-80.5,4.5,Whitaker,127.3,Whitaker,127.255,True,True
+rover,62479,-83.5,19.5,Mons Mouton,49,Mons Mouton,49.029,True,True
+rover,59517,-75.5,-62.5,Le Gentil,112.9,Le Gentil,112.871,True,True
+rover,59600,-75.5,20.5,Schomberger,46.1,Schomberger,46.125,True,True
+rover,59865,-76.5,-74.5,Le Gentil,68.5,Le Gentil,68.491,True,True
+rover,59938,-76.5,-1.5,Short,75.7,Short,75.698,True,True
+rover,62168,-82.5,68.5,Mons Amundsen,28.5,Mons Amundsen,28.465,True,True
+rover,62795,-84.5,-24.5,Mons Cabeus,44.2,Mons Cabeus,44.159,True,True
+rover,63612,-86.5,72.5,Malinkin,22.6,Malinkin,22.606,True,True
+rover,64046,-87.5,146.5,Haynes,42.6,Haynes,42.595,True,True
+rover,64278,-88.5,18.5,Shoemaker,26.4,Shoemaker,26.42,True,True
+rover,64428,-88.5,168.5,Haynes,7.6,Haynes,7.623,True,True
+rover,64430,-88.5,170.5,Haynes,7.9,Haynes,7.909,True,True
+rover,59622,-75.5,42.5,Boguslawsky,79.1,Boguslawsky,79.05,True,True
+rover,60305,-77.5,5.5,Short,131.4,Short,131.383,True,True
+rover,60755,-78.5,95.5,Ganswindt,94.8,Ganswindt,94.8,True,True
+rover,61032,-79.5,12.5,Schomberger,115.2,Schomberger,115.161,True,True
+rover,61385,-80.5,5.5,Whitaker,127.7,Whitaker,127.732,True,True
+rover,63248,-85.5,68.5,Nobile,37.6,Nobile,37.634,True,True
+rover,63876,-87.5,-23.5,Haworth,24.4,Haworth,24.429,True,True
+rover,59861,-76.5,-78.5,Le Gentil,70.1,Le Gentil,70.104,True,True
+rover,60310,-77.5,10.5,Schomberger,99.5,Schomberger,99.492,True,True
+rover,60404,-77.5,104.5,Ganswindt,70.7,Ganswindt,70.692,True,True
+rover,61107,-79.5,87.5,Hedervari,69.5,Hedervari,69.517,True,True
+rover,62069,-82.5,-30.5,Mons Cabeus,41,Mons Cabeus,41.016,True,True
+rover,63236,-85.5,56.5,Nobile,10.4,Nobile,10.409,True,True
+rover,63694,-86.5,154.5,Haynes,69.7,Haynes,69.697,True,True
+rover,64402,-88.5,142.5,Haynes,19.4,Haynes,19.434,True,True
+rover,64425,-88.5,165.5,Haynes,7.7,Haynes,7.704,True,True
+rover,60264,-77.5,-35.5,Newton,126.1,Newton,126.065,True,True
+rover,60293,-77.5,-6.5,Newton,80.1,Newton,80.122,True,True
+rover,60678,-78.5,18.5,Schomberger,69.3,Schomberger,69.328,True,True
+rover,61404,-80.5,24.5,Schomberger,117.1,Schomberger,117.078,True,True
+rover,62177,-82.5,77.5,Mons Amundsen,7.4,Mons Amundsen,7.364,True,True
+rover,62512,-83.5,52.5,Wapowski,13.6,Wapowski,13.595,True,True
+rover,62519,-83.5,59.5,Wapowski,23.9,Wapowski,23.933,True,True
+rover,62889,-84.5,69.5,Oberbeck,29.1,Oberbeck,29.123,True,True
+rover,64151,-88.5,-108.5,Brill,14.6,Brill,14.6,True,True
+rover,59975,-76.5,35.5,Schomberger,76.1,Schomberger,76.136,True,True
+rover,60038,-76.5,98.5,Hale,88.8,Hale,88.795,True,True
+rover,60224,-77.5,-75.5,Drygalski,94.1,Drygalski,94.075,True,True
+rover,60262,-77.5,-37.5,Newton,139.2,Newton,139.166,True,True
+rover,60263,-77.5,-36.5,Newton,132.6,Newton,132.611,True,True
+rover,60331,-77.5,31.5,Schomberger,53,Schomberger,53.02,True,True
+rover,60680,-78.5,20.5,Schomberger,62.7,Schomberger,62.672,True,True
+rover,61018,-79.5,-1.5,Newton,134.3,Newton,134.279,True,True
+rover,61021,-79.5,1.5,Newton,148.5,Newton,148.525,True,True
+rover,61038,-79.5,18.5,Schomberger,94.9,Schomberger,94.915,True,True
+rover,61054,-79.5,34.5,Schomberger,106,Schomberger,106.037,True,True
+rover,61309,-80.5,-70.5,Drygalski,91.5,Drygalski,91.517,True,True
+rover,61400,-80.5,20.5,Schomberger,119.7,Schomberger,119.675,True,True
+rover,61803,-81.5,63.5,Svedberg,9.1,Svedberg,9.141,True,True
+rover,62843,-84.5,23.5,Mons Mouton,21.8,Mons Mouton,21.796,True,True
+rover,64192,-88.5,-67.5,de Gerlache,16.5,de Gerlache,16.544,True,True
+rover,64360,-88.5,100.5,Slater,16,Slater,16.014,True,True
+rover,64398,-88.5,138.5,Haynes,22.1,Haynes,22.057,True,True
+rover,64416,-88.5,156.5,Haynes,10.9,Haynes,10.934,True,True
+rover,64429,-88.5,169.5,Haynes,7.7,Haynes,7.733,True,True
+rover,64446,-89.5,-173.5,Shackleton,12.8,Shackleton,12.787,True,True
+rover,64468,-89.5,-151.5,Shackleton,16.5,Shackleton,16.452,True,True
+rover,59539,-75.5,-40.5,Casatus,117.2,Casatus,117.168,True,True
+rover,59579,-75.5,-0.5,Short,63.4,Short,63.379,True,True
+rover,59582,-75.5,2.5,Short,84.9,Short,84.874,True,True
+rover,59585,-75.5,5.5,Short,107.1,Short,107.138,True,True
+rover,59590,-75.5,10.5,Simpelius,94.4,Simpelius,94.367,True,True
+rover,59617,-75.5,37.5,Boguslawsky,91.9,Boguslawsky,91.939,True,True
+rover,59621,-75.5,41.5,Boguslawsky,80.1,Boguslawsky,80.12,True,True
+rover,59947,-76.5,7.5,Schomberger,120.7,Schomberger,120.721,True,True
+rover,59948,-76.5,8.5,Schomberger,113.8,Schomberger,113.753,True,True
+rover,60039,-76.5,99.5,Rittenhouse,89.4,Rittenhouse,89.416,True,True
+rover,60253,-77.5,-46.5,Casatus,189.3,Casatus,189.305,True,True
+rover,60276,-77.5,-23.5,Newton,50.8,Newton,50.825,True,True
+rover,60350,-77.5,50.5,Demonax,59.4,Demonax,59.428,True,True
+rover,60993,-79.5,-26.5,Newton,106.6,Newton,106.592,True,True
+rover,61052,-79.5,32.5,Schomberger,99.4,Schomberger,99.418,True,True
+rover,61090,-79.5,70.5,Svedberg,71.2,Svedberg,71.174,True,True
+rover,61383,-80.5,3.5,Whitaker,126.9,Whitaker,126.888,True,True
+rover,61692,-81.5,-47.5,Mons Cabeus,79.1,Mons Cabeus,79.064,True,True
+rover,61809,-81.5,69.5,Svedberg,20,Svedberg,20.046,True,True
+rover,62066,-82.5,-33.5,Mons Cabeus,36.8,Mons Cabeus,36.774,True,True
+rover,62163,-82.5,63.5,von Baeyer,22.2,von Baeyer,22.229,True,True
+rover,62176,-82.5,76.5,Mons Amundsen,3.8,Mons Amundsen,3.767,True,True
+rover,63157,-85.5,-22.5,Cabeus,47.6,Cabeus,47.628,True,True
+rover,63519,-86.5,-20.5,Haworth,37.6,Haworth,37.594,True,True
+rover,63525,-86.5,-14.5,Mons Malapert,29.9,Mons Malapert,29.895,True,True
+rover,64084,-88.5,-175.5,Haynes,14.5,Haynes,14.493,True,True
+rover,64414,-88.5,154.5,Haynes,12,Haynes,12.014,True,True
+rover,59599,-75.5,19.5,Schomberger,51.2,Schomberger,51.246,True,True
+rover,59608,-75.5,28.5,Schomberger,44.3,Schomberger,44.327,True,True
+rover,59654,-75.5,74.5,Demonax,130.4,Demonax,130.367,True,True
+rover,59848,-76.5,-91.5,Boltzmann,51.5,Boltzmann,51.511,True,True
+rover,59957,-76.5,17.5,Schomberger,50.8,Schomberger,50.791,True,True
+rover,60315,-77.5,15.5,Schomberger,67.5,Schomberger,67.518,True,True
+rover,60367,-77.5,67.5,Demonax,55.1,Demonax,55.112,True,True
+rover,60372,-77.5,72.5,Demonax,85.9,Demonax,85.938,True,True
+rover,60395,-77.5,95.5,Hale,106.1,Hale,106.057,True,True
+rover,60696,-78.5,36.5,Schomberger,95.2,Schomberger,95.248,True,True
+rover,61051,-79.5,31.5,Schomberger,96.5,Schomberger,96.536,True,True
+rover,61754,-81.5,14.5,Malapert,106.7,Malapert,106.66,True,True
+rover,61808,-81.5,68.5,Svedberg,15.8,Svedberg,15.829,True,True
+rover,63226,-85.5,46.5,Nobile,17.9,Nobile,17.853,True,True
+rover,63230,-85.5,50.5,Nobile,9.6,Nobile,9.599,True,True
+rover,63568,-86.5,28.5,Stose,7.7,Stose,7.741,True,True
+rover,63583,-86.5,43.5,Burbidge,10.7,Burbidge,10.657,True,True
+rover,64354,-88.5,94.5,Slater,19.7,Slater,19.712,True,True
+rover,64409,-88.5,149.5,Haynes,15,Haynes,14.972,True,True
+rover,64424,-88.5,164.5,Haynes,7.9,Haynes,7.865,True,True
+rover,64435,-88.5,175.5,Haynes,9.6,Haynes,9.589,True,True
+rover,64469,-89.5,-150.5,Spudis,16.3,Spudis,16.328,True,True
+rover,64555,-89.5,-64.5,Spudis,5.2,Spudis,5.25,True,True
+rover,64622,-89.5,2.5,Spudis,20.7,Spudis,20.686,True,True
+rover,64647,-89.5,27.5,Shackleton,19.9,Shackleton,19.863,True,True
+rover,59535,-75.5,-44.5,Casatus,141.9,Casatus,141.867,True,True
+rover,59597,-75.5,17.5,Schomberger,62.8,Schomberger,62.78,True,True
+rover,59646,-75.5,66.5,Demonax,92.6,Demonax,92.601,True,True
+rover,59847,-76.5,-92.5,Boltzmann,53.2,Boltzmann,53.221,True,True
+rover,59862,-76.5,-77.5,Le Gentil,68.4,Le Gentil,68.441,True,True
+rover,59937,-76.5,-2.5,Short,71.3,Short,71.278,True,True
+rover,59958,-76.5,18.5,Schomberger,43.8,Schomberger,43.788,True,True
+rover,59981,-76.5,41.5,Boguslawsky,110,Boguslawsky,110.017,True,True
+rover,60300,-77.5,0.5,Short,107.8,Short,107.808,True,True
+rover,60689,-78.5,29.5,Schomberger,64.5,Schomberger,64.522,True,True
+rover,60747,-78.5,87.5,Hedervari,99.7,Hedervari,99.691,True,True
+rover,61022,-79.5,2.5,Newton,153.5,Newton,153.464,True,True
+rover,61034,-79.5,14.5,Schomberger,107.4,Schomberger,107.418,True,True
+rover,61048,-79.5,28.5,Schomberger,89.9,Schomberger,89.929,True,True
+rover,61050,-79.5,30.5,Schomberger,94,Schomberger,93.976,True,True
+rover,61066,-79.5,46.5,Demonax,86.8,Demonax,86.784,True,True
+rover,61761,-81.5,21.5,Mons Mouton,99.9,Mons Mouton,99.944,True,True
+rover,61801,-81.5,61.5,von Baeyer,9.3,von Baeyer,9.283,True,True
+rover,62369,-83.5,-90.5,Ibn Bajja,93.8,Ibn Bajja,93.751,True,True
+rover,62848,-84.5,28.5,Mons Mouton,7.8,Mons Mouton,7.812,True,True
+rover,63178,-85.5,-1.5,Lhamu,12.7,Lhamu,12.739,True,True
+rover,63229,-85.5,49.5,Nobile,11.4,Nobile,11.446,True,True
+rover,63528,-86.5,-11.5,Mons Malapert,25.1,Mons Malapert,25.059,True,True
+rover,63690,-86.5,150.5,Haynes,70.7,Haynes,70.724,True,True
+rover,64044,-87.5,144.5,Slater,41.8,Slater,41.837,True,True
+rover,64394,-88.5,134.5,Slater,24.3,Slater,24.323,True,True
+rover,64445,-89.5,-174.5,Shackleton,12.6,Shackleton,12.614,True,True
+rover,64470,-89.5,-149.5,Spudis,16.1,Spudis,16.107,True,True
+rover,64648,-89.5,28.5,Shackleton,19.7,Shackleton,19.732,True,True
+rover,59516,-75.5,-63.5,Le Gentil,105.5,Le Gentil,105.489,True,True
+rover,59536,-75.5,-43.5,Casatus,135.4,Casatus,135.371,True,True
+rover,59589,-75.5,9.5,Simpelius,97.8,Simpelius,97.762,True,True
+rover,59595,-75.5,15.5,Schomberger,75.4,Schomberger,75.358,True,True
+rover,59598,-75.5,18.5,Schomberger,56.8,Schomberger,56.84,True,True
+rover,59623,-75.5,43.5,Boguslawsky,78.8,Boguslawsky,78.83,True,True
+rover,59843,-76.5,-96.5,Boltzmann,68.3,Boltzmann,68.345,True,True
+rover,59851,-76.5,-88.5,Boltzmann,52.8,Boltzmann,52.826,True,True
+rover,59901,-76.5,-38.5,Casatus,130.9,Casatus,130.91,True,True
+rover,59952,-76.5,12.5,Schomberger,85.8,Schomberger,85.812,True,True
+rover,59992,-76.5,52.5,Demonax,66.3,Demonax,66.29,True,True
+rover,60007,-76.5,67.5,Demonax,72.5,Demonax,72.452,True,True
+rover,60031,-76.5,91.5,Hale,72,Hale,72.003,True,True
+rover,60037,-76.5,97.5,Hale,84.5,Hale,84.542,True,True
+rover,60312,-77.5,12.5,Schomberger,86.6,Schomberger,86.558,True,True
+rover,60314,-77.5,14.5,Schomberger,73.8,Schomberger,73.797,True,True
+rover,60337,-77.5,37.5,Schomberger,90.5,Schomberger,90.538,True,True
+rover,60341,-77.5,41.5,Demonax,115.4,Demonax,115.384,True,True
+rover,60348,-77.5,48.5,Demonax,71.7,Demonax,71.719,True,True
+rover,60455,-77.5,155.5,Braude,132.2,Braude,132.23,True,True
+rover,60618,-78.5,-41.5,Mons Cabeus,158.6,Mons Cabeus,158.6,True,True
+rover,60663,-78.5,3.5,Short,143.3,Short,143.322,True,True
+rover,60667,-78.5,7.5,Schomberger,125,Schomberger,124.965,True,True
+rover,60674,-78.5,14.5,Schomberger,87,Schomberger,87.025,True,True
+rover,60677,-78.5,17.5,Schomberger,73.3,Schomberger,73.295,True,True
+rover,60687,-78.5,27.5,Schomberger,59.3,Schomberger,59.313,True,True
+rover,61028,-79.5,8.5,Schomberger,132.7,Schomberger,132.726,True,True
+rover,61040,-79.5,20.5,Schomberger,90.6,Schomberger,90.585,True,True
+rover,61041,-79.5,21.5,Schomberger,89,Schomberger,88.993,True,True
+rover,61071,-79.5,51.5,Demonax,63,Demonax,62.999,True,True
+rover,61373,-80.5,-6.5,Whitaker,129.3,Whitaker,129.297,True,True
+rover,61409,-80.5,29.5,Scott,102,Scott,101.96,True,True
+rover,61749,-81.5,9.5,Whitaker,101.1,Whitaker,101.087,True,True
+rover,61766,-81.5,26.5,Mons Mouton,95.4,Mons Mouton,95.37,True,True
+rover,61800,-81.5,60.5,von Baeyer,11,von Baeyer,10.957,True,True
+rover,61812,-81.5,72.5,Svedberg,33,Svedberg,33.027,True,True
+rover,61817,-81.5,77.5,Mons Amundsen,33.3,Mons Amundsen,33.302,True,True
+rover,62005,-82.5,-94.5,Ashbrook,81,Ashbrook,80.974,True,True
+rover,62007,-82.5,-92.5,Ashbrook,88.4,Ashbrook,88.352,True,True
+rover,62126,-82.5,26.5,Mons Mouton,65.4,Mons Mouton,65.45,True,True
+rover,62412,-83.5,-47.5,Mons Cabeus,38.7,Mons Cabeus,38.7,True,True
+rover,62477,-83.5,17.5,Malapert,49,Malapert,49.044,True,True
+rover,62497,-83.5,37.5,Floss,28.2,Floss,28.202,True,True
+rover,62513,-83.5,53.5,Wapowski,12.8,Wapowski,12.846,True,True
+rover,62514,-83.5,54.5,Wapowski,13.1,Wapowski,13.051,True,True
+rover,62701,-84.5,-118.5,Mons Kocher,29.1,Mons Kocher,29.134,True,True
+rover,63179,-85.5,-0.5,Lhamu,13,Lhamu,12.986,True,True
+rover,63524,-86.5,-15.5,Mons Malapert,31.6,Mons Malapert,31.587,True,True
+rover,63601,-86.5,61.5,Burbidge,24.8,Burbidge,24.756,True,True
+rover,64008,-87.5,108.5,Slater,17.9,Slater,17.858,True,True
+rover,64026,-87.5,126.5,Slater,24.9,Slater,24.854,True,True
+rover,64054,-87.5,154.5,Haynes,39.8,Haynes,39.768,True,True
+rover,64089,-88.5,-170.5,Sverdrup,15.3,Sverdrup,15.313,True,True
+rover,64275,-88.5,15.5,Shoemaker,28.8,Shoemaker,28.776,True,True
+rover,64337,-88.5,77.5,Tooley,27.4,Tooley,27.377,True,True
+rover,64417,-88.5,157.5,Haynes,10.4,Haynes,10.426,True,True
+rover,64426,-88.5,166.5,Haynes,7.6,Haynes,7.608,True,True
+rover,64432,-88.5,172.5,Haynes,8.4,Haynes,8.436,True,True
+rover,64447,-89.5,-172.5,Shackleton,13,Shackleton,12.96,True,True
+rover,64627,-89.5,7.5,Spudis,21.6,Spudis,21.616,True,True
+rover,64628,-89.5,8.5,Spudis,21.8,Spudis,21.797,True,True
+rover,64650,-89.5,30.5,Shackleton,19.5,Shackleton,19.466,True,True
+rover,64655,-89.5,35.5,Shackleton,18.8,Shackleton,18.779,True,True
+rover,64657,-89.5,37.5,Shackleton,18.5,Shackleton,18.495,True,True
+rover,59524,-75.5,-55.5,Le Gentil,165.5,Le Gentil,165.523,True,True
+rover,59531,-75.5,-48.5,Casatus,169.3,Casatus,169.284,True,True
+rover,59538,-75.5,-41.5,Casatus,123,Casatus,122.988,True,True
+rover,59559,-75.5,-20.5,Newton,38.2,Newton,38.209,True,True
+rover,59567,-75.5,-12.5,Newton,47.6,Newton,47.619,True,True
+rover,59583,-75.5,3.5,Short,92.2,Short,92.239,True,True
+rover,59594,-75.5,14.5,Schomberger,81.9,Schomberger,81.887,True,True
+rover,59596,-75.5,16.5,Schomberger,69,Schomberger,68.974,True,True
+rover,59609,-75.5,29.5,Schomberger,49.2,Schomberger,49.224,True,True
+rover,59611,-75.5,31.5,Schomberger,60.5,Schomberger,60.474,True,True
+rover,59667,-75.5,87.5,Hale,53.4,Hale,53.411,True,True
+rover,59684,-75.5,104.5,Rittenhouse,43,Rittenhouse,43.042,True,True
+rover,59836,-76.5,-103.5,Boltzmann,110.4,Boltzmann,110.373,True,True
+rover,59852,-76.5,-87.5,Boltzmann,55.3,Boltzmann,55.327,True,True
+rover,59883,-76.5,-56.5,Le Gentil,162.9,Le Gentil,162.88,True,True
+rover,59931,-76.5,-8.5,Short,59.8,Short,59.844,True,True
+rover,59955,-76.5,15.5,Schomberger,64.8,Schomberger,64.805,True,True
+rover,60094,-76.5,154.5,Braude,163.1,Braude,163.131,True,True
+rover,60200,-77.5,-99.5,Drygalski,97,Drygalski,96.978,True,True
+rover,60260,-77.5,-39.5,Newton,152.3,Newton,152.288,True,True
+rover,60261,-77.5,-38.5,Newton,145.7,Newton,145.726,True,True
+rover,60298,-77.5,-1.5,Short,100.5,Short,100.503,True,True
+rover,60299,-77.5,-0.5,Short,104,Short,103.966,True,True
+rover,60302,-77.5,2.5,Short,116.5,Short,116.467,True,True
+rover,60306,-77.5,6.5,Schomberger,125.6,Schomberger,125.617,True,True
+rover,60308,-77.5,8.5,Schomberger,112.5,Schomberger,112.526,True,True
+rover,60309,-77.5,9.5,Schomberger,106,Schomberger,105.999,True,True
+rover,60346,-77.5,46.5,Demonax,84.1,Demonax,84.134,True,True
+rover,60351,-77.5,51.5,Demonax,53.4,Demonax,53.362,True,True
+rover,60386,-77.5,86.5,Hale,109.3,Hale,109.297,True,True
+rover,60454,-77.5,154.5,Braude,133.1,Braude,133.058,True,True
+rover,60558,-78.5,-101.5,Drygalski,88.5,Drygalski,88.501,True,True
+rover,60588,-78.5,-71.5,Drygalski,95.7,Drygalski,95.735,True,True
+rover,60665,-78.5,5.5,Schomberger,136.6,Schomberger,136.565,True,True
+rover,60673,-78.5,13.5,Schomberger,92.1,Schomberger,92.056,True,True
+rover,60683,-78.5,23.5,Schomberger,57,Schomberger,56.956,True,True
+rover,60688,-78.5,28.5,Schomberger,61.6,Schomberger,61.63,True,True
+rover,60708,-78.5,48.5,Demonax,67.9,Demonax,67.852,True,True
+rover,60729,-78.5,69.5,Demonax,63.6,Demonax,63.58,True,True
+rover,60756,-78.5,96.5,Ganswindt,89.3,Ganswindt,89.314,True,True
+rover,61007,-79.5,-12.5,Newton,95.5,Newton,95.474,True,True
+rover,61009,-79.5,-10.5,Newton,100.2,Newton,100.212,True,True
+rover,61044,-79.5,24.5,Schomberger,86.8,Schomberger,86.757,True,True
+rover,61310,-80.5,-69.5,Drygalski,96.5,Drygalski,96.464,True,True
+rover,61313,-80.5,-66.5,Drygalski,111.4,Drygalski,111.392,True,True
+rover,61366,-80.5,-13.5,Newton,122.9,Newton,122.923,True,True
+rover,61368,-80.5,-11.5,Newton,125.7,Newton,125.733,True,True
+rover,61380,-80.5,0.5,Whitaker,126.5,Whitaker,126.45,True,True
+rover,61381,-80.5,1.5,Whitaker,126.5,Whitaker,126.485,True,True
+rover,61382,-80.5,2.5,Whitaker,126.6,Whitaker,126.631,True,True
+rover,61386,-80.5,6.5,Whitaker,128.3,Whitaker,128.316,True,True
+rover,61401,-80.5,21.5,Schomberger,118.6,Schomberger,118.589,True,True
+rover,61432,-80.5,52.5,von Baeyer,58.8,von Baeyer,58.777,True,True
+rover,61435,-80.5,55.5,von Baeyer,49.4,von Baeyer,49.351,True,True
+rover,61753,-81.5,13.5,Whitaker,106.3,Whitaker,106.322,True,True
+rover,61758,-81.5,18.5,Mons Mouton,104.1,Mons Mouton,104.058,True,True
+rover,61762,-81.5,22.5,Mons Mouton,98.8,Mons Mouton,98.789,True,True
+rover,61767,-81.5,27.5,Scott,92.6,Scott,92.572,True,True
+rover,61768,-81.5,28.5,Scott,88.6,Scott,88.56,True,True
+rover,61769,-81.5,29.5,Scott,84.6,Scott,84.559,True,True
+rover,62107,-82.5,7.5,Whitaker,69.6,Whitaker,69.616,True,True
+rover,62118,-82.5,18.5,Mons Mouton,76.2,Mons Mouton,76.245,True,True
+rover,62160,-82.5,60.5,von Baeyer,21.9,von Baeyer,21.936,True,True
+rover,62189,-82.5,89.5,Hedervari,27.4,Hedervari,27.36,True,True
+rover,62193,-82.5,93.5,Hedervari,39.5,Hedervari,39.467,True,True
+rover,62383,-83.5,-76.5,Ibn Bajja,84.9,Ibn Bajja,84.881,True,True
+rover,62401,-83.5,-58.5,Cabeus,73,Cabeus,73.045,True,True
+rover,62424,-83.5,-35.5,Mons Cabeus,5.6,Mons Cabeus,5.619,True,True
+rover,62530,-83.5,70.5,Oberbeck,8.2,Oberbeck,8.211,True,True
+rover,62756,-84.5,-63.5,Ibn Bajja,61,Ibn Bajja,61.012,True,True
+rover,63063,-85.5,-116.5,Mons Kocher,3.9,Mons Kocher,3.92,True,True
+rover,63065,-85.5,-114.5,Mons Kocher,8.6,Mons Kocher,8.592,True,True
+rover,63206,-85.5,26.5,Jaci,11.6,Jaci,11.606,True,True
+rover,63517,-86.5,-22.5,Haworth,39.7,Haworth,39.677,True,True
+rover,63526,-86.5,-13.5,Mons Malapert,28.2,Mons Malapert,28.239,True,True
+rover,63631,-86.5,91.5,Faustini,23.9,Faustini,23.909,True,True
+rover,63640,-86.5,100.5,Faustini,33.9,Faustini,33.875,True,True
+rover,63804,-87.5,-95.5,Brill,23.5,Brill,23.462,True,True
+rover,63862,-87.5,-37.5,Cartwright,12.9,Cartwright,12.931,True,True
+rover,64058,-87.5,158.5,Haynes,38.8,Haynes,38.804,True,True
+rover,64090,-88.5,-169.5,Sverdrup,14.5,Sverdrup,14.539,True,True
+rover,64153,-88.5,-106.5,Brill,13.1,Brill,13.138,True,True
+rover,64272,-88.5,12.5,Shoemaker,31.1,Shoemaker,31.148,True,True
+rover,64345,-88.5,85.5,Slater,26.3,Slater,26.275,True,True
+rover,64353,-88.5,93.5,Slater,20.4,Slater,20.397,True,True
+rover,64408,-88.5,148.5,Haynes,15.6,Haynes,15.593,True,True
+rover,64415,-88.5,155.5,Haynes,11.5,Haynes,11.465,True,True
+rover,64419,-88.5,159.5,Haynes,9.5,Haynes,9.492,True,True
+rover,64427,-88.5,167.5,Haynes,7.6,Haynes,7.581,True,True
+rover,64434,-88.5,174.5,Haynes,9.2,Haynes,9.164,True,True
+rover,64444,-89.5,-175.5,Shackleton,12.4,Shackleton,12.44,True,True
+rover,64467,-89.5,-152.5,Shackleton,16.3,Shackleton,16.293,True,True
+rover,64621,-89.5,1.5,Spudis,20.5,Spudis,20.496,True,True
+rover,64649,-89.5,29.5,Shackleton,19.6,Shackleton,19.6,True,True
+rover,64651,-89.5,31.5,Shackleton,19.3,Shackleton,19.331,True,True
+rover,64652,-89.5,32.5,Shackleton,19.2,Shackleton,19.195,True,True
+rover,64656,-89.5,36.5,Shackleton,18.6,Shackleton,18.638,True,True
+rover,64658,-89.5,38.5,Shackleton,18.4,Shackleton,18.352,True,True
+solar,21795,29.5,15.5,Banting,91.9,Banting,91.922,True,True
+solar,21796,29.5,16.5,Mare Serenitatis,83.4,Mare Serenitatis,83.424,True,True
+solar,21709,29.5,-70.5,Briggs,98.9,Briggs,98.86,True,True
+solar,26400,16.5,-59.5,Rima Galilaei,109.3,Rima Galilaei,109.264,True,True
+solar,21751,29.5,-28.5,Caventou,24.3,Caventou,24.285,True,True
+solar,23956,23.5,16.5,Bessel,66.7,Bessel,66.691,True,True
+solar,21722,29.5,-57.5,Dorsa Whiston,16.3,Dorsa Whiston,16.324,True,True
+solar,21700,29.5,-79.5,Ulugh Beigh,115.3,Ulugh Beigh,115.312,True,True
+solar,21708,29.5,-71.5,Briggs,111.2,Briggs,111.229,True,True
+solar,26040,17.5,-59.5,Oceanus Procellarum,125.7,Oceanus Procellarum,125.651,True,True
+solar,21793,29.5,13.5,Linne,69.8,Linne,69.83,True,True
+solar,21741,29.5,-38.5,Dorsum Bucher,47.2,Dorsum Bucher,47.182,True,True
+solar,22156,28.5,16.5,Banting,58.2,Banting,58.21,True,True
+solar,25036,20.5,16.5,Bobillier,40.2,Bobillier,40.17,True,True
+solar,21759,29.5,-20.5,McDonald,28.8,McDonald,28.762,True,True
+solar,21723,29.5,-56.5,Dorsa Whiston,14.6,Dorsa Whiston,14.609,True,True
+solar,43002,-29.5,-17.5,Hesiodus,28.7,Hesiodus,28.658,True,True
+solar,21699,29.5,-80.5,Ulugh Beigh,103.2,Ulugh Beigh,103.244,True,True
+solar,23156,25.5,-63.5,Golgi,118.4,Golgi,118.44,True,True
+solar,43180,-29.5,160.5,O Day,88.8,O Day,88.771,True,True
+solar,21894,29.5,114.5,Seyfert,8.4,Seyfert,8.388,True,True
+solar,22794,26.5,-65.5,Briggs,100.1,Briggs,100.091,True,True
+solar,24673,21.5,13.5,Dorsum Buckland,66.7,Dorsum Buckland,66.669,True,True
+solar,38376,-16.5,36.5,Rosse,62.2,Rosse,62.154,True,True
+solar,42992,-29.5,-27.5,Mercator,37.5,Mercator,37.472,True,True
+solar,25680,18.5,-59.5,Oceanus Procellarum,104.1,Oceanus Procellarum,104.1,True,True
+solar,21792,29.5,12.5,Linne,56.3,Linne,56.35,True,True
+solar,21726,29.5,-53.5,Rima Agricola,7.9,Rima Agricola,7.934,True,True
+solar,26423,16.5,-36.5,Bessarion,55.3,Bessarion,55.282,True,True
+solar,38407,-16.5,67.5,Lame,100.9,Lame,100.867,True,True
+solar,23515,24.5,-64.5,Seleucus,119.7,Seleucus,119.725,True,True
+solar,43006,-29.5,-13.5,Rimae Pitatus,10.7,Rimae Pitatus,10.672,True,True
+solar,21711,29.5,-68.5,Lichtenberg,74.2,Lichtenberg,74.242,True,True
+solar,22516,27.5,16.5,Banting,27.9,Banting,27.922,True,True
+solar,26422,16.5,-37.5,Bessarion,50.3,Bessarion,50.318,True,True
+solar,26521,16.5,61.5,Mons Latreille,61,Mons Latreille,60.959,True,True
+solar,21720,29.5,-59.5,Golgi,53.4,Golgi,53.4,True,True
+solar,21739,29.5,-40.5,Angstrom,33,Angstrom,33.008,True,True
+solar,25320,19.5,-59.5,Oceanus Procellarum,87.9,Oceanus Procellarum,87.881,True,True
+solar,21721,29.5,-58.5,Dorsa Whiston,41.3,Dorsa Whiston,41.339,True,True
+solar,21752,29.5,-27.5,Mavis,31.1,Mavis,31.142,True,True
+solar,21772,29.5,-7.5,Bancroft,51.9,Bancroft,51.902,True,True
+solar,21923,29.5,143.5,Tereshkova,40.1,Tereshkova,40.149,True,True
+solar,22151,28.5,11.5,Linne,24.2,Linne,24.214,True,True
+solar,38307,-16.5,-32.5,Herigonius,104.6,Herigonius,104.641,True,True
+solar,42866,-29.5,-153.5,Barringer,90.3,Barringer,90.304,True,True
+solar,43102,-29.5,82.5,Humboldt,85.6,Humboldt,85.634,True,True
+solar,21728,29.5,-51.5,Dorsum Niggli,25.5,Dorsum Niggli,25.462,True,True
+solar,21779,29.5,-0.5,Spurr,52.3,Spurr,52.344,True,True
+solar,22167,28.5,27.5,Dorsa Smirnov,82.7,Dorsa Smirnov,82.671,True,True
+solar,23236,25.5,16.5,Banting,32.8,Banting,32.85,True,True
+solar,26421,16.5,-38.5,Bessarion,60.9,Bessarion,60.929,True,True
+solar,38308,-16.5,-31.5,Agatharchides,102.3,Agatharchides,102.3,True,True
+solar,38328,-16.5,-11.5,Lassell,109.2,Lassell,109.248,True,True
+solar,43005,-29.5,-14.5,Rimae Pitatus,25.2,Rimae Pitatus,25.234,True,True
+solar,21731,29.5,-48.5,Wollaston,52,Wollaston,52.002,True,True
+solar,21828,29.5,48.5,Debes,82.5,Debes,82.461,True,True
+solar,22127,28.5,-12.5,Catena Timocharis,26,Catena Timocharis,26.026,True,True
+solar,22150,28.5,10.5,Linne,41.6,Linne,41.59,True,True
+solar,26081,17.5,-18.5,Draper,94.1,Draper,94.096,True,True
+solar,26515,16.5,55.5,Picard,62.9,Picard,62.866,True,True
+solar,42850,-29.5,-169.5,Rumford,22.4,Rumford,22.358,True,True
+solar,43106,-29.5,86.5,Barnard,17,Barnard,16.952,True,True
+solar,21704,29.5,-75.5,Russell,90.6,Russell,90.627,True,True
+solar,21740,29.5,-39.5,Dorsum Bucher,38.3,Dorsum Bucher,38.33,True,True
+solar,21771,29.5,-8.5,Feuillee,69.4,Feuillee,69.422,True,True
+solar,25727,18.5,-12.5,Wallace,119.8,Wallace,119.79,True,True
+solar,26184,17.5,84.5,Cannon,115.3,Cannon,115.324,True,True
+solar,38244,-16.5,-95.5,Hohmann,55.9,Hohmann,55.897,True,True
+solar,40816,-23.5,-43.5,Rupes Liebig,83.4,Rupes Liebig,83.351,True,True
+solar,40820,-23.5,-39.5,Mare Humorum,39.3,Mare Humorum,39.267,True,True
+solar,43100,-29.5,80.5,Humboldt,76.2,Humboldt,76.178,True,True
+solar,21750,29.5,-29.5,Caventou,8.1,Caventou,8.063,True,True
+solar,21757,29.5,-22.5,McDonald,50.3,McDonald,50.296,True,True
+solar,21765,29.5,-14.5,Dorsum Grabau,11.3,Dorsum Grabau,11.29,True,True
+solar,21775,29.5,-4.5,Archimedes,14.9,Archimedes,14.899,True,True
+solar,21788,29.5,8.5,Linne,102.7,Linne,102.658,True,True
+solar,22110,28.5,-29.5,Caventou,37.9,Caventou,37.852,True,True
+solar,23185,25.5,-34.5,Dorsum Arduino,53.2,Dorsum Arduino,53.231,True,True
+solar,26051,17.5,-48.5,Rima Marius,45.6,Rima Marius,45.635,True,True
+solar,26395,16.5,-64.5,Seleucus,152.4,Seleucus,152.393,True,True
+solar,26438,16.5,-21.5,Draper,33.1,Draper,33.094,True,True
+solar,38318,-16.5,-21.5,Lubiniezky,81,Lubiniezky,81.023,True,True
+solar,43075,-29.5,55.5,Snellius,7.4,Snellius,7.406,True,True
+solar,21701,29.5,-78.5,Russell,120.2,Russell,120.232,True,True
+solar,21707,29.5,-72.5,Russell,121.9,Russell,121.929,True,True
+solar,21715,29.5,-64.5,Lichtenberg,110.1,Lichtenberg,110.121,True,True
+solar,21929,29.5,149.5,Titov,35.5,Titov,35.53,True,True
+solar,22083,28.5,-56.5,Dorsa Whiston,40.3,Dorsa Whiston,40.302,True,True
+solar,22161,28.5,21.5,Dorsum Azara,80,Dorsum Azara,79.984,True,True
+solar,23954,23.5,14.5,Hornsby,56,Hornsby,56.031,True,True
+solar,24314,22.5,14.5,Hornsby,68,Hornsby,68.003,True,True
+solar,24970,20.5,-49.5,Herodotus,84,Herodotus,84.033,True,True
+solar,26023,17.5,-76.5,Krafft,113.2,Krafft,113.213,True,True
+solar,26117,17.5,17.5,Rimae Menelaus,14.3,Rimae Menelaus,14.348,True,True
+solar,26416,16.5,-43.5,Rima Marius,175.8,Rima Marius,175.757,True,True
+solar,26419,16.5,-40.5,Bessarion,105.8,Bessarion,105.768,True,True
+solar,26437,16.5,-22.5,Draper,38.9,Draper,38.852,True,True
+solar,26544,16.5,84.5,Theiler,106.7,Theiler,106.695,True,True
+solar,38311,-16.5,-28.5,Rima Agatharchides,117.6,Rima Agatharchides,117.621,True,True
+solar,39030,-18.5,-29.5,Agatharchides,61.8,Agatharchides,61.833,True,True
+solar,39456,-19.5,36.5,Rosse,64.2,Rosse,64.171,True,True
+solar,43007,-29.5,-12.5,Pitatus,29.4,Pitatus,29.422,True,True
+solar,43121,-29.5,101.5,Titius,86.4,Titius,86.411,True,True
+solar,21712,29.5,-67.5,Lichtenberg,71.6,Lichtenberg,71.594,True,True
+solar,21770,29.5,-9.5,Feuillee,64.5,Feuillee,64.524,True,True
+solar,21784,29.5,4.5,Promontorium Fresnel,27.2,Promontorium Fresnel,27.219,True,True
+solar,21900,29.5,120.5,Innes,59.2,Innes,59.246,True,True
+solar,22153,28.5,13.5,Linne,50.9,Linne,50.897,True,True
+solar,23962,23.5,22.5,Finsch,34.3,Finsch,34.305,True,True
+solar,24703,21.5,43.5,Esclangon,40.6,Esclangon,40.592,True,True
+solar,25364,19.5,-15.5,Pytheas,148.7,Pytheas,148.684,True,True
+solar,25808,18.5,68.5,Mare Anguis,121.9,Mare Anguis,121.936,True,True
+solar,26022,17.5,-77.5,Krafft,141.5,Krafft,141.456,True,True
+solar,26425,16.5,-34.5,Bessarion,96,Bessarion,96.011,True,True
+solar,26445,16.5,-14.5,Eratosthenes,111.5,Eratosthenes,111.491,True,True
+solar,26514,16.5,54.5,Picard,59,Picard,59,True,True
+solar,26543,16.5,83.5,Theiler,97,Theiler,97.006,True,True
+solar,38313,-16.5,-26.5,Lubiniezky,86.3,Lubiniezky,86.333,True,True
+solar,38323,-16.5,-16.5,Opelt,33.6,Opelt,33.632,True,True
+solar,38673,-17.5,-26.5,Lubiniezky,76.2,Lubiniezky,76.166,True,True
+solar,42978,-29.5,-41.5,Doppelmayer,31,Doppelmayer,30.994,True,True
+solar,43132,-29.5,112.5,Milne,46.2,Milne,46.171,True,True
+solar,43187,-29.5,167.5,Zelinskiy,28.6,Zelinskiy,28.587,True,True
+solar,21706,29.5,-73.5,Russell,105.9,Russell,105.906,True,True
+solar,21729,29.5,-50.5,Dorsum Niggli,49.4,Dorsum Niggli,49.367,True,True
+solar,21734,29.5,-45.5,Krieger,14.7,Krieger,14.732,True,True
+solar,21768,29.5,-11.5,Catena Timocharis,46.8,Catena Timocharis,46.757,True,True
+solar,21777,29.5,-2.5,Archimedes,39.9,Archimedes,39.911,True,True
+solar,21804,29.5,24.5,Dorsa Smirnov,97.7,Dorsa Smirnov,97.722,True,True
+solar,21827,29.5,47.5,Newcomb,101.3,Newcomb,101.348,True,True
+solar,21927,29.5,147.5,Mare Moscoviense,69.3,Mare Moscoviense,69.288,True,True
+solar,22043,28.5,-96.5,Laue,16,Laue,16.018,True,True
+solar,22107,28.5,-32.5,Rima Diophantus,31.8,Rima Diophantus,31.845,True,True
+solar,22113,28.5,-26.5,Annegrit,36.4,Annegrit,36.354,True,True
+solar,22160,28.5,20.5,Dorsum Azara,61.3,Dorsum Azara,61.266,True,True
+solar,22523,27.5,23.5,Dorsa Smirnov,64.1,Dorsa Smirnov,64.068,True,True
+solar,23969,23.5,29.5,Dorsa Aldrovandi,23.7,Dorsa Aldrovandi,23.743,True,True
+solar,24624,21.5,-35.5,Rima Brayley,34.1,Rima Brayley,34.073,True,True
+solar,26167,17.5,67.5,Promontorium Agarum,121.5,Promontorium Agarum,121.496,True,True
+solar,26444,16.5,-15.5,Eratosthenes,136.8,Eratosthenes,136.823,True,True
+solar,26447,16.5,-12.5,Eratosthenes,70.5,Eratosthenes,70.512,True,True
+solar,26486,16.5,26.5,Dawes,22,Dawes,21.952,True,True
+solar,38377,-16.5,37.5,Bohnenberger,74.8,Bohnenberger,74.777,True,True
+solar,38606,-17.5,-93.5,Hohmann,25.4,Hohmann,25.426,True,True
+solar,38771,-17.5,71.5,Balmer,91.7,Balmer,91.659,True,True
+solar,38872,-17.5,172.5,Aitken,34.7,Aitken,34.699,True,True
+solar,39026,-18.5,-33.5,Agatharchides,79.7,Agatharchides,79.701,True,True
+solar,39037,-18.5,-22.5,Lubiniezky,44.3,Lubiniezky,44.323,True,True
+solar,40852,-23.5,-7.5,Birt,46,Birt,46.021,True,True
+solar,40853,-23.5,-6.5,Rupes Recta,64.8,Rupes Recta,64.772,True,True
+solar,40854,-23.5,-5.5,Thebit,61.3,Thebit,61.326,True,True
+solar,42852,-29.5,-167.5,Rumford,64.4,Rumford,64.424,True,True
+solar,43168,-29.5,148.5,Tharp,82.3,Tharp,82.35,True,True
+solar,21702,29.5,-77.5,Russell,104.6,Russell,104.605,True,True
+solar,21776,29.5,-3.5,Archimedes,14.6,Archimedes,14.573,True,True
+solar,21811,29.5,31.5,Chacornac,12.4,Chacornac,12.447,True,True
+solar,21928,29.5,148.5,Titov,55.4,Titov,55.402,True,True
+solar,23139,25.5,-80.5,Struve,123.6,Struve,123.617,True,True
+solar,23593,24.5,13.5,Hornsby,34.8,Hornsby,34.776,True,True
+solar,23926,23.5,-13.5,Heinrich,65.7,Heinrich,65.697,True,True
+solar,24315,22.5,15.5,Bessel,71.8,Bessel,71.849,True,True
+solar,24950,20.5,-69.5,Eddington,77.5,Eddington,77.479,True,True
+solar,25082,20.5,62.5,Dorsa Tetyaev,46.8,Dorsa Tetyaev,46.764,True,True
+solar,25446,19.5,66.5,Dorsa Tetyaev,71.3,Dorsa Tetyaev,71.316,True,True
+solar,25692,18.5,-47.5,Rima Marius,87.5,Rima Marius,87.472,True,True
+solar,25805,18.5,65.5,Dorsa Tetyaev,61.9,Dorsa Tetyaev,61.871,True,True
+solar,26125,17.5,25.5,Dawes,26,Dawes,25.957,True,True
+solar,38333,-16.5,-6.5,Lassell,51.2,Lassell,51.164,True,True
+solar,38402,-16.5,62.5,Vendelinus,27.8,Vendelinus,27.782,True,True
+solar,38508,-16.5,168.5,Zwicky,26.8,Zwicky,26.784,True,True
+solar,39950,-20.5,170.5,Vertregt,40.5,Vertregt,40.461,True,True
+solar,40269,-21.5,129.5,Tsiolkovskiy,37.1,Tsiolkovskiy,37.144,True,True
+solar,42827,-28.5,167.5,Zelinskiy,18.4,Zelinskiy,18.414,True,True
+solar,42855,-29.5,-164.5,Walker,131.4,Walker,131.354,True,True
+solar,42998,-29.5,-21.5,Rima Hesiodus,32.8,Rima Hesiodus,32.831,True,True
+solar,43184,-29.5,164.5,Zelinskiy,66.7,Zelinskiy,66.739,True,True
+solar,21732,29.5,-47.5,Rima Krieger,33.3,Rima Krieger,33.283,True,True
+solar,21780,29.5,0.5,Autolycus,44,Autolycus,44.045,True,True
+solar,21799,29.5,19.5,Mare Serenitatis,73.7,Mare Serenitatis,73.652,True,True
+solar,21865,29.5,85.5,Urey,69.9,Urey,69.904,True,True
+solar,22441,27.5,-58.5,Zinner,27.8,Zinner,27.833,True,True
+solar,22511,27.5,11.5,Linne,11,Linne,10.979,True,True
+solar,23138,25.5,-81.5,Struve,148,Struve,148,True,True
+solar,23167,25.5,-52.5,Freud,9.3,Freud,9.314,True,True
+solar,23202,25.5,-17.5,Dorsa Stille,56.4,Dorsa Stille,56.396,True,True
+solar,23368,25.5,148.5,Mare Moscoviense,55,Mare Moscoviense,54.988,True,True
+solar,23568,24.5,-11.5,Pupin,23.6,Pupin,23.608,True,True
+solar,23876,23.5,-63.5,Seleucus,114.9,Seleucus,114.888,True,True
+solar,23924,23.5,-15.5,Heinrich,40.8,Heinrich,40.841,True,True
+solar,23950,23.5,10.5,Yoshi,35,Yoshi,34.957,True,True
+solar,24672,21.5,12.5,Sulpicius Gallus,61.4,Sulpicius Gallus,61.417,True,True
+solar,24674,21.5,14.5,Bobillier,62.6,Bobillier,62.584,True,True
+solar,24675,21.5,15.5,Bobillier,56.7,Bobillier,56.701,True,True
+solar,24699,21.5,39.5,Hill,41.2,Hill,41.181,True,True
+solar,25054,20.5,34.5,Mons Maraldi,28.9,Mons Maraldi,28.869,True,True
+solar,25319,19.5,-60.5,Oceanus Procellarum,114.5,Oceanus Procellarum,114.508,True,True
+solar,26120,17.5,20.5,Tacquet,45.7,Tacquet,45.744,True,True
+solar,26446,16.5,-13.5,Eratosthenes,88.6,Eratosthenes,88.585,True,True
+solar,26479,16.5,19.5,Tacquet,9.6,Tacquet,9.646,True,True
+solar,26485,16.5,25.5,Dawes,32.6,Dawes,32.555,True,True
+solar,26489,16.5,29.5,Beketov,12.4,Beketov,12.448,True,True
+solar,26542,16.5,82.5,Theiler,95.7,Theiler,95.669,True,True
+solar,38289,-16.5,-50.5,Zupus,58.2,Zupus,58.156,True,True
+solar,38303,-16.5,-36.5,Rimae Herigonius,78.5,Rimae Herigonius,78.535,True,True
+solar,38322,-16.5,-17.5,Opelt,6.9,Opelt,6.922,True,True
+solar,38370,-16.5,30.5,Beaumont,68.2,Beaumont,68.228,True,True
+solar,38382,-16.5,42.5,Bohnenberger,71.6,Bohnenberger,71.561,True,True
+solar,38692,-17.5,-7.5,Promontorium Taenarium,34.6,Promontorium Taenarium,34.569,True,True
+solar,38723,-17.5,23.5,Catharina,14.6,Catharina,14.639,True,True
+solar,38737,-17.5,37.5,Rosse,74,Rosse,74.015,True,True
+solar,39042,-18.5,-17.5,Gould,24.1,Gould,24.097,True,True
+solar,40098,-21.5,-41.5,Mare Humorum,121.8,Mare Humorum,121.808,True,True
+solar,41925,-26.5,-14.5,Hesiodus,102.4,Hesiodus,102.356,True,True
+solar,42281,-27.5,-18.5,Hesiodus,80.4,Hesiodus,80.414,True,True
+solar,42625,-28.5,-34.5,Rupes Kelvin,38.2,Rupes Kelvin,38.201,True,True
+solar,42840,-29.5,-179.5,Leeuwenhoek,17.9,Leeuwenhoek,17.869,True,True
+solar,43101,-29.5,81.5,Humboldt,76.5,Humboldt,76.518,True,True
+solar,43131,-29.5,111.5,Milne,56.6,Milne,56.612,True,True
+solar,43133,-29.5,113.5,Milne,49.3,Milne,49.303,True,True
+solar,43162,-29.5,142.5,Pavlov,37,Pavlov,36.961,True,True
+solar,21696,29.5,-83.5,Ulugh Beigh,104.1,Ulugh Beigh,104.093,True,True
+solar,21718,29.5,-61.5,Golgi,66.3,Golgi,66.291,True,True
+solar,21762,29.5,-17.5,Sampson,25.7,Sampson,25.665,True,True
+solar,21769,29.5,-10.5,Feuillee,70.2,Feuillee,70.206,True,True
+solar,21785,29.5,5.5,Promontorium Fresnel,33.1,Promontorium Fresnel,33.104,True,True
+solar,21808,29.5,28.5,Rimae Chacornac,74,Rimae Chacornac,74.038,True,True
+solar,21857,29.5,77.5,Seneca,104.7,Seneca,104.668,True,True
+solar,21864,29.5,84.5,Urey,91.2,Urey,91.22,True,True
+solar,22155,28.5,15.5,Banting,63.3,Banting,63.307,True,True
+solar,22777,26.5,-82.5,Voskresenskiy,157.4,Voskresenskiy,157.433,True,True
+solar,23154,25.5,-65.5,Briggs,104.6,Briggs,104.58,True,True
+solar,23186,25.5,-33.5,Dorsum Thera,66.1,Dorsum Thera,66.097,True,True
+solar,23189,25.5,-30.5,Courtney,13.9,Courtney,13.872,True,True
+solar,23230,25.5,10.5,Dorsum Owen,19.6,Dorsum Owen,19.62,True,True
+solar,23231,25.5,11.5,Dorsum Owen,15.6,Dorsum Owen,15.596,True,True
+solar,23537,24.5,-42.5,Prinz,54.2,Prinz,54.152,True,True
+solar,23599,24.5,19.5,Sarabhai,42.1,Sarabhai,42.072,True,True
+solar,23604,24.5,24.5,Very,41.3,Very,41.252,True,True
+solar,23935,23.5,-4.5,Montes Archimedes,61,Montes Archimedes,61.045,True,True
+solar,24590,21.5,-69.5,Eddington,71,Eddington,71.026,True,True
+solar,24627,21.5,-32.5,Mons Vinogradov,25.8,Mons Vinogradov,25.771,True,True
+solar,24670,21.5,10.5,Rimae Sulpicius Gallus,29.4,Rimae Sulpicius Gallus,29.416,True,True
+solar,24954,20.5,-65.5,Seleucus,37.5,Seleucus,37.467,True,True
+solar,24966,20.5,-53.5,Oceanus Procellarum,90.3,Oceanus Procellarum,90.345,True,True
+solar,25309,19.5,-70.5,Eddington,74.5,Eddington,74.462,True,True
+solar,25398,19.5,18.5,Bessel,69.7,Bessel,69.717,True,True
+solar,25432,19.5,52.5,Dorsum Oppel,13.1,Dorsum Oppel,13.093,True,True
+solar,25792,18.5,52.5,Peirce,25.6,Peirce,25.584,True,True
+solar,26025,17.5,-74.5,Krafft,59,Krafft,58.951,True,True
+solar,26085,17.5,-14.5,Eratosthenes,130.5,Eratosthenes,130.508,True,True
+solar,26186,17.5,86.5,Goddard,104.4,Goddard,104.421,True,True
+solar,26384,16.5,-75.5,Krafft,80.8,Krafft,80.787,True,True
+solar,26385,16.5,-74.5,Krafft,51.7,Krafft,51.728,True,True
+solar,26393,16.5,-66.5,Seleucus,139.3,Seleucus,139.285,True,True
+solar,26439,16.5,-20.5,Draper,48.6,Draper,48.602,True,True
+solar,26522,16.5,62.5,Mons Latreille,62,Mons Latreille,62.047,True,True
+solar,38241,-16.5,-98.5,Il in,46.1,Il in,46.095,True,True
+solar,38306,-16.5,-33.5,Herigonius,96.3,Herigonius,96.346,True,True
+solar,38383,-16.5,43.5,Colombo,82.7,Colombo,82.673,True,True
+solar,38408,-16.5,68.5,Balmer,124.7,Balmer,124.664,True,True
+solar,39033,-18.5,-26.5,Lubiniezky,77.4,Lubiniezky,77.376,True,True
+solar,39041,-18.5,-18.5,Gould,42.7,Gould,42.651,True,True
+solar,39907,-20.5,127.5,Tsiolkovskiy,42,Tsiolkovskiy,41.972,True,True
+solar,40844,-23.5,-15.5,Wolf,38.1,Wolf,38.14,True,True
+solar,42801,-28.5,141.5,Pavlov,24.9,Pavlov,24.91,True,True
+solar,42826,-28.5,166.5,Zelinskiy,12.1,Zelinskiy,12.086,True,True
+solar,43089,-29.5,69.5,Legendre,22.3,Legendre,22.273,True,True
+solar,43135,-29.5,115.5,Milne,84.5,Milne,84.527,True,True
+solar,43182,-29.5,162.5,Zelinskiy,117.9,Zelinskiy,117.876,True,True
+solar,43185,-29.5,165.5,Zelinskiy,42.9,Zelinskiy,42.876,True,True
+solar,43188,-29.5,168.5,Zelinskiy,49.1,Zelinskiy,49.11,True,True
+solar,21727,29.5,-52.5,Dorsum Niggli,16.1,Dorsum Niggli,16.102,True,True
+solar,21730,29.5,-49.5,Toscanelli,68.5,Toscanelli,68.549,True,True
+solar,21733,29.5,-46.5,Rima Krieger,8.9,Rima Krieger,8.856,True,True
+solar,21760,29.5,-19.5,McDonald,45.2,McDonald,45.245,True,True
+solar,21763,29.5,-16.5,Sampson,2.5,Sampson,2.502,True,True
+solar,21782,29.5,2.5,Autolycus,44.5,Autolycus,44.486,True,True
+solar,21794,29.5,14.5,Linne,89.4,Linne,89.408,True,True
+solar,21803,29.5,23.5,Dorsa Smirnov,108.4,Dorsa Smirnov,108.366,True,True
+solar,21858,29.5,78.5,Seneca,91.5,Seneca,91.499,True,True
+solar,21895,29.5,115.5,Seyfert,31.6,Seyfert,31.605,True,True
+solar,22067,28.5,-72.5,Russell,101.8,Russell,101.752,True,True
+solar,22087,28.5,-52.5,Dorsum Niggli,16.4,Dorsum Niggli,16.429,True,True
+solar,22111,28.5,-28.5,Caventou,44.3,Caventou,44.302,True,True
+solar,22148,28.5,8.5,Linne,91.1,Linne,91.144,True,True
+solar,22164,28.5,24.5,Dorsa Smirnov,69.2,Dorsa Smirnov,69.214,True,True
+solar,22528,27.5,28.5,Le Monnier,59.8,Le Monnier,59.792,True,True
+solar,22779,26.5,-80.5,Russell,134.4,Russell,134.375,True,True
+solar,22795,26.5,-64.5,Briggs,127.2,Briggs,127.228,True,True
+solar,22803,26.5,-56.5,Dorsa Burnet,12.4,Dorsa Burnet,12.397,True,True
+solar,22824,26.5,-35.5,Artsimovich,45.4,Artsimovich,45.433,True,True
+solar,22850,26.5,-9.5,Beer,20.5,Beer,20.49,True,True
+solar,23008,26.5,148.5,Mare Moscoviense,25.8,Mare Moscoviense,25.806,True,True
+solar,23009,26.5,149.5,Mare Moscoviense,44.2,Mare Moscoviense,44.153,True,True
+solar,23155,25.5,-64.5,Briggs,131,Briggs,130.992,True,True
+solar,23194,25.5,-25.5,Felix,13,Felix,12.99,True,True
+solar,23248,25.5,28.5,Dorsa Aldrovandi,57.6,Dorsa Aldrovandi,57.592,True,True
+solar,23367,25.5,147.5,Mare Moscoviense,56.6,Mare Moscoviense,56.608,True,True
+solar,23534,24.5,-45.5,Prinz,47.9,Prinz,47.866,True,True
+solar,23858,23.5,-81.5,Struve,134.9,Struve,134.87,True,True
+solar,23871,23.5,-68.5,Seleucus,89.4,Seleucus,89.438,True,True
+solar,23902,23.5,-37.5,Rima Brayley,48.5,Rima Brayley,48.537,True,True
+solar,23904,23.5,-35.5,Rima Brayley,43.5,Rima Brayley,43.548,True,True
+solar,23919,23.5,-20.5,Lambert,70.2,Lambert,70.178,True,True
+solar,23932,23.5,-7.5,MacMillan,23.3,MacMillan,23.324,True,True
+solar,23951,23.5,11.5,Dorsum Von Cotta,12.9,Dorsum Von Cotta,12.936,True,True
+solar,23968,23.5,28.5,Dorsa Aldrovandi,5.3,Dorsa Aldrovandi,5.345,True,True
+solar,24247,22.5,-52.5,Herodotus,77.9,Herodotus,77.874,True,True
+solar,24261,22.5,-38.5,Rima Brayley,60.5,Rima Brayley,60.509,True,True
+solar,24263,22.5,-36.5,Rima Brayley,7.4,Rima Brayley,7.391,True,True
+solar,24313,22.5,13.5,Hornsby,48,Hornsby,48.02,True,True
+solar,24603,21.5,-56.5,Oceanus Procellarum,25.6,Oceanus Procellarum,25.622,True,True
+solar,24606,21.5,-53.5,Oceanus Procellarum,93.3,Oceanus Procellarum,93.341,True,True
+solar,24682,21.5,22.5,Deseilligny,55.2,Deseilligny,55.184,True,True
+solar,24688,21.5,28.5,Clerke,37,Clerke,37.007,True,True
+solar,24720,21.5,60.5,Mons Latreille,100.4,Mons Latreille,100.394,True,True
+solar,24955,20.5,-64.5,Seleucus,63.8,Seleucus,63.819,True,True
+solar,24960,20.5,-59.5,Oceanus Procellarum,80.3,Oceanus Procellarum,80.293,True,True
+solar,25001,20.5,-18.5,Pytheas,59.5,Pytheas,59.506,True,True
+solar,25123,20.5,103.5,Malyy,74.4,Malyy,74.39,True,True
+solar,25311,19.5,-68.5,Seleucus,71.2,Seleucus,71.154,True,True
+solar,25322,19.5,-57.5,Oceanus Procellarum,42.6,Oceanus Procellarum,42.55,True,True
+solar,25347,19.5,-32.5,Catena Pierre,20,Catena Pierre,19.963,True,True
+solar,25358,19.5,-21.5,Pytheas,41.4,Pytheas,41.383,True,True
+solar,25362,19.5,-17.5,Pytheas,93.9,Pytheas,93.899,True,True
+solar,25724,18.5,-15.5,Pytheas,158.5,Pytheas,158.49,True,True
+solar,25732,18.5,-7.5,Mons Wolff,53.1,Mons Wolff,53.133,True,True
+solar,26030,17.5,-69.5,Krafft,97.7,Krafft,97.678,True,True
+solar,26055,17.5,-44.5,Rima Marius,150.2,Rima Marius,150.191,True,True
+solar,26087,17.5,-12.5,Eratosthenes,98,Eratosthenes,98.04,True,True
+solar,26108,17.5,8.5,Bowen,17.7,Bowen,17.719,True,True
+solar,26153,17.5,53.5,Peirce,23.6,Peirce,23.552,True,True
+solar,26155,17.5,55.5,Peirce,66.1,Peirce,66.133,True,True
+solar,26163,17.5,63.5,Mons Latreille,54.2,Mons Latreille,54.237,True,True
+solar,26195,17.5,95.5,Al Biruni,85,Al Biruni,85.049,True,True
+solar,26199,17.5,99.5,Popov,17.5,Popov,17.547,True,True
+solar,26382,16.5,-77.5,Krafft,138.9,Krafft,138.917,True,True
+solar,26390,16.5,-69.5,Catena Krafft,93.6,Catena Krafft,93.59,True,True
+solar,26434,16.5,-25.5,Rima Draper,26.6,Rima Draper,26.634,True,True
+solar,26464,16.5,4.5,Rima Yangel,9.3,Rima Yangel,9.325,True,True
+solar,26469,16.5,9.5,Lacus Doloris,27.3,Lacus Doloris,27.289,True,True
+solar,26511,16.5,51.5,Yerkes,57.8,Yerkes,57.785,True,True
+solar,38273,-16.5,-66.5,Cruger,14.4,Cruger,14.41,True,True
+solar,38288,-16.5,-51.5,Zupus,32.7,Zupus,32.664,True,True
+solar,38295,-16.5,-44.5,Rima Billy,116.3,Rima Billy,116.346,True,True
+solar,38371,-16.5,31.5,Beaumont,91.1,Beaumont,91.13,True,True
+solar,38632,-17.5,-67.5,Cruger,29.5,Cruger,29.458,True,True
+solar,38677,-17.5,-22.5,Lubiniezky,41.9,Lubiniezky,41.904,True,True
+solar,38683,-17.5,-16.5,Opelt,48.8,Opelt,48.828,True,True
+solar,38687,-17.5,-12.5,Nicollet,134.9,Nicollet,134.89,True,True
+solar,38731,-17.5,31.5,Beaumont,79.3,Beaumont,79.276,True,True
+solar,39144,-18.5,84.5,Gibbs,7.8,Gibbs,7.828,True,True
+solar,39462,-19.5,42.5,Santbech,63.3,Santbech,63.3,True,True
+solar,39490,-19.5,70.5,Balmer,24.7,Balmer,24.676,True,True
+solar,39744,-20.5,-35.5,Loewy,100,Loewy,99.971,True,True
+solar,39814,-20.5,34.5,Fracastorius,48.1,Fracastorius,48.142,True,True
+solar,40040,-21.5,-99.5,Fryxell,61.2,Fryxell,61.229,True,True
+solar,40042,-21.5,-97.5,Mare Orientale,94.3,Mare Orientale,94.34,True,True
+solar,40099,-21.5,-40.5,Mare Humorum,105.1,Mare Humorum,105.139,True,True
+solar,40842,-23.5,-17.5,Wolf,32.6,Wolf,32.61,True,True
+solar,42963,-29.5,-56.5,Vieta,5.8,Vieta,5.787,True,True
+solar,42964,-29.5,-55.5,Vieta,27.7,Vieta,27.729,True,True
+solar,42976,-29.5,-43.5,Doppelmayer,61.3,Doppelmayer,61.277,True,True
+solar,21705,29.5,-74.5,Russell,94.9,Russell,94.859,True,True
+solar,21713,29.5,-66.5,Lichtenberg,78.1,Lichtenberg,78.1,True,True
+solar,21724,29.5,-55.5,Dorsa Whiston,39.4,Dorsa Whiston,39.367,True,True
+solar,21735,29.5,-44.5,Rocco,22.3,Rocco,22.309,True,True
+solar,21744,29.5,-35.5,Mons Delisle,7.9,Mons Delisle,7.945,True,True
+solar,21747,29.5,-32.5,Rima Diophantus,39.4,Rima Diophantus,39.363,True,True
+solar,21749,29.5,-30.5,Caventou,30.5,Caventou,30.496,True,True
+solar,21755,29.5,-24.5,Dorsum Zirkel,8.5,Dorsum Zirkel,8.528,True,True
+solar,21783,29.5,3.5,Promontorium Fresnel,42.3,Promontorium Fresnel,42.318,True,True
+solar,21786,29.5,6.5,Promontorium Fresnel,53.4,Promontorium Fresnel,53.44,True,True
+solar,21801,29.5,21.5,Dorsum Azara,101.5,Dorsum Azara,101.464,True,True
+solar,21860,29.5,80.5,Seneca,86.6,Seneca,86.58,True,True
+solar,21861,29.5,81.5,Seneca,95.9,Seneca,95.936,True,True
+solar,21925,29.5,145.5,Tereshkova,58.8,Tereshkova,58.846,True,True
+solar,21931,29.5,151.5,Titov,43.2,Titov,43.202,True,True
+solar,22086,28.5,-53.5,Montes Agricola,22.8,Montes Agricola,22.767,True,True
+solar,22091,28.5,-48.5,Toscanelli,28.8,Toscanelli,28.807,True,True
+solar,22096,28.5,-43.5,Rocco,41.8,Rocco,41.77,True,True
+solar,22101,28.5,-38.5,Fedorov,39.7,Fedorov,39.668,True,True
+solar,22103,28.5,-36.5,Fedorov,16.8,Fedorov,16.769,True,True
+solar,22105,28.5,-34.5,Samir,5.7,Samir,5.654,True,True
+solar,22112,28.5,-27.5,Mavis,48.8,Mavis,48.774,True,True
+solar,22117,28.5,-22.5,Dorsum Zirkel,69.2,Dorsum Zirkel,69.19,True,True
+solar,22132,28.5,-7.5,Bancroft,31.4,Bancroft,31.364,True,True
+solar,22146,28.5,6.5,Promontorium Fresnel,46.8,Promontorium Fresnel,46.841,True,True
+solar,22158,28.5,18.5,Mare Serenitatis,36.9,Mare Serenitatis,36.947,True,True
+solar,22254,28.5,114.5,Seyfert,23.6,Seyfert,23.569,True,True
+solar,22420,27.5,-79.5,Russell,110.9,Russell,110.896,True,True
+solar,22472,27.5,-27.5,Mons La Hire,53.8,Mons La Hire,53.834,True,True
+solar,22476,27.5,-23.5,Mons La Hire,54.1,Mons La Hire,54.118,True,True
+solar,22497,27.5,-2.5,Spurr,35.3,Spurr,35.31,True,True
+solar,22500,27.5,0.5,Palus Putredinis,14,Palus Putredinis,14.048,True,True
+solar,22515,27.5,15.5,Banting,37.5,Banting,37.478,True,True
+solar,22651,27.5,151.5,Titov,45.5,Titov,45.52,True,True
+solar,22780,26.5,-79.5,Russell,107.2,Russell,107.243,True,True
+solar,22798,26.5,-61.5,Golgi,57.1,Golgi,57.055,True,True
+solar,22832,26.5,-27.5,Mons La Hire,64.3,Mons La Hire,64.342,True,True
+solar,22849,26.5,-10.5,Feuillee,38.6,Feuillee,38.574,True,True
+solar,22885,26.5,25.5,Dorsa Smirnov,2.9,Dorsa Smirnov,2.896,True,True
+solar,23005,26.5,145.5,Tereshkova,68.4,Tereshkova,68.411,True,True
+solar,23140,25.5,-79.5,Struve,100.9,Struve,100.903,True,True
+solar,23147,25.5,-72.5,Russell,88.5,Russell,88.542,True,True
+solar,23150,25.5,-69.5,Briggs,30.1,Briggs,30.123,True,True
+solar,23164,25.5,-55.5,Dorsa Burnet,40.6,Dorsa Burnet,40.564,True,True
+solar,23175,25.5,-44.5,Prinz,9.8,Prinz,9.819,True,True
+solar,23204,25.5,-15.5,Heinrich,20.3,Heinrich,20.317,True,True
+solar,23238,25.5,18.5,Dorsum Azara,45.1,Dorsum Azara,45.067,True,True
+solar,23372,25.5,152.5,Komarov,28.5,Komarov,28.544,True,True
+solar,23548,24.5,-31.5,Dorsum Thera,3.6,Dorsum Thera,3.64,True,True
+solar,23591,24.5,11.5,Manuel,4.1,Manuel,4.11,True,True
+solar,23594,24.5,14.5,Hornsby,59.1,Hornsby,59.1,True,True
+solar,23672,24.5,92.5,Joliot,46.1,Joliot,46.069,True,True
+solar,23727,24.5,147.5,Mare Moscoviense,86,Mare Moscoviense,86.039,True,True
+solar,23870,23.5,-69.5,Briggs,90,Briggs,89.95,True,True
+solar,23882,23.5,-57.5,Schiaparelli,36.9,Schiaparelli,36.927,True,True
+solar,23918,23.5,-21.5,Lambert,70.3,Lambert,70.325,True,True
+solar,23934,23.5,-5.5,Montes Archimedes,57.8,Montes Archimedes,57.843,True,True
+solar,23972,23.5,32.5,Brewster,61.2,Brewster,61.234,True,True
+solar,23999,23.5,59.5,Delmotte,112.7,Delmotte,112.696,True,True
+solar,24044,23.5,104.5,Malyy,53.5,Malyy,53.519,True,True
+solar,24236,22.5,-63.5,Seleucus,98.7,Seleucus,98.718,True,True
+solar,24626,21.5,-33.5,Mons Vinogradov,37.8,Mons Vinogradov,37.754,True,True
+solar,24638,21.5,-21.5,Pytheas,38.2,Pytheas,38.177,True,True
+solar,24644,21.5,-15.5,Heinrich,101.4,Heinrich,101.386,True,True
+solar,24689,21.5,29.5,Clerke,10,Clerke,10.027,True,True
+solar,24962,20.5,-57.5,Oceanus Procellarum,23.9,Oceanus Procellarum,23.923,True,True
+solar,24972,20.5,-47.5,Aristarchus,97.9,Aristarchus,97.942,True,True
+solar,25003,20.5,-16.5,Pytheas,116.3,Pytheas,116.28,True,True
+solar,25042,20.5,22.5,Dorsa Lister,36.6,Dorsa Lister,36.635,True,True
+solar,25077,20.5,57.5,Eckert,100.7,Eckert,100.745,True,True
+solar,25318,19.5,-61.5,Schiaparelli,139.8,Schiaparelli,139.82,True,True
+solar,25342,19.5,-37.5,Brayley,45.3,Brayley,45.267,True,True
+solar,25353,19.5,-26.5,Rima Draper,72.4,Rima Draper,72.367,True,True
+solar,25360,19.5,-19.5,Pytheas,44.9,Pytheas,44.93,True,True
+solar,25363,19.5,-16.5,Pytheas,121,Pytheas,121.04,True,True
+solar,25374,19.5,-5.5,Huxley,34.5,Huxley,34.52,True,True
+solar,25442,19.5,62.5,Mons Latreille,35.4,Mons Latreille,35.385,True,True
+solar,25682,18.5,-57.5,Oceanus Procellarum,69.9,Oceanus Procellarum,69.912,True,True
+solar,25688,18.5,-51.5,Rima Marius,85.9,Rima Marius,85.857,True,True
+solar,25705,18.5,-34.5,Rosa,83.3,Rosa,83.314,True,True
+solar,25722,18.5,-17.5,Pytheas,108.4,Pytheas,108.383,True,True
+solar,25723,18.5,-16.5,Pytheas,132.7,Pytheas,132.728,True,True
+solar,25758,18.5,18.5,Rimae Menelaus,47.2,Rimae Menelaus,47.238,True,True
+solar,25759,18.5,19.5,Tacquet,57,Tacquet,57.017,True,True
+solar,25801,18.5,61.5,Mons Latreille,12.1,Mons Latreille,12.113,True,True
+solar,26038,17.5,-61.5,Rima Galilaei,154.6,Rima Galilaei,154.595,True,True
+solar,26042,17.5,-57.5,Oceanus Procellarum,99,Oceanus Procellarum,99.013,True,True
+solar,26046,17.5,-53.5,Rima Marius,119.8,Rima Marius,119.8,True,True
+solar,26048,17.5,-51.5,Rima Marius,66.3,Rima Marius,66.301,True,True
+solar,26050,17.5,-49.5,Rima Marius,34.2,Rima Marius,34.217,True,True
+solar,26053,17.5,-46.5,Rima Marius,94.6,Rima Marius,94.629,True,True
+solar,26086,17.5,-13.5,Eratosthenes,111.7,Eratosthenes,111.681,True,True
+solar,26091,17.5,-8.5,Mons Wolff,52.7,Mons Wolff,52.685,True,True
+solar,26172,17.5,72.5,Alhazen,51.9,Alhazen,51.88,True,True
+solar,26396,16.5,-63.5,Seleucus,166.1,Seleucus,166.15,True,True
+solar,26397,16.5,-62.5,Rima Galilaei,145.6,Rima Galilaei,145.621,True,True
+solar,26451,16.5,-8.5,Mons Wolff,50.7,Mons Wolff,50.659,True,True
+solar,26523,16.5,63.5,Mons Latreille,75.2,Mons Latreille,75.209,True,True
+solar,26547,16.5,87.5,Goddard,62.6,Goddard,62.601,True,True
+solar,38314,-16.5,-25.5,Lubiniezky,62.6,Lubiniezky,62.604,True,True
+solar,38506,-16.5,166.5,Zwicky,34.7,Zwicky,34.729,True,True
+solar,38601,-17.5,-98.5,Il in,25.5,Il in,25.476,True,True
+solar,38608,-17.5,-91.5,Kopff,52.8,Kopff,52.755,True,True
+solar,38667,-17.5,-32.5,Agatharchides,81.7,Agatharchides,81.716,True,True
+solar,38668,-17.5,-31.5,Agatharchides,72.2,Agatharchides,72.225,True,True
+solar,38672,-17.5,-27.5,Rima Agatharchides,92.5,Rima Agatharchides,92.465,True,True
+solar,38681,-17.5,-18.5,Opelt,43.7,Opelt,43.732,True,True
+solar,38682,-17.5,-17.5,Opelt,36.1,Opelt,36.147,True,True
+solar,38767,-17.5,67.5,Balmer,114.8,Balmer,114.771,True,True
+solar,38847,-17.5,147.5,Isaev,2,Isaev,2.015,True,True
+solar,38966,-18.5,-93.5,Hohmann,28.3,Hohmann,28.256,True,True
+solar,39012,-18.5,-47.5,Rimae Mersenius,72.1,Rimae Mersenius,72.093,True,True
+solar,39040,-18.5,-19.5,Gould,68.6,Gould,68.585,True,True
+solar,39048,-18.5,-11.5,Nicollet,108.3,Nicollet,108.336,True,True
+solar,39129,-18.5,69.5,Balmer,57.6,Balmer,57.578,True,True
+solar,39131,-18.5,71.5,Balmer,64.9,Balmer,64.932,True,True
+solar,39398,-19.5,-21.5,Bullialdus,43.6,Bullialdus,43.63,True,True
+solar,39457,-19.5,37.5,Rosse,86.3,Rosse,86.301,True,True
+solar,39682,-20.5,-97.5,Montes Rook,79,Montes Rook,78.951,True,True
+solar,39762,-20.5,-17.5,Mare Nubium,6.6,Mare Nubium,6.623,True,True
+solar,39766,-20.5,-13.5,Nicollet,52.3,Nicollet,52.294,True,True
+solar,39826,-20.5,46.5,Monge,48.4,Monge,48.419,True,True
+solar,40048,-21.5,-91.5,Mare Orientale,102.7,Mare Orientale,102.686,True,True
+solar,40075,-21.5,-64.5,Rimae Darwin,79.2,Rimae Darwin,79.188,True,True
+solar,40120,-21.5,-19.5,Mare Nubium,68.4,Mare Nubium,68.44,True,True
+solar,40132,-21.5,-7.5,Rupes Recta,7.8,Rupes Recta,7.778,True,True
+solar,40270,-21.5,130.5,Tsiolkovskiy,55,Tsiolkovskiy,55.041,True,True
+solar,40457,-22.5,-42.5,Rupes Liebig,124.1,Rupes Liebig,124.134,True,True
+solar,40765,-23.5,-94.5,Rimae Pettit,57.4,Rimae Pettit,57.401,True,True
+solar,40767,-23.5,-92.5,Rimae Pettit,60.7,Rimae Pettit,60.748,True,True
+solar,41408,-25.5,-171.5,Orlov,98.2,Orlov,98.227,True,True
+solar,41548,-25.5,-31.5,Hippalus,34.5,Hippalus,34.542,True,True
+solar,41552,-25.5,-27.5,Rimae Hippalus,50.9,Rimae Hippalus,50.893,True,True
+solar,41558,-25.5,-21.5,Kies,39.3,Kies,39.259,True,True
+solar,41559,-25.5,-20.5,Kies,62.9,Kies,62.926,True,True
+solar,41567,-25.5,-12.5,Lippershey,59.5,Lippershey,59.549,True,True
+solar,41659,-25.5,79.5,Humboldt,60.9,Humboldt,60.924,True,True
+solar,41901,-26.5,-38.5,Puiseux,44.1,Puiseux,44.052,True,True
+solar,41924,-26.5,-15.5,Hesiodus,91.9,Hesiodus,91.882,True,True
+solar,42260,-27.5,-39.5,Puiseux,12.8,Puiseux,12.79,True,True
+solar,42285,-27.5,-14.5,Rimae Pitatus,74.6,Rimae Pitatus,74.552,True,True
+solar,42645,-28.5,-14.5,Rimae Pitatus,46.7,Rimae Pitatus,46.669,True,True
+solar,42983,-29.5,-36.5,Vitello,39.2,Vitello,39.23,True,True
+solar,43092,-29.5,72.5,Legendre,68,Legendre,67.954,True,True
+solar,21703,29.5,-76.5,Russell,94.1,Russell,94.134,True,True
+solar,21743,29.5,-36.5,Mons Delisle,18.9,Mons Delisle,18.928,True,True
+solar,21764,29.5,-15.5,Sampson,27.3,Sampson,27.31,True,True
+solar,21800,29.5,20.5,Dorsum Azara,87.6,Dorsum Azara,87.612,True,True
+solar,21863,29.5,83.5,Urey,114.8,Urey,114.758,True,True
+solar,21870,29.5,90.5,Rayleigh,30.1,Rayleigh,30.147,True,True
+solar,22095,28.5,-44.5,Ruth,16.3,Ruth,16.303,True,True
+solar,22102,28.5,-37.5,Fedorov,14.7,Fedorov,14.677,True,True
+solar,22104,28.5,-35.5,Mons Delisle,29.1,Mons Delisle,29.07,True,True
+solar,22114,28.5,-25.5,Mons La Hire,25.4,Mons La Hire,25.436,True,True
+solar,22119,28.5,-20.5,McDonald,58.2,McDonald,58.151,True,True
+solar,22138,28.5,-1.5,Spurr,18.9,Spurr,18.887,True,True
+solar,22140,28.5,0.5,Palus Putredinis,37.1,Palus Putredinis,37.149,True,True
+solar,22154,28.5,14.5,Linne,75.7,Linne,75.749,True,True
+solar,22169,28.5,29.5,Rimae Chacornac,48.8,Rimae Chacornac,48.814,True,True
+solar,22218,28.5,78.5,Seneca,64.6,Seneca,64.609,True,True
+solar,22230,28.5,90.5,Rayleigh,33.7,Rayleigh,33.704,True,True
+solar,22419,27.5,-80.5,Russell,137.1,Russell,137.098,True,True
+solar,22421,27.5,-78.5,Russell,85.2,Russell,85.201,True,True
+solar,22423,27.5,-76.5,Russell,39.5,Russell,39.498,True,True
+solar,22433,27.5,-66.5,Briggs,79.3,Briggs,79.258,True,True
+solar,22452,27.5,-47.5,Rimae Aristarchus,6.8,Rimae Aristarchus,6.806,True,True
+solar,22453,27.5,-46.5,Rimae Aristarchus,20.1,Rimae Aristarchus,20.137,True,True
+solar,22499,27.5,-0.5,Palus Putredinis,14.2,Palus Putredinis,14.248,True,True
+solar,22517,27.5,17.5,Mare Serenitatis,24,Mare Serenitatis,24.02,True,True
+solar,22518,27.5,18.5,Mare Serenitatis,7.5,Mare Serenitatis,7.46,True,True
+solar,22524,27.5,24.5,Dorsa Smirnov,43.2,Dorsa Smirnov,43.246,True,True
+solar,22554,27.5,54.5,Cleomedes,27.1,Cleomedes,27.07,True,True
+solar,22594,27.5,94.5,Joliot,60,Joliot,59.997,True,True
+solar,22649,27.5,149.5,Mare Moscoviense,37.7,Mare Moscoviense,37.674,True,True
+solar,22650,27.5,150.5,Titov,32.4,Titov,32.369,True,True
+solar,22806,26.5,-53.5,Mons Herodotus,34,Mons Herodotus,33.981,True,True
+solar,22825,26.5,-34.5,Diophantus,34.4,Diophantus,34.38,True,True
+solar,22836,26.5,-23.5,Mons La Hire,64.6,Mons La Hire,64.582,True,True
+solar,22837,26.5,-22.5,Lambert,46.7,Lambert,46.749,True,True
+solar,22845,26.5,-14.5,Timocharis,38.5,Timocharis,38.518,True,True
+solar,22868,26.5,8.5,Dorsum Gast,64.7,Dorsum Gast,64.676,True,True
+solar,22871,26.5,11.5,Linne,38.6,Linne,38.649,True,True
+solar,22878,26.5,18.5,Dorsum Azara,21.1,Dorsum Azara,21.109,True,True
+solar,22888,26.5,28.5,Le Monnier,54.5,Le Monnier,54.484,True,True
+solar,22914,26.5,54.5,Cleomedes,42.9,Cleomedes,42.938,True,True
+solar,22915,26.5,55.5,Cleomedes,33.4,Cleomedes,33.371,True,True
+solar,22932,26.5,72.5,Hahn,145.7,Hahn,145.69,True,True
+solar,23010,26.5,150.5,Titov,62.4,Titov,62.446,True,True
+solar,23151,25.5,-68.5,Briggs,34.4,Briggs,34.435,True,True
+solar,23179,25.5,-40.5,Montes Harbinger,47.4,Montes Harbinger,47.377,True,True
+solar,23203,25.5,-16.5,Heinrich,37,Heinrich,37.002,True,True
+solar,23207,25.5,-12.5,Timocharis,40.4,Timocharis,40.366,True,True
+solar,23218,25.5,-1.5,Kathleen,18.9,Kathleen,18.853,True,True
+solar,23228,25.5,8.5,Dorsum Gast,34.6,Dorsum Gast,34.575,True,True
+solar,23232,25.5,12.5,Dorsum Owen,40.1,Dorsum Owen,40.052,True,True
+solar,23235,25.5,15.5,Banting,41.4,Banting,41.413,True,True
+solar,23243,25.5,23.5,Very,50.7,Very,50.689,True,True
+solar,23268,25.5,48.5,Tisserand,124.3,Tisserand,124.275,True,True
+solar,23311,25.5,91.5,Joliot,52.4,Joliot,52.389,True,True
+solar,23369,25.5,149.5,Mare Moscoviense,65.7,Mare Moscoviense,65.715,True,True
+solar,23498,24.5,-81.5,Struve,138.3,Struve,138.309,True,True
+solar,23538,24.5,-41.5,Montes Harbinger,72.8,Montes Harbinger,72.769,True,True
+solar,23544,24.5,-35.5,Dorsum Arduino,22.7,Dorsum Arduino,22.662,True,True
+solar,23573,24.5,-6.5,MacMillan,38.3,MacMillan,38.291,True,True
+solar,23580,24.5,0.5,Patricia,12.4,Patricia,12.357,True,True
+solar,23587,24.5,7.5,Joy,30.2,Joy,30.202,True,True
+solar,23590,24.5,10.5,Yoshi,13.7,Yoshi,13.708,True,True
+solar,23597,24.5,17.5,Banting,69.6,Banting,69.591,True,True
+solar,23605,24.5,25.5,Very,34.3,Very,34.302,True,True
+solar,23624,24.5,44.5,Lacus Bonitatis,40.3,Lacus Bonitatis,40.261,True,True
+solar,23674,24.5,94.5,Joliot,49.5,Joliot,49.549,True,True
+solar,23861,23.5,-78.5,Struve,51.5,Struve,51.465,True,True
+solar,23865,23.5,-74.5,Struve,59.9,Struve,59.929,True,True
+solar,23878,23.5,-61.5,Schiaparelli,74.6,Schiaparelli,74.631,True,True
+solar,23879,23.5,-60.5,Schiaparelli,46.9,Schiaparelli,46.864,True,True
+solar,23897,23.5,-42.5,Prinz,75.4,Prinz,75.397,True,True
+solar,23908,23.5,-31.5,Dorsum Thera,27.5,Dorsum Thera,27.463,True,True
+solar,23948,23.5,8.5,Dorsum Gast,27.2,Dorsum Gast,27.154,True,True
+solar,23952,23.5,12.5,Hornsby,8.9,Hornsby,8.949,True,True
+solar,23955,23.5,15.5,Hornsby,83.6,Hornsby,83.568,True,True
+solar,23964,23.5,24.5,Borel,63.7,Borel,63.67,True,True
+solar,23989,23.5,49.5,Tisserand,73.5,Tisserand,73.489,True,True
+solar,24001,23.5,61.5,Eimmart,92.8,Eimmart,92.799,True,True
+solar,24006,23.5,66.5,Mare Anguis,44.3,Mare Anguis,44.276,True,True
+solar,24042,23.5,102.5,Artamonov,68.7,Artamonov,68.66,True,True
+solar,24203,22.5,-96.5,Bell,15.8,Bell,15.848,True,True
+solar,24231,22.5,-68.5,Seleucus,67.1,Seleucus,67.137,True,True
+solar,24232,22.5,-67.5,Seleucus,48.8,Seleucus,48.829,True,True
+solar,24254,22.5,-45.5,Aristarchus,66.9,Aristarchus,66.866,True,True
+solar,24275,22.5,-24.5,Verne,78.3,Verne,78.275,True,True
+solar,24293,22.5,-6.5,MacMillan,63.8,MacMillan,63.758,True,True
+solar,24295,22.5,-4.5,Huxley,69.8,Huxley,69.848,True,True
+solar,24319,22.5,19.5,Bessel,50.1,Bessel,50.082,True,True
+solar,24336,22.5,36.5,Franck,26.5,Franck,26.474,True,True
+solar,24350,22.5,50.5,Tisserand,73.4,Tisserand,73.434,True,True
+solar,24360,22.5,60.5,Dorsa Tetyaev,125.6,Dorsa Tetyaev,125.593,True,True
+solar,24563,21.5,-96.5,Bell,14.5,Bell,14.528,True,True
+solar,24588,21.5,-71.5,Eddington,14.6,Eddington,14.6,True,True
+solar,24589,21.5,-70.5,Eddington,42.8,Eddington,42.813,True,True
+solar,24599,21.5,-60.5,Schiaparelli,73.9,Schiaparelli,73.896,True,True
+solar,24608,21.5,-51.5,Herodotus,70.8,Herodotus,70.756,True,True
+solar,24613,21.5,-46.5,Aristarchus,73.1,Aristarchus,73.076,True,True
+solar,24621,21.5,-38.5,Brayley,47.8,Brayley,47.822,True,True
+solar,24625,21.5,-34.5,Rima Brayley,57.5,Rima Brayley,57.468,True,True
+solar,24633,21.5,-26.5,Euler,92.2,Euler,92.234,True,True
+solar,24637,21.5,-22.5,Pytheas,60.9,Pytheas,60.906,True,True
+solar,24640,21.5,-19.5,Pytheas,41.9,Pytheas,41.948,True,True
+solar,24650,21.5,-9.5,Wallace,43.3,Wallace,43.279,True,True
+solar,24653,21.5,-6.5,Huxley,68.1,Huxley,68.093,True,True
+solar,24655,21.5,-4.5,Huxley,39.5,Huxley,39.533,True,True
+solar,24658,21.5,-1.5,Mons Bradley,53.5,Mons Bradley,53.486,True,True
+solar,24671,21.5,11.5,Rimae Sulpicius Gallus,49.8,Rimae Sulpicius Gallus,49.803,True,True
+solar,24684,21.5,24.5,Dorsa Lister,59.6,Dorsa Lister,59.586,True,True
+solar,24716,21.5,56.5,Swift,108.6,Swift,108.634,True,True
+solar,24721,21.5,61.5,Dorsa Tetyaev,85.4,Dorsa Tetyaev,85.354,True,True
+solar,24739,21.5,79.5,Cannon,72.3,Cannon,72.274,True,True
+solar,24756,21.5,96.5,Dziewulski,72.8,Dziewulski,72.778,True,True
+solar,24762,21.5,102.5,Malyy,87.6,Malyy,87.611,True,True
+solar,24940,20.5,-79.5,Balboa,115.2,Balboa,115.151,True,True
+solar,24951,20.5,-68.5,Seleucus,55.1,Seleucus,55.129,True,True
+solar,24959,20.5,-60.5,Schiaparelli,99.3,Schiaparelli,99.251,True,True
+solar,24977,20.5,-42.5,Prinz,158,Prinz,158.029,True,True
+solar,24986,20.5,-33.5,Ango,33,Ango,33.014,True,True
+solar,24992,20.5,-27.5,Rima Euler,81.7,Rima Euler,81.662,True,True
+solar,25000,20.5,-19.5,Pytheas,31.1,Pytheas,31.141,True,True
+solar,25015,20.5,-4.5,Huxley,9.3,Huxley,9.272,True,True
+solar,25031,20.5,11.5,Sulpicius Gallus,27,Sulpicius Gallus,26.982,True,True
+solar,25072,20.5,52.5,Dorsum Oppel,37.8,Dorsum Oppel,37.846,True,True
+solar,25121,20.5,101.5,Catena Dziewulski,63,Catena Dziewulski,63.005,True,True
+solar,25330,19.5,-49.5,Rima Marius,94.9,Rima Marius,94.85,True,True
+solar,25361,19.5,-18.5,Pytheas,67.9,Pytheas,67.87,True,True
+solar,25402,19.5,22.5,Dorsa Lister,30.2,Dorsa Lister,30.178,True,True
+solar,25404,19.5,24.5,Dorsa Lister,29.1,Dorsa Lister,29.121,True,True
+solar,25441,19.5,61.5,Mons Latreille,33.5,Mons Latreille,33.474,True,True
+solar,25443,19.5,63.5,Dorsa Tetyaev,22.6,Dorsa Tetyaev,22.638,True,True
+solar,25555,19.5,175.5,Lacus Luxuriae,2.8,Lacus Luxuriae,2.783,True,True
+solar,25674,18.5,-65.5,Seleucus,85.3,Seleucus,85.256,True,True
+solar,25690,18.5,-49.5,Rima Marius,64.5,Rima Marius,64.53,True,True
+solar,25715,18.5,-24.5,Rima Draper,42.4,Rima Draper,42.449,True,True
+solar,25721,18.5,-18.5,Pytheas,86.7,Pytheas,86.661,True,True
+solar,25807,18.5,67.5,Dorsa Tetyaev,108.7,Dorsa Tetyaev,108.681,True,True
+solar,25914,18.5,174.5,Lacus Luxuriae,39.8,Lacus Luxuriae,39.85,True,True
+solar,26020,17.5,-79.5,Balboa,121.6,Balboa,121.578,True,True
+solar,26026,17.5,-73.5,Krafft,36.4,Krafft,36.414,True,True
+solar,26056,17.5,-43.5,Rima Marius,178.6,Rima Marius,178.556,True,True
+solar,26077,17.5,-22.5,Draper,21.7,Draper,21.669,True,True
+solar,26079,17.5,-20.5,Draper,36.3,Draper,36.3,True,True
+solar,26083,17.5,-16.5,Pytheas,149.7,Pytheas,149.729,True,True
+solar,26093,17.5,-6.5,Mons Wolff,20.8,Mons Wolff,20.754,True,True
+solar,26160,17.5,60.5,Mons Latreille,50.4,Mons Latreille,50.422,True,True
+solar,26164,17.5,64.5,Dorsa Tetyaev,77.6,Dorsa Tetyaev,77.583,True,True
+solar,26182,17.5,82.5,Cannon,79.1,Cannon,79.069,True,True
+solar,26185,17.5,85.5,Goddard,127.3,Goddard,127.278,True,True
+solar,26187,17.5,87.5,Goddard,85.4,Goddard,85.447,True,True
+solar,26206,17.5,106.5,Fleming,112.7,Fleming,112.735,True,True
+solar,26403,16.5,-56.5,Oceanus Procellarum,126.6,Oceanus Procellarum,126.593,True,True
+solar,26424,16.5,-35.5,Bessarion,72.7,Bessarion,72.697,True,True
+solar,26440,16.5,-19.5,Draper,72.9,Draper,72.871,True,True
+solar,26442,16.5,-17.5,Gay Lussac,125,Gay Lussac,124.977,True,True
+solar,26483,16.5,23.5,Rimae Plinius,19.7,Rimae Plinius,19.68,True,True
+solar,26490,16.5,30.5,Beketov,39.4,Beketov,39.351,True,True
+solar,26491,16.5,31.5,Vitruvius,35.8,Vitruvius,35.831,True,True
+solar,26525,16.5,65.5,Promontorium Agarum,80,Promontorium Agarum,79.993,True,True
+solar,26558,16.5,98.5,Popov,28.6,Popov,28.635,True,True
+solar,26559,16.5,99.5,Popov,13.6,Popov,13.633,True,True
+solar,38248,-16.5,-91.5,Kopff,59.3,Kopff,59.294,True,True
+solar,38250,-16.5,-89.5,Kopff,27.5,Kopff,27.497,True,True
+solar,38270,-16.5,-69.5,Lacus Aestatis,57.4,Lacus Aestatis,57.362,True,True
+solar,38293,-16.5,-46.5,Rima Billy,69.8,Rima Billy,69.787,True,True
+solar,38301,-16.5,-38.5,Rimae Gassendi,49.5,Rimae Gassendi,49.458,True,True
+solar,38316,-16.5,-23.5,Lubiniezky,43.4,Lubiniezky,43.422,True,True
+solar,38401,-16.5,61.5,Vendelinus,1.8,Vendelinus,1.847,True,True
+solar,38409,-16.5,69.5,Balmer,116.2,Balmer,116.249,True,True
+solar,38603,-17.5,-96.5,Il in,35.2,Il in,35.207,True,True
+solar,38656,-17.5,-43.5,Gassendi,102.3,Gassendi,102.266,True,True
+solar,38658,-17.5,-41.5,Gassendi,44.5,Gassendi,44.454,True,True
+solar,38659,-17.5,-40.5,Gassendi,15.6,Gassendi,15.596,True,True
+solar,38670,-17.5,-29.5,Agatharchides,85.1,Agatharchides,85.117,True,True
+solar,38770,-17.5,70.5,Balmer,84.4,Balmer,84.411,True,True
+solar,38963,-18.5,-96.5,Il in,40,Il in,39.992,True,True
+solar,39014,-18.5,-45.5,Rimae Mersenius,72.7,Rimae Mersenius,72.742,True,True
+solar,39029,-18.5,-30.5,Agatharchides,44.7,Agatharchides,44.663,True,True
+solar,39382,-19.5,-37.5,Rimae Gassendi,91.8,Rimae Gassendi,91.838,True,True
+solar,39389,-19.5,-30.5,Agatharchides,20.6,Agatharchides,20.566,True,True
+solar,39393,-19.5,-26.5,Rima Agatharchides,64.6,Rima Agatharchides,64.591,True,True
+solar,39399,-19.5,-20.5,Bullialdus,62.9,Bullialdus,62.861,True,True
+solar,39412,-19.5,-7.5,Promontorium Taenarium,26.8,Promontorium Taenarium,26.763,True,True
+solar,39413,-19.5,-6.5,Promontorium Taenarium,35.8,Promontorium Taenarium,35.755,True,True
+solar,39454,-19.5,34.5,Rosse,49,Rosse,49.05,True,True
+solar,39459,-19.5,39.5,Bohnenberger,100.2,Bohnenberger,100.215,True,True
+solar,39465,-19.5,45.5,Monge,59,Monge,59.006,True,True
+solar,39528,-19.5,108.5,Hilbert,49.6,Hilbert,49.599,True,True
+solar,39548,-19.5,128.5,Tsiolkovskiy,29.8,Tsiolkovskiy,29.848,True,True
+solar,39688,-20.5,-91.5,Mare Orientale,92.3,Mare Orientale,92.258,True,True
+solar,39691,-20.5,-88.5,Kopff,100.2,Kopff,100.184,True,True
+solar,39746,-20.5,-33.5,Loewy,69,Loewy,68.963,True,True
+solar,39771,-20.5,-8.5,Rima Birt,35.2,Rima Birt,35.209,True,True
+solar,39850,-20.5,70.5,Balmer,10.5,Balmer,10.452,True,True
+solar,40043,-21.5,-96.5,Mare Orientale,71.8,Mare Orientale,71.767,True,True
+solar,40111,-21.5,-28.5,Rima Agatharchides,34.1,Rima Agatharchides,34.059,True,True
+solar,40112,-21.5,-27.5,Rima Agatharchides,45.4,Rima Agatharchides,45.445,True,True
+solar,40174,-21.5,34.5,Fracastorius,40.6,Fracastorius,40.583,True,True
+solar,40404,-22.5,-95.5,Mare Orientale,83.3,Mare Orientale,83.259,True,True
+solar,40407,-22.5,-92.5,Rimae Pettit,88.2,Rimae Pettit,88.195,True,True
+solar,40465,-22.5,-34.5,Loewy,46.5,Loewy,46.498,True,True
+solar,40492,-22.5,-7.5,Rupes Recta,25.7,Rupes Recta,25.658,True,True
+solar,40762,-23.5,-97.5,Rimae Pettit,118.9,Rimae Pettit,118.935,True,True
+solar,40825,-23.5,-34.5,Loewy,52.1,Loewy,52.066,True,True
+solar,40834,-23.5,-25.5,Konig,31.7,Konig,31.7,True,True
+solar,40836,-23.5,-23.5,Konig,39.4,Konig,39.447,True,True
+solar,41183,-24.5,-36.5,Mare Humorum,57.2,Mare Humorum,57.17,True,True
+solar,41189,-24.5,-30.5,Hippalus,12.9,Hippalus,12.896,True,True
+solar,41205,-24.5,-14.5,Wolf,78.7,Wolf,78.671,True,True
+solar,41210,-24.5,-9.5,Lippershey,50.5,Lippershey,50.472,True,True
+solar,41387,-24.5,167.5,Paracelsus,122.4,Paracelsus,122.353,True,True
+solar,41537,-25.5,-42.5,Rimae Doppelmayer,59.7,Rimae Doppelmayer,59.68,True,True
+solar,41538,-25.5,-41.5,Rimae Doppelmayer,85.6,Rimae Doppelmayer,85.601,True,True
+solar,41541,-25.5,-38.5,Mare Humorum,31,Mare Humorum,31.038,True,True
+solar,41565,-25.5,-14.5,Wolf,101.2,Wolf,101.163,True,True
+solar,41578,-25.5,-1.5,Purbach,14.5,Purbach,14.521,True,True
+solar,41695,-25.5,115.5,Schaeberle,65.2,Schaeberle,65.215,True,True
+solar,41754,-25.5,174.5,Nassau,79.8,Nassau,79.838,True,True
+solar,41897,-26.5,-42.5,Rimae Doppelmayer,55.7,Rimae Doppelmayer,55.717,True,True
+solar,41900,-26.5,-39.5,Puiseux,40.8,Puiseux,40.846,True,True
+solar,41905,-26.5,-34.5,Promontorium Kelvin,31.6,Promontorium Kelvin,31.634,True,True
+solar,41907,-26.5,-32.5,Promontorium Kelvin,29,Promontorium Kelvin,28.986,True,True
+solar,41910,-26.5,-29.5,Rimae Hippalus,27.6,Rimae Hippalus,27.639,True,True
+solar,41914,-26.5,-25.5,Konig,72.5,Konig,72.483,True,True
+solar,41920,-26.5,-19.5,Kies,85.1,Kies,85.083,True,True
+solar,41923,-26.5,-16.5,Hesiodus,88.6,Hesiodus,88.556,True,True
+solar,41929,-26.5,-10.5,Lippershey,16.7,Lippershey,16.653,True,True
+solar,42265,-27.5,-34.5,Promontorium Kelvin,33,Promontorium Kelvin,32.996,True,True
+solar,42274,-27.5,-25.5,Mercator,55.6,Mercator,55.61,True,True
+solar,42279,-27.5,-20.5,Kies,67.9,Kies,67.904,True,True
+solar,42280,-27.5,-19.5,Kies,91.9,Kies,91.923,True,True
+solar,42283,-27.5,-16.5,Hesiodus,58.2,Hesiodus,58.246,True,True
+solar,42287,-27.5,-12.5,Lippershey,74,Lippershey,73.96,True,True
+solar,42292,-27.5,-7.5,Lippershey,90.9,Lippershey,90.907,True,True
+solar,42487,-28.5,-172.5,Rumford,72.4,Rumford,72.421,True,True
+solar,42640,-28.5,-19.5,Hesiodus,86.4,Hesiodus,86.377,True,True
+solar,42642,-28.5,-17.5,Hesiodus,40,Hesiodus,40.009,True,True
+solar,42739,-28.5,79.5,Humboldt,59.6,Humboldt,59.607,True,True
+solar,42741,-28.5,81.5,Humboldt,47.1,Humboldt,47.095,True,True
+solar,42774,-28.5,114.5,Milne,88.3,Milne,88.348,True,True
+solar,42851,-29.5,-168.5,Rumford,40.3,Rumford,40.298,True,True
+solar,42854,-29.5,-165.5,Rumford,115.8,Rumford,115.801,True,True
+solar,42979,-29.5,-40.5,Lee,35.7,Lee,35.748,True,True
+solar,42982,-29.5,-37.5,Vitello,27.9,Vitello,27.911,True,True
+solar,42984,-29.5,-35.5,Vitello,60.7,Vitello,60.657,True,True
+solar,43003,-29.5,-16.5,Hesiodus,3.3,Hesiodus,3.254,True,True
+solar,43009,-29.5,-10.5,Pitatus,80.6,Pitatus,80.568,True,True
+solar,43014,-29.5,-5.5,Deslandres,92.6,Deslandres,92.626,True,True
+solar,43134,-29.5,114.5,Milne,64,Milne,64.045,True,True
+solar,43163,-29.5,143.5,Pavlov,47,Pavlov,47.015,True,True
+solar,43190,-29.5,170.5,Van de Graaff,84.7,Van de Graaff,84.735,True,True
+solar,21725,29.5,-54.5,Montes Agricola,17.5,Montes Agricola,17.522,True,True
+solar,21753,29.5,-26.5,Mavis,8.8,Mavis,8.773,True,True
+solar,21758,29.5,-21.5,McDonald,31.4,McDonald,31.434,True,True
+solar,21767,29.5,-12.5,Catena Timocharis,22.3,Catena Timocharis,22.349,True,True
+solar,21773,29.5,-6.5,Bancroft,43.5,Bancroft,43.522,True,True
+solar,21826,29.5,46.5,Newcomb,75.1,Newcomb,75.103,True,True
+solar,21841,29.5,61.5,Delmotte,78.9,Delmotte,78.887,True,True
+solar,21878,29.5,98.5,Maxwell,12.3,Maxwell,12.293,True,True
+solar,21926,29.5,146.5,Mare Moscoviense,80,Mare Moscoviense,79.988,True,True
+solar,21930,29.5,150.5,Titov,29.3,Titov,29.35,True,True
+solar,21932,29.5,152.5,Titov,65.4,Titov,65.402,True,True
+solar,22059,28.5,-80.5,Ulugh Beigh,132,Ulugh Beigh,131.984,True,True
+solar,22061,28.5,-78.5,Russell,99.7,Russell,99.693,True,True
+solar,22082,28.5,-57.5,Dorsa Whiston,41,Dorsa Whiston,40.962,True,True
+solar,22085,28.5,-54.5,Montes Agricola,20.4,Montes Agricola,20.429,True,True
+solar,22115,28.5,-24.5,Dorsum Zirkel,32.8,Dorsum Zirkel,32.848,True,True
+solar,22116,28.5,-23.5,Dorsum Zirkel,47.2,Dorsum Zirkel,47.224,True,True
+solar,22120,28.5,-19.5,Dorsa Stille,51.3,Dorsa Stille,51.294,True,True
+solar,22128,28.5,-11.5,Catena Timocharis,48.8,Catena Timocharis,48.79,True,True
+solar,22141,28.5,1.5,Palus Putredinis,53,Palus Putredinis,53.009,True,True
+solar,22147,28.5,7.5,Promontorium Fresnel,73.4,Promontorium Fresnel,73.413,True,True
+solar,22163,28.5,23.5,Dorsa Smirnov,83.7,Dorsa Smirnov,83.694,True,True
+solar,22168,28.5,28.5,Rimae Chacornac,74.5,Rimae Chacornac,74.505,True,True
+solar,22186,28.5,46.5,Newcomb,84.2,Newcomb,84.243,True,True
+solar,22219,28.5,79.5,Seneca,54.9,Seneca,54.866,True,True
+solar,22224,28.5,84.5,Urey,80.1,Urey,80.113,True,True
+solar,22238,28.5,98.5,Lomonosov,35.4,Lomonosov,35.37,True,True
+solar,22249,28.5,109.5,Espin,11.6,Espin,11.582,True,True
+solar,22444,27.5,-55.5,Raman,18.9,Raman,18.853,True,True
+solar,22447,27.5,-52.5,Mons Herodotus,11.7,Mons Herodotus,11.719,True,True
+solar,22456,27.5,-43.5,Rimae Prinz,13.8,Rimae Prinz,13.792,True,True
+solar,22459,27.5,-40.5,Dorsa Argand,24.4,Dorsa Argand,24.403,True,True
+solar,22482,27.5,-17.5,Dorsum Higazy,13.1,Dorsum Higazy,13.114,True,True
+solar,22513,27.5,13.5,Linne,46.3,Linne,46.296,True,True
+solar,22522,27.5,22.5,Dorsa Smirnov,88.3,Dorsa Smirnov,88.319,True,True
+solar,22557,27.5,57.5,Rima Cleomedes,30.2,Rima Cleomedes,30.155,True,True
+solar,22581,27.5,81.5,Seneca,51.6,Seneca,51.6,True,True
+solar,22593,27.5,93.5,Joliot,52,Joliot,51.991,True,True
+solar,22776,26.5,-83.5,Voskresenskiy,131.7,Voskresenskiy,131.681,True,True
+solar,22781,26.5,-78.5,Russell,80.1,Russell,80.11,True,True
+solar,22785,26.5,-74.5,Russell,28.4,Russell,28.435,True,True
+solar,22789,26.5,-70.5,Briggs,35.7,Briggs,35.659,True,True
+solar,22790,26.5,-69.5,Briggs,8.6,Briggs,8.607,True,True
+solar,22791,26.5,-68.5,Briggs,18.7,Briggs,18.71,True,True
+solar,22797,26.5,-62.5,Golgi,78.9,Golgi,78.947,True,True
+solar,22812,26.5,-47.5,Rupes Toscanelli,14.3,Rupes Toscanelli,14.307,True,True
+solar,22835,26.5,-24.5,Mons La Hire,44.5,Mons La Hire,44.458,True,True
+solar,22861,26.5,1.5,Julienne,46.3,Julienne,46.257,True,True
+solar,22883,26.5,23.5,Dorsa Smirnov,55.2,Dorsa Smirnov,55.164,True,True
+solar,22887,26.5,27.5,Dorsa Smirnov,53.6,Dorsa Smirnov,53.57,True,True
+solar,22916,26.5,56.5,Cleomedes,42.9,Cleomedes,42.921,True,True
+solar,22951,26.5,91.5,Joliot,55.8,Joliot,55.78,True,True
+solar,23006,26.5,146.5,Mare Moscoviense,49.9,Mare Moscoviense,49.871,True,True
+solar,23153,25.5,-66.5,Briggs,78.7,Briggs,78.745,True,True
+solar,23158,25.5,-61.5,Zinner,79.7,Zinner,79.712,True,True
+solar,23160,25.5,-59.5,Zinner,38.7,Zinner,38.702,True,True
+solar,23162,25.5,-57.5,Dorsa Burnet,28.4,Dorsa Burnet,28.419,True,True
+solar,23173,25.5,-46.5,Vaisala,40.1,Vaisala,40.087,True,True
+solar,23180,25.5,-39.5,Rima Artsimovich,42.3,Rima Artsimovich,42.255,True,True
+solar,23181,25.5,-38.5,Rima Artsimovich,35.5,Rima Artsimovich,35.495,True,True
+solar,23183,25.5,-36.5,Dorsum Arduino,23,Dorsum Arduino,22.956,True,True
+solar,23187,25.5,-32.5,Dorsum Thera,44.5,Dorsum Thera,44.545,True,True
+solar,23188,25.5,-31.5,Courtney,22,Courtney,22.03,True,True
+solar,23190,25.5,-29.5,Rima Zahia,30,Rima Zahia,29.964,True,True
+solar,23195,25.5,-24.5,Felix,27.1,Felix,27.109,True,True
+solar,23196,25.5,-23.5,Artemis,52.8,Artemis,52.811,True,True
+solar,23206,25.5,-13.5,Timocharis,38.5,Timocharis,38.481,True,True
+solar,23208,25.5,-11.5,Pupin,51.3,Pupin,51.343,True,True
+solar,23209,25.5,-10.5,Pupin,51.3,Pupin,51.349,True,True
+solar,23216,25.5,-3.5,Rimae Archimedes,37.8,Rimae Archimedes,37.8,True,True
+solar,23241,25.5,21.5,Sarabhai,26.5,Sarabhai,26.456,True,True
+solar,23244,25.5,24.5,Very,23.5,Very,23.494,True,True
+solar,23277,25.5,57.5,Rima Cleomedes,79.7,Rima Cleomedes,79.727,True,True
+solar,23290,25.5,70.5,Mare Anguis,123.5,Mare Anguis,123.489,True,True
+solar,23323,25.5,103.5,Artamonov,8,Artamonov,8.029,True,True
+solar,23366,25.5,146.5,Mare Moscoviense,69.7,Mare Moscoviense,69.718,True,True
+solar,23513,24.5,-66.5,Briggs,94.4,Briggs,94.43,True,True
+solar,23514,24.5,-65.5,Seleucus,108.3,Seleucus,108.349,True,True
+solar,23519,24.5,-60.5,Schiaparelli,57.6,Schiaparelli,57.636,True,True
+solar,23547,24.5,-32.5,Dorsum Thera,29.9,Dorsum Thera,29.888,True,True
+solar,23557,24.5,-22.5,Lambert,56.7,Lambert,56.687,True,True
+solar,23570,24.5,-9.5,Pupin,45.7,Pupin,45.704,True,True
+solar,23608,24.5,28.5,Dorsa Aldrovandi,27.4,Dorsa Aldrovandi,27.444,True,True
+solar,23612,24.5,32.5,Brewster,71.2,Brewster,71.167,True,True
+solar,23665,24.5,85.5,Hubble,77.6,Hubble,77.633,True,True
+solar,23726,24.5,146.5,Mare Moscoviense,95.3,Mare Moscoviense,95.252,True,True
+solar,23860,23.5,-79.5,Struve,79.3,Struve,79.258,True,True
+solar,23862,23.5,-77.5,Struve,23.7,Struve,23.727,True,True
+solar,23867,23.5,-72.5,Eddington,62.1,Eddington,62.061,True,True
+solar,23872,23.5,-67.5,Seleucus,76.8,Seleucus,76.755,True,True
+solar,23875,23.5,-64.5,Seleucus,94.9,Seleucus,94.929,True,True
+solar,23877,23.5,-62.5,Schiaparelli,102.4,Schiaparelli,102.425,True,True
+solar,23886,23.5,-53.5,Freud,75.9,Freud,75.874,True,True
+solar,23901,23.5,-38.5,Rima Brayley,70.2,Rima Brayley,70.187,True,True
+solar,23907,23.5,-32.5,Mons Vinogradov,34.9,Mons Vinogradov,34.885,True,True
+solar,23916,23.5,-23.5,Verne,68.1,Verne,68.091,True,True
+solar,23931,23.5,-8.5,MacMillan,27.9,MacMillan,27.928,True,True
+solar,23938,23.5,-1.5,Rima Bradley,32.2,Rima Bradley,32.171,True,True
+solar,23940,23.5,0.5,Rima Bradley,36.8,Rima Bradley,36.806,True,True
+solar,23957,23.5,17.5,Bessel,54.8,Bessel,54.823,True,True
+solar,23977,23.5,37.5,Franck,60.8,Franck,60.816,True,True
+solar,23990,23.5,50.5,Tisserand,91,Tisserand,90.993,True,True
+solar,24089,23.5,149.5,Komarov,82.9,Komarov,82.925,True,True
+solar,24227,22.5,-72.5,Eddington,33.2,Eddington,33.15,True,True
+solar,24230,22.5,-69.5,Eddington,77,Eddington,76.97,True,True
+solar,24233,22.5,-66.5,Seleucus,43,Seleucus,42.971,True,True
+solar,24253,22.5,-46.5,Aristarchus,46.4,Aristarchus,46.404,True,True
+solar,24258,22.5,-41.5,Prinz,116.5,Prinz,116.453,True,True
+solar,24262,22.5,-37.5,Rima Brayley,32.7,Rima Brayley,32.742,True,True
+solar,24265,22.5,-34.5,Rima Brayley,52.3,Rima Brayley,52.305,True,True
+solar,24269,22.5,-30.5,Rima Euler,43.3,Rima Euler,43.257,True,True
+solar,24279,22.5,-20.5,Pytheas,58.7,Pytheas,58.675,True,True
+solar,24280,22.5,-19.5,Pytheas,66.2,Pytheas,66.245,True,True
+solar,24288,22.5,-11.5,Pupin,43.8,Pupin,43.78,True,True
+solar,24296,22.5,-3.5,Huxley,75.8,Huxley,75.795,True,True
+solar,24317,22.5,17.5,Bessel,26.1,Bessel,26.052,True,True
+solar,24328,22.5,28.5,Catena Littrow,32.2,Catena Littrow,32.217,True,True
+solar,24329,22.5,29.5,Catena Littrow,8.7,Catena Littrow,8.74,True,True
+solar,24338,22.5,38.5,Hill,81,Hill,81.021,True,True
+solar,24402,22.5,102.5,Malyy,87,Malyy,87.003,True,True
+solar,24449,22.5,149.5,Komarov,99.2,Komarov,99.191,True,True
+solar,24583,21.5,-76.5,Struve,58.2,Struve,58.171,True,True
+solar,24586,21.5,-73.5,Eddington,41.8,Eddington,41.826,True,True
+solar,24592,21.5,-67.5,Seleucus,26.8,Seleucus,26.76,True,True
+solar,24593,21.5,-66.5,Seleucus,13.2,Seleucus,13.214,True,True
+solar,24594,21.5,-65.5,Seleucus,35.1,Seleucus,35.065,True,True
+solar,24610,21.5,-49.5,Herodotus,54,Herodotus,54.003,True,True
+solar,24614,21.5,-45.5,Aristarchus,87.6,Aristarchus,87.606,True,True
+solar,24618,21.5,-41.5,Brayley,130.3,Brayley,130.282,True,True
+solar,24636,21.5,-23.5,Pytheas,87,Pytheas,86.968,True,True
+solar,24639,21.5,-20.5,Pytheas,28.4,Pytheas,28.417,True,True
+solar,24647,21.5,-12.5,Pupin,83.2,Pupin,83.183,True,True
+solar,24649,21.5,-10.5,Wallace,62.3,Wallace,62.299,True,True
+solar,24696,21.5,36.5,Franck,42.3,Franck,42.253,True,True
+solar,24709,21.5,49.5,Tisserand,37.7,Tisserand,37.723,True,True
+solar,24715,21.5,55.5,Swift,87.6,Swift,87.609,True,True
+solar,24763,21.5,103.5,Malyy,60.1,Malyy,60.149,True,True
+solar,24808,21.5,148.5,Leonov,73.9,Leonov,73.934,True,True
+solar,24948,20.5,-71.5,Eddington,33.7,Eddington,33.745,True,True
+solar,24949,20.5,-70.5,Eddington,52.6,Eddington,52.626,True,True
+solar,24971,20.5,-48.5,Herodotus,91.6,Herodotus,91.564,True,True
+solar,24978,20.5,-41.5,Brayley,130,Brayley,129.978,True,True
+solar,24979,20.5,-40.5,Brayley,101.8,Brayley,101.77,True,True
+solar,24998,20.5,-21.5,Pytheas,25.8,Pytheas,25.799,True,True
+solar,25011,20.5,-8.5,Wallace,10.2,Wallace,10.217,True,True
+solar,25033,20.5,13.5,Dorsum Buckland,39.6,Dorsum Buckland,39.576,True,True
+solar,25038,20.5,18.5,Bessel,40.9,Bessel,40.859,True,True
+solar,25040,20.5,20.5,Deseilligny,19.2,Deseilligny,19.237,True,True
+solar,25041,20.5,21.5,Deseilligny,32.1,Deseilligny,32.138,True,True
+solar,25044,20.5,24.5,Dorsa Lister,35.8,Dorsa Lister,35.775,True,True
+solar,25056,20.5,36.5,Sinus Amoris,28.5,Sinus Amoris,28.521,True,True
+solar,25059,20.5,39.5,Carmichael,38.2,Carmichael,38.219,True,True
+solar,25074,20.5,54.5,Swift,46.1,Swift,46.139,True,True
+solar,25085,20.5,65.5,Dorsa Tetyaev,43.3,Dorsa Tetyaev,43.314,True,True
+solar,25333,19.5,-46.5,Rima Marius,129.2,Rima Marius,129.203,True,True
+solar,25334,19.5,-45.5,Aristarchus,140,Aristarchus,139.99,True,True
+solar,25341,19.5,-38.5,Brayley,61.4,Brayley,61.403,True,True
+solar,25344,19.5,-35.5,Brayley,58.9,Brayley,58.87,True,True
+solar,25369,19.5,-10.5,Wallace,55,Wallace,54.954,True,True
+solar,25373,19.5,-6.5,Huxley,59.7,Huxley,59.683,True,True
+solar,25396,19.5,16.5,Bobillier,30.7,Bobillier,30.677,True,True
+solar,25399,19.5,19.5,Deseilligny,58.3,Deseilligny,58.281,True,True
+solar,25406,19.5,26.5,Robert,30.7,Robert,30.707,True,True
+solar,25409,19.5,29.5,Rima Rudolf,7.3,Rima Rudolf,7.286,True,True
+solar,25431,19.5,51.5,Dorsum Oppel,17.7,Dorsum Oppel,17.709,True,True
+solar,25448,19.5,68.5,Mare Anguis,92.5,Mare Anguis,92.531,True,True
+solar,25459,19.5,79.5,Cannon,54.4,Cannon,54.424,True,True
+solar,25477,19.5,97.5,Dziewulski,62.3,Dziewulski,62.335,True,True
+solar,25481,19.5,101.5,Catena Dziewulski,41.5,Catena Dziewulski,41.542,True,True
+solar,25483,19.5,103.5,Catena Dziewulski,95.1,Catena Dziewulski,95.123,True,True
+solar,25659,18.5,-80.5,Balboa,83.6,Balboa,83.61,True,True
+solar,25677,18.5,-62.5,Seleucus,142.3,Seleucus,142.341,True,True
+solar,25685,18.5,-54.5,Oceanus Procellarum,90.6,Oceanus Procellarum,90.578,True,True
+solar,25694,18.5,-45.5,Rima Marius,133.5,Rima Marius,133.539,True,True
+solar,25696,18.5,-43.5,Rima Marius,186.3,Rima Marius,186.298,True,True
+solar,25697,18.5,-42.5,Brayley,174.6,Brayley,174.622,True,True
+solar,25716,18.5,-23.5,Draper,57.8,Draper,57.801,True,True
+solar,25717,18.5,-22.5,Draper,35.6,Draper,35.617,True,True
+solar,25725,18.5,-14.5,Eratosthenes,153.2,Eratosthenes,153.204,True,True
+solar,25728,18.5,-11.5,Wallace,95,Wallace,95.028,True,True
+solar,25729,18.5,-10.5,Wallace,73.1,Wallace,73.124,True,True
+solar,25730,18.5,-9.5,Wallace,57.4,Wallace,57.447,True,True
+solar,25780,18.5,40.5,Carmichael,31.6,Carmichael,31.609,True,True
+solar,25796,18.5,56.5,Eckert,65.6,Eckert,65.552,True,True
+solar,25812,18.5,72.5,Alhazen,80.8,Alhazen,80.773,True,True
+solar,25819,18.5,79.5,Cannon,67.7,Cannon,67.74,True,True
+solar,26013,17.5,-86.5,Dalton,60.7,Dalton,60.75,True,True
+solar,26034,17.5,-65.5,Seleucus,113.8,Seleucus,113.838,True,True
+solar,26036,17.5,-63.5,Seleucus,141.5,Seleucus,141.547,True,True
+solar,26049,17.5,-50.5,Rima Marius,44.1,Rima Marius,44.067,True,True
+solar,26057,17.5,-42.5,Bessarion,171.2,Bessarion,171.213,True,True
+solar,26076,17.5,-23.5,Draper,50.5,Draper,50.534,True,True
+solar,26092,17.5,-7.5,Mons Wolff,27.6,Mons Wolff,27.641,True,True
+solar,26115,17.5,15.5,Menelaus,39.6,Menelaus,39.632,True,True
+solar,26150,17.5,50.5,Dorsum Oppel,71.5,Dorsum Oppel,71.483,True,True
+solar,26151,17.5,51.5,Dorsum Oppel,57.5,Dorsum Oppel,57.537,True,True
+solar,26158,17.5,58.5,Eckert,7.5,Eckert,7.474,True,True
+solar,26159,17.5,59.5,Eckert,33.1,Eckert,33.142,True,True
+solar,26161,17.5,61.5,Mons Latreille,31.8,Mons Latreille,31.81,True,True
+solar,26274,17.5,174.5,Lacus Luxuriae,64.7,Lacus Luxuriae,64.674,True,True
+solar,26275,17.5,175.5,Lacus Luxuriae,57.9,Lacus Luxuriae,57.866,True,True
+solar,26366,16.5,-93.5,Mees,118.5,Mees,118.547,True,True
+solar,26373,16.5,-86.5,Dalton,61.9,Dalton,61.885,True,True
+solar,26380,16.5,-79.5,Balboa,137.7,Balboa,137.701,True,True
+solar,26381,16.5,-78.5,Balboa,161.7,Balboa,161.665,True,True
+solar,26389,16.5,-70.5,Krafft,64.6,Krafft,64.606,True,True
+solar,26402,16.5,-57.5,Rima Galilaei,119.8,Rima Galilaei,119.832,True,True
+solar,26410,16.5,-49.5,Rima Marius,4.1,Rima Marius,4.059,True,True
+solar,26414,16.5,-45.5,Rima Marius,117.6,Rima Marius,117.614,True,True
+solar,26448,16.5,-11.5,Eratosthenes,61.7,Eratosthenes,61.678,True,True
+solar,26468,16.5,8.5,Lacus Doloris,9.7,Lacus Doloris,9.727,True,True
+solar,26481,16.5,21.5,Promontorium Archerusia,15.8,Promontorium Archerusia,15.845,True,True
+solar,26512,16.5,52.5,Peirce,58.9,Peirce,58.921,True,True
+solar,26517,16.5,57.5,Eckert,34.8,Eckert,34.813,True,True
+solar,37881,-15.5,-98.5,Il in,73.8,Il in,73.752,True,True
+solar,38275,-16.5,-64.5,Cruger,71.7,Cruger,71.697,True,True
+solar,38292,-16.5,-47.5,Rima Billy,55.6,Rima Billy,55.635,True,True
+solar,38294,-16.5,-45.5,Rima Billy,91.4,Rima Billy,91.382,True,True
+solar,38299,-16.5,-40.5,Rimae Gassendi,34.6,Rimae Gassendi,34.632,True,True
+solar,38300,-16.5,-39.5,Rimae Gassendi,31.3,Rimae Gassendi,31.333,True,True
+solar,38304,-16.5,-35.5,Rimae Herigonius,86.4,Rimae Herigonius,86.353,True,True
+solar,38305,-16.5,-34.5,Herigonius,96.6,Herigonius,96.602,True,True
+solar,38369,-16.5,29.5,Beaumont,51.8,Beaumont,51.786,True,True
+solar,38400,-16.5,60.5,Vendelinus,30.4,Vendelinus,30.431,True,True
+solar,38448,-16.5,108.5,Hilbert,42,Hilbert,41.963,True,True
+solar,38512,-16.5,172.5,Aitken,13.4,Aitken,13.438,True,True
+solar,38660,-17.5,-39.5,Rimae Gassendi,10.8,Rimae Gassendi,10.756,True,True
+solar,38666,-17.5,-33.5,Agatharchides,98.9,Agatharchides,98.937,True,True
+solar,38669,-17.5,-30.5,Agatharchides,73.5,Agatharchides,73.523,True,True
+solar,38678,-17.5,-21.5,Lubiniezky,70.1,Lubiniezky,70.125,True,True
+solar,38693,-17.5,-6.5,Promontorium Taenarium,42,Promontorium Taenarium,41.997,True,True
+solar,38698,-17.5,-1.5,Rimae Arzachel,24.7,Rimae Arzachel,24.723,True,True
+solar,38727,-17.5,27.5,Beaumont,42.1,Beaumont,42.06,True,True
+solar,38728,-17.5,28.5,Beaumont,19.9,Beaumont,19.925,True,True
+solar,38733,-17.5,33.5,Rosse,44.9,Rosse,44.881,True,True
+solar,38761,-17.5,61.5,Vendelinus,31.6,Vendelinus,31.637,True,True
+solar,38763,-17.5,63.5,Holden,58.3,Holden,58.29,True,True
+solar,38766,-17.5,66.5,Lame,100.6,Lame,100.614,True,True
+solar,38769,-17.5,69.5,Balmer,86.6,Balmer,86.574,True,True
+solar,38809,-17.5,109.5,Hilbert,35.9,Hilbert,35.906,True,True
+solar,38823,-17.5,123.5,Litke  Lutke,24.9,Litke  Lutke,24.942,True,True
+solar,38873,-17.5,173.5,Aitken,35.7,Aitken,35.695,True,True
+solar,38969,-18.5,-90.5,Kopff,41.1,Kopff,41.132,True,True
+solar,39016,-18.5,-43.5,Gassendi,105.9,Gassendi,105.919,True,True
+solar,39021,-18.5,-38.5,Rimae Gassendi,50.4,Rimae Gassendi,50.368,True,True
+solar,39024,-18.5,-35.5,Rimae Gassendi,129.9,Rimae Gassendi,129.858,True,True
+solar,39025,-18.5,-34.5,Agatharchides,105.3,Agatharchides,105.287,True,True
+solar,39031,-18.5,-28.5,Rima Agatharchides,57,Rima Agatharchides,56.989,True,True
+solar,39035,-18.5,-24.5,Lubiniezky,25.6,Lubiniezky,25.618,True,True
+solar,39036,-18.5,-23.5,Lubiniezky,21.9,Lubiniezky,21.921,True,True
+solar,39039,-18.5,-20.5,Bullialdus,84.7,Bullialdus,84.742,True,True
+solar,39100,-18.5,40.5,Bohnenberger,69.8,Bohnenberger,69.796,True,True
+solar,39101,-18.5,41.5,Bohnenberger,80.3,Bohnenberger,80.331,True,True
+solar,39143,-18.5,83.5,Gibbs,22.5,Gibbs,22.45,True,True
+solar,39154,-18.5,94.5,Sklodowska,49.5,Sklodowska,49.547,True,True
+solar,39155,-18.5,95.5,Sklodowska,23.4,Sklodowska,23.421,True,True
+solar,39157,-18.5,97.5,Sklodowska,41.4,Sklodowska,41.36,True,True
+solar,39181,-18.5,121.5,Diderot,58.2,Diderot,58.155,True,True
+solar,39324,-19.5,-95.5,Montes Rook,15.8,Montes Rook,15.793,True,True
+solar,39385,-19.5,-34.5,Agatharchides,97.3,Agatharchides,97.254,True,True
+solar,39391,-19.5,-28.5,Rima Agatharchides,26.7,Rima Agatharchides,26.699,True,True
+solar,39400,-19.5,-19.5,Gould,64.8,Gould,64.841,True,True
+solar,39408,-19.5,-11.5,Nicollet,79.4,Nicollet,79.433,True,True
+solar,39482,-19.5,62.5,Holden,9.5,Holden,9.52,True,True
+solar,39491,-19.5,71.5,Balmer,43.2,Balmer,43.24,True,True
+solar,39498,-19.5,78.5,Hecataeus,84.5,Hecataeus,84.513,True,True
+solar,39684,-20.5,-95.5,Mare Orientale,30.5,Mare Orientale,30.46,True,True
+solar,39741,-20.5,-38.5,Gassendi,98.7,Gassendi,98.677,True,True
+solar,39748,-20.5,-31.5,Agatharchides,22.5,Agatharchides,22.459,True,True
+solar,39751,-20.5,-28.5,Rima Agatharchides,4.1,Rima Agatharchides,4.115,True,True
+solar,39754,-20.5,-25.5,Rima Agatharchides,87.1,Rima Agatharchides,87.147,True,True
+solar,39755,-20.5,-24.5,Bullialdus,63.9,Bullialdus,63.923,True,True
+solar,39761,-20.5,-18.5,Mare Nubium,34.5,Mare Nubium,34.544,True,True
+solar,39770,-20.5,-9.5,Rima Birt,28.1,Rima Birt,28.087,True,True
+solar,39772,-20.5,-7.5,Rupes Recta,36.1,Rupes Recta,36.079,True,True
+solar,39900,-20.5,120.5,Diderot,29.8,Diderot,29.761,True,True
+solar,39951,-20.5,171.5,Vertregt,38,Vertregt,37.967,True,True
+solar,40106,-21.5,-33.5,Loewy,40.5,Loewy,40.498,True,True
+solar,40110,-21.5,-29.5,Rima Agatharchides,43.1,Rima Agatharchides,43.115,True,True
+solar,40113,-21.5,-26.5,Rima Agatharchides,67.6,Rima Agatharchides,67.634,True,True
+solar,40133,-21.5,-6.5,Rupes Recta,34.3,Rupes Recta,34.301,True,True
+solar,40267,-21.5,127.5,Tsiolkovskiy,53.8,Tsiolkovskiy,53.78,True,True
+solar,40317,-21.5,177.5,Bergstrand,89.4,Bergstrand,89.402,True,True
+solar,40463,-22.5,-36.5,Mare Humorum,83.2,Mare Humorum,83.174,True,True
+solar,40467,-22.5,-32.5,Loewy,11.5,Loewy,11.47,True,True
+solar,40480,-22.5,-19.5,Wolf,80.9,Wolf,80.901,True,True
+solar,40493,-22.5,-6.5,Rupes Recta,42,Rupes Recta,42.031,True,True
+solar,40592,-22.5,92.5,Curie,17.7,Curie,17.655,True,True
+solar,40622,-22.5,122.5,Xenophon,15.4,Xenophon,15.44,True,True
+solar,40663,-22.5,163.5,Paracelsus,12.9,Paracelsus,12.912,True,True
+solar,40694,-23.5,-165.5,Sniadecki,100.3,Sniadecki,100.301,True,True
+solar,40764,-23.5,-95.5,Rimae Pettit,73.4,Rimae Pettit,73.389,True,True
+solar,40766,-23.5,-93.5,Rimae Pettit,52.2,Rimae Pettit,52.246,True,True
+solar,40821,-23.5,-38.5,Mare Humorum,29.7,Mare Humorum,29.738,True,True
+solar,40826,-23.5,-33.5,Loewy,30.4,Loewy,30.415,True,True
+solar,40829,-23.5,-30.5,Hippalus,43.1,Hippalus,43.077,True,True
+solar,40845,-23.5,-14.5,Wolf,63.1,Wolf,63.108,True,True
+solar,40850,-23.5,-9.5,Birt,42.8,Birt,42.779,True,True
+solar,40866,-23.5,6.5,Playfair,54.1,Playfair,54.111,True,True
+solar,40951,-23.5,91.5,Curie,25.7,Curie,25.714,True,True
+solar,41181,-24.5,-38.5,Mare Humorum,2.1,Mare Humorum,2.081,True,True
+solar,41185,-24.5,-34.5,Loewy,71.4,Loewy,71.401,True,True
+solar,41187,-24.5,-32.5,Loewy,55.7,Loewy,55.659,True,True
+solar,41197,-24.5,-22.5,Kies,54.9,Kies,54.908,True,True
+solar,41214,-24.5,-5.5,Thebit,86.1,Thebit,86.056,True,True
+solar,41218,-24.5,-1.5,Purbach,34,Purbach,33.973,True,True
+solar,41331,-24.5,111.5,Alden,31.9,Alden,31.912,True,True
+solar,41393,-24.5,173.5,Van de Graaff,87.2,Van de Graaff,87.166,True,True
+solar,41401,-25.5,-178.5,Orlov,93.8,Orlov,93.831,True,True
+solar,41536,-25.5,-43.5,Rimae Doppelmayer,35.8,Rimae Doppelmayer,35.844,True,True
+solar,41539,-25.5,-40.5,Mare Humorum,61.4,Mare Humorum,61.388,True,True
+solar,41545,-25.5,-34.5,Promontorium Kelvin,52.5,Promontorium Kelvin,52.455,True,True
+solar,41556,-25.5,-23.5,Kies,34.2,Kies,34.181,True,True
+solar,41557,-25.5,-22.5,Kies,24.7,Kies,24.714,True,True
+solar,41564,-25.5,-15.5,Wolf,88,Wolf,88.006,True,True
+solar,41566,-25.5,-13.5,Lippershey,86.3,Lippershey,86.339,True,True
+solar,41582,-25.5,2.5,Blanchinus,5.8,Blanchinus,5.799,True,True
+solar,41701,-25.5,121.5,Zhiritskiy,39.5,Zhiritskiy,39.527,True,True
+solar,41774,-26.5,-165.5,Walker,99.6,Walker,99.572,True,True
+solar,41896,-26.5,-43.5,Rimae Doppelmayer,29.1,Rimae Doppelmayer,29.1,True,True
+solar,41915,-26.5,-24.5,Kies,51.3,Kies,51.251,True,True
+solar,41921,-26.5,-18.5,Hesiodus,104.6,Hesiodus,104.615,True,True
+solar,42270,-27.5,-29.5,Campanus,46,Campanus,46.026,True,True
+solar,42403,-27.5,103.5,Lacus Solitudinis,10.1,Lacus Solitudinis,10.147,True,True
+solar,42441,-27.5,141.5,Pavlov,33.9,Pavlov,33.89,True,True
+solar,42472,-27.5,172.5,Van de Graaff,19.2,Van de Graaff,19.218,True,True
+solar,42478,-27.5,178.5,Nassau,84.6,Nassau,84.566,True,True
+solar,42481,-28.5,-178.5,Leeuwenhoek,25.7,Leeuwenhoek,25.716,True,True
+solar,42626,-28.5,-33.5,Rupes Kelvin,16.8,Rupes Kelvin,16.753,True,True
+solar,42636,-28.5,-23.5,Rupes Mercator,54.6,Rupes Mercator,54.615,True,True
+solar,42652,-28.5,-7.5,Lippershey,109.4,Lippershey,109.354,True,True
+solar,42653,-28.5,-6.5,Hell,123.5,Hell,123.464,True,True
+solar,42729,-28.5,69.5,Legendre,18.8,Legendre,18.828,True,True
+solar,42742,-28.5,82.5,Humboldt,60.9,Humboldt,60.912,True,True
+solar,42764,-28.5,104.5,Lacus Solitudinis,34,Lacus Solitudinis,34.006,True,True
+solar,42822,-28.5,162.5,Zelinskiy,116.4,Zelinskiy,116.376,True,True
+solar,42823,-28.5,163.5,Zelinskiy,89.8,Zelinskiy,89.828,True,True
+solar,42829,-28.5,169.5,Zelinskiy,70.5,Zelinskiy,70.542,True,True
+solar,42981,-29.5,-38.5,Vitello,37.4,Vitello,37.408,True,True
+solar,42990,-29.5,-29.5,Marth,50.4,Marth,50.389,True,True
+solar,42993,-29.5,-26.5,Mercator,12.7,Mercator,12.722,True,True
+solar,43051,-29.5,31.5,Piccolomini,19.4,Piccolomini,19.39,True,True
+solar,43090,-29.5,70.5,Legendre,21.7,Legendre,21.658,True,True
+solar,43113,-29.5,93.5,Lauritsen,95.5,Lauritsen,95.481,True,True
+solar,43122,-29.5,102.5,Lacus Solitudinis,70.3,Lacus Solitudinis,70.276,True,True
+solar,43191,-29.5,171.5,Birkeland,69,Birkeland,69.036,True,True
+solar,43197,-29.5,177.5,Birkeland,94,Birkeland,94.003,True,True
+solar,43198,-29.5,178.5,Leeuwenhoek,69.8,Leeuwenhoek,69.767,True,True
+solar,21698,29.5,-81.5,Ulugh Beigh,96.8,Ulugh Beigh,96.799,True,True
+solar,21717,29.5,-62.5,Golgi,85.4,Golgi,85.382,True,True
+solar,21719,29.5,-60.5,Golgi,54,Golgi,53.99,True,True
+solar,21736,29.5,-43.5,Rocco,43.6,Rocco,43.577,True,True
+solar,21737,29.5,-42.5,Angstrom,25,Angstrom,24.999,True,True
+solar,21738,29.5,-41.5,Angstrom,12.8,Angstrom,12.783,True,True
+solar,21754,29.5,-25.5,Annegrit,4.2,Annegrit,4.169,True,True
+solar,21756,29.5,-23.5,Dorsum Zirkel,34.8,Dorsum Zirkel,34.824,True,True
+solar,21778,29.5,-1.5,Spurr,48.6,Spurr,48.566,True,True
+solar,21781,29.5,1.5,Autolycus,35.7,Autolycus,35.653,True,True
+solar,21787,29.5,7.5,Promontorium Fresnel,77.6,Promontorium Fresnel,77.593,True,True
+solar,21789,29.5,9.5,Linne,81.1,Linne,81.073,True,True
+solar,21791,29.5,11.5,Linne,53.8,Linne,53.769,True,True
+solar,21798,29.5,18.5,Mare Serenitatis,67.2,Mare Serenitatis,67.183,True,True
+solar,21809,29.5,29.5,Rimae Chacornac,48.4,Rimae Chacornac,48.415,True,True
+solar,21815,29.5,35.5,Rimae Romer,78.2,Rimae Romer,78.184,True,True
+solar,21816,29.5,36.5,Kirchhoff,66.2,Kirchhoff,66.248,True,True
+solar,21859,29.5,79.5,Seneca,85,Seneca,84.964,True,True
+solar,21879,29.5,99.5,Maxwell,28.4,Maxwell,28.449,True,True
+solar,21922,29.5,142.5,Tereshkova,52.9,Tereshkova,52.937,True,True
+solar,21924,29.5,144.5,Tereshkova,42.8,Tereshkova,42.803,True,True
+solar,22042,28.5,-97.5,Laue,13.6,Laue,13.554,True,True
+solar,22056,28.5,-83.5,Voskresenskiy,124.8,Voskresenskiy,124.763,True,True
+solar,22060,28.5,-79.5,Russell,122.2,Russell,122.195,True,True
+solar,22064,28.5,-75.5,Russell,60.3,Russell,60.309,True,True
+solar,22066,28.5,-73.5,Russell,81.7,Russell,81.66,True,True
+solar,22071,28.5,-68.5,Briggs,64.8,Briggs,64.773,True,True
+solar,22073,28.5,-66.5,Briggs,95.3,Briggs,95.285,True,True
+solar,22084,28.5,-55.5,Montes Agricola,41.6,Montes Agricola,41.582,True,True
+solar,22092,28.5,-47.5,Toscanelli,16.7,Toscanelli,16.68,True,True
+solar,22094,28.5,-45.5,Van Biesbroeck,8.4,Van Biesbroeck,8.405,True,True
+solar,22130,28.5,-9.5,Feuillee,34.2,Feuillee,34.208,True,True
+solar,22137,28.5,-2.5,Spurr,37.4,Spurr,37.417,True,True
+solar,22144,28.5,4.5,Promontorium Fresnel,7.7,Promontorium Fresnel,7.657,True,True
+solar,22152,28.5,12.5,Linne,29.6,Linne,29.551,True,True
+solar,22175,28.5,35.5,Rimae Romer,49.1,Rimae Romer,49.06,True,True
+solar,22233,28.5,93.5,Joliot,82.3,Joliot,82.282,True,True
+solar,22283,28.5,143.5,Tereshkova,12.7,Tereshkova,12.695,True,True
+solar,22289,28.5,149.5,Titov,21,Titov,20.975,True,True
+solar,22291,28.5,151.5,Titov,32.4,Titov,32.401,True,True
+solar,22292,28.5,152.5,Titov,59,Titov,59.026,True,True
+solar,22417,27.5,-82.5,Voskresenskiy,151.4,Voskresenskiy,151.373,True,True
+solar,22418,27.5,-81.5,Ulugh Beigh,157.2,Ulugh Beigh,157.174,True,True
+solar,22430,27.5,-69.5,Briggs,32.9,Briggs,32.86,True,True
+solar,22449,27.5,-50.5,Vallis Schroteri,50.2,Vallis Schroteri,50.169,True,True
+solar,22458,27.5,-41.5,Montes Harbinger,19.3,Montes Harbinger,19.277,True,True
+solar,22468,27.5,-31.5,Walter,64.2,Walter,64.169,True,True
+solar,22469,27.5,-30.5,Courtney,72.2,Courtney,72.192,True,True
+solar,22475,27.5,-24.5,Mons La Hire,27.5,Mons La Hire,27.458,True,True
+solar,22489,27.5,-10.5,Feuillee,28.2,Feuillee,28.215,True,True
+solar,22502,27.5,2.5,Rimae Fresnel,37.8,Rimae Fresnel,37.792,True,True
+solar,22503,27.5,3.5,Rimae Fresnel,19.5,Rimae Fresnel,19.525,True,True
+solar,22526,27.5,26.5,Dorsa Smirnov,42.2,Dorsa Smirnov,42.241,True,True
+solar,22531,27.5,31.5,Le Monnier,37.2,Le Monnier,37.172,True,True
+solar,22555,27.5,55.5,Cleomedes,3,Cleomedes,3.048,True,True
+solar,22563,27.5,63.5,Delmotte,89.4,Delmotte,89.356,True,True
+solar,22592,27.5,92.5,Joliot,57.2,Joliot,57.231,True,True
+solar,22609,27.5,109.5,Espin,20,Espin,20.047,True,True
+solar,22647,27.5,147.5,Mare Moscoviense,18,Mare Moscoviense,18.021,True,True
+solar,22653,27.5,153.5,Titov,91.8,Titov,91.755,True,True
+solar,22778,26.5,-81.5,Russell,161.5,Russell,161.505,True,True
+solar,22787,26.5,-72.5,Russell,82.7,Russell,82.704,True,True
+solar,22788,26.5,-71.5,Briggs,62.8,Briggs,62.789,True,True
+solar,22792,26.5,-67.5,Briggs,45.8,Briggs,45.82,True,True
+solar,22793,26.5,-66.5,Briggs,73,Briggs,72.954,True,True
+solar,22799,26.5,-60.5,Golgi,41.6,Golgi,41.642,True,True
+solar,22800,26.5,-59.5,Zinner,17.8,Zinner,17.785,True,True
+solar,22804,26.5,-55.5,Raman,16.7,Raman,16.741,True,True
+solar,22814,26.5,-45.5,Prinz,48.1,Prinz,48.094,True,True
+solar,22819,26.5,-40.5,Montes Harbinger,24.5,Montes Harbinger,24.488,True,True
+solar,22822,26.5,-37.5,Rima Artsimovich,31.5,Rima Artsimovich,31.461,True,True
+solar,22823,26.5,-36.5,Artsimovich,33.9,Artsimovich,33.884,True,True
+solar,22831,26.5,-28.5,Rima Zahia,69.7,Rima Zahia,69.74,True,True
+solar,22842,26.5,-17.5,Dorsa Stille,38.7,Dorsa Stille,38.721,True,True
+solar,22846,26.5,-13.5,Timocharis,12.7,Timocharis,12.683,True,True
+solar,22848,26.5,-11.5,Timocharis,43.9,Timocharis,43.881,True,True
+solar,22852,26.5,-7.5,Beer,46.7,Beer,46.726,True,True
+solar,22853,26.5,-6.5,Bancroft,47.5,Bancroft,47.517,True,True
+solar,22874,26.5,14.5,Banting,52.4,Banting,52.371,True,True
+solar,22877,26.5,17.5,Banting,29.2,Banting,29.175,True,True
+solar,22879,26.5,19.5,Dorsum Azara,14.2,Dorsum Azara,14.187,True,True
+solar,22880,26.5,20.5,Dorsum Azara,37.8,Dorsum Azara,37.751,True,True
+solar,22886,26.5,26.5,Dorsa Smirnov,26.5,Dorsa Smirnov,26.497,True,True
+solar,22891,26.5,31.5,Le Monnier,27.5,Le Monnier,27.488,True,True
+solar,22930,26.5,70.5,Mare Anguis,147.5,Mare Anguis,147.537,True,True
+solar,22931,26.5,71.5,Hahn,153,Hahn,152.998,True,True
+solar,22942,26.5,82.5,Seneca,73.3,Seneca,73.314,True,True
+solar,22949,26.5,89.5,Lyapunov,4.3,Lyapunov,4.276,True,True
+solar,22953,26.5,93.5,Joliot,21.8,Joliot,21.789,True,True
+solar,22958,26.5,98.5,Lomonosov,26.5,Lomonosov,26.464,True,True
+solar,23004,26.5,144.5,Tereshkova,54.8,Tereshkova,54.801,True,True
+solar,23011,26.5,151.5,Komarov,61.5,Komarov,61.518,True,True
+solar,23137,25.5,-82.5,Voskresenskiy,168.8,Voskresenskiy,168.793,True,True
+solar,23149,25.5,-70.5,Briggs,46,Briggs,45.991,True,True
+solar,23152,25.5,-67.5,Briggs,54.3,Briggs,54.316,True,True
+solar,23157,25.5,-62.5,Golgi,97.8,Golgi,97.756,True,True
+solar,23159,25.5,-60.5,Zinner,56.4,Zinner,56.428,True,True
+solar,23163,25.5,-56.5,Dorsa Burnet,21.9,Dorsa Burnet,21.948,True,True
+solar,23174,25.5,-45.5,Prinz,37.2,Prinz,37.185,True,True
+solar,23178,25.5,-41.5,Montes Harbinger,42.6,Montes Harbinger,42.604,True,True
+solar,23182,25.5,-37.5,Dorsum Arduino,40.4,Dorsum Arduino,40.428,True,True
+solar,23191,25.5,-28.5,Rima Zahia,55.6,Rima Zahia,55.562,True,True
+solar,23192,25.5,-27.5,Felix,59.6,Felix,59.551,True,True
+solar,23210,25.5,-9.5,Beer,49,Beer,48.96,True,True
+solar,23212,25.5,-7.5,MacMillan,40.5,MacMillan,40.534,True,True
+solar,23213,25.5,-6.5,Montes Archimedes,34.4,Montes Archimedes,34.383,True,True
+solar,23219,25.5,-0.5,Ian,7.3,Ian,7.299,True,True
+solar,23220,25.5,0.5,Michael,15.7,Michael,15.746,True,True
+solar,23221,25.5,1.5,Carlos,28,Carlos,28.01,True,True
+solar,23234,25.5,14.5,Banting,61.9,Banting,61.931,True,True
+solar,23239,25.5,19.5,Dorsum Azara,42.2,Dorsum Azara,42.245,True,True
+solar,23240,25.5,20.5,Sarabhai,26.5,Sarabhai,26.47,True,True
+solar,23242,25.5,22.5,Sarabhai,47,Sarabhai,46.974,True,True
+solar,23245,25.5,25.5,Very,5.6,Very,5.582,True,True
+solar,23247,25.5,27.5,Very,59,Very,58.986,True,True
+solar,23249,25.5,29.5,Le Monnier,44.4,Le Monnier,44.416,True,True
+solar,23250,25.5,30.5,Le Monnier,35.1,Le Monnier,35.054,True,True
+solar,23252,25.5,32.5,Le Monnier,64.7,Le Monnier,64.741,True,True
+solar,23260,25.5,40.5,Montes Taurus,55.5,Montes Taurus,55.466,True,True
+solar,23286,25.5,66.5,Eimmart,65.9,Eimmart,65.887,True,True
+solar,23287,25.5,67.5,Eimmart,87.6,Eimmart,87.592,True,True
+solar,23288,25.5,68.5,Mare Anguis,96.6,Mare Anguis,96.647,True,True
+solar,23289,25.5,69.5,Mare Anguis,107.4,Mare Anguis,107.367,True,True
+solar,23307,25.5,87.5,Lyapunov,58.1,Lyapunov,58.1,True,True
+solar,23312,25.5,92.5,Joliot,25.8,Joliot,25.842,True,True
+solar,23315,25.5,95.5,Joliot,58.3,Joliot,58.349,True,True
+solar,23365,25.5,145.5,Mare Moscoviense,89.4,Mare Moscoviense,89.399,True,True
+solar,23497,24.5,-82.5,Balboa,161.2,Balboa,161.211,True,True
+solar,23499,24.5,-80.5,Struve,111.6,Struve,111.595,True,True
+solar,23500,24.5,-79.5,Struve,85.5,Struve,85.515,True,True
+solar,23505,24.5,-74.5,Russell,67.4,Russell,67.402,True,True
+solar,23507,24.5,-72.5,Eddington,91.9,Eddington,91.886,True,True
+solar,23512,24.5,-67.5,Briggs,75.1,Briggs,75.097,True,True
+solar,23523,24.5,-56.5,Dorsa Burnet,51.5,Dorsa Burnet,51.466,True,True
+solar,23533,24.5,-46.5,Aristarchus,36,Aristarchus,36.003,True,True
+solar,23541,24.5,-38.5,Dorsum Arduino,62.2,Dorsum Arduino,62.152,True,True
+solar,23550,24.5,-29.5,Catena Yuri,24.5,Catena Yuri,24.494,True,True
+solar,23558,24.5,-21.5,Lambert,41.1,Lambert,41.059,True,True
+solar,23579,24.5,-0.5,Rima Bradley,10.3,Rima Bradley,10.305,True,True
+solar,23588,24.5,8.5,Dorsum Gast,6.8,Dorsum Gast,6.848,True,True
+solar,23592,24.5,12.5,Hornsby,21.4,Hornsby,21.379,True,True
+solar,23595,24.5,15.5,Banting,68,Banting,68.034,True,True
+solar,23602,24.5,22.5,Sarabhai,42,Sarabhai,42.045,True,True
+solar,23607,24.5,27.5,Dorsa Aldrovandi,41.9,Dorsa Aldrovandi,41.9,True,True
+solar,23609,24.5,29.5,Dorsa Aldrovandi,35.8,Dorsa Aldrovandi,35.836,True,True
+solar,23613,24.5,33.5,Brewster,49.7,Brewster,49.731,True,True
+solar,23628,24.5,48.5,Tisserand,94.1,Tisserand,94.067,True,True
+solar,23679,24.5,99.5,Edison,13.2,Edison,13.19,True,True
+solar,23690,24.5,110.5,Deutsch,12.2,Deutsch,12.185,True,True
+solar,23728,24.5,148.5,Mare Moscoviense,85,Mare Moscoviense,84.974,True,True
+solar,23729,24.5,149.5,Komarov,75.8,Komarov,75.844,True,True
+solar,23730,24.5,150.5,Komarov,48.3,Komarov,48.287,True,True
+solar,23859,23.5,-80.5,Struve,107.1,Struve,107.062,True,True
+solar,23868,23.5,-71.5,Eddington,62.3,Eddington,62.281,True,True
+solar,23880,23.5,-59.5,Schiaparelli,19.3,Schiaparelli,19.253,True,True
+solar,23894,23.5,-45.5,Aristarchus,55.7,Aristarchus,55.73,True,True
+solar,23896,23.5,-43.5,Prinz,62.8,Prinz,62.822,True,True
+solar,23898,23.5,-41.5,Prinz,94.6,Prinz,94.58,True,True
+solar,23899,23.5,-40.5,Montes Harbinger,105.1,Montes Harbinger,105.124,True,True
+solar,23905,23.5,-34.5,Dorsum Arduino,62.3,Dorsum Arduino,62.265,True,True
+solar,23909,23.5,-30.5,Catena Yuri,27.7,Catena Yuri,27.731,True,True
+solar,23914,23.5,-25.5,Verne,44.2,Verne,44.2,True,True
+solar,23929,23.5,-10.5,Pupin,17.8,Pupin,17.837,True,True
+solar,23936,23.5,-3.5,Montes Archimedes,75,Montes Archimedes,75.039,True,True
+solar,23937,23.5,-2.5,Rima Bradley,56.4,Rima Bradley,56.418,True,True
+solar,23949,23.5,9.5,Dorsum Gast,34.5,Dorsum Gast,34.464,True,True
+solar,23953,23.5,13.5,Hornsby,29,Hornsby,28.952,True,True
+solar,23967,23.5,27.5,Dorsa Aldrovandi,32.2,Dorsa Aldrovandi,32.23,True,True
+solar,23991,23.5,51.5,Tisserand,112.8,Tisserand,112.823,True,True
+solar,24002,23.5,62.5,Eimmart,65.5,Eimmart,65.505,True,True
+solar,24009,23.5,69.5,Mare Anguis,62.8,Mare Anguis,62.823,True,True
+solar,24091,23.5,151.5,Komarov,38.9,Komarov,38.924,True,True
+solar,24197,22.5,-102.5,Helberg,4.1,Helberg,4.057,True,True
+solar,24222,22.5,-77.5,Struve,36.4,Struve,36.428,True,True
+solar,24235,22.5,-64.5,Seleucus,74.3,Seleucus,74.344,True,True
+solar,24237,22.5,-62.5,Schiaparelli,106.1,Schiaparelli,106.141,True,True
+solar,24242,22.5,-57.5,Schiaparelli,45.5,Schiaparelli,45.5,True,True
+solar,24255,22.5,-44.5,Prinz,91.1,Prinz,91.143,True,True
+solar,24259,22.5,-40.5,Brayley,111.5,Brayley,111.531,True,True
+solar,24264,22.5,-35.5,Rima Brayley,24.7,Rima Brayley,24.682,True,True
+solar,24266,22.5,-33.5,Mons Vinogradov,27.9,Mons Vinogradov,27.873,True,True
+solar,24268,22.5,-31.5,Mons Vinogradov,28.9,Mons Vinogradov,28.924,True,True
+solar,24271,22.5,-28.5,Euler,29.9,Euler,29.947,True,True
+solar,24273,22.5,-26.5,Euler,78.4,Euler,78.387,True,True
+solar,24278,22.5,-21.5,Pytheas,63.9,Pytheas,63.94,True,True
+solar,24287,22.5,-12.5,Pupin,58.9,Pupin,58.906,True,True
+solar,24292,22.5,-7.5,MacMillan,52.5,MacMillan,52.469,True,True
+solar,24312,22.5,12.5,Dorsum Von Cotta,36.7,Dorsum Von Cotta,36.652,True,True
+solar,24320,22.5,20.5,Finsch,39.2,Finsch,39.229,True,True
+solar,24321,22.5,21.5,Finsch,33.5,Finsch,33.459,True,True
+solar,24325,22.5,25.5,Borel,26.2,Borel,26.183,True,True
+solar,24351,22.5,51.5,Dorsum Oppel,98,Dorsum Oppel,98.033,True,True
+solar,24353,22.5,53.5,Swift,95.6,Swift,95.644,True,True
+solar,24354,22.5,54.5,Swift,100.2,Swift,100.191,True,True
+solar,24355,22.5,55.5,Swift,111.9,Swift,111.949,True,True
+solar,24359,22.5,59.5,Mons Latreille,140.2,Mons Latreille,140.201,True,True
+solar,24361,22.5,61.5,Eimmart,102.2,Eimmart,102.247,True,True
+solar,24366,22.5,66.5,Mare Anguis,30.2,Mare Anguis,30.214,True,True
+solar,24386,22.5,86.5,Hubble,13.1,Hubble,13.088,True,True
+solar,24389,22.5,89.5,Hubble,73,Hubble,72.96,True,True
+solar,24430,22.5,130.5,Vernadskiy,18.7,Vernadskiy,18.731,True,True
+solar,24448,22.5,148.5,Leonov,104.2,Leonov,104.227,True,True
+solar,24547,21.5,-112.5,Comrie,60.4,Comrie,60.395,True,True
+solar,24555,21.5,-104.5,Robertson,26.5,Robertson,26.476,True,True
+solar,24587,21.5,-72.5,Eddington,13.6,Eddington,13.613,True,True
+solar,24611,21.5,-48.5,Herodotus,65,Herodotus,65.036,True,True
+solar,24615,21.5,-44.5,Aristarchus,107.6,Aristarchus,107.592,True,True
+solar,24616,21.5,-43.5,Prinz,122.2,Prinz,122.232,True,True
+solar,24619,21.5,-40.5,Brayley,102.4,Brayley,102.37,True,True
+solar,24628,21.5,-31.5,Jehan,26,Jehan,25.996,True,True
+solar,24631,21.5,-28.5,Rima Euler,52.7,Rima Euler,52.727,True,True
+solar,24632,21.5,-27.5,Euler,71.3,Euler,71.262,True,True
+solar,24641,21.5,-18.5,Pytheas,65.7,Pytheas,65.679,True,True
+solar,24651,21.5,-8.5,Wallace,38.3,Wallace,38.344,True,True
+solar,24652,21.5,-7.5,Wallace,51.7,Wallace,51.699,True,True
+solar,24654,21.5,-5.5,Huxley,47.9,Huxley,47.925,True,True
+solar,24669,21.5,9.5,Rimae Sulpicius Gallus,29.2,Rimae Sulpicius Gallus,29.178,True,True
+solar,24680,21.5,20.5,Deseilligny,11.5,Deseilligny,11.515,True,True
+solar,24685,21.5,25.5,Borel,37.1,Borel,37.111,True,True
+solar,24690,21.5,30.5,Clerke,20.5,Clerke,20.532,True,True
+solar,24725,21.5,65.5,Dorsa Tetyaev,60.5,Dorsa Tetyaev,60.483,True,True
+solar,24728,21.5,68.5,Mare Anguis,38.3,Mare Anguis,38.289,True,True
+solar,24730,21.5,70.5,Mare Anguis,86.9,Mare Anguis,86.916,True,True
+solar,24757,21.5,97.5,Dziewulski,45.6,Dziewulski,45.58,True,True
+solar,24761,21.5,101.5,Dziewulski,71.9,Dziewulski,71.945,True,True
+solar,24807,21.5,147.5,Leonov,77.8,Leonov,77.802,True,True
+solar,24939,20.5,-80.5,Balboa,88.8,Balboa,88.768,True,True
+solar,24942,20.5,-77.5,Struve,91.5,Struve,91.497,True,True
+solar,24946,20.5,-73.5,Eddington,51.8,Eddington,51.82,True,True
+solar,24956,20.5,-63.5,Seleucus,91.4,Seleucus,91.374,True,True
+solar,24957,20.5,-62.5,Seleucus,119.3,Seleucus,119.299,True,True
+solar,24963,20.5,-56.5,Oceanus Procellarum,7.2,Oceanus Procellarum,7.237,True,True
+solar,24969,20.5,-50.5,Herodotus,85.6,Herodotus,85.57,True,True
+solar,24973,20.5,-46.5,Aristarchus,101.8,Aristarchus,101.813,True,True
+solar,24974,20.5,-45.5,Aristarchus,112.8,Aristarchus,112.769,True,True
+solar,24980,20.5,-39.5,Brayley,73.7,Brayley,73.68,True,True
+solar,24981,20.5,-38.5,Brayley,45.9,Brayley,45.928,True,True
+solar,24987,20.5,-32.5,Ango,4.7,Ango,4.652,True,True
+solar,24995,20.5,-24.5,Rima Draper,98.1,Rima Draper,98.143,True,True
+solar,24996,20.5,-23.5,Pytheas,82.5,Pytheas,82.537,True,True
+solar,25008,20.5,-11.5,Wallace,78.5,Wallace,78.541,True,True
+solar,25012,20.5,-7.5,Wallace,36.3,Wallace,36.262,True,True
+solar,25029,20.5,9.5,Rimae Sulpicius Gallus,14.7,Rimae Sulpicius Gallus,14.708,True,True
+solar,25043,20.5,23.5,Dorsa Lister,22.4,Dorsa Lister,22.37,True,True
+solar,25046,20.5,26.5,Abetti,39.2,Abetti,39.217,True,True
+solar,25047,20.5,27.5,Abetti,14.8,Abetti,14.783,True,True
+solar,25055,20.5,35.5,Mons Maraldi,4.9,Mons Maraldi,4.888,True,True
+solar,25075,20.5,55.5,Swift,68.2,Swift,68.239,True,True
+solar,25080,20.5,60.5,Mons Latreille,73.7,Mons Latreille,73.734,True,True
+solar,25084,20.5,64.5,Dorsa Tetyaev,19,Dorsa Tetyaev,19.008,True,True
+solar,25086,20.5,66.5,Mare Anguis,65.8,Mare Anguis,65.836,True,True
+solar,25099,20.5,79.5,Cannon,56.3,Cannon,56.334,True,True
+solar,25116,20.5,96.5,Dziewulski,72.8,Dziewulski,72.822,True,True
+solar,25117,20.5,97.5,Dziewulski,45.4,Dziewulski,45.412,True,True
+solar,25138,20.5,118.5,Olcott,20.3,Olcott,20.33,True,True
+solar,25299,19.5,-80.5,Balboa,80.7,Balboa,80.724,True,True
+solar,25300,19.5,-79.5,Balboa,109.2,Balboa,109.226,True,True
+solar,25303,19.5,-76.5,Struve,118.7,Struve,118.739,True,True
+solar,25307,19.5,-72.5,Eddington,62.2,Eddington,62.25,True,True
+solar,25308,19.5,-71.5,Eddington,62.5,Eddington,62.476,True,True
+solar,25317,19.5,-62.5,Seleucus,127.8,Seleucus,127.783,True,True
+solar,25325,19.5,-54.5,Oceanus Procellarum,71.5,Oceanus Procellarum,71.462,True,True
+solar,25326,19.5,-53.5,Oceanus Procellarum,97.2,Oceanus Procellarum,97.208,True,True
+solar,25331,19.5,-48.5,Rima Marius,99.5,Rima Marius,99.489,True,True
+solar,25332,19.5,-47.5,Rima Marius,111.6,Rima Marius,111.641,True,True
+solar,25339,19.5,-40.5,Brayley,109.9,Brayley,109.87,True,True
+solar,25340,19.5,-39.5,Brayley,84.3,Brayley,84.328,True,True
+solar,25345,19.5,-34.5,Rosa,67.2,Rosa,67.21,True,True
+solar,25355,19.5,-24.5,Rima Draper,69.3,Rima Draper,69.264,True,True
+solar,25356,19.5,-23.5,Draper,77.2,Draper,77.245,True,True
+solar,25357,19.5,-22.5,Draper,62.5,Draper,62.502,True,True
+solar,25365,19.5,-14.5,Heinrich,163.8,Heinrich,163.773,True,True
+solar,25370,19.5,-9.5,Wallace,31.4,Wallace,31.394,True,True
+solar,25371,19.5,-8.5,Wallace,24,Wallace,24.032,True,True
+solar,25372,19.5,-7.5,Wallace,42.4,Wallace,42.377,True,True
+solar,25437,19.5,57.5,Eckert,71.8,Eckert,71.811,True,True
+solar,25470,19.5,90.5,Al Biruni,74.6,Al Biruni,74.615,True,True
+solar,25557,19.5,177.5,Lacus Luxuriae,57.1,Lacus Luxuriae,57.132,True,True
+solar,25661,18.5,-78.5,Balboa,139.8,Balboa,139.752,True,True
+solar,25666,18.5,-73.5,Krafft,63.1,Krafft,63.054,True,True
+solar,25667,18.5,-72.5,Krafft,59.2,Krafft,59.248,True,True
+solar,25668,18.5,-71.5,Krafft,68.7,Krafft,68.679,True,True
+solar,25673,18.5,-66.5,Seleucus,78.7,Seleucus,78.696,True,True
+solar,25675,18.5,-64.5,Seleucus,99.9,Seleucus,99.859,True,True
+solar,25693,18.5,-46.5,Rima Marius,109.1,Rima Marius,109.111,True,True
+solar,25695,18.5,-44.5,Rima Marius,159.5,Rima Marius,159.478,True,True
+solar,25699,18.5,-40.5,Brayley,125,Brayley,124.991,True,True
+solar,25703,18.5,-36.5,Brayley,73.7,Brayley,73.728,True,True
+solar,25704,18.5,-35.5,Brayley,83.4,Brayley,83.447,True,True
+solar,25713,18.5,-26.5,Rima Draper,47.4,Rima Draper,47.371,True,True
+solar,25734,18.5,-5.5,Mons Ampere,57.1,Mons Ampere,57.116,True,True
+solar,25757,18.5,17.5,Rimae Menelaus,43,Rimae Menelaus,43.035,True,True
+solar,25764,18.5,24.5,Brackett,34.2,Brackett,34.244,True,True
+solar,25768,18.5,28.5,Rima Marcello,22,Rima Marcello,22.048,True,True
+solar,25770,18.5,30.5,Mons Vitruvius,26.2,Mons Vitruvius,26.16,True,True
+solar,25791,18.5,51.5,Dorsum Oppel,29.9,Dorsum Oppel,29.876,True,True
+solar,25798,18.5,58.5,Eckert,37.1,Eckert,37.072,True,True
+solar,25809,18.5,69.5,Alhazen,103.4,Alhazen,103.398,True,True
+solar,25823,18.5,83.5,Cannon,74,Cannon,74.03,True,True
+solar,25824,18.5,84.5,Cannon,99,Cannon,99.014,True,True
+solar,25827,18.5,87.5,Goddard,111.9,Goddard,111.902,True,True
+solar,25828,18.5,88.5,Goddard,103.1,Goddard,103.068,True,True
+solar,25829,18.5,89.5,Al Biruni,90.7,Al Biruni,90.658,True,True
+solar,25832,18.5,92.5,Al Biruni,13.4,Al Biruni,13.423,True,True
+solar,26018,17.5,-81.5,Balboa,74,Balboa,74.029,True,True
+solar,26019,17.5,-80.5,Balboa,96.5,Balboa,96.451,True,True
+solar,26021,17.5,-78.5,Balboa,148,Balboa,148.039,True,True
+solar,26024,17.5,-75.5,Krafft,85.5,Krafft,85.473,True,True
+solar,26027,17.5,-72.5,Krafft,29.3,Krafft,29.29,True,True
+solar,26028,17.5,-71.5,Krafft,45.5,Krafft,45.509,True,True
+solar,26031,17.5,-68.5,Seleucus,120.9,Seleucus,120.936,True,True
+solar,26045,17.5,-54.5,Oceanus Procellarum,114.6,Oceanus Procellarum,114.63,True,True
+solar,26063,17.5,-36.5,Bessarion,83.7,Bessarion,83.697,True,True
+solar,26074,17.5,-25.5,Rima Draper,5.5,Rima Draper,5.524,True,True
+solar,26075,17.5,-24.5,Rima Draper,25.4,Rima Draper,25.4,True,True
+solar,26080,17.5,-19.5,Draper,65.2,Draper,65.191,True,True
+solar,26082,17.5,-17.5,Draper,123,Draper,123.005,True,True
+solar,26089,17.5,-10.5,Eratosthenes,94.8,Eratosthenes,94.801,True,True
+solar,26113,17.5,13.5,Dorsa Sorby,35.3,Dorsa Sorby,35.267,True,True
+solar,26114,17.5,14.5,Dorsa Sorby,41.8,Dorsa Sorby,41.755,True,True
+solar,26118,17.5,18.5,Rimae Menelaus,24.2,Rimae Menelaus,24.237,True,True
+solar,26121,17.5,21.5,Promontorium Archerusia,24.7,Promontorium Archerusia,24.7,True,True
+solar,26129,17.5,29.5,Fabbroni,35.7,Fabbroni,35.724,True,True
+solar,26131,17.5,31.5,Vitruvius,8.1,Vitruvius,8.056,True,True
+solar,26132,17.5,32.5,Vitruvius,35.6,Vitruvius,35.618,True,True
+solar,26162,17.5,62.5,Mons Latreille,33.8,Mons Latreille,33.838,True,True
+solar,26166,17.5,66.5,Dorsa Tetyaev,103.7,Dorsa Tetyaev,103.698,True,True
+solar,26188,17.5,88.5,Goddard,73.4,Goddard,73.43,True,True
+solar,26192,17.5,92.5,Al Biruni,17.6,Al Biruni,17.646,True,True
+solar,26198,17.5,98.5,Popov,30.6,Popov,30.637,True,True
+solar,26200,17.5,100.5,Popov,36.8,Popov,36.811,True,True
+solar,26202,17.5,102.5,Mobius,69.2,Mobius,69.217,True,True
+solar,26383,16.5,-76.5,Krafft,109.9,Krafft,109.851,True,True
+solar,26387,16.5,-72.5,Krafft,6.7,Krafft,6.675,True,True
+solar,26399,16.5,-60.5,Rima Galilaei,115.4,Rima Galilaei,115.359,True,True
+solar,26404,16.5,-55.5,Oceanus Procellarum,130.9,Oceanus Procellarum,130.937,True,True
+solar,26411,16.5,-48.5,Rima Marius,30.5,Rima Marius,30.546,True,True
+solar,26435,16.5,-24.5,Rima Draper,36.4,Rima Draper,36.433,True,True
+solar,26443,16.5,-16.5,Gay Lussac,148.7,Gay Lussac,148.707,True,True
+solar,26480,16.5,20.5,Tacquet,37.9,Tacquet,37.95,True,True
+solar,26482,16.5,22.5,Promontorium Archerusia,18.6,Promontorium Archerusia,18.618,True,True
+solar,26484,16.5,24.5,Rimae Plinius,42.8,Rimae Plinius,42.832,True,True
+solar,26513,16.5,53.5,Peirce,53.7,Peirce,53.661,True,True
+solar,26520,16.5,60.5,Mare Crisium,41.8,Mare Crisium,41.791,True,True
+solar,26527,16.5,67.5,Promontorium Agarum,95,Promontorium Agarum,94.982,True,True
+solar,26537,16.5,77.5,Sabatier,109.8,Sabatier,109.76,True,True
+solar,26545,16.5,85.5,Goddard,113.4,Goddard,113.416,True,True
+solar,26549,16.5,89.5,Goddard,42.2,Goddard,42.222,True,True
+solar,26551,16.5,91.5,Al Biruni,57.6,Al Biruni,57.573,True,True
+solar,26634,16.5,174.5,Virtanen,70.2,Virtanen,70.165,True,True
+solar,26635,16.5,175.5,Virtanen,44.4,Virtanen,44.43,True,True
+solar,26844,15.5,24.5,Plinius,26.5,Plinius,26.47,True,True
+solar,26887,15.5,67.5,Promontorium Agarum,71.6,Promontorium Agarum,71.558,True,True
+solar,26910,15.5,90.5,Goddard,41.5,Goddard,41.483,True,True
+solar,37974,-15.5,-5.5,Alpetragius,33.3,Alpetragius,33.318,True,True
+solar,38067,-15.5,87.5,Mirzakhani,89.7,Mirzakhani,89.668,True,True
+solar,38153,-15.5,173.5,Aitken,32.7,Aitken,32.666,True,True
+solar,38240,-16.5,-99.5,Il in,65.9,Il in,65.927,True,True
+solar,38242,-16.5,-97.5,Il in,39.8,Il in,39.776,True,True
+solar,38249,-16.5,-90.5,Kopff,36,Kopff,35.98,True,True
+solar,38272,-16.5,-67.5,Cruger,16.6,Cruger,16.579,True,True
+solar,38287,-16.5,-52.5,Zupus,20.9,Zupus,20.889,True,True
+solar,38310,-16.5,-29.5,Agatharchides,111.8,Agatharchides,111.826,True,True
+solar,38317,-16.5,-22.5,Lubiniezky,58.2,Lubiniezky,58.19,True,True
+solar,38332,-16.5,-7.5,Lassell,32.9,Lassell,32.903,True,True
+solar,38334,-16.5,-5.5,Alpetragius,31.9,Alpetragius,31.9,True,True
+solar,38378,-16.5,38.5,Bohnenberger,46,Bohnenberger,45.952,True,True
+solar,38399,-16.5,59.5,Vendelinus,59.5,Vendelinus,59.495,True,True
+solar,38507,-16.5,167.5,Zwicky,10.7,Zwicky,10.723,True,True
+solar,38513,-16.5,173.5,Aitken,15.8,Aitken,15.847,True,True
+solar,38600,-17.5,-99.5,Il in,53.5,Il in,53.466,True,True
+solar,38605,-17.5,-94.5,Hohmann,14.3,Hohmann,14.332,True,True
+solar,38609,-17.5,-90.5,Kopff,24,Kopff,23.954,True,True
+solar,38634,-17.5,-65.5,Cruger,49.1,Cruger,49.134,True,True
+solar,38650,-17.5,-49.5,Zupus,83.8,Zupus,83.767,True,True
+solar,38662,-17.5,-37.5,Rimae Gassendi,68.6,Rimae Gassendi,68.568,True,True
+solar,38675,-17.5,-24.5,Lubiniezky,21,Lubiniezky,20.983,True,True
+solar,38684,-17.5,-15.5,Opelt,71.7,Opelt,71.729,True,True
+solar,38688,-17.5,-11.5,Lassell,121.1,Lassell,121.084,True,True
+solar,38697,-17.5,-2.5,Arzachel,28.4,Arzachel,28.414,True,True
+solar,38736,-17.5,36.5,Rosse,45.9,Rosse,45.929,True,True
+solar,38760,-17.5,60.5,Vendelinus,43.8,Vendelinus,43.802,True,True
+solar,38762,-17.5,62.5,Vendelinus,42,Vendelinus,42.015,True,True
+solar,38796,-17.5,96.5,Sklodowska,19.1,Sklodowska,19.125,True,True
+solar,38797,-17.5,97.5,Sklodowska,42.2,Sklodowska,42.238,True,True
+solar,38808,-17.5,108.5,Hilbert,12.4,Hilbert,12.448,True,True
+solar,38821,-17.5,121.5,Delporte,48.7,Delporte,48.731,True,True
+solar,38879,-17.5,179.5,Bergstrand,95.7,Bergstrand,95.674,True,True
+solar,38962,-18.5,-97.5,Il in,21.8,Il in,21.806,True,True
+solar,38964,-18.5,-95.5,Montes Cordillera,32.7,Montes Cordillera,32.733,True,True
+solar,38965,-18.5,-94.5,Hohmann,19,Hohmann,18.969,True,True
+solar,38971,-18.5,-88.5,Kopff,47.9,Kopff,47.865,True,True
+solar,39017,-18.5,-42.5,Gassendi,78.6,Gassendi,78.55,True,True
+solar,39022,-18.5,-37.5,Rimae Gassendi,75.2,Rimae Gassendi,75.159,True,True
+solar,39023,-18.5,-36.5,Rimae Gassendi,102.1,Rimae Gassendi,102.099,True,True
+solar,39032,-18.5,-27.5,Rima Agatharchides,64.6,Rima Agatharchides,64.579,True,True
+solar,39043,-18.5,-16.5,Gould,31.4,Gould,31.443,True,True
+solar,39049,-18.5,-10.5,Promontorium Taenarium,90.9,Promontorium Taenarium,90.857,True,True
+solar,39050,-18.5,-9.5,Promontorium Taenarium,62.2,Promontorium Taenarium,62.152,True,True
+solar,39052,-18.5,-7.5,Promontorium Taenarium,6,Promontorium Taenarium,6.012,True,True
+solar,39057,-18.5,-2.5,Arzachel,17.9,Arzachel,17.881,True,True
+solar,39058,-18.5,-1.5,Rimae Arzachel,6.7,Rimae Arzachel,6.73,True,True
+solar,39083,-18.5,23.5,Catharina,15.8,Catharina,15.833,True,True
+solar,39091,-18.5,31.5,Beaumont,78.1,Beaumont,78.118,True,True
+solar,39094,-18.5,34.5,Rosse,21.7,Rosse,21.73,True,True
+solar,39096,-18.5,36.5,Rosse,46.8,Rosse,46.844,True,True
+solar,39097,-18.5,37.5,Rosse,74.5,Rosse,74.459,True,True
+solar,39098,-18.5,38.5,Bohnenberger,82.1,Bohnenberger,82.052,True,True
+solar,39103,-18.5,43.5,Santbech,77.1,Santbech,77.129,True,True
+solar,39156,-18.5,96.5,Sklodowska,17.3,Sklodowska,17.334,True,True
+solar,39166,-18.5,106.5,Hilbert,55.8,Hilbert,55.783,True,True
+solar,39167,-18.5,107.5,Hilbert,30.3,Hilbert,30.331,True,True
+solar,39180,-18.5,120.5,Diderot,65.4,Diderot,65.353,True,True
+solar,39182,-18.5,122.5,Fermi,39.8,Fermi,39.798,True,True
+solar,39189,-18.5,129.5,Tsiolkovskiy,58.9,Tsiolkovskiy,58.944,True,True
+solar,39229,-18.5,169.5,Vertregt,52.4,Vertregt,52.431,True,True
+solar,39252,-19.5,-167.5,Lacus Oblivionis,39.7,Lacus Oblivionis,39.718,True,True
+solar,39321,-19.5,-98.5,Il in,56.7,Il in,56.694,True,True
+solar,39323,-19.5,-96.5,Montes Rook,44.4,Montes Rook,44.374,True,True
+solar,39328,-19.5,-91.5,Kopff,82.7,Kopff,82.662,True,True
+solar,39329,-19.5,-90.5,Kopff,68.2,Kopff,68.183,True,True
+solar,39331,-19.5,-88.5,Kopff,72.4,Kopff,72.419,True,True
+solar,39376,-19.5,-43.5,Rimae Mersenius,93.5,Rimae Mersenius,93.544,True,True
+solar,39378,-19.5,-41.5,Gassendi,73.7,Gassendi,73.694,True,True
+solar,39380,-19.5,-39.5,Gassendi,60.5,Gassendi,60.479,True,True
+solar,39381,-19.5,-38.5,Gassendi,72.5,Gassendi,72.462,True,True
+solar,39383,-19.5,-36.5,Rimae Gassendi,114.8,Rimae Gassendi,114.811,True,True
+solar,39384,-19.5,-35.5,Loewy,122.4,Loewy,122.408,True,True
+solar,39388,-19.5,-31.5,Agatharchides,15.4,Agatharchides,15.366,True,True
+solar,39394,-19.5,-25.5,Lubiniezky,67.3,Lubiniezky,67.35,True,True
+solar,39395,-19.5,-24.5,Lubiniezky,52.1,Lubiniezky,52.07,True,True
+solar,39396,-19.5,-23.5,Lubiniezky,50.4,Lubiniezky,50.364,True,True
+solar,39401,-19.5,-18.5,Gould,36.6,Gould,36.563,True,True
+solar,39402,-19.5,-17.5,Gould,10.3,Gould,10.291,True,True
+solar,39405,-19.5,-14.5,Gould,78.9,Gould,78.943,True,True
+solar,39406,-19.5,-13.5,Nicollet,79.5,Nicollet,79.518,True,True
+solar,39407,-19.5,-12.5,Nicollet,74.2,Nicollet,74.244,True,True
+solar,39467,-19.5,47.5,Monge,8,Monge,7.955,True,True
+solar,39488,-19.5,68.5,Balmer,54.5,Balmer,54.46,True,True
+solar,39495,-19.5,75.5,Hecataeus,141.6,Hecataeus,141.566,True,True
+solar,39499,-19.5,79.5,Hecataeus,77.8,Hecataeus,77.826,True,True
+solar,39550,-19.5,130.5,Tsiolkovskiy,51.1,Tsiolkovskiy,51.075,True,True
+solar,39589,-19.5,169.5,Vertregt,46.7,Vertregt,46.739,True,True
+solar,39590,-19.5,170.5,Vertregt,18.8,Vertregt,18.751,True,True
+solar,39591,-19.5,171.5,Vertregt,12.4,Vertregt,12.44,True,True
+solar,39689,-20.5,-90.5,Kopff,97.2,Kopff,97.184,True,True
+solar,39734,-20.5,-45.5,Rimae Mersenius,29.8,Rimae Mersenius,29.791,True,True
+solar,39743,-20.5,-36.5,Loewy,122.5,Loewy,122.464,True,True
+solar,39745,-20.5,-34.5,Loewy,81.1,Loewy,81.119,True,True
+solar,39749,-20.5,-30.5,Agatharchides,26.3,Agatharchides,26.269,True,True
+solar,39753,-20.5,-26.5,Rima Agatharchides,58.8,Rima Agatharchides,58.771,True,True
+solar,39756,-20.5,-23.5,Bullialdus,35.9,Bullialdus,35.895,True,True
+solar,39760,-20.5,-19.5,Mare Nubium,62.9,Mare Nubium,62.89,True,True
+solar,39767,-20.5,-12.5,Nicollet,43.9,Nicollet,43.921,True,True
+solar,39774,-20.5,-5.5,Thebit,62.1,Thebit,62.121,True,True
+solar,39867,-20.5,87.5,Schorr,72.7,Schorr,72.72,True,True
+solar,40047,-21.5,-92.5,Mare Orientale,79,Mare Orientale,79.037,True,True
+solar,40051,-21.5,-88.5,Kopff,129.1,Kopff,129.104,True,True
+solar,40091,-21.5,-48.5,Mersenius,23.6,Mersenius,23.594,True,True
+solar,40105,-21.5,-34.5,Loewy,58.8,Loewy,58.753,True,True
+solar,40116,-21.5,-23.5,Bullialdus,41.8,Bullialdus,41.764,True,True
+solar,40121,-21.5,-18.5,Mare Nubium,44.1,Mare Nubium,44.051,True,True
+solar,40126,-21.5,-13.5,Nicollet,31.4,Nicollet,31.386,True,True
+solar,40131,-21.5,-8.5,Rima Birt,22.2,Rima Birt,22.239,True,True
+solar,40184,-21.5,44.5,Santbech,19.9,Santbech,19.881,True,True
+solar,40186,-21.5,46.5,Santbech,70.7,Santbech,70.679,True,True
+solar,40220,-21.5,80.5,Hecataeus,28.8,Hecataeus,28.79,True,True
+solar,40261,-21.5,121.5,Diderot,32.9,Diderot,32.851,True,True
+solar,40262,-21.5,122.5,Babakin,30,Babakin,30.011,True,True
+solar,40268,-21.5,128.5,Tsiolkovskiy,36.5,Tsiolkovskiy,36.524,True,True
+solar,40324,-22.5,-175.5,De Vries,92.9,De Vries,92.878,True,True
+solar,40325,-22.5,-174.5,Orlov,100.4,Orlov,100.406,True,True
+solar,40406,-22.5,-93.5,Rimae Pettit,82.5,Rimae Pettit,82.524,True,True
+solar,40408,-22.5,-91.5,Rimae Pettit,101.4,Rimae Pettit,101.411,True,True
+solar,40450,-22.5,-49.5,Mersenius,30.9,Mersenius,30.887,True,True
+solar,40456,-22.5,-43.5,Rimae Mersenius,101.4,Rimae Mersenius,101.435,True,True
+solar,40461,-22.5,-38.5,Mare Humorum,60,Mare Humorum,60.028,True,True
+solar,40464,-22.5,-35.5,Loewy,74.4,Loewy,74.354,True,True
+solar,40468,-22.5,-31.5,Loewy,38.3,Loewy,38.308,True,True
+solar,40469,-22.5,-30.5,Loewy,66.1,Loewy,66.113,True,True
+solar,40472,-22.5,-27.5,Rima Agatharchides,71,Rima Agatharchides,71.001,True,True
+solar,40478,-22.5,-21.5,Bullialdus,57.3,Bullialdus,57.325,True,True
+solar,40482,-22.5,-17.5,Wolf,26,Wolf,25.953,True,True
+solar,40483,-22.5,-16.5,Wolf,9.3,Wolf,9.349,True,True
+solar,40485,-22.5,-14.5,Nicollet,58.7,Nicollet,58.692,True,True
+solar,40486,-22.5,-13.5,Nicollet,32.8,Nicollet,32.777,True,True
+solar,40532,-22.5,32.5,Fracastorius,38.1,Fracastorius,38.145,True,True
+solar,40533,-22.5,33.5,Fracastorius,36.7,Fracastorius,36.658,True,True
+solar,40591,-22.5,91.5,Curie,27.4,Curie,27.356,True,True
+solar,40623,-22.5,123.5,Xenophon,41.6,Xenophon,41.563,True,True
+solar,40674,-22.5,174.5,Nassau,107.5,Nassau,107.516,True,True
+solar,40689,-23.5,-170.5,Sniadecki,59.2,Sniadecki,59.166,True,True
+solar,40690,-23.5,-169.5,Sniadecki,41.1,Sniadecki,41.127,True,True
+solar,40693,-23.5,-166.5,Sniadecki,75,Sniadecki,75.016,True,True
+solar,40768,-23.5,-91.5,Rimae Pettit,78.6,Rimae Pettit,78.594,True,True
+solar,40813,-23.5,-46.5,Rupes Liebig,52.1,Rupes Liebig,52.134,True,True
+solar,40814,-23.5,-45.5,Rupes Liebig,51,Rupes Liebig,50.999,True,True
+solar,40839,-23.5,-20.5,Bullialdus,97,Bullialdus,97.046,True,True
+solar,40840,-23.5,-19.5,Wolf,83,Wolf,83.016,True,True
+solar,40841,-23.5,-18.5,Wolf,56.6,Wolf,56.57,True,True
+solar,40868,-23.5,8.5,Playfair,2.4,Playfair,2.382,True,True
+solar,40921,-23.5,61.5,Rimae Petavius,59.6,Rimae Petavius,59.604,True,True
+solar,40953,-23.5,93.5,Curie,36.7,Curie,36.69,True,True
+solar,41065,-24.5,-154.5,Plummer,10.5,Plummer,10.529,True,True
+solar,41125,-24.5,-94.5,Rimae Pettit,32.4,Rimae Pettit,32.384,True,True
+solar,41126,-24.5,-93.5,Rimae Pettit,22.1,Rimae Pettit,22.089,True,True
+solar,41178,-24.5,-41.5,Mare Humorum,80.8,Mare Humorum,80.812,True,True
+solar,41180,-24.5,-39.5,Mare Humorum,25.6,Mare Humorum,25.628,True,True
+solar,41182,-24.5,-37.5,Mare Humorum,29.6,Mare Humorum,29.578,True,True
+solar,41184,-24.5,-35.5,Mare Humorum,84.8,Mare Humorum,84.763,True,True
+solar,41188,-24.5,-31.5,Hippalus,32.4,Hippalus,32.414,True,True
+solar,41192,-24.5,-27.5,Rimae Hippalus,60.9,Rimae Hippalus,60.912,True,True
+solar,41196,-24.5,-23.5,Konig,33.6,Konig,33.604,True,True
+solar,41203,-24.5,-16.5,Wolf,52.1,Wolf,52.104,True,True
+solar,41212,-24.5,-7.5,Birt,71.6,Birt,71.556,True,True
+solar,41213,-24.5,-6.5,Birt,87.1,Birt,87.092,True,True
+solar,41301,-24.5,81.5,Humboldt,77.8,Humboldt,77.842,True,True
+solar,41400,-25.5,-179.5,Nassau,88.6,Nassau,88.579,True,True
+solar,41540,-25.5,-39.5,Mare Humorum,40.1,Mare Humorum,40.132,True,True
+solar,41542,-25.5,-37.5,Mare Humorum,42.7,Mare Humorum,42.742,True,True
+solar,41544,-25.5,-35.5,Promontorium Kelvin,71.1,Promontorium Kelvin,71.078,True,True
+solar,41547,-25.5,-32.5,Promontorium Kelvin,50.9,Promontorium Kelvin,50.888,True,True
+solar,41549,-25.5,-30.5,Hippalus,17.8,Hippalus,17.775,True,True
+solar,41562,-25.5,-17.5,Wolf,85.8,Wolf,85.79,True,True
+solar,41573,-25.5,-6.5,Lippershey,106.9,Lippershey,106.93,True,True
+solar,41577,-25.5,-2.5,Purbach,12.9,Purbach,12.857,True,True
+solar,41642,-25.5,62.5,Petavius,47.3,Petavius,47.277,True,True
+solar,41664,-25.5,84.5,Humboldt,106.7,Humboldt,106.651,True,True
+solar,41752,-25.5,172.5,Van de Graaff,48.6,Van de Graaff,48.614,True,True
+solar,41773,-26.5,-166.5,Rumford,113,Rumford,113.017,True,True
+solar,41899,-26.5,-40.5,Puiseux,53.4,Puiseux,53.403,True,True
+solar,41902,-26.5,-37.5,Puiseux,60.6,Puiseux,60.568,True,True
+solar,41903,-26.5,-36.5,Puiseux,82.8,Puiseux,82.777,True,True
+solar,41913,-26.5,-26.5,Campanus,60.1,Campanus,60.062,True,True
+solar,41917,-26.5,-22.5,Kies,6.8,Kies,6.765,True,True
+solar,41918,-26.5,-21.5,Kies,31.1,Kies,31.117,True,True
+solar,41922,-26.5,-17.5,Hesiodus,93.1,Hesiodus,93.146,True,True
+solar,41926,-26.5,-13.5,Lippershey,86.4,Lippershey,86.395,True,True
+solar,41932,-26.5,-7.5,Lippershey,80,Lippershey,80.048,True,True
+solar,41937,-26.5,-2.5,Purbach,32.6,Purbach,32.578,True,True
+solar,41981,-26.5,41.5,Weinek,124.2,Weinek,124.154,True,True
+solar,42001,-26.5,61.5,Petavius,39,Petavius,38.962,True,True
+solar,42016,-26.5,76.5,Phillips,22.6,Phillips,22.614,True,True
+solar,42018,-26.5,78.5,Humboldt,68.5,Humboldt,68.549,True,True
+solar,42044,-26.5,104.5,Lacus Solitudinis,35.3,Lacus Solitudinis,35.3,True,True
+solar,42065,-26.5,125.5,Neujmin,10.4,Neujmin,10.37,True,True
+solar,42111,-26.5,171.5,Van de Graaff,21.4,Van de Graaff,21.414,True,True
+solar,42113,-26.5,173.5,Van de Graaff,43.6,Van de Graaff,43.6,True,True
+solar,42116,-26.5,176.5,Nassau,53.3,Nassau,53.261,True,True
+solar,42118,-26.5,178.5,Nassau,57.6,Nassau,57.649,True,True
+solar,42132,-27.5,-167.5,Rumford,73.3,Rumford,73.258,True,True
+solar,42255,-27.5,-44.5,Rimae Doppelmayer,38.4,Rimae Doppelmayer,38.382,True,True
+solar,42256,-27.5,-43.5,Rimae Doppelmayer,47.4,Rimae Doppelmayer,47.41,True,True
+solar,42257,-27.5,-42.5,Doppelmayer,39.8,Doppelmayer,39.828,True,True
+solar,42263,-27.5,-36.5,Puiseux,72.8,Puiseux,72.807,True,True
+solar,42264,-27.5,-35.5,Promontorium Kelvin,57.9,Promontorium Kelvin,57.874,True,True
+solar,42266,-27.5,-33.5,Promontorium Kelvin,16.8,Promontorium Kelvin,16.797,True,True
+solar,42276,-27.5,-23.5,Kies,43.2,Kies,43.217,True,True
+solar,42286,-27.5,-13.5,Rimae Pitatus,70.9,Rimae Pitatus,70.887,True,True
+solar,42289,-27.5,-10.5,Lippershey,46.8,Lippershey,46.77,True,True
+solar,42291,-27.5,-8.5,Lippershey,69.1,Lippershey,69.079,True,True
+solar,42379,-27.5,79.5,Humboldt,42,Humboldt,42.038,True,True
+solar,42391,-27.5,91.5,Lauritsen,129.3,Lauritsen,129.321,True,True
+solar,42469,-27.5,169.5,Van de Graaff,69,Van de Graaff,69.013,True,True
+solar,42473,-27.5,173.5,Van de Graaff,42.6,Van de Graaff,42.551,True,True
+solar,42479,-27.5,179.5,Leeuwenhoek,69.4,Leeuwenhoek,69.372,True,True
+solar,42483,-28.5,-176.5,Leeuwenhoek,67.3,Leeuwenhoek,67.279,True,True
+solar,42497,-28.5,-162.5,Walker,82.8,Walker,82.784,True,True
+solar,42503,-28.5,-156.5,Plummer,125.7,Plummer,125.713,True,True
+solar,42617,-28.5,-42.5,Doppelmayer,26.5,Doppelmayer,26.473,True,True
+solar,42618,-28.5,-41.5,Doppelmayer,0.7,Doppelmayer,0.696,True,True
+solar,42619,-28.5,-40.5,Doppelmayer,26.8,Doppelmayer,26.846,True,True
+solar,42623,-28.5,-36.5,Vitello,64.5,Vitello,64.473,True,True
+solar,42631,-28.5,-28.5,Campanus,21.2,Campanus,21.235,True,True
+solar,42644,-28.5,-15.5,Hesiodus,37,Hesiodus,37.031,True,True
+solar,42650,-28.5,-9.5,Lippershey,80.6,Lippershey,80.562,True,True
+solar,42658,-28.5,-1.5,Regiomontanus,12.9,Regiomontanus,12.91,True,True
+solar,42659,-28.5,-0.5,Regiomontanus,17,Regiomontanus,17.006,True,True
+solar,42738,-28.5,78.5,Humboldt,79.9,Humboldt,79.877,True,True
+solar,42773,-28.5,113.5,Milne,78.2,Milne,78.216,True,True
+solar,42803,-28.5,143.5,Pavlov,30,Pavlov,30.038,True,True
+solar,42828,-28.5,168.5,Zelinskiy,44.1,Zelinskiy,44.149,True,True
+solar,42841,-29.5,-178.5,Leeuwenhoek,11.8,Leeuwenhoek,11.799,True,True
+solar,42842,-29.5,-177.5,Leeuwenhoek,36.8,Leeuwenhoek,36.813,True,True
+solar,42847,-29.5,-172.5,Rumford,74.4,Rumford,74.447,True,True
+solar,42856,-29.5,-163.5,Walker,119.4,Walker,119.4,True,True
+solar,42862,-29.5,-157.5,Dryden,117.9,Dryden,117.933,True,True
+solar,42867,-29.5,-152.5,Barringer,67.3,Barringer,67.313,True,True
+solar,42872,-29.5,-147.5,Scobee,79.5,Scobee,79.469,True,True
+solar,42980,-29.5,-39.5,Lee,48.2,Lee,48.198,True,True
+solar,43000,-29.5,-19.5,Weiss,68.6,Weiss,68.623,True,True
+solar,43099,-29.5,79.5,Humboldt,84.7,Humboldt,84.72,True,True
+solar,43109,-29.5,89.5,Barnard,94,Barnard,93.991,True,True
+solar,43167,-29.5,147.5,Tharp,59.3,Tharp,59.308,True,True
+solar,43181,-29.5,161.5,O Day,114,O Day,113.998,True,True
+solar,43183,-29.5,163.5,Zelinskiy,92,Zelinskiy,92.049,True,True
+solar,43189,-29.5,169.5,Zelinskiy,73.6,Zelinskiy,73.551,True,True
+lunar_base,62848,-84.5,28.5,Mons Mouton,7.8,Mons Mouton,7.812,True,True
+lunar_base,62846,-84.5,26.5,Mons Mouton,13.3,Mons Mouton,13.306,True,True
+lunar_base,63659,-86.5,119.5,Slater,49.2,Slater,49.192,True,True
+lunar_base,62847,-84.5,27.5,Mons Mouton,10.5,Mons Mouton,10.524,True,True
+lunar_base,62517,-83.5,57.5,Wapowski,18.3,Wapowski,18.348,True,True
+lunar_base,62518,-83.5,58.5,Wapowski,21,Wapowski,21.029,True,True
+lunar_base,62134,-82.5,34.5,Scott,56,Scott,56.05,True,True
+lunar_base,63829,-87.5,-70.5,Cartwright,30.3,Cartwright,30.332,True,True
+lunar_base,62844,-84.5,24.5,Mons Mouton,19,Mons Mouton,18.954,True,True
+lunar_base,62516,-83.5,56.5,Wapowski,16,Wapowski,16.005,True,True
+lunar_base,63660,-86.5,120.5,Slater,49.5,Slater,49.522,True,True
+lunar_base,62479,-83.5,19.5,Mons Mouton,49,Mons Mouton,49.029,True,True
+lunar_base,63658,-86.5,118.5,Slater,48.9,Slater,48.897,True,True
+lunar_base,62515,-83.5,55.5,Wapowski,14.2,Wapowski,14.167,True,True
+lunar_base,62857,-84.5,37.5,Floss,15.6,Floss,15.628,True,True
+lunar_base,63518,-86.5,-21.5,Haworth,38.6,Haworth,38.619,True,True
+lunar_base,63665,-86.5,125.5,Slater,51.7,Slater,51.684,True,True
+lunar_base,62523,-83.5,63.5,Oberbeck,15.9,Oberbeck,15.935,True,True
+lunar_base,63841,-87.5,-58.5,Cartwright,15.5,Cartwright,15.471,True,True
+lunar_base,64026,-87.5,126.5,Slater,24.9,Slater,24.854,True,True
+lunar_base,63517,-86.5,-22.5,Haworth,39.7,Haworth,39.677,True,True
+lunar_base,63837,-87.5,-62.5,Cartwright,20.4,Cartwright,20.394,True,True
+lunar_base,63843,-87.5,-56.5,Cartwright,13.1,Cartwright,13.051,True,True
+lunar_base,62133,-82.5,33.5,Scott,60,Scott,60.003,True,True
+lunar_base,64019,-87.5,119.5,Slater,20,Slater,19.974,True,True
+lunar_base,62843,-84.5,23.5,Mons Mouton,21.8,Mons Mouton,21.796,True,True
+lunar_base,63832,-87.5,-67.5,Cartwright,26.6,Cartwright,26.605,True,True
+lunar_base,62856,-84.5,36.5,Mons Mouton,16.1,Mons Mouton,16.121,True,True
+lunar_base,62881,-84.5,61.5,Nobile,32.3,Nobile,32.298,True,True
+lunar_base,63521,-86.5,-18.5,Haworth,35.7,Haworth,35.66,True,True
+lunar_base,64031,-87.5,131.5,Slater,29.2,Slater,29.189,True,True
+lunar_base,64032,-87.5,132.5,Slater,30.1,Slater,30.108,True,True
+lunar_base,62477,-83.5,17.5,Malapert,49,Malapert,49.044,True,True
+lunar_base,62845,-84.5,25.5,Mons Mouton,16.1,Mons Mouton,16.121,True,True
+lunar_base,62851,-84.5,31.5,Mons Mouton,3.4,Mons Mouton,3.357,True,True
+lunar_base,62854,-84.5,34.5,Mons Mouton,10.5,Mons Mouton,10.524,True,True
+lunar_base,62882,-84.5,62.5,Oberbeck,33.8,Oberbeck,33.831,True,True
+lunar_base,63511,-86.5,-28.5,Cartwright,44.6,Cartwright,44.642,True,True
+lunar_base,63519,-86.5,-20.5,Haworth,37.6,Haworth,37.594,True,True
+lunar_base,63668,-86.5,128.5,Slater,53.4,Slater,53.352,True,True
+lunar_base,63821,-87.5,-78.5,Lacus Tenebrarum,27.7,Lacus Tenebrarum,27.695,True,True
+lunar_base,63830,-87.5,-69.5,Cartwright,29.1,Cartwright,29.09,True,True
+lunar_base,63831,-87.5,-68.5,Cartwright,27.8,Cartwright,27.848,True,True
+lunar_base,64018,-87.5,118.5,Slater,19.4,Slater,19.45,True,True
+lunar_base,64029,-87.5,129.5,Slater,27.4,Slater,27.398,True,True
+lunar_base,62135,-82.5,35.5,Scott,52.1,Scott,52.094,True,True
+lunar_base,62849,-84.5,29.5,Mons Mouton,5.3,Mons Mouton,5.278,True,True
+lunar_base,62850,-84.5,30.5,Mons Mouton,3.4,Mons Mouton,3.357,True,True
+lunar_base,63520,-86.5,-19.5,Haworth,36.6,Haworth,36.607,True,True
+lunar_base,63657,-86.5,117.5,Slater,48.6,Slater,48.638,True,True
+lunar_base,63671,-86.5,131.5,Slater,55.3,Slater,55.262,True,True
+lunar_base,63836,-87.5,-63.5,Cartwright,21.6,Cartwright,21.634,True,True
+lunar_base,63873,-87.5,-26.5,Cartwright,26.5,Cartwright,26.48,True,True
+lunar_base,63874,-87.5,-25.5,Haworth,27.1,Haworth,27.058,True,True
+lunar_base,63875,-87.5,-24.5,Haworth,25.7,Haworth,25.744,True,True
+lunar_base,63878,-87.5,-21.5,Haworth,21.8,Haworth,21.793,True,True
+lunar_base,64021,-87.5,121.5,Slater,21.2,Slater,21.173,True,True
+lunar_base,64028,-87.5,128.5,Slater,26.5,Slater,26.528,True,True
+lunar_base,64030,-87.5,130.5,Slater,28.3,Slater,28.285,True,True
+lunar_base,64033,-87.5,133.5,Slater,31,Slater,31.04,True,True
+lunar_base,64034,-87.5,134.5,Slater,32,Slater,31.984,True,True
+lunar_base,62136,-82.5,36.5,Scott,48.1,Scott,48.137,True,True
+lunar_base,62478,-83.5,18.5,Malapert,50.2,Malapert,50.247,True,True
+lunar_base,62484,-83.5,24.5,Mons Mouton,39.1,Mons Mouton,39.065,True,True
+lunar_base,62485,-83.5,25.5,Mons Mouton,37.5,Mons Mouton,37.533,True,True
+lunar_base,62522,-83.5,62.5,Oberbeck,19.3,Oberbeck,19.338,True,True
+lunar_base,62852,-84.5,32.5,Mons Mouton,5.3,Mons Mouton,5.278,True,True
+lunar_base,62853,-84.5,33.5,Mons Mouton,7.8,Mons Mouton,7.812,True,True
+lunar_base,62879,-84.5,59.5,Nobile,28.9,Nobile,28.876,True,True
+lunar_base,63207,-85.5,27.5,Jaci,9.3,Jaci,9.274,True,True
+lunar_base,63215,-85.5,35.5,Masina,8.4,Masina,8.397,True,True
+lunar_base,63506,-86.5,-33.5,Cabeus,40,Cabeus,39.975,True,True
+lunar_base,63512,-86.5,-27.5,Haworth,45.4,Haworth,45.383,True,True
+lunar_base,63524,-86.5,-15.5,Mons Malapert,31.6,Mons Malapert,31.587,True,True
+lunar_base,63526,-86.5,-13.5,Mons Malapert,28.2,Mons Malapert,28.239,True,True
+lunar_base,63527,-86.5,-12.5,Mons Malapert,26.6,Mons Malapert,26.624,True,True
+lunar_base,63528,-86.5,-11.5,Mons Malapert,25.1,Mons Malapert,25.059,True,True
+lunar_base,63664,-86.5,124.5,Slater,51.2,Slater,51.187,True,True
+lunar_base,63666,-86.5,126.5,Slater,52.2,Slater,52.211,True,True
+lunar_base,63669,-86.5,129.5,Slater,54,Slater,53.963,True,True
+lunar_base,63822,-87.5,-77.5,Lacus Tenebrarum,28.5,Lacus Tenebrarum,28.484,True,True
+lunar_base,63823,-87.5,-76.5,Lacus Tenebrarum,29.3,Lacus Tenebrarum,29.328,True,True
+lunar_base,63825,-87.5,-74.5,Lacus Tenebrarum,31.2,Lacus Tenebrarum,31.167,True,True
+lunar_base,63826,-87.5,-73.5,Brill,31.9,Brill,31.943,True,True
+lunar_base,63834,-87.5,-65.5,Cartwright,24.1,Cartwright,24.118,True,True
+lunar_base,63835,-87.5,-64.5,Cartwright,22.9,Cartwright,22.875,True,True
+lunar_base,63840,-87.5,-59.5,Cartwright,16.7,Cartwright,16.694,True,True
+lunar_base,63842,-87.5,-57.5,Cartwright,14.3,Cartwright,14.256,True,True
+lunar_base,63866,-87.5,-33.5,Cartwright,17.8,Cartwright,17.8,True,True
+lunar_base,63871,-87.5,-28.5,Cartwright,24,Cartwright,23.994,True,True
+lunar_base,63876,-87.5,-23.5,Haworth,24.4,Haworth,24.429,True,True
+lunar_base,63879,-87.5,-20.5,Haworth,20.5,Haworth,20.474,True,True
+lunar_base,64022,-87.5,122.5,Slater,21.8,Slater,21.839,True,True
+lunar_base,64023,-87.5,123.5,Slater,22.5,Slater,22.543,True,True
+lunar_base,64025,-87.5,125.5,Slater,24.1,Slater,24.054,True,True
+lunar_base,64035,-87.5,135.5,Slater,32.9,Slater,32.938,True,True
+lunar_base,64181,-88.5,-78.5,de Gerlache,7.9,de Gerlache,7.857,True,True
+lunar_base,64182,-88.5,-77.5,de Gerlache,8.7,de Gerlache,8.651,True,True
+lunar_base,64199,-88.5,-60.5,Bay,18.7,Bay,18.692,True,True
+lunar_base,64200,-88.5,-59.5,Bay,18.1,Bay,18.053,True,True
+lunar_base,64203,-88.5,-56.5,Bay,16.2,Bay,16.165,True,True
+lunar_base,64204,-88.5,-55.5,Bay,15.5,Bay,15.548,True,True
+lunar_base,64210,-88.5,-49.5,Bay,12,Bay,12.049,True,True

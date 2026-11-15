@@ -29,7 +29,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DataStore } from '../src/data/store.ts';
-import { classWord, plainText, staleForRule } from '../src/flow/copy.ts';
+import { classWord, noPairKindWords, plainText, setByWords, staleForRule } from '../src/flow/copy.ts';
 import { serve } from './lib/serve.mjs';
 
 const require = createRequire(import.meta.url);
@@ -649,6 +649,10 @@ async function run(browser, srv, variant, exp, size) {
       await waitStep('pick');
       check((await flow(() => window.starsFlow.state.missionId)) === next.id, `${tag}: back from the eliminated cell lands on the ${next.id} ranking`);
     }
+    if (await stepIs('compare')) {
+      await page.click('#detail-panel .panel-foot .back-btn');
+      await waitStep('pick');
+    }
     await measured('change mission', () => page.click('#mission-panel .panel-head .btn'));
     await waitStep('choose');
     check(await stepIs('choose'), `${tag}: "Change mission" goes back to the mission choice`);
@@ -766,7 +770,7 @@ async function checkPanel(page, label, store, m, id, twins) {
       const close = (txt, v, p1 = pct) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= (p1 ? 0.051 : 0.006 * Math.abs(v) + 0.006);
       if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
       if (r.real && (!close(b.vals['earth-real'], r.real.earth, false) || !close(b.vals['moon-real'], r.real.moon, false) || !close(b.vals['diff-real'], r.real.diff, false) || !/\bK\b/.test(b.vals['diff-real'] ?? '') === (r.real.unit === 'K'))) bad.push(`real values ${r.def.variable}: ${b.vals['earth-real']} / ${b.vals['moon-real']} / ${b.vals['diff-real']}`);
-      if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${r.def.tolerance_set_by.split(':')[0].trim()}`)) bad.push(`tolerance ${r.def.variable}`);
+      if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${setByWords(r.def.tolerance_set_by)}`)) bad.push(`tolerance ${r.def.variable}`);
       if (!b.vals.within.includes(r.within ? 'Within' : 'Outside') || b.within !== String(r.within)) bad.push(`within ${r.def.variable}`);
       if (!near(nums(b.vals.weight)[0], r.weight, 2) || (r.score != null && !near(nums(b.vals.score)[0], r.score, 3))) bad.push(`weight/score ${r.def.variable}`);
       if (!b.role.includes(r.def.role === 'key' ? 'key' : 'secondary')) bad.push(`role ${r.def.variable}`);
@@ -872,7 +876,7 @@ async function checkUnpairedList(page, tag, store, m, ranked, unpairedList) {
   }));
   const first = unpairedList[0];
   const np = store.noPairAt(m.id, first.passPos);
-  const reason = np.sentence.replace(/^No lunar analog:\s*/, '').split(/(?<=\.)\s/)[0];
+  const reason = noPairKindWords(np.kind);
   check(!!l.divider && l.divider.includes(`No lunar twin: ${int(unpairedList.length)} points`) && /no lunar twin/.test(l.divider), `${tag} ${m.id}: divider "${(l.divider ?? '').split('\n')[0]}" with one sentence on why`);
   check(l.rows.length > 0 && l.rows.every((r, i) => r.id === unpairedList[i].id && r.paired === 'false' && r.text.includes('No lunar twin')), `${tag} ${m.id}: "No twin" lists the ${int(unpairedList.length)} points without a twin in the bundle's order (by suitability)`);
   check(l.rows[0].text.includes(reason) && l.rows[0].text.includes(f2(first.suitability)) && !/final/.test(l.rows[0].text), `${tag} ${m.id}: a row without a twin gives the reason in plain words and the suitability, no final ("${reason.slice(0, 90)}")`);
