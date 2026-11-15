@@ -964,7 +964,7 @@
         "min_separation": "The five shown are chosen down the full ranking by final score: the best point is kept, and any point whose cell centre lies within {deg} degrees of arc (about {km} km) of one already kept is skipped, so that neighbouring cells of one place do not fill the list. The full ranking itself is unchanged and stays ordered by final score.",
         "by_rank": "The five shown are numbers 1 to 5 of the full ranking, ordered by final score.",
         "rank_with_skips": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within {deg} degrees of arc (about {km} km) of one already kept. The full ranking itself is unchanged.",
-        "spread_within_top_tie": "{tied_n} sites tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
+        "spread_within_top_tie": "{tied_n} sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
       }
     },
     "why": "Decision 2 of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf: a minimum separation of 2 degrees between the analogs of the top 5 in Rover and in Solar panels, so that neighbouring cells of one place do not fill the list. The director's reading: a rule for choosing the FIVE (greedy by rank: keep the best, skip any whose cell centre is within 2 degrees of arc, great circle on the sphere of body_radius_km EARTH = 6371.0 km, about 222.4 km, of one already kept); the full ranking stays by final score. Lunar base keeps ranks 1 to 5 (the rule would change nothing there today: docs/stats_audit/7_efecto_decisiones_pendientes.md P2). Exported as missions.json missions[].top5."
@@ -1620,22 +1620,22 @@
           "data_and_limits"
         ],
         "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
-        "source": "docs/stats_audit/research_3_base_lunar.md and research_4_validacion_externa.md; values recomputed from the Earth table at build",
+        "source": "docs/stats_audit/research_3_base_lunar.md and research_4_validacion_externa.md; values recomputed from the Earth table at build; cells as in research/r4_rank_sites.py (data/benchmark/validation_sites_lunar_base.csv)",
         "sites": [
           {
-            "name": "Haughton crater (Devon Island)",
-            "lat": 75.4,
-            "lon": -89.8
+            "name": "Haughton crater (Devon Island, cell E5130)",
+            "lat": 75.5,
+            "lon": -89.5
           },
           {
-            "name": "Svalbard (Longyearbyen)",
-            "lat": 78.2,
-            "lon": 15.6
+            "name": "Svalbard, Bockfjorden (cell E3793)",
+            "lat": 79.5,
+            "lon": 13.5
           },
           {
-            "name": "Kangerlussuaq",
-            "lat": 67.0,
-            "lon": -50.7
+            "name": "Kangerlussuaq, ice-sheet margin (cell E8049)",
+            "lat": 67.5,
+            "lon": -50.5
           }
         ],
         "text": "The Lunar base keeps the team's gate 'daily thermal swing at least {gate_min} K'. Without it, Earth cells with a swing of about 1 K (for example on Ellesmere Island) would match the Moon's coldest temperature at a similarity of about 99, and the key variable, the thermal swing, would carry no weight in practice. The recognised polar stations therefore do not pass: daily land-surface swing {sites}; McMurdo and Concordia have no land-surface temperature in the table. They are analogs of cold and isolation, not of thermal cycling.",
@@ -1701,7 +1701,8 @@
         ],
         "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
         "source": "docs/stats_audit/research_1_rover_terreno.md; recomputed at build over the passing points",
-        "text": "In the Rover suitability, slope ({w1_pct} %) and roughness ({w2_pct} %) are nearly one criterion: over the {passing_n} passing points their utilities have a Spearman correlation of {rho}. The team's weights are kept unchanged."
+        "text": "In the Rover suitability, slope ({w1_pct} %) and roughness ({w2_pct} %) are nearly one criterion: over the {passing_n} passing points their utilities have a Spearman correlation of {rho}. The team's weights are kept unchanged.",
+        "criteria_set": "corrected"
       },
       "deviations_from_team": {
         "kind": "computed:deviations_table",

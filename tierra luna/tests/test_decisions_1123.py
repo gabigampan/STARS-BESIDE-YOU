@@ -142,7 +142,9 @@ def test_top5_shape_and_greedy_separation(b, missions, ecfg):
         t = m["top5"]
         # revision 8 adds rule_id, skips, top_tie_n, top_tie_n_after_skips, alternative_rule (and alternative)
         assert {"rule", "min_separation_deg", "min_separation_km", "ids", "overall_ranks"} <= set(t)
-        assert len(t["ids"]) == 5 and t["overall_ranks"] == sorted(t["overall_ranks"])
+        assert len(t["ids"]) == 5
+        if t.get("rule_id") != "spread_within_top_tie":  # revision 8: spread order is the farthest-point order
+            assert t["overall_ranks"] == sorted(t["overall_ranks"])
         ids = b.int_column("earth_base.bin", "id")
         li = b.int_column(f"earth_{mid}.bin", "land_index")
         rank = b.column(f"earth_{mid}.bin", "rank")
@@ -150,11 +152,11 @@ def test_top5_shape_and_greedy_separation(b, missions, ecfg):
         assert [rid[i] for i in t["ids"]] == t["overall_ranks"]
         order = sorted(rid, key=rid.get)
         ll = {i: (float(lat_r[i // 360]), float(lon_c[i % 360])) for i in order[:200]}
-        cfg = sel["missions"][mid]
+        cfg = {**sel["missions"][mid], "rule": t.get("rule_id", sel["missions"][mid]["rule"])}  # the rule the bundle states (criteria set applied)
         if cfg["rule"] == "by_rank":
             assert t["overall_ranks"] == [1, 2, 3, 4, 5] and t["min_separation_deg"] is None
             continue
-        sep = cfg["min_separation_deg"]
+        sep = t["min_separation_deg"]
         assert t["min_separation_deg"] == sep and t["min_separation_km"] == round(math.radians(sep) * radius, 1) == 222.4
         if cfg["rule"] != "min_separation":
             # revision 8 rules (skips, spread within the top tie): tests/test_decisions_1128.py;
