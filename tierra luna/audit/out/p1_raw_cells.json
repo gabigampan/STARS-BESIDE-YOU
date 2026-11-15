@@ -1,0 +1,91 @@
+{
+ "grid": {
+  "EARTH": {
+   "rows": 64800,
+   "unique_ids": 64800,
+   "id_formula_ok": true,
+   "lat_is_89.5_minus_row": true,
+   "lon_is_-179.5_plus_col": true,
+   "row_col_match_id": true,
+   "lat_range": [
+    -89.5,
+    89.5
+   ],
+   "lon_range": [
+    -179.5,
+    179.5
+   ],
+   "cell_km_range": [
+    110.574,
+    111.694
+   ]
+  },
+  "MOON": {
+   "rows": 64800,
+   "unique_ids": 64800,
+   "id_formula_ok": true,
+   "lat_is_89.5_minus_row": true,
+   "lon_is_-179.5_plus_col": true,
+   "row_col_match_id": true,
+   "lat_range": [
+    -89.5,
+    89.5
+   ],
+   "lon_range": [
+    -179.5,
+    179.5
+   ],
+   "cell_km_range": [
+    30.323,
+    30.323
+   ]
+  },
+  "bundle_manifest_grid": {
+   "rows": 180,
+   "cols": 360,
+   "cell_deg": 1.0,
+   "cell_id": "row * 360 + col",
+   "lat_center": "90 - (row + 0.5) * 1.0",
+   "lon_center": "-180 + (col + 0.5) * 1.0 (positive east, -180..180)",
+   "row0": "north",
+   "col0": "west",
+   "bodies": {
+    "EARTH": {
+     "radius_km": 6371.0,
+     "cell_ns_km": 111.2,
+     "cell_ew_km_at_equator": 111.2,
+     "cell_ew_km_rule": "cell_ns_km * cos(latitude)"
+    },
+    "MOON": {
+     "radius_km": 1737.4,
+     "cell_ns_km": 30.3,
+     "cell_ew_km_at_equator": 30.3,
+     "cell_ew_km_rule": "cell_ns_km * cos(latitude)"
+    }
+   }
+  }
+ },
+ "ldem_label": {
+  "LINES": 2880,
+  "LINE_SAMPLES": 5760,
+  "SCALING_FACTOR": 0.5,
+  "MAP_RESOLUTION": "16",
+  "WESTERNMOST_LONGITUDE": 0,
+  "A_AXIS_RADIUS_km": "1737.4"
+ },
+ "max_abs_diff": {
+  "EARTH": {
+   "elev": 0.03447650399471058,
+   "slope": 0.0004761714835737063,
+   "slope_iso": 0.0004493634308249117,
+   "rough": 0.0046173345538989
+  },
+  "MOON": {
+   "elev": 0.04499518819102377,
+   "slope": 0.00047514313136609587,
+   "slope_iso": 0.00047010092335142417,
+   "rough": 0.004966050257820598
+  }
+ },
+ "named_places_all_inside": true
+}
