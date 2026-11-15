@@ -1132,3 +1132,30 @@ Texto DESPUÉS (vigente en `engine_config.json` y en `similarity.json` `texts`):
 Ningún número del modelo cambia: solo cambia la redacción; la regla de puntuación descrita es la que ya publica el bundle.
 
 **PENDIENTE DE CONFIRMACIÓN DEL LÍDER.** El líder aprobó la redacción anterior; el cambio de significado (la banda muerta de Rover) es decisión suya, pero la frase nueva la escribió la pasada de textos del motor y la comprobó un lector independiente. El líder aún no ha confirmado esta redacción.
+
+## Audios regrabados (15-11-2026, 14:20 CET, el delegado en nombre del líder)
+
+**Entrega.** A las 14:20 CET el delegado del líder entregó, en nombre del líder, un ZIP con las 19 pistas de la guía de audio que el equipo volvió a grabar (voz Matilda, modelo eleven_multilingual_v2, según él), su `transcripts.json` y su `SHA256SUMS.txt`. SHA256 del ZIP: `cc9699eb9742cedc95f4161b60a0bf2aab9ad2013e25830392311e1922330c35` (comprobado por el director; `sha256sum -c` 19/19 dentro del ZIP). Los ficheros se subieron sin modificar a la rama `audio-assets`, commit `6650a13`, y se copiaron byte a byte a `app/public/audio/` de `final-integration` (`cmp` idéntico en los 19 MP3, `SHA256SUMS.txt` y `transcripts.json`; `sha256sum -c` 19/19 en `app/public/audio/`). Ningún audio se generó, editó, recodificó, recortó, normalizó ni renombró.
+
+**Textos.** Grabados desde los textos finales de `0486ad9` con un único cambio, decidido por el delegado: rover_1 queda "A site in Canada, at 78.5 degrees north and 102.5 degrees west." (antes seguía ", about 1,116 kilometers north of Gjoa Haven"). Comprobado con un script: el `transcripts.json` del equipo solo difiere del del repositorio en esa pista.
+
+**Regla general que sale de ese cambio** (no es un caso especial de una pista): si el lugar poblado más cercano de una celda de la Tierra está más lejos que la distancia a partir de la cual la pantalla no lo nombra (`NEAREST_PLACE_MAX_KM = 300` en `app/src/flow/detailPanel.ts`), la pista da el país (y la región si la celda la tiene) y las coordenadas, y no menciona el lugar. El generador `tierra luna/tools/make_audio_top5.py` lleva ese valor en su configuración con esa fuente y comprueba al ejecutarse que coincide con el de la web; su `transcripts.json` es idéntico byte a byte al del equipo. `docs/AUDIO_TOP5.json` conserva el lugar y su distancia como dato, con `"nearest_named_place_spoken": false`. De las 15 pistas de pareja solo rover_1 (Gjoa Haven, 1.115,8 km) cae fuera; la siguiente más lejana, solar_4 (Gaalkacyo, 131 km), se sigue diciendo. La comprobación independiente `tierra luna/audit/t_audio_texts.py` lee el mismo límite de la web y comprueba la regla (472 comprobaciones, 0 fallos).
+
+**Lo que decidió además el delegado.** Los textos se quedan sin "the five best" (en Rover empatan 254 sitios en lo más alto); "Schrodinger" se queda sin diéresis.
+
+**Comprobaciones del delegado frente a las medidas de aquí** (`tierra luna/audit/a_audio_files.py` → `tierra luna/audit/out/a_audio_files.csv`; ffprobe, ffmpeg volumedetect y silencedetect noise=-50dB:d=1.0):
+
+| | Delegado (según él) | Medido aquí |
+|---|---|---|
+| Duración | 34,5 a 51,8 s | 34,534 (rover_4) a 51,775 s (base_3) |
+| Volumen medio | −22,7 a −23,3 dB | −23,3 a −22,7 dB |
+| Pico | ≤ −1,5 dB | −3,2 a −1,5 dB (−1,5 en base_1) |
+| Silencios | sin silencios largos | ninguno de 1 s o más al principio ni al final; dentro, dos pausas: 1,45 s en m1_rover (20,15 s) y 1,00 s en m3_base (15,12 s) |
+| Formato | — | MP3, 44.100 Hz, mono, 128 kb/s en las 19 |
+| Decodificación | — | las 19 se decodifican enteras sin un mensaje de error |
+
+Coinciden en duración, volumen medio y pico; "sin silencios largos" coincide si una pausa de hasta 1,5 s no cuenta como larga. No se ha verificado que las palabras dichas coincidan palabra por palabra con el texto: nadie aquí ha escuchado ni transcrito el audio; el equipo grabó desde el texto y así lo dice.
+
+**Estado.** `app/public/audio/pending.json` tiene la lista vacía (la web reproduce cada pista con la guía activada; una pista en la lista solo mostraría su texto). Nada pendiente de grabar (`docs/AUDIO_RERECORD.md`).
+
+**Despliegue (14:30 CET).** El primer intento, a las 14:09 CET, lo bloqueó Vercel (`TEAM_ACCESS_REQUIRED`: en un repositorio privado de un equipo Hobby el autor del commit desplegado tiene que ser el titular del equipo). El líder añadió su propio commit `0d87802` encima de `e41af38` (una línea en blanco en `app/README.md`) y `scripts/deploy_vercel.sh`, sin cambios, desplegó producción a las 14:30 CET: https://stars-beside-you.vercel.app. Cualquier despliegue posterior necesita que el último commit vuelva a ser del titular de la cuenta. Comprobación independiente de la integración: `docs/stats_audit/15_audios_integrados.md`.

@@ -35,8 +35,11 @@ re-computation of the real tables from raw files (`docs/REAL_DATA.md` section 6,
   `docs/DECISIONS.md` (options, figures before and after) and its effect is recorded in `ASSUMPTIONS.md`.
 - **Original pipeline.** The team's Earth-Moon extraction, harmonisation and cleaning pipeline and its
   documentation (`tierra luna/README.md`, `main.py`, `analog_finder.py`, `web/index.html`) predate this branch.
-- **Audio guide.** The 19 tracks were recorded by the team with a text-to-speech service. No audio was
-  generated or edited by the AI assistant.
+- **Audio guide.** The 19 tracks were recorded by the team with a text-to-speech service (voice Matilda, model
+  eleven_multilingual_v2, as the team states them), re-recorded on 15 November 2026 from the final texts, with
+  one text change the team decided (rover_1). No audio was generated, edited, re-encoded or renamed by the AI
+  assistant: it copied the team's files byte for byte and measured them (checksums, decoding, duration,
+  loudness); it did not listen to or transcribe them.
 - **Rover video.** The team's own 3D simulation (`app/public/media/rover/README.md`), only re-encoded, with
   nothing changed in picture or timing. None of the three videos is real footage.
 

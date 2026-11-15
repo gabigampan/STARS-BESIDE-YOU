@@ -66,13 +66,13 @@ JavaScript: never use a token with write scopes there; use a read-only token, or
 
 ### Deployment
 
-**The final production deployment has NOT been made.** The attempt at 14:09 CET was blocked by Vercel (`DEPLOYMENT_BLOCKED: the commit author does not have access to this team`, block code `TEAM_ACCESS_REQUIRED`): the Vercel CLI attaches the git metadata of the last commit, and its author is an automation identity that is not a member of the account's team. Nothing was changed on the account. https://stars-beside-you.vercel.app therefore still serves the REHEARSAL build made at about 13:25 CET from web commit `70cac01` with the bundle of that hour (it still shows the heading "The five best analogs", the earlier Solar panels video and earlier texts): it is **not** the final site. How to deploy is the account owner's decision (deploy from a commit authored by a team member, or upload the built folder himself).
+**The final production deployment is made.** The first attempt, at 14:09 CET, was blocked by Vercel (`DEPLOYMENT_BLOCKED: the commit author does not have access to this team`, block code `TEAM_ACCESS_REQUIRED`): for a private repository on a Hobby team the author of the commit being deployed must be the team's owner, and the last commit's author was an automation identity. Nothing was changed on the account. The team lead then added his own commit `0d87802` on top of the audio integration `e41af38` (one blank line in `app/README.md`), and the unchanged script `scripts/deploy_vercel.sh` deployed production from it at 14:30 CET: https://stars-beside-you.vercel.app. Checked from here: the site serves the new recordings (`rover_1.mp3` and `base_3.mp3` have the same SHA256 as the repository's, `audio/pending.json` is empty); the full live-site check goes in `docs/stats_audit/16_sitio_en_vivo.md`. Any later deployment needs the last commit to be the account owner's again.
 
 The web branch `web-accessibility` is merged into `final-integration` (merge commits `0c5203d` and `407fdfe`). Deploy from the repository root with the Vercel token
 in the environment, never on the command line: `bash scripts/deploy_vercel.sh` (production) or
 `bash scripts/deploy_vercel.sh --preview`; configuration in `app/vercel.json`.
 
-**Performance.** Lighthouse desktop performance was measured on the rehearsal deployment (https://stars-beside-you.vercel.app) from the build container: 24 and 25 in two runs, with a total blocking time of 35 to 37 s. That container has no GPU and runs WebGL in software, so this is not a valid measurement of a real computer, and the performance target of 85 is **not demonstrated**. Two causes on the page side were found: the intro heading is built in JavaScript and waits for the 4.1 MB bundle, and the page shifts its layout by 0.28 (cumulative layout shift) when the globes mount.
+**Performance.** Lighthouse desktop performance was measured on the rehearsal deployment of about 13:25 CET (same URL, before the final deployment; not repeated on the final site) from the build container: 24 and 25 in two runs, with a total blocking time of 35 to 37 s. That container has no GPU and runs WebGL in software, so this is not a valid measurement of a real computer, and the performance target of 85 is **not demonstrated**. Two causes on the page side were found: the intro heading is built in JavaScript and waits for the 4.1 MB bundle, and the page shifts its layout by 0.28 (cumulative layout shift) when the globes mount.
 
 ### Engine (`tierra luna/engine/`)
 
@@ -246,5 +246,6 @@ None of the three videos is real footage, and each says so.
 
 ### Audio guide
 
-19 tracks (`app/public/audio/*.mp3`) recorded by the team with a text-to-speech service; the texts are in
-`app/public/audio/transcripts.json` and checksums in `app/public/audio/SHA256SUMS.txt`.
+19 tracks (`app/public/audio/*.mp3`) recorded by the team with a text-to-speech service (voice
+Matilda, model eleven_multilingual_v2, as the team states them), re-recorded on 15 November 2026 from the final
+texts; the texts are in `app/public/audio/transcripts.json` and checksums in `app/public/audio/SHA256SUMS.txt`.

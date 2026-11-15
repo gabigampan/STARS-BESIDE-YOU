@@ -1,0 +1,64 @@
+{
+ "check1": {
+  "mp3_count": 19,
+  "byte_identical": 21,
+  "of": 21,
+  "sha256sums_ok": 19,
+  "sha256sums_lines": 19
+ },
+ "check2": {
+  "differing_tracks": [
+   "rover_1.mp3"
+  ],
+  "removed_clause": ", about 1,116 kilometers north of Gjoa Haven",
+  "only_other_difference": "none"
+ },
+ "check3": {
+  "pending_rerecord": [],
+  "pair_tracks_mapped_ok": 15,
+  "of": 15,
+  "web_behaviour": "app/src/a11y/audio.ts: a file in pending_rerecord gets state 'pending' (text only, never requested); with the list empty every track is played when the guide is on and its step or pair is on screen"
+ },
+ "check5": {
+  "remeasured": {
+   "rover_4.mp3": {
+    "duration_s": 34.534,
+    "mean_db": -23.1,
+    "peak_db": -2.1,
+    "matches_csv": true
+   },
+   "base_3.mp3": {
+    "duration_s": 51.775,
+    "mean_db": -22.9,
+    "peak_db": -1.7,
+    "matches_csv": true
+   },
+   "base_1.mp3": {
+    "duration_s": 50.939,
+    "mean_db": -22.9,
+    "peak_db": -1.5,
+    "matches_csv": true
+   }
+  },
+  "csv_rows": 19,
+  "csv_range": {
+   "duration_s": [
+    34.534,
+    51.775
+   ],
+   "mean_db": [
+    -23.3,
+    -22.7
+   ],
+   "peak_db": [
+    -3.2,
+    -1.5
+   ],
+   "decode_ok": 19,
+   "longest_inside_silence_s": 1.452
+  }
+ },
+ "failures": [],
+ "verdict": "GO",
+ "not_verified": "that the spoken words match transcripts.json word for word (nobody listened or transcribed)"
+}
