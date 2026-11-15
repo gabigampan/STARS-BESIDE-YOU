@@ -1,0 +1,1374 @@
+{
+ "rover": {
+  "2deg_222.4km": {
+   "separation_km": 222.38985328911747,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17566",
+     "lat": 41.5,
+     "lon": 106.5,
+     "earth_place": {
+      "place": "Bayinbaolige",
+      "km": 65.6,
+      "country": "China"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E23945",
+     "lat": 23.5,
+     "lon": 5.5,
+     "earth_place": {
+      "place": "Tamanrasset",
+      "km": 79.5,
+      "country": "Algeria"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21
+    },
+    {
+     "rank": 3,
+     "current_rank": 3,
+     "earth_id": "E18282",
+     "lat": 39.5,
+     "lon": 102.5,
+     "earth_place": {
+      "place": "Ehen Hudag",
+      "km": 78.4,
+      "country": "China"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 98.77,
+     "suitability": 99.58,
+     "final": 99.17
+    },
+    {
+     "rank": 4,
+     "current_rank": 5,
+     "earth_id": "E15395",
+     "lat": 47.5,
+     "lon": 95.5,
+     "earth_place": {
+      "place": "Buga",
+      "km": 41.0,
+      "country": "Mongolia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91
+    },
+    {
+     "rank": 5,
+     "current_rank": 7,
+     "earth_id": "E16841",
+     "lat": 43.5,
+     "lon": 101.5,
+     "earth_place": {
+      "place": "Urt",
+      "km": 47.1,
+      "country": "Mongolia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.63,
+     "suitability": 97.99,
+     "final": 98.81
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "status": "moves to 4"
+    }
+   ],
+   "tracks_broken": [
+    4,
+    5
+   ]
+  },
+  "500km": {
+   "separation_km": 500.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17566",
+     "lat": 41.5,
+     "lon": 106.5,
+     "earth_place": {
+      "place": "Bayinbaolige",
+      "km": 65.6,
+      "country": "China"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E23945",
+     "lat": 23.5,
+     "lon": 5.5,
+     "earth_place": {
+      "place": "Tamanrasset",
+      "km": 79.5,
+      "country": "Algeria"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21
+    },
+    {
+     "rank": 3,
+     "current_rank": 4,
+     "earth_id": "E18280",
+     "lat": 39.5,
+     "lon": 100.5,
+     "earth_place": {
+      "place": "Banqiao",
+      "km": 27.8,
+      "country": "China"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.5,
+     "suitability": 98.66,
+     "final": 99.08
+    },
+    {
+     "rank": 4,
+     "current_rank": 5,
+     "earth_id": "E15395",
+     "lat": 47.5,
+     "lon": 95.5,
+     "earth_place": {
+      "place": "Buga",
+      "km": 41.0,
+      "country": "Mongolia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91
+    },
+    {
+     "rank": 5,
+     "current_rank": 8,
+     "earth_id": "E16121",
+     "lat": 45.5,
+     "lon": 101.5,
+     "earth_place": {
+      "place": "Bayan Uula Sumu",
+      "km": 37.9,
+      "country": "Mongolia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 98.96,
+     "suitability": 98.63,
+     "final": 98.79
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "status": "moves to 3"
+    },
+    {
+     "track": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "status": "moves to 4"
+    }
+   ],
+   "tracks_broken": [
+    3,
+    4,
+    5
+   ]
+  },
+  "1000km": {
+   "separation_km": 1000.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17566",
+     "lat": 41.5,
+     "lon": 106.5,
+     "earth_place": {
+      "place": "Bayinbaolige",
+      "km": 65.6,
+      "country": "China"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E23945",
+     "lat": 23.5,
+     "lon": 5.5,
+     "earth_place": {
+      "place": "Tamanrasset",
+      "km": 79.5,
+      "country": "Algeria"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21
+    },
+    {
+     "rank": 3,
+     "current_rank": 5,
+     "earth_id": "E15395",
+     "lat": 47.5,
+     "lon": 95.5,
+     "earth_place": {
+      "place": "Buga",
+      "km": 41.0,
+      "country": "Mongolia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91
+    },
+    {
+     "rank": 4,
+     "current_rank": 11,
+     "earth_id": "E26144",
+     "lat": 17.5,
+     "lon": 44.5,
+     "earth_place": {
+      "place": "Najran",
+      "km": 39.5,
+      "country": "Saudi Arabia"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 98.34,
+     "suitability": 99.06,
+     "final": 98.7
+    },
+    {
+     "rank": 5,
+     "current_rank": 15,
+     "earth_id": "E20752",
+     "lat": 32.5,
+     "lon": 52.5,
+     "earth_place": {
+      "place": "Na'in",
+      "km": 68.0,
+      "country": "Iran"
+     },
+     "moon_id": "M59895",
+     "moon_lat": -76.5,
+     "moon_lon": -44.5,
+     "moon_feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 98.27,
+     "suitability": 98.54,
+     "final": 98.41
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "status": "moves to 3"
+    }
+   ],
+   "tracks_broken": [
+    3,
+    4,
+    5
+   ]
+  }
+ },
+ "solar": {
+  "2deg_222.4km": {
+   "separation_km": 222.38985328911747,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E38464",
+     "lat": -16.5,
+     "lon": 124.5,
+     "earth_place": {
+      "place": "Derby",
+      "km": 128.7,
+      "country": "Australia"
+     },
+     "moon_id": "M24296",
+     "moon_lat": 22.5,
+     "moon_lon": -3.5,
+     "moon_feature": {
+      "feature": "Huxley",
+      "km": 75.8
+     },
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "rank": 2,
+     "current_rank": 3,
+     "earth_id": "E38744",
+     "lat": -17.5,
+     "lon": 44.5,
+     "earth_place": {
+      "place": "Maintirano",
+      "km": 80.1,
+      "country": "Madagascar"
+     },
+     "moon_id": "M40854",
+     "moon_lat": -23.5,
+     "moon_lon": -5.5,
+     "moon_feature": {
+      "feature": "Thebit",
+      "km": 61.3
+     },
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "rank": 3,
+     "current_rank": 4,
+     "earth_id": "E37746",
+     "lat": -14.5,
+     "lon": 126.5,
+     "earth_place": {
+      "place": "Kununurra",
+      "km": 279.7,
+      "country": "Australia"
+     },
+     "moon_id": "M24761",
+     "moon_lat": 21.5,
+     "moon_lon": 101.5,
+     "moon_feature": {
+      "feature": "Dziewulski",
+      "km": 71.9
+     },
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "final": 98.3
+    },
+    {
+     "rank": 4,
+     "current_rank": 7,
+     "earth_id": "E37750",
+     "lat": -14.5,
+     "lon": 130.5,
+     "earth_place": {
+      "place": "Katherine",
+      "km": 189.9,
+      "country": "Australia"
+     },
+     "moon_id": "M24688",
+     "moon_lat": 21.5,
+     "moon_lon": 28.5,
+     "moon_feature": {
+      "feature": "Clerke",
+      "km": 37.0
+     },
+     "similarity": 99.98,
+     "suitability": 96.4,
+     "final": 98.19
+    },
+    {
+     "rank": 5,
+     "current_rank": 9,
+     "earth_id": "E29749",
+     "lat": 7.5,
+     "lon": 49.5,
+     "earth_place": {
+      "place": "Eyl",
+      "km": 63.8,
+      "country": "Somalia"
+     },
+     "moon_id": "M26063",
+     "moon_lat": 17.5,
+     "moon_lon": -36.5,
+     "moon_feature": {
+      "feature": "Bessarion",
+      "km": 83.7
+     },
+     "similarity": 99.97,
+     "suitability": 96.35,
+     "final": 98.16
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "status": "moves to 2"
+    },
+    {
+     "track": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "status": "moves to 3"
+    },
+    {
+     "track": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "status": "leaves top 5"
+    }
+   ],
+   "tracks_broken": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "500km": {
+   "separation_km": 500.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E38464",
+     "lat": -16.5,
+     "lon": 124.5,
+     "earth_place": {
+      "place": "Derby",
+      "km": 128.7,
+      "country": "Australia"
+     },
+     "moon_id": "M24296",
+     "moon_lat": 22.5,
+     "moon_lon": -3.5,
+     "moon_feature": {
+      "feature": "Huxley",
+      "km": 75.8
+     },
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "rank": 2,
+     "current_rank": 3,
+     "earth_id": "E38744",
+     "lat": -17.5,
+     "lon": 44.5,
+     "earth_place": {
+      "place": "Maintirano",
+      "km": 80.1,
+      "country": "Madagascar"
+     },
+     "moon_id": "M40854",
+     "moon_lat": -23.5,
+     "moon_lon": -5.5,
+     "moon_feature": {
+      "feature": "Thebit",
+      "km": 61.3
+     },
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "rank": 3,
+     "current_rank": 7,
+     "earth_id": "E37750",
+     "lat": -14.5,
+     "lon": 130.5,
+     "earth_place": {
+      "place": "Katherine",
+      "km": 189.9,
+      "country": "Australia"
+     },
+     "moon_id": "M24688",
+     "moon_lat": 21.5,
+     "moon_lon": 28.5,
+     "moon_feature": {
+      "feature": "Clerke",
+      "km": 37.0
+     },
+     "similarity": 99.98,
+     "suitability": 96.4,
+     "final": 98.19
+    },
+    {
+     "rank": 4,
+     "current_rank": 9,
+     "earth_id": "E29749",
+     "lat": 7.5,
+     "lon": 49.5,
+     "earth_place": {
+      "place": "Eyl",
+      "km": 63.8,
+      "country": "Somalia"
+     },
+     "moon_id": "M26063",
+     "moon_lat": 17.5,
+     "moon_lon": -36.5,
+     "moon_feature": {
+      "feature": "Bessarion",
+      "km": 83.7
+     },
+     "similarity": 99.97,
+     "suitability": 96.35,
+     "final": 98.16
+    },
+    {
+     "rank": 5,
+     "current_rank": 12,
+     "earth_id": "E27554",
+     "lat": 13.5,
+     "lon": 14.5,
+     "earth_place": {
+      "place": "Bol",
+      "km": 23.7,
+      "country": "Chad"
+     },
+     "moon_id": "M25036",
+     "moon_lat": 20.5,
+     "moon_lon": 16.5,
+     "moon_feature": {
+      "feature": "Bobillier",
+      "km": 40.2
+     },
+     "similarity": 99.97,
+     "suitability": 96.26,
+     "final": 98.11
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "status": "moves to 2"
+    },
+    {
+     "track": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "status": "leaves top 5"
+    }
+   ],
+   "tracks_broken": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "1000km": {
+   "separation_km": 1000.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E38464",
+     "lat": -16.5,
+     "lon": 124.5,
+     "earth_place": {
+      "place": "Derby",
+      "km": 128.7,
+      "country": "Australia"
+     },
+     "moon_id": "M24296",
+     "moon_lat": 22.5,
+     "moon_lon": -3.5,
+     "moon_feature": {
+      "feature": "Huxley",
+      "km": 75.8
+     },
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "rank": 2,
+     "current_rank": 3,
+     "earth_id": "E38744",
+     "lat": -17.5,
+     "lon": 44.5,
+     "earth_place": {
+      "place": "Maintirano",
+      "km": 80.1,
+      "country": "Madagascar"
+     },
+     "moon_id": "M40854",
+     "moon_lat": -23.5,
+     "moon_lon": -5.5,
+     "moon_feature": {
+      "feature": "Thebit",
+      "km": 61.3
+     },
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "rank": 3,
+     "current_rank": 9,
+     "earth_id": "E29749",
+     "lat": 7.5,
+     "lon": 49.5,
+     "earth_place": {
+      "place": "Eyl",
+      "km": 63.8,
+      "country": "Somalia"
+     },
+     "moon_id": "M26063",
+     "moon_lat": 17.5,
+     "moon_lon": -36.5,
+     "moon_feature": {
+      "feature": "Bessarion",
+      "km": 83.7
+     },
+     "similarity": 99.97,
+     "suitability": 96.35,
+     "final": 98.16
+    },
+    {
+     "rank": 4,
+     "current_rank": 12,
+     "earth_id": "E27554",
+     "lat": 13.5,
+     "lon": 14.5,
+     "earth_place": {
+      "place": "Bol",
+      "km": 23.7,
+      "country": "Chad"
+     },
+     "moon_id": "M25036",
+     "moon_lat": 20.5,
+     "moon_lon": 16.5,
+     "moon_feature": {
+      "feature": "Bobillier",
+      "km": 40.2
+     },
+     "similarity": 99.97,
+     "suitability": 96.26,
+     "final": 98.11
+    },
+    {
+     "rank": 5,
+     "current_rank": 22,
+     "earth_id": "E38474",
+     "lat": -16.5,
+     "lon": 134.5,
+     "earth_place": {
+      "place": "Katherine",
+      "km": 329.6,
+      "country": "Australia"
+     },
+     "moon_id": "M24288",
+     "moon_lat": 22.5,
+     "moon_lon": -11.5,
+     "moon_feature": {
+      "feature": "Pupin",
+      "km": 43.8
+     },
+     "similarity": 100.0,
+     "suitability": 96.03,
+     "final": 98.01
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "status": "moves to 2"
+    },
+    {
+     "track": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "status": "leaves top 5"
+    }
+   ],
+   "tracks_broken": [
+    2,
+    3,
+    4,
+    5
+   ]
+  }
+ },
+ "lunar_base": {
+  "2deg_222.4km": {
+   "separation_km": 222.38985328911747,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M63528",
+     "moon_lat": -86.5,
+     "moon_lon": -11.5,
+     "moon_feature": {
+      "feature": "Mons Malapert",
+      "km": 25.1
+     },
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28
+    },
+    {
+     "rank": 3,
+     "current_rank": 3,
+     "earth_id": "E15751",
+     "lat": 46.5,
+     "lon": 91.5,
+     "earth_place": {
+      "place": "Burenhayrhan",
+      "km": 45.5,
+      "country": "Mongolia"
+     },
+     "moon_id": "M64018",
+     "moon_lat": -87.5,
+     "moon_lon": 118.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 19.4
+     },
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "final": 71.73
+    },
+    {
+     "rank": 4,
+     "current_rank": 4,
+     "earth_id": "E21054",
+     "lat": 31.5,
+     "lon": -5.5,
+     "earth_place": {
+      "place": "Tinghir",
+      "km": 3.5,
+      "country": "Morocco"
+     },
+     "moon_id": "M62517",
+     "moon_lat": -83.5,
+     "moon_lon": 57.5,
+     "moon_feature": {
+      "feature": "Wapowski",
+      "km": 18.3
+     },
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63
+    },
+    {
+     "rank": 5,
+     "current_rank": 5,
+     "earth_id": "E17187",
+     "lat": 42.5,
+     "lon": 87.5,
+     "earth_place": {
+      "place": "Ewirgol",
+      "km": 53.3,
+      "country": "China"
+     },
+     "moon_id": "M62523",
+     "moon_lat": -83.5,
+     "moon_lon": 63.5,
+     "moon_feature": {
+      "feature": "Oberbeck",
+      "km": 15.9
+     },
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "final": 71.28
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "same"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "same"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "same"
+    }
+   ],
+   "tracks_broken": []
+  },
+  "500km": {
+   "separation_km": 500.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M63528",
+     "moon_lat": -86.5,
+     "moon_lon": -11.5,
+     "moon_feature": {
+      "feature": "Mons Malapert",
+      "km": 25.1
+     },
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28
+    },
+    {
+     "rank": 3,
+     "current_rank": 4,
+     "earth_id": "E21054",
+     "lat": 31.5,
+     "lon": -5.5,
+     "earth_place": {
+      "place": "Tinghir",
+      "km": 3.5,
+      "country": "Morocco"
+     },
+     "moon_id": "M62517",
+     "moon_lat": -83.5,
+     "moon_lon": 57.5,
+     "moon_feature": {
+      "feature": "Wapowski",
+      "km": 18.3
+     },
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63
+    },
+    {
+     "rank": 4,
+     "current_rank": 6,
+     "earth_id": "E42949",
+     "lat": -29.5,
+     "lon": -70.5,
+     "earth_place": {
+      "place": "Vicuna",
+      "km": 63.0,
+      "country": "Chile"
+     },
+     "moon_id": "M62477",
+     "moon_lat": -83.5,
+     "moon_lon": 17.5,
+     "moon_feature": {
+      "feature": "Malapert",
+      "km": 49.0
+     },
+     "similarity": 93.41,
+     "suitability": 49.07,
+     "final": 71.24
+    },
+    {
+     "rank": 5,
+     "current_rank": 9,
+     "earth_id": "E18627",
+     "lat": 38.5,
+     "lon": 87.5,
+     "earth_place": {
+      "place": "Waxxari",
+      "km": 27.4,
+      "country": "China"
+     },
+     "moon_id": "M62479",
+     "moon_lat": -83.5,
+     "moon_lon": 19.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 49.0
+     },
+     "similarity": 83.98,
+     "suitability": 57.84,
+     "final": 70.91
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "moves to 3"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "leaves top 5"
+    }
+   ],
+   "tracks_broken": [
+    3,
+    4,
+    5
+   ]
+  },
+  "1000km": {
+   "separation_km": 1000.0,
+   "top": [
+    {
+     "rank": 1,
+     "current_rank": 1,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M63528",
+     "moon_lat": -86.5,
+     "moon_lon": -11.5,
+     "moon_feature": {
+      "feature": "Mons Malapert",
+      "km": 25.1
+     },
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29
+    },
+    {
+     "rank": 2,
+     "current_rank": 2,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28
+    },
+    {
+     "rank": 3,
+     "current_rank": 4,
+     "earth_id": "E21054",
+     "lat": 31.5,
+     "lon": -5.5,
+     "earth_place": {
+      "place": "Tinghir",
+      "km": 3.5,
+      "country": "Morocco"
+     },
+     "moon_id": "M62517",
+     "moon_lat": -83.5,
+     "moon_lon": 57.5,
+     "moon_feature": {
+      "feature": "Wapowski",
+      "km": 18.3
+     },
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63
+    },
+    {
+     "rank": 4,
+     "current_rank": 6,
+     "earth_id": "E42949",
+     "lat": -29.5,
+     "lon": -70.5,
+     "earth_place": {
+      "place": "Vicuna",
+      "km": 63.0,
+      "country": "Chile"
+     },
+     "moon_id": "M62477",
+     "moon_lat": -83.5,
+     "moon_lon": 17.5,
+     "moon_feature": {
+      "feature": "Malapert",
+      "km": 49.0
+     },
+     "similarity": 93.41,
+     "suitability": 49.07,
+     "final": 71.24
+    },
+    {
+     "rank": 5,
+     "current_rank": 17,
+     "earth_id": "E21832",
+     "lat": 29.5,
+     "lon": 52.5,
+     "earth_place": {
+      "place": "Shiraz",
+      "km": 12.6,
+      "country": "Iran"
+     },
+     "moon_id": "M62515",
+     "moon_lat": -83.5,
+     "moon_lon": 55.5,
+     "moon_feature": {
+      "feature": "Wapowski",
+      "km": 14.2
+     },
+     "similarity": 96.68,
+     "suitability": 42.21,
+     "final": 69.45
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "leaves top 5"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "moves to 3"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "leaves top 5"
+    }
+   ],
+   "tracks_broken": [
+    3,
+    4,
+    5
+   ]
+  }
+ }
+}

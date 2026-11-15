@@ -78,12 +78,40 @@ def share_lost_percent(above_raw: float, ground_raw: float) -> int:
     return (200 * (a - g) + a) // (2 * a)
 
 
-def fill_placeholder(spec: Dict[str, Any], values: Dict[str, float]) -> str:
+def to_fixed(x: float, decimals: int) -> str:
+    """JavaScript ``Number.prototype.toFixed(decimals)`` of the double ``x``, exactly
+    (ECMA-262: the integer n nearest to x * 10^d on the EXACT binary value of x; of two
+    equally near, the larger n; a negative x is formatted as -(-x), so a half goes away
+    from zero). Python's ``f"{x:.{d}f}"`` differs on exact binary halves only (it rounds
+    them to even: 154.5 -> '154' where toFixed gives '155')."""
+    x = float(x)
+    if not np.isfinite(x):
+        raise ValueError(f"no displayed value for a missing value ({x!r})")
+    if x == 0.0:
+        x = 0.0  # (-0).toFixed(d) is "0..." (toFixed tests x < 0, false for -0)
+    q = Decimal(x).quantize(Decimal(1).scaleb(-int(decimals)), rounding=ROUND_HALF_UP)
+    return format(q, "f")
+
+
+def to_fixed_of_stored(raw: float, decimals: int, subtract: float = 0.0, multiply: float = 1.0) -> str:
+    """The lunar_base_pair_sentence rule of docs/DATA_CONTRACT.md (earth_lunar_base_pairs.bin,
+    'Per-pair sentence'): the stored float32 read as a double (what a Float32Array gives the
+    browser), minus ``subtract``, times ``multiply``, in double precision, shown with
+    ``toFixed(decimals)``. Used by the engine for explain.json so that its copy of the
+    sentence is character for character what that rule prints (statistical audit
+    2026-11-15, correction 3); templates with a ``display_rule`` (solar_limitation) use
+    ``displayed`` instead."""
+    v = (float(np.float32(raw)) - float(subtract)) * float(multiply)
+    return to_fixed(v, decimals)
+
+
+def fill_placeholder(spec: Dict[str, Any], values: Dict[str, float], display_rule: bool = True) -> str:
     """Text of one per-pair placeholder ({file, column, decimals[, subtract][, multiply]} or
     the share-lost rule {file, columns: {above, ground}, rule}) from the pair's stored
-    values {column: value}."""
+    values {column: value}. ``display_rule`` False: a template without a display_rule
+    (lunar_base_pair_sentence), filled with ``to_fixed_of_stored``."""
     if spec.get("rule") == SHARE_LOST_RULE:
         cols = spec["columns"]
         return str(share_lost_percent(values[cols["above"]], values[cols["ground"]]))
-    return displayed_text(values[spec["column"]], int(spec["decimals"]),
-                          float(spec.get("subtract", 0.0)), float(spec.get("multiply", 1.0)))
+    args = (values[spec["column"]], int(spec["decimals"]), float(spec.get("subtract", 0.0)), float(spec.get("multiply", 1.0)))
+    return displayed_text(*args) if display_rule else to_fixed_of_stored(*args)

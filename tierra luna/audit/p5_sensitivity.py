@@ -129,6 +129,8 @@ def perturbations(P, m):
                 (lambda Q0, k=k: (_set(lambda Q: Q["toa"].__setitem__(k, Q["toa"][k] * 1.01))(Q0), f"toa_{k}")), "D")
         add("moon_irradiance x1.01", "constant", "lunar irradiance column x1.01 (= lunar S0 or day factor +1 %)",
             (lambda Q0: (copy.deepcopy(Q0), "moon_irr")), "D")
+        add("S0 both bodies x1.01", "constant", "solar constant x1.01 on BOTH sides (Earth TOA and the lunar column, which uses the same 1361 W/m2)",
+            (lambda Q0: (_set(lambda Q: Q["toa"].__setitem__("solar_constant_w_m2", Q["toa"]["solar_constant_w_m2"] * 1.01))(Q0), "s0_both")), "D")
     if "elevation_rel_m" in names:
         for b in ("EARTH", "MOON"):
             add(f"body_mean.{b}x1.01", "constant", f"{b} mean elevation x1.01",
@@ -179,7 +181,7 @@ def main(missions, start=0, stop=None, tag=""):
             else:
                 Q, tag = fn(P0)
                 D = derived(T, Q)
-                if tag == "moon_irr":
+                if tag in ("moon_irr", "s0_both"):
                     D["irradiance_toa_kwh_m2_day"]["MOON"] = D["irradiance_toa_kwh_m2_day"]["MOON"] * 1.01
             r = run_mission(T, D, m, Q, cache=cache, dtag=tag)
             row = {"mission": m, "id": pid, "group": grp, "change": desc, **compare(base, r)}

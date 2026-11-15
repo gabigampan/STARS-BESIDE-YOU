@@ -1,0 +1,2 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,S0 both bodies x1.01,constant,"solar constant x1.01 on BOTH sides (Earth TOA and the lunar column, which uses the same 1361 W/m2)",18777,0,0,6360,0,0,6,5,True,50,False,

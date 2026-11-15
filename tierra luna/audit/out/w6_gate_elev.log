@@ -1,0 +1,4 @@
+{'land_cells_elev_below_1': 177, 'of_which_mask_ge_0.3': 37}
+rover {'passing_now': 10337, 'passing_option': 10338, 'extra_passing': 1, 'extra_paired': 1, 'paired_option': 10193, 'distinct_twins_option': 402, 'best_ranks_of_new': [439], 'new_in_top50': [], 'top50_identical': True, 'tracks_broken': []}
+solar {'passing_now': 18777, 'passing_option': 18805, 'extra_passing': 28, 'extra_paired': 3, 'paired_option': 6363, 'distinct_twins_option': 1704, 'best_ranks_of_new': [1667, 3171, 4906], 'new_in_top50': [], 'top50_identical': True, 'tracks_broken': []}
+lunar_base {'passing_now': 2419, 'passing_option': 2437, 'extra_passing': 18, 'extra_paired': 0, 'paired_option': 449, 'distinct_twins_option': 105, 'best_ranks_of_new': [], 'new_in_top50': [], 'top50_identical': False, 'tracks_broken': [3, 4]}

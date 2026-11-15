@@ -105,11 +105,11 @@ Fuentes abiertas hoy (URL, fecha que muestra la página, frase o valor):
 |---|---|---|---|
 | Tierra tmin_c | récord mínimo del aire -89.2 °C (S1) | mínimo de la tabla -72.28 °C (media mensual de mínimas, celda de 1°): por encima del récord, como debe | sí, como cota. **Pero** en la meseta antártica WorldClim se aparta de las estaciones (tabla 1.4) |
 | Tierra temp_k / lst_diurnal_amp_k | LST máxima instantánea 70.7 °C (S2) | máximo de la tabla 309.68 K = 36.5 °C (media anual día/noche de celda): muy por debajo, como corresponde a una media | sí (cota; no hay rango oficial de amplitud LST, R3) |
-| Tierra lst_diurnal_amp_k < 0 | físicamente posible solo sobre agua (el agua está más caliente de noche) | 9 celdas, todas con fracción de tierra <= 0.087 (lago Victoria E32972, Orcadas/Shetland del Sur); ninguna pasa ninguna misión | explicado, sin efecto |
+| Tierra lst_diurnal_amp_k < 0 | físicamente posible solo sobre agua (el agua está más caliente de noche) | 9 celdas, todas con fracción de tierra <= 0.087 (E32972 en -1.5/32.5, con 14,400 píxeles LST, y celdas insulares en 60.5-61.5 S); ninguna pasa ninguna misión | explicado, sin efecto |
 | Tierra permafrost_area_frac | 13.9 x 10^6 km2 (MAGT < 0) y 21 x 10^6 km2 (probabilidad > 0) en el hemisferio norte (S3) | suma de probabilidad x fracción de tierra x área: 13.93 x 10^6 km2 en el HN | sí (la suma de probabilidades es el área esperada, cercana al 13.9 del modelo de origen) |
 | Tierra irradiance (suelo) | no puede superar la TOA de su latitud; GSA en la celda máxima E28666: 2,308 kWh/m2/año = 6.32 kWh/m2/día (S8) | 0 celdas por encima de la TOA; cociente suelo/TOA mediana 0.54, máximo 0.92; E28666: 6.44 (+1.9 % sobre GSA) | sí, salvo la meseta antártica (cociente 0.90-0.92, ver fallo B3) |
 | Tierra irradiance_toa (fórmula) | 1361 W/m2 (S7); POWER `TOA_SW_DWN` (CERES SYN1deg) en (-16.5, 124.5), 2020: 9.603 kWh/m2/día | fórmula propia 9.599; par del bundle 9.6005 (diferencia 0.04 %) | sí |
-| Tierra elevation_m | (cota interna: la celda media no puede superar el punto más alto; REAL_DATA 6.2 halla Everest 8,157 m en el píxel ETOPO) | máximo 5,420 m (meseta del Tíbet). Mínimo -2,569.9 m en E38522 con fracción de tierra 0 y 1 píxel DEM: artefacto costero conocido (REAL_DATA 9) | sí, salvo E38522 (sin efecto en rankings, pero entra en la media del cuerpo: fallo B2) |
+| Tierra elevation_m | (cota interna: la celda media no puede superar el punto más alto; REAL_DATA 6.2 halla Everest 8,157 m en el píxel ETOPO) | máximo 5,420 m (E20059, 34.5/79.5). Mínimo -2,569.9 m en E38522 con fracción de tierra 0 y 1 píxel DEM: artefacto costero conocido (REAL_DATA 9) | sí, salvo E38522 (sin efecto en rankings, pero entra en la media del cuerpo: fallo B2) |
 | Tierra slope_iso_deg, roughness_m | sin rango publicado a 3.7 km / 1.85 km; contraste independiente con NASADEM (SRTM, misión distinta de la Copernicus GLO-30 que usa ETOPO 2022, ver 2.2) | en las 15 celdas de los pares: pendiente |Δ| <= 0.13°, rugosidad |Δ| <= 1.4 m en interior (3.4 m en una costera) | sí |
 | Luna elevation_m | extremos puntuales -9.129 y +10.792 km (S5) | medias de celda -8.18 a +9.10 km, dentro | sí |
 | Luna slope_iso_deg | pendiente LOLA LDSM a 30-120 m de base (S6), cota superior porque la pendiente baja con la base (S5) | mediana LDSM 8.08° frente a 4.91° de la tabla; cociente P10/P50/P90 1.20/1.66/4.39; la tabla supera a LDSM en 824 de 64,800 celdas (1.3 %, mediana 77.5° de latitud: celdas polares estrechas) | sí, salvo 1.3 % de celdas polares sin explicar del todo (sin efecto medido) |
@@ -224,8 +224,8 @@ Elevación y relieve (tabla / NASADEM):
 | E17187 | Base 5 | 2,007.2 / 1,987.7 | 4.665 / 4.663 | 173.53 / 173.01 |
 
 (*) Celdas costeras: la tabla promedia solo píxeles de tierra y NASADEM pone el mar a 0 m; E38464 tiene 17.8 % de agua
-(137.3 x 0.82 = 113 m, igual a NASADEM). En interior la elevación coincide a <= 2.4 m salvo E17187 (19.5 m, 0.97 % de su
-superficie es agua/lago). Todas las diferencias caben en la escala; ninguna cambiaría un par (tolerancias 2°, 30 m, 500 m).
+(137.3 x 0.82 = 113 m, igual a NASADEM). En interior la elevación coincide a <= 2.4 m salvo E17187 (19.5 m; fracción de tierra 0.98,
+2.0 % de agua CCI, que queda fuera de la media de la tabla y dentro de la de NASADEM). Todas las diferencias caben en la escala; ninguna cambiaría un par (tolerancias 2°, 30 m, 500 m).
 
 Temperatura mínima del mes más frío (tabla WorldClim 1970-2000 / estación GHCN, mismo periodo salvo lo dicho; elevación de la
 estación frente a la media de celda):
@@ -285,9 +285,8 @@ las demás celdas se contrastaron con estaciones y GSA.
 
 Suelo firme (`out/p6_pairs.json` `earth`): fracción de tierra 0.82-1.00 en las 15 celdas; todas tienen el centro dentro de
 la tierra de Natural Earth 1:110m. Las 10 de Rover y Lunar base están a 318-2,636 km de la costa, sin hielo (nieve/hielo CCI
-220 <= 8.3 %, E17538 en el Tian Shan), sin agua (<= 0.23 %) y dominadas por suelo desnudo CCI 200 (36-100 %). Las 5 de
-Solar están a 32-134 km de la costa (Natural Earth 110m, escala gruesa); su agua CCI 210 es 0-17.8 % (E38464, el estuario de
-King Sound) y su cubierta dominante es matorral (122) o arbolado (110), no salar ni lago. Ninguna celda es un artefacto de
+220 <= 8.3 %, E17538 en el Tian Shan), casi sin agua (<= 0.23 %, salvo E17187 con 2.0 %) y dominadas por suelo desnudo CCI 200 (36-100 %). Las 5 de
+Solar están a 32-134 km de la costa (Natural Earth 110m, escala gruesa); su agua CCI 210 es 0-17.8 % (E38464) y su cubierta dominante es matorral (122) o arbolado (110), no salar ni lago. Ninguna celda es un artefacto de
 cuadrícula (el artefacto conocido de 1 píxel, E38522, no pasa ninguna puerta común).
 
 ### 2.4 Lado lunar (`out/p6_pairs.json` `moon`, `out/p6_regions.json`, `out/p6_lunar_ext.json`)

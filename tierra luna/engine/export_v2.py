@@ -258,7 +258,7 @@ def build_variables_v2(ds: Dataset, mission_cfg: Dict, missions: List[str], stor
             "comparability": {"status": e.get("comparability"), "reason": e["comparability_note"]},
             "bodies": bodies,
         })
-    return {"bundle_version": engine_cfg.v("bundle_version"), "dataset": ds.id, "levels": reg["levels"],
+    return {"bundle_version": engine_cfg.v("bundle_version"), "dataset": ds.id, "levels": levels_in_use(reg["levels"], out),
             "comparability_statuses": {
                 "comparable": "Same physical quantity and definition on both bodies; used in the similarity.",
                 "comparable_with_caveat": "Used in the similarity; the reason says how the two values differ (show it).",
@@ -633,6 +633,18 @@ def real_pair_values(res: MissionResult, i: int, engine_cfg: EngineConfig) -> Li
     return out
 
 
+UNUSED_LEVEL_NOTE = "No variable of this dataset has this level (defined for other tables only)."
+
+
+def levels_in_use(levels: Dict[str, str], variables: List[Dict[str, Any]]) -> Dict[str, str]:
+    """variables.json 'levels': every defined level with its text; a level that no
+    variable of the dataset has on either body says so (statistical audit 2026-11-15,
+    point 9.2.8: the real tables use MEASURED, DERIVED, MODELLED and NO_DATA, never
+    UNDOCUMENTED, which only the legacy 2-degree table can carry)."""
+    used = {b["level"] for v in variables for b in v["bodies"].values() if b.get("level")}
+    return {k: (t if k in used else f"{t} {UNUSED_LEVEL_NOTE}") for k, t in levels.items()}
+
+
 def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> str:
     """Fill a per-pair text template (approved_texts entry with placeholders {file, column,
     decimals[, subtract][, multiply]}) from the pair's values {column: value}; the browser
@@ -647,9 +659,11 @@ def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> st
             # displayed exactly as the browser displays it; the share lost from the two
             # displayed values (engine/display.py, wording and display rounding 2026-11-15)
             text = text.replace("{" + name + "}", fill_placeholder(ph, values))
-        else:  # unchanged rule of the other templates (lunar_base_pair_sentence)
-            x = float(values[ph["column"]]) * float(ph.get("multiply", 1.0)) - float(ph.get("subtract", 0.0))
-            text = text.replace("{" + name + "}", f"{x:.{int(ph['decimals'])}f}")
+        else:  # templates without a display_rule (lunar_base_pair_sentence): the contract's
+            # browser rule, stored float32 minus subtract with toFixed(decimals) (engine/display.py
+            # to_fixed_of_stored; before the audit correction of 2026-11-15 Python's f"{x:.0f}",
+            # which rounds an exact binary half to even where toFixed rounds it up)
+            text = text.replace("{" + name + "}", fill_placeholder(ph, values, display_rule=False))
     return text
 
 

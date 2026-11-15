@@ -27,7 +27,7 @@ from p5_common import OUT, REPO, TL  # noqa: E402
 
 CODE_DIRS = [os.path.join(TL, "engine"), os.path.join(TL, "real_data")]
 CODE_FILES = sorted(glob.glob(os.path.join(TL, "engine", "*.py"))) + [os.path.join(TL, "mission_scoring.py")] + \
-    sorted(glob.glob(os.path.join(TL, "real_data", "*.py")))
+    sorted(glob.glob(os.path.join(TL, "real_data", "*.py"))) + sorted(glob.glob(os.path.join(TL, "tests", "*.py")))
 _SRC = {f: open(f, encoding="utf-8").read().splitlines() for f in CODE_FILES}
 
 
@@ -45,7 +45,7 @@ def uses(*keys, limit=4):
                     break
             if len(hits) >= limit:
                 return "; ".join(hits)
-    return "; ".join(hits) if hits else "NOT READ BY ANY CODE (searched engine/, mission_scoring.py, real_data/)"
+    return "; ".join(hits) if hits else "NOT READ BY ANY CODE (searched engine/, mission_scoring.py, real_data/, tests/)"
 
 
 def load_sens():
@@ -225,7 +225,7 @@ def annotated():
             "inconsistent with build_earth.py (23.4393)" if k == "obliquity_deg" else "", "use one obliquity value in both places (effect below 1e-3 kWh/m2/day)" if k == "obliquity_deg" else "")
     row("moon.irradiance_kwh_m2_day (S0, 24 h, flat horizon)", "1361 W/m2 x mean max(0,sin h) x 24/1000", "kWh/m2/day", "derived lunar column (solar key, Moon side)",
         "computation", "build_moon.py:476-507 (Sun geometry, circular orbit, obliquity 1.54 deg PIA13720, 720 x 2880 grid); provenance_moon.csv",
-        "tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day", "build_moon.py:625", eff("solar", "moon_irradiance x1.01"),
+        "tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day", "build_moon.py:625", eff("solar", "moon_irradiance x1.01", "S0 both bodies x1.01"),
         "Moon uses a circular orbit, Earth an eccentric one (difference below 0.02 %)", "")
     for b, mu in (("EARTH", 695.9244), ("MOON", -248.3894)):
         row(f"body_mean_elevation.{b}", round(mu, 1), "m", "constant (rover secondary variable)", "computation",
@@ -287,6 +287,8 @@ AUTO_RULES = [
     (r"^ec\.antarctic_label_lat_max", "place label rule (Antarctica south of -60)", "label only", ""),
     (r"^ec\.lunar_regions\.", "region codes A-F of mission_zones.json (|lon| > 90 = far side)", "labels and zone-contrast texts only", ""),
     (r"^ec\.engine_version", "version string", "none", ""),
+    (r"^ec\.approved_texts\..*\.(decimals|subtract)$", "display decimals / offset of a placeholder of an approved web text (shown value)", "display only; the filled texts are checked by the engine tests and explain.json", ""),
+    (r"^ec\.approved_texts\..*\.decision$", "number of the team decision that approved the text", "label only", ""),
     (r"^ec\.toa_insolation\.", "see annotated rows", "", ""),
     (r"^ec\.real_value_similarity\.", "see annotated rows", "", ""),
     (r"^ec\.confidence\.", "see annotated rows", "", ""),
@@ -358,10 +360,23 @@ def builders():
                          "correction_changes_design": ""})
 
 
+def builders_extra():
+    """Builder constants written as tuples or pairs (not caught by the NAME = number pattern)."""
+    for name, val, org, line in (
+            ("CCI_BARE", "(200, 201, 202)", "ESA CCI LCCS legend codes (bare areas); with CCI_SPARSE they make rock_or_bare_frac", "build_earth.py:55"),
+            ("CCI_SPARSE", "(150, 151, 152, 153)", "ESA CCI LCCS legend codes (sparse vegetation < 15 %)", "build_earth.py:56"),
+            ("WGS84_A, WGS84_INVF", "6378.137 km, 298.257223563", "WGS84 ellipsoid (meridian arc of the grid cells)", "build_earth.py:49")):
+        ROWS.append({"id": f"BUILDER build_earth.py:{name}", "value": val, "unit": "", "category": "table builder constant",
+                     "origin_class": "literature", "origin": org, "defined_in": f"tierra luna/real_data/{line}",
+                     "used_at": uses(name.split(",")[0], limit=3), "effect_measured": "acts through the tables; not perturbed (needs a rebuild)",
+                     "flag": "", "proposal": "", "correction_changes_design": ""})
+
+
 def main():
     annotated()
     auto()
     builders()
+    builders_extra()
     fields = ["id", "value", "unit", "category", "origin_class", "origin", "defined_in", "used_at", "effect_measured", "flag", "proposal",
               "correction_changes_design"]
     with open(os.path.join(OUT, "inventory.csv"), "w", newline="", encoding="utf-8") as fh:

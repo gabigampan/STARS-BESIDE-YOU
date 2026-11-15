@@ -1,0 +1,42 @@
+/home/user/stars-beside-you/tierra luna/audit/w1_zone.py:44: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  polys = [transform(lambda x, y, z=None: laea(x, y), shape(f["geometry"])) for f in g["features"]]
+zone (a) recomputed by touch in LAEA: 280 cells with area>0; zone_a cells 280 of which outside every square in LAEA: 0
+a 280 2419 450 103
+    1 E17538 M63528 0.00429 Haworth:0.00429
+    2 E16830 M63841 0.07815 de Gerlache Rim 2:0.07815
+    3 E15751 M64018 0.32946 Slater Plain:0.32946
+    4 E21054 M62517 0.44567 Nobile Rim 2:0.44567
+    5 E17187 M62523 0.0032 Nobile Rim 2:0.00320
+b_centre_inside zone 113 pass 2419 paired 271 twins 49 broken tracks [1, 2, 3, 4, 5]
+    1 E16830 Mori M62846 Mons Mouton 94.2 47.96 71.08
+    2 E43309 Monte Patria M62841 Mons Mouton 96.11 45.53 70.82
+    3 E15751 Burenhayrhan M63522 Haworth 93.62 46.6 70.11
+    4 E19697 Thang M64021 Slater 92.16 48.03 70.1
+    5 E15750 Qinghe M64024 Slater 94.11 45.19 69.65
+      track {'track': 1, 'earth': 'E17538', 'moon': 'M63528', 'status': 'leaves top 5 (now rank 6, twin M63523)'}
+      track {'track': 2, 'earth': 'E16830', 'moon': 'M63841', 'status': 'moves to 1, twin M62846'}
+      track {'track': 3, 'earth': 'E15751', 'moon': 'M64018', 'status': 'moves to 3, twin M63522'}
+      track {'track': 4, 'earth': 'E21054', 'moon': 'M62517', 'status': 'leaves top 5 (no twin / not ranked)'}
+      track {'track': 5, 'earth': 'E17187', 'moon': 'M62523', 'status': 'leaves top 5 (no twin / not ranked)'}
+c_area_ge_50pct zone 109 pass 2419 paired 284 twins 49 broken tracks [1, 2, 3, 4, 5]
+    1 E43309 Monte Patria M62841 Mons Mouton 96.66 45.53 71.1
+    2 E17538 Aheqi M64028 Slater 94.11 47.27 70.69
+    3 E18255 Kashi M62845 Mons Mouton 92.35 48.45 70.4
+    4 E42233 Andalgala M62856 Mons Mouton 97.38 42.69 70.04
+    5 E17898 Aheqi M62845 Mons Mouton 91.3 48.77 70.03
+      track {'track': 1, 'earth': 'E17538', 'moon': 'M63528', 'status': 'moves to 2, twin M64028'}
+      track {'track': 2, 'earth': 'E16830', 'moon': 'M63841', 'status': 'leaves top 5 (now rank 13, twin M62846)'}
+      track {'track': 3, 'earth': 'E15751', 'moon': 'M64018', 'status': 'leaves top 5 (now rank 6, twin M63524)'}
+      track {'track': 4, 'earth': 'E21054', 'moon': 'M62517', 'status': 'leaves top 5 (no twin / not ranked)'}
+      track {'track': 5, 'earth': 'E17187', 'moon': 'M62523', 'status': 'leaves top 5 (no twin / not ranked)'}
+d_area_ge_5pct zone 246 pass 2419 paired 435 twins 87 broken tracks [1, 2, 3, 4, 5]
+    1 E16830 Mori M63841 Cartwright 96.45 47.96 72.21
+    2 E17538 Aheqi M63867 Cartwright 96.5 47.27 71.89
+    3 E16833 Barkol M63841 Cartwright 95.74 47.47 71.61
+    4 E15751 Burenhayrhan M64018 Slater 96.34 46.6 71.47
+    5 E18254 A'yi Take M63875 Haworth 93.21 49.65 71.43
+      track {'track': 1, 'earth': 'E17538', 'moon': 'M63528', 'status': 'moves to 2, twin M63867'}
+      track {'track': 2, 'earth': 'E16830', 'moon': 'M63841', 'status': 'moves to 1'}
+      track {'track': 3, 'earth': 'E15751', 'moon': 'M64018', 'status': 'moves to 4'}
+      track {'track': 4, 'earth': 'E21054', 'moon': 'M62517', 'status': 'leaves top 5 (now rank 6)'}
+      track {'track': 5, 'earth': 'E17187', 'moon': 'M62523', 'status': 'leaves top 5 (now rank 29, twin M64022)'}

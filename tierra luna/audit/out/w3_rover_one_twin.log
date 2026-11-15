@@ -1,0 +1,31 @@
+1 E17566 pass 1 fails {'slope_deg': 4874, 'roughness_m': 5155, 'elevation_rel_m': 4134} only {'slope_deg': 0, 'roughness_m': 7, 'elevation_rel_m': 243} missing 0
+     M59895 Casatus 99.57 True {'slope_deg': 0.11, 'roughness_m': 0.67, 'elevation_rel_m': 95.814}
+     M59717 Schrodinger 79.99 False {'slope_deg': 0.022, 'roughness_m': 0.53, 'elevation_rel_m': 5185.686}
+     M63305 Slater 79.97 False {'slope_deg': 0.068, 'roughness_m': 0.4, 'elevation_rel_m': 3688.986}
+    passing: [(99.566, 'M59895')]
+2 E23945 pass 1 fails {'slope_deg': 4799, 'roughness_m': 5155, 'elevation_rel_m': 4164} only {'slope_deg': 0, 'roughness_m': 14, 'elevation_rel_m': 243} missing 0
+     M59895 Casatus 99.76 True {'slope_deg': 0.067, 'roughness_m': 0.83, 'elevation_rel_m': 71.414}
+     M60062 Schrodinger 79.99 False {'slope_deg': 0.008, 'roughness_m': 0.66, 'elevation_rel_m': 4581.086}
+     M60059 Ganswindt 79.96 False {'slope_deg': 0.022, 'roughness_m': 1.3, 'elevation_rel_m': 4482.586}
+    passing: [(99.759, 'M59895')]
+3 E18282 pass 1 fails {'slope_deg': 4927, 'roughness_m': 5181, 'elevation_rel_m': 4150} only {'slope_deg': 0, 'roughness_m': 2, 'elevation_rel_m': 218} missing 0
+     M59895 Casatus 98.77 True {'slope_deg': 0.24, 'roughness_m': 5.45, 'elevation_rel_m': 85.614}
+     M60064 Schrodinger 79.93 False {'slope_deg': 0.017, 'roughness_m': 1.8, 'elevation_rel_m': 4591.586}
+     M59699 Rittenhouse 79.93 False {'slope_deg': 0.047, 'roughness_m': 1.68, 'elevation_rel_m': 4618.486}
+    passing: [(98.767, 'M59895')]
+4 E18280 pass 1 fails {'slope_deg': 4836, 'roughness_m': 5121, 'elevation_rel_m': 4272} only {'slope_deg': 0, 'roughness_m': 12, 'elevation_rel_m': 276} missing 0
+     M59895 Casatus 99.5 True {'slope_deg': 0.017, 'roughness_m': 4.71, 'elevation_rel_m': 18.186}
+     M60793 Nefed ev 79.99 False {'slope_deg': 0.023, 'roughness_m': 0.4, 'elevation_rel_m': 4801.886}
+     M63360 Sverdrup 79.98 False {'slope_deg': 0.061, 'roughness_m': 0.5, 'elevation_rel_m': 3475.186}
+    passing: [(99.495, 'M59895')]
+5 E15395 pass 1 fails {'slope_deg': 4789, 'roughness_m': 5168, 'elevation_rel_m': 4345} only {'slope_deg': 0, 'roughness_m': 11, 'elevation_rel_m': 231} missing 0
+     M59895 Casatus 99.12 True {'slope_deg': 0.088, 'roughness_m': 2.87, 'elevation_rel_m': 129.186}
+     M63455 Lacus Tenebrarum 79.98 False {'slope_deg': 0.066, 'roughness_m': 0.27, 'elevation_rel_m': 3172.286}
+     M60574 Drygalski 79.96 False {'slope_deg': 0.093, 'roughness_m': 0.13, 'elevation_rel_m': 5438.486}
+    passing: [(99.122, 'M59895')]
+b 1 1 E17566 Bayinbaolige M59895 Casatus 99.57 99.22 99.39
+b 2 25 E18633 Lenghu M61037 Schomberger 96.51 99.02 97.77
+b 3 35 E5680 Khatanga M61116 Ganswindt 96.28 98.37 97.32
+b 4 45 E4764 Gjoa Haven M60992 Newton 97.84 95.93 96.88
+b 5 59 E4769 Gjoa Haven M61352 Mons Cabeus 99.12 94.2 96.66
+broken [2, 3, 4, 5]

@@ -28,6 +28,8 @@ CFG_FILES = [os.path.join(TL, "engine", "engine_config.json"), os.path.join(TL, 
              os.path.join(TL, "engine", "datasets.json"), os.path.join(TL, "engine", "data", "artemis_iii_regions.geojson")]
 
 _STATE = {}
+_ZONES_ORIG = p2_model.zones
+_DERIVED_ORIG = p2_model.derived
 
 
 def sha(path):
@@ -52,16 +54,29 @@ def patched(zone_override=None, earth_elev_mean=None, gate_fn=None):
     zone_override: {mission: bool mask(64800)}; earth_elev_mean: float (Earth reference for
     elevation_rel_m); gate_fn(e, mission, ms) -> bool mask replacing the funnel."""
     oz, od, og = p2_model.zones, p2_model.derived, p2_model.gates_earth
+
+    def zones_cached(m, eng):
+        if "zones" not in _STATE:
+            _STATE["zones"] = _ZONES_ORIG(m, eng)
+        return _STATE["zones"]
+    p2_model.zones = zones_cached
+
+    def derived_cached(e, m, eng):
+        if "derived" not in _STATE:
+            _STATE["derived"] = _DERIVED_ORIG(e, m, eng)
+        ev, mv, notes = _STATE["derived"]
+        return dict(ev), dict(mv), copy.deepcopy(notes)
+    p2_model.derived = derived_cached
     if zone_override is not None:
         def zones(m, eng):
-            z, extra = oz(m, eng)
+            z, extra = zones_cached(m, eng)
             z = dict(z)
             z.update(zone_override)
             return z, extra
         p2_model.zones = zones
     if earth_elev_mean is not None:
         def derived(e, m, eng):
-            ev, mv, notes = od(e, m, eng)
+            ev, mv, notes = derived_cached(e, m, eng)
             ee = p2_model.num(e, "elevation_m")
             ev["elevation_rel_m"] = ee - earth_elev_mean
             notes["elevation_body_mean"] = dict(notes["elevation_body_mean"], EARTH=earth_elev_mean)
@@ -188,3 +203,15 @@ def where(r, eid_str):
     if i < len(r["ids"]) and r["ids"][i] == cid and r["twin"][i] >= 0:
         return int(r["rank"][i]), f"M{int(r['twin'][i])}"
     return None, None
+
+
+def mission_bundle_ranked(mission):
+    """Ranked rows of the shipped bundle (ids, rank, final, similarity, suitability, twin, lat, lon)."""
+    from p2_common import mission_bundle
+    base, eb, pr, pass_ids = mission_bundle(mission)
+    rk = eb["rank"]
+    idx = np.flatnonzero(np.isfinite(rk) & (rk > 0))
+    idx = idx[np.argsort(rk[idx], kind="mergesort")]
+    lat, lon = latlon(pass_ids[idx])
+    return {"id": pass_ids[idx].astype(int), "rank": rk[idx].astype(int), "final": eb["final"][idx], "sim": eb["similarity"][idx],
+            "suit": eb["suitability"][idx], "twin": eb["twin"][idx].astype(int), "lat": lat, "lon": lon}

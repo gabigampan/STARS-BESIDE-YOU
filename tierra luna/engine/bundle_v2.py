@@ -303,10 +303,10 @@ def _check_pair_sentences(b: Bundle, missions: Dict[str, Any], sim_json: Dict[st
                 k = pos[int(it["id"])]
                 text = t["text"]
                 for name, p in specs.items():
-                    if "display_rule" in t or "rule" in p:
-                        x = fill_placeholder(p, {c: float(v[k]) for c, v in cols.items()})
-                    else:  # the engine's earlier formatting (lunar_base_pair_sentence)
-                        x = f"{float(cols[p['column']][k]) * float(p.get('multiply', 1.0)) - float(p.get('subtract', 0.0)):.{int(p['decimals'])}f}"
+                    # solar_limitation: the display rule; lunar_base_pair_sentence: the contract's
+                    # toFixed of the stored float32 (engine/display.py to_fixed_of_stored)
+                    x = fill_placeholder(p, {c: float(v[k]) for c, v in cols.items()},
+                                         display_rule=("display_rule" in t or "rule" in p))
                     text = text.replace("{" + name + "}", x)
                 if text != it["similarity"]["pair_sentence"]:
                     raise ValueError(f"{mid}: explain.json pair_sentence of {it['id']} is not texts.{key} filled from the bundle")

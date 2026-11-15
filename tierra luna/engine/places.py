@@ -6,7 +6,8 @@ Earth: for every land cell,
   Norway in NE 110m) the name comes from the polygon and the code is the polygon's
   commonest GeoNames country code (one code per polygon; "natural_earth_polygon_geonames_code"); a centre outside every polygon (coasts and
   small islands at 110m) falls back to the nearest populated place in GeoNames
-  cities1000 (offline, reverse_geocoder; label_rule "nearest_geonames_place");
+  cities1000 (offline, the copy shipped in the reverse_geocoder package;
+  label_rule "nearest_geonames_place");
 * country name: the ISO 3166 table of the IANA time zone database (tzdata), or the
   polygon's own ADMIN name when the code is missing or not in that table;
 * region: the nearest GeoNames place's first-level region, only when that place is
@@ -14,6 +15,15 @@ Earth: for every land cell,
 * cells at or south of the configured latitude (Antarctic Treaty area) are labelled
   Antarctica (label_rule "antarctic_treaty_area").
 A 222 km cell can span several countries: the label is that of the cell centre.
+
+"Nearest populated place" is the true great-circle nearest (``nearest_geonames_rows``:
+a k-d tree on unit vectors, whose chord order is the great-circle order, then the
+haversine distance on the engine's Earth sphere; ties by the lower row of
+rg_cities1000.csv). Until the statistical audit of 2026-11-15 (docs/stats_audit/
+1_datos_rejilla_nombres.md, point 7.5.1) the engine called ``reverse_geocoder.search``,
+whose k-d tree is built on (lat, lon) in degrees: that is the nearest place in
+Euclidean degrees, not in distance, and it was not the nearest one in 8,284 of the
+25,497 land cells (most of them in Antarctica or at high latitude).
 
 Moon: for every cell, the nearest IAU-named feature (great-circle distance on the
 1737.4 km sphere) from an offline extract of the USGS/IAU Gazetteer of Planetary
@@ -27,7 +37,7 @@ import importlib.resources
 import json
 import math
 import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -174,13 +184,47 @@ def polygon_codes_from_places(poly_of: List[Optional[int]], place_codes: List[Op
     return {pk: sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))[0][0] for pk, c in counts.items()}
 
 
+def geonames_places_path() -> str:
+    """GeoNames cities1000 as shipped in the reverse_geocoder package (rg_cities1000.csv):
+    the engine's offline list of populated places (only the data file is used)."""
+    import reverse_geocoder
+
+    return os.path.join(os.path.dirname(os.path.abspath(reverse_geocoder.__file__)), "rg_cities1000.csv")
+
+
+def load_geonames_places(path: Optional[str] = None) -> pd.DataFrame:
+    """The populated places (columns lat, lon, name, admin1, cc), in file order."""
+    df = pd.read_csv(path or geonames_places_path(), dtype=str, keep_default_na=False)
+    out = pd.DataFrame({"lat": df["lat"].astype(np.float64), "lon": df["lon"].astype(np.float64),
+                        "name": df["name"], "admin1": df["admin1"], "cc": df["cc"]})
+    return out
+
+
+def nearest_geonames_rows(lat: np.ndarray, lon: np.ndarray, places: pd.DataFrame, radius_km: float,
+                          k: int = 8) -> Tuple[np.ndarray, np.ndarray]:
+    """Row of the great-circle nearest place to each point and its distance in km.
+
+    The k-d tree on unit vectors returns the k nearest by chord, which is the
+    great-circle order; among those k the haversine distance decides and, on an exact
+    tie, the lower row (deterministic). k > 1 only guards against ties and rounding."""
+    tree = cKDTree(to_unit_vectors(places["lat"].to_numpy(), places["lon"].to_numpy()))
+    lat = np.asarray(lat, dtype=np.float64)
+    lon = np.asarray(lon, dtype=np.float64)
+    k = min(int(k), len(places))
+    _, idx = tree.query(to_unit_vectors(lat, lon), k=k)
+    idx = np.asarray(idx).reshape(len(lat), k)
+    plat, plon = places["lat"].to_numpy()[idx], places["lon"].to_numpy()[idx]
+    d = great_circle_km(lat[:, None], lon[:, None], plat, plon, radius_km)
+    order = np.lexsort((idx, d), axis=1)[:, 0]
+    rows = idx[np.arange(len(lat)), order]
+    return rows, d[np.arange(len(lat)), order]
+
+
 def earth_places(lat: np.ndarray, lon: np.ndarray, land: np.ndarray, antarctic_lat_max: float,
                  radius_km: float, polygons: Optional[List[Dict]] = None,
                  region_max_place_km: Optional[float] = None) -> Dict[str, list]:
     """Country code, country name, first-level region, nearest place and its distance
     for each Earth cell; null for non-land cells (rules in the module docstring)."""
-    import reverse_geocoder as rg
-
     n = len(lat)
     out: Dict[str, list] = {k: [None] * n for k in
                             ("country_code", "country", "region", "nearest_place", "nearest_place_km", "label_rule")}
@@ -188,13 +232,16 @@ def earth_places(lat: np.ndarray, lon: np.ndarray, land: np.ndarray, antarctic_l
     land_idx = np.flatnonzero(np.asarray(land, dtype=bool))
     if land_idx.size == 0:
         return out
-    pts = [(float(lat[i]), float(lon[i])) for i in land_idx]
-    hits = rg.search(pts, mode=1, verbose=False)  # single process: deterministic
+    gn = load_geonames_places()
+    rows, dist = nearest_geonames_rows(np.asarray(lat, dtype=np.float64)[land_idx],
+                                       np.asarray(lon, dtype=np.float64)[land_idx], gn, radius_km)
+    gname, gadm, gcc = gn["name"].to_numpy(), gn["admin1"].to_numpy(), gn["cc"].to_numpy()
+    hits = [{"name": gname[r], "admin1": gadm[r], "cc": gcc[r], "km": float(km)} for r, km in zip(rows, dist)]
     poly_of = polygon_country(np.asarray(lat)[land_idx], np.asarray(lon)[land_idx], polygons) if polygons else \
         [None] * len(land_idx)
     poly_code = polygon_codes_from_places(poly_of, [h["cc"] for h in hits], polygons) if polygons else {}
     for k, (i, h) in enumerate(zip(land_idx, hits)):
-        d = float(great_circle_km(lat[i], lon[i], float(h["lat"]), float(h["lon"]), radius_km))
+        d = h["km"]
         out["nearest_place"][i] = h["name"]
         out["nearest_place_km"][i] = d
         if lat[i] <= antarctic_lat_max:

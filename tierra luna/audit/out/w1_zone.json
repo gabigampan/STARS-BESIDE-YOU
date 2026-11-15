@@ -1,0 +1,657 @@
+{
+ "method": "w1: Lunar base zone rule (question 1). Options, computed in memory, nothing applied:\n (a) as now: 1-degree cells whose square TOUCHES the footprint of the nine regions;\n (b) cells whose CENTRE is inside a region;\n (c) cells with >= 50 % of their area inside the footprint (union of the nine);\n (d) cells with >= 5 %.\nAreas in a south-polar Lambert azimuthal equal-area projection (sphere R = 1737.4 km), cell\nsquares densified along the parallels. For each option the whole Lunar base pairing is recomputed\n(the lunar percentile population changes with the zone).\n\n    python \"tierra luna/audit/w1_zone.py\"\n\nWrites audit/out/w1_zone.json and w1_zone_cells.csv.\n",
+ "options": {
+  "a_touch_as_now": {
+   "passing": 2419,
+   "paired": 450,
+   "distinct_twins": 103,
+   "zone_cells": 280,
+   "top": [
+    {
+     "rank": 1,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M63528",
+     "moon_lat": -86.5,
+     "moon_lon": -11.5,
+     "moon_feature": {
+      "feature": "Mons Malapert",
+      "km": 25.1
+     },
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29,
+     "twin_frac_footprint": 0.00429,
+     "twin_frac_by_region": "Haworth:0.00429",
+     "twin_centre_in": ""
+    },
+    {
+     "rank": 2,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28,
+     "twin_frac_footprint": 0.07815,
+     "twin_frac_by_region": "de Gerlache Rim 2:0.07815",
+     "twin_centre_in": ""
+    },
+    {
+     "rank": 3,
+     "earth_id": "E15751",
+     "lat": 46.5,
+     "lon": 91.5,
+     "earth_place": {
+      "place": "Burenhayrhan",
+      "km": 45.5,
+      "country": "Mongolia"
+     },
+     "moon_id": "M64018",
+     "moon_lat": -87.5,
+     "moon_lon": 118.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 19.4
+     },
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "final": 71.73,
+     "twin_frac_footprint": 0.32946,
+     "twin_frac_by_region": "Slater Plain:0.32946",
+     "twin_centre_in": ""
+    },
+    {
+     "rank": 4,
+     "earth_id": "E21054",
+     "lat": 31.5,
+     "lon": -5.5,
+     "earth_place": {
+      "place": "Tinghir",
+      "km": 3.5,
+      "country": "Morocco"
+     },
+     "moon_id": "M62517",
+     "moon_lat": -83.5,
+     "moon_lon": 57.5,
+     "moon_feature": {
+      "feature": "Wapowski",
+      "km": 18.3
+     },
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63,
+     "twin_frac_footprint": 0.44567,
+     "twin_frac_by_region": "Nobile Rim 2:0.44567",
+     "twin_centre_in": ""
+    },
+    {
+     "rank": 5,
+     "earth_id": "E17187",
+     "lat": 42.5,
+     "lon": 87.5,
+     "earth_place": {
+      "place": "Ewirgol",
+      "km": 53.3,
+      "country": "China"
+     },
+     "moon_id": "M62523",
+     "moon_lat": -83.5,
+     "moon_lon": 63.5,
+     "moon_feature": {
+      "feature": "Oberbeck",
+      "km": 15.9
+     },
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "final": 71.28,
+     "twin_frac_footprint": 0.0032,
+     "twin_frac_by_region": "Nobile Rim 2:0.00320",
+     "twin_centre_in": ""
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "same"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "same"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "same"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "same"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "same"
+    }
+   ],
+   "tracks_broken": []
+  },
+  "b_centre_inside": {
+   "passing": 2419,
+   "paired": 271,
+   "distinct_twins": 49,
+   "zone_cells": 113,
+   "top": [
+    {
+     "rank": 1,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M62846",
+     "moon_lat": -84.5,
+     "moon_lon": 26.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 13.3
+     },
+     "similarity": 94.2,
+     "suitability": 47.96,
+     "final": 71.08
+    },
+    {
+     "rank": 2,
+     "earth_id": "E43309",
+     "lat": -30.5,
+     "lon": -70.5,
+     "earth_place": {
+      "place": "Monte Patria",
+      "km": 48.9,
+      "country": "Chile"
+     },
+     "moon_id": "M62841",
+     "moon_lat": -84.5,
+     "moon_lon": 21.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 27.5
+     },
+     "similarity": 96.11,
+     "suitability": 45.53,
+     "final": 70.82
+    },
+    {
+     "rank": 3,
+     "earth_id": "E15751",
+     "lat": 46.5,
+     "lon": 91.5,
+     "earth_place": {
+      "place": "Burenhayrhan",
+      "km": 45.5,
+      "country": "Mongolia"
+     },
+     "moon_id": "M63522",
+     "moon_lat": -86.5,
+     "moon_lon": -17.5,
+     "moon_feature": {
+      "feature": "Haworth",
+      "km": 34.8
+     },
+     "similarity": 93.62,
+     "suitability": 46.6,
+     "final": 70.11
+    },
+    {
+     "rank": 4,
+     "earth_id": "E19697",
+     "lat": 35.5,
+     "lon": 77.5,
+     "earth_place": {
+      "place": "Thang",
+      "km": 90.4,
+      "country": "Pakistan"
+     },
+     "moon_id": "M64021",
+     "moon_lat": -87.5,
+     "moon_lon": 121.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 21.2
+     },
+     "similarity": 92.16,
+     "suitability": 48.03,
+     "final": 70.1
+    },
+    {
+     "rank": 5,
+     "earth_id": "E15750",
+     "lat": 46.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Qinghe",
+      "km": 20.8,
+      "country": "China"
+     },
+     "moon_id": "M64024",
+     "moon_lat": -87.5,
+     "moon_lon": 124.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 23.3
+     },
+     "similarity": 94.11,
+     "suitability": 45.19,
+     "final": 69.65
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "leaves top 5 (now rank 6, twin M63523)"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "moves to 1, twin M62846"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "moves to 3, twin M63522"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "leaves top 5 (no twin / not ranked)"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "leaves top 5 (no twin / not ranked)"
+    }
+   ],
+   "tracks_broken": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "zone_by_region_centre": {
+    "Mons Mouton Plateau": 49,
+    "Haworth": 18,
+    "de Gerlache Rim 2": 18,
+    "Slater Plain": 7,
+    "Peak Near Cabeus B": 6,
+    "Nobile Rim 1": 6,
+    "Mons Mouton;Nobile Rim 1": 4,
+    "Mons Mouton": 3,
+    "Mons Mouton;Mons Mouton Plateau": 2
+   }
+  },
+  "c_area_ge_50pct": {
+   "passing": 2419,
+   "paired": 284,
+   "distinct_twins": 49,
+   "zone_cells": 109,
+   "top": [
+    {
+     "rank": 1,
+     "earth_id": "E43309",
+     "lat": -30.5,
+     "lon": -70.5,
+     "earth_place": {
+      "place": "Monte Patria",
+      "km": 48.9,
+      "country": "Chile"
+     },
+     "moon_id": "M62841",
+     "moon_lat": -84.5,
+     "moon_lon": 21.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 27.5
+     },
+     "similarity": 96.66,
+     "suitability": 45.53,
+     "final": 71.1
+    },
+    {
+     "rank": 2,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M64028",
+     "moon_lat": -87.5,
+     "moon_lon": 128.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 26.5
+     },
+     "similarity": 94.11,
+     "suitability": 47.27,
+     "final": 70.69
+    },
+    {
+     "rank": 3,
+     "earth_id": "E18255",
+     "lat": 39.5,
+     "lon": 75.5,
+     "earth_place": {
+      "place": "Kashi",
+      "km": 42.1,
+      "country": "China"
+     },
+     "moon_id": "M62845",
+     "moon_lat": -84.5,
+     "moon_lon": 25.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 16.1
+     },
+     "similarity": 92.35,
+     "suitability": 48.45,
+     "final": 70.4
+    },
+    {
+     "rank": 4,
+     "earth_id": "E42233",
+     "lat": -27.5,
+     "lon": -66.5,
+     "earth_place": {
+      "place": "Andalgala",
+      "km": 21.1,
+      "country": "Argentina"
+     },
+     "moon_id": "M62856",
+     "moon_lat": -84.5,
+     "moon_lon": 36.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 16.1
+     },
+     "similarity": 97.38,
+     "suitability": 42.69,
+     "final": 70.04
+    },
+    {
+     "rank": 5,
+     "earth_id": "E17898",
+     "lat": 40.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 49.3,
+      "country": "China"
+     },
+     "moon_id": "M62845",
+     "moon_lat": -84.5,
+     "moon_lon": 25.5,
+     "moon_feature": {
+      "feature": "Mons Mouton",
+      "km": 16.1
+     },
+     "similarity": 91.3,
+     "suitability": 48.77,
+     "final": 70.03
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "moves to 2, twin M64028"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "leaves top 5 (now rank 13, twin M62846)"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "leaves top 5 (now rank 6, twin M63524)"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "leaves top 5 (no twin / not ranked)"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "leaves top 5 (no twin / not ranked)"
+    }
+   ],
+   "tracks_broken": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "zone_by_region_centre": {
+    "Mons Mouton Plateau": 47,
+    "de Gerlache Rim 2": 18,
+    "Haworth": 16,
+    "Slater Plain": 7,
+    "Peak Near Cabeus B": 5,
+    "Mons Mouton;Nobile Rim 1": 4,
+    "": 4,
+    "Mons Mouton": 3,
+    "Nobile Rim 1": 3,
+    "Mons Mouton;Mons Mouton Plateau": 2
+   }
+  },
+  "d_area_ge_5pct": {
+   "passing": 2419,
+   "paired": 435,
+   "distinct_twins": 87,
+   "zone_cells": 246,
+   "top": [
+    {
+     "rank": 1,
+     "earth_id": "E16830",
+     "lat": 43.5,
+     "lon": 90.5,
+     "earth_place": {
+      "place": "Mori",
+      "km": 43.6,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 96.45,
+     "suitability": 47.96,
+     "final": 72.21
+    },
+    {
+     "rank": 2,
+     "earth_id": "E17538",
+     "lat": 41.5,
+     "lon": 78.5,
+     "earth_place": {
+      "place": "Aheqi",
+      "km": 62.3,
+      "country": "China"
+     },
+     "moon_id": "M63867",
+     "moon_lat": -87.5,
+     "moon_lon": -32.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 19.0
+     },
+     "similarity": 96.5,
+     "suitability": 47.27,
+     "final": 71.89
+    },
+    {
+     "rank": 3,
+     "earth_id": "E16833",
+     "lat": 43.5,
+     "lon": 93.5,
+     "earth_place": {
+      "place": "Barkol",
+      "km": 41.1,
+      "country": "China"
+     },
+     "moon_id": "M63841",
+     "moon_lat": -87.5,
+     "moon_lon": -58.5,
+     "moon_feature": {
+      "feature": "Cartwright",
+      "km": 15.5
+     },
+     "similarity": 95.74,
+     "suitability": 47.47,
+     "final": 71.61
+    },
+    {
+     "rank": 4,
+     "earth_id": "E15751",
+     "lat": 46.5,
+     "lon": 91.5,
+     "earth_place": {
+      "place": "Burenhayrhan",
+      "km": 45.5,
+      "country": "Mongolia"
+     },
+     "moon_id": "M64018",
+     "moon_lat": -87.5,
+     "moon_lon": 118.5,
+     "moon_feature": {
+      "feature": "Slater",
+      "km": 19.4
+     },
+     "similarity": 96.34,
+     "suitability": 46.6,
+     "final": 71.47
+    },
+    {
+     "rank": 5,
+     "earth_id": "E18254",
+     "lat": 39.5,
+     "lon": 74.5,
+     "earth_place": {
+      "place": "A'yi Take",
+      "km": 100.4,
+      "country": "China"
+     },
+     "moon_id": "M63875",
+     "moon_lat": -87.5,
+     "moon_lon": -24.5,
+     "moon_feature": {
+      "feature": "Haworth",
+      "km": 25.7
+     },
+     "similarity": 93.21,
+     "suitability": 49.65,
+     "final": 71.43
+    }
+   ],
+   "tracks": [
+    {
+     "track": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "status": "moves to 2, twin M63867"
+    },
+    {
+     "track": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "status": "moves to 1"
+    },
+    {
+     "track": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "status": "moves to 4"
+    },
+    {
+     "track": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "status": "leaves top 5 (now rank 6)"
+    },
+    {
+     "track": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "status": "leaves top 5 (now rank 29, twin M64022)"
+    }
+   ],
+   "tracks_broken": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "zone_by_region_centre": {
+    "": 133,
+    "Mons Mouton Plateau": 49,
+    "Haworth": 18,
+    "de Gerlache Rim 2": 18,
+    "Slater Plain": 7,
+    "Peak Near Cabeus B": 6,
+    "Nobile Rim 1": 6,
+    "Mons Mouton;Nobile Rim 1": 4,
+    "Mons Mouton": 3,
+    "Mons Mouton;Mons Mouton Plateau": 2
+   }
+  }
+ }
+}

@@ -472,10 +472,12 @@ def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
     approved = ecfg.v("approved_texts")
     assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "similarity_meaning_lunar_base",
                              "rock_note", "missing_temperature_mark", "missing_temperature_note", "twin_sharing_note",
-                             "no_twin_note", "solar_limitation", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+                             "no_twin_note", "solar_limitation", "lunar_base_pair_sentence", "no_twin_note_lunar_base",
+                             "solar_similarity_saturation"}
     lunar_base_texts = {"similarity_meaning_lunar_base", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+    audit_texts = {"solar_similarity_saturation"}   # statistical audit 2026-11-15: test_audit_corrections_1
     for key, t in approved.items():   # the Lunar base texts of 08:55 are checked in test_lunar_base_position
-        if key != "missing_temperature_mark" and key not in lunar_base_texts:  # the short mark: the team's answer 3
+        if key != "missing_temperature_mark" and key not in lunar_base_texts | audit_texts:  # the short mark: the team's answer 3
             assert f'> "{t["text"]}"' in decisions, key
     assert approved["missing_temperature_mark"]["text"] == "no temperature data: similarity computed with 3 variables"
     sj = real["objects"]["similarity.json"]

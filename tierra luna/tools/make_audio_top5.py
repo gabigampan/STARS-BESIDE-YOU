@@ -22,7 +22,17 @@ Sources outside the bundle (read only):
   coordinates of the nearest place the bundle names, for the compass direction;
 * tierra luna/engine/data/artemis_iii_regions.geojson: the names of the NASA candidate
   regions a Lunar base twin cell intersects (the bundle has only the zone, region A),
-  with the engine's own rule (the 1-degree cell square intersects the region).
+  with the engine's own rule (the 1-degree cell square intersects the region), and the
+  share of the cell's area inside each of them (south-polar Lambert azimuthal
+  equal-area projection on the 1737.4 km sphere, written out here), which decides the
+  words "in" (half of the cell or more) or "at the edge of" (less than half).
+
+Statistical audit corrections of 2026-11-15 (docs/stats_audit/correcciones_1.md):
+distances are rounded once, from the stored float32 (engine/display.py displayed, half
+up), never from the 1-decimal value (15.47 km was spoken 16); the Lunar base twins are
+said to be "in" a NASA region only when at least half of the cell lies inside it; the
+caveats say that the daily swing is DERIVED from MODIS land-surface temperature and how
+much more ground an Earth cell averages than its twin (computed from the pairs).
 """
 from __future__ import annotations
 
@@ -43,12 +53,14 @@ BUNDLE = os.path.join(REPO, "app", "public", "data", "v2")
 OUT = os.path.join(REPO, "docs", "AUDIO_TOP5.json")
 ENGINE_DATA = os.path.join(REPO, "tierra luna", "engine", "data")
 sys.path.insert(0, os.path.join(REPO, "tierra luna"))
-from engine.display import SHARE_LOST_PYTHON, share_lost_percent, tenths  # noqa: E402  (one display rule with the engine)
+from engine.display import SHARE_LOST_PYTHON, displayed, share_lost_percent, tenths  # noqa: E402  (one display rule with the engine)
 SCRIPT_REL = "tierra luna/tools/make_audio_top5.py"
 GENERATED_ON = "2026-11-15"
 MISSIONS = ["rover", "solar", "lunar_base"]
 TOP = 5
-LUNAR_BASE_ZONE_TEXT = "one of NASA's nine candidate landing regions near the lunar south pole"
+LUNAR_BASE_ZONE_TEXT = ("the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole "
+                        "(the engine's zone: the 1-degree cell square intersects a region outline)")
+REGION_IN_MIN_SHARE = 0.5   # "in NASA's ... region" only when at least half of the cell lies inside it
 
 CHECKS: List[str] = []
 
@@ -93,6 +105,48 @@ def great_circle_km(lat1, lon1, lat2, lon2, r):
     dl = math.radians(lon2 - lon1)
     c = math.sin(p1) * math.sin(p2) + math.cos(p1) * math.cos(p2) * math.cos(dl)
     return r * math.acos(max(-1.0, min(1.0, c)))
+
+
+def spoken_km(raw: float) -> int:
+    """A distance as spoken: rounded ONCE to the unit, half up, from the stored float32
+    (the value the browser displays, engine/display.py), never from a 1-decimal copy."""
+    return int(displayed(raw, 0))
+
+
+def cell_area_km2(lat_centre: float, r: float, deg: float = 1.0) -> float:
+    """Area of a deg x deg cell on a sphere of radius r: r^2 * dlon * |sin(lat2) - sin(lat1)|."""
+    a, b = math.radians(lat_centre - deg / 2), math.radians(lat_centre + deg / 2)
+    return r * r * math.radians(deg) * abs(math.sin(b) - math.sin(a))
+
+
+def cell_east_west_km(lat_centre: float, r: float, deg: float = 1.0) -> float:
+    """East-west width of a cell at its centre latitude."""
+    return 2 * math.pi * r * deg / 360.0 * math.cos(math.radians(lat_centre))
+
+
+def south_laea(lon: float, lat: float, r: float) -> Tuple[float, float]:
+    """South-polar Lambert azimuthal equal-area projection on a sphere of radius r (km):
+    rho = 2 r sin(c / 2), c = angular distance from the south pole."""
+    c = math.radians(90.0 + lat)
+    rho = 2.0 * r * math.sin(c / 2.0)
+    return rho * math.sin(math.radians(lon)), rho * math.cos(math.radians(lon))
+
+
+def project_geom(g, r: float, step_deg: float = 0.01):
+    """A lon/lat shapely geometry densified to step_deg and projected (equal area)."""
+    from shapely import segmentize
+    from shapely.ops import transform
+    def fwd(x, y, z=None):
+        pts = [south_laea(a, b, r) for a, b in zip(x, y)]
+        return [p[0] for p in pts], [p[1] for p in pts]
+    return transform(fwd, segmentize(g, step_deg))
+
+
+def region_share_of_cell(lat: float, lon: float, region_geom, r: float) -> float:
+    """Share of the area of the 1-degree cell centred at (lat, lon) inside a region (0-1)."""
+    from shapely.geometry import box
+    cell = project_geom(box(lon - 0.5, lat - 0.5, lon + 0.5, lat + 0.5), r)
+    return float(cell.intersection(project_geom(region_geom, r)).area / cell.area)
 
 
 def bearing_deg(lat1, lon1, lat2, lon2) -> float:
@@ -329,7 +383,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
             plat, plon = float(prow["lat"]), float(prow["lon"])
             direction = compass(bearing_deg(plat, plon, elat, elon))
             label_rule = pdetail["label_rules"][int(lr_idx[k])]
-            km_say = int(round(pl["nearest_place_km"]))
+            km_say = spoken_km(np_km[k])
             where_bits = [x for x in (pl["region"], pl["country"]) if x]
             speakable = f"about {km_say} km {direction} of {nname}, {', '.join(where_bits)}"
             earth_place = {
@@ -341,6 +395,9 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 "nearest_named_place_admin1_in_geonames": prow["admin1"] or None,
                 "nearest_named_place_country_code_in_geonames": prow["cc"],
                 "distance_km": pl["nearest_place_km"],
+                "distance_km_spoken": km_say,
+                "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 "
+                                     "(earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
                 "distance_km_recomputed": round(dkm, 1),
                 "direction_from_place": direction,
                 "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -375,6 +432,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 "nearest_named_feature": fname,
                 "feature_type": ftype,
                 "distance_km": st["twin"]["feature_km"],
+                "distance_km_spoken": spoken_km(m_feat_km[mid_cell]),
                 "distance_km_recomputed": round(fkm, 1),
                 "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), "
                                   "moon_base.bin feature / feature_km",
@@ -382,6 +440,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 "cell_centre_lon": mlon,
                 "lunar_region_code": reg["code"],
                 "lunar_region_label": reg["label"],
+                "cell_east_west_km": round(cell_east_west_km(mlat, R_M), 2),
             }
             if mid == "lunar_base":
                 check(reg["code"] == "A", f"lunar_base twin {mid_cell} outside region A")
@@ -390,6 +449,25 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 check(len(hits) >= 1 and all(h in art_names for h in hits), "Artemis region names")
                 moon_place["zone"] = LUNAR_BASE_ZONE_TEXT
                 moon_place["nasa_candidate_regions_intersected"] = hits
+                shares = {n: region_share_of_cell(mlat, mlon, g, R_M) for n, g in art if n in hits}
+                main_region = max(sorted(shares), key=lambda n: shares[n])
+                share = shares[main_region]
+                pct = 100.0 * share
+                from shapely.geometry import Point
+                centre_in = bool(project_geom(dict(art)[main_region], R_M).contains(project_geom(Point(mlon, mlat), R_M)))
+                moon_place["cell_centre_inside_nasa_candidate_region"] = centre_in
+                pct_txt = f"{pct:.1f}" if pct < 10 else f"{pct:.0f}"
+                moon_place["nasa_candidate_region_share_of_cell"] = {n: round(v, 4) for n, v in shares.items()}
+                moon_place["nasa_candidate_region_share_method"] = (
+                    "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert "
+                    "azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline "
+                    "is the union of the region's 1 km grid squares, an upper bound of the region")
+                moon_place["nasa_candidate_region_wording"] = (
+                    f"in NASA's {main_region} candidate region" if share >= REGION_IN_MIN_SHARE else
+                    f"at the edge of NASA's {main_region} candidate region ({pct_txt} % of the cell lies inside it; "
+                    f"its centre is {'inside' if centre_in else 'outside'})")
+                moon_place["nasa_candidate_region_wording_rule"] = (
+                    f"'in' when at least {REGION_IN_MIN_SHARE:.0%} of the cell lies inside the region, else 'at the edge of'")
                 moon_place["nasa_candidate_regions_source"] = (
                     "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); "
                     "engine rule: the 1-degree cell square intersects the region outline (an upper bound)")
@@ -502,6 +580,12 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 same(V["tmin_k"]["moon_real"], m_tmin[mid_cell] + 273.15, "tmin moon vs moon_base")
                 pair["pair_sentence_from_bundle"] = st["pair_sentence"]
 
+            ea, ma = cell_area_km2(elat, R_E), cell_area_km2(mlat, R_M)
+            pair["cell_area_km2"] = {"earth": round(ea, 1), "moon": round(ma, 1), "earth_over_moon": round(ea / ma, 1),
+                                     "earth_east_west_km": round(cell_east_west_km(elat, R_E), 1),
+                                     "moon_east_west_km": round(cell_east_west_km(mlat, R_M), 2),
+                                     "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; "
+                                             "east-west width 2 pi R / 360 x cos(lat)"}
             pair["common_traits"] = traits(mid, pair, k, mid_cell, pop, pop_text)
             pair["say"] = say(mid, mj, pair)
             pairs.append(pair)
@@ -521,6 +605,16 @@ def build(bundle_path: str) -> Dict[str, Any]:
         CHECKS.append(f"{mid}: ranks 1..{TOP} found once each, all paired, list_order 1..{TOP}; ids, scores, "
                       f"variables, places and features equal across explain.json, twins.json and the binary files")
 
+    def span(xs, d=0):
+        lo, hi = min(xs), max(xs)
+        f = (lambda x: f"{x:.{d}f}")
+        return f(lo) if f(lo) == f(hi) else f"{f(lo)} to {f(hi)}"
+    ratio = {m: [p["cell_area_km2"]["earth_over_moon"] for p in out_missions[m]["pairs"]] for m in MISSIONS}
+    lb_w = [p["cell_area_km2"]["moon_east_west_km"] for p in out_missions["lunar_base"]["pairs"]]
+    cell_caveat = (f"East-west a cell narrows towards the poles: the lunar twin of a Lunar base pair is only {span(lb_w, 1)} km "
+                   f"wide east-west (30 km north-south), so each Earth cell averages {span(ratio['lunar_base'])} times more "
+                   f"ground than its twin ({span(ratio['solar'])} times for Solar panels, {span(ratio['rover'])} for Rover); "
+                   f"see cell_area_km2 in each pair.")
     return {
         "generated_on": GENERATED_ON,
         "generated_by": SCRIPT_REL,
@@ -540,7 +634,8 @@ def build(bundle_path: str) -> Dict[str, Any]:
         "status": {m: out_missions[m]["status"] for m in MISSIONS},
         "caveats": [
             "Each place is a 1-degree cell, about 111 km north-south on Earth (about 30 km on the Moon); values are cell averages.",
-            "Earth temperatures and ground sunlight are modelled climatologies (WorldClim, MODIS-based amplitude, modelled irradiance), not site measurements.",
+            cell_caveat,
+            "Earth coldest air temperature and ground sunlight are modelled climatologies (WorldClim); the daily temperature swing is derived from MODIS land-surface temperature (daytime minus night-time overpass); none of them is a site measurement.",
             "Names are the nearest named feature or populated place to the cell centre, not a landing site or the cell's own name.",
             "Lunar base pairs are a likeness of thermal position within each world's population, not of temperature: the real temperatures are about 200 K apart.",
             "Sunlight above the atmosphere is alike for Solar panels pairs, but on Earth a large share is lost in the atmosphere; panels would not charge the same.",
@@ -652,7 +747,7 @@ def traits(mid: str, pair: Dict, k: int, mcell: int, pop: Dict, pop_text: Dict) 
                               "earth_percentile": pe, "moon_percentile": pm, "difference_points": tm["difference_points"],
                               "earth_k": tm["earth_real"], "moon_k": tm["moon_real"], "difference_k": tm["difference_real"],
                               "populations": {"EARTH": f"{tm['population_earth']:,} Earth points passing the Lunar base funnel",
-                                              "MOON": f"{tm['population_moon']} lunar cells of NASA's nine candidate regions"},
+                                              "MOON": f"{tm['population_moon']} lunar cells overlapping NASA's nine candidate regions"},
                               "percentile_direction": "low percentile = colder"}})
         pe, pm = am["earth_percentile"], am["moon_percentile"]
         bd = band(pe, pm, "smallest", "largest")
@@ -721,9 +816,9 @@ def feature_phrase(name: str, ftype: str) -> str:
 def say(mid: str, mj: Dict, pair: Dict) -> str:
     ep, mp = pair["earth_place"], pair["moon_place"]
     where = ", ".join(x for x in (ep["region"], ep["country"]) if x)
-    km = int(round(ep["distance_km"]))
+    km = ep["distance_km_spoken"]
     earth = f"a site about {km} kilometres {ep['direction_from_place']} of {ep['nearest_named_place']}, in {where}"
-    mkm = int(round(mp["distance_km"]))
+    mkm = mp["distance_km_spoken"]
     moon = f"a spot about {mkm} kilometres from {feature_phrase(mp['nearest_named_feature'], mp['feature_type'])}"
     V = {v["variable"]: v for v in pair["variables"]}
     sim = f"{pair['similarity']:.1f}"
@@ -743,7 +838,7 @@ def say(mid: str, mj: Dict, pair: Dict) -> str:
                 f"per square metre a day, but on Earth about {a['lost_percent']} percent is lost in the air and only "
                 f"{a['ground_kwh_m2_day']:.1f} reach the ground; similarity {sim} out of 100.")
     tm, am = V["tmin_k"], V["lst_diurnal_amp_k"]
-    return (f"{head}, in {LUNAR_BASE_ZONE_TEXT}. They are not equally cold, the Moon spot's coldest temperature is about "
+    return (f"{head}, {mp['nasa_candidate_region_wording']}, near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about "
             f"{spoken_diff(tm['difference_real'], 0, 'kelvin')} lower and its daily swing {spoken_diff(am['difference_real'], 0, 'kelvin')} larger, but each holds "
             f"a similar place in its own world's range of cold and swing, and slopes differ by {spoken_diff(V['slope_deg']['difference_real'], 1, 'degrees')} "
             f"and roughness by {spoken_diff(V['roughness_m']['difference_real'], 0, 'metres')}; similarity {sim} out of 100.")

@@ -1,0 +1,3 @@
+b_no_hielo {'paired_after': 8924, 'distinct_twins_after': 389, 'distinct_twins_now': 401, 'top5_same': True, 'top50_same': True, 'ranks_of_removed_in_top100': []}
+c_no_snow_ge_0.5 {'paired_after': 8768, 'distinct_twins_after': 381, 'distinct_twins_now': 401, 'top5_same': True, 'top50_same': True, 'ranks_of_removed_in_top100': []}
+{'rover_scales': ['real', 'real', 'real'], 'ranked': 10192, 'hielo': 1268, 'snow_ge_0.5': 1424, 'either': 1445, 'both': 1247, 'best_rank_hielo': 870, 'best_rank_snow': 722}
