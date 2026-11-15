@@ -257,7 +257,7 @@
     ],
     "fov_deg": 50
   },
-  "poster_s": 28.0,
+  "poster_s": 20.0,
   "encode": {
     "x264_crf": 25,
     "vp9_crf": 34
