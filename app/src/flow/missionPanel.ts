@@ -311,6 +311,17 @@ export class MissionPanel {
     return (t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`) + (t.nasa_region?.text ? `, ${t.nasa_region.text}` : '');
   }
 
+  /** The twin's words for a row of the five: the NASA region phrase sits in its own span (top5-region) so the desktop layout can
+   *  hide it visually while textContent, the title and the accessible name keep the full words. */
+  private twinNameEl(it: RankItem, tw: string): HTMLElement {
+    const full = tw.replace(/^Moon: /, 'Lunar twin: ');
+    const mid = this.app.state.missionId;
+    const t = mid && it.twinId != null ? this.app.store.twin(mid, it.twinId) : null;
+    const region = t?.nasa_region?.text ? `, ${t.nasa_region.text}` : '';
+    if (!region || !full.endsWith(region)) return h('span', { class: 'top5-twin-name' }, full);
+    return h('span', { class: 'top5-twin-name' }, full.slice(0, full.length - region.length), h('span', { class: 'top5-region' }, region));
+  }
+
   /** The ranking, filtered by the search words (place text and lunar twin name). */
   private visibleItems(): RankItem[] {
     let items = this.app.ranking();
@@ -416,8 +427,10 @@ export class MissionPanel {
           h(
             'span',
             { class: 'top5-twin', title: tw ?? '' },
-            tw ? tw.replace(/^Moon: /, 'Lunar twin: ') : '',
-            it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `${tw ? ' · ' : ''}Number ${int(it.rank)} in the full list`) : null,
+            tw ? this.twinNameEl(it, tw) : '',
+            it.rank != null && it.rank !== it.pos
+              ? h('span', { class: 'top5-overall' }, tw ? h('span', { class: 'top5-sep' }, ' · ') : '', `Number ${int(it.rank)} in the full list`)
+              : null,
           ),
         ),
         h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),

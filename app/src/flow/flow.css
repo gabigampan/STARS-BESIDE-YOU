@@ -1554,7 +1554,7 @@ body.view-open .topbar {
   width: 100%;
   min-height: 56px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto; /* the text column can never push into the score */
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
@@ -1890,7 +1890,7 @@ body.view-open .topbar {
   color: var(--text-dim);
 }
 .top5-text {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 #mission-panel .card-notes > summary {
   min-height: 44px;
@@ -1965,4 +1965,66 @@ body.mf-phone .intro-card {
 body.flow[data-step='choose'] .pane-caption,
 body.flow[data-step='choose'] .pane-reset {
   display: none !important;
+}
+
+/* desktop (point 13): the five and the three folded rows on one screen without scrolling.
+   The twin line stays on ONE line: the twin's words end in an ellipsis if too long (the full words are the
+   line's title, part of the button's accessible name and printed in the pair card), while
+   "Number N in the full list" is its own piece that is never cut. Phones are unchanged. */
+@media (min-width: 951px) and (min-height: 501px) and (min-aspect-ratio: 1/1) {
+  .top5-twin {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  .top5-twin-name {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* the NASA region phrase: visually hidden in the row (still in textContent, the title and the accessible name;
+     printed in full on the pair card) */
+  .top5-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* "Number N in the full list" on its own line, never cut, without the " · " used when it shares the line on phones */
+  .top5-overall {
+    white-space: nowrap;
+  }
+  .top5-sep {
+    display: none;
+  }
+  .top5-place {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .top5-text {
+    gap: 0;
+    line-height: 1.35;
+  }
+  .top5-btn {
+    min-height: 48px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+@media (min-width: 951px) and (min-height: 501px) and (max-height: 820px) and (min-aspect-ratio: 1/1) {
+  .top5 h3 {
+    margin: 0 0 2px;
+  }
+  .top5-note {
+    margin-bottom: 4px;
+  }
+  #mission-panel .panel-body {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
 }
