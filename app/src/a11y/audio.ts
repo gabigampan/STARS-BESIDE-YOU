@@ -205,6 +205,7 @@ export class AudioGuide {
       this.stop();
       this.setState('text-only');
     } else if (this.step?.track) void this.play();
+    else this.setState('text-only');
   }
 
   /** R / the Repeat control: the current track from the start (or, with the guide off, the caption again). */

@@ -355,7 +355,7 @@ export class MissionPanel {
     if (!notes.length) return null;
     return h(
       'details',
-      { class: 'panel-sec card-notes', 'data-notes': 'mission_card' },
+      { class: 'card-notes', 'data-notes': 'mission_card' },
       h('summary', null, `Limits of this list (${notes.length})`),
       ...notes.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, n.text)),
     );

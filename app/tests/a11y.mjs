@@ -402,6 +402,11 @@ async function run(browser, base, variant, size, full) {
     await page.waitForTimeout(150);
     const r = await page.evaluate(() => [document.getElementById('keys-dialog').open, window.starsFlow.state.step]);
     check(listed && r[0] === false && r[1] === 'pick', `${tag}: the shortcuts list opens from the header; Escape closes it first and stays on the step`);
+    // no rule identifier anywhere in Data and limits (only the bundle's plain-English descriptions)
+    await page.evaluate(() => document.getElementById('credits-button').click());
+    const ids = await page.evaluate(() => (document.getElementById('credits-body').innerText.match(/\b(repo_global_mean|zone_twin|real_value_tolerance|percentile_and_real_tolerance|per_mission)\b/g) ?? []));
+    check(ids.length === 0, `${tag}: Data and limits shows no rule identifier (${ids.join(', ') || 'none'})`);
+    await page.keyboard.press('Escape');
     await page.screenshot({ path: join(SHOTS, `${variant}-${size.width}-mission.png`) });
     await ctx.close();
   }
@@ -490,7 +495,11 @@ async function run(browser, base, variant, size, full) {
     await page.evaluate(() => document.querySelector('#switch-audio').click());
     m = await media(page);
     check(m.now === 0 && (await guide(page)).state === 'text-only', `${tag}: switching the guide off stops the sound at once; caption "Text only"`);
-    // a failing track: caption with the text-only wording, no error on screen
+    // a failing track: caption with the text-only wording, no error on screen (on a step that has a track)
+    if (mm) {
+      await page.evaluate(() => window.starsFlow.changeMission());
+      await waitStep(page, 'choose');
+    }
     await page.evaluate(() => (window.__media.fail = true));
     await page.evaluate(() => document.querySelector('#switch-audio').click());
     await page.waitForTimeout(200);
@@ -530,7 +539,12 @@ async function run(browser, base, variant, size, full) {
     const { page, ctx } = await openPage(browser, base, { size });
     await page.evaluate(() => (document.getElementById('loading').hidden = true));
     const r = await page.evaluate(() => ({ choices: [...document.querySelectorAll('#intro .choice')].map((c) => c.getBoundingClientRect().bottom), h: window.innerHeight, header: document.querySelector('header').getBoundingClientRect().height }));
-    check(r.choices.length > 0 && r.choices.every((b) => b <= r.h), `${tag}: the purpose and all mission choices are in the first screen without scrolling (lowest ${Math.round(Math.max(...r.choices))} of ${r.h} px)`);
+    if (size.height >= 600) check(r.choices.length > 0 && r.choices.every((b) => b <= r.h), `${tag}: the purpose and all mission choices are in the first screen without scrolling (lowest ${Math.round(Math.max(...r.choices))} of ${r.h} px)`);
+    else {
+      // a phone on its side (375 px high) cannot hold them: the start screen scrolls, and every choice is reachable
+      const reach = await page.evaluate(async () => { const last = [...document.querySelectorAll('#intro .choice')].pop(); last.scrollIntoView({ block: 'nearest' }); await new Promise((r) => setTimeout(r, 100)); const b = last.getBoundingClientRect(); return b.top >= 0 && b.bottom <= window.innerHeight + 1; });
+      check(reach, `${tag}: in landscape the start screen scrolls and every mission choice can be brought into view`);
+    }
     if (size.width >= 1280) check(r.header < 100, `${tag}: the header stays on one row (${Math.round(r.header)} px)`);
     const fold = await page.evaluate(() => { const c = document.getElementById('guide-caption'); return [c.dataset.expanded, c.querySelector('.caption-more')?.textContent]; });
     check(fold[0] === 'false' && fold[1] === 'Full text', `${tag}: with the guide off the caption is folded, with a "Full text" control`);
@@ -594,16 +608,17 @@ async function run(browser, base, variant, size, full) {
       await page.waitForFunction((x) => document.getElementById('detail-panel').dataset.cell === String(x) && document.querySelector('#detail-panel .pair-var'), id, { timeout: 60000 });
       const r = await page.evaluate(() => ({
         meanings: [...document.querySelectorAll('#detail-panel [data-note="meaning"]')].map((e) => e.textContent.trim()),
+        lunar: document.querySelector('#detail-panel .lunar')?.textContent ?? '',
         pct: [...document.querySelectorAll('#detail-panel .pair-var')].map((v) => ['earth', 'moon', 'diff'].map((k) => v.querySelector(`[data-k="${k}"] dd`)?.textContent ?? '')).filter((x) => x[0].includes('percentile')),
       }));
-      if (!r.meanings.length || r.meanings.some((t) => t !== want)) badMeaning++;
+      if (!r.meanings.length || r.meanings.some((t) => t !== want) || /real values are closest/.test(r.lunar)) badMeaning++;
       for (const [e, m, d] of r.pct) {
         rows++;
         const n = (t) => Math.round(parseFloat(t) * 10);
         if (Math.abs(n(e) - n(m)) !== n(d)) badDiff++;
       }
     }
-    check(want && badMeaning === 0, `${tag}: every Lunar base pair shows the bundle's Lunar base meaning of similarity (${badMeaning} of ${ids.length} differ)`);
+    check(want && badMeaning === 0, `${tag}: every Lunar base pair shows the bundle's Lunar base meaning of similarity and no other rule's wording in its twin section (${badMeaning} of ${ids.length} differ)`);
     check(rows > 0 && badDiff === 0, `${tag}: Lunar base percentile differences agree with the two printed positions (${rows} rows, ${badDiff} differ)`);
     const one = await page.evaluate(() => { const m = window.starsFlow.store.offeredMissions()[0].id; return window.starsFlow.store.twinSharingText(m, 1); });
     check(!one || (/\b1 Earth point\b/.test(one) && !/\b1 Earth points\b/.test(one)), `${tag}: a twin shared by one point says "1 Earth point" (${one})`);

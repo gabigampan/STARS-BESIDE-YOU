@@ -1619,3 +1619,9 @@ body.view-open .topbar {
     font-size: var(--step--1);
   }
 }
+@media (max-height: 500px) {
+  .intro {
+    place-items: start center;
+    overflow-y: auto;
+  }
+}
