@@ -17,7 +17,7 @@
     "place_ref": {
       "feature": "Huxley",
       "distance_km": 75.8,
-      "source": "Nearest primary IAU feature of the cell and its distance: bundle app/public/data/v2/explain.json (solar rank 1, similarity.twin.feature / feature_km); IAU/USGS Gazetteer of Planetary Nomenclature"
+      "source": "explain.json solar item, similarity.twin.feature / feature_km (IAU/USGS Gazetteer of Planetary Nomenclature)"
     },
     "zone": {
       "name": "Low equatorial plains (the maria)",
@@ -26,7 +26,7 @@
       "elevation_max_m": -1200.0,
       "cells": 6686,
       "bundle_rule_name": "Mare Tranquillitatis & Equatorial Maria",
-      "source": "mission_zones.json region D label (mission_zone_regions.solar = D); rule and cell count from missions.json missions[solar].similarity.zone (absolute latitude <= 30 deg and elevation <= -1,200 m, 6,686 cells)"
+      "source": "mission_zones.json region D label; rule and cell count from missions.json missions[solar].similarity.zone"
     },
     "card_name": "near Huxley"
   },
@@ -38,7 +38,7 @@
     "name": "Australia",
     "nearest_place": "Derby",
     "nearest_place_km": 128.7,
-    "source": "explain.json solar rank 1 'place' (country; region null in the bundle; nearest GeoNames populated place)"
+    "source": "explain.json solar item 'place'; selected by missions.json missions[solar].top5.ids[0]"
   },
   "table_values": {
     "moon": {
@@ -172,7 +172,6 @@
   },
   "sun": {
     "declination_deg": 1.54,
-    "declination_note": "Northern-summer solstice: the Sun reaches the table's sun_elev_max_deg (69.04 deg = 90 - 22.5 + 1.54) at local noon, in the south. Illustrative choice of season; other seasons change the noon Sun by at most 3.1 deg.",
     "hour_angle_start_deg": -89.0,
     "hour_angle_end_deg": 89.0,
     "sim_end_s": 38,
@@ -182,7 +181,7 @@
     "draw": false,
     "elev_mean_deg": 67.2,
     "az_mean_deg": 170.9,
-    "decision": "Not drawn. At its mean position (the sub-Earth point at 0 N 0 E; elevation 90 deg minus the 22.8 deg arc from the site, az 170.9 deg; parallax and libration ignored, a geometric estimate) the Earth stands about 67 deg up in the south, above the camera's field of view for most of the video."
+    "decision": "Not drawn. Geometric estimate of the Earth's mean position: elevation 90 deg minus the 22.8 deg arc from the site to the sub-Earth point (0 N 0 E), azimuth 170.9 deg; parallax and libration ignored."
   },
   "array": {
     "assumption": "Illustrative engineering shape, not a real design: short mast, hub 2.4 m above ground; two wings of 3 hinged panels, each panel 2.0 m x 1.2 m (total 14.4 m2), that unfold upwards and end flat (horizontal, tilt 0 deg), as the mission's irradiance (a horizontal surface) assumes. No tracking.",
@@ -337,8 +336,9 @@
     "legend": "Sunlight above the atmosphere: on Earth, the annual-mean daily sunlight on a horizontal surface at the top of the atmosphere, from the cell's latitude (a formula); on the Moon, the table's surface irradiance (horizontal, S0 = 1361 W/m², averaged over the whole lunar cycle, nights included). Sunlight reaching the ground on Earth: WorldClim 2.1, modelled (non-commercial licence). A panel at the Earth site receives only the sunlight that reaches the ground. The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability."
   },
   "pair_values": {
-    "source": "app/public/data/v2/explain.json, missions.solar item with rank 1; similarity.json (display rule of the share lost, saturation note, lunar day); missions.json and mission_zones.json (zone); variables.json and missions.json similarity sides (levels). prepare.py checks every value here against those files, and render.js runs that check before it renders.",
+    "source": "app/public/data/v2/explain.json missions.solar item 38464 (selected by missions.json missions[solar].top5.ids[0]); similarity.json; missions.json; mission_zones.json; variables.json. Written by tools/solar_pair.py and checked again by prepare.py before every run.",
     "mission": "solar",
+    "selected_by": "missions.json missions[solar].top5.ids[0]",
     "rule": "real_value_tolerance",
     "rank": 1,
     "earth_id": 38464,
@@ -401,16 +401,16 @@
         "earth": "DERIVED",
         "moon": "DERIVED"
       },
-      "irradiance_kwh_m2_day": {
-        "earth": "MODELLED",
-        "moon": "DERIVED"
-      },
       "slope_deg": {
         "earth": "DERIVED",
         "moon": "DERIVED"
       },
       "roughness_m": {
         "earth": "DERIVED",
+        "moon": "DERIVED"
+      },
+      "irradiance_kwh_m2_day": {
+        "earth": "MODELLED",
         "moon": "DERIVED"
       },
       "temp_k": {
@@ -431,11 +431,11 @@
     "cue_times": [
       0,
       1.967,
-      5,
-      10,
+      5.0,
+      10.0,
       11.5,
       14.3,
-      19,
+      19.0,
       23.733,
       30,
       36.067,
@@ -469,7 +469,7 @@
         "Lunar night: Sun below the horizon": "Lunar night: Sun below the horizon"
       },
       "text": [
-        "3D simulation driven by table data, not real footage. Sunrise over the real relief (SLDEM2015, LOLA and Kaguya) of lunar cell M24296, 22.5° N 3.5° W, 75.8 km from the crater Huxley, in the low equatorial plains (the maria). The Sun is just above the eastern horizon; the exposure is raised for the low Sun (not to scale). The camera descends to the stowed panels.",
+        "3D simulation driven by table data, not real footage. Sunrise over the real relief (SLDEM2015, LOLA and Kaguya) of lunar cell M24296, 22.5° N 3.5° W, 75.8 km from Huxley, in the low equatorial plains (the maria). The Sun is just above the eastern horizon; the exposure is raised for the low Sun (not to scale). The camera descends to the stowed panels.",
         "The Sun climbs above 10°; the shadows shorten.",
         "The mast rises and two wings of hinged panels unfold upwards.",
         "The panels lie flat, facing the sky; energy is counted from now.",
@@ -509,7 +509,7 @@
         "Lunar night: Sun below the horizon": "Noche lunar: Sol bajo el horizonte"
       },
       "text": [
-        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real (SLDEM2015, LOLA y Kaguya) de la celda lunar M24296, 22,5° N 3,5° O, a 75,8 km del cráter Huxley, en las llanuras ecuatoriales bajas (los mares). El Sol acaba de asomar por el horizonte este; la exposición se aumenta por el Sol bajo (no a escala). La cámara desciende hasta los paneles plegados.",
+        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real (SLDEM2015, LOLA y Kaguya) de la celda lunar M24296, 22,5° N 3,5° O, a 75,8 km de Huxley, en las llanuras ecuatoriales bajas (los mares). El Sol acaba de asomar por el horizonte este; la exposición se aumenta por el Sol bajo (no a escala). La cámara desciende hasta los paneles plegados.",
         "El Sol pasa de 10°; las sombras se acortan.",
         "El mástil sube y dos alas de paneles con bisagras se despliegan hacia arriba.",
         "Los paneles quedan en horizontal, mirando al cielo; la energía se cuenta desde ahora.",

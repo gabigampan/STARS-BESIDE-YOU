@@ -185,6 +185,7 @@ function probe() {
 // (tools/prepare.py --checks-only: table_values against the 1-degree tables, pair_values against
 // app/public/data/v2). It exits non-zero on the first mismatch.
 function preCheck() {
+  if (SC.preview && !(opt('stills', null) || flag('timeline') || flag('topdown'))) throw new Error('PREVIEW scenario (pair not in the shipped bundle): only --stills, --timeline and --topdown are allowed');
   execFileSync('python3', ['-I', path.join(HERE, 'tools', 'prepare.py'), scPath, '--work', WORK, '--checks-only'], { stdio: 'inherit' });
 }
 

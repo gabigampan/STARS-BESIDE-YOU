@@ -61,6 +61,9 @@ def check_pair_values(sc):
     pv = sc.get("pair_values")
     if not pv:
         return []
+    if sc.get("preview") or pv.get("preview"):
+        print("PREVIEW scenario: pair not checked against the bundle (stills and terrain only; render.js refuses a full render)")
+        return []
     if pv.get("mission") == "solar":
         return check_pair_values_solar(sc, pv)
     ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
@@ -116,9 +119,15 @@ def check_pair_values_solar(sc, pv):
     variables and their levels), mission_zones.json (zone label), similarity.json (display rule of the
     share lost) and variables.json (levels)."""
     ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
-    it = [x for x in ex["missions"]["solar"] if x["rank"] == pv["rank"]][0]
+    ms0 = [x for x in json.load(open(os.path.join(BUNDLE, "missions.json")))["missions"] if x.get("id") == "solar"][0]
+    top5 = (ms0.get("top5") or {}).get("ids")
+    first = top5[0] if top5 else [x for x in ex["missions"]["solar"] if x["rank"] == 1][0]["id"]
+    if pv["earth_id"] != first:
+        raise SystemExit("PAIR MISMATCH: the scenario's Earth point E%d is not the first Solar panels analog of the bundle (E%d, %s); rerun tools/solar_pair.py"
+                         % (pv["earth_id"], first, "missions.json top5.ids[0]" if top5 else "explain.json rank 1"))
+    it = [x for x in ex["missions"]["solar"] if x["id"] == first][0]
     sim = it["similarity"]
-    out = []
+    out = [dict(item="first analog", scenario=pv["earth_id"], bundle=first, ok=True)]
 
     def eq(name, a, b):
         ok = (a == b) if (isinstance(a, str) or a is None or b is None) else abs(float(a) - float(b)) < 1e-9

@@ -128,7 +128,7 @@ def test_mission_scoring_json_is_quoted_unchanged(b):
     import hashlib as h
     want = h.sha256(open(os.path.join(ROOT, "mission_scoring.json"), "rb").read()).hexdigest()
     assert b.manifest["config_sha256"]["mission_scoring.json"] == want
-    assert b.manifest["contract_revision"] == 7
+    assert b.manifest["contract_revision"] == 8
 
 
 # ----------------------------------------------------------------------------- decision 2

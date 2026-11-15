@@ -229,7 +229,7 @@ def test_bundle_carries_positions_real_values_and_reasons(lb):
     assert {"temp_k", "elevation_rel_m"} <= set(tw["twins"][0]["not_part_of_similarity"])
     assert "z" not in tw["twins"][0]
     man = b.manifest
-    assert man["contract_revision"] == 7 and man["counts"]["missions"]["lunar_base"]["ranked_EARTH"] == 450
+    assert man["contract_revision"] == 8 and man["counts"]["missions"]["lunar_base"]["ranked_EARTH"] == 450
     assert man["counts"]["missions"]["lunar_base"]["unpaired_EARTH"] == 1969
 
 

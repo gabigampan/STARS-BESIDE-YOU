@@ -1467,7 +1467,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     data_credits = sorted({reg["variables"][v]["bodies"][b].get("licence_credit") or "" for v in eng_vars for b in BODIES} - {""})
     manifest = {
         "bundle_version": engine_cfg.v("bundle_version"),
-        "contract_revision": 7,
+        "contract_revision": 8,
         "engine_version": engine_cfg.v("engine_version"),
         "dataset": {"id": ds.id, "why": engine_cfg.dataset.why},
         "build_time": build_time,

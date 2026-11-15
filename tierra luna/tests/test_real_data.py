@@ -468,7 +468,7 @@ def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
     card text."""
     decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
     assert ecfg.v("similarity_rule")["lunar_base"] == "percentile_and_real_tolerance"
-    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 7
+    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 8
     approved = ecfg.v("approved_texts")
     assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "similarity_meaning_lunar_base",
                              "rock_note", "missing_temperature_mark", "missing_temperature_note", "twin_sharing_note",

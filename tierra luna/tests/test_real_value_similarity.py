@@ -329,7 +329,7 @@ def test_rover_and_solar_are_byte_identical_to_revision_5(real):
 def test_bundle_carries_the_real_value_pairs(real, real_dir):
     b = load_bundle(real_dir)
     man = b.manifest
-    assert man["contract_revision"] == 7 and man["similarity_rule"] == "per_mission"
+    assert man["contract_revision"] == 8 and man["similarity_rule"] == "per_mission"
     assert man["similarity_rules"] == {"rover": "real_value_tolerance", "solar": "real_value_tolerance",
                                        "lunar_base": "percentile_and_real_tolerance"}
     ms = {m["id"]: m for m in b.json("missions.json")["missions"]}
