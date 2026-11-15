@@ -10,11 +10,93 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 
 - **Celda**: un cuadrado de 1 grado × 1 grado. En la Tierra mide unos 111 km de norte a sur; en la Luna, unos 30 km.
 - **Idoneidad** (0-100): lo bien que una celda de la Tierra cumple los criterios de la misión (`mission_scoring.json`). Solo la reciben las celdas que pasan los filtros duros.
-- **z (puntuación típica robusta)**: dónde está un valor dentro de su propio cuerpo. `z = (valor − mediana del cuerpo) / escala`, con escala = rango intercuartílico / 1,349, recortado a ±4. z = 0 es "justo en la mediana"; z = +1 es "una desviación típica por encima". La Tierra y la Luna se normalizan **cada una por separado**.
-- **Similitud** (0-100): `100 × exp(−0,45 × d)`, donde `d = √(Σ peso × (z Tierra − z Luna)²)`. 100 = misma posición relativa en las cuatro variables.
-- **Gemelo**: la celda lunar, dentro de la zona de la misión, con la similitud más alta.
+> **Marca de la corrección de la auditoría estadística (15-11-2026, `docs/stats_audit/correcciones_1.md`):** las tres definiciones siguientes marcadas "SUSTITUIDO" (z, Similitud, Gemelo) son el vocabulario de la regla de la noche del 14 al 15 (z-score, `zone_twin`), que ya no usa ninguna misión. Se conservan como historia para leer las decisiones 1 a 5. La regla vigente está justo debajo, en "Similitud (regla vigente)" y "Gemelo (regla vigente)".
+
+- **[SUSTITUIDO el 15-11-2026 por "Decisiones tomadas (15-11-2026, mañana)" (Rover, Paneles solares) y "Decisiones tomadas (15-11-2026, 08:55 CET)" (Base lunar)]** **z (puntuación típica robusta)**: dónde está un valor dentro de su propio cuerpo. `z = (valor − mediana del cuerpo) / escala`, con escala = rango intercuartílico / 1,349, recortado a ±4. z = 0 es "justo en la mediana"; z = +1 es "una desviación típica por encima". La Tierra y la Luna se normalizan **cada una por separado**.
+- **[SUSTITUIDO el 15-11-2026 por las mismas dos secciones]** **Similitud** (0-100, regla anterior): `100 × exp(−0,45 × d)`, donde `d = √(Σ peso × (z Tierra − z Luna)²)`. 100 = misma posición relativa en las cuatro variables.
+- **[SUSTITUIDO el 15-11-2026 por las mismas dos secciones]** **Gemelo** (regla anterior): la celda lunar, dentro de la zona de la misión, con la similitud más alta.
+- **Similitud (regla vigente, las tres misiones)**: para cada variable, puntuación `s = exp(−0,5 × (d / τ)²)`, con `d` = diferencia absoluta entre el punto de la Tierra y la celda lunar y `τ` = su tolerancia; similitud = 100 × media ponderada de las `s` (las variables clave pesan el 80 %; en Rover, desde las 11:23 CET, el 100 %: pendiente y rugosidad, 50 % cada una). En Rover y Paneles solares `d` se toma en valores reales; en Base lunar las dos claves (temperatura mínima y amplitud térmica diaria) se comparan como **percentil dentro de su población** (Tierra: los 2.419 candidatos del embudo; Luna: las 280 celdas de la zona) y la pendiente y la rugosidad en valores reales.
+- **Gemelo (regla vigente)**: la celda lunar de la zona de la misión que **pasa el filtro del par** (cada clave a menos de `τ`, cada secundaria a menos de `2τ`) con la similitud más alta; empate, el id más bajo. Si ninguna celda pasa el filtro, el punto no tiene gemelo (conserva su idoneidad, sin similitud ni final).
 - **Final** = 0,5 × similitud + 0,5 × idoneidad. El ranking ordena por el final.
 - **Spearman**: correlación de rangos, de −1 (orden inverso) a +1 (mismo orden).
+
+---
+
+## Decisiones tomadas (15-11-2026, 11:23 CET): Rover, top 5, zona de Base lunar, límites y audio
+
+Decisiones tomadas **por la persona delegada en nombre del líder del equipo, 2026-11-15 11:23 CET**, en respuesta a la auditoría estadística (`docs/stats_audit/`, en particular `7_efecto_decisiones_pendientes.md`). Aplicadas en el motor 3.3.0 y en el paquete publicado `app/public/data/v2` (**revisión 7 del contrato**, `docs/DATA_CONTRACT.md`). Todas las cifras de esta sección salen del motor (paquete reconstruido dos veces, idéntico byte a byte) o de las mediciones con el motor `scratchpad/measure_slope_min.py` / `measure_old.py` (salidas `measure_slope_min.json`, `measure_old.json`).
+
+1. **Rover: la elevación relativa pasa a peso cero.** No tiene sentido físico para un rover y choca con el principio de las 04:47 (Rover = pendiente y rugosidad). Su peso se reparte entre las variables de terreno, sin variable nueva: **pendiente 50 % y rugosidad 50 %, las dos clave, tolerancias sin cambio (2° y 30 m)**. **Lectura del director, comunicada al líder:** la elevación relativa sale **también del filtro del par** (una variable de peso cero no debe decidir qué pares existen) y queda como **fila informativa** con sus dos valores y su diferencia (`earth_rover_pairs.bin` `info.elevation_rel_m.earth/.moon/.diff`). En `engine_config.json`: `real_value_similarity.missions.rover` (pesos con `weight_set_by`), `info_differences.rover`, `info_in_pairs_file.rover`.
+2. **Top 5: separación mínima de 2° entre los análogos del top 5 de Rover y de Paneles solares**, para que celdas vecinas de un mismo sitio no llenen la lista. **Lectura del director:** es una regla para **elegir los CINCO** (voraz por puesto: se conserva el mejor y se salta cualquiera cuyo centro de celda esté a menos de 2° de arco, círculo máximo sobre la esfera de 6.371,0 km, unos 222,4 km, de uno ya conservado); **el ranking completo sigue ordenado por el final**. Base lunar conserva los puestos 1 a 5 (la regla hoy no cambiaría nada). `engine_config.json` `top5_selection`; `missions.json` `missions[].top5`.
+3. **Zona de Base lunar: se mantiene** (las 280 celdas que tocan la huella de las nueve regiones candidatas de la NASA). Los textos dicen "at the edge of NASA's ... candidate region" cuando poca parte de la celda del gemelo cae dentro de su región: regla "in" con ≥ 50 % de la celda dentro, "at the edge of" por debajo (`engine_config.json` `twin_zone_regions`; `twins.json` `nasa_region` de cada gemelo). Hoy **69 de los 103 gemelos** de Base lunar tienen menos del 50 % de su celda dentro de una región.
+4. **Mantener y decirlo con honestidad**, en "Data and limits" de la web y en `docs/STATS_AUDIT.md`: las celdas de hielo en el ranking de Rover, la puerta común `elevation_m >= 1` (quita 177 celdas de tierra real por debajo de 1 m, 37 de ellas con al menos 30 % de tierra), la saturación de la similitud de Paneles solares, la fragilidad de cada top 5 con sus porcentajes de estabilidad y los números sin efecto. **`mission_scoring.json` no se edita**: esos números solo se listan. Textos en `similarity.json` `texts` con el campo nuevo `show` (`engine_config.json` `limit_texts`, `top5_stability`, `external_validation`, `limit_facts`).
+5. **Audio:** las tres introducciones de misión dirán "five of the highest-scoring analogs in our model" y que el orden es por el final. El equipo vuelve a grabar una vez, cuando los nuevos top 5 sean definitivos (no lo hace este paso; ningún audio se ha generado, editado ni borrado).
+
+**Queda sustituido:** en "Decisiones tomadas (15-11-2026, mañana)", el reparto de pesos de Rover (pendiente 40 %, rugosidad 40 %, elevación relativa 20 % secundaria con tolerancia 500 m y filtro 1.000 m) y, por tanto, la frase "las variables clave pesan el 80 %" del vocabulario para Rover (en Rover pesan el 100 %); la nota de hielo con cifras escritas a mano de `datasets.json` `mission_notes.rover` (ahora `texts.surface_classes_rover`, calculada en cada build).
+
+### Rover antes y después (motor, tablas reales de 1°)
+
+| | Antes (mañana, hasta 11:23) | Después (11:23) |
+|---|---|---|
+| pasan el embudo | 10.337 | 10.337 |
+| emparejados | 10.192 | **10.337** (todos) |
+| gemelos distintos | 401 | **1.166** |
+| mayor cuota de un gemelo | M61116: 2.033 puntos (19,9 %) | M63712: 265 puntos (2,6 %) |
+| puntos con final publicado 100,00 | 0 | **74** (empate: el orden entre ellos es por id de celda) |
+
+Top 5 **antes** (puestos 1-5; todos con el gemelo M59895, Casatus; pendiente y rugosidad Tierra / Luna):
+
+| # | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 | E17566 (41,5; 106,5) | Bayinbaolige, China | M59895 Casatus | 99,57 / 99,22 / 99,39 | 1,038 / 1,148 | 43,53 / 44,20 |
+| 2 | E23945 (23,5; 5,5) | Tamanrasset, Argelia | M59895 | 99,76 / 98,66 / 99,21 | 1,215 / 1,148 | 43,37 / 44,20 |
+| 3 | E18282 (39,5; 102,5) | Ehen Hudag, China | M59895 | 98,77 / 99,58 / 99,17 | 0,908 / 1,148 | 38,75 / 44,20 |
+| 4 | E18280 (39,5; 100,5) | Banqiao, China | M59895 | 99,50 / 98,66 / 99,08 | 1,131 / 1,148 | 48,91 / 44,20 |
+| 5 | E15395 (47,5; 95,5) | Buga, Mongolia | M59895 | 99,12 / 98,69 / 98,91 | 1,236 / 1,148 | 41,33 / 44,20 |
+
+Top 5 **después** (los cinco mostrados con la separación de 2°; puesto en el ranking completo entre paréntesis):
+
+| # (puesto) | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 (1) | E3872 (79,5; 92,5) | Dikson, Rusia | M61299 Drygalski | 100,00 / 100,00 / 100,00 | 0,571 / 0,544 | 26,68 / 26,72 |
+| 2 (2) | E4037 (78,5; −102,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,770 / 0,793 | 29,34 / 29,50 |
+| 3 (4) | E4742 (76,5; −117,5) | Kugluktuk, Canadá | M63712 Haynes | 100,00 / 100,00 / 100,00 | 0,557 / 0,582 | 20,82 / 20,64 |
+| 4 (6) | E5111 (75,5; −108,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,783 / 0,793 | 29,44 / 29,50 |
+| 5 (8) | E5318 (75,5; 98,5) | Khatanga, Rusia | M59713 Schrödinger | 99,99 / 100,00 / 100,00 | 0,708 / 0,719 | 26,21 / 25,76 |
+
+**Aviso:** el número 1, **E3872, es una celda cuya clase de cobertura más frecuente es agua** (ESA CCI 210; solo 33,8 % de tierra, clase térmica del equipo "agua"): costa del mar de Kara. Ninguna regla de Rover excluye el agua. Ninguno de los cinco es hielo. Con el puesto 1 a 74 empatados en 100,00, el orden de los cinco lo decide el id de celda, no el dato (`texts.ties_at_top_rover`).
+
+Diferencias reales de los pares (mediana / P90 / máximo, todos los emparejados):
+
+| Variable | Antes | Después |
+|---|---|---|
+| pendiente (°) | 0,41 / 0,85 / 1,97 | 0,03 / 0,09 / 0,60 |
+| rugosidad (m) | 5,34 / 20,55 / 29,97 | 0,53 / 1,38 / 9,43 |
+| elevación relativa (m) | 247,9 / 798,9 / 1.000,0 (comparada) | 3.350 / 5.455 / 10.517 (solo información) |
+| temperatura media (K, información) | 148,7 / 175,6 / 233,0 | 149,4 / 191,3 / 257,2 |
+
+Paneles solares: los cinco mostrados pasan de los puestos 1-5 (E38464 Derby, E38105 Derby, E38744 Maintirano, E37746 Kununurra, E38465 Derby) a los puestos **1, 3, 4, 7 y 9**: E38464 Derby (98,45), E38744 Maintirano (98,36), E37746 Kununurra (98,30), E37750 Katherine (98,19) y E29749 Eyl, Somalia (98,16; su clase de cobertura más frecuente es agua, ESA CCI 210, aunque tiene 66 % de tierra). Coincide con la auditoría (`7_efecto_decisiones_pendientes.md` P2). Los ficheros `.bin` de Paneles solares y Base lunar son **idénticos byte a byte** a los del paquete anterior (`tests/test_decisions_1123.py`).
+
+### Pendiente mínima de Rover (0,5°): se mantiene, justificada con datos
+
+Fuente buscada otra vez: `docs/sources/` (R3 línea 17 la clasifica como "pure design choice"; línea 75: "Removes flat terrain, which is unusual for a rover gate; ask why"), `docs/FILTERS.md` (líneas 305 y 349: "n.s.f.", sin fuente), `docs/AUDIT.md` (línea 445: "mark 0.5 deg ... 'no official source'"), `docs/LOCAL_ZIP_COMPARISON.md` (el zip y `rover_preset.py` v3 ponen `min: null`), `rover_preset.py` (línea 214: `"min": None`), comentarios de `mission_scoring.json` (ninguno). **No hay fuente.** Medido con la regla nueva de Rover, con y sin el mínimo:
+
+| | Con mínimo 0,5° | Sin mínimo |
+|---|---|---|
+| pasan el embudo | 10.337 | 18.184 (+7.847) |
+| emparejados | 10.337 | 18.184 |
+| gemelos distintos | 1.166 | 1.181 |
+| mayor cuota de un gemelo | 2,6 % (265, M63712) | **13,9 %** (2.522, M62913) |
+| top 5 del ranking completo | E3872, E4037, E4042, E4742, E4750 | E3675 (pendiente 0,27°), E3872, E4037, E4042, E4044 (0,39°): 2 de 5 nuevos |
+| top 50 | — | 28 de 50 son puntos añadidos (todos con pendiente < 0,5°); coinciden 22 de 50 |
+| celdas de agua (CCI 210 la más frecuente) en el top 50 | 4 | 13 |
+| hielo en el top 50 | 0 | 0 |
+| de los 7.847 añadidos | — | 2.862 hielo o nieve (2.856 de clase CCI 220 "hielo permanente"), 373 de agua, 777 de suelo desnudo (200-202) |
+| Qaidam / Haughton / Ramon / Yungay (percentil del puesto) | 4,0 / 4,2 / 3,6 / 8,1 % | 8,3 / 8,4 / 8,0 / 11,6 % |
+| MDRS / Tabernas / Bardenas | 20,5 / 71,3 / 68,2 % | 22,2 / 83,7 / 81,9 % |
+| Dhofar; discordantes Concordia / El Soplao | no pasa (rugosidad < 5 m); Concordia no pasa; El Soplao 95,4 % | igual (rugosidad); El Soplao 97,4 % |
+
+**Regla del líder:** sin fuente, se quita o se justifica con datos; se quita solo si la cabeza del ranking y los análogos conocidos quedan igual o mejor y no entra ningún artefacto en el top 50. **Sin el mínimo** los cuatro análogos de movilidad pierden puesto (su percentil casi se duplica), entran 28 llanuras sin relieve en el top 50 (9 más de agua) y casi 2.900 celdas de hielo permanente en el ranking, y un solo gemelo acumula el 13,9 % de los pares. **Decisión: la pendiente mínima de 0,5° se mantiene**, tal como la escribió el equipo, porque hace trabajo útil: deja fuera de la cabeza del ranking las llanuras sin relieve (agua costera, hielo y planicies con pendiente < 0,5° a 3,7 km de base). Sigue sin fuente externa y así se dice; no hay ninguna anulación en `engine_config.json` y `mission_scoring.json` no se ha tocado.
 
 ---
 
@@ -40,14 +122,14 @@ Respuestas dadas el 15-11-2026 a las 08:55 CET por la persona en quien el líder
 
 Respuestas dadas el 15-11-2026 por la mañana por la persona en quien el líder del equipo delegó, **en nombre del líder del equipo**, a la propuesta de `docs/ANALOG_PRINCIPLE.md` (principio P1-P9 de Facundo, 15-11-2026, 04:47-04:49 CET). Aplicadas en el motor 3.1.0 (`tierra luna/engine/real_similarity.py`, `engine_config.json` `similarity_rule`, `real_value_similarity`, `toa_insolation`) y en el paquete publicado `app/public/data/v2` (revisión 5 del contrato). Los resultados están en `docs/ANALOG_PRINCIPLE.md`, sección "Resultado tras implementar (15-11-2026)".
 
-**La regla de similitud pasa a ser un ajuste por misión** (`engine_config.json` `similarity_rule`): Rover y Paneles solares, `real_value_tolerance`; Base lunar, `zone_twin` sin ningún cambio. Las reglas anteriores (`zone_twin`, `repo_global_mean`, `physical_pooled`) siguen disponibles con `--similarity-rule` y probadas.
+**[SUSTITUIDO el 15-11-2026 para Base lunar** por "Decisiones tomadas (15-11-2026, 08:55 CET)", punto 1: Base lunar ya no usa `zone_twin` sino `percentile_and_real_tolerance`. Lo de Rover y Paneles solares sigue vigente.] **La regla de similitud pasa a ser un ajuste por misión** (`engine_config.json` `similarity_rule`): Rover y Paneles solares, `real_value_tolerance`; Base lunar, `zone_twin` sin ningún cambio. Las reglas anteriores (`zone_twin`, `repo_global_mean`, `physical_pooled`) siguen disponibles con `--similarity-rule` y probadas.
 
 1. **Método para Rover y Paneles solares: similitud sobre valores reales.** Para cada variable, puntuación `s = exp(−0,5 × (diferencia / tolerancia)²)` sobre la diferencia absoluta entre la celda de la Tierra y la lunar; similitud = 100 × media ponderada de las puntuaciones; las variables clave llevan el 80 % del peso. **Filtro del par:** cada variable clave a menos de su tolerancia y cada secundaria a menos del doble de la suya; si no, el par no es análogo y no se enseña. **Gemelo:** la celda lunar de la zona de la misión que pasa el filtro con la similitud más alta (empate: el id más bajo). **Final** = 0,5 × similitud + 0,5 × idoneidad para los puntos con par. El embudo (filtros duros e idoneidad de `mission_scoring.json`) no cambia. Una variable clave sin dato en un lado hace fallar el filtro; una secundaria sin dato se deja fuera del filtro y de la similitud y se renormalizan los pesos.
 2. **Rover.** Claves: pendiente y rugosidad (40 % + 40 %), tolerancias 2° y 30 m: los valores del propio equipo en `tierra luna/rover_preset.py` (versión 3, `tolerances_by_baseline`, base de 5 km, líneas 196-205), marcados allí como ilustrativos: **"valores ilustrativos del equipo"**. Secundaria: elevación relativa (20 %), tolerancia 500 m. Zona: polo sur (latitud ≤ −75°), sin cambio. Resultado: 10.192 de 10.337 puntos con gemelo; número 1 E17566 (41,5 N 106,5 E) con M59895 (76,5 S 44,5 O), como en la propuesta comprobada.
 3. **Elevación relativa:** la elevación menos la media de la elevación del propio cuerpo ponderada por el área (cos de la latitud), sobre todas las celdas con dato: Tierra +695,9 m (las celdas con `elevation_m`, es decir, tierra firme), Luna −248,4 m. Sustituye a la elevación sin centrar que exportaba el motor (`elevation_m` tal cual).
 4. **Paneles solares.** Clave: **irradiancia sin atmósfera** (80 %): en la Tierra, la luz solar diaria media anual sobre una superficie horizontal en el tope de la atmósfera, calculada a partir de la latitud con una órbita de Kepler y la constante solar ya citada en la procedencia (1.361 W/m², `real_data/provenance_moon.csv`, fila `irradiance_kwh_m2_day`, ficha lunar del NSSDC); oblicuidad 23,44° y excentricidad 0,0167 de la ficha de la Tierra del NSSDC. Es un valor **DERIVADO** nuevo (`irradiance_toa_kwh_m2_day`), con la fórmula corregida del comprobador (`docs/ANALOG_PRINCIPLE.md`, "Comprobación", punto 1): 9,97 / 8,77 / 7,37 / 5,67 kWh/m²/día a 0 / 30 / 45 / 60° (lo comprueba un test). En la Luna, la irradiancia de superficie de la tabla lunar (sin atmósfera). Tolerancia 0,6 kWh/m²/día. Secundarias: pendiente y rugosidad (10 % + 10 %) con las tolerancias del Rover. Zona: los mares ecuatoriales tal como los define `analog_finder.build_lunar_reference_zones`: `(np.abs(lat) <= 30.0) & (moon_norm_df["elevation_m"] <= -1200.0)`, aplicada a la tabla lunar real: 6.686 celdas. Resultado: 6.360 de 18.777 puntos con gemelo; 12.417 sin gemelo.
 5. **Puntos sin gemelo** (Paneles solares sobre todo): se siguen enseñando, **sin gemelo**: conservan su resultado del embudo y su idoneidad, no tienen similitud ni final, se listan después de los puntos con par por idoneidad (empate: id) y llevan el motivo: qué variable no tiene ninguna celda lunar dentro de la tolerancia y la diferencia más pequeña encontrada (`earth_<misión>_pairs.bin` `nopair_kind`, `nopair_var`, `nopair_gap`; resumen en `missions.json` `similarity.unpaired_reasons`).
-6. **Condición del equipo para Paneles solares:** cada par lleva también la irradiancia en el suelo de la celda de la Tierra y la parte que se pierde en la atmósfera (por ejemplo 6,2 de 9,6, un 36 % menos en el número 1), y ningún texto dice ni da a entender que los paneles cargan lo mismo en los dos sitios. El texto de limitación de anoche se **sustituye** por esta plantilla, que la web rellena por par (`similarity.json` `texts.solar_limitation`, con el nombre y el archivo de cada valor en `placeholders`; `{lunar_day}` lo rellena el motor con 29,5):
+6. **Condición del equipo para Paneles solares:** cada par lleva también la irradiancia en el suelo de la celda de la Tierra y la parte que se pierde en la atmósfera (por ejemplo 6,2 de 9,6, un 35 % menos en el número 1; **corregido el 15-11-2026: antes decía "36 %"**, que era 100 × `atm.lost_share`, la parte perdida calculada con los valores sin redondear (35,66 %, redondeado a 36); desde la regla de redondeo de la web de ese día (`docs/DATA_CONTRACT.md`, `share_lost_of_displayed_tenths`) el porcentaje se calcula con los dos números que se enseñan, 6,2 y 9,6: 100 × (9,6 − 6,2) / 9,6 = 35,4 → **35**, que es lo que dicen la web, `docs/AUDIO_TOP5.json` y el audio solar_1), y ningún texto dice ni da a entender que los paneles cargan lo mismo en los dos sitios. El texto de limitación de anoche se **sustituye** por esta plantilla, que la web rellena por par (`similarity.json` `texts.solar_limitation`, con el nombre y el archivo de cada valor en `placeholders`; `{lunar_day}` lo rellena el motor con 29,5):
 
 > "This pair is matched on sunlight above the atmosphere: {toa_earth} kWh/m²/day at the top of Earth's atmosphere here and {toa_moon} kWh/m²/day on the lunar surface. At the Earth site only {ground_earth} of those {toa_earth} kWh/m²/day reach the ground ({loss_pct} % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts {lunar_day} Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
 
@@ -79,6 +161,8 @@ Respuestas dadas el 15-11-2026 por la mañana por la persona en quien el líder 
 
 ## Decisiones tomadas (15-11-2026)
 
+**[SUSTITUIDO el 15-11-2026** por "Decisiones tomadas (15-11-2026, mañana)" (Rover y Paneles solares: `real_value_tolerance`; Paneles solares pasan del polo sur a los mares ecuatoriales) y por "Decisiones tomadas (15-11-2026, 08:55 CET)" (Base lunar: `percentile_and_real_tolerance`). Ninguna misión usa ya `zone_twin` ni los z; la marca "sin dato de temperatura" (punto 3) no se enseña. Se conserva como historia.]
+
 Respuestas del equipo dadas el 15-11-2026 por la persona en quien el líder del equipo delegó el seguimiento esa noche, en el orden 1, 5, 3, 2, 4:
 
 1. **Regla del gemelo: sí.** Se activa `zone_twin` (A1) con los `DEFAULT_WEIGHTS` del repositorio sin radar ni roca (pendiente 33,3 %, rugosidad 26,7 %, elevación relativa 20 %, temperatura 20 %), no los pesos por dominio. Zonas: Rover y Paneles solares en el polo sur (latitud ≤ −75°, versión de la rama, commit `ff6f1ae`; no Tycho); Base lunar en las nueve regiones de la NASA. Junto al parecido se enseñan siempre los valores absolutos de cada variable en la Tierra y en la Luna, con una frase que dice que el parecido es posición relativa dentro de cada cuerpo.
@@ -91,7 +175,11 @@ Respuestas del equipo dadas el 15-11-2026 por la persona en quien el líder del 
 
 ## Decisión 1. La regla del gemelo
 
+**[SUSTITUIDO el 15-11-2026** por "Decisiones tomadas (15-11-2026, mañana)" y "Decisiones tomadas (15-11-2026, 08:55 CET)". Toda esta decisión (secciones 1 a 8) describe la regla `zone_twin` en z como la de "hoy" (la noche del 14 al 15): ya no la usa ninguna misión. Se conserva como historia; la regla vigente está en el vocabulario del principio.]
+
 ### 1. Qué pasa ahora
+
+**[SUSTITUIDO el 15-11-2026** (ver el principio de la Decisión 1): "hoy" en esta sección es la noche del 14 al 15 de noviembre; la regla de abajo ya no es la del producto.]
 
 **Cómo se elige hoy el gemelo, paso a paso (regla A1 de la propuesta):**
 
@@ -647,6 +735,8 @@ Nada: 0 gemelos cambian y los tres top 10 son los de la decisión 1. Solo se añ
 ---
 
 ## Decisión 5. Paneles solares frente al polo sur
+
+**[SUSTITUIDO el 15-11-2026** por "Decisiones tomadas (15-11-2026, mañana)", puntos 4 y 6: Paneles solares ya no están en el polo sur sino en los mares ecuatoriales, el gemelo se elige por la luz sobre la atmósfera y el texto de limitación de esta decisión se ha retirado. Se conserva como historia.]
 
 ### 1. Qué pasa ahora
 

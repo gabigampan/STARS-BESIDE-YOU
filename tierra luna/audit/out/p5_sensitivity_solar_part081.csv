@@ -1,0 +1,7 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,sim.roughness_m.weight0,sim_weight,"similarity weight of roughness_m (0.1) -> 0, still in the pair filter",18777,0,0,6360,0,0,5349,0,False,6,False,38464-40324;38105-40042;38744-23920;37746-40113;38465-24309
+solar,sim.roughness_m.removed,sim_weight,roughness_m removed from similarity AND pair filter,18777,0,0,6361,1,0,5356,0,False,6,False,38464-40324;38105-40042;38744-23920;37746-40113;38465-24309
+solar,sim.roughness_m.weight x0.9,sim_weight,similarity weight of roughness_m x0.9,18777,0,0,6360,0,0,134,5,True,50,True,
+solar,sim.roughness_m.tolerance x0.9,tolerance,tolerance of roughness_m (30.0) x0.9,18777,0,0,6360,0,0,266,4,False,47,False,37746-24671
+solar,sim.roughness_m.weight x1.1,sim_weight,similarity weight of roughness_m x1.1,18777,0,0,6360,0,0,130,4,False,48,False,37746-24671
+solar,sim.roughness_m.tolerance x1.1,tolerance,tolerance of roughness_m (30.0) x1.1,18777,0,0,6361,1,0,236,5,True,50,True,

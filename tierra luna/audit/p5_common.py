@@ -261,7 +261,20 @@ def percentile(x: np.ndarray, rule: str = "midrank") -> np.ndarray:
 
 
 # ------------------------------------------------------------------ the pairing
-def run_mission(T, D, m: str, P: Dict, chunk: int = 96) -> Dict:
+def _twin_key(m, passed, sim_cfg, zone, P, dtag):
+    import hashlib
+    h = hashlib.sha1()
+    h.update(m.encode()); h.update(np.packbits(passed).tobytes()); h.update(np.packbits(zone).tobytes())
+    sc = {k: v for k, v in sim_cfg.items() if k != "zone"}
+    h.update(json.dumps(sc, sort_keys=True, default=str).encode())
+    h.update(json.dumps([P["mult"], P["percentile_rule"], dtag], sort_keys=True).encode())
+    return h.hexdigest()
+
+
+def run_mission(T, D, m: str, P: Dict, chunk: int = 96, cache: Optional[Dict] = None, dtag: str = "base") -> Dict:
+    """cache: optional dict; the twin search does not depend on the suitability, alpha or the final
+    rounding, so it is reused when the passing set, the similarity settings, the zone and the
+    derived values (dtag) are unchanged."""
     E, M = T["EARTH"], T["MOON"]
     passed = gate_pass(E, "EARTH", m, P)
     suit, utils = suitability(E, m, P, passed)
@@ -283,6 +296,48 @@ def run_mission(T, D, m: str, P: Dict, chunk: int = 96) -> Dict:
             ev[:, q] = percentile(ev[:, q], P["percentile_rule"])
             mv[:, q] = percentile(mv[:, q], P["percentile_rule"])
     n = len(pi)
+    if cache is None:
+        twin_pos = _twin_search(ev, mv, key, tau, bound, w, n, chunk)
+    elif any(sc == "percentile_within_population" for sc in scales):
+        # percentiles depend on the whole passing population: cache by the passing set
+        ck = _twin_key(m, passed, sim_cfg, zone, P, dtag)
+        if ck not in cache:
+            cache[ck] = _twin_search(ev, mv, key, tau, bound, w, n, chunk)
+        twin_pos = cache[ck].copy()
+    else:
+        # real values: the twin of a point depends only on that point, so cache per Earth cell
+        ck = _twin_key(m, np.zeros(1, bool), sim_cfg, zone, P, dtag)
+        per = cache.setdefault(ck, {})
+        need = np.array([k for k, i in enumerate(pi) if int(i) not in per], dtype=int)
+        if len(need):
+            tp = _twin_search(ev[need], mv, key, tau, bound, w, len(need), chunk)
+            for k, t in zip(need, tp):
+                per[int(pi[k])] = int(t)
+        twin_pos = np.array([per[int(i)] for i in pi], dtype=int)
+    has = twin_pos >= 0
+    twin_id = np.where(has, M["id"].to_numpy()[zi][np.maximum(twin_pos, 0)], -1)
+    return _finish(T, D, m, P, passed, suit, utils, pi, zi, names, w, tau, ev, mv, twin_pos, twin_id, zone)
+
+
+def _twin_search(ev, mv, key, tau, bound, w, n, chunk):
+    """Exact search. Speed-up only: an Earth point with, for some key variable, no zone cell
+    within the bound can have no twin (the filter needs every key within its bound), so it is
+    skipped; the remaining points are searched over every zone cell."""
+    possible = np.ones(n, dtype=bool)
+    for q in np.flatnonzero(key):
+        mq = np.sort(mv[:, q][np.isfinite(mv[:, q])])
+        x = ev[:, q]
+        lo = np.searchsorted(mq, np.where(np.isfinite(x), x - bound[q], np.inf), side="left")
+        hi = np.searchsorted(mq, np.where(np.isfinite(x), x + bound[q], -np.inf), side="right")
+        possible &= np.isfinite(x) & (hi > lo)
+    idx = np.flatnonzero(possible)
+    out = np.full(n, -1)
+    if len(idx):
+        out[idx] = _twin_search_full(ev[idx], mv, key, tau, bound, w, len(idx), chunk)
+    return out
+
+
+def _twin_search_full(ev, mv, key, tau, bound, w, n, chunk):
     twin_pos = np.full(n, -1)
     for a in range(0, n, chunk):
         b = min(n, a + chunk)
@@ -300,8 +355,13 @@ def run_mission(T, D, m: str, P: Dict, chunk: int = 96) -> Dict:
         j = np.argmax(sv, axis=1)
         got = np.isfinite(sv[np.arange(b - a), j])
         twin_pos[a:b] = np.where(got, j, -1)
+    return twin_pos
+
+
+def _finish(T, D, m, P, passed, suit, utils, pi, zi, names, w, tau, ev, mv, twin_pos, twin_id, zone):
+    E, M = T["EARTH"], T["MOON"]
+    n = len(pi)
     has = twin_pos >= 0
-    twin_id = np.where(has, M["id"].to_numpy()[zi][np.maximum(twin_pos, 0)], -1)
     mvt = np.where(has[:, None], mv[np.maximum(twin_pos, 0)], np.nan)
     diff = np.abs(ev - mvt)
     fin = np.isfinite(diff)

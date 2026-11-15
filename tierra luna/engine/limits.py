@@ -1,0 +1,386 @@
+"""Honest limits as bundle texts, with figures computed from the data at build time
+(decision of 2026-11-15 11:23 CET, point 4: keep and state honestly).
+
+Every template lives in engine_config ``limit_texts``; this module only computes the
+named figures (``facts``) and fills ``{placeholders}``. A template whose figures are
+missing is never shipped with empty figures: the stability text falls back to its
+``pending`` sentence (engine_config ``top5_stability``). No mission is named in code:
+which missions a text applies to, the ice and water rules, the benchmark and the zone
+regions are all configuration.
+"""
+from __future__ import annotations
+
+import csv
+import math
+import re
+from typing import Any, Dict, List, Optional
+
+import numpy as np
+import pandas as pd
+
+from engine.config import EngineConfig, resolve_path
+from engine.gates import GateResult
+
+
+# ----------------------------------------------------------------------------- formatting
+def fmt_int(n: int) -> str:
+    return f"{int(n):,}"
+
+
+def fmt_pct(x: float, d: int = 1) -> str:
+    return f"{x:.{d}f}"
+
+
+def ordinal_list(items: List[str]) -> str:
+    """'a', 'a and b', 'a, b and c'."""
+    if not items:
+        return ""
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def fill(template: str, values: Dict[str, Any]) -> str:
+    out = template
+    for k, v in values.items():
+        out = out.replace("{" + k + "}", str(v))
+    left = re.findall(r"\{[a-z0-9_]+\}", out)
+    if left:
+        raise KeyError(f"unfilled placeholders {left} in {template[:60]!r}")
+    return out
+
+
+# ----------------------------------------------------------------------------- cell classes
+def cell_classes(earth: pd.DataFrame, rules: Dict[str, Any]) -> Dict[str, np.ndarray]:
+    """Boolean masks of the configured surface classes (engine_config limit_facts.cell_classes):
+    each rule is a list of conditions joined by OR: {column, equals} or {column, at_least}."""
+    out = {}
+    for name, rule in rules.items():
+        m = np.zeros(len(earth), dtype=bool)
+        for c in rule["any_of"]:
+            if c["column"] not in earth.columns:   # a table without the column: no cell is counted
+                continue
+            s = earth[c["column"]]
+            if "equals" in c:
+                if isinstance(c["equals"], str):
+                    m |= (s.astype(str).str.strip().str.lower() == c["equals"].lower()).to_numpy()
+                else:
+                    m |= (pd.to_numeric(s, errors="coerce").to_numpy(dtype=np.float64) == float(c["equals"]))
+            elif "at_least" in c:
+                m |= np.nan_to_num(pd.to_numeric(s, errors="coerce").to_numpy(dtype=np.float64), nan=-np.inf) >= float(c["at_least"])
+            else:
+                raise ValueError(f"cell class {name}: unknown condition {c}")
+        out[name] = m
+    return out
+
+
+# ----------------------------------------------------------------------------- external validation
+def benchmark_sites(cfg: Dict[str, Any], grid) -> List[Dict[str, Any]]:
+    """Sites of the benchmark CSV whose coordinates are not flagged unverified (the
+    auditor's rule, engine_config external_validation.unverified_rule)."""
+    rule = cfg["unverified_rule"]
+    with open(resolve_path(cfg["benchmark_csv"]), encoding="utf-8", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    out = []
+    for r in rows:
+        cq = (r.get("coord_quality") or "").lower()
+        ss = r.get("source_status") or ""
+        bad = (rule["coord_quality_contains"] in cq or ss.upper().startswith(rule["source_status_starts_with"])
+               or bool(re.search(rule["source_status_regex"], ss, re.I)))
+        lat, lon = float(r["lat"]), float(r["lon"])
+        row = min(int(math.floor(90.0 - lat)), grid.rows - 1)
+        col = min(int(math.floor(lon + 180.0)), grid.cols - 1)
+        out.append({"id": r["id"], "name": r["name"], "lat": lat, "lon": lon, "verified": not bad,
+                    "cell": int(grid.cell_id(row, col))})
+    return out
+
+
+def _norm(name: str) -> str:
+    for a, b in (("í", "i"), ("á", "a"), ("é", "e"), ("ó", "o"), ("ú", "u"), ("-", " ")):
+        name = name.replace(a, b)
+    return name.lower().strip()
+
+
+def external_validation(res, earth_ids: np.ndarray, cfg: Dict[str, Any], mcfg: Dict[str, Any], grid) -> Dict[str, Any]:
+    """Rank percentile (100 * (rank - 0.5) / ranked points, 0 = best) of the named sites of
+    one mission, matched by name as rover_preset.validate_rover_ranking does."""
+    import importlib
+
+    mod = importlib.import_module(mcfg["names_module"])
+    sites = [s for s in benchmark_sites(cfg, grid) if s["verified"]]
+    n = int((res.rank > 0).sum())
+    out = {}
+    for role, attr in (("positives", mcfg["positives"]), ("mismatches", mcfg["mismatches"])):
+        rows = []
+        for name in getattr(mod, attr):
+            hit = next((s for s in sites if _norm(name) in _norm(s["name"])), None)
+            if hit is None:
+                rows.append({"name": name, "benchmark_id": None, "verified_coordinates": False})
+                continue
+            i = int(np.searchsorted(earth_ids, hit["cell"]))
+            ok = i < len(earth_ids) and earth_ids[i] == hit["cell"]
+            rk = int(res.rank[i]) if ok else 0
+            rows.append({"name": name, "benchmark_id": hit["id"], "benchmark_name": hit["name"], "cell": hit["cell"],
+                         "verified_coordinates": True, "passes_funnel": bool(ok and res.earth_gates.passed[i]),
+                         "fail": list(res.earth_gates.reasons[i]) if ok else [],
+                         "rank": rk or None, "rank_percentile": round(100.0 * (rk - 0.5) / n, 1) if rk > 0 else None})
+        out[role] = rows
+    out["ranked_points"] = n
+    return out
+
+
+# ----------------------------------------------------------------------------- lunar zone regions
+def twin_region_shares(moon: pd.DataFrame, twin_ids: List[int], cfg: Dict[str, Any], radius_km: float) -> Dict[int, Dict[str, Any]]:
+    """For each lunar cell id: the configured region it shares most area with and that share
+    of the cell (south-polar Lambert azimuthal equal-area projection on the body sphere,
+    cell square densified along the parallels; the auditor's method,
+    docs/stats_audit/7_efecto_decisiones_pendientes.md P1)."""
+    import json as _json
+
+    from shapely.geometry import Polygon, shape
+    from shapely.ops import transform
+
+    r_m = radius_km * 1000.0
+    pole = float(cfg["projection_pole_lat"])
+
+    def laea(lon, lat):
+        lon = np.radians(np.asarray(lon, float))
+        colat = np.radians(np.asarray(lat, float) - pole) if pole < 0 else np.radians(pole - np.asarray(lat, float))
+        rho = 2 * r_m * np.sin(colat / 2)
+        return rho * np.sin(lon), rho * np.cos(lon)
+
+    with open(resolve_path(cfg["regions_file"]), encoding="utf-8") as fh:
+        g = _json.load(fh)
+    regions = [(f["properties"]["name"], transform(lambda x, y, z=None: laea(x, y), shape(f["geometry"])))
+               for f in g["features"]]
+    half = float(cfg["cell_deg"]) / 2.0
+    k = int(cfg["densify_points"])
+    out = {}
+    for cid in twin_ids:
+        la, lo = float(moon["lat_deg"].iat[cid]), float(moon["lon_deg"].iat[cid])
+        lons = np.linspace(lo - half, lo + half, k)
+        top = np.column_stack(laea(lons, np.full(k, la + half)))
+        bot = np.column_stack(laea(lons[::-1], np.full(k, la - half)))
+        cp = Polygon(np.vstack([top, bot]))
+        best = None
+        for name, poly in regions:
+            if not poly.intersects(cp):
+                continue
+            sh = poly.intersection(cp).area / cp.area
+            if best is None or sh > best[1]:
+                best = (name, sh)
+        if best is None:
+            out[cid] = {"region": None, "share_of_cell": 0.0, "phrase": None, "text": None}
+            continue
+        phrase = cfg["phrase_in"] if best[1] >= float(cfg["in_min_share"]) else cfg["phrase_edge"]
+        out[cid] = {"region": best[0], "share_of_cell": round(float(best[1]), int(cfg["share_decimals"])),
+                    "phrase": phrase, "text": cfg["text"].replace("{phrase}", phrase).replace("{region}", best[0])}
+    return out
+
+
+# ----------------------------------------------------------------------------- facts per mission
+def gates_without_effect(g: GateResult, land: np.ndarray, gate_vars: List[str]) -> Dict[str, int]:
+    """Per gate variable: Earth land cells that fail ONLY that gate (removing the gate would
+    add exactly these cells; 0 = the gate excludes no cell at this resolution)."""
+    out = {v: 0 for v in gate_vars}
+    for i in np.flatnonzero(land):
+        r = g.reasons[i]
+        if not r:
+            continue
+        vs = {c.rsplit(":", 1)[0] for c in r}
+        if len(vs) == 1:
+            v = next(iter(vs))
+            if v in out:
+                out[v] += 1
+    return out
+
+
+def stability_sentence(mid: str, top5_ids: List[int], cfg: Dict[str, Any]) -> Dict[str, Any]:
+    """The stability text of one mission: the audited figures when every one is present and
+    they describe the five shown, else the pending sentence (never empty figures)."""
+    e = (cfg["missions"] or {}).get(mid) or {}
+    need = ("ids", "in_top5_share", "in_top20_share", "simulations", "weights_pm10_survivors", "source")
+    ok = e.get("status") == "audited" and all(e.get(k) is not None for k in need)
+    ok = ok and list(e["ids"]) == list(top5_ids) and len(e["in_top5_share"]) == len(top5_ids) == len(e["in_top20_share"])
+    if not ok:
+        reason = ("figures not filled" if e.get("status") != "audited" else
+                  "the audited five differ from the five shown" if e.get("ids") and list(e["ids"]) != list(top5_ids)
+                  else "a figure is missing")
+        return {"text": cfg["pending_sentence"], "status": "pending", "reason": reason, "source": None}
+    per = [cfg["per_analog"].replace("{n}", str(k + 1)).replace("{top5}", fmt_pct(a)).replace("{top20}", fmt_pct(b))
+           for k, (a, b) in enumerate(zip(e["in_top5_share"], e["in_top20_share"]))]
+    text = fill(cfg["sentence"], {"simulations": fmt_int(e["simulations"]), "per_analog": "; ".join(per),
+                                  "survivors": e["weights_pm10_survivors"], "count": len(top5_ids)})
+    return {"text": text, "status": "audited", "reason": None, "source": e["source"]}
+
+
+def _reasons(codes: List[str], mission_cfg: Dict[str, Any], mid: str) -> str:
+    from engine.gates import reason_texts
+
+    return ", ".join(reason_texts(c, mission_cfg, mid)["text"] for c in codes)
+
+
+# ----------------------------------------------------------------------------- the build step
+def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engine_cfg: EngineConfig,
+                 land: np.ndarray) -> Dict[str, Any]:
+    """Everything the decision of 2026-11-15 11:23 CET adds to the bundle: the five shown
+    per mission (missions.json top5), the texts of engine_config limit_texts filled with
+    figures computed here, the external validation per mission and the region share of
+    the twins of the missions configured in twin_zone_regions."""
+    from engine import top5 as t5
+
+    earth, moon = ds.cells["EARTH"], ds.cells["MOON"]
+    ids = earth["id"].to_numpy()
+    lat, lon = earth["lat_deg"].to_numpy(dtype=np.float64), earth["lon_deg"].to_numpy(dtype=np.float64)
+    radii = engine_cfg.v("body_radius_km")
+    sel = engine_cfg.v("top5_selection")
+    stab = engine_cfg.v("top5_stability")
+    lf = engine_cfg.v("limit_facts")
+    lt = engine_cfg.v("limit_texts")
+    ev_cfg = engine_cfg.v("external_validation")
+    tz = engine_cfg.v("twin_zone_regions")
+    classes = cell_classes(earth, lf["cell_classes"])
+    alpha = float(engine_cfg.v("mix_factor"))
+    texts: Dict[str, Any] = {}
+    top5: Dict[str, Any] = {}
+    rows5: Dict[str, List[int]] = {}
+    ext: Dict[str, Any] = {}
+    region_share: Dict[str, Dict[int, Dict[str, Any]]] = {}
+    for mid, res in results.items():
+        rule = {"count": sel["count"], **sel["missions"][mid], "sentence": sel["sentences"][sel["missions"][mid]["rule"]]}
+        rows = t5.select(res.rank, lat, lon, rule)
+        rows5[mid] = rows
+        top5[mid] = t5.top5_block(rule, rows, ids, res.rank, float(radii[sel["radius_body"]]), int(sel["km_decimals"]))
+        # (a) order and wording of the five
+        t = lt["list_order"]
+        texts[f"list_order_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"],
+                                      "text": fill(t["text"], {"alpha_pct": f"{100 * alpha:g}", "rest_pct": f"{100 * (1 - alpha):g}"})}
+        # (b) stability
+        s = stability_sentence(mid, top5[mid]["ids"], stab)
+        texts[f"top5_stability_{mid}"] = {"missions": [mid], "show": stab["show"], "decision": stab["decision"],
+                                          "text": s["text"], "status": s["status"], "status_reason": s["reason"],
+                                          "source": s["source"]}
+        # (e) external validation
+        mv = ev_cfg["missions"].get(mid)
+        if mv and mv.get("names_module"):
+            ev = external_validation(res, ids, ev_cfg, mv, ds.grid)
+            ext[mid] = ev
+            pos = []
+            for r in ev["positives"]:
+                if not r["verified_coordinates"]:
+                    continue
+                if r["rank"]:
+                    pos.append(mv["ranked_item"].replace("{name}", r["name"]).replace("{pct}", fmt_pct(r["rank_percentile"])))
+                else:
+                    pos.append(mv["unranked_item"].replace("{name}", r["name"]).replace(
+                        "{reasons}", _reasons(r["fail"], mission_cfg, mid) or "not paired"))
+            mis = []
+            for r in ev["mismatches"]:
+                if not r["verified_coordinates"]:
+                    continue
+                mis.append(mv["ranked_item"].replace("{name}", r["name"]).replace("{pct}", fmt_pct(r["rank_percentile"]))
+                           if r["rank"] else mv["unranked_item"].replace("{name}", r["name"]).replace(
+                               "{reasons}", _reasons(r["fail"], mission_cfg, mid)))
+            unver = [r["name"] for r in ev["positives"] + ev["mismatches"] if not r["verified_coordinates"]]
+            texts[f"external_validation_{mid}"] = {
+                "missions": [mid], "show": ev_cfg["show"], "decision": ev_cfg["decision"], "source": mv["source"],
+                "text": fill(mv["text"], {"positives": ordinal_list(pos), "mismatches": ordinal_list(mis),
+                                          "unverified": ordinal_list(unver), "ranked": fmt_int(ev["ranked_points"])})}
+        elif mv:
+            texts[f"external_validation_{mid}"] = {"missions": [mid], "show": ev_cfg["show"], "decision": ev_cfg["decision"],
+                                                   "source": mv["source"], "text": mv["text"]}
+        # (h) region of each twin
+        if mid in tz:
+            cfg = tz[mid]
+            tw = sorted({int(x) for x in res.twin_id[res.rank > 0] if x >= 0})
+            region_share[mid] = twin_region_shares(moon, tw, cfg, float(radii["MOON"]))
+    # (d) surface classes in the ranking, per configured mission
+    for key, t in lt.items():
+        if t.get("kind") != "surface_classes":
+            continue
+        for mid in t["missions"]:
+            res = results[mid]
+            rk = res.rank
+            ranked = rk > 0
+            shown = set(rows5[mid])
+            vals: Dict[str, Any] = {"ranked_n": fmt_int(ranked.sum()), "top_n": t["top_n"]}
+            for cname in t["classes"]:
+                m = classes[cname] & ranked
+                best = int(rk[m].min()) if m.any() else None
+                in_top = int((m & (rk <= int(t["top_n"]))).sum())
+                in5 = sum(1 for i in shown if classes[cname][i])
+                vals[f"{cname}_n"] = fmt_int(m.sum())
+                vals[f"{cname}_best"] = fmt_int(best) if best else "none"
+                vals[f"{cname}_top"] = fmt_int(in_top)
+                vals[f"{cname}_shown"] = fmt_int(in5)
+                vals[f"{cname}_shown_ids"] = ", ".join(f"E{ids[i]} (number {int(rk[i])})" for i in rows5[mid] if classes[cname][i]) or "none"
+            texts[f"{key}_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"], "source": t["source"],
+                                     "text": fill(t["text"], vals), "figures": vals}
+    # ties at the head of the ranking (the fragility of the five)
+    t = lt.get("ties_at_top")
+    if t:
+        sd = int(engine_cfg.v("export_decimals")["score"])
+        for mid, res in results.items():
+            rk = res.rank
+            if not (rk == 1).any():
+                continue
+            top = float(res.final_published[rk == 1][0])
+            tied = int(np.sum((rk > 0) & (res.final_published == top)))
+            if tied >= int(t["min_tied"]):
+                vals = {"tied_n": fmt_int(tied), "score": f"{top:.{sd}f}"}
+                texts[f"ties_at_top_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"],
+                                               "source": t["source"], "text": fill(t["text"], vals), "figures": vals}
+    # (f) the common elevation gate on Earth land below sea level
+    t = lt["gate_elevation_land"]
+    el = pd.to_numeric(earth[t["elevation_column"]], errors="coerce").to_numpy(dtype=np.float64)
+    mf = pd.to_numeric(earth[t["land_share_column"]], errors="coerce").to_numpy(dtype=np.float64)
+    gmin = float(mission_cfg["common_gates"][t["gate"]]["min"])
+    lmin = float(mission_cfg["common_gates"][t["land_share_gate"]]["min"])
+    below = np.isfinite(el) & (el < gmin)
+    vals = {"below_n": fmt_int(below.sum()), "below_land_n": fmt_int((below & (np.nan_to_num(mf, nan=-1) >= lmin)).sum()),
+            "gate_min": f"{gmin:g}", "land_min_pct": f"{100 * lmin:g}"}
+    texts["gate_elevation_land"] = {"show": t["show"], "decision": t["decision"], "source": t["source"],
+                                    "text": fill(t["text"], vals), "figures": vals}
+    # (g) numbers without effect at this resolution
+    t = lt["numbers_without_effect"]
+    titles = engine_cfg.v("mission_titles_short")
+    inert = []
+    for mid, res in results.items():
+        m = mission_cfg["missions"][mid]
+        gvars = list(dict.fromkeys(list(mission_cfg.get("common_gates", {})) + list(m.get("gates", {}))))
+        only = {}
+        for i in np.flatnonzero(land):
+            r = res.earth_gates.reasons[i]
+            if r and len({c.rsplit(":", 1)[0] for c in r}) == 1:
+                for c in set(r):
+                    only[c] = only.get(c, 0) + 1
+        parts = []
+        for v in gvars:
+            g = m.get("gates", {}).get(v, mission_cfg.get("common_gates", {}).get(v, {}))
+            for bound, kind in (("min", "below_min"), ("max", "above_max")):
+                if g.get(bound) is not None and only.get(f"{v}:{kind}", 0) == 0:
+                    parts.append(f"{v} {'>=' if bound == 'min' else '<='} {g[bound]:g}")
+            for bound, kind in (("allow", "not_allowed"), ("exclude", "excluded")):
+                if g.get(bound) and only.get(f"{v}:{kind}", 0) == 0:
+                    parts.append(f"{v} {'in' if bound == 'allow' else 'not in'} {', '.join(g[bound])}")
+        if parts:
+            inert.append(f"{titles.get(mid, mid)}: {', '.join(parts)}")
+    unread = []
+    for mid in results:
+        m = mission_cfg["missions"][mid]
+        keys = [k for k in t["unread_keys"] if m.get(k)]
+        if keys:
+            unread.append(f"{titles.get(mid, mid)}: {', '.join(t['unread_labels'][k] for k in keys)}")
+    vals = {"inert_gates": "; ".join(inert) or "none", "unread_values": "; ".join(unread) or "none"}
+    texts["numbers_without_effect"] = {"show": t["show"], "decision": t["decision"], "source": t["source"],
+                                       "text": fill(t["text"], vals), "figures": vals}
+    # (h) the zone rule of the twins' regions
+    for mid, shares in region_share.items():
+        t = lt["zone_edge"]
+        edge = sum(1 for s in shares.values() if s["phrase"] == tz[mid]["phrase_edge"])
+        if "real" not in results[mid].extra:
+            continue
+        zc = int(results[mid].extra["real"]["zone_cells"])
+        vals = {"zone_cells": fmt_int(zc), "edge_n": fmt_int(edge), "twins_n": fmt_int(len(shares)),
+                "in_min_pct": f"{100 * float(tz[mid]['in_min_share']):g}"}
+        texts[f"zone_edge_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"], "source": t["source"],
+                                     "text": fill(t["text"], vals), "figures": vals}
+    return {"texts": texts, "top5": top5, "top5_rows": rows5, "external_validation": ext, "region_share": region_share}

@@ -1,0 +1,2314 @@
+{
+ "bundle_build_time": "inputs-sha256:e0051cc11b099887",
+ "missions": {
+  "rover": {
+   "rank_follows_final_desc_then_id": true,
+   "rank_is_1_to_n": true,
+   "ranked": 10192,
+   "top5_by_similarity_instead": [
+    {
+     "earth_id": 9520,
+     "similarity": 100.0,
+     "suitability": 80.53,
+     "final": 90.26,
+     "rank_by_final": 1112
+    },
+    {
+     "earth_id": 3342,
+     "similarity": 99.99,
+     "suitability": 74.41,
+     "final": 87.2,
+     "rank_by_final": 1681
+    },
+    {
+     "earth_id": 26941,
+     "similarity": 99.99,
+     "suitability": 61.62,
+     "final": 80.81,
+     "rank_by_final": 6073
+    },
+    {
+     "earth_id": 30185,
+     "similarity": 99.99,
+     "suitability": 61.61,
+     "final": 80.8,
+     "rank_by_final": 6085
+    },
+    {
+     "earth_id": 2615,
+     "similarity": 99.98,
+     "suitability": 71.96,
+     "final": 85.97,
+     "rank_by_final": 1993
+    }
+   ],
+   "cells_with_max_similarity": 1,
+   "max_similarity": 100.0,
+   "top20": [
+    {
+     "rank": 1,
+     "earth_id": 17566,
+     "lat": 41.5,
+     "lon": 106.5,
+     "final": 99.39,
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "twin": 59895
+    },
+    {
+     "rank": 2,
+     "earth_id": 23945,
+     "lat": 23.5,
+     "lon": 5.5,
+     "final": 99.21,
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "twin": 59895
+    },
+    {
+     "rank": 3,
+     "earth_id": 18282,
+     "lat": 39.5,
+     "lon": 102.5,
+     "final": 99.17,
+     "similarity": 98.77,
+     "suitability": 99.58,
+     "twin": 59895
+    },
+    {
+     "rank": 4,
+     "earth_id": 18280,
+     "lat": 39.5,
+     "lon": 100.5,
+     "final": 99.08,
+     "similarity": 99.5,
+     "suitability": 98.66,
+     "twin": 59895
+    },
+    {
+     "rank": 5,
+     "earth_id": 15395,
+     "lat": 47.5,
+     "lon": 95.5,
+     "final": 98.91,
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "twin": 59895
+    },
+    {
+     "rank": 6,
+     "earth_id": 18281,
+     "lat": 39.5,
+     "lon": 101.5,
+     "final": 98.87,
+     "similarity": 98.06,
+     "suitability": 99.67,
+     "twin": 59895
+    },
+    {
+     "rank": 7,
+     "earth_id": 16841,
+     "lat": 43.5,
+     "lon": 101.5,
+     "final": 98.81,
+     "similarity": 99.63,
+     "suitability": 97.99,
+     "twin": 59895
+    },
+    {
+     "rank": 8,
+     "earth_id": 16121,
+     "lat": 45.5,
+     "lon": 101.5,
+     "final": 98.79,
+     "similarity": 98.96,
+     "suitability": 98.63,
+     "twin": 59895
+    },
+    {
+     "rank": 9,
+     "earth_id": 15034,
+     "lat": 48.5,
+     "lon": 94.5,
+     "final": 98.76,
+     "similarity": 98.28,
+     "suitability": 99.24,
+     "twin": 59895
+    },
+    {
+     "rank": 10,
+     "earth_id": 16482,
+     "lat": 44.5,
+     "lon": 102.5,
+     "final": 98.75,
+     "similarity": 99.55,
+     "suitability": 97.94,
+     "twin": 59895
+    },
+    {
+     "rank": 11,
+     "earth_id": 26144,
+     "lat": 17.5,
+     "lon": 44.5,
+     "final": 98.7,
+     "similarity": 98.34,
+     "suitability": 99.06,
+     "twin": 59895
+    },
+    {
+     "rank": 12,
+     "earth_id": 15394,
+     "lat": 47.5,
+     "lon": 94.5,
+     "final": 98.59,
+     "similarity": 97.53,
+     "suitability": 99.65,
+     "twin": 59895
+    },
+    {
+     "rank": 13,
+     "earth_id": 16844,
+     "lat": 43.5,
+     "lon": 104.5,
+     "final": 98.58,
+     "similarity": 97.4,
+     "suitability": 99.75,
+     "twin": 59895
+    },
+    {
+     "rank": 14,
+     "earth_id": 15032,
+     "lat": 48.5,
+     "lon": 92.5,
+     "final": 98.53,
+     "similarity": 97.97,
+     "suitability": 99.09,
+     "twin": 59895
+    },
+    {
+     "rank": 15,
+     "earth_id": 20752,
+     "lat": 32.5,
+     "lon": 52.5,
+     "final": 98.41,
+     "similarity": 98.27,
+     "suitability": 98.54,
+     "twin": 59895
+    },
+    {
+     "rank": 16,
+     "earth_id": 23946,
+     "lat": 23.5,
+     "lon": 6.5,
+     "final": 98.3,
+     "similarity": 98.91,
+     "suitability": 97.7,
+     "twin": 59895
+    },
+    {
+     "rank": 17,
+     "earth_id": 15764,
+     "lat": 46.5,
+     "lon": 104.5,
+     "final": 98.29,
+     "similarity": 96.7,
+     "suitability": 99.87,
+     "twin": 59895
+    },
+    {
+     "rank": 18,
+     "earth_id": 15393,
+     "lat": 47.5,
+     "lon": 93.5,
+     "final": 98.2,
+     "similarity": 98.31,
+     "suitability": 98.09,
+     "twin": 59895
+    },
+    {
+     "rank": 19,
+     "earth_id": 16476,
+     "lat": 44.5,
+     "lon": 96.5,
+     "final": 98.18,
+     "similarity": 96.5,
+     "suitability": 99.86,
+     "twin": 59895
+    },
+    {
+     "rank": 20,
+     "earth_id": 16478,
+     "lat": 44.5,
+     "lon": 98.5,
+     "final": 98.12,
+     "similarity": 97.66,
+     "suitability": 98.58,
+     "twin": 59895
+    }
+   ],
+   "what_orders_the_top": {
+    "top5": {
+     "similarity_range": [
+      98.77,
+      99.76
+     ],
+     "suitability_range": [
+      98.66,
+      99.58
+     ],
+     "final_range": [
+      98.91,
+      99.39
+     ],
+     "var_share_0.25var_sim": 1.265554480980005,
+     "var_share_0.25var_suit": 1.420212765957435,
+     "spearman_final_vs_similarity": 0.6,
+     "spearman_final_vs_suitability": 0.20519567041703082
+    },
+    "top20": {
+     "similarity_range": [
+      96.5,
+      99.76
+     ],
+     "suitability_range": [
+      97.7,
+      99.87
+     ],
+     "final_range": [
+      98.12,
+      99.39
+     ],
+     "var_share_0.25var_sim": 1.747881364343802,
+     "var_share_0.25var_suit": 0.871618818288663,
+     "spearman_final_vs_similarity": 0.7233082706766917,
+     "spearman_final_vs_suitability": 0.03309515089252832
+    },
+    "top100": {
+     "similarity_range": [
+      92.42,
+      99.76
+     ],
+     "suitability_range": [
+      92.81,
+      100.0
+     ],
+     "final_range": [
+      96.2,
+      99.39
+     ],
+     "var_share_0.25var_sim": 1.136189228191247,
+     "var_share_0.25var_suit": 1.0927491152110957,
+     "spearman_final_vs_similarity": 0.3777016958075226,
+     "spearman_final_vs_suitability": 0.4473906914043344
+    },
+    "all": {
+     "spearman_final_vs_similarity": 0.3164336382946314,
+     "spearman_final_vs_suitability": 0.4984449032123189,
+     "spearman_similarity_vs_suitability": -0.5303693708226335,
+     "sd_similarity": 7.628793353659954,
+     "sd_suitability": 11.517973115935384
+    }
+   },
+   "ties": {
+    "rows_sharing_their_final_with_another_row": 9512,
+    "within_top5": 0,
+    "within_top20": 0,
+    "within_top100": 33,
+    "rank5_final": 98.91,
+    "rank6_final": 98.87,
+    "rows_with_final_equal_to_rank5": 1,
+    "gap_rank5_rank6": 0.03999999999999204,
+    "tie_groups_in_top20": []
+   },
+   "top5_distance_km": [
+    [
+     0.0,
+     9156.625560177377,
+     404.7082171833694,
+     553.7580310243376,
+     1096.5169835379672
+    ],
+    [
+     9156.625560177377,
+     0.0,
+     8936.008102297217,
+     8776.915586946732,
+     8106.454588908716
+    ],
+    [
+     404.7082171833694,
+     8936.008102297217,
+     0.0,
+     171.59795276993427,
+     1052.6101653268086
+    ],
+    [
+     553.7580310243376,
+     8776.915586946732,
+     171.59795276993427,
+     0.0,
+     976.1815177650972
+    ],
+    [
+     1096.5169835379672,
+     8106.454588908716,
+     1052.6101653268086,
+     976.1815177650972,
+     0.0
+    ]
+   ],
+   "top5_min_distance_km": 171.59795276993427,
+   "top5_adjacent_cell_pairs_by_rank": [],
+   "top5_same_cell": false,
+   "top5_distinct_twins": 1,
+   "min_separation_alternatives": {
+    "2deg_222km": {
+     "min_km": 222.38985328911747,
+     "ranks": [
+      1,
+      2,
+      3,
+      5,
+      7
+     ],
+     "earth_ids": [
+      17566,
+      23945,
+      18282,
+      15395,
+      16841
+     ],
+     "finals": [
+      99.39,
+      99.21,
+      99.17,
+      98.91,
+      98.81
+     ],
+     "similarities": [
+      99.57,
+      99.76,
+      98.77,
+      99.12,
+      99.63
+     ],
+     "twins": [
+      59895,
+      59895,
+      59895,
+      59895,
+      59895
+     ],
+     "sum_final_lost_vs_current": 0.27,
+     "fifth_final": 98.81,
+     "fifth_final_lost": 0.1,
+     "members_changed": 1
+    },
+    "500km": {
+     "min_km": 500.0,
+     "ranks": [
+      1,
+      2,
+      4,
+      5,
+      8
+     ],
+     "earth_ids": [
+      17566,
+      23945,
+      18280,
+      15395,
+      16121
+     ],
+     "finals": [
+      99.39,
+      99.21,
+      99.08,
+      98.91,
+      98.79
+     ],
+     "similarities": [
+      99.57,
+      99.76,
+      99.5,
+      99.12,
+      98.96
+     ],
+     "twins": [
+      59895,
+      59895,
+      59895,
+      59895,
+      59895
+     ],
+     "sum_final_lost_vs_current": 0.38,
+     "fifth_final": 98.79,
+     "fifth_final_lost": 0.12,
+     "members_changed": 1
+    },
+    "1000km": {
+     "min_km": 1000.0,
+     "ranks": [
+      1,
+      2,
+      5,
+      11,
+      15
+     ],
+     "earth_ids": [
+      17566,
+      23945,
+      15395,
+      26144,
+      20752
+     ],
+     "finals": [
+      99.39,
+      99.21,
+      98.91,
+      98.7,
+      98.41
+     ],
+     "similarities": [
+      99.57,
+      99.76,
+      99.12,
+      98.34,
+      98.27
+     ],
+     "twins": [
+      59895,
+      59895,
+      59895,
+      59895,
+      59895
+     ],
+     "sum_final_lost_vs_current": 1.14,
+     "fifth_final": 98.41,
+     "fifth_final_lost": 0.5,
+     "members_changed": 2
+    }
+   },
+   "distinct_twin_alternative": {
+    "ranks": [
+     1,
+     25,
+     35,
+     45,
+     59
+    ],
+    "finals": [
+     99.39,
+     97.77,
+     97.32,
+     96.88,
+     96.66
+    ],
+    "twins": [
+     59895,
+     61037,
+     61116,
+     60992,
+     61352
+    ],
+    "sum_final_lost_vs_current": 7.74
+   },
+   "twins": {
+    "distinct": 401,
+    "largest": {
+     "twin": 61116,
+     "points": 2033,
+     "share": 0.1994701726844584
+    },
+    "top5_twins_by_points": [
+     [
+      61116,
+      2033
+     ],
+     [
+      59895,
+      1873
+     ],
+     [
+      60992,
+      893
+     ],
+     [
+      60245,
+      678
+     ],
+     [
+      61352,
+      377
+     ]
+    ],
+    "twins_json_distinct": 401,
+    "twins_json_largest": {
+     "twin_id": 61116,
+     "earth_cells": 2033,
+     "share": 0.1995
+    },
+    "share_of_top20_on_most_used_twin_of_top5": null,
+    "points_on_twin_of_rank1": 1873,
+    "top20_on_twin_of_rank1": 20,
+    "top100_on_twin_of_rank1": 59
+   },
+   "audio_top5_matches_bundle": [
+    {
+     "rank": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "bundle_earth": "E17566",
+     "bundle_moon": "M59895",
+     "same": true
+    },
+    {
+     "rank": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "bundle_earth": "E23945",
+     "bundle_moon": "M59895",
+     "same": true
+    },
+    {
+     "rank": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "bundle_earth": "E18282",
+     "bundle_moon": "M59895",
+     "same": true
+    },
+    {
+     "rank": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "bundle_earth": "E18280",
+     "bundle_moon": "M59895",
+     "same": true
+    },
+    {
+     "rank": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "bundle_earth": "E15395",
+     "bundle_moon": "M59895",
+     "same": true
+    }
+   ]
+  },
+  "solar": {
+   "rank_follows_final_desc_then_id": true,
+   "rank_is_1_to_n": true,
+   "ranked": 6360,
+   "top5_by_similarity_instead": [
+    {
+     "earth_id": 23836,
+     "similarity": 100.0,
+     "suitability": 80.4,
+     "final": 90.2,
+     "rank_by_final": 4129
+    },
+    {
+     "earth_id": 23837,
+     "similarity": 100.0,
+     "suitability": 81.37,
+     "final": 90.68,
+     "rank_by_final": 3907
+    },
+    {
+     "earth_id": 23924,
+     "similarity": 100.0,
+     "suitability": 92.19,
+     "final": 96.1,
+     "rank_by_final": 1297
+    },
+    {
+     "earth_id": 23925,
+     "similarity": 100.0,
+     "suitability": 91.95,
+     "final": 95.97,
+     "rank_by_final": 1366
+    },
+    {
+     "earth_id": 23926,
+     "similarity": 100.0,
+     "suitability": 91.78,
+     "final": 95.89,
+     "rank_by_final": 1420
+    }
+   ],
+   "cells_with_max_similarity": 514,
+   "max_similarity": 100.0,
+   "top20": [
+    {
+     "rank": 1,
+     "earth_id": 38464,
+     "lat": -16.5,
+     "lon": 124.5,
+     "final": 98.45,
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "twin": 24296
+    },
+    {
+     "rank": 2,
+     "earth_id": 38105,
+     "lat": -15.5,
+     "lon": 125.5,
+     "final": 98.39,
+     "similarity": 99.88,
+     "suitability": 96.9,
+     "twin": 24583
+    },
+    {
+     "rank": 3,
+     "earth_id": 38744,
+     "lat": -17.5,
+     "lon": 44.5,
+     "final": 98.36,
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "twin": 40854
+    },
+    {
+     "rank": 4,
+     "earth_id": 37746,
+     "lat": -14.5,
+     "lon": 126.5,
+     "final": 98.3,
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "twin": 24761
+    },
+    {
+     "rank": 5,
+     "earth_id": 38465,
+     "lat": -16.5,
+     "lon": 125.5,
+     "final": 98.24,
+     "similarity": 100.0,
+     "suitability": 96.48,
+     "twin": 40406
+    },
+    {
+     "rank": 6,
+     "earth_id": 38385,
+     "lat": -16.5,
+     "lon": 45.5,
+     "final": 98.23,
+     "similarity": 100.0,
+     "suitability": 96.47,
+     "twin": 24227
+    },
+    {
+     "rank": 7,
+     "earth_id": 37750,
+     "lat": -14.5,
+     "lon": 130.5,
+     "final": 98.19,
+     "similarity": 99.98,
+     "suitability": 96.4,
+     "twin": 24688
+    },
+    {
+     "rank": 8,
+     "earth_id": 38109,
+     "lat": -15.5,
+     "lon": 129.5,
+     "final": 98.18,
+     "similarity": 99.91,
+     "suitability": 96.44,
+     "twin": 40186
+    },
+    {
+     "rank": 9,
+     "earth_id": 29749,
+     "lat": 7.5,
+     "lon": 49.5,
+     "final": 98.16,
+     "similarity": 99.97,
+     "suitability": 96.35,
+     "twin": 26063
+    },
+    {
+     "rank": 10,
+     "earth_id": 30468,
+     "lat": 5.5,
+     "lon": 48.5,
+     "final": 98.16,
+     "similarity": 99.96,
+     "suitability": 96.35,
+     "twin": 26087
+    },
+    {
+     "rank": 11,
+     "earth_id": 30108,
+     "lat": 6.5,
+     "lon": 48.5,
+     "final": 98.15,
+     "similarity": 100.0,
+     "suitability": 96.3,
+     "twin": 26159
+    },
+    {
+     "rank": 12,
+     "earth_id": 27554,
+     "lat": 13.5,
+     "lon": 14.5,
+     "final": 98.11,
+     "similarity": 99.97,
+     "suitability": 96.26,
+     "twin": 25036
+    },
+    {
+     "rank": 13,
+     "earth_id": 38027,
+     "lat": -15.5,
+     "lon": 47.5,
+     "final": 98.11,
+     "similarity": 99.91,
+     "suitability": 96.31,
+     "twin": 24696
+    },
+    {
+     "rank": 14,
+     "earth_id": 38110,
+     "lat": -15.5,
+     "lon": 130.5,
+     "final": 98.1,
+     "similarity": 99.9,
+     "suitability": 96.3,
+     "twin": 24756
+    },
+    {
+     "rank": 15,
+     "earth_id": 30465,
+     "lat": 5.5,
+     "lon": 45.5,
+     "final": 98.08,
+     "similarity": 99.96,
+     "suitability": 96.2,
+     "twin": 26079
+    },
+    {
+     "rank": 16,
+     "earth_id": 30467,
+     "lat": 5.5,
+     "lon": 47.5,
+     "final": 98.08,
+     "similarity": 99.96,
+     "suitability": 96.19,
+     "twin": 26081
+    },
+    {
+     "rank": 17,
+     "earth_id": 30106,
+     "lat": 6.5,
+     "lon": 46.5,
+     "final": 98.04,
+     "similarity": 100.0,
+     "suitability": 96.09,
+     "twin": 26040
+    },
+    {
+     "rank": 18,
+     "earth_id": 30107,
+     "lat": 6.5,
+     "lon": 47.5,
+     "final": 98.04,
+     "similarity": 99.99,
+     "suitability": 96.09,
+     "twin": 26155
+    },
+    {
+     "rank": 19,
+     "earth_id": 37390,
+     "lat": -13.5,
+     "lon": 130.5,
+     "final": 98.04,
+     "similarity": 99.97,
+     "suitability": 96.1,
+     "twin": 25003
+    },
+    {
+     "rank": 20,
+     "earth_id": 37747,
+     "lat": -14.5,
+     "lon": 127.5,
+     "final": 98.04,
+     "similarity": 99.98,
+     "suitability": 96.1,
+     "twin": 40043
+    }
+   ],
+   "what_orders_the_top": {
+    "top5": {
+     "similarity_range": [
+      99.88,
+      100.0
+     ],
+     "suitability_range": [
+      96.48,
+      96.9
+     ],
+     "final_range": [
+      98.24,
+      98.45
+     ],
+     "var_share_0.25var_sim": 0.08942161339421437,
+     "var_share_0.25var_suit": 1.2739726027396336,
+     "spearman_final_vs_similarity": -0.39999999999999997,
+     "spearman_final_vs_suitability": 0.9746794344808964
+    },
+    "top20": {
+     "similarity_range": [
+      99.88,
+      100.0
+     ],
+     "suitability_range": [
+      96.09,
+      96.9
+     ],
+     "final_range": [
+      98.04,
+      98.45
+     ],
+     "var_share_0.25var_sim": 0.021583238362409912,
+     "var_share_0.25var_suit": 1.0519680897694683,
+     "spearman_final_vs_similarity": -0.053755714788929675,
+     "spearman_final_vs_suitability": 0.9878924925878856
+    },
+    "top100": {
+     "similarity_range": [
+      99.88,
+      100.0
+     ],
+     "suitability_range": [
+      95.18,
+      96.9
+     ],
+     "final_range": [
+      97.59,
+      98.45
+     ],
+     "var_share_0.25var_sim": 0.0070389037826669824,
+     "var_share_0.25var_suit": 0.9981837554475351,
+     "spearman_final_vs_similarity": 0.14649161291953885,
+     "spearman_final_vs_suitability": 0.9946806839335384
+    },
+    "all": {
+     "spearman_final_vs_similarity": 0.43180290830306345,
+     "spearman_final_vs_suitability": 0.8956371865220812,
+     "spearman_similarity_vs_suitability": 0.16065681803829437,
+     "sd_similarity": 6.995601333639869,
+     "sd_suitability": 7.5679565585051565
+    }
+   },
+   "ties": {
+    "rows_sharing_their_final_with_another_row": 5735,
+    "within_top5": 0,
+    "within_top20": 10,
+    "within_top100": 78,
+    "rank5_final": 98.24,
+    "rank6_final": 98.23,
+    "rows_with_final_equal_to_rank5": 1,
+    "gap_rank5_rank6": 0.009999999999990905,
+    "tie_groups_in_top20": [
+     [
+      17,
+      18,
+      19,
+      20
+     ],
+     [
+      15,
+      16
+     ],
+     [
+      12,
+      13
+     ],
+     [
+      9,
+      10
+     ]
+    ]
+   },
+   "top5_distance_km": [
+    [
+     0.0,
+     154.23634290362781,
+     8435.875833151133,
+     308.830641470091,
+     106.61578092464188
+    ],
+    [
+     154.23634290362781,
+     0.0,
+     8567.389096657846,
+     154.5962355640774,
+     111.19492664455889
+    ],
+    [
+     8435.875833151133,
+     8567.389096657846,
+     0.0,
+     8700.008055453698,
+     8539.086288624867
+    ],
+    [
+     308.830641470091,
+     154.5962355640774,
+     8700.008055453698,
+     0.0,
+     246.8543880335738
+    ],
+    [
+     106.61578092464188,
+     111.19492664455889,
+     8539.086288624867,
+     246.8543880335738,
+     0.0
+    ]
+   ],
+   "top5_min_distance_km": 106.61578092464188,
+   "top5_adjacent_cell_pairs_by_rank": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ]
+   ],
+   "top5_same_cell": false,
+   "top5_distinct_twins": 5,
+   "min_separation_alternatives": {
+    "2deg_222km": {
+     "min_km": 222.38985328911747,
+     "ranks": [
+      1,
+      3,
+      4,
+      7,
+      9
+     ],
+     "earth_ids": [
+      38464,
+      38744,
+      37746,
+      37750,
+      29749
+     ],
+     "finals": [
+      98.45,
+      98.36,
+      98.3,
+      98.19,
+      98.16
+     ],
+     "similarities": [
+      99.99,
+      99.95,
+      99.98,
+      99.98,
+      99.97
+     ],
+     "twins": [
+      24296,
+      40854,
+      24761,
+      24688,
+      26063
+     ],
+     "sum_final_lost_vs_current": 0.28,
+     "fifth_final": 98.16,
+     "fifth_final_lost": 0.08,
+     "members_changed": 2
+    },
+    "500km": {
+     "min_km": 500.0,
+     "ranks": [
+      1,
+      3,
+      7,
+      9,
+      12
+     ],
+     "earth_ids": [
+      38464,
+      38744,
+      37750,
+      29749,
+      27554
+     ],
+     "finals": [
+      98.45,
+      98.36,
+      98.19,
+      98.16,
+      98.11
+     ],
+     "similarities": [
+      99.99,
+      99.95,
+      99.98,
+      99.97,
+      99.97
+     ],
+     "twins": [
+      24296,
+      40854,
+      24688,
+      26063,
+      25036
+     ],
+     "sum_final_lost_vs_current": 0.47,
+     "fifth_final": 98.11,
+     "fifth_final_lost": 0.13,
+     "members_changed": 3
+    },
+    "1000km": {
+     "min_km": 1000.0,
+     "ranks": [
+      1,
+      3,
+      9,
+      12,
+      22
+     ],
+     "earth_ids": [
+      38464,
+      38744,
+      29749,
+      27554,
+      38474
+     ],
+     "finals": [
+      98.45,
+      98.36,
+      98.16,
+      98.11,
+      98.01
+     ],
+     "similarities": [
+      99.99,
+      99.95,
+      99.97,
+      99.97,
+      100.0
+     ],
+     "twins": [
+      24296,
+      40854,
+      26063,
+      25036,
+      24288
+     ],
+     "sum_final_lost_vs_current": 0.65,
+     "fifth_final": 98.01,
+     "fifth_final_lost": 0.23,
+     "members_changed": 3
+    }
+   },
+   "distinct_twin_alternative": {
+    "ranks": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "finals": [
+     98.45,
+     98.39,
+     98.36,
+     98.3,
+     98.24
+    ],
+    "twins": [
+     24296,
+     24583,
+     40854,
+     24761,
+     40406
+    ],
+    "sum_final_lost_vs_current": 0.0
+   },
+   "twins": {
+    "distinct": 1704,
+    "largest": {
+     "twin": 21795,
+     "points": 159,
+     "share": 0.025
+    },
+    "top5_twins_by_points": [
+     [
+      21795,
+      159
+     ],
+     [
+      21796,
+      57
+     ],
+     [
+      21709,
+      44
+     ],
+     [
+      26400,
+      43
+     ],
+     [
+      21751,
+      38
+     ]
+    ],
+    "twins_json_distinct": 1704,
+    "twins_json_largest": {
+     "twin_id": 21795,
+     "earth_cells": 159,
+     "share": 0.025
+    },
+    "share_of_top20_on_most_used_twin_of_top5": null,
+    "points_on_twin_of_rank1": 2,
+    "top20_on_twin_of_rank1": 1,
+    "top100_on_twin_of_rank1": 1
+   },
+   "audio_top5_matches_bundle": [
+    {
+     "rank": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "bundle_earth": "E38464",
+     "bundle_moon": "M24296",
+     "same": true
+    },
+    {
+     "rank": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "bundle_earth": "E38105",
+     "bundle_moon": "M24583",
+     "same": true
+    },
+    {
+     "rank": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "bundle_earth": "E38744",
+     "bundle_moon": "M40854",
+     "same": true
+    },
+    {
+     "rank": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "bundle_earth": "E37746",
+     "bundle_moon": "M24761",
+     "same": true
+    },
+    {
+     "rank": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "bundle_earth": "E38465",
+     "bundle_moon": "M40406",
+     "same": true
+    }
+   ]
+  },
+  "lunar_base": {
+   "rank_follows_final_desc_then_id": true,
+   "rank_is_1_to_n": true,
+   "ranked": 450,
+   "top5_by_similarity_instead": [
+    {
+     "earth_id": 18430,
+     "similarity": 99.48,
+     "suitability": 28.12,
+     "final": 63.8,
+     "rank_by_final": 100
+    },
+    {
+     "earth_id": 19723,
+     "similarity": 99.47,
+     "suitability": 30.24,
+     "final": 64.86,
+     "rank_by_final": 73
+    },
+    {
+     "earth_id": 17534,
+     "similarity": 99.41,
+     "suitability": 34.13,
+     "final": 66.77,
+     "rank_by_final": 41
+    },
+    {
+     "earth_id": 21054,
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63,
+     "rank_by_final": 4
+    },
+    {
+     "earth_id": 20405,
+     "similarity": 99.2,
+     "suitability": 34.71,
+     "final": 66.96,
+     "rank_by_final": 40
+    }
+   ],
+   "cells_with_max_similarity": 1,
+   "max_similarity": 99.48,
+   "top20": [
+    {
+     "rank": 1,
+     "earth_id": 17538,
+     "lat": 41.5,
+     "lon": 78.5,
+     "final": 72.29,
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "twin": 63528
+    },
+    {
+     "rank": 2,
+     "earth_id": 16830,
+     "lat": 43.5,
+     "lon": 90.5,
+     "final": 72.28,
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "twin": 63841
+    },
+    {
+     "rank": 3,
+     "earth_id": 15751,
+     "lat": 46.5,
+     "lon": 91.5,
+     "final": 71.73,
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "twin": 64018
+    },
+    {
+     "rank": 4,
+     "earth_id": 21054,
+     "lat": 31.5,
+     "lon": -5.5,
+     "final": 71.63,
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "twin": 62517
+    },
+    {
+     "rank": 5,
+     "earth_id": 17187,
+     "lat": 42.5,
+     "lon": 87.5,
+     "final": 71.28,
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "twin": 62523
+    },
+    {
+     "rank": 6,
+     "earth_id": 42949,
+     "lat": -29.5,
+     "lon": -70.5,
+     "final": 71.24,
+     "similarity": 93.41,
+     "suitability": 49.07,
+     "twin": 62477
+    },
+    {
+     "rank": 7,
+     "earth_id": 16833,
+     "lat": 43.5,
+     "lon": 93.5,
+     "final": 71.15,
+     "similarity": 94.83,
+     "suitability": 47.47,
+     "twin": 63841
+    },
+    {
+     "rank": 8,
+     "earth_id": 18254,
+     "lat": 39.5,
+     "lon": 74.5,
+     "final": 70.99,
+     "similarity": 92.32,
+     "suitability": 49.65,
+     "twin": 63875
+    },
+    {
+     "rank": 9,
+     "earth_id": 18627,
+     "lat": 38.5,
+     "lon": 87.5,
+     "final": 70.91,
+     "similarity": 83.98,
+     "suitability": 57.84,
+     "twin": 62479
+    },
+    {
+     "rank": 10,
+     "earth_id": 21412,
+     "lat": 30.5,
+     "lon": -7.5,
+     "final": 70.9,
+     "similarity": 97.55,
+     "suitability": 44.25,
+     "twin": 62516
+    },
+    {
+     "rank": 11,
+     "earth_id": 42951,
+     "lat": -29.5,
+     "lon": -68.5,
+     "final": 70.56,
+     "similarity": 98.33,
+     "suitability": 42.78,
+     "twin": 62135
+    },
+    {
+     "rank": 12,
+     "earth_id": 15750,
+     "lat": 46.5,
+     "lon": 90.5,
+     "final": 70.28,
+     "similarity": 95.38,
+     "suitability": 45.19,
+     "twin": 63843
+    },
+    {
+     "rank": 13,
+     "earth_id": 17897,
+     "lat": 40.5,
+     "lon": 77.5,
+     "final": 70.15,
+     "similarity": 90.49,
+     "suitability": 49.81,
+     "twin": 62523
+    },
+    {
+     "rank": 14,
+     "earth_id": 20695,
+     "lat": 32.5,
+     "lon": -4.5,
+     "final": 69.75,
+     "similarity": 95.06,
+     "suitability": 44.45,
+     "twin": 62135
+    },
+    {
+     "rank": 15,
+     "earth_id": 44750,
+     "lat": -34.5,
+     "lon": -69.5,
+     "final": 69.56,
+     "similarity": 92.12,
+     "suitability": 47.0,
+     "twin": 63822
+    },
+    {
+     "rank": 16,
+     "earth_id": 16463,
+     "lat": 44.5,
+     "lon": 83.5,
+     "final": 69.53,
+     "similarity": 95.17,
+     "suitability": 43.9,
+     "twin": 63526
+    },
+    {
+     "rank": 17,
+     "earth_id": 21832,
+     "lat": 29.5,
+     "lon": 52.5,
+     "final": 69.45,
+     "similarity": 96.68,
+     "suitability": 42.21,
+     "twin": 62515
+    },
+    {
+     "rank": 18,
+     "earth_id": 21833,
+     "lat": 29.5,
+     "lon": 53.5,
+     "final": 69.44,
+     "similarity": 92.5,
+     "suitability": 46.39,
+     "twin": 62515
+    },
+    {
+     "rank": 19,
+     "earth_id": 19672,
+     "lat": 35.5,
+     "lon": 52.5,
+     "final": 69.33,
+     "similarity": 93.33,
+     "suitability": 45.32,
+     "twin": 63657
+    },
+    {
+     "rank": 20,
+     "earth_id": 17898,
+     "lat": 40.5,
+     "lon": 78.5,
+     "final": 69.31,
+     "similarity": 89.85,
+     "suitability": 48.77,
+     "twin": 63832
+    }
+   ],
+   "what_orders_the_top": {
+    "top5": {
+     "similarity_range": [
+      95.03,
+      99.36
+     ],
+     "suitability_range": [
+      43.91,
+      47.96
+     ],
+     "final_range": [
+      71.28,
+      72.29
+     ],
+     "var_share_0.25var_sim": 3.1703791716717746,
+     "var_share_0.25var_suit": 3.3956102783725703,
+     "spearman_final_vs_similarity": 0.3,
+     "spearman_final_vs_suitability": 0.19999999999999998
+    },
+    "top20": {
+     "similarity_range": [
+      83.98,
+      99.36
+     ],
+     "suitability_range": [
+      42.21,
+      57.84
+     ],
+     "final_range": [
+      69.31,
+      72.29
+     ],
+     "var_share_0.25var_sim": 3.161275105838074,
+     "var_share_0.25var_suit": 2.958499673194238,
+     "spearman_final_vs_similarity": 0.4451127819548871,
+     "spearman_final_vs_suitability": 0.26917293233082706
+    },
+    "top100": {
+     "similarity_range": [
+      73.94,
+      99.48
+     ],
+     "suitability_range": [
+      28.12,
+      57.84
+     ],
+     "final_range": [
+      63.8,
+      72.29
+     ],
+     "var_share_0.25var_sim": 1.2747708291294357,
+     "var_share_0.25var_suit": 1.719973083992181,
+     "spearman_final_vs_similarity": 0.1972636443625473,
+     "spearman_final_vs_suitability": 0.5582079164374213
+    },
+    "all": {
+     "spearman_final_vs_similarity": 0.674783222878848,
+     "spearman_final_vs_suitability": 0.6826699349094314,
+     "spearman_similarity_vs_suitability": -0.01577164880693676,
+     "sd_similarity": 7.991719547965466,
+     "sd_suitability": 7.778322596822975
+    }
+   },
+   "ties": {
+    "rows_sharing_their_final_with_another_row": 98,
+    "within_top5": 0,
+    "within_top20": 0,
+    "within_top100": 20,
+    "rank5_final": 71.28,
+    "rank6_final": 71.24,
+    "rows_with_final_equal_to_rank5": 1,
+    "gap_rank5_rank6": 0.04000000000000625,
+    "tie_groups_in_top20": []
+   },
+   "top5_distance_km": [
+    [
+     0.0,
+     1007.6274595221822,
+     1177.075098415484,
+     7295.3358108023485,
+     751.6010650099433
+    ],
+    [
+     1007.6274595221822,
+     0.0,
+     342.71742324609414,
+     8099.611162056055,
+     268.09167250100904
+    ],
+    [
+     1177.075098415484,
+     342.71742324609414,
+     0.0,
+     8016.330389807819,
+     546.1596376691929
+    ],
+    [
+     7295.3358108023485,
+     8099.611162056055,
+     8016.330389807819,
+     0.0,
+     7931.683043784243
+    ],
+    [
+     751.6010650099433,
+     268.09167250100904,
+     546.1596376691929,
+     7931.683043784243,
+     0.0
+    ]
+   ],
+   "top5_min_distance_km": 268.09167250100904,
+   "top5_adjacent_cell_pairs_by_rank": [],
+   "top5_same_cell": false,
+   "top5_distinct_twins": 5,
+   "min_separation_alternatives": {
+    "2deg_222km": {
+     "min_km": 222.38985328911747,
+     "ranks": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "earth_ids": [
+      17538,
+      16830,
+      15751,
+      21054,
+      17187
+     ],
+     "finals": [
+      72.29,
+      72.28,
+      71.73,
+      71.63,
+      71.28
+     ],
+     "similarities": [
+      97.31,
+      96.61,
+      96.86,
+      99.36,
+      95.03
+     ],
+     "twins": [
+      63528,
+      63841,
+      64018,
+      62517,
+      62523
+     ],
+     "sum_final_lost_vs_current": 0.0,
+     "fifth_final": 71.28,
+     "fifth_final_lost": 0.0,
+     "members_changed": 0
+    },
+    "500km": {
+     "min_km": 500.0,
+     "ranks": [
+      1,
+      2,
+      4,
+      6,
+      9
+     ],
+     "earth_ids": [
+      17538,
+      16830,
+      21054,
+      42949,
+      18627
+     ],
+     "finals": [
+      72.29,
+      72.28,
+      71.63,
+      71.24,
+      70.91
+     ],
+     "similarities": [
+      97.31,
+      96.61,
+      99.36,
+      93.41,
+      83.98
+     ],
+     "twins": [
+      63528,
+      63841,
+      62517,
+      62477,
+      62479
+     ],
+     "sum_final_lost_vs_current": 0.86,
+     "fifth_final": 70.91,
+     "fifth_final_lost": 0.37,
+     "members_changed": 2
+    },
+    "1000km": {
+     "min_km": 1000.0,
+     "ranks": [
+      1,
+      2,
+      4,
+      6,
+      17
+     ],
+     "earth_ids": [
+      17538,
+      16830,
+      21054,
+      42949,
+      21832
+     ],
+     "finals": [
+      72.29,
+      72.28,
+      71.63,
+      71.24,
+      69.45
+     ],
+     "similarities": [
+      97.31,
+      96.61,
+      99.36,
+      93.41,
+      96.68
+     ],
+     "twins": [
+      63528,
+      63841,
+      62517,
+      62477,
+      62515
+     ],
+     "sum_final_lost_vs_current": 2.32,
+     "fifth_final": 69.45,
+     "fifth_final_lost": 1.83,
+     "members_changed": 2
+    }
+   },
+   "distinct_twin_alternative": {
+    "ranks": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "finals": [
+     72.29,
+     72.28,
+     71.73,
+     71.63,
+     71.28
+    ],
+    "twins": [
+     63528,
+     63841,
+     64018,
+     62517,
+     62523
+    ],
+    "sum_final_lost_vs_current": 0.0
+   },
+   "twins": {
+    "distinct": 103,
+    "largest": {
+     "twin": 62848,
+     "points": 25,
+     "share": 0.05555555555555555
+    },
+    "top5_twins_by_points": [
+     [
+      62848,
+      25
+     ],
+     [
+      62846,
+      22
+     ],
+     [
+      63659,
+      22
+     ],
+     [
+      62847,
+      19
+     ],
+     [
+      62517,
+      17
+     ]
+    ],
+    "twins_json_distinct": 103,
+    "twins_json_largest": {
+     "twin_id": 62848,
+     "earth_cells": 25,
+     "share": 0.0556
+    },
+    "share_of_top20_on_most_used_twin_of_top5": null,
+    "points_on_twin_of_rank1": 1,
+    "top20_on_twin_of_rank1": 1,
+    "top100_on_twin_of_rank1": 1
+   },
+   "audio_top5_matches_bundle": [
+    {
+     "rank": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "bundle_earth": "E17538",
+     "bundle_moon": "M63528",
+     "same": true
+    },
+    {
+     "rank": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "bundle_earth": "E16830",
+     "bundle_moon": "M63841",
+     "same": true
+    },
+    {
+     "rank": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "bundle_earth": "E15751",
+     "bundle_moon": "M64018",
+     "same": true
+    },
+    {
+     "rank": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "bundle_earth": "E21054",
+     "bundle_moon": "M62517",
+     "same": true
+    },
+    {
+     "rank": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "bundle_earth": "E17187",
+     "bundle_moon": "M62523",
+     "same": true
+    }
+   ]
+  }
+ },
+ "rover_one_twin": {
+  "zone_cells": 5400,
+  "per_point": [
+   {
+    "rank": 1,
+    "earth_id": 17566,
+    "earth_values": {
+     "slope_deg": 1.038,
+     "roughness_m": 43.53,
+     "elevation_rel_m": 737.4755988109184
+    },
+    "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 244,
+    "zone_cells_with_slope_within_tolerance": 526,
+    "zone_cells_with_roughness_within_tolerance": 245,
+    "zone_cells_passing_with_similarity_ge_99": 1,
+    "best3": [
+     {
+      "moon_id": 59895,
+      "passes_filter": true,
+      "similarity": 99.5657,
+      "scores": {
+       "slope_deg": 0.998489,
+       "roughness_m": 0.999751,
+       "elevation_rel_m": 0.981807
+      },
+      "diff": {
+       "slope_deg": 0.11,
+       "roughness_m": 0.67,
+       "elevation_rel_m": 95.814
+      },
+      "moon_values": {
+       "slope_deg": 1.148,
+       "roughness_m": 44.2,
+       "elevation_rel_m": 833.289
+      }
+     },
+     {
+      "moon_id": 59717,
+      "passes_filter": false,
+      "similarity": 79.9913,
+      "scores": {
+       "slope_deg": 0.99994,
+       "roughness_m": 0.999844,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.022,
+       "roughness_m": 0.53,
+       "elevation_rel_m": 5185.686
+      },
+      "moon_values": {
+       "slope_deg": 1.016,
+       "roughness_m": 43.0,
+       "elevation_rel_m": -4448.211
+      }
+     },
+     {
+      "moon_id": 63305,
+      "passes_filter": false,
+      "similarity": 79.9733,
+      "scores": {
+       "slope_deg": 0.999422,
+       "roughness_m": 0.999911,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.068,
+       "roughness_m": 0.4,
+       "elevation_rel_m": 3688.986
+      },
+      "moon_values": {
+       "slope_deg": 0.97,
+       "roughness_m": 43.93,
+       "elevation_rel_m": -2951.511
+      }
+     }
+    ]
+   },
+   {
+    "rank": 2,
+    "earth_id": 23945,
+    "earth_values": {
+     "slope_deg": 1.215,
+     "roughness_m": 43.37,
+     "elevation_rel_m": 761.8755988109183
+    },
+    "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 244,
+    "zone_cells_with_slope_within_tolerance": 601,
+    "zone_cells_with_roughness_within_tolerance": 245,
+    "zone_cells_passing_with_similarity_ge_99": 1,
+    "best3": [
+     {
+      "moon_id": 59895,
+      "passes_filter": true,
+      "similarity": 99.7593,
+      "scores": {
+       "slope_deg": 0.999439,
+       "roughness_m": 0.999617,
+       "elevation_rel_m": 0.989852
+      },
+      "diff": {
+       "slope_deg": 0.067,
+       "roughness_m": 0.83,
+       "elevation_rel_m": 71.414
+      },
+      "moon_values": {
+       "slope_deg": 1.148,
+       "roughness_m": 44.2,
+       "elevation_rel_m": 833.289
+      }
+     },
+     {
+      "moon_id": 60062,
+      "passes_filter": false,
+      "similarity": 79.99,
+      "scores": {
+       "slope_deg": 0.999992,
+       "roughness_m": 0.999758,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.008,
+       "roughness_m": 0.66,
+       "elevation_rel_m": 4581.086
+      },
+      "moon_values": {
+       "slope_deg": 1.223,
+       "roughness_m": 44.03,
+       "elevation_rel_m": -3819.211
+      }
+     },
+     {
+      "moon_id": 60059,
+      "passes_filter": false,
+      "similarity": 79.96,
+      "scores": {
+       "slope_deg": 0.99994,
+       "roughness_m": 0.999062,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.022,
+       "roughness_m": 1.3,
+       "elevation_rel_m": 4482.586
+      },
+      "moon_values": {
+       "slope_deg": 1.237,
+       "roughness_m": 44.67,
+       "elevation_rel_m": -3720.711
+      }
+     }
+    ]
+   },
+   {
+    "rank": 3,
+    "earth_id": 18282,
+    "earth_values": {
+     "slope_deg": 0.908,
+     "roughness_m": 38.75,
+     "elevation_rel_m": 747.6755988109182
+    },
+    "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 219,
+    "zone_cells_with_slope_within_tolerance": 473,
+    "zone_cells_with_roughness_within_tolerance": 219,
+    "zone_cells_passing_with_similarity_ge_99": 0,
+    "best3": [
+     {
+      "moon_id": 59895,
+      "passes_filter": true,
+      "similarity": 98.7673,
+      "scores": {
+       "slope_deg": 0.992826,
+       "roughness_m": 0.983634,
+       "elevation_rel_m": 0.985447
+      },
+      "diff": {
+       "slope_deg": 0.24,
+       "roughness_m": 5.45,
+       "elevation_rel_m": 85.614
+      },
+      "moon_values": {
+       "slope_deg": 1.148,
+       "roughness_m": 44.2,
+       "elevation_rel_m": 833.289
+      }
+     },
+     {
+      "moon_id": 60064,
+      "passes_filter": false,
+      "similarity": 79.9266,
+      "scores": {
+       "slope_deg": 0.999964,
+       "roughness_m": 0.998202,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.017,
+       "roughness_m": 1.8,
+       "elevation_rel_m": 4591.586
+      },
+      "moon_values": {
+       "slope_deg": 0.925,
+       "roughness_m": 36.95,
+       "elevation_rel_m": -3843.911
+      }
+     },
+     {
+      "moon_id": 59699,
+      "passes_filter": false,
+      "similarity": 79.9263,
+      "scores": {
+       "slope_deg": 0.999724,
+       "roughness_m": 0.998433,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.047,
+       "roughness_m": 1.68,
+       "elevation_rel_m": 4618.486
+      },
+      "moon_values": {
+       "slope_deg": 0.955,
+       "roughness_m": 40.43,
+       "elevation_rel_m": -3870.811
+      }
+     }
+    ]
+   },
+   {
+    "rank": 4,
+    "earth_id": 18280,
+    "earth_values": {
+     "slope_deg": 1.131,
+     "roughness_m": 48.91,
+     "elevation_rel_m": 851.4755988109184
+    },
+    "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 277,
+    "zone_cells_with_slope_within_tolerance": 564,
+    "zone_cells_with_roughness_within_tolerance": 279,
+    "zone_cells_passing_with_similarity_ge_99": 1,
+    "best3": [
+     {
+      "moon_id": 59895,
+      "passes_filter": true,
+      "similarity": 99.4954,
+      "scores": {
+       "slope_deg": 0.999964,
+       "roughness_m": 0.987751,
+       "elevation_rel_m": 0.999339
+      },
+      "diff": {
+       "slope_deg": 0.017,
+       "roughness_m": 4.71,
+       "elevation_rel_m": 18.186
+      },
+      "moon_values": {
+       "slope_deg": 1.148,
+       "roughness_m": 44.2,
+       "elevation_rel_m": 833.289
+      }
+     },
+     {
+      "moon_id": 60793,
+      "passes_filter": false,
+      "similarity": 79.9938,
+      "scores": {
+       "slope_deg": 0.999934,
+       "roughness_m": 0.999911,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.023,
+       "roughness_m": 0.4,
+       "elevation_rel_m": 4801.886
+      },
+      "moon_values": {
+       "slope_deg": 1.154,
+       "roughness_m": 48.51,
+       "elevation_rel_m": -3950.411
+      }
+     },
+     {
+      "moon_id": 63360,
+      "passes_filter": false,
+      "similarity": 79.9758,
+      "scores": {
+       "slope_deg": 0.999535,
+       "roughness_m": 0.999861,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.061,
+       "roughness_m": 0.5,
+       "elevation_rel_m": 3475.186
+      },
+      "moon_values": {
+       "slope_deg": 1.192,
+       "roughness_m": 49.41,
+       "elevation_rel_m": -2623.711
+      }
+     }
+    ]
+   },
+   {
+    "rank": 5,
+    "earth_id": 15395,
+    "earth_values": {
+     "slope_deg": 1.236,
+     "roughness_m": 41.33,
+     "elevation_rel_m": 962.4755988109184
+    },
+    "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 232,
+    "zone_cells_with_slope_within_tolerance": 611,
+    "zone_cells_with_roughness_within_tolerance": 232,
+    "zone_cells_passing_with_similarity_ge_99": 1,
+    "best3": [
+     {
+      "moon_id": 59895,
+      "passes_filter": true,
+      "similarity": 99.1221,
+      "scores": {
+       "slope_deg": 0.999032,
+       "roughness_m": 0.995434,
+       "elevation_rel_m": 0.967173
+      },
+      "diff": {
+       "slope_deg": 0.088,
+       "roughness_m": 2.87,
+       "elevation_rel_m": 129.186
+      },
+      "moon_values": {
+       "slope_deg": 1.148,
+       "roughness_m": 44.2,
+       "elevation_rel_m": 833.289
+      }
+     },
+     {
+      "moon_id": 63455,
+      "passes_filter": false,
+      "similarity": 79.9766,
+      "scores": {
+       "slope_deg": 0.999456,
+       "roughness_m": 0.99996,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.066,
+       "roughness_m": 0.27,
+       "elevation_rel_m": 3172.286
+      },
+      "moon_values": {
+       "slope_deg": 1.17,
+       "roughness_m": 41.06,
+       "elevation_rel_m": -2209.811
+      }
+     },
+     {
+      "moon_id": 60574,
+      "passes_filter": false,
+      "similarity": 79.9564,
+      "scores": {
+       "slope_deg": 0.998919,
+       "roughness_m": 0.999991,
+       "elevation_rel_m": 0.0
+      },
+      "diff": {
+       "slope_deg": 0.093,
+       "roughness_m": 0.13,
+       "elevation_rel_m": 5438.486
+      },
+      "moon_values": {
+       "slope_deg": 1.143,
+       "roughness_m": 41.46,
+       "elevation_rel_m": -4476.011
+      }
+     }
+    ]
+   }
+  ],
+  "twin": {
+   "moon_id": 59895,
+   "lat": -76.5,
+   "lon": -44.5,
+   "values": {
+    "slope_deg": 1.148,
+    "roughness_m": 44.2,
+    "elevation_rel_m": 833.2894020283721
+   },
+   "percentile_in_zone": {
+    "slope_deg": 1.8240740740740742,
+    "roughness_m": 1.8981481481481481,
+    "elevation_rel_m": 83.78703703703704
+   }
+  },
+  "zone_distribution": {
+   "slope_deg": {
+    "q00": 0.234,
+    "q10": 3.076,
+    "q25": 4.529999999999999,
+    "q50": 6.415,
+    "q75": 9.043,
+    "q90": 11.619500000000006,
+    "q99": 15.505150000000004,
+    "q100": 22.846
+   },
+   "roughness_m": {
+    "q00": 7.11,
+    "q10": 99.205,
+    "q25": 141.53500000000003,
+    "q50": 198.49,
+    "q75": 264.505,
+    "q90": 336.373,
+    "q99": 526.5578000000002,
+    "q100": 616.28
+   },
+   "elevation_rel_m": {
+    "q00": -6150.510597971627,
+    "q10": -3326.4705979716277,
+    "q25": -2313.7605979716277,
+    "q50": -1127.5605979716279,
+    "q75": 86.48940202837218,
+    "q90": 1591.2194020283723,
+    "q99": 3921.1804020284203,
+    "q100": 6344.589402028372
+   }
+  },
+  "zone_cells_slope_le_2_and_rough_le_60": 159,
+  "zone_cells_slope_le_1.5_and_rough_le_50": 111,
+  "earth_top100": {
+   "slope_deg": {
+    "q00": 0.642,
+    "q50": 1.2435,
+    "q100": 2.365
+   },
+   "roughness_m": {
+    "q00": 26.04,
+    "q50": 47.69,
+    "q100": 88.0
+   },
+   "elevation_rel_m": {
+    "q00": -604.0244011890817,
+    "q50": 505.67559881091825,
+    "q100": 2340.3755988109187
+   }
+  },
+  "earth_ranked_all": {
+   "slope_deg": {
+    "q10": 0.626,
+    "q50": 1.5945,
+    "q90": 4.6968
+   },
+   "roughness_m": {
+    "q10": 23.471,
+    "q50": 64.775,
+    "q90": 176.03699999999998
+   },
+   "elevation_rel_m": {
+    "q10": -516.7244011890816,
+    "q50": -90.87440118908165,
+    "q90": 1136.325598810918
+   }
+  },
+  "rover_soft_spec": {
+   "slope_300m_deg": {
+    "weight": 0.45,
+    "bad": 15.0,
+    "good": 1.0,
+    "why": "menos pendiente = mas traficable"
+   },
+   "rough_300m_m": {
+    "weight": 0.3,
+    "bad": 650.0,
+    "good": 30.0,
+    "why": "menos rugosidad = menos obstaculos"
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.25,
+    "bad": 0.0,
+    "good": 0.7,
+    "why": "suelo expuesto firme frente a vegetacion"
+   }
+  }
+ }
+}

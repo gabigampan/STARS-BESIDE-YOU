@@ -1,0 +1,80 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+rover,common_gate.elevation_m.drop,common_gate,drop common gate elevation_m,10338,1,0,10193,1,0,0,5,True,50,True,
+rover,common_gate.elevation_m.minx0.9,common_gate,common gate elevation_m min 1.0 x0.9,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,common_gate.elevation_m.minx1.1,common_gate,common gate elevation_m min 1.0 x1.1,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,common_gate.mask_fraction.drop,common_gate,drop common gate mask_fraction,12131,1794,0,11985,1793,0,0,5,True,37,False,
+rover,common_gate.mask_fraction.minx0.9,common_gate,common gate mask_fraction min 0.3 x0.9,10455,118,0,10310,118,0,0,5,True,48,False,
+rover,common_gate.mask_fraction.minx1.1,common_gate,common gate mask_fraction min 0.3 x1.1,10225,0,112,10080,0,112,0,5,True,50,True,
+rover,require_present.slope_300m_deg.drop,require_present,drop require_present slope_300m_deg,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,require_present.rough_300m_m.drop,require_present,drop require_present rough_300m_m,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.slope_300m_deg.drop,gate,drop gate slope_300m_deg,18184,7847,0,13915,3723,0,0,5,True,50,True,
+rover,gate.slope_300m_deg.min.drop,gate,drop min of gate slope_300m_deg,18184,7847,0,13915,3723,0,0,5,True,50,True,
+rover,gate.slope_300m_deg.minx0.9,gate,gate slope_300m_deg min 0.5 x0.9,10941,604,0,10621,429,0,0,5,True,50,True,
+rover,gate.slope_300m_deg.minx1.1,gate,gate slope_300m_deg min 0.5 x1.1,9854,0,483,9774,0,418,0,5,True,50,True,
+rover,gate.slope_300m_deg.max.drop,gate,drop max of gate slope_300m_deg,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.slope_300m_deg.maxx0.9,gate,gate slope_300m_deg max 15.0 x0.9,10336,0,1,10191,0,1,0,5,True,50,True,
+rover,gate.slope_300m_deg.maxx1.1,gate,gate slope_300m_deg max 15.0 x1.1,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.drop,gate,drop gate rough_300m_m,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.min.drop,gate,drop min of gate rough_300m_m,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.minx0.9,gate,gate rough_300m_m min 5.0 x0.9,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.minx1.1,gate,gate rough_300m_m min 5.0 x1.1,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.max.drop,gate,drop max of gate rough_300m_m,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.maxx0.9,gate,gate rough_300m_m max 650.0 x0.9,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,gate.rough_300m_m.maxx1.1,gate,gate rough_300m_m max 650.0 x1.1,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,soft.slope_300m_deg.weight0,soft_weight,suitability weight of slope_300m_deg (0.45) -> 0,10337,0,0,10192,0,0,0,3,False,39,False,16841-59895;16482-59895
+rover,soft.slope_300m_deg.weight x0.9,soft_weight,suitability weight of slope_300m_deg x0.9,10337,0,0,10192,0,0,0,5,True,49,False,
+rover,soft.slope_300m_deg.weight x1.1,soft_weight,suitability weight of slope_300m_deg x1.1,10337,0,0,10192,0,0,0,5,True,49,False,
+rover,soft.slope_300m_deg.badx0.9,soft_utility,bad of slope_300m_deg (15.0) x0.9,10337,0,0,10192,0,0,0,4,False,49,False,18281-59895
+rover,soft.slope_300m_deg.badx1.1,soft_utility,bad of slope_300m_deg (15.0) x1.1,10337,0,0,10192,0,0,0,5,True,48,False,
+rover,soft.slope_300m_deg.goodx0.9,soft_utility,good of slope_300m_deg (1.0) x0.9,10337,0,0,10192,0,0,0,4,False,48,False,18281-59895
+rover,soft.slope_300m_deg.goodx1.1,soft_utility,good of slope_300m_deg (1.0) x1.1,10337,0,0,10192,0,0,0,5,False,49,False,
+rover,soft.rough_300m_m.weight0,soft_weight,suitability weight of rough_300m_m (0.3) -> 0,10337,0,0,10192,0,0,0,4,False,47,False,26144-59895
+rover,soft.rough_300m_m.weight x0.9,soft_weight,suitability weight of rough_300m_m x0.9,10337,0,0,10192,0,0,0,5,True,50,False,
+rover,soft.rough_300m_m.weight x1.1,soft_weight,suitability weight of rough_300m_m x1.1,10337,0,0,10192,0,0,0,5,True,49,False,
+rover,soft.rough_300m_m.badx0.9,soft_utility,bad of rough_300m_m (650.0) x0.9,10337,0,0,10192,0,0,0,5,True,49,False,
+rover,soft.rough_300m_m.badx1.1,soft_utility,bad of rough_300m_m (650.0) x1.1,10337,0,0,10192,0,0,0,5,True,50,False,
+rover,soft.rough_300m_m.goodx0.9,soft_utility,good of rough_300m_m (30.0) x0.9,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,soft.rough_300m_m.goodx1.1,soft_utility,good of rough_300m_m (30.0) x1.1,10337,0,0,10192,0,0,0,5,True,50,False,
+rover,soft.rock_or_bare_frac.weight0,soft_weight,suitability weight of rock_or_bare_frac (0.25) -> 0,10337,0,0,10192,0,0,0,1,False,10,False,19007-59895;59451-59895;59738-59895;16633-59895
+rover,soft.rock_or_bare_frac.weight x0.9,soft_weight,suitability weight of rock_or_bare_frac x0.9,10337,0,0,10192,0,0,0,5,True,49,False,
+rover,soft.rock_or_bare_frac.weight x1.1,soft_weight,suitability weight of rock_or_bare_frac x1.1,10337,0,0,10192,0,0,0,5,True,50,False,
+rover,soft.rock_or_bare_frac.badx0.9,soft_utility,bad of rock_or_bare_frac (0.0) x0.9,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,soft.rock_or_bare_frac.badx1.1,soft_utility,bad of rock_or_bare_frac (0.0) x1.1,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,soft.rock_or_bare_frac.goodx0.9,soft_utility,good of rock_or_bare_frac (0.7) x0.9,10337,0,0,10192,0,0,0,5,True,47,False,
+rover,soft.rock_or_bare_frac.goodx1.1,soft_utility,good of rock_or_bare_frac (0.7) x1.1,10337,0,0,10192,0,0,0,3,False,46,False,18281-59895;16841-59895
+rover,sim.slope_deg.weight0,sim_weight,"similarity weight of slope_deg (0.4) -> 0, still in the pair filter",10337,0,0,10192,0,0,3912,4,False,27,False,16841-59895
+rover,sim.slope_deg.removed,sim_weight,slope_deg removed from similarity AND pair filter,10337,0,0,10192,0,0,4076,4,False,27,False,16841-59895
+rover,sim.slope_deg.weight x0.9,sim_weight,similarity weight of slope_deg x0.9,10337,0,0,10192,0,0,185,5,True,49,False,
+rover,sim.slope_deg.tolerance x0.9,tolerance,tolerance of slope_deg (2.0) x0.9,10337,0,0,10192,0,0,368,5,True,48,False,
+rover,sim.slope_deg.weight x1.1,sim_weight,similarity weight of slope_deg x1.1,10337,0,0,10192,0,0,171,5,True,49,False,
+rover,sim.slope_deg.tolerance x1.1,tolerance,tolerance of slope_deg (2.0) x1.1,10337,0,0,10192,0,0,299,5,True,49,False,
+rover,sim.roughness_m.weight0,sim_weight,"similarity weight of roughness_m (0.4) -> 0, still in the pair filter",10337,0,0,10192,0,0,5243,0,False,28,False,15764-59895;16844-59895;15034-59895;15394-59895;17196-59895
+rover,sim.roughness_m.removed,sim_weight,roughness_m removed from similarity AND pair filter,10337,0,0,10329,137,0,6184,0,False,28,False,15764-59895;16844-59895;15034-59895;15394-59895;17196-59895
+rover,sim.roughness_m.weight x0.9,sim_weight,similarity weight of roughness_m x0.9,10337,0,0,10192,0,0,214,5,True,48,False,
+rover,sim.roughness_m.tolerance x0.9,tolerance,tolerance of roughness_m (30.0) x0.9,10337,0,0,9972,0,220,364,5,True,46,False,
+rover,sim.roughness_m.weight x1.1,sim_weight,similarity weight of roughness_m x1.1,10337,0,0,10192,0,0,145,5,True,47,False,
+rover,sim.roughness_m.tolerance x1.1,tolerance,tolerance of roughness_m (30.0) x1.1,10337,0,0,10270,78,0,368,4,False,47,False,18281-59895
+rover,sim.elevation_rel_m.weight0,sim_weight,"similarity weight of elevation_rel_m (0.2) -> 0, still in the pair filter",10337,0,0,10192,0,0,5476,0,False,2,False,11627-60245;40874-60244;11626-60245;6385-60245;6408-60245
+rover,sim.elevation_rel_m.removed,sim_weight,elevation_rel_m removed from similarity AND pair filter,10337,0,0,10337,145,0,10101,0,False,0,False,3872-61299;4037-63714;4042-61217;4742-63712;4750-63712
+rover,sim.elevation_rel_m.weight x0.9,sim_weight,similarity weight of elevation_rel_m x0.9,10337,0,0,10192,0,0,245,5,True,48,False,
+rover,sim.elevation_rel_m.tolerance x0.9,tolerance,tolerance of elevation_rel_m (500.0) x0.9,10337,0,0,10114,0,78,739,5,True,47,False,
+rover,sim.elevation_rel_m.weight x1.1,sim_weight,similarity weight of elevation_rel_m x1.1,10337,0,0,10192,0,0,249,5,True,48,False,
+rover,sim.elevation_rel_m.tolerance x1.1,tolerance,tolerance of elevation_rel_m (500.0) x1.1,10337,0,0,10284,92,0,555,5,True,46,False,
+rover,mult.keyx0.9,filter_bound,filter multiplier key (1.0) x0.9,10337,0,0,9972,0,220,10,5,True,50,True,
+rover,mult.keyx1.1,filter_bound,filter multiplier key (1.0) x1.1,10337,0,0,10270,78,0,5,5,True,50,True,
+rover,mult.secondaryx0.9,filter_bound,filter multiplier secondary (2.0) x0.9,10337,0,0,10114,0,78,379,5,True,50,True,
+rover,mult.secondaryx1.1,filter_bound,filter multiplier secondary (2.0) x1.1,10337,0,0,10284,92,0,260,5,True,50,True,
+rover,zone.lat_max=-67.5,zone,zone latitude limit -75.0 -> -67.5,10337,0,0,10309,117,0,8434,0,False,0,False,4036-58543;4037-58543;6030-58543;5319-58543;6036-58543
+rover,zone.lat_max=-82.5,zone,zone latitude limit -75.0 -> -82.5,10337,0,0,7463,0,2729,5042,0,False,0,False,27229-64346;5327-64346;4771-64346;5134-64346;4770-63690
+rover,zone.lat_max=-74,zone,zone latitude limit -75.0 -> -74,10337,0,0,10192,0,0,641,5,True,50,True,
+rover,zone.lat_max=-76,zone,zone latitude limit -75.0 -> -76,10337,0,0,10192,0,0,407,5,True,50,True,
+rover,alpha=0.45,alpha,alpha 0.5 -> 0.45,10337,0,0,10192,0,0,0,4,False,47,False,18281-59895
+rover,alpha=0.55,alpha,alpha 0.5 -> 0.55,10337,0,0,10192,0,0,0,5,True,46,False,
+rover,alpha=0.0,alpha,alpha 0.5 -> 0.0,10337,0,0,10192,0,0,0,0,False,0,False,3872-60245;4035-60245;4037-61116;4038-60245;4042-60245
+rover,alpha=1.0,alpha,alpha 0.5 -> 1.0,10337,0,0,10192,0,0,0,0,False,0,False,9520-62054;3342-63999;26941-64359;30185-64276;2615-60227
+rover,utility_decimals=None,rounding,utilities not rounded to 6 decimals,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,score_decimals=12,rounding,per-variable scores rounded to 12 instead of 6 decimals,10337,0,0,10192,0,0,0,5,True,50,True,
+rover,final_decimals=12,rounding,rank on the final score at 12 decimals instead of 2,10337,0,0,10192,0,0,0,5,True,50,False,
+rover,body_mean.EARTHx1.01,constant,EARTH mean elevation x1.01,10337,0,0,10193,1,0,206,5,True,49,False,
+rover,body_mean.MOONx1.01,constant,MOON mean elevation x1.01,10337,0,0,10192,0,0,62,5,True,50,False,
+rover,body_mean.unweighted,constant,body mean elevation without cos(lat) weight,10337,0,0,10255,120,57,7058,0,False,0,False,16791-60245;4750-60245;6385-60245;6026-60245;4742-60245

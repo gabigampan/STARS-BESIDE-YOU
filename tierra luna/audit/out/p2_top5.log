@@ -1,0 +1,3 @@
+rover rank rule: True min dist top5 km: 171.6 ties top5: 0 gap5-6: 0.04
+solar rank rule: True min dist top5 km: 106.6 ties top5: 0 gap5-6: 0.01
+lunar_base rank rule: True min dist top5 km: 268.1 ties top5: 0 gap5-6: 0.04

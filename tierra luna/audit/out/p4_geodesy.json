@@ -1,0 +1,302 @@
+{
+ "lunar_base_1": {
+  "cell_centre": [
+   41.5,
+   78.5
+  ],
+  "compass_sphere": "north",
+  "compass_wgs84": "north",
+  "direction_ok_both": true,
+  "place": "Aheqi",
+  "place_latlon": [
+   40.94152,
+   78.44379
+  ],
+  "sphere_bearing": 4.31,
+  "sphere_km": 62.278,
+  "spoken_direction": "north",
+  "spoken_km": 62,
+  "wgs84_bearing": 4.33,
+  "wgs84_km": 62.203
+ },
+ "lunar_base_2": {
+  "cell_centre": [
+   43.5,
+   90.5
+  ],
+  "compass_sphere": "southeast",
+  "compass_wgs84": "southeast",
+  "direction_ok_both": true,
+  "place": "Mori",
+  "place_latlon": [
+   43.82442,
+   90.19476
+  ],
+  "sphere_bearing": 145.65,
+  "sphere_km": 43.637,
+  "spoken_direction": "southeast",
+  "spoken_km": 44,
+  "wgs84_bearing": 145.56,
+  "wgs84_km": 43.651
+ },
+ "lunar_base_3": {
+  "cell_centre": [
+   46.5,
+   91.5
+  ],
+  "compass_sphere": "north",
+  "compass_wgs84": "north",
+  "direction_ok_both": true,
+  "place": "Burenhayrhan",
+  "place_latlon": [
+   46.09237,
+   91.54796
+  ],
+  "sphere_bearing": 355.37,
+  "sphere_km": 45.476,
+  "spoken_direction": "north",
+  "spoken_km": 46,
+  "wgs84_bearing": 355.35,
+  "wgs84_km": 45.461
+ },
+ "lunar_base_4": {
+  "cell_centre": [
+   31.5,
+   -5.5
+  ],
+  "compass_sphere": "southeast",
+  "compass_wgs84": "southeast",
+  "direction_ok_both": true,
+  "place": "Tinghir",
+  "place_latlon": [
+   31.51472,
+   -5.53278
+  ],
+  "sphere_bearing": 117.77,
+  "sphere_km": 3.512,
+  "spoken_direction": "southeast",
+  "spoken_km": 4,
+  "wgs84_bearing": 117.65,
+  "wgs84_km": 3.516
+ },
+ "lunar_base_5": {
+  "cell_centre": [
+   42.5,
+   87.5
+  ],
+  "compass_sphere": "south",
+  "compass_wgs84": "south",
+  "direction_ok_both": true,
+  "place": "Ewirgol",
+  "place_latlon": [
+   42.96444,
+   87.66111
+  ],
+  "sphere_bearing": 194.35,
+  "sphere_km": 53.293,
+  "spoken_direction": "south",
+  "spoken_km": 53,
+  "wgs84_bearing": 194.4,
+  "wgs84_km": 53.254
+ },
+ "rover_1": {
+  "cell_centre": [
+   41.5,
+   106.5
+  ],
+  "compass_sphere": "northwest",
+  "compass_wgs84": "northwest",
+  "direction_ok_both": true,
+  "place": "Bayinbaolige",
+  "place_latlon": [
+   41.09139,
+   107.06639
+  ],
+  "sphere_bearing": 314.02,
+  "sphere_km": 65.599,
+  "spoken_direction": "northwest",
+  "spoken_km": 66,
+  "wgs84_bearing": 313.92,
+  "wgs84_km": 65.649
+ },
+ "rover_2": {
+  "cell_centre": [
+   23.5,
+   5.5
+  ],
+  "compass_sphere": "north",
+  "compass_wgs84": "north",
+  "direction_ok_both": true,
+  "place": "Tamanrasset",
+  "place_latlon": [
+   22.785,
+   5.52278
+  ],
+  "sphere_bearing": 358.33,
+  "sphere_km": 79.538,
+  "spoken_direction": "north",
+  "spoken_km": 80,
+  "wgs84_bearing": 358.32,
+  "wgs84_km": 79.218
+ },
+ "rover_3": {
+  "cell_centre": [
+   39.5,
+   102.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Ehen Hudag",
+  "place_latlon": [
+   39.21074,
+   101.66898
+  ],
+  "sphere_bearing": 65.5,
+  "sphere_km": 78.356,
+  "spoken_direction": "northeast",
+  "spoken_km": 78,
+  "wgs84_bearing": 65.59,
+  "wgs84_km": 78.496
+ },
+ "rover_4": {
+  "cell_centre": [
+   39.5,
+   100.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Banqiao",
+  "place_latlon": [
+   39.29487,
+   100.31501
+  ],
+  "sphere_bearing": 34.81,
+  "sphere_km": 27.802,
+  "spoken_direction": "northeast",
+  "spoken_km": 28,
+  "wgs84_bearing": 34.92,
+  "wgs84_km": 27.795
+ },
+ "rover_5": {
+  "cell_centre": [
+   47.5,
+   95.5
+  ],
+  "compass_sphere": "southeast",
+  "compass_wgs84": "southeast",
+  "direction_ok_both": true,
+  "place": "Buga",
+  "place_latlon": [
+   47.65013,
+   95.0005
+  ],
+  "sphere_bearing": 113.83,
+  "sphere_km": 41.02,
+  "spoken_direction": "southeast",
+  "spoken_km": 41,
+  "wgs84_bearing": 113.76,
+  "wgs84_km": 41.121
+ },
+ "solar_1": {
+  "cell_centre": [
+   -16.5,
+   124.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Derby",
+  "place_latlon": [
+   -17.30295,
+   123.62864
+  ],
+  "sphere_bearing": 46.2,
+  "sphere_km": 128.708,
+  "spoken_direction": "northeast",
+  "spoken_km": 130,
+  "wgs84_bearing": 46.38,
+  "wgs84_km": 128.509
+ },
+ "solar_2": {
+  "cell_centre": [
+   -15.5,
+   125.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Derby",
+  "place_latlon": [
+   -17.30295,
+   123.62864
+  ],
+  "sphere_bearing": 45.14,
+  "sphere_km": 282.904,
+  "spoken_direction": "northeast",
+  "spoken_km": 280,
+  "wgs84_bearing": 45.32,
+  "wgs84_km": 282.421
+ },
+ "solar_3": {
+  "cell_centre": [
+   -17.5,
+   44.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Maintirano",
+  "place_latlon": [
+   -18.06354,
+   44.02951
+  ],
+  "sphere_bearing": 38.56,
+  "sphere_km": 80.052,
+  "spoken_direction": "northeast",
+  "spoken_km": 80,
+  "wgs84_bearing": 38.73,
+  "wgs84_km": 79.869
+ },
+ "solar_4": {
+  "cell_centre": [
+   -14.5,
+   126.5
+  ],
+  "compass_sphere": "northwest",
+  "compass_wgs84": "northwest",
+  "direction_ok_both": true,
+  "place": "Kununurra",
+  "place_latlon": [
+   -15.77813,
+   128.74414
+  ],
+  "sphere_bearing": 300.24,
+  "sphere_km": 279.673,
+  "spoken_direction": "northwest",
+  "spoken_km": 280,
+  "wgs84_bearing": 300.09,
+  "wgs84_km": 279.6
+ },
+ "solar_5": {
+  "cell_centre": [
+   -16.5,
+   125.5
+  ],
+  "compass_sphere": "northeast",
+  "compass_wgs84": "northeast",
+  "direction_ok_both": true,
+  "place": "Derby",
+  "place_latlon": [
+   -17.30295,
+   123.62864
+  ],
+  "sphere_bearing": 66.12,
+  "sphere_km": 218.198,
+  "spoken_direction": "northeast",
+  "spoken_km": 220,
+  "wgs84_bearing": 66.25,
+  "wgs84_km": 218.281
+ }
+}

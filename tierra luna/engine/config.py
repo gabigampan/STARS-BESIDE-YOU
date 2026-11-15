@@ -101,6 +101,14 @@ class EngineConfig(BaseModel):
     toa_insolation: Optional[Setting] = None
     lunar_day_earth_days: Optional[Setting] = None
     lunar_regions: Optional[Setting] = None
+    # decision of 2026-11-15 11:23 CET (contract revision 7)
+    mission_titles_short: Optional[Setting] = None
+    top5_selection: Optional[Setting] = None
+    top5_stability: Optional[Setting] = None
+    limit_facts: Optional[Setting] = None
+    external_validation: Optional[Setting] = None
+    twin_zone_regions: Optional[Setting] = None
+    limit_texts: Optional[Setting] = None
     # filled from the dataset descriptor (engine/datasets.json)
     dataset: Optional[Setting] = None
     inputs: Optional[Setting] = None

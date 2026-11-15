@@ -1,0 +1,103 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+lunar_base,common_gate.elevation_m.drop,common_gate,drop common gate elevation_m,2437,18,0,449,1,2,23,5,False,45,False,
+lunar_base,common_gate.elevation_m.minx0.9,common_gate,common gate elevation_m min 1.0 x0.9,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,common_gate.elevation_m.minx1.1,common_gate,common gate elevation_m min 1.0 x1.1,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,common_gate.mask_fraction.drop,common_gate,drop common gate mask_fraction,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,common_gate.mask_fraction.minx0.9,common_gate,common gate mask_fraction min 0.3 x0.9,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,common_gate.mask_fraction.minx1.1,common_gate,common gate mask_fraction min 0.3 x1.1,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,require_present.lst_diurnal_amp_k.drop,require_present,drop require_present lst_diurnal_amp_k,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,require_present.tmin_c.drop,require_present,drop require_present tmin_c,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,require_present.thermal_inertia_class.drop,require_present,drop require_present thermal_inertia_class,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,gate.lst_diurnal_amp_k.drop,gate,drop gate lst_diurnal_amp_k,9981,7562,0,2109,2014,355,95,0,False,0,False,2973-64027;2971-64026;3334-64026;2972-64026;3692-64026
+lunar_base,gate.lst_diurnal_amp_k.min.drop,gate,drop min of gate lst_diurnal_amp_k,9981,7562,0,2109,2014,355,95,0,False,0,False,2973-64027;2971-64026;3334-64026;2972-64026;3692-64026
+lunar_base,gate.lst_diurnal_amp_k.minx0.9,gate,gate lst_diurnal_amp_k min 15.0 x0.9,2826,407,0,529,137,58,306,0,False,9,False,17538-62880;44750-63668;18254-64021;17898-63836;18627-62479
+lunar_base,gate.lst_diurnal_amp_k.minx1.1,gate,gate lst_diurnal_amp_k min 15.0 x1.1,1998,0,421,347,73,176,230,0,False,3,False,17898-63835;42949-62477;18255-63831;15391-64018;15029-64026
+lunar_base,gate.tmin_c.drop,gate,drop gate tmin_c,4339,1920,0,497,158,111,293,0,False,8,False,18254-64020;42232-62479;17898-63841;17538-63867;18255-63841
+lunar_base,gate.tmin_c.max.drop,gate,drop max of gate tmin_c,4339,1920,0,497,158,111,293,0,False,8,False,18254-64020;42232-62479;17898-63841;17538-63867;18255-63841
+lunar_base,gate.tmin_c.maxx0.9,gate,gate tmin_c max 5.0 x0.9,2255,0,164,441,23,32,127,2,False,29,False,18627-62479;18254-63875;16833-63841
+lunar_base,gate.tmin_c.maxx1.1,gate,gate tmin_c max 5.0 x1.1,2570,151,0,451,17,16,100,3,False,32,False,42949-62477;44750-63822
+lunar_base,gate.thermal_inertia_class.drop,gate,drop gate thermal_inertia_class,2423,4,0,450,0,0,1,5,True,48,False,
+lunar_base,soft.lst_diurnal_amp_k.weight0,soft_weight,suitability weight of lst_diurnal_amp_k (0.35) -> 0,2419,0,0,450,0,0,0,3,False,42,False,15750-63843;18254-63875
+lunar_base,soft.lst_diurnal_amp_k.weight x0.9,soft_weight,suitability weight of lst_diurnal_amp_k x0.9,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.lst_diurnal_amp_k.weight x1.1,soft_weight,suitability weight of lst_diurnal_amp_k x1.1,2419,0,0,450,0,0,0,4,False,48,False,42949-62477
+lunar_base,soft.lst_diurnal_amp_k.badx0.9,soft_utility,bad of lst_diurnal_amp_k (15.0) x0.9,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.lst_diurnal_amp_k.badx1.1,soft_utility,bad of lst_diurnal_amp_k (15.0) x1.1,2419,0,0,450,0,0,0,4,False,48,False,42949-62477
+lunar_base,soft.lst_diurnal_amp_k.goodx0.9,soft_utility,good of lst_diurnal_amp_k (35.0) x0.9,2419,0,0,450,0,0,0,3,False,47,False,42949-62477;18627-62479
+lunar_base,soft.lst_diurnal_amp_k.goodx1.1,soft_utility,good of lst_diurnal_amp_k (35.0) x1.1,2419,0,0,450,0,0,0,5,True,48,False,
+lunar_base,soft.tmin_c.weight0,soft_weight,suitability weight of tmin_c (0.25) -> 0,2419,0,0,450,0,0,0,1,False,33,False,42949-62477;21412-62516;42951-62135;43311-62516
+lunar_base,soft.tmin_c.weight x0.9,soft_weight,suitability weight of tmin_c x0.9,2419,0,0,450,0,0,0,4,False,48,False,42949-62477
+lunar_base,soft.tmin_c.weight x1.1,soft_weight,suitability weight of tmin_c x1.1,2419,0,0,450,0,0,0,5,True,48,False,
+lunar_base,soft.tmin_c.badx0.9,soft_utility,bad of tmin_c (5.0) x0.9,2419,0,0,450,0,0,0,5,True,50,False,
+lunar_base,soft.tmin_c.badx1.1,soft_utility,bad of tmin_c (5.0) x1.1,2419,0,0,450,0,0,0,5,False,50,False,
+lunar_base,soft.tmin_c.goodx0.9,soft_utility,good of tmin_c (-50.0) x0.9,2419,0,0,450,0,0,0,5,False,49,False,
+lunar_base,soft.tmin_c.goodx1.1,soft_utility,good of tmin_c (-50.0) x1.1,2419,0,0,450,0,0,0,4,False,48,False,42949-62477
+lunar_base,soft.thermal_inertia_class.weight0,soft_weight,suitability weight of thermal_inertia_class (0.15) -> 0,2419,0,0,450,0,0,0,3,False,42,False,18627-62479;19340-62479
+lunar_base,soft.thermal_inertia_class.weight x0.9,soft_weight,suitability weight of thermal_inertia_class x0.9,2419,0,0,450,0,0,0,5,False,49,False,
+lunar_base,soft.thermal_inertia_class.weight x1.1,soft_weight,suitability weight of thermal_inertia_class x1.1,2419,0,0,450,0,0,0,5,True,48,False,
+lunar_base,soft.thermal_inertia_class.default0.4,soft_utility,default utility of thermal_inertia_class 0.5 -> 0.4,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,soft.thermal_inertia_class.map.roca-0.1,soft_utility,utility of thermal_inertia_class=roca 1.0 -0.1,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,soft.thermal_inertia_class.map.regolito-0.1,soft_utility,utility of thermal_inertia_class=regolito 1.0 -0.1,2419,0,0,450,0,0,0,5,True,48,False,
+lunar_base,soft.thermal_inertia_class.map.arena-0.1,soft_utility,utility of thermal_inertia_class=arena 0.9 -0.1,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,soft.thermal_inertia_class.map.suelo-0.1,soft_utility,utility of thermal_inertia_class=suelo 0.6 -0.1,2419,0,0,450,0,0,0,5,True,48,False,
+lunar_base,soft.thermal_inertia_class.map.hielo-0.1,soft_utility,utility of thermal_inertia_class=hielo 0.4 -0.1,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,soft.rock_or_bare_frac.weight0,soft_weight,suitability weight of rock_or_bare_frac (0.1) -> 0,2419,0,0,450,0,0,0,3,False,41,False,42949-62477;16833-63841
+lunar_base,soft.rock_or_bare_frac.weight x0.9,soft_weight,suitability weight of rock_or_bare_frac x0.9,2419,0,0,450,0,0,0,5,False,49,False,
+lunar_base,soft.rock_or_bare_frac.weight x1.1,soft_weight,suitability weight of rock_or_bare_frac x1.1,2419,0,0,450,0,0,0,5,False,48,False,
+lunar_base,soft.rock_or_bare_frac.badx0.9,soft_utility,bad of rock_or_bare_frac (0.1) x0.9,2419,0,0,450,0,0,0,5,False,50,False,
+lunar_base,soft.rock_or_bare_frac.badx1.1,soft_utility,bad of rock_or_bare_frac (0.1) x1.1,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.rock_or_bare_frac.goodx0.9,soft_utility,good of rock_or_bare_frac (0.7) x0.9,2419,0,0,450,0,0,0,4,False,49,False,42949-62477
+lunar_base,soft.rock_or_bare_frac.goodx1.1,soft_utility,good of rock_or_bare_frac (0.7) x1.1,2419,0,0,450,0,0,0,5,False,49,False,
+lunar_base,soft.irradiance_kwh_m2_day.weight0,soft_weight,suitability weight of irradiance_kwh_m2_day (0.1) -> 0,2419,0,0,450,0,0,0,4,False,46,False,18254-63875
+lunar_base,soft.irradiance_kwh_m2_day.weight x0.9,soft_weight,suitability weight of irradiance_kwh_m2_day x0.9,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.irradiance_kwh_m2_day.weight x1.1,soft_weight,suitability weight of irradiance_kwh_m2_day x1.1,2419,0,0,450,0,0,0,4,False,48,False,42949-62477
+lunar_base,soft.irradiance_kwh_m2_day.badx0.9,soft_utility,bad of irradiance_kwh_m2_day (3.0) x0.9,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.irradiance_kwh_m2_day.badx1.1,soft_utility,bad of irradiance_kwh_m2_day (3.0) x1.1,2419,0,0,450,0,0,0,4,False,49,False,42949-62477
+lunar_base,soft.irradiance_kwh_m2_day.goodx0.9,soft_utility,good of irradiance_kwh_m2_day (6.0) x0.9,2419,0,0,450,0,0,0,4,False,48,False,21412-62516
+lunar_base,soft.irradiance_kwh_m2_day.goodx1.1,soft_utility,good of irradiance_kwh_m2_day (6.0) x1.1,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.permafrost_class.weight0,soft_weight,suitability weight of permafrost_class (0.05) -> 0,2419,0,0,450,0,0,0,3,False,43,False,21412-62516;42949-62477
+lunar_base,soft.permafrost_class.weight x0.9,soft_weight,suitability weight of permafrost_class x0.9,2419,0,0,450,0,0,0,4,False,49,False,42949-62477
+lunar_base,soft.permafrost_class.weight x1.1,soft_weight,suitability weight of permafrost_class x1.1,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.permafrost_class.default0.4,soft_utility,default utility of permafrost_class 0.5 -> 0.4,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,soft.permafrost_class.map.esporadico-0.1,soft_utility,utility of permafrost_class=esporadico 1.0 -0.1,2419,0,0,450,0,0,0,4,False,49,False,42949-62477
+lunar_base,soft.permafrost_class.map.discontinuo-0.1,soft_utility,utility of permafrost_class=discontinuo 1.0 -0.1,2419,0,0,450,0,0,0,5,False,49,False,
+lunar_base,soft.permafrost_class.map.continuo-0.1,soft_utility,utility of permafrost_class=continuo 0.7 -0.1,2419,0,0,450,0,0,0,5,True,49,False,
+lunar_base,soft.permafrost_class.map.ninguno-0.1,soft_utility,utility of permafrost_class=ninguno 0.3 -0.1,2419,0,0,450,0,0,0,5,True,50,False,
+lunar_base,sim.tmin_k.weight0,sim_weight,"similarity weight of tmin_k (0.4) -> 0, still in the pair filter",2419,0,0,450,0,0,117,1,False,25,False,18254-64020;44750-63822;17538-63867;18255-62850
+lunar_base,sim.tmin_k.removed,sim_weight,tmin_k removed from similarity AND pair filter,2419,0,0,765,315,0,333,0,False,5,False,19701-62479;18628-62479;18986-62479;15392-62135;15031-62517
+lunar_base,sim.tmin_k.weight x0.9,sim_weight,similarity weight of tmin_k x0.9,2419,0,0,450,0,0,6,4,False,49,False,42949-62477
+lunar_base,sim.tmin_k.tolerance x0.9,tolerance,tolerance of tmin_k (10.0) x0.9,2419,0,0,439,0,11,20,5,True,47,False,
+lunar_base,sim.tmin_k.weight x1.1,sim_weight,similarity weight of tmin_k x1.1,2419,0,0,450,0,0,6,5,True,48,False,
+lunar_base,sim.tmin_k.tolerance x1.1,tolerance,tolerance of tmin_k (10.0) x1.1,2419,0,0,459,9,0,12,4,False,49,False,18627-62479
+lunar_base,sim.lst_diurnal_amp_k.weight0,sim_weight,"similarity weight of lst_diurnal_amp_k (0.4) -> 0, still in the pair filter",2419,0,0,450,0,0,152,2,False,27,False,18255-63832;19340-62479;19672-62852
+lunar_base,sim.lst_diurnal_amp_k.removed,sim_weight,lst_diurnal_amp_k removed from similarity AND pair filter,2419,0,0,1023,573,0,328,0,False,0,False,40432-62850;41151-63660;40072-62847;40071-63825;41512-62134
+lunar_base,sim.lst_diurnal_amp_k.weight x0.9,sim_weight,similarity weight of lst_diurnal_amp_k x0.9,2419,0,0,450,0,0,12,5,True,48,False,
+lunar_base,sim.lst_diurnal_amp_k.tolerance x0.9,tolerance,tolerance of lst_diurnal_amp_k (10.0) x0.9,2419,0,0,435,0,15,12,5,False,49,False,
+lunar_base,sim.lst_diurnal_amp_k.weight x1.1,sim_weight,similarity weight of lst_diurnal_amp_k x1.1,2419,0,0,450,0,0,7,5,False,49,False,
+lunar_base,sim.lst_diurnal_amp_k.tolerance x1.1,tolerance,tolerance of lst_diurnal_amp_k (10.0) x1.1,2419,0,0,463,13,0,24,4,False,46,False,42949-62477
+lunar_base,sim.slope_deg.weight0,sim_weight,"similarity weight of slope_deg (0.1) -> 0, still in the pair filter",2419,0,0,450,0,0,57,4,False,37,False,18627-62479
+lunar_base,sim.slope_deg.removed,sim_weight,slope_deg removed from similarity AND pair filter,2419,0,0,456,6,0,61,4,False,36,False,18627-62479
+lunar_base,sim.slope_deg.weight x0.9,sim_weight,similarity weight of slope_deg x0.9,2419,0,0,450,0,0,4,5,False,48,False,
+lunar_base,sim.slope_deg.tolerance x0.9,tolerance,tolerance of slope_deg (2.0) x0.9,2419,0,0,447,0,3,8,4,False,48,False,42949-62477
+lunar_base,sim.slope_deg.weight x1.1,sim_weight,similarity weight of slope_deg x1.1,2419,0,0,450,0,0,6,4,False,49,False,42949-62477
+lunar_base,sim.slope_deg.tolerance x1.1,tolerance,tolerance of slope_deg (2.0) x1.1,2419,0,0,451,1,0,6,5,False,47,False,
+lunar_base,sim.roughness_m.weight0,sim_weight,"similarity weight of roughness_m (0.1) -> 0, still in the pair filter",2419,0,0,450,0,0,85,2,False,32,False,16833-63841;15751-63843;18627-62479
+lunar_base,sim.roughness_m.removed,sim_weight,roughness_m removed from similarity AND pair filter,2419,0,0,999,549,0,171,2,False,26,False,16833-63841;15751-63843;18627-62479
+lunar_base,sim.roughness_m.weight x0.9,sim_weight,similarity weight of roughness_m x0.9,2419,0,0,450,0,0,3,5,False,49,False,
+lunar_base,sim.roughness_m.tolerance x0.9,tolerance,tolerance of roughness_m (30.0) x0.9,2419,0,0,419,0,31,29,4,False,47,False,42949-62477
+lunar_base,sim.roughness_m.weight x1.1,sim_weight,similarity weight of roughness_m x1.1,2419,0,0,450,0,0,7,5,True,48,False,
+lunar_base,sim.roughness_m.tolerance x1.1,tolerance,tolerance of roughness_m (30.0) x1.1,2419,0,0,489,39,0,18,5,False,48,False,
+lunar_base,mult.keyx0.9,filter_bound,filter multiplier key (1.0) x0.9,2419,0,0,425,0,25,7,5,True,50,True,
+lunar_base,mult.keyx1.1,filter_bound,filter multiplier key (1.0) x1.1,2419,0,0,472,22,0,7,5,True,50,True,
+lunar_base,mult.secondaryx0.9,filter_bound,filter multiplier secondary (2.0) x0.9,2419,0,0,417,0,33,21,5,True,50,True,
+lunar_base,mult.secondaryx1.1,filter_bound,filter multiplier secondary (2.0) x1.1,2419,0,0,490,40,0,16,5,True,50,True,
+lunar_base,zone.fallback_lat_max-75,zone,Lunar base zone replaced by its configured fallback (lat <= -75),2419,0,0,1786,1340,4,441,0,False,0,False,40071-59924;40431-60527;41871-59924;41151-62189;41512-62189
+lunar_base,percentile_rule=rank_over_n,percentile_rule,mid-rank rule -> rank_over_n,2419,0,0,450,0,0,12,4,False,49,False,42949-62477
+lunar_base,percentile_rule=weibull,percentile_rule,mid-rank rule -> weibull,2419,0,0,450,0,0,1,5,False,49,False,
+lunar_base,alpha=0.45,alpha,alpha 0.5 -> 0.45,2419,0,0,450,0,0,0,3,False,47,False,18627-62479;42949-62477
+lunar_base,alpha=0.55,alpha,alpha 0.5 -> 0.55,2419,0,0,450,0,0,0,5,False,47,False,
+lunar_base,alpha=0.0,alpha,alpha 0.5 -> 0.0,2419,0,0,450,0,0,0,0,False,26,False,18627-62479;41513-62854;18977-62479;37906-62485;18616-62479
+lunar_base,alpha=1.0,alpha,alpha 0.5 -> 1.0,2419,0,0,450,0,0,0,1,False,17,False,18430-62847;19723-63832;17534-63527;20405-63836
+lunar_base,utility_decimals=None,rounding,utilities not rounded to 6 decimals,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,score_decimals=12,rounding,per-variable scores rounded to 12 instead of 6 decimals,2419,0,0,450,0,0,0,5,True,50,True,
+lunar_base,final_decimals=12,rounding,rank on the final score at 12 decimals instead of 2,2419,0,0,450,0,0,0,5,True,50,False,
+lunar_base,kelvin_offset x1.01,constant,273.15 K offset x1.01 (both bodies),2419,0,0,450,0,0,0,5,True,50,True,

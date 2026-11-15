@@ -1,0 +1,744 @@
+{
+ "hits_per_fact": {
+  "artemis.III": 12,
+  "artemis.IV": 26,
+  "bounds.base": 35,
+  "cell.size": 133,
+  "cell.size.other": 21,
+  "count.base.paired": 31,
+  "count.base.passing": 62,
+  "count.base.twins": 20,
+  "count.base.unpaired": 12,
+  "count.base.zone280": 78,
+  "count.rover.paired": 32,
+  "count.rover.passing": 36,
+  "count.rover.twins": 6,
+  "count.rover.unpaired": 1,
+  "count.solar.paired": 27,
+  "count.solar.passing": 49,
+  "count.solar.twins": 4,
+  "count.solar.unpaired": 15,
+  "final.mix": 10,
+  "levels": 774,
+  "rule.base": 56,
+  "rule.old.pooled": 3,
+  "rule.old.zone_twin": 60,
+  "rule.old.zscore": 48,
+  "rule.real_value": 79,
+  "similarity.meaning": 46,
+  "tol.base.pct": 40,
+  "tol.rover.erel": 11,
+  "tol.rover.rough": 30,
+  "tol.rover.slope": 6,
+  "tol.solar.irr": 12,
+  "top1.base": 30,
+  "top1.rover": 11,
+  "top1.rover.moon": 53,
+  "top1.solar": 12,
+  "weights.rover": 9,
+  "weights.solar": 15,
+  "zone.rover": 46,
+  "zone.solar": 12,
+  "zone.solar.old": 13
+ },
+ "truth": {
+  "grid": {
+   "bodies": {
+    "EARTH": {
+     "cell_ew_km_at_equator": 111.2,
+     "cell_ew_km_rule": "cell_ns_km * cos(latitude)",
+     "cell_ns_km": 111.2,
+     "radius_km": 6371.0
+    },
+    "MOON": {
+     "cell_ew_km_at_equator": 30.3,
+     "cell_ew_km_rule": "cell_ns_km * cos(latitude)",
+     "cell_ns_km": 30.3,
+     "radius_km": 1737.4
+    }
+   },
+   "cell_deg": 1.0,
+   "cell_id": "row * 360 + col",
+   "col0": "west",
+   "cols": 360,
+   "lat_center": "90 - (row + 0.5) * 1.0",
+   "lon_center": "-180 + (col + 0.5) * 1.0 (positive east, -180..180)",
+   "row0": "north",
+   "rows": 180
+  },
+  "lunar_base": {
+   "distinct_twins": 103,
+   "paired": 450,
+   "passing": 2419,
+   "top1_earth": 17538,
+   "top1_moon": 63528,
+   "unpaired": 1969
+  },
+  "manifest": {
+   "bundle_version": "v2",
+   "contract_revision": 6,
+   "dataset": {
+    "id": "real_1deg",
+    "why": "Earth from ETOPO 2022, ESA CCI land cover, the MODIS land surface temperature climatology, WorldClim 2.1 and the Obu permafrost maps; Moon from LOLA LDEM_16, Diviner and LOLA polar illumination (real_data/README.md). Every column has a provenance row with its level."
+   },
+   "engine_version": "3.2.0"
+  },
+  "missions_json": [
+   {
+    "id": "rover",
+    "label": null,
+    "name": null,
+    "similarity_rule": "real_value_tolerance",
+    "variables": [
+     [
+      "slope_deg",
+      "key",
+      0.4,
+      2.0,
+      2.0
+     ],
+     [
+      "roughness_m",
+      "key",
+      0.4,
+      30.0,
+      30.0
+     ],
+     [
+      "elevation_rel_m",
+      "secondary",
+      0.2,
+      500.0,
+      1000.0
+     ]
+    ],
+    "zone": {
+     "cells": 5400,
+     "kind": "lat_max",
+     "lat_max": -75.0,
+     "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+     "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+     "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+    }
+   },
+   {
+    "id": "solar",
+    "label": null,
+    "name": null,
+    "similarity_rule": "real_value_tolerance",
+    "variables": [
+     [
+      "irradiance_toa_kwh_m2_day",
+      "key",
+      0.8,
+      0.6,
+      0.6
+     ],
+     [
+      "slope_deg",
+      "secondary",
+      0.1,
+      2.0,
+      4.0
+     ],
+     [
+      "roughness_m",
+      "secondary",
+      0.1,
+      30.0,
+      60.0
+     ]
+    ],
+    "zone": {
+     "abs_lat_max": 30.0,
+     "cells": 6686,
+     "elevation_column": "elevation_m",
+     "elevation_max_m": -1200.0,
+     "kind": "abs_lat_max_elevation_max",
+     "name": "Mare Tranquillitatis & Equatorial Maria",
+     "source": "analog_finder.build_lunar_reference_zones: '\"Mare Tranquillitatis & Equatorial Maria\": ((np.abs(lat) <= 30.0) & (moon_norm_df[\"elevation_m\"] <= -1200.0))'",
+     "why": "Team decision of 2026-11-15 (morning): the equatorial maria as analog_finder defines them (absolute latitude <= 30 degrees and elevation <= -1,200 m), applied to the real lunar table."
+    }
+   },
+   {
+    "id": "lunar_base",
+    "label": null,
+    "name": null,
+    "similarity_rule": "percentile_and_real_tolerance",
+    "variables": [
+     [
+      "tmin_k",
+      "key",
+      0.4,
+      10.0,
+      10.0
+     ],
+     [
+      "lst_diurnal_amp_k",
+      "key",
+      0.4,
+      10.0,
+      10.0
+     ],
+     [
+      "slope_deg",
+      "secondary",
+      0.1,
+      2.0,
+      4.0
+     ],
+     [
+      "roughness_m",
+      "secondary",
+      0.1,
+      30.0,
+      60.0
+     ]
+    ],
+    "zone": {
+     "cells": 280,
+     "kind": "similarity_zone",
+     "name": "NASA's nine candidate landing regions near the lunar south pole",
+     "similarity_zones_key": "lunar_base",
+     "source": "engine_config similarity_zones.lunar_base: the lunar cells intersecting the nine candidate landing regions NASA announced on 28 October 2024 (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK); 280 cells",
+     "why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: the zone is the nine NASA regions (the 280-cell footprint already in the engine), unchanged."
+    }
+   }
+  ],
+  "rover": {
+   "distinct_twins": 401,
+   "paired": 10192,
+   "passing": 10337,
+   "top1_earth": 17566,
+   "top1_moon": 59895,
+   "unpaired": 145
+  },
+  "solar": {
+   "distinct_twins": 1704,
+   "paired": 6360,
+   "passing": 18777,
+   "top1_earth": 38464,
+   "top1_moon": 24296,
+   "unpaired": 12417
+  },
+  "thermal": {
+   "earth_cells_colder_than_warmest_zoneA_cell": 0,
+   "earth_tmin_k_min_land": 200.86999999999998,
+   "moon_all_tmin_k_max": 114.04,
+   "moon_zoneA_tmin_k_max": 75.23,
+   "moon_zoneA_tmin_k_min": 32.89
+  }
+ },
+ "unmarked_leftovers": [
+  [
+   "artemis.III",
+   "docs/DECISIONS.md",
+   "30",
+   "   - **Artemis:** según las páginas de la NASA consultadas hoy, el primer alunizaje tripulado es **Artemis IV** (página de Artemis III, actualizada el 19-10-2026: \"Crewed Demonstration\" en órbita baja, \"before Americans return to the Moon on Artemis IV\"; blog "
+  ],
+  [
+   "artemis.III",
+   "docs/LUNAR_BASE_PROPOSAL.md",
+   "34",
+   "ual temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine Artemis III candidate regions. In real values the twin is 195 K colder on average (minimum −232 °C a"
+  ],
+  [
+   "artemis.III",
+   "docs/LUNAR_BASE_PROPOSAL.md",
+   "36",
+   "ra la base lunar, la temperatura más fría y la amplitud diaria de este sitio ocupan el mismo puesto que las de su gemelo entre las celdas de las nueve regiones Artemis III de la NASA. En valores reales el gemelo es 195 K más frío de media (mínima de −232 °C en"
+  ],
+  [
+   "artemis.III",
+   "docs/LUNAR_BASE_PROPOSAL.md",
+   "393",
+   "_lunar_base_pairs.bin`), con la zona nombrada \"NASA's nine candidate landing regions near the lunar south pole\", sin número de misión, en lugar de \"NASA's nine Artemis III candidate regions\". El número 1 da exactamente la frase de arriba con esa zona (en `expl"
+  ],
+  [
+   "artemis.III",
+   "docs/MISSION_ZONES.md",
+   "51",
+   "| S35 | https://www.nasa.gov/mission/artemis-iii/ \"Artemis III\" | NASA, last updated Oct 19, 2026: \"Mission Type: Crewed Demonstration\", launch \"2027\", \"will carry out a series of objectives in low Earth orbit\", \"before Am"
+  ],
+  [
+   "artemis.III",
+   "docs/MISSION_ZONES.md",
+   "239",
+   "| Artemis crew landing order | S16 Artemis IV page still has the Artemis III site-selection panel (\"the first of the Artemis missions to bring crew to the lunar surface\"), and RELEASE24-136 (not updated since Oct 28, 2024) still caption"
+  ],
+  [
+   "artemis.III",
+   "docs/MISSION_ZONES.md",
+   "401",
+   "5. \"NASA's next crew landing, Artemis IV\" had no source in the draft (S16 still carries the old Artemis III panel). It is now cited to S30 (RELEASE26-022) and S31 (the NASA blog of 2026-10-23), and a row was added to the disagreements table."
+  ],
+  [
+   "artemis.III",
+   "docs/MISSION_ZONES.md",
+   "423",
+   "1. **Artemis coherence.** NASA's pages say today that the first crewed landing is Artemis IV: the Artemis III page (S35, updated Oct 19, 2026) calls Artemis III a \"Crewed Demonstration\" that \"will carry out a series of objectives in low Earth orbit\", \"before A"
+  ],
+  [
+   "artemis.III",
+   "docs/MISSION_ZONES.md",
+   "454",
+   "**Resumed pass of the second check (2026-11-15, 08:40 UTC).** Re-read the pages fetched today (Artemis III \"Crewed Demonstration\" and \"return to the Moon on Artemis IV\"; blog of Oct 23, 2026 \"first Artemis mission on the lunar surface\"; ispace Mission 2 \"NOT C"
+  ],
+  [
+   "cell.size.other",
+   "ASSUMPTIONS.md",
+   "209",
+   "- Every Earth cell sits in a 2-degree cell: about 222 km on Earth and about 61 km on the Moon. The `resolution_m = 500` column is wrong."
+  ],
+  [
+   "cell.size.other",
+   "ASSUMPTIONS.md",
+   "341",
+   "  - The `*_300m_*` columns are copies of 2-degree-cell values (A2), so applying 300 m tolerances to 2-degree values would be a unit mismatch."
+  ],
+  [
+   "cell.size.other",
+   "ASSUMPTIONS.md",
+   "356",
+   "  - The label is \"high\" only at 0.8 or above **and** with cells of at most 1 km, which no 2-degree cell meets. \"Medium\" needs 0.5 or above."
+  ],
+  [
+   "cell.size.other",
+   "ASSUMPTIONS.md",
+   "391",
+   "1, 2, 22, 28, 42 and 46. Cause: the provisional soft criteria have no surface-type term, ice counts as bare ground in `rock_or_bare_frac` (0.77 at rank 1), and 2-degree slope and roughness are smooth on an ice sheet (rank 1: slope 1.689 deg against 1.691 on it"
+  ],
+  [
+   "cell.size.other",
+   "ASSUMPTIONS.md",
+   "392",
+   "e mare cells.** The commonest twins are Seleucus (867 Earth cells), Mare Frigoris (505) and Sinus Roris (241): smooth lunar cells match smooth Earth cells. The 2-degree slope and roughness say nothing about rover-scale hazards."
+  ],
+  [
+   "cell.size.other",
+   "app/public/data/v2/missions.json",
+   "$.missions[0].not_used_by_engine.why",
+   "tolerances: defined for 300 m baselines while the *_300m_* columns are 2-degree copies. workable_days: not read by mission_scoring.py. domain weights (relieve/material/termico/luz/agua): the team note in mission_scoring.json says they are "
+  ],
+  [
+   "cell.size.other",
+   "app/public/data/v2/missions.json",
+   "$.missions[1].not_used_by_engine.why",
+   "tolerances: defined for 300 m baselines while the *_300m_* columns are 2-degree copies. workable_days: not read by mission_scoring.py. domain weights (relieve/material/termico/luz/agua): the team note in mission_scoring.json says they are "
+  ],
+  [
+   "cell.size.other",
+   "app/public/data/v2/missions.json",
+   "$.missions[2].not_used_by_engine.why",
+   "tolerances: defined for 300 m baselines while the *_300m_* columns are 2-degree copies. workable_days: not read by mission_scoring.py. domain weights (relieve/material/termico/luz/agua): the team note in mission_scoring.json says they are "
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "440",
+   "set, in Tamanghasset, Algeria, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.2 degrees and a roughness of 43 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.8 out"
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "995",
+   "Buga, in Govi-Altay, Mongolia, pairs with a spot about 159 kilometres from the crater Casatus, in the lunar south-polar region. The Earth site has a slope of 1.2 degrees and a roughness of 41 metres, the Moon spot 1.1 degrees and 44 metres; similarity 99.1 out"
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "2285",
+   "       \"text\": \"Similar terrain: slope 6.7 against 7.2 degrees (0.5 apart) and roughness 239 against 238 metres (0.3 apart). By slope both are steep: 98th percentile of Earth land cells, 76th of lunar cells. By roughness "
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "2334",
+   "s about 207 kelvin lower and its daily swing 138 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.5 degrees and roughness by less than 1 metre; similarity 97.3 out of 100.\""
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "2551",
+   "       \"text\": \"Similar terrain: slope 3.1 against 4.2 degrees (1.1 apart) and roughness 119 against 128 metres (9.6 apart).\","
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "3039",
+   "wn population by coldest temperature (63rd percentile on Earth, 63rd on the Moon, 0.1 points apart), although the temperatures themselves are far apart: about -2 degrees C air on Earth against -210 degrees C surface on the Moon, 209 K.\","
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "3132",
+   "about 209 kelvin lower and its daily swing 158 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.2 degrees and roughness by 4 metres; similarity 99.4 out of 100.\""
+  ],
+  [
+   "cell.size.other",
+   "docs/AUDIO_TOP5.json",
+   "3349",
+   "       \"text\": \"Similar terrain: slope 4.7 against 6.2 degrees (1.5 apart) and roughness 174 against 162 metres (11.9 apart).\","
+  ],
+  [
+   "cell.size.other",
+   "docs/MISSION_ZONES.md",
+   "252",
+   "grees east to 45 degrees west longitude)\" (S24, p. 73 and the section \"Picking Landing Sites\"); \"Slope: the general slope of the landing area must be less than 2 degrees\" (S23)."
+  ],
+  [
+   "rule.old.pooled",
+   "ASSUMPTIONS.md",
+   "331",
+   "- **Formula.** For each variable, `sim = max(0, 1 - |earth - moon| / scale)` in physical units. A categorical variable scores 1 when equal and 0 otherwise. A missing value gives a null sim, the variable drops out,"
+  ],
+  [
+   "rule.old.pooled",
+   "ASSUMPTIONS.md",
+   "333",
+   "- **Why a pooled physical range, not per-body z-scores or percentile ranks.**"
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "33",
+   " the Moon and exported (`moon_<mission>.bin` `fail_bits`) as information, but neither similarity rule uses them: the repository's target is the whole Moon, and zone_twin searches every cell of the zone."
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "56",
+   "| | **`zone_twin` (active since the team decision of 2026-11-15)** | the twin of an Earth point is the single most similar lunar cell inside the mission's zone under the same f"
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "63",
+   "Team lead decision (2026-11-15): `similarity_rule` is set to `zone_twin`. The twin of an Earth point is the single lunar cell of the mission's zone with the smallest weighted z-distance, with the repository's `DEFAULT_WEIGHTS` reno"
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "109",
+   "| rover, zone_twin (preview) | Canadian Arctic Archipelago (rank 1 is Devon Island, 75.5 N 91.5 W, next to Haughton crater), Taymyr | plausible; Devon Island is an established an"
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "111",
+   "| solar, zone_twin (preview) | South Africa, Namibia, Madagascar, India, Nicaragua; similarity 67-78 | no: warm Earth cells matched to the coldest lunar zone; temperature carries"
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "113",
+   "| lunar_base, zone_twin (preview) | Tibetan Plateau edge (Xinjiang), Altiplano and Puna (Chile, Bolivia, Argentina, Peru) | high cold deserts are established analogues, but the match "
+  ],
+  [
+   "rule.old.zone_twin",
+   "ASSUMPTIONS.md",
+   "123",
+   "1. **Twin rule: yes.** `similarity_rule = zone_twin` with the repository's fixed `DEFAULT_WEIGHTS` without radar or rock (slope 33.3 %, roughness 26.7 %, relative elevation 20 %, temperature 20 %), not the domai"
+  ],
+  [
+   "rule.old.zone_twin",
+   "app/public/data/v2/missions.json",
+   "$.missions[0].similarity.zone.why",
+   "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+  ],
+  [
+   "rule.old.zone_twin",
+   "app/public/data/v2/similarity.json",
+   "$.real_value.missions_detail.rover.zone.why",
+   "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/ANALOG_PRINCIPLE.md",
+   "31",
+   "Regla actual (`zone_twin`, pesos 20 / 33,3 / 26,7 / 20 %, z por cuerpo). Diferencia absoluta Tierra − gemelo: mediana y percentil 90; razón Tierra / Luna (mediana) donde tiene sentido."
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "10",
+   "| `python -m engine build --similarity-rule zone_twin --out DIR` | any | `DIR` (last night's z-score twin rule for every mission) | no |"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "53",
+   "- the shipped rule is `zone_twin` (`manifest.similarity_rule`, `similarity.json` `rule`): every ranked Earth cell has a lunar twin (`earth_<mission>.bin` `twin`, `moon_<mission>.bin` `twin_cou"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "61",
+   "ribed in the new `similarity.json`; the active rule is `repo_global_mean` (no twin); `twin`, `twin_count` and `twins.json` exist only when the rule has twins (`zone_twin`);"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "323",
+   "r-body z-score of each active z-score similarity variable (`similarity.json` `active_variables`); **only in builds with a z-score mission** (`--similarity-rule zone_twin` or `repo_global_mean`), absent from the shipped bundle since revision 6; missing when the"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "419",
+   "- **`similarity`** of a z-score mission (none in the shipped bundle since revision 6): the rule; with `zone_twin` also `zone` (`name`, `kind`, `used`, `reason`, `cells`, `regions`), `distinct_twins`, `earth_cells_with_twin`, `largest_share` (`twin_id`, `earth_"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "430",
+   " \"rule_why\":\"...\",\"rule_options\":{\"real_value_tolerance\":\"...\",\"zone_twin\":\"...\",...},\"alpha\":0.5,"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "446",
+   "weights_why\",\"not_part_of_similarity\"}}}`. The shipped bundle has no z-score mission, so the keys below are **absent** from it (present in a `--similarity-rule zone_twin` / `repo_global_mean` build)."
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "475",
+   "With `zone_twin`, `target` is `{\"kind\":\"zone_twin\",\"tie_rule\":\"lowest_lunar_id\",\"lunar_cells_filtered\":false,\"zones\":{...}}` with one entry per `zone_twin` mission (none in th"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "492",
+   " \"missions\":{\"rover\":{\"rule\":\"zone_twin\",\"distinct_twins\":744,\"earth_cells_with_twin\":10337,"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "523",
+   "tribution`, `points`, `level`; sorted by contribution), `similarity` (`value`, `rule`; z-score rules: `earth` and `moon` z and value per active variable, with `zone_twin` also `twin`; real-value rule: `twin`, `variables` = per similarity variable `{variable, r"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "546",
+   "-- z-score missions (none shipped since revision 6; --similarity-rule zone_twin / repo_global_mean builds)"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "548",
+   "ze_f   = tile \"z.<f>\" / 1e4;  zm_f = target.profile[f].z (repo_global_mean) or the twin's twins.json z[f] (zone_twin)"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DATA_CONTRACT.md",
+   "571",
+   "twin (zone_twin)     = the zone cell with the smallest d2; ties -> lowest lunar id; lunar cells are not filtered"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "84",
+   "1. **Regla del gemelo: sí.** Se activa `zone_twin` (A1) con los `DEFAULT_WEIGHTS` del repositorio sin radar ni roca (pendiente 33,3 %, rugosidad 26,7 %, elevación relativa 20 %, temperatura 20 %), no los pesos"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "124",
+   "epo_global_mean`): mi cálculo reproduce su similitud en los 31.533 puntos (diferencia 0) y sus tres top 10 en el mismo orden. La regla del gemelo es el valor `\"zone_twin\"` del mismo ajuste (línea 224), con las zonas de `similarity_zones` (líneas 246-274). Ence"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "176",
+   "| **A. Encender A1 con pesos fijos** (`similarity_rule = zone_twin`) | Da un par real con nombre, coordenadas y enlace al nomenclátor de la IAU. Mismos pesos para las tres misiones: fácil de explicar. Para el Rover da casi lo "
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "309",
+   "> \"Team lead decision (2026-11-15): `similarity_rule` is set to `zone_twin`. The twin of an Earth point is the single lunar cell of the mission's zone with the smallest weighted z-distance, with the repository's `DEFAULT_WEIGHTS` reno"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "472",
+   "ratamiento salen hoy 744 gemelos distintos en el Rover (el más compartido, 895 puntos) y 721 en Paneles (3.047). Son exactamente las cifras de la vista previa `zone_twin` del motor en `ASSUMPTIONS.md` §0.7. No he ejecutado el motor; la coincidencia sale de com"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "811",
+   "| 1. Regla del gemelo | Encender A1 (`zone_twin`) con `DEFAULT_WEIGHTS` | 31.533 pares nuevos; ningún top 10 actual se mantiene (0/10 en las tres misiones) | 1 h: cambiar el ajuste, reconstruir, revisar, tex"
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "819",
+   "1. **Decisión 1**, porque todo lo demás describe pares que solo existen si se enciende `zone_twin`, y el motor tiene que reconstruirse."
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/DECISIONS.md",
+   "855",
+   "- No he ejecutado el motor; E0 lo he comparado con el paquete ya publicado, y la regla `zone_twin` con la reimplementación de su tratamiento de los datos que faltan."
+  ],
+  [
+   "rule.old.zone_twin",
+   "docs/LUNAR_BASE_PROPOSAL.md",
+   "315",
+   "**Hoy** (`engine/repo_similarity.py`, `zone_twin`): z por cuerpo (Tierra firme / Luna entera) de pendiente, rugosidad, elevación relativa y temperatura media con pesos 33,3 / 26,7 / 20 / 20 %, `similitud = 10"
+  ],
+  [
+   "rule.old.zscore",
+   "ASSUMPTIONS.md",
+   "36",
+   "nnel`, `gates[].step` and `limit`, `reason_codes[].step`, `text`, `team_text`), `earth_<mission>.bin` (fail bits and scores), `earth_detail_NN.bin` (utilities, z-scores, ice component). `docs/DATA_CONTRACT.md` says how the app shows the funnel of any land cell"
+  ],
+  [
+   "rule.old.zscore",
+   "ASSUMPTIONS.md",
+   "41",
+   "eg, 160 m); the Earth cells most similar to it are at Earth's median (0.48 deg, 18 m), ten times flatter and smoother in absolute terms. The bundle exports the z-scores **and** the absolute values of both sides (`similarity.json`, detail tiles, `twins.json`) s"
+  ],
+  [
+   "rule.old.zscore",
+   "ASSUMPTIONS.md",
+   "333",
+   "- **Why a pooled physical range, not per-body z-scores or percentile ranks.**"
+  ],
+  [
+   "rule.old.zscore",
+   "ASSUMPTIONS.md",
+   "334",
+   "  - A rank or z-score says where a cell stands within its own planet. It hides real physical differences."
+  ],
+  [
+   "rule.old.zscore",
+   "ASSUMPTIONS.md",
+   "336",
+   "  - With per-body z-scores the old code scored `temp_k` as a 100 % match between 220-330 K Earth cells and 43-110 K lunar cells (A3 section 7)."
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "10",
+   "| `python -m engine build --similarity-rule zone_twin --out DIR` | any | `DIR` (last night's z-score twin rule for every mission) | no |"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "54",
+   "(bit k set when `active_variables[k]` was left out; on the real tables only `temp_k`, bit 3, for Antarctic cells); `validate_bundle_v2` checks both against the z-scores on every passing cell;"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "62",
+   "- utilities, z-scores and the ice component moved to the tiled detail files `earth_detail_NN.bin`; the per-mission `earth_<mission>.bin` keep the map columns;"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "97",
+   "ail_00.bin` .. `earth_detail_17.bin` | bin | on demand (one per selected cell) | land cells of 10 grid rows | utilities of every mission, the ice component (no z-scores since revision 6) | 6,160 - 276,800 each, 2,039,200 in all |"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "172",
+   "Quantised columns store exactly the published value: `q / divisor` in double precision is the same double as the engine's number (utilities 6 decimals, z-scores 4, scores 2, confidence scores 3; `engine_config.json` `binary_encoding` and `repo_similarity`). Al"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "323",
+   "| `z.<variable>` | int32 q, /1e4: the per-body z-score of each active z-score similarity variable (`similarity.json` `active_variables`); **only in builds with a z-score mission** (`--similarity-rule zone_twin` or "
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "334",
+   "Lunar z-scores are not stored per cell: `z = clip((value - median) / scale, -4, 4)` rounded to 4 decimals with the Moon's `median` and `scale` from `similarity.json`; a twin'"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "419",
+   "- **`similarity`** of a z-score mission (none in the shipped bundle since revision 6): the rule; with `zone_twin` also `zone` (`name`, `kind`, `used`, `reason`, `cells`, `regions`), `distinct"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "442",
+   " ... the z-score keys below (absent from the shipped bundle since revision 6: no z-score mission) ...,"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "446",
+   ",\"meaning\",\"missions_detail\":{\"lunar_base\":{\"variables\",\"percentile\",\"populations\",\"zone\",\"weights_why\",\"not_part_of_similarity\"}}}`. The shipped bundle has no z-score mission, so the keys below are **absent** from it (present in a `--similarity-rule zone_twin"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "479",
+   "- **Meaning, z-score missions (none shipped since revision 6).** Each body is normalised on its own, so a high similarity means the same **relative** position on each body, not equ"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "523",
+   "wn` (per weighted variable `variable`, `value`, `utility`, `weight`, `contribution`, `points`, `level`; sorted by contribution), `similarity` (`value`, `rule`; z-score rules: `earth` and `moon` z and value per active variable, with `zone_twin` also `twin`; rea"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "546",
+   "-- z-score missions (none shipped since revision 6; --similarity-rule zone_twin / repo_global_mean builds)"
+  ],
+  [
+   "rule.old.zscore",
+   "docs/DATA_CONTRACT.md",
+   "583",
+   "| thermal_inertia_class, permafrost_class | category | | z-scores | dimensionless (robust spreads from the body's median) |"
+  ],
+  [
+   "zone.solar.old",
+   "ASSUMPTIONS.md",
+   "124",
+   "5. **Solar stays on the south pole**; the limitation is published (section 0.7); the equatorial maria are an alternative, not implemented, for the team lead to assess."
+  ],
+  [
+   "zone.solar.old",
+   "docs/DECISIONS.md",
+   "84",
+   "repositorio sin radar ni roca (pendiente 33,3 %, rugosidad 26,7 %, elevación relativa 20 %, temperatura 20 %), no los pesos por dominio. Zonas: Rover y Paneles solares en el polo sur (latitud ≤ −75°, versión de la rama, commit `ff6f1ae`; no Tycho); Base lunar "
+  ],
+  [
+   "zone.solar.old",
+   "docs/DECISIONS.md",
+   "109",
+   "| Paneles solares | la misma zona del polo sur | 5.400 | 1.440 |"
+  ],
+  [
+   "zone.solar.old",
+   "docs/DECISIONS.md",
+   "649",
+   "## Decisión 5. Paneles solares frente al polo sur"
+  ],
+  [
+   "zone.solar.old",
+   "docs/DECISIONS.md",
+   "793",
+   "> \"Known limitation, solar (left unchanged pending a team decision, 2026-11-15): solar suitability rewards warm, sunny places while the twin comes from the coldest part of the Moon and is chosen on relief and temperature only; similarity and suitability are an"
+  ],
+  [
+   "zone.solar.old",
+   "docs/DECISIONS.md",
+   "803",
+   "**Nota (15-11-2026).** Decidido: Paneles solares se queda en el polo sur y se publica la limitación. Los mares ecuatoriales (opción de la sección 4, la de mejor resultado) quedan como **alternativa no implementada**, para que el líd"
+  ]
+ ]
+}

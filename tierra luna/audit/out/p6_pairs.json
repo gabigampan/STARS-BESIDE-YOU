@@ -1,0 +1,1618 @@
+{
+ "top5_vs_bundle": {
+  "rover": {
+   "identical": true,
+   "bundle": [
+    {
+     "rank": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39
+    },
+    {
+     "rank": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21
+    },
+    {
+     "rank": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "similarity": 98.77,
+     "suitability": 99.58,
+     "final": 99.17
+    },
+    {
+     "rank": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "similarity": 99.5,
+     "suitability": 98.66,
+     "final": 99.08
+    },
+    {
+     "rank": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91
+    }
+   ],
+   "audio": [
+    {
+     "rank": 1,
+     "earth": "E17566",
+     "moon": "M59895",
+     "similarity": 99.57,
+     "suitability": 99.22,
+     "final": 99.39
+    },
+    {
+     "rank": 2,
+     "earth": "E23945",
+     "moon": "M59895",
+     "similarity": 99.76,
+     "suitability": 98.66,
+     "final": 99.21
+    },
+    {
+     "rank": 3,
+     "earth": "E18282",
+     "moon": "M59895",
+     "similarity": 98.77,
+     "suitability": 99.58,
+     "final": 99.17
+    },
+    {
+     "rank": 4,
+     "earth": "E18280",
+     "moon": "M59895",
+     "similarity": 99.5,
+     "suitability": 98.66,
+     "final": 99.08
+    },
+    {
+     "rank": 5,
+     "earth": "E15395",
+     "moon": "M59895",
+     "similarity": 99.12,
+     "suitability": 98.69,
+     "final": 98.91
+    }
+   ]
+  },
+  "solar": {
+   "identical": true,
+   "bundle": [
+    {
+     "rank": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "rank": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "similarity": 99.88,
+     "suitability": 96.9,
+     "final": 98.39
+    },
+    {
+     "rank": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "rank": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "final": 98.3
+    },
+    {
+     "rank": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "similarity": 100.0,
+     "suitability": 96.48,
+     "final": 98.24
+    }
+   ],
+   "audio": [
+    {
+     "rank": 1,
+     "earth": "E38464",
+     "moon": "M24296",
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "rank": 2,
+     "earth": "E38105",
+     "moon": "M24583",
+     "similarity": 99.88,
+     "suitability": 96.9,
+     "final": 98.39
+    },
+    {
+     "rank": 3,
+     "earth": "E38744",
+     "moon": "M40854",
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "rank": 4,
+     "earth": "E37746",
+     "moon": "M24761",
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "final": 98.3
+    },
+    {
+     "rank": 5,
+     "earth": "E38465",
+     "moon": "M40406",
+     "similarity": 100.0,
+     "suitability": 96.48,
+     "final": 98.24
+    }
+   ]
+  },
+  "lunar_base": {
+   "identical": true,
+   "bundle": [
+    {
+     "rank": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29
+    },
+    {
+     "rank": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28
+    },
+    {
+     "rank": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "final": 71.73
+    },
+    {
+     "rank": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63
+    },
+    {
+     "rank": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "final": 71.28
+    }
+   ],
+   "audio": [
+    {
+     "rank": 1,
+     "earth": "E17538",
+     "moon": "M63528",
+     "similarity": 97.31,
+     "suitability": 47.27,
+     "final": 72.29
+    },
+    {
+     "rank": 2,
+     "earth": "E16830",
+     "moon": "M63841",
+     "similarity": 96.61,
+     "suitability": 47.96,
+     "final": 72.28
+    },
+    {
+     "rank": 3,
+     "earth": "E15751",
+     "moon": "M64018",
+     "similarity": 96.86,
+     "suitability": 46.6,
+     "final": 71.73
+    },
+    {
+     "rank": 4,
+     "earth": "E21054",
+     "moon": "M62517",
+     "similarity": 99.36,
+     "suitability": 43.91,
+     "final": 71.63
+    },
+    {
+     "rank": 5,
+     "earth": "E17187",
+     "moon": "M62523",
+     "similarity": 95.03,
+     "suitability": 47.54,
+     "final": 71.28
+    }
+   ]
+  }
+ },
+ "earth": {
+  "E17566": {
+   "uses": [
+    "rover#1"
+   ],
+   "lat": 41.5,
+   "lon": 106.5,
+   "place": "about 66 km north-west of Bayinbaolige, Inner Mongolia, China",
+   "mask_fraction": 0.9999,
+   "bare_frac": 0.6726,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.8348,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "ninguno",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1433.4,
+   "slope_iso_deg": 1.038,
+   "roughness_m": 43.53,
+   "tmin_c": -18.27,
+   "lst_diurnal_amp_k": 20.62,
+   "irradiance_kwh_m2_day": 4.575,
+   "temp_k": 284.67,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 986.3,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E10727",
+    "km": 1074.1
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E090.tif",
+    "px": 129600,
+    "water_210": 0.0001,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.6725,
+    "sparse_150_153": 0.1622,
+    "top3_classes": [
+     [
+      200,
+      0.673
+     ],
+     [
+      150,
+      0.162
+     ],
+     [
+      130,
+      0.162
+     ]
+    ]
+   }
+  },
+  "E23945": {
+   "uses": [
+    "rover#2"
+   ],
+   "lat": 23.5,
+   "lon": 5.5,
+   "place": "about 80 km north of Tamanrasset, Tamanghasset, Algeria",
+   "mask_fraction": 1.0,
+   "bare_frac": 0.9986,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.9987,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 3600,
+   "elevation_m": 1457.8,
+   "slope_iso_deg": 1.215,
+   "roughness_m": 43.37,
+   "tmin_c": 3.79,
+   "lst_diurnal_amp_k": 21.82,
+   "irradiance_kwh_m2_day": 6.246,
+   "temp_k": 300.7,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 1218.8,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E11750",
+    "km": 1256.4
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E000.tif",
+    "px": 129600,
+    "water_210": 0.0,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.9986,
+    "sparse_150_153": 0.0001,
+    "top3_classes": [
+     [
+      200,
+      0.999
+     ],
+     [
+      11,
+      0.001
+     ],
+     [
+      150,
+      0.0
+     ]
+    ]
+   }
+  },
+  "E18282": {
+   "uses": [
+    "rover#3"
+   ],
+   "lat": 39.5,
+   "lon": 102.5,
+   "place": "about 78 km north-east of Ehen Hudag, Inner Mongolia, China",
+   "mask_fraction": 0.9981,
+   "bare_frac": 0.7102,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.9496,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "ninguno",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1443.6,
+   "slope_iso_deg": 0.908,
+   "roughness_m": 38.75,
+   "tmin_c": -15.73,
+   "lst_diurnal_amp_k": 24.82,
+   "irradiance_kwh_m2_day": 4.621,
+   "temp_k": 288.75,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 1298.1,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E10727",
+    "km": 1385.3
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E090.tif",
+    "px": 129600,
+    "water_210": 0.0019,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.7088,
+    "sparse_150_153": 0.2389,
+    "top3_classes": [
+     [
+      200,
+      0.684
+     ],
+     [
+      150,
+      0.239
+     ],
+     [
+      130,
+      0.049
+     ]
+    ]
+   }
+  },
+  "E18280": {
+   "uses": [
+    "rover#4"
+   ],
+   "lat": 39.5,
+   "lon": 100.5,
+   "place": "about 28 km north-east of Banqiao, Gansu Sheng, China",
+   "mask_fraction": 0.9999,
+   "bare_frac": 0.5521,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.7058,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "ninguno",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1547.4,
+   "slope_iso_deg": 1.131,
+   "roughness_m": 48.91,
+   "tmin_c": -17.25,
+   "lst_diurnal_amp_k": 23.44,
+   "irradiance_kwh_m2_day": 4.637,
+   "temp_k": 287.33,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 1469.7,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E10727",
+    "km": 1556.8
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E090.tif",
+    "px": 129600,
+    "water_210": 0.0001,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.552,
+    "sparse_150_153": 0.1538,
+    "top3_classes": [
+     [
+      200,
+      0.465
+     ],
+     [
+      130,
+      0.192
+     ],
+     [
+      150,
+      0.154
+     ]
+    ]
+   }
+  },
+  "E15395": {
+   "uses": [
+    "rover#5"
+   ],
+   "lat": 47.5,
+   "lon": 95.5,
+   "place": "about 41 km south-east of Buga, Govi-Altay, Mongolia",
+   "mask_fraction": 0.999,
+   "bare_frac": 0.6361,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.7377,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "esporadico",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1658.4,
+   "slope_iso_deg": 1.236,
+   "roughness_m": 41.33,
+   "tmin_c": -26.75,
+   "lst_diurnal_amp_k": 21.88,
+   "irradiance_kwh_m2_day": 3.963,
+   "temp_k": 276.58,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 2026.4,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E8132",
+    "km": 1133.2
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N45E090.tif",
+    "px": 129600,
+    "water_210": 0.001,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.6355,
+    "sparse_150_153": 0.1014,
+    "top3_classes": [
+     [
+      200,
+      0.635
+     ],
+     [
+      130,
+      0.229
+     ],
+     [
+      150,
+      0.101
+     ]
+    ]
+   }
+  },
+  "E38464": {
+   "uses": [
+    "solar#1"
+   ],
+   "lat": -16.5,
+   "lon": 124.5,
+   "place": "about 129 km north-east of Derby, Australia",
+   "mask_fraction": 0.8222,
+   "bare_frac": 0.0,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.0106,
+   "lc_dominant_cci_code": 122,
+   "thermal_inertia_class": "suelo",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 2962,
+   "elevation_m": 137.3,
+   "slope_iso_deg": 0.976,
+   "roughness_m": 39.2,
+   "tmin_c": 15.56,
+   "lst_diurnal_amp_k": 11.89,
+   "irradiance_kwh_m2_day": 6.177,
+   "temp_k": 302.37,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 32.1,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E24883",
+    "km": 106.6
+   },
+   "cci": {
+    "tile": "cci_lc_2020_S45E090.tif",
+    "px": 129600,
+    "water_210": 0.1778,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.0,
+    "sparse_150_153": 0.0087,
+    "top3_classes": [
+     [
+      122,
+      0.697
+     ],
+     [
+      210,
+      0.178
+     ],
+     [
+      100,
+      0.04
+     ]
+    ]
+   }
+  },
+  "E38105": {
+   "uses": [
+    "solar#2"
+   ],
+   "lat": -15.5,
+   "lon": 125.5,
+   "place": "about 283 km north-east of Derby, Australia",
+   "mask_fraction": 0.9475,
+   "bare_frac": 0.0,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.0004,
+   "lc_dominant_cci_code": 122,
+   "thermal_inertia_class": "suelo",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 3424,
+   "elevation_m": 296.6,
+   "slope_iso_deg": 1.132,
+   "roughness_m": 42.53,
+   "tmin_c": 13.24,
+   "lst_diurnal_amp_k": 11.27,
+   "irradiance_kwh_m2_day": 6.11,
+   "temp_k": 301.52,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 77.6,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E24605",
+    "km": 107.2
+   },
+   "cci": {
+    "tile": "cci_lc_2020_S45E090.tif",
+    "px": 129600,
+    "water_210": 0.0525,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.0,
+    "sparse_150_153": 0.0004,
+    "top3_classes": [
+     [
+      122,
+      0.846
+     ],
+     [
+      210,
+      0.053
+     ],
+     [
+      100,
+      0.029
+     ]
+    ]
+   }
+  },
+  "E38744": {
+   "uses": [
+    "solar#3"
+   ],
+   "lat": -17.5,
+   "lon": 44.5,
+   "place": "about 80 km north-east of Maintirano, Melaky, Madagascar",
+   "mask_fraction": 0.952,
+   "bare_frac": 0.0081,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.0099,
+   "lc_dominant_cci_code": 110,
+   "thermal_inertia_class": "suelo",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 3434,
+   "elevation_m": 143.6,
+   "slope_iso_deg": 0.706,
+   "roughness_m": 29.64,
+   "tmin_c": 16.15,
+   "lst_diurnal_amp_k": 11.95,
+   "irradiance_kwh_m2_day": 5.967,
+   "temp_k": 300.41,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 54.1,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E25086",
+    "km": 106.0
+   },
+   "cci": {
+    "tile": "cci_lc_2020_S45E000.tif",
+    "px": 129600,
+    "water_210": 0.048,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.0077,
+    "sparse_150_153": 0.0017,
+    "top3_classes": [
+     [
+      110,
+      0.588
+     ],
+     [
+      60,
+      0.152
+     ],
+     [
+      100,
+      0.138
+     ]
+    ]
+   }
+  },
+  "E37746": {
+   "uses": [
+    "solar#4"
+   ],
+   "lat": -14.5,
+   "lon": 126.5,
+   "place": "about 280 km north-west of Kununurra, Australia",
+   "mask_fraction": 0.8952,
+   "bare_frac": 0.0,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.0078,
+   "lc_dominant_cci_code": 122,
+   "thermal_inertia_class": "suelo",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 3228,
+   "elevation_m": 159.4,
+   "slope_iso_deg": 0.757,
+   "roughness_m": 26.93,
+   "tmin_c": 13.71,
+   "lst_diurnal_amp_k": 13.33,
+   "irradiance_kwh_m2_day": 6.071,
+   "temp_k": 302.27,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 43.8,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E24325",
+    "km": 107.7
+   },
+   "cci": {
+    "tile": "cci_lc_2020_S45E090.tif",
+    "px": 129600,
+    "water_210": 0.1048,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.0,
+    "sparse_150_153": 0.007,
+    "top3_classes": [
+     [
+      122,
+      0.792
+     ],
+     [
+      210,
+      0.105
+     ],
+     [
+      120,
+      0.044
+     ]
+    ]
+   }
+  },
+  "E38465": {
+   "uses": [
+    "solar#5"
+   ],
+   "lat": -16.5,
+   "lon": 125.5,
+   "place": "about 218 km north-east of Derby, Australia",
+   "mask_fraction": 1.0,
+   "bare_frac": 0.0,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.0325,
+   "lc_dominant_cci_code": 122,
+   "thermal_inertia_class": "suelo",
+   "permafrost_class": NaN,
+   "n_dem_land_px": 3600,
+   "elevation_m": 403.7,
+   "slope_iso_deg": 0.92,
+   "roughness_m": 33.25,
+   "tmin_c": 11.74,
+   "lst_diurnal_amp_k": 13.35,
+   "irradiance_kwh_m2_day": 6.14,
+   "temp_k": 302.06,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 133.8,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E24605",
+    "km": 154.2
+   },
+   "cci": {
+    "tile": "cci_lc_2020_S45E090.tif",
+    "px": 129600,
+    "water_210": 0.0,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.0,
+    "sparse_150_153": 0.0325,
+    "top3_classes": [
+     [
+      122,
+      0.745
+     ],
+     [
+      100,
+      0.105
+     ],
+     [
+      120,
+      0.084
+     ]
+    ]
+   }
+  },
+  "E17538": {
+   "uses": [
+    "lunar_base#1"
+   ],
+   "lat": 41.5,
+   "lon": 78.5,
+   "place": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+   "mask_fraction": 0.9983,
+   "bare_frac": 0.5278,
+   "snow_ice_frac": 0.0832,
+   "rock_or_bare_frac": 0.6489,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "discontinuo",
+   "n_dem_land_px": 3598,
+   "elevation_m": 3502.9,
+   "slope_iso_deg": 6.652,
+   "roughness_m": 238.81,
+   "tmin_c": -24.54,
+   "lst_diurnal_amp_k": 15.6,
+   "irradiance_kwh_m2_day": 4.093,
+   "temp_k": 272.06,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 1982.0,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E9198",
+    "km": 641.3
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E045.tif",
+    "px": 129600,
+    "water_210": 0.0017,
+    "snow_ice_220": 0.083,
+    "bare_200_202": 0.5268,
+    "sparse_150_153": 0.1209,
+    "top3_classes": [
+     [
+      200,
+      0.527
+     ],
+     [
+      130,
+      0.226
+     ],
+     [
+      150,
+      0.121
+     ]
+    ]
+   }
+  },
+  "E16830": {
+   "uses": [
+    "lunar_base#2"
+   ],
+   "lat": 43.5,
+   "lon": 90.5,
+   "place": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+   "mask_fraction": 0.9998,
+   "bare_frac": 0.5014,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.5372,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "esporadico",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1584.2,
+   "slope_iso_deg": 3.066,
+   "roughness_m": 118.63,
+   "tmin_c": -18.86,
+   "lst_diurnal_amp_k": 18.01,
+   "irradiance_kwh_m2_day": 4.368,
+   "temp_k": 282.43,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 2301.2,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E9198",
+    "km": 1299.0
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E090.tif",
+    "px": 129600,
+    "water_210": 0.0002,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.5013,
+    "sparse_150_153": 0.0358,
+    "top3_classes": [
+     [
+      200,
+      0.501
+     ],
+     [
+      130,
+      0.312
+     ],
+     [
+      20,
+      0.066
+     ]
+    ]
+   }
+  },
+  "E15751": {
+   "uses": [
+    "lunar_base#3"
+   ],
+   "lat": 46.5,
+   "lon": 91.5,
+   "place": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+   "mask_fraction": 0.9977,
+   "bare_frac": 0.362,
+   "snow_ice_frac": 0.0066,
+   "rock_or_bare_frac": 0.5424,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "esporadico",
+   "n_dem_land_px": 3596,
+   "elevation_m": 2261.0,
+   "slope_iso_deg": 4.673,
+   "roughness_m": 164.12,
+   "tmin_c": -25.85,
+   "lst_diurnal_amp_k": 16.04,
+   "irradiance_kwh_m2_day": 4.015,
+   "temp_k": 273.78,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 2636.3,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E9198",
+    "km": 1298.7
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N45E090.tif",
+    "px": 129600,
+    "water_210": 0.0023,
+    "snow_ice_220": 0.0066,
+    "bare_200_202": 0.3612,
+    "sparse_150_153": 0.18,
+    "top3_classes": [
+     [
+      200,
+      0.361
+     ],
+     [
+      130,
+      0.346
+     ],
+     [
+      150,
+      0.18
+     ]
+    ]
+   }
+  },
+  "E21054": {
+   "uses": [
+    "lunar_base#4"
+   ],
+   "lat": 31.5,
+   "lon": -5.5,
+   "place": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+   "mask_fraction": 1.0,
+   "bare_frac": 0.5588,
+   "snow_ice_frac": 0.0,
+   "rock_or_bare_frac": 0.9637,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "ninguno",
+   "n_dem_land_px": 3600,
+   "elevation_m": 1733.1,
+   "slope_iso_deg": 3.257,
+   "roughness_m": 119.49,
+   "tmin_c": -1.52,
+   "lst_diurnal_amp_k": 18.71,
+   "irradiance_kwh_m2_day": 5.386,
+   "temp_k": 293.19,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 318.3,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E11749",
+    "km": 358.6
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00W045.tif",
+    "px": 129600,
+    "water_210": 0.0,
+    "snow_ice_220": 0.0,
+    "bare_200_202": 0.5588,
+    "sparse_150_153": 0.4049,
+    "top3_classes": [
+     [
+      200,
+      0.554
+     ],
+     [
+      153,
+      0.261
+     ],
+     [
+      150,
+      0.143
+     ]
+    ]
+   }
+  },
+  "E17187": {
+   "uses": [
+    "lunar_base#5"
+   ],
+   "lat": 42.5,
+   "lon": 87.5,
+   "place": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+   "mask_fraction": 0.9798,
+   "bare_frac": 0.42,
+   "snow_ice_frac": 0.0004,
+   "rock_or_bare_frac": 0.5334,
+   "lc_dominant_cci_code": 200,
+   "thermal_inertia_class": "regolito",
+   "permafrost_class": "esporadico",
+   "n_dem_land_px": 3529,
+   "elevation_m": 2007.2,
+   "slope_iso_deg": 4.665,
+   "roughness_m": 173.53,
+   "tmin_c": -18.35,
+   "lst_diurnal_amp_k": 18.16,
+   "irradiance_kwh_m2_day": 4.252,
+   "temp_k": 281.89,
+   "centre_inside_ne110m_land": true,
+   "coast_km_ne110m": 2207.5,
+   "nearest_cell_land_share_lt_0_5": {
+    "cell": "E9198",
+    "km": 1121.1
+   },
+   "cci": {
+    "tile": "cci_lc_2020_N00E045.tif",
+    "px": 129600,
+    "water_210": 0.0202,
+    "snow_ice_220": 0.0004,
+    "bare_200_202": 0.4116,
+    "sparse_150_153": 0.1111,
+    "top3_classes": [
+     [
+      200,
+      0.412
+     ],
+     [
+      130,
+      0.331
+     ],
+     [
+      150,
+      0.111
+     ]
+    ]
+   }
+  }
+ },
+ "moon": {
+  "M59895": {
+   "uses": [
+    "rover#1",
+    "rover#2",
+    "rover#3",
+    "rover#4",
+    "rover#5"
+   ],
+   "lat": -76.5,
+   "lon": -44.5,
+   "elevation_m": 584.9,
+   "elevation_rel_m": 833.3,
+   "slope_iso_deg": 1.148,
+   "roughness_m": 44.2,
+   "tmin_k": 69.56,
+   "tmax_k": 266.19,
+   "lst_diurnal_amp_k": 196.63,
+   "temp_k": 142.47,
+   "irradiance_kwh_m2_day": 1.774,
+   "illum_frac": 0.3644,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Casatus",
+   "audio_feature_km": 159.2,
+   "audio_region_code": "B",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Casatus",
+     "Crater, craters",
+     159.2,
+     102.8
+    ],
+    [
+     "Newton",
+     "Crater, craters",
+     189.7,
+     83.9
+    ],
+    [
+     "Wilson",
+     "Crater, craters",
+     218.0,
+     66.6
+    ]
+   ]
+  },
+  "M24296": {
+   "uses": [
+    "solar#1"
+   ],
+   "lat": 22.5,
+   "lon": -3.5,
+   "elevation_m": -1842.7,
+   "elevation_rel_m": -1594.3,
+   "slope_iso_deg": 1.047,
+   "roughness_m": 39.03,
+   "tmin_k": 91.81,
+   "tmax_k": 385.18,
+   "lst_diurnal_amp_k": 293.36,
+   "temp_k": 213.39,
+   "irradiance_kwh_m2_day": 9.604,
+   "illum_frac": 0.5016,
+   "illum_frac_level": "DERIVED_FLAT_GEOMETRY",
+   "zone_rules": {
+    "rover: lat <= -75": false,
+    "solar: |lat| <= 30 and elevation <= -1200 m": true,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Huxley",
+   "audio_feature_km": 75.8,
+   "audio_region_code": "D",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Huxley",
+     "Crater, craters",
+     75.8,
+     3.5
+    ],
+    [
+     "Mons Huygens",
+     "Mons, montes",
+     80.4,
+     42.0
+    ],
+    [
+     "Rima Bradley",
+     "Rima, rimae",
+     95.3,
+     133.8
+    ]
+   ]
+  },
+  "M24583": {
+   "uses": [
+    "solar#2"
+   ],
+   "lat": 21.5,
+   "lon": -76.5,
+   "elevation_m": -1251.1,
+   "elevation_rel_m": -1002.7,
+   "slope_iso_deg": 1.038,
+   "roughness_m": 44.43,
+   "tmin_k": 92.28,
+   "tmax_k": 385.19,
+   "lst_diurnal_amp_k": 292.9,
+   "temp_k": 214.17,
+   "irradiance_kwh_m2_day": 9.672,
+   "illum_frac": 0.5016,
+   "illum_frac_level": "DERIVED_FLAT_GEOMETRY",
+   "zone_rules": {
+    "rover: lat <= -75": false,
+    "solar: |lat| <= 30 and elevation <= -1200 m": true,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Struve",
+   "audio_feature_km": 58.2,
+   "audio_region_code": "D",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Struve",
+     "Crater, craters",
+     58.2,
+     164.3
+    ],
+    [
+     "Eddington",
+     "Crater, craters",
+     126.5,
+     120.1
+    ],
+    [
+     "Russell",
+     "Crater, craters",
+     154.2,
+     103.4
+    ]
+   ]
+  },
+  "M40854": {
+   "uses": [
+    "solar#3"
+   ],
+   "lat": -23.5,
+   "lon": -5.5,
+   "elevation_m": -1532.5,
+   "elevation_rel_m": -1284.1,
+   "slope_iso_deg": 0.649,
+   "roughness_m": 29.0,
+   "tmin_k": 91.83,
+   "tmax_k": 380.17,
+   "lst_diurnal_amp_k": 288.34,
+   "temp_k": 211.99,
+   "irradiance_kwh_m2_day": 9.534,
+   "illum_frac": 0.5016,
+   "illum_frac_level": "DERIVED_FLAT_GEOMETRY",
+   "zone_rules": {
+    "rover: lat <= -75": false,
+    "solar: |lat| <= 30 and elevation <= -1200 m": true,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Thebit",
+   "audio_feature_km": 61.3,
+   "audio_region_code": "D",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Thebit",
+     "Crater, craters",
+     61.3,
+     54.6
+    ],
+    [
+     "Rupes Recta",
+     "Rupes, rupēs",
+     82.8,
+     115.9
+    ],
+    [
+     "Birt",
+     "Crater, craters",
+     93.0,
+     15.8
+    ]
+   ]
+  },
+  "M24761": {
+   "uses": [
+    "solar#4"
+   ],
+   "lat": 21.5,
+   "lon": 101.5,
+   "elevation_m": -1300.7,
+   "elevation_rel_m": -1052.3,
+   "slope_iso_deg": 0.711,
+   "roughness_m": 27.55,
+   "tmin_k": 94.06,
+   "tmax_k": 382.43,
+   "lst_diurnal_amp_k": 288.37,
+   "temp_k": 213.79,
+   "irradiance_kwh_m2_day": 9.672,
+   "illum_frac": 0.5016,
+   "illum_frac_level": "DERIVED_FLAT_GEOMETRY",
+   "zone_rules": {
+    "rover: lat <= -75": false,
+    "solar: |lat| <= 30 and elevation <= -1200 m": true,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Dziewulski",
+   "audio_feature_km": 71.9,
+   "audio_region_code": "D",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Dziewulski",
+     "Crater, craters",
+     71.9,
+     68.9
+    ],
+    [
+     "Catena Dziewulski",
+     "Catena, catenae",
+     89.7,
+     80.7
+    ],
+    [
+     "Malyy",
+     "Crater, craters",
+     115.4,
+     41.3
+    ]
+   ]
+  },
+  "M40406": {
+   "uses": [
+    "solar#5"
+   ],
+   "lat": -22.5,
+   "lon": -93.5,
+   "elevation_m": -2829.0,
+   "elevation_rel_m": -2580.6,
+   "slope_iso_deg": 0.951,
+   "roughness_m": 32.92,
+   "tmin_k": 92.85,
+   "tmax_k": 385.99,
+   "lst_diurnal_amp_k": 293.15,
+   "temp_k": 213.94,
+   "irradiance_kwh_m2_day": 9.604,
+   "illum_frac": 0.5016,
+   "illum_frac_level": "DERIVED_FLAT_GEOMETRY",
+   "zone_rules": {
+    "rover: lat <= -75": false,
+    "solar: |lat| <= 30 and elevation <= -1200 m": true,
+    "lunar_base: cell intersects the nine regions": false
+   },
+   "nasa_regions_intersecting_cell": [],
+   "nasa_region_share_of_cell": {},
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Rimae Pettit",
+   "audio_feature_km": 82.5,
+   "audio_region_code": "D",
+   "audio_nasa_regions": null,
+   "nearest_iau": [
+    [
+     "Rimae Pettit",
+     "Rima, rimae",
+     82.5,
+     320.0
+    ],
+    [
+     "Mare Orientale",
+     "Mare, maria",
+     86.5,
+     294.2
+    ],
+    [
+     "Montes Rook",
+     "Mons, montes",
+     100.1,
+     682.3
+    ]
+   ]
+  },
+  "M63528": {
+   "uses": [
+    "lunar_base#1"
+   ],
+   "lat": -86.5,
+   "lon": -11.5,
+   "elevation_m": 432.3,
+   "elevation_rel_m": 680.7,
+   "slope_iso_deg": 7.179,
+   "roughness_m": 238.49,
+   "tmin_k": 41.23,
+   "tmax_k": 194.51,
+   "lst_diurnal_amp_k": 153.27,
+   "temp_k": 77.49,
+   "irradiance_kwh_m2_day": 0.103,
+   "illum_frac": 0.0773,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": true
+   },
+   "nasa_regions_intersecting_cell": [
+    "Haworth"
+   ],
+   "nasa_region_share_of_cell": {
+    "Haworth": 0.004
+   },
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Mons Malapert",
+   "audio_feature_km": 25.1,
+   "audio_region_code": "A",
+   "audio_nasa_regions": [
+    "Haworth"
+   ],
+   "nearest_iau": [
+    [
+     "Mons Malapert",
+     "Mons, montes",
+     25.1,
+     67.0
+    ],
+    [
+     "Lhamu",
+     "Crater, craters",
+     26.4,
+     1.4
+    ],
+    [
+     "Haworth",
+     "Crater, craters",
+     30.5,
+     51.4
+    ]
+   ]
+  },
+  "M63841": {
+   "uses": [
+    "lunar_base#2"
+   ],
+   "lat": -87.5,
+   "lon": -58.5,
+   "elevation_m": -1503.1,
+   "elevation_rel_m": -1254.7,
+   "slope_iso_deg": 4.151,
+   "roughness_m": 128.19,
+   "tmin_k": 46.11,
+   "tmax_k": 218.73,
+   "lst_diurnal_amp_k": 172.62,
+   "temp_k": 98.73,
+   "irradiance_kwh_m2_day": 0.174,
+   "illum_frac": 0.1752,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": true
+   },
+   "nasa_regions_intersecting_cell": [
+    "de Gerlache Rim 2"
+   ],
+   "nasa_region_share_of_cell": {
+    "de Gerlache Rim 2": 0.078
+   },
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Cartwright",
+   "audio_feature_km": 15.5,
+   "audio_region_code": "A",
+   "audio_nasa_regions": [
+    "de Gerlache Rim 2"
+   ],
+   "nearest_iau": [
+    [
+     "Cartwright",
+     "Crater, craters",
+     15.5,
+     17.0
+    ],
+    [
+     "de Gerlache",
+     "Crater, craters",
+     42.6,
+     32.7
+    ],
+    [
+     "Bay",
+     "Crater, craters",
+     43.1,
+     3.5
+    ]
+   ]
+  },
+  "M64018": {
+   "uses": [
+    "lunar_base#3"
+   ],
+   "lat": -87.5,
+   "lon": 118.5,
+   "elevation_m": -820.2,
+   "elevation_rel_m": -571.8,
+   "slope_iso_deg": 6.26,
+   "roughness_m": 167.9,
+   "tmin_k": 40.65,
+   "tmax_k": 193.97,
+   "lst_diurnal_amp_k": 153.31,
+   "temp_k": 79.66,
+   "irradiance_kwh_m2_day": 0.087,
+   "illum_frac": 0.087,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": true
+   },
+   "nasa_regions_intersecting_cell": [
+    "Slater Plain"
+   ],
+   "nasa_region_share_of_cell": {
+    "Slater Plain": 0.33
+   },
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Slater",
+   "audio_feature_km": 19.4,
+   "audio_region_code": "A",
+   "audio_nasa_regions": [
+    "Slater Plain"
+   ],
+   "nearest_iau": [
+    [
+     "Slater",
+     "Crater, craters",
+     19.4,
+     25.1
+    ],
+    [
+     "Faustini",
+     "Crater, craters",
+     48.3,
+     42.5
+    ],
+    [
+     "Haynes",
+     "Crater, craters",
+     58.3,
+     17.0
+    ]
+   ]
+  },
+  "M62517": {
+   "uses": [
+    "lunar_base#4"
+   ],
+   "lat": -83.5,
+   "lon": 57.5,
+   "elevation_m": 638.0,
+   "elevation_rel_m": 886.4,
+   "slope_iso_deg": 3.481,
+   "roughness_m": 115.01,
+   "tmin_k": 63.03,
+   "tmax_k": 239.92,
+   "lst_diurnal_amp_k": 176.89,
+   "temp_k": 130.4,
+   "irradiance_kwh_m2_day": 0.844,
+   "illum_frac": 0.3536,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": true
+   },
+   "nasa_regions_intersecting_cell": [
+    "Nobile Rim 2"
+   ],
+   "nasa_region_share_of_cell": {
+    "Nobile Rim 2": 0.445
+   },
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Wapowski",
+   "audio_feature_km": 18.3,
+   "audio_region_code": "A",
+   "audio_nasa_regions": [
+    "Nobile Rim 2"
+   ],
+   "nearest_iau": [
+    [
+     "Wapowski",
+     "Crater, craters",
+     18.3,
+     11.5
+    ],
+    [
+     "Oberbeck",
+     "Crater, craters",
+     36.4,
+     58.0
+    ],
+    [
+     "Scott",
+     "Crater, craters",
+     48.2,
+     107.8
+    ]
+   ]
+  },
+  "M62523": {
+   "uses": [
+    "lunar_base#5"
+   ],
+   "lat": -83.5,
+   "lon": 63.5,
+   "elevation_m": -1243.8,
+   "elevation_rel_m": -995.4,
+   "slope_iso_deg": 6.214,
+   "roughness_m": 161.62,
+   "tmin_k": 47.0,
+   "tmax_k": 221.6,
+   "lst_diurnal_amp_k": 174.6,
+   "temp_k": 89.59,
+   "irradiance_kwh_m2_day": 0.312,
+   "illum_frac": 0.1306,
+   "illum_frac_level": "DERIVED_LOLA_TOPOGRAPHY",
+   "zone_rules": {
+    "rover: lat <= -75": true,
+    "solar: |lat| <= 30 and elevation <= -1200 m": false,
+    "lunar_base: cell intersects the nine regions": true
+   },
+   "nasa_regions_intersecting_cell": [
+    "Nobile Rim 2"
+   ],
+   "nasa_region_share_of_cell": {
+    "Nobile Rim 2": 0.003
+   },
+   "nasa_region_containing_centre": [],
+   "audio_feature": "Oberbeck",
+   "audio_feature_km": 15.9,
+   "audio_region_code": "A",
+   "audio_nasa_regions": [
+    "Nobile Rim 2"
+   ],
+   "nearest_iau": [
+    [
+     "Oberbeck",
+     "Crater, craters",
+     15.9,
+     58.0
+    ],
+    [
+     "Wapowski",
+     "Crater, craters",
+     36.7,
+     11.5
+    ],
+    [
+     "von Baeyer",
+     "Crater, craters",
+     51.9,
+     13.5
+    ]
+   ]
+  }
+ }
+}

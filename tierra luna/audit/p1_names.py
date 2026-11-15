@@ -353,6 +353,21 @@ def main():
     same = (bname == gn["name"].to_numpy()[gi]) & (np.abs(np_km - gc_km_all) < 0.05)
     longer = np_km - gc_km_all
 
+    # where the degree-metric rule fails: Antarctica vs elsewhere, and labels the web shows (<= 300 km,
+    # app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM)
+    ant = lat_all <= -60.0
+    shown = np_km <= 300.0
+    gc_name_all = gn["name"].to_numpy()[gi]
+    rule_breakdown = {
+        "not_nearest_lat_le_-60": int((~same & ant).sum()), "land_cells_lat_le_-60": int(ant.sum()),
+        "not_nearest_elsewhere": int((~same & ~ant).sum()), "land_cells_elsewhere": int((~ant).sum()),
+        "not_nearest_elsewhere_and_shown_le_300km": int((~same & ~ant & shown).sum()),
+        "shown_le_300km_elsewhere": int((~ant & shown).sum()),
+        "extra_km_elsewhere_shown_median": float(np.median(longer[~same & ~ant & shown])),
+        "extra_km_elsewhere_shown_p90": float(np.percentile(longer[~same & ~ant & shown], 90)),
+        "extra_km_elsewhere_shown_max": float(longer[~same & ~ant & shown].max()),
+        "same_name_but_other_row": int(((bname == gc_name_all) & ~same).sum()),
+    }
     # ranked points of each mission: how many carry a non-nearest place
     ranked_stats = {}
     for mission in MISSIONS:
@@ -360,6 +375,8 @@ def main():
         d = d[d["rank"].notna()]
         li = d["land_index"].to_numpy()
         ranked_stats[mission] = {"ranked": int(len(d)), "place_not_gc_nearest": int((~same[li]).sum()),
+                                 "place_not_gc_nearest_shown_le_300km_not_antarctic": int((~same[li] & shown[li] & ~ant[li]).sum()),
+                                 "top100_place_not_gc_nearest": int((~same[li] & (d["rank"].to_numpy() <= 100)).sum()),
                                  "median_extra_km_when_wrong": float(np.median(longer[li][~same[li]])) if (~same[li]).any() else 0.0,
                                  "max_extra_km": float(longer[li].max())}
 
@@ -383,6 +400,7 @@ def main():
                                             "extra_km_when_not_nearest_median": float(np.median(longer[~same])),
                                             "extra_km_max": float(longer.max())},
         "earth_place_rule_ranked": ranked_stats,
+        "earth_place_rule_breakdown": rule_breakdown,
         "lunar_feature_rule_all_cells": {"cells": 64800, "bundle_feature_is_gc_nearest": int(fsame.sum())},
         "pairs_place_not_nearest": int((~pairs["place_is_gc_nearest"]).sum()),
         "sample_place_not_nearest": int((~samp["place_is_gc_nearest"]).sum()),

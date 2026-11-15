@@ -1,0 +1,120 @@
+{
+ "region_names_in_engine_file": [
+  "Haworth",
+  "Malapert Massif",
+  "Mons Mouton",
+  "Mons Mouton Plateau",
+  "Nobile Rim 1",
+  "Nobile Rim 2",
+  "Peak Near Cabeus B",
+  "Slater Plain",
+  "de Gerlache Rim 2"
+ ],
+ "lunar_base_cells": [
+  {
+   "rank": 1,
+   "moon": "M63528",
+   "lat": -86.5,
+   "lon": -11.5,
+   "audio_region": [
+    "Haworth"
+   ],
+   "cell_area_km2": 56.2,
+   "share_of_cell_in_region": {
+    "Haworth": 0.0043
+   },
+   "region_area_inside_cell_km2": {
+    "Haworth": 0.24
+   },
+   "centre_to_region_edge_km_negative_inside": {
+    "Haworth": 1.0,
+    "Malapert Massif": 12.1,
+    "Mons Mouton Plateau": 71.0
+   }
+  },
+  {
+   "rank": 2,
+   "moon": "M63841",
+   "lat": -87.5,
+   "lon": -58.5,
+   "audio_region": [
+    "de Gerlache Rim 2"
+   ],
+   "cell_area_km2": 40.1,
+   "share_of_cell_in_region": {
+    "de Gerlache Rim 2": 0.0781
+   },
+   "region_area_inside_cell_km2": {
+    "de Gerlache Rim 2": 3.14
+   },
+   "centre_to_region_edge_km_negative_inside": {
+    "de Gerlache Rim 2": 8.3,
+    "Haworth": 37.6,
+    "Malapert Massif": 89.0
+   }
+  },
+  {
+   "rank": 3,
+   "moon": "M64018",
+   "lat": -87.5,
+   "lon": 118.5,
+   "audio_region": [
+    "Slater Plain"
+   ],
+   "cell_area_km2": 40.1,
+   "share_of_cell_in_region": {
+    "Slater Plain": 0.3295
+   },
+   "region_area_inside_cell_km2": {
+    "Slater Plain": 13.23
+   },
+   "centre_to_region_edge_km_negative_inside": {
+    "Slater Plain": 3.1,
+    "de Gerlache Rim 2": 115.4,
+    "Nobile Rim 1": 135.9
+   }
+  },
+  {
+   "rank": 4,
+   "moon": "M62517",
+   "lat": -83.5,
+   "lon": 57.5,
+   "audio_region": [
+    "Nobile Rim 2"
+   ],
+   "cell_area_km2": 104.8,
+   "share_of_cell_in_region": {
+    "Nobile Rim 2": 0.4454
+   },
+   "region_area_inside_cell_km2": {
+    "Nobile Rim 2": 46.67
+   },
+   "centre_to_region_edge_km_negative_inside": {
+    "Nobile Rim 2": 0.4,
+    "Mons Mouton Plateau": 41.6,
+    "Nobile Rim 1": 71.8
+   }
+  },
+  {
+   "rank": 5,
+   "moon": "M62523",
+   "lat": -83.5,
+   "lon": 63.5,
+   "audio_region": [
+    "Nobile Rim 2"
+   ],
+   "cell_area_km2": 104.8,
+   "share_of_cell_in_region": {
+    "Nobile Rim 2": 0.0032
+   },
+   "region_area_inside_cell_km2": {
+    "Nobile Rim 2": 0.34
+   },
+   "centre_to_region_edge_km_negative_inside": {
+    "Nobile Rim 2": 9.6,
+    "Mons Mouton Plateau": 58.5,
+    "Nobile Rim 1": 82.8
+   }
+  }
+ ]
+}

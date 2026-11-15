@@ -1,0 +1,70 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,common_gate.elevation_m.drop,common_gate,drop common gate elevation_m,18805,28,0,6363,3,0,0,5,True,50,True,
+solar,common_gate.elevation_m.minx0.9,common_gate,common gate elevation_m min 1.0 x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,common_gate.elevation_m.minx1.1,common_gate,common gate elevation_m min 1.0 x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,common_gate.mask_fraction.drop,common_gate,drop common gate mask_fraction,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,common_gate.mask_fraction.minx0.9,common_gate,common gate mask_fraction min 0.3 x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,common_gate.mask_fraction.minx1.1,common_gate,common gate mask_fraction min 0.3 x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,require_present.irradiance_kwh_m2_day.drop,require_present,drop require_present irradiance_kwh_m2_day,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,require_present.sun_elev_max_deg.drop,require_present,drop require_present sun_elev_max_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,require_present.sun_low_frac_0_5deg.drop,require_present,drop require_present sun_low_frac_0_5deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,require_present.slope_deg.drop,require_present,drop require_present slope_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.irradiance_kwh_m2_day.drop,gate,drop gate irradiance_kwh_m2_day,21048,2271,0,6360,0,0,0,5,True,50,True,
+solar,gate.irradiance_kwh_m2_day.min.drop,gate,drop min of gate irradiance_kwh_m2_day,21048,2271,0,6360,0,0,0,5,True,50,True,
+solar,gate.irradiance_kwh_m2_day.minx0.9,gate,gate irradiance_kwh_m2_day min 2.5 x0.9,20089,1312,0,6360,0,0,0,5,True,50,True,
+solar,gate.irradiance_kwh_m2_day.minx1.1,gate,gate irradiance_kwh_m2_day min 2.5 x1.1,17461,0,1316,6360,0,0,0,5,True,50,True,
+solar,gate.slope_deg.drop,gate,drop gate slope_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.slope_deg.max.drop,gate,drop max of gate slope_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.slope_deg.maxx0.9,gate,gate slope_deg max 15.0 x0.9,18776,0,1,6360,0,0,0,5,True,50,True,
+solar,gate.slope_deg.maxx1.1,gate,gate slope_deg max 15.0 x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_elev_max_deg.drop,gate,drop gate sun_elev_max_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_elev_max_deg.min.drop,gate,drop min of gate sun_elev_max_deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_elev_max_deg.minx0.9,gate,gate sun_elev_max_deg min 10.0 x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_elev_max_deg.minx1.1,gate,gate sun_elev_max_deg min 10.0 x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_low_frac_0_5deg.drop,gate,drop gate sun_low_frac_0_5deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_low_frac_0_5deg.max.drop,gate,drop max of gate sun_low_frac_0_5deg,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_low_frac_0_5deg.maxx0.9,gate,gate sun_low_frac_0_5deg max 0.25 x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.sun_low_frac_0_5deg.maxx1.1,gate,gate sun_low_frac_0_5deg max 0.25 x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,gate.thermal_inertia_class.drop,gate,drop gate thermal_inertia_class,19517,740,0,6664,304,0,0,0,False,42,False,37745-24684;38104-40105;37749-24685;38463-24328;38384-24238
+solar,soft.irradiance_kwh_m2_day.weight0,soft_weight,suitability weight of irradiance_kwh_m2_day (0.35) -> 0,18777,0,0,6360,0,0,0,0,False,0,False,31785-26444;31786-26397;31802-26438;31803-26521;31804-26521
+solar,soft.irradiance_kwh_m2_day.weight x0.9,soft_weight,suitability weight of irradiance_kwh_m2_day x0.9,18777,0,0,6360,0,0,0,4,False,48,False,38385-24227
+solar,soft.irradiance_kwh_m2_day.weight x1.1,soft_weight,suitability weight of irradiance_kwh_m2_day x1.1,18777,0,0,6360,0,0,0,5,True,47,False,
+solar,soft.irradiance_kwh_m2_day.badx0.9,soft_utility,bad of irradiance_kwh_m2_day (2.5) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.irradiance_kwh_m2_day.badx1.1,soft_utility,bad of irradiance_kwh_m2_day (2.5) x1.1,18777,0,0,6360,0,0,0,5,True,48,False,
+solar,soft.irradiance_kwh_m2_day.goodx0.9,soft_utility,good of irradiance_kwh_m2_day (6.0) x0.9,18777,0,0,6360,0,0,0,0,False,0,False,30077-26087;30078-26055;30079-26120;30080-38771;29420-25716
+solar,soft.irradiance_kwh_m2_day.goodx1.1,soft_utility,good of irradiance_kwh_m2_day (6.0) x1.1,18777,0,0,6360,0,0,0,1,False,11,False,28670-25483;29389-25758;29030-25759;29749-26063
+solar,soft.sun_elev_max_deg.weight0,soft_weight,suitability weight of sun_elev_max_deg (0.15) -> 0,18777,0,0,6360,0,0,0,5,True,49,False,
+solar,soft.sun_elev_max_deg.weight x0.9,soft_weight,suitability weight of sun_elev_max_deg x0.9,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.sun_elev_max_deg.weight x1.1,soft_weight,suitability weight of sun_elev_max_deg x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.sun_elev_max_deg.badx0.9,soft_utility,bad of sun_elev_max_deg (10.0) x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.badx1.1,soft_utility,bad of sun_elev_max_deg (10.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.goodx0.9,soft_utility,good of sun_elev_max_deg (70.0) x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.goodx1.1,soft_utility,good of sun_elev_max_deg (70.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_low_frac_0_5deg.weight0,soft_weight,suitability weight of sun_low_frac_0_5deg (0.15) -> 0,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.sun_low_frac_0_5deg.weight x0.9,soft_weight,suitability weight of sun_low_frac_0_5deg x0.9,18777,0,0,6360,0,0,0,5,True,49,False,
+solar,soft.sun_low_frac_0_5deg.weight x1.1,soft_weight,suitability weight of sun_low_frac_0_5deg x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.badx0.9,soft_utility,bad of sun_low_frac_0_5deg (0.25) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.badx1.1,soft_utility,bad of sun_low_frac_0_5deg (0.25) x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.goodx0.9,soft_utility,good of sun_low_frac_0_5deg (0.03) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.goodx1.1,soft_utility,good of sun_low_frac_0_5deg (0.03) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.slope_deg.weight0,soft_weight,suitability weight of slope_deg (0.15) -> 0,18777,0,0,6360,0,0,0,5,False,50,False,
+solar,soft.slope_deg.weight x0.9,soft_weight,suitability weight of slope_deg x0.9,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.slope_deg.weight x1.1,soft_weight,suitability weight of slope_deg x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.slope_deg.badx0.9,soft_utility,bad of slope_deg (12.0) x0.9,18777,0,0,6360,0,0,0,5,True,49,False,
+solar,soft.slope_deg.badx1.1,soft_utility,bad of slope_deg (12.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.slope_deg.goodx0.9,soft_utility,good of slope_deg (1.0) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.slope_deg.goodx1.1,soft_utility,good of slope_deg (1.0) x1.1,18777,0,0,6360,0,0,0,5,False,50,False,
+solar,soft.lst_diurnal_amp_k.weight0,soft_weight,suitability weight of lst_diurnal_amp_k (0.1) -> 0,18777,0,0,6360,0,0,0,0,False,19,False,30104-26120;30105-26056;30106-26040;30107-26155;30108-26159
+solar,soft.lst_diurnal_amp_k.weight x0.9,soft_weight,suitability weight of lst_diurnal_amp_k x0.9,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.lst_diurnal_amp_k.weight x1.1,soft_weight,suitability weight of lst_diurnal_amp_k x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.lst_diurnal_amp_k.badx0.9,soft_utility,bad of lst_diurnal_amp_k (35.0) x0.9,18777,0,0,6360,0,0,0,4,False,48,False,38385-24227
+solar,soft.lst_diurnal_amp_k.badx1.1,soft_utility,bad of lst_diurnal_amp_k (35.0) x1.1,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.lst_diurnal_amp_k.goodx0.9,soft_utility,good of lst_diurnal_amp_k (10.0) x0.9,18777,0,0,6360,0,0,0,5,True,48,False,
+solar,soft.lst_diurnal_amp_k.goodx1.1,soft_utility,good of lst_diurnal_amp_k (10.0) x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.roughness_m.weight0,soft_weight,suitability weight of roughness_m (0.1) -> 0,18777,0,0,6360,0,0,0,5,False,47,False,
+solar,soft.roughness_m.weight x0.9,soft_weight,suitability weight of roughness_m x0.9,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.roughness_m.weight x1.1,soft_weight,suitability weight of roughness_m x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.roughness_m.badx0.9,soft_utility,bad of roughness_m (400.0) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.roughness_m.badx1.1,soft_utility,bad of roughness_m (400.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.roughness_m.goodx0.9,soft_utility,good of roughness_m (30.0) x0.9,18777,0,0,6360,0,0,0,4,False,48,False,38385-24227
+solar,soft.roughness_m.goodx1.1,soft_utility,good of roughness_m (30.0) x1.1,18777,0,0,6360,0,0,0,5,True,49,False,

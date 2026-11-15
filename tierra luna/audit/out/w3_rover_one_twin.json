@@ -1,0 +1,582 @@
+{
+ "zone_cells": 5400,
+ "bounds": {
+  "slope_deg": 2.0,
+  "roughness_m": 30.0,
+  "elevation_rel_m": 1000.0
+ },
+ "cells": [
+  {
+   "track": 1,
+   "earth_id": "E17566",
+   "earth_values": {
+    "slope_deg": 1.038,
+    "roughness_m": 43.53,
+    "elevation_rel_m": 737.476
+   },
+   "zone_cells_passing_filter": 1,
+   "fails_by_variable": {
+    "slope_deg": 4874,
+    "roughness_m": 5155,
+    "elevation_rel_m": 4134
+   },
+   "fails_only_this_variable": {
+    "slope_deg": 0,
+    "roughness_m": 7,
+    "elevation_rel_m": 243
+   },
+   "key_value_missing_in_zone": 0,
+   "best3_ignoring_filter": [
+    {
+     "moon_id": "M59895",
+     "lat_lon": [
+      -76.5,
+      -44.5
+     ],
+     "feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.57,
+     "passes_filter": true,
+     "diff": {
+      "slope_deg": 0.11,
+      "roughness_m": 0.67,
+      "elevation_rel_m": 95.814
+     }
+    },
+    {
+     "moon_id": "M59717",
+     "lat_lon": [
+      -75.5,
+      137.5
+     ],
+     "feature": {
+      "feature": "Schrodinger",
+      "km": 42.5
+     },
+     "similarity": 79.99,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.022,
+      "roughness_m": 0.53,
+      "elevation_rel_m": 5185.686
+     }
+    },
+    {
+     "moon_id": "M63305",
+     "lat_lon": [
+      -85.5,
+      125.5
+     ],
+     "feature": {
+      "feature": "Slater",
+      "km": 81.3
+     },
+     "similarity": 79.97,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.068,
+      "roughness_m": 0.4,
+      "elevation_rel_m": 3688.986
+     }
+    }
+   ],
+   "best_passing": [
+    [
+     99.566,
+     "M59895"
+    ]
+   ]
+  },
+  {
+   "track": 2,
+   "earth_id": "E23945",
+   "earth_values": {
+    "slope_deg": 1.215,
+    "roughness_m": 43.37,
+    "elevation_rel_m": 761.876
+   },
+   "zone_cells_passing_filter": 1,
+   "fails_by_variable": {
+    "slope_deg": 4799,
+    "roughness_m": 5155,
+    "elevation_rel_m": 4164
+   },
+   "fails_only_this_variable": {
+    "slope_deg": 0,
+    "roughness_m": 14,
+    "elevation_rel_m": 243
+   },
+   "key_value_missing_in_zone": 0,
+   "best3_ignoring_filter": [
+    {
+     "moon_id": "M59895",
+     "lat_lon": [
+      -76.5,
+      -44.5
+     ],
+     "feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.76,
+     "passes_filter": true,
+     "diff": {
+      "slope_deg": 0.067,
+      "roughness_m": 0.83,
+      "elevation_rel_m": 71.414
+     }
+    },
+    {
+     "moon_id": "M60062",
+     "lat_lon": [
+      -76.5,
+      122.5
+     ],
+     "feature": {
+      "feature": "Schrodinger",
+      "km": 94.9
+     },
+     "similarity": 79.99,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.008,
+      "roughness_m": 0.66,
+      "elevation_rel_m": 4581.086
+     }
+    },
+    {
+     "moon_id": "M60059",
+     "lat_lon": [
+      -76.5,
+      119.5
+     ],
+     "feature": {
+      "feature": "Ganswindt",
+      "km": 102.7
+     },
+     "similarity": 79.96,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.022,
+      "roughness_m": 1.3,
+      "elevation_rel_m": 4482.586
+     }
+    }
+   ],
+   "best_passing": [
+    [
+     99.759,
+     "M59895"
+    ]
+   ]
+  },
+  {
+   "track": 3,
+   "earth_id": "E18282",
+   "earth_values": {
+    "slope_deg": 0.908,
+    "roughness_m": 38.75,
+    "elevation_rel_m": 747.676
+   },
+   "zone_cells_passing_filter": 1,
+   "fails_by_variable": {
+    "slope_deg": 4927,
+    "roughness_m": 5181,
+    "elevation_rel_m": 4150
+   },
+   "fails_only_this_variable": {
+    "slope_deg": 0,
+    "roughness_m": 2,
+    "elevation_rel_m": 218
+   },
+   "key_value_missing_in_zone": 0,
+   "best3_ignoring_filter": [
+    {
+     "moon_id": "M59895",
+     "lat_lon": [
+      -76.5,
+      -44.5
+     ],
+     "feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 98.77,
+     "passes_filter": true,
+     "diff": {
+      "slope_deg": 0.24,
+      "roughness_m": 5.45,
+      "elevation_rel_m": 85.614
+     }
+    },
+    {
+     "moon_id": "M60064",
+     "lat_lon": [
+      -76.5,
+      124.5
+     ],
+     "feature": {
+      "feature": "Schrodinger",
+      "km": 82.9
+     },
+     "similarity": 79.93,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.017,
+      "roughness_m": 1.8,
+      "elevation_rel_m": 4591.586
+     }
+    },
+    {
+     "moon_id": "M59699",
+     "lat_lon": [
+      -75.5,
+      119.5
+     ],
+     "feature": {
+      "feature": "Rittenhouse",
+      "km": 105.2
+     },
+     "similarity": 79.93,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.047,
+      "roughness_m": 1.68,
+      "elevation_rel_m": 4618.486
+     }
+    }
+   ],
+   "best_passing": [
+    [
+     98.767,
+     "M59895"
+    ]
+   ]
+  },
+  {
+   "track": 4,
+   "earth_id": "E18280",
+   "earth_values": {
+    "slope_deg": 1.131,
+    "roughness_m": 48.91,
+    "elevation_rel_m": 851.476
+   },
+   "zone_cells_passing_filter": 1,
+   "fails_by_variable": {
+    "slope_deg": 4836,
+    "roughness_m": 5121,
+    "elevation_rel_m": 4272
+   },
+   "fails_only_this_variable": {
+    "slope_deg": 0,
+    "roughness_m": 12,
+    "elevation_rel_m": 276
+   },
+   "key_value_missing_in_zone": 0,
+   "best3_ignoring_filter": [
+    {
+     "moon_id": "M59895",
+     "lat_lon": [
+      -76.5,
+      -44.5
+     ],
+     "feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.5,
+     "passes_filter": true,
+     "diff": {
+      "slope_deg": 0.017,
+      "roughness_m": 4.71,
+      "elevation_rel_m": 18.186
+     }
+    },
+    {
+     "moon_id": "M60793",
+     "lat_lon": [
+      -78.5,
+      133.5
+     ],
+     "feature": {
+      "feature": "Nefed ev",
+      "km": 78.9
+     },
+     "similarity": 79.99,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.023,
+      "roughness_m": 0.4,
+      "elevation_rel_m": 4801.886
+     }
+    },
+    {
+     "moon_id": "M63360",
+     "lat_lon": [
+      -86.5,
+      -179.5
+     ],
+     "feature": {
+      "feature": "Sverdrup",
+      "km": 64.4
+     },
+     "similarity": 79.98,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.061,
+      "roughness_m": 0.5,
+      "elevation_rel_m": 3475.186
+     }
+    }
+   ],
+   "best_passing": [
+    [
+     99.495,
+     "M59895"
+    ]
+   ]
+  },
+  {
+   "track": 5,
+   "earth_id": "E15395",
+   "earth_values": {
+    "slope_deg": 1.236,
+    "roughness_m": 41.33,
+    "elevation_rel_m": 962.476
+   },
+   "zone_cells_passing_filter": 1,
+   "fails_by_variable": {
+    "slope_deg": 4789,
+    "roughness_m": 5168,
+    "elevation_rel_m": 4345
+   },
+   "fails_only_this_variable": {
+    "slope_deg": 0,
+    "roughness_m": 11,
+    "elevation_rel_m": 231
+   },
+   "key_value_missing_in_zone": 0,
+   "best3_ignoring_filter": [
+    {
+     "moon_id": "M59895",
+     "lat_lon": [
+      -76.5,
+      -44.5
+     ],
+     "feature": {
+      "feature": "Casatus",
+      "km": 159.2
+     },
+     "similarity": 99.12,
+     "passes_filter": true,
+     "diff": {
+      "slope_deg": 0.088,
+      "roughness_m": 2.87,
+      "elevation_rel_m": 129.186
+     }
+    },
+    {
+     "moon_id": "M63455",
+     "lat_lon": [
+      -86.5,
+      -84.5
+     ],
+     "feature": {
+      "feature": "Lacus Tenebrarum",
+      "km": 8.5
+     },
+     "similarity": 79.98,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.066,
+      "roughness_m": 0.27,
+      "elevation_rel_m": 3172.286
+     }
+    },
+    {
+     "moon_id": "M60574",
+     "lat_lon": [
+      -78.5,
+      -85.5
+     ],
+     "feature": {
+      "feature": "Drygalski",
+      "km": 34.0
+     },
+     "similarity": 79.96,
+     "passes_filter": false,
+     "diff": {
+      "slope_deg": 0.093,
+      "roughness_m": 0.13,
+      "elevation_rel_m": 5438.486
+     }
+    }
+   ],
+   "best_passing": [
+    [
+     99.122,
+     "M59895"
+    ]
+   ]
+  }
+ ],
+ "twin_M59895_values": {
+  "slope_deg": 1.148,
+  "roughness_m": 44.2,
+  "elevation_rel_m": 833.2894020283721
+ },
+ "option_b_distinct_twins": {
+  "top": [
+   {
+    "rank": 1,
+    "current_rank": 1,
+    "earth_id": "E17566",
+    "lat": 41.5,
+    "lon": 106.5,
+    "earth_place": {
+     "place": "Bayinbaolige",
+     "km": 65.6,
+     "country": "China"
+    },
+    "moon_id": "M59895",
+    "moon_lat": -76.5,
+    "moon_lon": -44.5,
+    "moon_feature": {
+     "feature": "Casatus",
+     "km": 159.2
+    },
+    "similarity": 99.57,
+    "suitability": 99.22,
+    "final": 99.39
+   },
+   {
+    "rank": 2,
+    "current_rank": 25,
+    "earth_id": "E18633",
+    "lat": 38.5,
+    "lon": 93.5,
+    "earth_place": {
+     "place": "Lenghu",
+     "km": 30.2,
+     "country": "China"
+    },
+    "moon_id": "M61037",
+    "moon_lat": -79.5,
+    "moon_lon": 17.5,
+    "moon_feature": {
+     "feature": "Schomberger",
+     "km": 97.6
+    },
+    "similarity": 96.51,
+    "suitability": 99.02,
+    "final": 97.77
+   },
+   {
+    "rank": 3,
+    "current_rank": 35,
+    "earth_id": "E5680",
+    "lat": 74.5,
+    "lon": 100.5,
+    "earth_place": {
+     "place": "Khatanga",
+     "km": 287.2,
+     "country": "Russia"
+    },
+    "moon_id": "M61116",
+    "moon_lat": -79.5,
+    "moon_lon": 96.5,
+    "moon_feature": {
+     "feature": "Ganswindt",
+     "km": 81.2
+    },
+    "similarity": 96.28,
+    "suitability": 98.37,
+    "final": 97.32
+   },
+   {
+    "rank": 4,
+    "current_rank": 45,
+    "earth_id": "E4764",
+    "lat": 76.5,
+    "lon": -95.5,
+    "earth_place": {
+     "place": "Gjoa Haven",
+     "km": 875.6,
+     "country": "Canada"
+    },
+    "moon_id": "M60992",
+    "moon_lat": -79.5,
+    "moon_lon": -27.5,
+    "moon_feature": {
+     "feature": "Newton",
+     "km": 110.0
+    },
+    "similarity": 97.84,
+    "suitability": 95.93,
+    "final": 96.88
+   },
+   {
+    "rank": 5,
+    "current_rank": 59,
+    "earth_id": "E4769",
+    "lat": 76.5,
+    "lon": -90.5,
+    "earth_place": {
+     "place": "Gjoa Haven",
+     "km": 892.8,
+     "country": "Canada"
+    },
+    "moon_id": "M61352",
+    "moon_lat": -80.5,
+    "moon_lon": -27.5,
+    "moon_feature": {
+     "feature": "Mons Cabeus",
+     "km": 102.4
+    },
+    "similarity": 99.12,
+    "suitability": 94.2,
+    "final": 96.66
+   }
+  ],
+  "tracks": [
+   {
+    "track": 1,
+    "earth": "E17566",
+    "moon": "M59895",
+    "status": "same"
+   },
+   {
+    "track": 2,
+    "earth": "E23945",
+    "moon": "M59895",
+    "status": "leaves top 5"
+   },
+   {
+    "track": 3,
+    "earth": "E18282",
+    "moon": "M59895",
+    "status": "leaves top 5"
+   },
+   {
+    "track": 4,
+    "earth": "E18280",
+    "moon": "M59895",
+    "status": "leaves top 5"
+   },
+   {
+    "track": 5,
+    "earth": "E15395",
+    "moon": "M59895",
+    "status": "leaves top 5"
+   }
+  ],
+  "tracks_broken": [
+   2,
+   3,
+   4,
+   5
+  ]
+ }
+}

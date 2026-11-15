@@ -1,0 +1,9 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,mult.keyx0.9,filter_bound,filter multiplier key (1.0) x0.9,18777,0,0,6163,0,197,0,5,True,50,True,
+solar,mult.keyx1.1,filter_bound,filter multiplier key (1.0) x1.1,18777,0,0,6546,186,0,0,5,True,50,True,
+solar,mult.secondaryx0.9,filter_bound,filter multiplier secondary (2.0) x0.9,18777,0,0,6360,0,0,1,5,True,50,True,
+solar,mult.secondaryx1.1,filter_bound,filter multiplier secondary (2.0) x1.1,18777,0,0,6361,1,0,2,5,True,50,True,
+solar,zone.abs_lat_max=27,zone,zone |lat| limit 30.0 -> 27,18777,0,0,5733,0,627,1770,5,True,50,True,
+solar,zone.abs_lat_max=33,zone,zone |lat| limit 30.0 -> 33,18777,0,0,6900,540,0,1528,5,True,50,True,
+solar,zone.elevation_max_m=-1080,zone,zone elevation limit -1200.0 -> -1080,18777,0,0,6360,0,0,258,5,True,48,False,
+solar,zone.elevation_max_m=-1320,zone,zone elevation limit -1200.0 -> -1320,18777,0,0,6360,0,0,412,3,False,46,False,38105-24642;37746-24671

@@ -1,0 +1,50 @@
+{
+ "ballypatrick": {
+  "lat": 55.181,
+  "lon": -6.153,
+  "years_complete": 0,
+  "mean_annual_sun_h_1991_2020": null
+ },
+ "braemar": {
+  "lat": 57.006,
+  "lon": -3.396,
+  "years_complete": 13,
+  "mean_annual_sun_h_1991_2020": 1210.4
+ },
+ "camborne": {
+  "lat": 50.218,
+  "lon": -5.327,
+  "years_complete": 30,
+  "mean_annual_sun_h_1991_2020": 1611.6
+ },
+ "dunstaffnage": {
+  "lat": 56.451,
+  "lon": -5.439,
+  "years_complete": 10,
+  "mean_annual_sun_h_1991_2020": 1209.7
+ },
+ "eskdalemuir": {
+  "lat": 55.311,
+  "lon": -3.206,
+  "years_complete": 30,
+  "mean_annual_sun_h_1991_2020": 1106.9
+ },
+ "lerwick": {
+  "lat": 60.139,
+  "lon": -1.183,
+  "years_complete": 30,
+  "mean_annual_sun_h_1991_2020": 1103.4
+ },
+ "stornoway": {
+  "lat": 58.214,
+  "lon": -6.318,
+  "years_complete": 28,
+  "mean_annual_sun_h_1991_2020": 1177.8
+ },
+ "tiree": {
+  "lat": 56.5,
+  "lon": -6.88,
+  "years_complete": 27,
+  "mean_annual_sun_h_1991_2020": 1429.7
+ }
+}

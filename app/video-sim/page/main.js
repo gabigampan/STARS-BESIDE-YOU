@@ -217,9 +217,12 @@ if (isSolar) {
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 1, 16), alu); root.add(mast);
   const head = new THREE.Group(); root.add(head);
   const hub = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.35), grey); head.add(hub);
-  const tip = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2, 6), alu); tip.position.y = 0.85; head.add(tip);
+  const FLAT = A.final_tilt_deg === 0;   // flat (horizontal) array: the head is turned so the wings unfold upwards and end lying flat
+  if (!FLAT) { const tip = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2, 6), alu); tip.position.y = 0.85; head.add(tip); }
   const panelGeo = new THREE.BoxGeometry(A.panel_w_m, A.panel_h_m, 0.045);
-  const panelMats = [alu, alu, alu, alu, back, cells]; // -z face (index 5) is the cell side, facing forward (towards the Sun)
+  // vertical array: -z face (index 5) is the cell side, facing the Sun; flat array: +z face (index 4), which ends facing up
+  const panelMats = FLAT ? [alu, alu, alu, alu, cells, back] : [alu, alu, alu, alu, back, cells];
+  if (FLAT) head.rotation.set(-Math.PI / 2, 0, 0);
   const wings = [];
   for (const side of [1, -1]) {
     const wroot = new THREE.Group(); wroot.scale.x = side; head.add(wroot);
@@ -235,7 +238,7 @@ if (isSolar) {
     wings.push(hinges);
   }
   shadowAll(root);
-  solar = { mast, head, wings };
+  solar = { mast, head, wings, FLAT };
 } else {
   const HB = SC.habitat;
   const white = objMat({ color: 0xd2cec6, roughness: 0.7, metalness: 0.05 });
@@ -333,14 +336,39 @@ const COMP = M.compression(SC);
 const compStr = '×' + thou(Number(COMP.toPrecision(3)));
 const prodShort = (p) => p.split(' (')[0].replace('LOLA ', '');
 
-foot.innerHTML = `3D simulation driven by table data. Not real footage. &nbsp;·&nbsp; Terrain: real LOLA relief, ${prodShort(NEAR.product)} at ${f1(NEAR.step, 1)} m/px (±${f1(NEAR.half / 1000, 0)} km), ` +
+foot.innerHTML = `3D simulation driven by table data. Not real footage. &nbsp;·&nbsp; Terrain: real ${SC.render?.relief_credit ?? 'LOLA'} relief, ${prodShort(NEAR.product)} at ${f1(NEAR.step, 1)} m/px (±${f1(NEAR.half / 1000, 0)} km), ` +
   `far field ${prodShort(FAR.product)} meshed at ${f1(FAR.step, 0)} m/px; fine surface texture is procedural. ` +
   (isSolar ? 'Array size and timing: illustrative.' : 'Habitat shapes, sizes and timing: illustrative.');
 
 const graph = document.createElement('canvas'); graph.width = 548; graph.height = 128;
 function row(l, v) { return `<div class="row"><span class="l">${l}</span><span class="v">${v}</span></div>`; }
 
+// Flat array: x axis = one whole lunar cycle (synodic period) from sunrise; the night half is shaded.
+const CYC = SC.constants.synodic_period_days.value;
+const H_RISE = -Math.acos(-Math.tan(SC.site.lat_deg * D2R) * Math.tan(SC.sun.declination_deg * D2R)) / D2R;
+const dayFromRise = (Hh) => (Hh - H_RISE) / 360 * CYC;
+function drawCycleGraph(t) {
+  const g = graph.getContext('2d'), w = graph.width, h = graph.height, pl = 8, pr = 8, pt = 8, pb = 22;
+  const X = (d) => pl + (w - pl - pr) * d / CYC, Y = (P) => pt + (h - pt - pb) * (1 - P / 1400);
+  g.clearRect(0, 0, w, h);
+  g.fillStyle = 'rgba(255,255,255,0.04)'; g.fillRect(0, 0, w, h);
+  const dSet = dayFromRise(-H_RISE);
+  g.fillStyle = 'rgba(120,130,160,0.22)'; g.fillRect(X(dSet), pt, X(CYC) - X(dSet), h - pt - pb);
+  g.strokeStyle = 'rgba(255,255,255,0.14)'; g.lineWidth = 1;
+  for (const v of [0, 700, 1400]) { const y = Y(v); g.beginPath(); g.moveTo(pl, y + 0.5); g.lineTo(w - pr, y + 0.5); g.stroke(); }
+  // model curve over the whole daytime (dashed), then the part already shown (solid)
+  g.setLineDash([5, 5]); g.strokeStyle = 'rgba(242,163,58,0.45)'; g.lineWidth = 1.5; g.beginPath();
+  for (let k = 0; k <= 200; k++) { const Hh = H_RISE + (-2 * H_RISE) * k / 200; const e = M.sunENU(SC.site.lat_deg, SC.sun.declination_deg, Hh).elev; const P = S0 * Math.max(0, Math.sin(e * D2R)); const x = X(dayFromRise(Hh)), y = Y(P); if (k === 0) g.moveTo(x, y); else g.lineTo(x, y); }
+  g.stroke(); g.setLineDash([]);
+  g.strokeStyle = '#f2a33a'; g.lineWidth = 2.5; g.beginPath();
+  const kmax = Math.round(Math.min(t, SIM_END) * SC.fps * 4);
+  for (let k = 0; k <= kmax; k += 2) { const s = series[k]; const x = X(dayFromRise(M.hourAngleAt(SC, s.t))), y = Y(s.P); if (k === 0) g.moveTo(x, y); else g.lineTo(x, y); }
+  g.stroke();
+  g.fillStyle = 'rgba(255,255,255,0.62)'; g.font = '17px sans-serif';
+  g.fillText(`day ${f1(dSet)} d`, X(0) + 2, h - 5); g.fillText(`night ${f1(CYC - dSet)} d (no sunlight)`, X(dSet) + 6, h - 5);
+}
 function drawGraph(t) {
+  if (solar && solar.FLAT) return drawCycleGraph(t);
   const g = graph.getContext('2d'), w = graph.width, h = graph.height, pl = 8, pr = 8, pt = 8, pb = 8;
   g.clearRect(0, 0, w, h);
   g.fillStyle = 'rgba(255,255,255,0.04)'; g.fillRect(0, 0, w, h);
@@ -405,7 +433,36 @@ function buildPairCard() {
     `<div class="sentence">${PV.pair_sentence}</div><div class="legend">${C.legend}</div>`;
 }
 
+// Pair card (Solar panels): every number comes from scenario.pair_values, checked by prepare.py
+// against explain.json (solar rank 1), similarity.json and missions.json before anything is rendered.
+function buildSolarPairCard() {
+  const C = SC.card, PV = SC.pair_values;
+  const lv = (x) => ({ MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled' }[x] || x);
+  const L = PV.levels;
+  const unitS = (u) => (u === '°' ? '°' : ' ' + u);
+  const rowsH = C.rows.map((r) => {
+    if (r.kind === 'atmosphere') {
+      const a = PV.atmosphere;
+      return `<tr class="hl"><td class="var">${r.label}${r.sub ? `<div class="lv">${r.sub}</div>` : ''}</td>` +
+        `<td class="num">${a.ground_kwh_m2_day} ${r.unit}<div class="lv">${lv(L[r.var].earth)}, ${r.earth_note}</div></td>` +
+        `<td class="num">${PV.variables[r.moon_from].moon} ${r.unit}<div class="lv">${lv(L[r.moon_from].moon)}, ${r.moon_note}</div></td>` +
+        `<td class="num">${a.loss_pct_display} % lost<div class="lv">${a.ground_display} of ${a.toa_display} ${r.unit} reach the ground</div></td></tr>`;
+    }
+    const v = r.info ? PV.not_part_of_similarity[r.var] : PV.variables[r.var];
+    const side = (b) => `<td class="num">${v[b]}${unitS(r.unit)}<div class="lv">${lv(L[r.var][b])}${r[b + '_note'] ? ', ' + r[b + '_note'] : ''}</div></td>`;
+    return `<tr><td class="var">${r.label}${r.sub ? `<div class="lv">${r.sub}</div>` : ''}</td>${side('earth')}${side('moon')}<td class="num">${v.difference}${unitS(r.unit)}${r.tol ? `<div class="lv">tolerance ${v.tolerance}${unitS(r.unit)}</div>` : ''}</td></tr>`;
+  }).join('');
+  document.getElementById('card').classList.add('pair');
+  const es = SC.earth_site, ms = SC.site;
+  const ll = (lat, lon) => `${Math.abs(lat)}° ${lat < 0 ? 'S' : 'N'} ${Math.abs(lon)}° ${lon < 0 ? 'W' : 'E'}`;
+  document.getElementById('cardInner').innerHTML = `<h1>${C.title}</h1><div class="sub">${C.subtitle}</div>` +
+    `<table class="pair"><tr><th>Variable</th><th>Earth: ${es.name}<div class="lv">cell ${es.cell_id}, ${ll(es.lat_deg, es.lon_deg)}; ${es.nearest_place_km} km from ${es.nearest_place}</div></th>` +
+    `<th>Moon: ${ms.card_name}<div class="lv">cell ${ms.cell_id}, ${ms.label}; ${ms.place_ref.distance_km} km from ${ms.place_ref.feature}</div></th><th>Real difference</th></tr>${rowsH}</table>` +
+    `<div class="sentence">${PV.pair_sentence}</div><div class="legend">${C.legend}</div>`;
+}
+
 function buildCard() {
+  if (SC.pair_values && SC.pair_values.mission === 'solar') return buildSolarPairCard();
   if (SC.pair_values) return buildPairCard();
   const C = SC.card, tv = SC.table_values;
   const lv = (x) => ({ MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled' }[x] || x);
@@ -439,11 +496,39 @@ function baseStatus(t, s) {
   if (s.vis < 1) return t < st[0].t0 ? S.rising : S.partly;
   return t < st[0].t0 ? S.day_before : S.day_after;
 }
+// Solar (flat array, scenario.sun_status with elevation bands): while the array moves the label is
+// sun_status.deploying; from deploy_end_s (the first frame at rest: phase() reaches exactly 1 there)
+// sun_status.deployed for done_hold_s; otherwise the label follows the Sun at the array (real terrain
+// horizon first, then the Sun's elevation band; morning / afternoon from the sign of the hour angle).
+function solarStatus(t, s) {
+  const A = SC.array, S = SC.sun_status;
+  if (!S) return null;
+  if (t >= A.deploy_start_s && t < A.deploy_end_s) return S.deploying;
+  if (t >= A.deploy_end_s && t < A.deploy_end_s + (A.done_hold_s ?? 1.5)) return S.deployed;
+  const stowed = t < A.deploy_start_s;
+  if (s.elev <= -M.SUN_DIAM_DEG / 2) return S.night;
+  if (s.vis <= 0) return S.blocked;
+  if (s.vis < 1) return S.partly;
+  const am = s.Hh < 0;
+  if (s.elev < S.low_deg) return stowed ? S.low_morning_stowed : am ? S.low_morning : S.low_evening;
+  if (stowed) return S.morning_stowed;
+  if (s.elev >= S.high_deg) return S.high;
+  return am ? S.morning : S.afternoon;
+}
 // Display exposure (a camera setting, not a change of the light): 1 while the habitat site sees the
 // whole solar disc, render.shadow_exposure (EX) while it sees none of it, and in between the value that
 // keeps the site's light level constant on screen: 1 / (1/EX + (1 - 1/EX) * visible disc fraction).
 // A function of t only (no adaptation lag). Stated on screen whenever it is above 1.25.
+// Solar (render.low_sun_exposure = {ref_deg, max}): display exposure min(max, max(1, sin(ref) / sin(h))),
+// h = the Sun's elevation, so the ground lit by a low Sun stays readable; a function of t only; stated on
+// screen whenever it is above 1.25. The light itself is not changed (power uses the real geometry).
+function lowSunExposure(t) {
+  const L = SC.render?.low_sun_exposure; if (!L) return 1;
+  const h = Math.max(0.3, sunAt(Math.min(t, SIM_END)).elev);
+  return Math.min(L.max, Math.max(1, Math.sin(L.ref_deg * D2R) / Math.sin(h * D2R)));
+}
 function exposureAt(t) {
+  if (isSolar) return lowSunExposure(t);
   const EX = SC.render?.shadow_exposure ?? 1;
   if (EX === 1) return 1;
   const v = sunAt(Math.min(t, SIM_END)).vis;
@@ -451,7 +536,7 @@ function exposureAt(t) {
 }
 window.statusAt = function (t) {
   const s = sunAt(Math.min(t, SIM_END));
-  return { t, status: isSolar ? null : baseStatus(t, s), sunElev: s.elev, sunAz: s.az, horizon: s.hz, visible: s.vis, exposure: isSolar ? 1 : exposureAt(t) };
+  return { t, status: isSolar ? solarStatus(t, s) : baseStatus(t, s), sunElev: s.elev, sunAz: s.az, horizon: s.hz, visible: s.vis, exposure: exposureAt(t) };
 };
 
 // ------------------------------------------------------------------ frame
@@ -500,19 +585,33 @@ window.renderAt = function (t) {
     const L = 2.0 + (A.mast_height_m - 2.0) * uM;
     solar.mast.scale.y = L; solar.mast.position.y = 0.4 + L / 2;
     solar.head.position.y = 0.4 + L - (A.mast_height_m - A.hub_height_m) * uM;
-    solar.head.rotation.y = -s.az * D2R;
+    if (!solar.FLAT) solar.head.rotation.y = -s.az * D2R;
     const fold = (1 - uW) * 86 * D2R;
     for (const hinges of solar.wings) hinges.forEach((h, k) => { h.rotation.y = k === 0 ? -fold * 0.98 : (k % 2 ? 2 * fold : -2 * fold); });
     const se = seriesAt(tc);
     const deployed = t >= A.deploy_end_s;
     const pp = M.panelPower(S0, A.final_tilt_deg, s.elev, s.vis);
     out.P = se.P; out.E = se.E; out.tilt = A.final_tilt_deg; out.inc = pp.inc; out.deployed = deployed;
-    if (t < A.deploy_start_s) status = s.vis > 0 ? 'Dawn: array stowed' : 'Dawn: Sun behind the terrain';
+    if (SC.sun_status) status = solarStatus(t, s);
+    else if (t < A.deploy_start_s) status = s.vis > 0 ? 'Dawn: array stowed' : 'Dawn: Sun behind the terrain';
     else if (!deployed) status = 'Deploying array';
     else if (s.elev <= -M.SUN_DIAM_DEG / 2) status = 'Sun below the horizon';
     else if (s.vis <= 0) status = 'Sun blocked by terrain';
     else if (s.vis < 1) status = 'Sun partly behind terrain';
     else status = 'Tracking the Sun';
+    if (solar.FLAT) {
+      const PL = SC.panel_text;
+      const ex = exposureAt(t); renderer.toneMappingExposure = ex; out.exposure = ex;
+      rows = row('Sun elevation', f1(s.elev) + '°') + row('Sun azimuth', f1(s.az) + '°') + row('Terrain horizon', f1(s.hz) + '°') +
+        row('Panel', 'flat (horizontal)') + row('Power (model)', thou(se.P) + ' W/m²') + row(deployed ? 'Energy (model)' : 'Energy (after deploy)', se.E.toFixed(2) + ' kWh/m²') +
+        row('Elapsed', f1(M.simDays(SC, tc)) + ' Earth days') + row('Time', compStr) + row('Earth', PL.earth_row);
+      panel.innerHTML = `<div class="title">Solar panels · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div>` +
+        `<div class="site zone">${SC.site.zone.name}</div><div class="status">${status}</div>${rows}` +
+        `<div id="graphwrap"><div class="cap">${PL.graph_caption}</div></div><div class="tag" style="margin-top:6px">${PL.model_tag}` +
+        (ex > 1.25 ? `<br><span style="color:#f2a33a">Exposure ×${f1(ex)} for the low Sun (not to scale).</span>` : '') + `</div>`;
+      document.getElementById('graphwrap').appendChild(graph); drawGraph(t);
+      out.status = status;
+    } else {
     rows = row('Sun elevation', f1(s.elev) + '°') + row('Sun azimuth', f1(s.az) + '°') + row('Terrain horizon', f1(s.hz) + '°') +
       row('Panel tilt', f1(A.final_tilt_deg) + '°') + row('Incidence', f1(pp.inc) + '°') +
       row('Power', thou(se.P) + ' W/m²') + row(deployed ? 'Energy' : 'Energy (after deploy)', se.E.toFixed(2) + ' kWh/m²') +
@@ -521,6 +620,7 @@ window.renderAt = function (t) {
     panel.innerHTML = `<div class="title">Solar array · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div><div class="status">${status}</div>${rows}` +
       `<div id="graphwrap"><div class="cap">Power per m² vs time, 0–1,400 W/m²</div></div><div class="tag" style="margin-top:6px">Computed: Sun, power, energy (S0 ${S0} W/m²)</div>`;
     document.getElementById('graphwrap').appendChild(graph); drawGraph(t);
+    }
   } else {
     const HB = SC.habitat, st = HB.steps;
     const u1 = M.phase(t, st[0].t0, st[0].t1), u2 = M.phase(t, st[1].t0, st[1].t1), u3 = Math.min(1, Math.max(0, (t - st[2].t0) / (st[2].t1 - st[2].t0)));

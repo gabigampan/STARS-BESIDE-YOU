@@ -1,0 +1,15 @@
+body,name,type,src_lat,src_lon_e180,diameter_km,own_cell,cell_lat,cell_lon,table_lat,table_lon,inside,named_sites_cell,cell_elev_m,rim_ring_mean_elev_m,bundle_nearest_place_of_cell,bundle_km,own_km_place_to_centre,table_mask_fraction
+MOON,Tycho,"Crater, craters",-43.2958,-11.2153,85.29377,M48048,-43.5,-11.5,-43.5,-11.5,True,M48048,-3078.9,65.3714285714286,,,,
+MOON,Copernicus,"Crater, craters",9.6209,-20.0786,96.069916,M28959,9.5,-20.5,9.5,-20.5,True,,-3358.5,-472.34000000000003,,,,
+MOON,Plato,"Crater, craters",51.6192,-9.3825,100.68353,M13850,51.5,-9.5,51.5,-9.5,True,,-2514.2,-1520.088888888889,,,,
+MOON,Aristarchus,"Crater, craters",23.7299,-47.4901,39.994484,M23892,23.5,-47.5,23.5,-47.5,True,,-2089.1,,,,,
+MOON,Shackleton,"Crater, craters",-89.67,129.78,20.924982,M64749,-89.5,129.5,-89.5,129.5,True,M64749,-85.4,,,,,
+MOON,Casatus,"Crater, craters",-72.6964,-30.7476,102.84991,M58469,-72.5,-30.5,-72.5,-30.5,True,,-2911.0,-61.054166666666674,,,,
+MOON,Huxley,"Crater, craters",20.1969,-4.543,3.4797702,M25015,20.5,-4.5,20.5,-4.5,True,,-1921.7,,,,,
+MOON,Mons Malapert,"Mons, montes",-85.98,-1.67,67.0,M63178,-85.5,-1.5,-85.5,-1.5,True,M63178,920.6,,,,,
+EARTH,Tamanrasset,GeoNames cities1000 (DZ),22.785,5.52278,,E24305,22.5,5.5,22.5,5.5,True,,,,Tamanrasset,31.77666473388672,31.776665222521764,1.0
+EARTH,Tinghir,GeoNames cities1000 (MA),31.51472,-5.53278,,E21054,31.5,-5.5,31.5,-5.5,True,,,,Tinghir,3.512303352355957,3.512303349689358,1.0
+EARTH,Derby,GeoNames cities1000 (AU),-17.30295,123.62864,,E38823,-17.5,123.5,-17.5,123.5,True,,,,Derby,25.81467628479004,25.81467645453108,0.9141
+EARTH,Kununurra,GeoNames cities1000 (AU),-15.77813,128.74414,,E38108,-15.5,128.5,-15.5,128.5,True,,,,Kununurra,40.49525833129883,40.4952568128778,0.9622
+EARTH,Maintirano,GeoNames cities1000 (MG),-18.06354,44.02951,,E39104,-18.5,44.5,-18.5,44.5,True,,,,Maintirano,69.44784545898438,69.44784256531543,0.8588
+EARTH,Aheqi,GeoNames cities1000 (CN),40.94152,78.44379,,E17898,40.5,78.5,40.5,78.5,True,,,,Aheqi,49.322784423828125,49.32278622977798,0.9997

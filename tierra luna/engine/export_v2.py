@@ -258,7 +258,7 @@ def build_variables_v2(ds: Dataset, mission_cfg: Dict, missions: List[str], stor
             "comparability": {"status": e.get("comparability"), "reason": e["comparability_note"]},
             "bodies": bodies,
         })
-    return {"bundle_version": engine_cfg.v("bundle_version"), "dataset": ds.id, "levels": reg["levels"],
+    return {"bundle_version": engine_cfg.v("bundle_version"), "dataset": ds.id, "levels": levels_in_use(reg["levels"], out),
             "comparability_statuses": {
                 "comparable": "Same physical quantity and definition on both bodies; used in the similarity.",
                 "comparable_with_caveat": "Used in the similarity; the reason says how the two values differ (show it).",
@@ -393,8 +393,10 @@ def twin_summary(twin: np.ndarray, moon_ids: np.ndarray) -> Dict[str, Any]:
 
 def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: Dict, engine_cfg: EngineConfig,
                       land: np.ndarray, moon_feat: Dict[str, list], earth_places: Dict[str, list],
-                      codes: Dict[str, List[str]], comp_codes: Dict[str, Dict[str, List[str]]]) -> Dict[str, Any]:
+                      codes: Dict[str, List[str]], comp_codes: Dict[str, Dict[str, List[str]]],
+                      limits: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     reg = ds.reg
+    limits = limits or {"texts": {}, "top5": {}, "external_validation": {}}
     titles = engine_cfg.v("mission_titles")
     notes = engine_cfg.v("mission_notes")
     status = engine_cfg.v("mission_threshold_status")
@@ -468,7 +470,11 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             },
             "component_results": comp_out,
             "known_limitations": [t["text"] for t in (engine_cfg.v("approved_texts") or {}).values()
-                                  if t.get("mission") == mid and t.get("mission_card", True)] + list(notes.get(mid, [])),
+                                  if t.get("mission") == mid and t.get("mission_card", True)] + list(notes.get(mid, []))
+                                 + [t["text"] for t in limits["texts"].values()
+                                    if "mission_card" in t.get("show", []) and mid in (t.get("missions") or [mid])],
+            "top5": limits["top5"].get(mid),
+            "external_validation": limits["external_validation"].get(mid),
             "facts": mission_facts(res, ds.cells, moon_feat, earth_places, engine_cfg),
             "not_used_by_engine": {"tolerances": m.get("tolerances"), "workable_days": m.get("workable_days"),
                                    "domain_weights": m.get("weights"), "why": engine_cfg.v("not_used_by_engine_why")},
@@ -560,6 +566,10 @@ def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfi
         "unpaired_reasons": nopair_summary(_rt_view(real), real["spec"], passing, 4),
         "pairs_file": f"earth_{res.mission}_pairs.bin",
         "list_rule": "paired points by rank, then the points without a twin by published suitability descending, ties by Earth cell id (earth_<mission>_pairs.bin list_order)",
+        "info_columns": [{"variable": v, "columns": {s: f"info.{v}.{s}" for s in ("earth", "moon", "diff")},
+                          "part_of_similarity": False}
+                         for v in (rv.get("info_in_pairs_file") or {}).get(res.mission, [])],
+        "info_in_explain_only": [v for v in real["info"] if v not in (rv.get("info_in_pairs_file") or {}).get(res.mission, [])],
     }
 
 
@@ -633,6 +643,18 @@ def real_pair_values(res: MissionResult, i: int, engine_cfg: EngineConfig) -> Li
     return out
 
 
+UNUSED_LEVEL_NOTE = "No variable of this dataset has this level (defined for other tables only)."
+
+
+def levels_in_use(levels: Dict[str, str], variables: List[Dict[str, Any]]) -> Dict[str, str]:
+    """variables.json 'levels': every defined level with its text; a level that no
+    variable of the dataset has on either body says so (statistical audit 2026-11-15,
+    point 9.2.8: the real tables use MEASURED, DERIVED, MODELLED and NO_DATA, never
+    UNDOCUMENTED, which only the legacy 2-degree table can carry)."""
+    used = {b["level"] for v in variables for b in v["bodies"].values() if b.get("level")}
+    return {k: (t if k in used else f"{t} {UNUSED_LEVEL_NOTE}") for k, t in levels.items()}
+
+
 def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> str:
     """Fill a per-pair text template (approved_texts entry with placeholders {file, column,
     decimals[, subtract][, multiply]}) from the pair's values {column: value}; the browser
@@ -647,9 +669,11 @@ def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> st
             # displayed exactly as the browser displays it; the share lost from the two
             # displayed values (engine/display.py, wording and display rounding 2026-11-15)
             text = text.replace("{" + name + "}", fill_placeholder(ph, values))
-        else:  # unchanged rule of the other templates (lunar_base_pair_sentence)
-            x = float(values[ph["column"]]) * float(ph.get("multiply", 1.0)) - float(ph.get("subtract", 0.0))
-            text = text.replace("{" + name + "}", f"{x:.{int(ph['decimals'])}f}")
+        else:  # templates without a display_rule (lunar_base_pair_sentence): the contract's
+            # browser rule, stored float32 minus subtract with toFixed(decimals) (engine/display.py
+            # to_fixed_of_stored; before the audit correction of 2026-11-15 Python's f"{x:.0f}",
+            # which rounds an exact binary half to even where toFixed rounds it up)
+            text = text.replace("{" + name + "}", fill_placeholder(ph, values, display_rule=False))
     return text
 
 
@@ -690,8 +714,17 @@ def similarity_variables_used(ctx, rule: str, earth_rows: np.ndarray,
     return used, bits
 
 
-def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg: EngineConfig) -> Dict[str, Any]:
-    """similarity.json: the active rule, the repository formula and every number it uses."""
+def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg: EngineConfig,
+                          limits: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """similarity.json: the active rule, the repository formula and every number it uses;
+    'texts' = the approved texts plus the honest-limits texts of ``limits`` (revision 7)."""
+    base = _build_similarity_json(ds, results, engine_cfg)
+    if limits:
+        base["texts"].update(limits["texts"])
+    return base
+
+
+def _build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg: EngineConfig) -> Dict[str, Any]:
     rule = similarity_rule(engine_cfg)
     rules = {m: r.rule for m, r in results.items()}
     first = next(iter(results.values()))
@@ -893,7 +926,8 @@ def lunar_info_summary(ds: Dataset, engine_cfg: EngineConfig) -> Dict[str, Any]:
 
 
 def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg: EngineConfig,
-                     moon_feat: Dict[str, list], feats: pd.DataFrame) -> Optional[Dict[str, Any]]:
+                     moon_feat: Dict[str, list], feats: pd.DataFrame,
+                     region_share: Optional[Dict[str, Dict[int, Dict[str, Any]]]] = None) -> Optional[Dict[str, Any]]:
     """twins.json (twin rules only): every distinct twin per mission with its z-scores,
     values, nearest IAU feature (name, distance, gazetteer URL) and Earth-cell count."""
     if not any(r.rule in TWIN_RULES for r in results.values()):
@@ -939,7 +973,7 @@ def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg:
                     x = moon[v].iat[p]
                     info[v] = (None if pd.isna(x) else str(x)) if ds.reg["variables"][v]["kind"] == "categorical" \
                         else rnd(x, _dec(engine_cfg, v))
-            if res.rule == "percentile_and_real_tolerance":
+            if res.rule in REAL_RULES:
                 dv = res.extra["real"]["derived"].values
                 for v in res.extra["real"]["info"]:
                     if v in dv and v not in info:      # derived (the centred relative elevation)
@@ -948,6 +982,8 @@ def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg:
             row["feature"] = {"name": moon_feat["name"][p], "type": moon_feat["type"][p],
                               "distance_km": rnd(moon_feat["distance_km"][p], dkm),
                               "url": str(feats["link"].iat[fi]) if "link" in feats.columns else None}
+            if region_share and mid in region_share:
+                row["nasa_region"] = region_share[mid].get(p)
             rows.append(row)
         if res.rule not in TWIN_RULES:
             continue
@@ -958,8 +994,10 @@ def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg:
 
 
 def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg: Dict, engine_cfg: EngineConfig,
-                     earth_places: Dict[str, list], moon_feat: Dict[str, list]) -> Dict[str, Any]:
-    """explain.json: the top-N ranked Earth cells per mission with the whole funnel."""
+                     earth_places: Dict[str, list], moon_feat: Dict[str, list],
+                     top5_rows: Optional[Dict[str, List[int]]] = None) -> Dict[str, Any]:
+    """explain.json: the top-N ranked Earth cells per mission with the whole funnel, plus
+    the five shown (missions.json top5) when one of them ranks beyond N (revision 7)."""
     n = int(engine_cfg.v("explain_top_n"))
     earth = ds.cells["EARTH"]
     ll, ud, scd, cd, dkm = (_dec(engine_cfg, k) for k in ("lat_lon", "utility", "score", "confidence_score", "distance_km"))
@@ -968,6 +1006,8 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
         ctx = res.extra.get("repo_context")
         order = [i for i in np.argsort(np.where(res.rank > 0, res.rank, np.iinfo(np.int64).max), kind="mergesort")
                  if res.rank[i] > 0][:n]
+        extra5 = sorted((i for i in (top5_rows or {}).get(mid, []) if i not in set(order)), key=lambda i: res.rank[i])
+        order = list(order) + extra5
         weights = soft_weights(mission_cfg, mid)
         total = sum(weights.values())
         items = []
@@ -1043,7 +1083,9 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
                     "suitability": rnd(cres.earth_suit.score[i], scd) if cp else None}
             items.append(item)
         out[mid] = items
-    return {"bundle_version": engine_cfg.v("bundle_version"), "top_n": n, "missions": out}
+    return {"bundle_version": engine_cfg.v("bundle_version"), "top_n": n,
+            "top_n_rule": "the first top_n ranks of every mission, then any of the five shown (missions.json top5.ids) that ranks beyond top_n, by rank",
+            "missions": out}
 
 
 def pair_columns_of_row(res: MissionResult, i: int) -> Dict[str, float]:
@@ -1192,6 +1234,10 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     comp_codes = {m: {c: reason_code_table(cr) for c, cr in r.components.items()} for m, r in results.items()}
     rule = similarity_rule(engine_cfg)
     ctx = next(iter(results.values())).extra.get("repo_context") if results else None
+    limits = None
+    if engine_cfg.top5_selection is not None:
+        from engine.limits import build_limits
+        limits = build_limits(ds, results, mission_cfg, engine_cfg, land)
 
     files: Dict[str, bytes] = {}
     objs: Dict[str, Any] = {}
@@ -1372,9 +1418,9 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     add_bin(pd_bin, "on_demand", "Earth land cells: how the country was found and the nearest populated place", body="EARTH")
     add_bin(mb, "on_demand", "Every lunar cell (position = id): values, information columns and nearest IAU feature", body="MOON")
     add_json("missions.json", build_missions_v2(ds, results, mission_cfg, engine_cfg, land, moon_feat,
-                                                 earth_places, codes, comp_codes), "start",
+                                                 earth_places, codes, comp_codes, limits), "start",
              "missions, funnel, gates, weights, reason codes, counts, components")
-    add_json("similarity.json", build_similarity_json(ds, results, engine_cfg), "start",
+    add_json("similarity.json", build_similarity_json(ds, results, engine_cfg, limits), "start",
              "the active similarity rule, its formula, variables, weights, per-body statistics and target")
     variables_obj = build_variables_v2(ds, mission_cfg, missions + comp_ids, stored, engine_cfg)
     variables_obj["lunar_info_columns"] = lunar_info_entries(engine_cfg)
@@ -1382,10 +1428,11 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
              "per variable and body: column, level, source, licence, baseline, caveat, comparability")
     add_json("places.json", places_obj, "start", "Earth country and region tables indexed by earth_base.bin")
     add_json("place_detail.json", detail_obj, "on_demand", "label rules and nearest-place names indexed by earth_place_detail.bin")
-    twins = build_twins_json(ds, results, engine_cfg, moon_feat, feats)
+    twins = build_twins_json(ds, results, engine_cfg, moon_feat, feats, (limits or {}).get("region_share"))
     if twins is not None:
         add_json("twins.json", twins, "on_demand", "every distinct lunar twin per mission: z-scores, values, IAU feature, Earth-cell count")
-    add_json("explain.json", build_explain_v2(results, ds, mission_cfg, engine_cfg, earth_places, moon_feat),
+    add_json("explain.json", build_explain_v2(results, ds, mission_cfg, engine_cfg, earth_places, moon_feat,
+                                              (limits or {}).get("top5_rows")),
              "on_demand", "top-N ranked Earth cells per mission with the whole funnel")
     add_json("iau_moon_features.json", build_iau_features(feats, engine_cfg, iau_source), "on_demand",
              "IAU lunar features (non-satellite), indexed by moon_base.bin 'feature'")
@@ -1410,7 +1457,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     data_credits = sorted({reg["variables"][v]["bodies"][b].get("licence_credit") or "" for v in eng_vars for b in BODIES} - {""})
     manifest = {
         "bundle_version": engine_cfg.v("bundle_version"),
-        "contract_revision": 6,
+        "contract_revision": 7,
         "engine_version": engine_cfg.v("engine_version"),
         "dataset": {"id": ds.id, "why": engine_cfg.dataset.why},
         "build_time": build_time,
@@ -1471,6 +1518,12 @@ def real_pairs_file(res: MissionResult, idx: np.ndarray, enc: Dict) -> BinFile:
                description=f"{v} of the lunar twin (NaN = no twin or no value)")
         pf.f32(f"{v}.diff", real["diff"][idx, q], "passing", unit=unit,
                description=f"|Earth - twin| of {v}, computed in double precision (NaN = no twin or no value)")
+    units = {"temp_k": "K", "elevation_rel_m": "m", "irradiance_kwh_m2_day": "kWh/m2/day", "lst_diurnal_amp_k": "K"}
+    for v in (real["settings"].get("info_in_pairs_file") or {}).get(res.mission, []):
+        x = real["info"][v]
+        for side, txt in (("earth", "of the Earth cell"), ("moon", "of the lunar twin"), ("diff", "|Earth - twin|")):
+            pf.f32(f"info.{v}.{side}", x[side][idx], "passing", unit=units.get(v),
+                   description=f"{v} {txt}: not part of the similarity, shown as a difference (NaN = no twin or no value)")
     nk = real["nopair_kind"][idx]
     pf.i32("nopair_kind", nk, "passing", missing=nk < 0,
            codes="missions.json similarity.nopair_kinds",

@@ -1,0 +1,86 @@
+{
+ "base_1": {
+  "cell": 63528,
+  "cell_area_km2": 56.2,
+  "centre": [
+   -86.5,
+   -11.5
+  ],
+  "centre_inside": false,
+  "centre_to_region_km": 0.97,
+  "other_regions_touched": [],
+  "region_named": "Haworth",
+  "share_of_cell_in_region": 0.0043
+ },
+ "base_2": {
+  "cell": 63841,
+  "cell_area_km2": 40.1,
+  "centre": [
+   -87.5,
+   -58.5
+  ],
+  "centre_inside": false,
+  "centre_to_region_km": 8.32,
+  "other_regions_touched": [],
+  "region_named": "de Gerlache Rim 2",
+  "share_of_cell_in_region": 0.0781
+ },
+ "base_3": {
+  "cell": 64018,
+  "cell_area_km2": 40.1,
+  "centre": [
+   -87.5,
+   118.5
+  ],
+  "centre_inside": false,
+  "centre_to_region_km": 3.06,
+  "other_regions_touched": [],
+  "region_named": "Slater Plain",
+  "share_of_cell_in_region": 0.3295
+ },
+ "base_4": {
+  "cell": 62517,
+  "cell_area_km2": 104.8,
+  "centre": [
+   -83.5,
+   57.5
+  ],
+  "centre_inside": false,
+  "centre_to_region_km": 0.38,
+  "other_regions_touched": [],
+  "region_named": "Nobile Rim 2",
+  "share_of_cell_in_region": 0.4454
+ },
+ "base_5": {
+  "cell": 62523,
+  "cell_area_km2": 104.8,
+  "centre": [
+   -83.5,
+   63.5
+  ],
+  "centre_inside": false,
+  "centre_to_region_km": 9.58,
+  "other_regions_touched": [],
+  "region_named": "Nobile Rim 2",
+  "share_of_cell_in_region": 0.0032
+ },
+ "n_regions": 9,
+ "regions": [
+  "Haworth",
+  "Malapert Massif",
+  "Mons Mouton",
+  "Mons Mouton Plateau",
+  "Nobile Rim 1",
+  "Nobile Rim 2",
+  "Peak Near Cabeus B",
+  "Slater Plain",
+  "de Gerlache Rim 2"
+ ],
+ "zone_A": {
+  "cells": 280,
+  "centre_inside_a_region": 113,
+  "median_share": 0.379,
+  "share_ge_50pct": 109,
+  "share_lt_5pct": 34
+ }
+}

@@ -1,0 +1,184 @@
+{
+ "means_m": {
+  "A_cos_all_cells": 695.9244011890817,
+  "B_cos_x_land_share": 810.713806162676
+ },
+ "moon_mean_m": -248.3894020283722,
+ "A_cos_all_cells": {
+  "mean": 695.9244011890817,
+  "paired": 10192,
+  "top10": [
+   {
+    "rank": 1,
+    "earth": "E17566",
+    "moon": "M59895",
+    "similarity": 99.57,
+    "suitability": 99.22,
+    "final": 99.4
+   },
+   {
+    "rank": 2,
+    "earth": "E23945",
+    "moon": "M59895",
+    "similarity": 99.76,
+    "suitability": 98.66,
+    "final": 99.21
+   },
+   {
+    "rank": 3,
+    "earth": "E18282",
+    "moon": "M59895",
+    "similarity": 98.77,
+    "suitability": 99.58,
+    "final": 99.18
+   },
+   {
+    "rank": 4,
+    "earth": "E18280",
+    "moon": "M59895",
+    "similarity": 99.5,
+    "suitability": 98.66,
+    "final": 99.08
+   },
+   {
+    "rank": 5,
+    "earth": "E15395",
+    "moon": "M59895",
+    "similarity": 99.12,
+    "suitability": 98.69,
+    "final": 98.9
+   },
+   {
+    "rank": 6,
+    "earth": "E18281",
+    "moon": "M59895",
+    "similarity": 98.06,
+    "suitability": 99.67,
+    "final": 98.86
+   },
+   {
+    "rank": 7,
+    "earth": "E16841",
+    "moon": "M59895",
+    "similarity": 99.63,
+    "suitability": 97.99,
+    "final": 98.81
+   },
+   {
+    "rank": 8,
+    "earth": "E16121",
+    "moon": "M59895",
+    "similarity": 98.96,
+    "suitability": 98.63,
+    "final": 98.79
+   },
+   {
+    "rank": 9,
+    "earth": "E15034",
+    "moon": "M59895",
+    "similarity": 98.28,
+    "suitability": 99.24,
+    "final": 98.76
+   },
+   {
+    "rank": 10,
+    "earth": "E16482",
+    "moon": "M59895",
+    "similarity": 99.55,
+    "suitability": 97.94,
+    "final": 98.74
+   }
+  ],
+  "check_vs_bundle": {
+   "max_abs_sim_diff": 0.010000000000005116,
+   "twin_mismatches": 0,
+   "paired_bundle": 10192
+  }
+ },
+ "B_cos_x_land_share": {
+  "mean": 810.713806162676,
+  "paired": 10240,
+  "top10": [
+   {
+    "rank": 1,
+    "earth": "E15395",
+    "moon": "M59895",
+    "similarity": 99.77,
+    "suitability": 98.69,
+    "final": 99.23
+   },
+   {
+    "rank": 2,
+    "earth": "E16121",
+    "moon": "M59895",
+    "similarity": 99.7,
+    "suitability": 98.63,
+    "final": 99.16
+   },
+   {
+    "rank": 3,
+    "earth": "E20752",
+    "moon": "M59895",
+    "similarity": 99.48,
+    "suitability": 98.54,
+    "final": 99.01
+   },
+   {
+    "rank": 4,
+    "earth": "E18280",
+    "moon": "M59895",
+    "similarity": 99.14,
+    "suitability": 98.66,
+    "final": 98.9
+   },
+   {
+    "rank": 5,
+    "earth": "E16478",
+    "moon": "M59895",
+    "similarity": 99.14,
+    "suitability": 98.58,
+    "final": 98.86
+   },
+   {
+    "rank": 6,
+    "earth": "E25783",
+    "moon": "M59895",
+    "similarity": 98.7,
+    "suitability": 98.85,
+    "final": 98.78
+   },
+   {
+    "rank": 7,
+    "earth": "E17566",
+    "moon": "M59895",
+    "similarity": 98.23,
+    "suitability": 99.22,
+    "final": 98.72
+   },
+   {
+    "rank": 8,
+    "earth": "E16844",
+    "moon": "M59895",
+    "similarity": 97.54,
+    "suitability": 99.75,
+    "final": 98.65
+   },
+   {
+    "rank": 9,
+    "earth": "E23945",
+    "moon": "M59895",
+    "similarity": 98.62,
+    "suitability": 98.66,
+    "final": 98.64
+   },
+   {
+    "rank": 10,
+    "earth": "E18282",
+    "moon": "M59895",
+    "similarity": 97.51,
+    "suitability": 99.58,
+    "final": 98.54
+   }
+  ]
+ }
+}

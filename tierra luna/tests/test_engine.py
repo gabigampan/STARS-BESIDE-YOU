@@ -587,6 +587,10 @@ def test_mission_notes_and_facts_exported(bundle, ecfg):
     approved = ecfg.v("approved_texts")
     for m in bundle["objects"]["missions.json"]["missions"]:
         first = [t["text"] for t in approved.values() if t.get("mission") == m["id"] and t.get("mission_card", True)]
-        assert m["known_limitations"] == first + notes.get(m["id"], [])
+        # revision 7 (2026-11-15 11:23 CET): then the honest-limits texts shown on the mission card
+        lim = (bundle["objects"].get("similarity.json") or {}).get("texts", {})
+        card = [t["text"] for t in lim.values() if "mission_card" in t.get("show", [])
+                and str(t.get("decision", "")).startswith("2026-11-15 11:23") and m["id"] in (t.get("missions") or [m["id"]])]
+        assert m["known_limitations"] == first + notes.get(m["id"], []) + card
         f = m["facts"]
         assert f["distinct_twins"] > 0 and isinstance(f["confidence_constant"], bool)   # zone_twin (default since 2026-11-15)

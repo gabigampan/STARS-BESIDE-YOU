@@ -1,0 +1,348 @@
+{
+ "earth_ground_over_toa": {
+  "n": 25484,
+  "max": 0.9235164927909942,
+  "cells_above_1": 0,
+  "cells_above_0_80": 4028,
+  "p50": 0.5387944301555629,
+  "p99": 0.9090920092219082,
+  "max_cell": "{'cell_id': 'E63337', 'lat_deg': -85.5, 'lon_deg': 157.5, 'irradiance_kwh_m2_day': 3.845, 'irradiance_toa_kwh_m2_day': 4.163434037198274, 'mask_fraction': 1.0}",
+  "top10": [
+   {
+    "cell_id": "E63337",
+    "lat_deg": -85.5,
+    "lon_deg": 157.5,
+    "elevation_m": 2586.9,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.845,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9235
+   },
+   {
+    "cell_id": "E63338",
+    "lat_deg": -85.5,
+    "lon_deg": 158.5,
+    "elevation_m": 2551.6,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.844,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9233
+   },
+   {
+    "cell_id": "E63340",
+    "lat_deg": -85.5,
+    "lon_deg": 160.5,
+    "elevation_m": 2468.4,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.841,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9226
+   },
+   {
+    "cell_id": "E63336",
+    "lat_deg": -85.5,
+    "lon_deg": 156.5,
+    "elevation_m": 2620.4,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.839,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9221
+   },
+   {
+    "cell_id": "E63339",
+    "lat_deg": -85.5,
+    "lon_deg": 159.5,
+    "elevation_m": 2514.5,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.838,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9218
+   },
+   {
+    "cell_id": "E63341",
+    "lat_deg": -85.5,
+    "lon_deg": 161.5,
+    "elevation_m": 2414.7,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.838,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9218
+   },
+   {
+    "cell_id": "E63342",
+    "lat_deg": -85.5,
+    "lon_deg": 162.5,
+    "elevation_m": 2380.1,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.836,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9214
+   },
+   {
+    "cell_id": "E63335",
+    "lat_deg": -85.5,
+    "lon_deg": 155.5,
+    "elevation_m": 2650.3,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.833,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9206
+   },
+   {
+    "cell_id": "E63333",
+    "lat_deg": -85.5,
+    "lon_deg": 153.5,
+    "elevation_m": 2712.5,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.831,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9202
+   },
+   {
+    "cell_id": "E63334",
+    "lat_deg": -85.5,
+    "lon_deg": 154.5,
+    "elevation_m": 2687.1,
+    "mask_fraction": 1.0,
+    "irradiance_kwh_m2_day": 3.831,
+    "irradiance_toa_kwh_m2_day": 4.1634,
+    "r": 0.9202
+   }
+  ]
+ },
+ "moon_irr_minus_flat_formula": {
+  "abs_lat_lt_65_maxabs": 0.0004947044131160538,
+  "polar_min": -2.0183689246295846,
+  "polar_max": -0.06265904112939646,
+  "polar_cells_above_formula": 0,
+  "polar_above_examples": []
+ },
+ "bounds": {
+  "earth_slope_iso_outside_0_90": 0,
+  "moon_slope_iso_outside_0_90": 0,
+  "earth_roughness_negative": 0,
+  "earth_mask_outside_0_1": 0,
+  "earth_lst_amp_negative": 9,
+  "earth_tmin_below_-89.2C": 0,
+  "earth_tmin_above_35C": 0,
+  "moon_tmin_below_20K": 0,
+  "moon_tmax_above_400K": 1,
+  "moon_tmin_gt_tmax": 0,
+  "moon_amp_ne_tmax_minus_tmin_gt_0.02": 0,
+  "moon_tmin_c_ne_tmin_k_minus_273.15_gt_0.02": 0,
+  "earth_elev_below_-430m_mask_ge_0.3": 0,
+  "earth_elev_below_-430m_any": 1,
+  "earth_elev_below_-430m_cells": [
+   {
+    "cell_id": "E38522",
+    "lat_deg": -17.5,
+    "lon_deg": -177.5,
+    "elevation_m": -2569.9,
+    "mask_fraction": 0.0,
+    "n_dem_land_px": 1
+   }
+  ],
+  "earth_lst_amp_max": 35.7
+ },
+ "earth_tmin_c_vs_temp_k": {
+  "cells_tmin_above_mean_lst": 53,
+  "n": 18727
+ },
+ "earth_coldest_tmin_cells": [
+  {
+   "cell_id": "E64663",
+   "lat_deg": -89.5,
+   "lon_deg": 43.5,
+   "elevation_m": 2824.0,
+   "tmin_c": -72.28
+  },
+  {
+   "cell_id": "E64664",
+   "lat_deg": -89.5,
+   "lon_deg": 44.5,
+   "elevation_m": 2827.4,
+   "tmin_c": -72.28
+  },
+  {
+   "cell_id": "E62865",
+   "lat_deg": -84.5,
+   "lon_deg": 45.5,
+   "elevation_m": 3318.6,
+   "tmin_c": -72.27
+  },
+  {
+   "cell_id": "E64662",
+   "lat_deg": -89.5,
+   "lon_deg": 42.5,
+   "elevation_m": 2821.5,
+   "tmin_c": -72.26
+  },
+  {
+   "cell_id": "E64665",
+   "lat_deg": -89.5,
+   "lon_deg": 45.5,
+   "elevation_m": 2832.2,
+   "tmin_c": -72.26
+  }
+ ],
+ "earth_tmin_dome_c_like_cells": [
+  {
+   "cell_id": "E59702",
+   "lat_deg": -75.5,
+   "lon_deg": 122.5,
+   "elevation_m": 3244.0,
+   "tmin_c": -49.73
+  },
+  {
+   "cell_id": "E59703",
+   "lat_deg": -75.5,
+   "lon_deg": 123.5,
+   "elevation_m": 3239.6,
+   "tmin_c": -49.27
+  },
+  {
+   "cell_id": "E59704",
+   "lat_deg": -75.5,
+   "lon_deg": 124.5,
+   "elevation_m": 3228.3,
+   "tmin_c": -49.33
+  }
+ ],
+ "earth_hottest_ground_irr": [
+  {
+   "cell_id": "E28666",
+   "lat_deg": 10.5,
+   "lon_deg": 46.5,
+   "elevation_m": 575.1,
+   "irradiance_kwh_m2_day": 6.44
+  },
+  {
+   "cell_id": "E28665",
+   "lat_deg": 10.5,
+   "lon_deg": 45.5,
+   "elevation_m": 397.2,
+   "irradiance_kwh_m2_day": 6.386
+  },
+  {
+   "cell_id": "E28308",
+   "lat_deg": 11.5,
+   "lon_deg": 48.5,
+   "elevation_m": 291.3,
+   "irradiance_kwh_m2_day": 6.377
+  },
+  {
+   "cell_id": "E28309",
+   "lat_deg": 11.5,
+   "lon_deg": 49.5,
+   "elevation_m": 787.5,
+   "irradiance_kwh_m2_day": 6.373
+  },
+  {
+   "cell_id": "E28668",
+   "lat_deg": 10.5,
+   "lon_deg": 48.5,
+   "elevation_m": 1105.7,
+   "irradiance_kwh_m2_day": 6.365
+  }
+ ],
+ "moon_coldest": [
+  {
+   "cell_id": "M63564",
+   "lat_deg": -86.5,
+   "lon_deg": 24.5,
+   "tmin_k": 26.84,
+   "tmax_k": 137.66
+  },
+  {
+   "cell_id": "M63891",
+   "lat_deg": -87.5,
+   "lon_deg": -8.5,
+   "tmin_k": 27.32,
+   "tmax_k": 63.32
+  },
+  {
+   "cell_id": "M63565",
+   "lat_deg": -86.5,
+   "lon_deg": 25.5,
+   "tmin_k": 27.67,
+   "tmax_k": 124.86
+  },
+  {
+   "cell_id": "M63892",
+   "lat_deg": -87.5,
+   "lon_deg": -7.5,
+   "tmin_k": 27.67,
+   "tmax_k": 62.48
+  },
+  {
+   "cell_id": "M63890",
+   "lat_deg": -87.5,
+   "lon_deg": -9.5,
+   "tmin_k": 27.73,
+   "tmax_k": 65.66
+  }
+ ],
+ "moon_hottest": [
+  {
+   "cell_id": "M32647",
+   "lat_deg": -0.5,
+   "lon_deg": 67.5,
+   "tmax_k": 405.61
+  },
+  {
+   "cell_id": "M35507",
+   "lat_deg": -8.5,
+   "lon_deg": 47.5,
+   "tmax_k": 396.96
+  },
+  {
+   "cell_id": "M31949",
+   "lat_deg": 1.5,
+   "lon_deg": 89.5,
+   "tmax_k": 396.86
+  },
+  {
+   "cell_id": "M32525",
+   "lat_deg": -0.5,
+   "lon_deg": -54.5,
+   "tmax_k": 396.78
+  },
+  {
+   "cell_id": "M32526",
+   "lat_deg": -0.5,
+   "lon_deg": -53.5,
+   "tmax_k": 396.74
+  }
+ ],
+ "moon_equatorial_band_0_10N": {
+  "tmax_k": 391.39,
+  "tmin_k": 94.38,
+  "lst_diurnal_amp_k": 297.29
+ },
+ "moon_slope_median_by_band": {
+  "0-30": 4.6845,
+  "30-60": 4.681,
+  "60-90": 5.3245000000000005
+ },
+ "earth_toa_checks": {
+  "equator": 9.972563156527816,
+  "lat_16.5S": 9.599143380578182,
+  "lat_89.5": 4.136136285412102,
+  "lat_-89.5": 4.136136285412102
+ },
+ "moon_flat_toa": {
+  "equator": 10.395000810878155,
+  "22.5": 9.604391722664351
+ },
+ "body_mean_elevation": {
+  "earth": 695.9244011890818,
+  "moon": -248.3894020283722
+ },
+ "permafrost_area_km2_approx": {
+  "all": 15861140.868415538,
+  "NH": 13928536.589644497,
+  "SH": 1932604.27877104,
+  "note": "sum of permafrost_area_frac x land share x spherical cell area; permafrost_area_frac is the mean PERPROB probability of the land pixels"
+ },
+ "earth_land_area_km2_approx": 144047872.0712331
+}

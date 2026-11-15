@@ -1,24 +1,26 @@
-# Solar mission video
+# Solar panels mission video
 
 **Credit line to show in the app:**
-"Solar mission video: 3D simulation by the Stars Beside You team, driven by table data (not real footage)"
+"Solar panels mission video: 3D simulation by the Stars Beside You team, driven by table data, over real LOLA and Kaguya relief (SLDEM2015, 59 m per pixel); fine surface texture procedural (not real footage)"
 
 A 3D simulation, not real footage. The first caption cue and the closing card say so, and a line at the bottom of every frame says "3D simulation driven by table data. Not real footage."
 
-Story (42 s): local dawn over the real relief of lunar cell **M59479 (75.5° S, 100.5° W)**, west of Boltzmann crater on the far side; the camera descends to a stowed array; the mast extends and two wings of hinged panels unfold; the vertical panels turn with the Sun as it moves along the horizon through an accelerated lunar day; long shadows sweep the ground; the Sun goes behind the western terrain at the end. Closing card (36-42 s): the Earth analog **E44120 (32.5° S, 20.5° E, Western Cape, South Africa)** against the lunar cell.
+Re-rendered on 2026-11-15 for the current number 1 pair of the Solar panels list. It replaces the video of the earlier method (lunar cell M59479 at 75.5° S 100.5° W in the south-polar zone, with Earth cell E44120), which is not a pair of the shipped bundle.
+
+Story (44 s): one lunar daytime, accelerated, at lunar cell **M24296 (22.5° N, 3.5° W)**, 75.8 km from the crater Huxley, in the **low equatorial plains (the maria)**, the Solar panels zone (within 30° of the equator and at or below −1,200 m). The camera descends to a stowed array at sunrise; a short mast rises and two wings of hinged panels unfold and come to rest flat (horizontal), as the mission's irradiance (a horizontal surface) assumes; the Sun climbs in the east to 69.0° in the south at local noon and descends to the west; the shadows shorten and lengthen again. The panel shows the Sun's elevation and azimuth, the real terrain horizon, the modelled power and energy per m² of a flat panel, the elapsed Earth days, the time compression and a graph of the power over one whole lunar cycle with the night half shaded. Closing card (38-44 s): the number 1 pair, the Earth analog **E38464 (16.5° S, 124.5° E, Australia; 128.7 km from Derby)** against the lunar cell, with real values, differences, levels, the sunlight reaching the ground at the Earth site and the share lost in the atmosphere, and the per-pair sentence.
 
 ## Files
 
 | File | What it is | Size (bytes) |
 |---|---|---|
-| `solar.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 42.000 s, 1260 frames, no audio, faststart (`moov` at byte 36, before `mdat`), CRF 25 | 11,051,971 |
-| `solar.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 42.000 s, 1260 frames, two-pass CRF 34 | 11,414,025 |
-| `solar-poster.jpg` | Frame 780 (t = 26 s): array tracking, mast shadow, panel readable | 281,261 |
-| `solar-poster.webp` | Same frame, WebP quality 88 | 161,626 |
-| `solar.en.vtt` | English descriptive captions, 14 cues, 0-42 s | 3,888 |
-| `solar.es.vtt` | Spanish descriptive captions, 14 cues, 0-42 s | 4,406 |
+| `solar.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, no audio, faststart, CRF 25 | @MP4@ |
+| `solar.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, two-pass CRF 34 | @WEBM@ |
+| `solar-poster.jpg` | Frame 570 (t = 19 s): local noon, Sun 69.0° up in the south, panels flat, short shadows | @JPG@ |
+| `solar-poster.webp` | Same frame, WebP quality 88 | @WEBP@ |
+| `solar.en.vtt` | English descriptive captions, 12 cues, 0-44 s; cue boundaries at every status change | @ENVTT@ |
+| `solar.es.vtt` | Spanish descriptive captions, 12 cues, 0-44 s | @ESVTT@ |
 
-ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1260 frames, duration 42.000000, 2.11 Mb/s`; webm `vp9 Profile 0 yuv420p 1920x1080 30/1, 1260 frames, duration 42.000000, 2.17 Mb/s`; both VTT files parse in ffmpeg's WebVTT demuxer.
+ffprobe (`-count_frames`): @FFPROBE@; both VTT files parse in ffmpeg's WebVTT demuxer.
 
 ```html
 <video controls playsinline preload="metadata" poster="/media/solar/solar-poster.webp">
@@ -31,62 +33,93 @@ ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1260 
 
 ## How to re-render
 
-Renderer and scenario: `app/video-sim/` (see its README). Everything shown comes from `app/video-sim/scenarios/solar.json`.
+Renderer and scenario: `app/video-sim/` (see its README). Everything shown comes from `app/video-sim/scenarios/solar.json`. The relief file must be in `$W/cache/` (one file, 1,415,577,600 bytes; URL below).
 
 ```sh
 cd app/video-sim && npm install
-python3 -I tools/prepare.py scenarios/solar.json --work $W   # 29 s: table check, DEM rows, horizons
-node render.js scenarios/solar.json --work $W                # 1260 frames, then encodes, captions, ffprobe
+W=/path/to/scratch/work; mkdir -p $W/cache
+curl -o $W/cache/sldem2015_512_00n_30n_315_360_float.img https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.img
+python3 -I tools/prepare.py scenarios/solar.json --work $W   # ~40 s: table and bundle checks, relief, georeference check, horizons
+node render.js scenarios/solar.json --work $W --timeline     # optional: label of every frame (no rendering)
+node render.js scenarios/solar.json --work $W                # 1320 frames, then encodes, captions, ffprobe
 ```
 
-Render time: 1,046 ms per frame on average (WebGL in SwiftShader, no GPU, 4 CPU cores, screenshot included), 1260 frames in about 22 minutes; encodes about 4 minutes.
+`render.js` runs `prepare.py --checks-only` first and refuses to start if a value of the scenario differs from the tables or from the shipped bundle.
+
+Render time: @RTIME@
+
+## Status labels (what the picture shows)
+
+| Label on the panel | From - to (s) | Picture |
+|---|---|---|
+| Sunrise: low Sun in the east, panels stowed | 0.00-1.97 | camera descends from 1.9 km over the plain; Sun 1.5-9.9° up in the east (az 89-92°); the real small craters of the mare throw long shadows; array folded; exposure x8.0 falling to x2.5 stated |
+| Morning: Sun climbing, panels stowed | 1.97-5.00 | camera reaches the folded array; Sun 10.0-22.9°; shadows shorten; exposure stated until 4.23 s |
+| Unfolding the flat panels | 5.00-10.00 | mast rises, the two wings unfold upwards and fold down to flat (they move until 10.00 s) |
+| Panels deployed, lying flat | 10.00-11.50 | array at rest, panels horizontal, cells facing the sky (from frame 300, the first at rest) |
+| Morning: Sun climbing in the east | 11.50-14.30 | Sun 50.0-59.9°, az 117-131°; short shadows under the wings |
+| Sun high in the sky: short shadows, most power | 14.30-23.73 | Sun above 60° (69.0° in the south at 19.0 s, local noon); shadows almost under the panels; power 1,178-1,271 W/m² |
+| Afternoon: Sun descending towards the west | 23.73-36.07 | Sun 59.9° down to 10.0°, az 229-267°; shadows lengthen to the east; exposure stated from 33.80 s |
+| Low Sun in the west: long shadows | 36.07-38.00 (held on the card fade 38.0-38.8) | Sun 9.9° down to 1.7° (az 268-271°); very long shadows of the array and of the craters; exposure x2.5 rising to x8.0 stated |
+| (closing card) | 38.0-44.0 | pair card, no panel |
+
+The labels are computed from the same values the picture is rendered from (`page/main.js` `solarStatus`): the deployment labels from the deployment times (the unfolding is a smoothstep that reaches exactly 1 at 10.0 s), the others from the Sun's elevation at the array (below 10° "low", from 60° "high") and the sign of the hour angle (morning or afternoon); a Sun behind the real terrain would be labelled so, but it never is here (the real horizon at the array is 0.07-3.3° and the Sun clears it in every frame). Caption cues start at the frames where the label changes (1.967, 5, 10, 11.5, 14.3, 23.733, 36.067 s, from `render.js --timeline`) plus 19 s (noon), 30 s and the card (38, 41 s); `render.js` refuses to write the captions if the label changes inside a cue.
 
 ## Inputs, sources and levels
 
 | On screen | Value | Level | Source |
 |---|---|---|---|
-| Lunar cell, coordinates | M59479, 75.5° S 100.5° W (id checked against the coordinates) | grid | `tierra luna/output_real/moon_real_1deg.csv` |
-| Earth cell | E44120, 32.5° S 20.5° E | grid | `tierra luna/output_real/earth_real_1deg.csv` |
-| Card, Moon: irradiance 2.372 kWh/m²/day; highest Sun 16.04°; Sun below 5° for 0.2271 of daylight; sunlit 0.4543 of the time; slope 10.693°; elevation 122.4 m | as in the table | derived (elevation measured) | moon table; levels and formulas in `real_data/provenance_moon.csv` |
-| Card, Earth: irradiance 5.518 kWh/m²/day; highest Sun 80.939°; Sun below 5° 0.07016; slope 2.137°; elevation 1127.1 m | as in the table | irradiance modelled (WorldClim 2.1 srad, non-commercial licence); Sun values and slope derived; elevation measured (ETOPO 2022) | earth table; `real_data/provenance_earth.csv` |
-| Solar constant S0 | 1361.0 W/m² | measured | NSSDC Moon fact sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html (same value as the table formula) |
-| Lunar obliquity | 1.54° | measured | NASA PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map |
-| Synodic period | 29.53 days | measured | NSSDC Moon fact sheet |
-| Place name | Boltzmann crater, IAU centre 74.82° S 269.59° E (90.41° W), diameter 72.3 km: the cell centre lies about 80 km from the crater centre, outside its rim | gazetteer | https://planetarynames.wr.usgs.gov/Feature/805 |
-| Earth visibility | not drawn: from the site the Earth's elevation (JPL Horizons, DE441, observer at 259.5° E −75.5°, 2026-2044 every 12 h) is −11.43° to +5.63°, mean −2.88°, azimuth 90.8-109.5°; above a flat horizon 35.1 % of the time; the real terrain horizon in that direction is 3.8°, so the Earth is behind the terrain nearly always and below the horizon on average | computed | Horizons API |
+| Lunar cell | M24296, 22.5° N 3.5° W (id checked against the coordinates) | grid | `tierra luna/output_real/moon_real_1deg.csv`; `explain.json` solar rank 1 `similarity.twin` |
+| Zone | "Low equatorial plains (the maria)": absolute latitude ≤ 30° and elevation ≤ −1,200 m, 6,686 cells; the cell's elevation is −1,842.7 m | team zone | `mission_zones.json` region D label (`mission_zone_regions.solar`); rule and cell count from `missions.json` `missions[solar].similarity.zone` (named there after analog_finder's "Mare Tranquillitatis & Equatorial Maria") |
+| Place | 75.8 km from Huxley, the cell's nearest primary IAU feature | gazetteer | `explain.json` (`similarity.twin.feature`, `feature_km`) |
+| Earth analog | E38464, 16.5° S 124.5° E, Australia (the bundle has no region name for it); nearest populated place Derby, 128.7 km | grid / place labels | `explain.json` `place`; `earth_real_1deg.csv` |
+| Card: sunlight above the atmosphere (key variable, tolerance 0.6 kWh/m²/day) | Earth 9.6005, Moon 9.604, difference 0.0035 kWh/m²/day | Earth derived (formula from latitude, top of the atmosphere); Moon derived (table surface irradiance, horizontal, whole lunar cycle) | `explain.json` `similarity.variables`; levels from `missions.json` `similarity.variables[].sides` |
+| Card: sunlight reaching the ground | Earth 6.177 kWh/m²/day; Moon 9.604 (no atmosphere); share lost **35 %** ("6.2 of 9.6") | Earth modelled (WorldClim 2.1, non-commercial licence); Moon derived | `explain.json` `similarity.atmosphere` (ground 6.177, top 9.6005, lost_share 0.3566); the 35 % follows the display rule of `similarity.json` `texts.solar_limitation` (`share_lost_of_displayed_tenths`: A = 96, G = 62, floor((200 (A − G) + A) / (2A)) = 35), recomputed by `prepare.py` |
+| Card: slope (secondary, tolerance 2°) | 0.976° / 1.047°, difference 0.071° | derived | `explain.json`; `variables.json` |
+| Card: roughness (secondary, tolerance 30 m) | 39.2 m / 39.03 m, difference 0.17 m | derived | `explain.json`; `variables.json` |
+| Card: mean surface temperature, daily swing (not part of the similarity) | 302.37 / 213.39 K (88.98 K); 11.89 / 293.36 K (281.47 K) | derived | `explain.json` `not_part_of_similarity`; `variables.json` |
+| Card: scores | suitability 96.9, similarity 99.99, final 98.45; the per-pair sentence and the saturation note (`similarity.json` `texts.solar_similarity_saturation`) verbatim | derived | `explain.json`, `similarity.json` |
+| S0, obliquity, synodic period | 1361.0 W/m², 1.54°, 29.53 d (the bundle's `lunar_day_earth_days`) | measured | NSSDC Moon fact sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html; NASA PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map |
+| Earth (panel row) | not drawn; "~67° up, mean pos.": at its mean position (sub-Earth point 0° N 0° E) the Earth is 67.2° up at azimuth 170.9° (90° minus the 22.8° arc from the site; parallax and libration ignored, a geometric estimate), above the camera's view | computed | formula |
+
+`prepare.py` checks 16 table values against the two 1-degree tables and 69 values of the scenario's `pair_values` block against the bundle (ids, coordinates, scores, every Earth, Moon and difference value with its tolerance, role and weight, the atmosphere values and the displayed 9.6 / 6.2 / 35 %, the per-pair sentence, the saturation note, the lunar day, place names, the zone rule, cell count and label, and the level of every value on the card against `variables.json` and `missions.json`). A changed number, level or text stops the render (tested: share lost 36, a MEASURED level, slope 1.075 each refused).
 
 ### Terrain (real relief)
 
-- **Near patch:** LOLA **LDEM_75S_60M** V2.0 (polar stereographic, 60 m/px true at the pole), https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_75s_60m.img, rows 8845-9088 fetched by HTTP range. At 75.5° S the projection's scale factor is k = 2/(1+sin 75.5°) = 1.0162, so the **true ground spacing is 59.04 m/px**; the patch is ±6.02 km (205 x 205 nodes at that spacing, no upsampling). Shown on screen as "59.0 m/px".
-- **Far field:** LOLA **LDEM_60S_240M** V2.0 (236.2 m/px true at the site), rows 3918-4515, used at native spacing for horizons out to ±60 km and meshed at every 2nd pixel (**472 m/px**, shown on screen).
-- **Georeference check:** the cos-lat weighted mean of the polar product over the 1-degree cell is 127.7 m; the table's `elevation_m` is 122.4 m (LDEM_16; my recomputation from LDEM_16: 122.37 m). Difference 5.3 m. The polar grid and LDEM_16 sampled on a 41x41 lat/lon lattice around the site correlate at 0.998 (line = LINE_PROJECTION_OFFSET − y/scale; the other sign gives 0.735). The near and far products differ by 3.6 m RMS over the near patch. The site itself (cell centre) is at 324 m: the cell spans 2.4 km of relief within ±6 km (a crater wall; local slope at the site 4.6°).
-- **Shaded-relief check:** a straight-down render of the near patch from the renderer, lit from the north-west at 25°, correlates with the shaded relief computed directly from the elevation grid at 0.985 (`tools/check_relief.py`).
-- Units: metres above the 1737.4 km sphere (DN x 0.5, label `SCALING_FACTOR`). Heights in the scene include the Moon's curvature.
+- **Product (near and far):** **SLDEM2015** (LOLA altimetry co-registered with SELENE/Kaguya Terrain Camera stereo, Barker et al. 2016), tile **SLDEM2015_512_00N_30N_315_360_FLOAT**, 512 pixels per degree, simple cylindrical, float32 heights in km above the 1737.4 km sphere; file `sldem2015_512_00n_30n_315_360_float.img`, 1,415,577,600 bytes, https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.img (label `..._float.lbl` beside it; NASA PDS Geosciences Node, LOLA archive, `sldem2015/tiles/float_img`; file date 2015-07-14, label PRODUCT_CREATION_TIME 2015-09-15; downloaded in full on 2026-11-15, no account; sha256 1f1bdbead0e872362b4e828697de9ff97524b96671f487714ade724547ba8904). It is finer than the tables' LDEM_16 (about 1.9 km per pixel) by a factor of 32.
+- **Near patch:** ±5.98 km around the cell centre at the product's true north-south spacing, **59.2 m/px** (203 x 203 nodes; east-west the product is finer, 54.7 m at 22.5° N, so nothing is upsampled), rows 3738-3942.
+- **Far field:** the same file sampled every 4 pixels (236.9 m) for the horizons out to ±60 km, meshed at **474 m/px** (on screen); rows 2827-4860. It reaches the highlands towards Huxley and the Apennines (heights −2,336 to +2,599 m).
+- **Georeference check:** the cos-lat weighted mean of the product over the 1-degree cell is −1,841.6 m against the table's `elevation_m` −1,842.7 m (difference 1.1 m); recomputed from LDEM_16 −1,842.71 m. The near patch and the far sampling differ by 2.9 m RMS. Cell centre −1,923.0 m; 306 m of relief within ±6 km (−1,994 to −1,688 m).
+- **Shaded-relief check:** the renderer's straight-down view of the near patch and the shaded relief computed directly from the elevation grid (both lit from the north-west at 25°) correlate at 0.896 (`tools/check_relief.py`); the same real craters appear in both. The value is lower than on rough polar terrain because this plain is flat and most of its shading is low-amplitude noise.
 
-## Computed values (formulas)
+## Computed and modelled values
 
-- Sun position: sin h = sin(lat) sin(d) + cos(lat) cos(d) cos(H), the table's formula; azimuth from the east/north components. lat = −75.5°, d = −1.54° (see assumptions), H runs linearly from −86° to +96° over 36 s.
-- Terrain horizon: the maximum elevation angle of the real terrain (with curvature) from the hub (6 m above ground) in the Sun's azimuth, from the DEMs, 0.5° azimuth steps.
-- Visible part of the solar disc: linear across the 0.533° disc.
-- Panel tilt 90° (vertical); incidence = Sun elevation (the mast turns the panels to the Sun's azimuth).
-- **Power per m² of panel** = S0 x cos(incidence) x visible disc fraction: 0 while the real terrain hides the Sun (first 3 s; last 0.5 s goes to 31 W/m² with the Sun at −0.01°, almost all of its disc behind the 0.25° horizon).
-- **Energy per m²** = time integral of the power (trapezoid, 4 steps per frame) from the end of deployment (t = 11 s), in kWh/m² of simulated time. End value 327.75 kWh/m² over 10.4 Earth days.
-- Time compression = (182° / 360°) x 29.53 d / 36 s = **x35,800** (shown rounded to 3 figures).
+- Sun: sin h = sin(lat) sin(d) + cos(lat) cos(d) cos(H), the formula of the tables and of the Lunar base video, lat = 22.5°, d = +1.54° (northern-summer solstice, so that the noon Sun reaches the table's `sun_elev_max_deg` 69.04°), H linear from −89° to +89° over 38 s. Flat-horizon sunrise and sunset at H = ±90.64°: **14.9 Earth days of daylight and 14.7 of night in the 29.53-day lunar day**; the video shows 14.6 of the 14.9 daylight days (Sun 1.5° at both ends). As the approved sentence says, the lunar day lasts 29.5 Earth days and about half of it is night; the panel says so and the graph shades the night.
+- Terrain horizon and disc visibility: from a point 2.4 m above the ground at the array, 720 azimuths, from the real relief with curvature; the Sun clears it in every frame (visible disc fraction 1).
+- **Power per m² of a flat panel (model, stated on the panel):** P = S0 x sin(h) x visible disc fraction, S0 = 1361 W/m²: 36 W/m² at the first frame, 1,271 W/m² at noon, 41 W/m² at the last. No cell efficiency, area, temperature coefficient or losses (none is in the project data), so the numbers are sunlight on the panel, not electrical output.
+- **Energy per m²:** time integral of the power from the end of deployment (10 s), trapezoid with 4 steps per frame: 240.5 kWh/m² by 38 s.
+- Whole-cycle check: the same model at d = +1.54° gives 9.77 kWh/m²/day averaged over the 29.53-day cycle; at d = 0 it gives 9.605, the table's `irradiance_kwh_m2_day` 9.604 for this cell (the table does not use a season).
+- Time compression = (178° / 360°) x 29.53 d / 38 s = **x33,200** (33,198 rounded to 3 figures).
 
-**Why per square metre.** The table values and the formula only give the sunlight reaching a surface. A real array's output would also need a cell efficiency, an area, a temperature coefficient and losses, none of which is in the project data. Showing W/m² and kWh/m² of panel keeps every number traceable to S0 and the geometry; a reader can multiply by an efficiency and an area of their choice.
+### Lighting (simulation)
+
+One parallel Sun of fixed intensity (3.2 in renderer units, lower than the polar videos' 7.0 so that the 69° noon Sun does not saturate the light-grey ground), terrain shadows from the real SLDEM2015 horizons, object shadows from a 4096 px shadow map over ±170 m, a 3.5 % uniform fill standing in for light reflected by the surrounding ground (assumption), black sky, stars a dim seeded background. At sunrise and sunset the flat ground is lit at 1.5-10° and would read as almost black on screen, so the **display exposure** (a camera setting; the light and the power are not changed) is min(8, max(1, sin 25° / sin h)), a function of t only: x8.0 at both ends, x2.4 at 10°, 1 from 25°; whenever it is above 1.25 (0-4.23 s and 33.80-38 s) the panel says "Exposure ×N for the low Sun (not to scale)". The Earth is not drawn, so there is no earthshine.
+
+## Luminance check
+
+@LUMA@
 
 ## Assumptions (illustrative, stated)
 
-- The array: mast 8.0 m, hub 6.0 m, two wings of 3 hinged panels of 2.0 x 1.2 m each (14.4 m² in total); vertical panels with one-axis (azimuth) tracking; mast extension 5.0-7.4 s and wing unfolding 7.4-11.0 s of video. A plain engineering shape, not a real design. Shown on screen ("Array size and timing: illustrative").
-- Season: d = −1.54° (southern-summer solstice), so local noon reaches the table's `sun_elev_max_deg` 16.04°. Any other season gives a lower Sun.
-- Time compression x35,800; the hour angle advances linearly.
-- Fine surface texture: procedural small craters (cell sizes 23, 9, 3.7 m) and noise on the shading normals near the camera only, and a ±5 % albedo variation. They change no height, horizon or number.
-- Light: a faint 3.5 % ambient fill for light reflected by the surrounding ground; stars are a dim seeded random background, not a catalogue.
-- Object shadows are rendered from a 4096 px shadow map over ±170 m around the array; terrain shadows come from the horizon maps (90 azimuths, interpolated).
+- Array: short mast, panels about 2.8 m above the ground; two wings of 3 hinged panels of 2.0 x 1.2 m (14.4 m² in total), unfolding 5.0-10.0 s and ending flat (tilt 0°), no tracking. A plain engineering shape, not a real design ("Array size and timing: illustrative" on screen).
+- Season d = +1.54°; any other season changes the noon Sun by at most 3.1°.
+- Display exposure raised for the low Sun (above); 3.5 % uniform fill.
+- Fine surface texture procedural (small craters of 23, 9 and 3.7 m and noise on the shading normals near the camera, ±5 % albedo variation); it changes no height, horizon or number.
 
 ## Falls short of the brief / caveats
 
-- The 59 m DEM is smooth at the scale of a few metres; all near-field detail is the procedural texture.
-- The final 0.5 s before the card shows the Sun 99 % hidden (31 W/m²), not exactly 0.
-- The Earth's irradiance in the card is WorldClim 2.1 (modelled; licence: non-commercial use only, no redistribution without permission, see `provenance_earth.csv`).
+- The power is sunlight per m² on a flat panel, a model; it is not electrical output, and the panel does not say what a panel would produce on Earth. The card shows instead that only 6.177 of the 9.6005 kWh/m²/day above the atmosphere reach the ground at the Earth site (35 % lost, as displayed by the bundle's rule).
+- 59 m per pixel resolves craters of a few hundred metres; everything smaller near the camera is the procedural texture.
+- The Solar panels similarity is saturated (the card's legend quotes the bundle's note): 99.99 says that the pair is within the tolerances, not that it is closer than other pairs.
+- The Earth's position is a geometric estimate (not drawn), not a Horizons query as in the Lunar base video.
+- The Earth cell's place label is the bundle's (country and nearest populated place); "north-western Australia" is not shown because it is not in the shipped data.
 - The camera is free to move; the view is not a specific real camera.

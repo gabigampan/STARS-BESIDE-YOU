@@ -1,0 +1,7 @@
+rank,moon_cell,lat,lon,region,named_in_audio,cell_area_km2,overlap_km2,overlap_share,centre_inside,centre_to_region_km,transcript
+1,M63528,-86.5000,-11.5000,Haworth,True,56.1338,0.2410,0.0043,False,0.9665,"Its lunar twin lies 25 kilometers from Mons Malapert, in NASA's Haworth candidate region"
+1,M63528,-86.5000,-11.5000,Malapert Massif,False,56.1338,0.0000,0.0000,False,12.0735,"Its lunar twin lies 25 kilometers from Mons Malapert, in NASA's Haworth candidate region"
+2,M63841,-87.5000,-58.5000,de Gerlache Rim 2,True,40.1078,3.1343,0.0781,False,8.3122,"Its lunar twin lies 16 kilometers from Cartwright crater, in NASA's de Gerlache Rim 2 candidate region"
+3,M64018,-87.5000,118.5000,Slater Plain,True,40.1078,13.2141,0.3295,False,3.0559,"Its lunar twin lies 19 kilometers from Slater crater, in NASA's Slater Plain candidate region"
+4,M62517,-83.5000,57.5000,Nobile Rim 2,True,104.0897,46.3892,0.4457,False,0.3817,"Its lunar twin lies 18 kilometers from Wapowski crater, in NASA's Nobile Rim 2 candidate region"
+5,M62523,-83.5000,63.5000,Nobile Rim 2,True,104.0897,0.3336,0.0032,False,9.5425,"Its lunar twin lies 16 kilometers from Oberbeck crater, in NASA's Nobile Rim 2 candidate region"

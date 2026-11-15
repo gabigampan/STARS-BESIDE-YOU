@@ -1,73 +1,85 @@
 WEBVTT - Lunar base mission video (3D simulation), English descriptive captions
 
 NOTE
-No speech. Each cue gives the values on the on-screen panel at its start time. The surface temperature follows a stated model curve between the cell's measured Diviner minimum (68.5 K) and maximum (255.56 K); the Sun is computed; habitat shapes, sizes and timing are illustrative.
+No speech. Each cue gives the values on the on-screen panel at its start time; the panel status does not change within a cue. The surface temperature follows a stated model curve between the cell's measured Diviner minimum (41.23 K) and maximum (194.51 K); the Sun is computed; habitat shapes, sizes and timing are illustrative. While the site is in shadow the display exposure is raised (not to scale).
 
 1
-00:00.000 --> 00:04.000
-3D simulation driven by table data, not real footage. Lunar night over the real LOLA relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the north-west sky.
-Lunar night · Surface temperature 71.0 K (-202.2 °C, model) · Sun -3.2° / azimuth 150.0°
-0.0 Earth days elapsed · ×63,800
+00:00.000 --> 00:04.067
+3D simulation driven by table data, not real footage. Lunar cell M63528, 86.5° S 11.5° W, 25.1 km from Mons Malapert, in NASA's nine candidate landing regions near the lunar south pole, over real LOLA relief. The camera descends to the site. The Sun is up but behind the northern terrain: the site is in shadow (exposure raised, not to scale).
+Sun up, behind the northern terrain · Surface temperature 41.3 K (-231.9 °C, model) · Sun 4.8° / azimuth 22.1°
+0.0 Earth days elapsed · ×21,600
 
 2
-00:04.000 --> 00:08.000
-The camera descends to the site. Night view: exposure raised to show earthshine.
-Lunar night · Surface temperature 68.8 K (-204.4 °C, model) · Sun -0.7° / azimuth 114.0°
-3.0 Earth days elapsed · ×63,800
+00:04.067 --> 00:05.500
+The Sun rises over the northern terrain.
+Sun rising over the terrain · Surface temperature 41.2 K (-231.9 °C, model) · Sun 5.0° / azimuth 9.6°
+1.0 Earth days elapsed · ×21,600
 
 3
-00:08.000 --> 00:12.000
-Sunrise: the Sun skims the eastern horizon; the cylindrical module is lowered onto its legs.
-Placing the module · Surface temperature 215.2 K (-57.9 °C, model) · Sun 2.7° / azimuth 78.2°
-5.9 Earth days elapsed · ×63,800
+00:05.500 --> 00:09.500
+The cylindrical module is lowered onto its legs.
+Lowering the module · Surface temperature 194.4 K (-78.8 °C, model) · Sun 5.0° / azimuth 5.2°
+1.4 Earth days elapsed · ×21,600
 
 4
-00:12.000 --> 00:16.000
-The inflatable section expands from the end of the module.
-Inflatable section deploying · Surface temperature 245.3 K (-27.8 °C, model) · Sun 5.6° / azimuth 42.2°
-8.9 Earth days elapsed · ×63,800
+00:09.500 --> 00:11.000
+The module rests on the ground.
+Module placed · Surface temperature 194.3 K (-78.8 °C, model) · Sun 5.0° / azimuth 353.0°
+2.4 Earth days elapsed · ×21,600
 
 5
-00:16.000 --> 00:20.000
-A regolith berm rises in a ring around the habitat.
-Building the regolith berm · Surface temperature 255.4 K (-17.8 °C, model) · Sun 7.0° / azimuth 6.0°
-11.8 Earth days elapsed · ×63,800
+00:11.000 --> 00:15.500
+The inflatable section expands from the end of the module.
+Inflatable section deploying · Surface temperature 194.0 K (-79.2 °C, model) · Sun 5.0° / azimuth 348.4°
+2.8 Earth days elapsed · ×21,600
 
 6
-00:20.000 --> 00:24.000
-The Sun stays below about 7° all day and moves west along the horizon; shadows are very long.
-Building the regolith berm · Surface temperature 250.4 K (-22.7 °C, model) · Sun 6.3° / azimuth 329.8°
-14.8 Earth days elapsed · ×63,800
+00:15.500 --> 00:16.500
+The inflatable section is deployed.
+Inflatable section deployed · Surface temperature 191.9 K (-81.3 °C, model) · Sun 4.7° / azimuth 334.6°
+3.9 Earth days elapsed · ×21,600
 
 7
-00:24.000 --> 00:28.000
-The Sun goes behind the western terrain while still above the flat horizon; the surface starts to cool.
-Habitat assembled, daylight · Surface temperature 228.4 K (-44.7 °C, model) · Sun 3.8° / azimuth 293.8°
-17.7 Earth days elapsed · ×63,800
+00:16.500 --> 00:22.500
+A regolith berm rises in a ring around the habitat.
+Building the regolith berm · Surface temperature 191.2 K (-81.9 °C, model) · Sun 4.6° / azimuth 331.6°
+4.1 Earth days elapsed · ×21,600
 
 8
-00:28.000 --> 00:32.000
-The Sun sets below the horizon: lunar night begins.
-Sun blocked by terrain · Surface temperature 135.7 K (-137.5 °C, model) · Sun 0.4° / azimuth 257.9°
-20.7 Earth days elapsed · ×63,800
+00:22.500 --> 00:24.000
+The berm is complete.
+Regolith berm built · Surface temperature 185.4 K (-87.8 °C, model) · Sun 3.9° / azimuth 313.3°
+5.6 Earth days elapsed · ×21,600
 
 9
-00:32.000 --> 00:36.000
-Lunar night, lit only by earthshine (exposure raised, not to scale).
-Night: surface cooling · Surface temperature 92.9 K (-180.2 °C, model) · Sun -2.5° / azimuth 222.0°
-23.6 Earth days elapsed · ×63,800
+00:24.000 --> 00:27.967
+The habitat is assembled. The Sun stays below about 5° and moves west, low over the terrain; shadows are very long.
+Habitat assembled, sunlit · Surface temperature 183.4 K (-89.7 °C, model) · Sun 3.7° / azimuth 308.7°
+6.0 Earth days elapsed · ×21,600
 
 10
-00:36.000 --> 00:40.000
-The surface temperature approaches the measured minimum, 68.5 K.
-Night: surface cooling · Surface temperature 77.0 K (-196.2 °C, model) · Sun -3.9° / azimuth 186.0°
-26.6 Earth days elapsed · ×63,800
+00:27.967 --> 00:29.100
+The Sun starts to go behind the western terrain.
+Sun partly behind the terrain · Surface temperature 177.1 K (-96.1 °C, model) · Sun 3.1° / azimuth 296.6°
+7.0 Earth days elapsed · ×21,600
 
 11
-00:40.000 --> 00:43.000
-Closing card: Earth analog Kunlun Mountains, Xinjiang, China (cell E19345) against the lunar cell M62859 on Mons Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against −204.65 °C (surface); lunar maximum 255.56 K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Earth (modelled).
+00:29.100 --> 00:34.500
+The Sun is behind the western terrain while still above the flat horizon: the site is in shadow and its surface cools. Exposure raised to show the ground (not to scale).
+Sun behind the terrain: site in shadow · Surface temperature 171.6 K (-101.6 °C, model) · Sun 2.9° / azimuth 293.1°
+7.3 Earth days elapsed · ×21,600
 
 12
+00:34.500 --> 00:40.000
+The site stays in shadow. At its mean position the Earth is hidden behind the terrain from here, so there is no earthshine.
+Sun behind the terrain: site in shadow · Surface temperature 124.3 K (-148.8 °C, model) · Sun 1.9° / azimuth 276.7°
+8.6 Earth days elapsed · ×21,600
+
+13
+00:40.000 --> 00:43.000
+Closing card: the Earth analog in Xinjiang Uygur Zizhiqu, China (cell E17538, 41.5° N 78.5° E) and its lunar twin, cell M63528 near Mons Malapert, paired by relative thermal position, not by equal temperatures. Coldest temperature 248.61 K (−24.54 °C, modelled air) against 41.23 K (−231.92 °C, measured surface), percentiles 8.37 and 8.04; daily swing 15.60 K against 153.27 K, percentiles 6.72 and 10.18; slope 6.652° against 7.179°; roughness 238.81 m against 238.49 m; mean temperature 272.06 K against 77.49 K (not part of the similarity).
+
+14
 00:43.000 --> 00:46.000
-Kunlun reproduces a high plateau on frozen ground, not the lunar thermal range. 3D simulation driven by table data. Not real footage.
+This pair matches by relative thermal position, not by equal temperatures. In real values the twin is 195 K colder on average (minimum −232 °C at the surface against −24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m. 3D simulation driven by table data. Not real footage.
 

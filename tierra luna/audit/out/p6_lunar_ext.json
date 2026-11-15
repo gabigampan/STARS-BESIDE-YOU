@@ -1,0 +1,163 @@
+{
+ "label": {
+  "lines": 2880,
+  "samples": 5760,
+  "scaling": 0.0015,
+  "offset": 45.0,
+  "baseline_text": [
+   "This data product is a map of the surface\n   slope of the Moon at a resolution of 1895.21 m/pix by 1895.21 m/pix,\n   based on altimetry data acquired through mission phase LRO_SM_17\n   by the LOLA instrument [ZUBERETAL2012]. The LOLA Laser 1 and 2 data \n   through mission phase LRO_SM_17 are the source for this data set. The \n   bi-directional slope was calculated from a plane fit to three \n   successive laser shots requiring n=5 to 15 profile returns. Depending \n   on orbital velocity, probability of detection and spacecraft altitude, \n   the slope baseline may vary from 30 to 120 meters.\n   \n   The map is in the form of a binary table with one row for each\n   0.0625 degrees of latitude, pixel registered.  This label describes\n   an IMG file in the form of a binary resampling to pixel registration.",
+   "Each sample represents the surface slope at a \n    baseline of 240 meters. A scaling was applied to make better use of the\n    16-bit integer range: a flat surface corresponds to a numerical value of\n    -30,000, and a surface tilted by 45 degrees corresponds to a numerical \n    value of 0."
+  ]
+ },
+ "alignment": {
+  "roll_columns": 180,
+  "corr_60S_60N": 0.9409
+ },
+ "global": {
+  "ldsm_cell_mean_median": 8.084,
+  "table_slope_iso_median": 4.91,
+  "cells_where_table_gt_ldsm": 824,
+  "ratio_p10_p50_p90": [
+   1.201,
+   1.661,
+   4.391
+  ]
+ },
+ "audio_cells": [
+  {
+   "cell": "M59895",
+   "uses": [
+    "rover#1",
+    "rover#2",
+    "rover#3",
+    "rover#4",
+    "rover#5"
+   ],
+   "lat": -76.5,
+   "lon": -44.5,
+   "table_slope_iso_deg": 1.148,
+   "ldsm_cell_mean_deg": 4.415,
+   "ldsm_over_table": 3.85
+  },
+  {
+   "cell": "M24296",
+   "uses": [
+    "solar#1"
+   ],
+   "lat": 22.5,
+   "lon": -3.5,
+   "table_slope_iso_deg": 1.047,
+   "ldsm_cell_mean_deg": 4.407,
+   "ldsm_over_table": 4.21
+  },
+  {
+   "cell": "M24583",
+   "uses": [
+    "solar#2"
+   ],
+   "lat": 21.5,
+   "lon": -76.5,
+   "table_slope_iso_deg": 1.038,
+   "ldsm_cell_mean_deg": 3.966,
+   "ldsm_over_table": 3.82
+  },
+  {
+   "cell": "M40854",
+   "uses": [
+    "solar#3"
+   ],
+   "lat": -23.5,
+   "lon": -5.5,
+   "table_slope_iso_deg": 0.649,
+   "ldsm_cell_mean_deg": 5.588,
+   "ldsm_over_table": 8.61
+  },
+  {
+   "cell": "M24761",
+   "uses": [
+    "solar#4"
+   ],
+   "lat": 21.5,
+   "lon": 101.5,
+   "table_slope_iso_deg": 0.711,
+   "ldsm_cell_mean_deg": 3.803,
+   "ldsm_over_table": 5.35
+  },
+  {
+   "cell": "M40406",
+   "uses": [
+    "solar#5"
+   ],
+   "lat": -22.5,
+   "lon": -93.5,
+   "table_slope_iso_deg": 0.951,
+   "ldsm_cell_mean_deg": 4.163,
+   "ldsm_over_table": 4.38
+  },
+  {
+   "cell": "M63528",
+   "uses": [
+    "lunar_base#1"
+   ],
+   "lat": -86.5,
+   "lon": -11.5,
+   "table_slope_iso_deg": 7.179,
+   "ldsm_cell_mean_deg": 9.297,
+   "ldsm_over_table": 1.3
+  },
+  {
+   "cell": "M63841",
+   "uses": [
+    "lunar_base#2"
+   ],
+   "lat": -87.5,
+   "lon": -58.5,
+   "table_slope_iso_deg": 4.151,
+   "ldsm_cell_mean_deg": 8.333,
+   "ldsm_over_table": 2.01
+  },
+  {
+   "cell": "M64018",
+   "uses": [
+    "lunar_base#3"
+   ],
+   "lat": -87.5,
+   "lon": 118.5,
+   "table_slope_iso_deg": 6.26,
+   "ldsm_cell_mean_deg": 8.234,
+   "ldsm_over_table": 1.32
+  },
+  {
+   "cell": "M62517",
+   "uses": [
+    "lunar_base#4"
+   ],
+   "lat": -83.5,
+   "lon": 57.5,
+   "table_slope_iso_deg": 3.481,
+   "ldsm_cell_mean_deg": 6.808,
+   "ldsm_over_table": 1.96
+  },
+  {
+   "cell": "M62523",
+   "uses": [
+    "lunar_base#5"
+   ],
+   "lat": -83.5,
+   "lon": 63.5,
+   "table_slope_iso_deg": 6.214,
+   "ldsm_cell_mean_deg": 7.189,
+   "ldsm_over_table": 1.16
+  }
+ ],
+ "rover_zone": {
+  "n": 5400,
+  "ldsm_median": 8.328,
+  "table_median": 6.415
+ },
+ "solar_zone": {
+  "n": 6686,
+  "ldsm_median": 4.215,
+  "table_median": 1.128
+ }
+}

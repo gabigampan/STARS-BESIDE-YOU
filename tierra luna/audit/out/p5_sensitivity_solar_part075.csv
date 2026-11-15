@@ -1,0 +1,7 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,sim.slope_deg.weight0,sim_weight,"similarity weight of slope_deg (0.1) -> 0, still in the pair filter",18777,0,0,6360,0,0,4135,3,False,24,False,38105-24642;37746-24671
+solar,sim.slope_deg.removed,sim_weight,slope_deg removed from similarity AND pair filter,18777,0,0,6360,0,0,4135,3,False,24,False,38105-24642;37746-24671
+solar,sim.slope_deg.weight x0.9,sim_weight,similarity weight of slope_deg x0.9,18777,0,0,6360,0,0,139,4,False,48,False,37746-24671
+solar,sim.slope_deg.tolerance x0.9,tolerance,tolerance of slope_deg (2.0) x0.9,18777,0,0,6360,0,0,258,5,True,49,False,
+solar,sim.slope_deg.weight x1.1,sim_weight,similarity weight of slope_deg x1.1,18777,0,0,6360,0,0,119,5,True,50,True,
+solar,sim.slope_deg.tolerance x1.1,tolerance,tolerance of slope_deg (2.0) x1.1,18777,0,0,6360,0,0,243,4,False,47,False,37746-24671

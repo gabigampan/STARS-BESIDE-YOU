@@ -1,0 +1,121 @@
+{
+ "level_disagreements": [],
+ "units": {
+  "moon_tmin_c_minus_tmin_k_plus_273.15_max_abs": 5.684341886080802e-14,
+  "moon_amp_minus_tmax_minus_tmin_max_abs": 0.010000000000047748,
+  "earth_tmin_k_pairs_minus_tmin_c_plus_273.15": {
+   "pairs_row_is_mission_row": 1.4877319358674868e-05,
+   "pairs_row_by_list_order": "IndexError('index 2419 is out of bounds for axis 0 with size 2419')"
+  },
+  "pairs_file_rows": 2419,
+  "lunar_base_mission_rows": 2419,
+  "moon_tmin_k_pairs_minus_table_tmin_k": 3.662109378410605e-06,
+  "earth_base_lat_rows_ok": true,
+  "earth_toa_bundle_minus_own_max_abs_kwh": 2.2414126394920686e-06,
+  "earth_toa_rows_stored": 180,
+  "earth_toa_own_at": {
+   "0.0": 9.974,
+   "30.0": 8.765,
+   "45.0": 7.367,
+   "60.0": 5.672,
+   "-16.5": 9.6
+  },
+  "earth_toa_reference_values_config": {
+   "0": 9.97,
+   "30": 8.77,
+   "45": 7.37,
+   "60": 5.67
+  },
+  "moon_irradiance_table_minus_own_flat_max_abs_kwh": 0.0019312547225993626,
+  "moon_irradiance_note": "own integration includes the 1/r^2 eccentricity factor; the table's builder may not (difference shows it)",
+  "earth_ground_irradiance_range_land": [
+   1.412,
+   6.44
+  ],
+  "earth_ground_over_toa_max": 0.9233614685748704,
+  "body_mean_elevation_own": {
+   "EARTH_land_cells": 695.9244011890817,
+   "EARTH_cells_in_mean": 25245,
+   "MOON": -248.3894020283722
+  },
+  "rover_elev_rel_earth_minus_own_max_abs_m": 0.00040349841856368585,
+  "rover_elev_rel_moon_minus_own_max_abs_m": 0.00024187212238757638
+ },
+ "ranked_integrity": {
+  "rover": {
+   "ranked": 10192,
+   "mask_fraction_lt_0.3": 0,
+   "mask_fraction_eq_0": 0,
+   "elevation_missing": 0,
+   "thermal_class_agua": 816,
+   "thermal_class_hielo": 1268,
+   "snow_ice_frac_ge_0.5": 1424,
+   "lc_dominant_220_snow_ice": 1286,
+   "lat_le_-60_antarctic": 1101,
+   "missing_similarity_input": {
+    "slope_iso_deg": 0,
+    "roughness_m": 0,
+    "elevation_m": 0
+   },
+   "mask_fraction_min": 0.3003,
+   "ice_cells_best_rank": 722,
+   "ice_cells_in_top_100": 0,
+   "greenland_box_ice": 217
+  },
+  "solar": {
+   "ranked": 6360,
+   "mask_fraction_lt_0.3": 0,
+   "mask_fraction_eq_0": 0,
+   "elevation_missing": 0,
+   "thermal_class_agua": 0,
+   "thermal_class_hielo": 0,
+   "snow_ice_frac_ge_0.5": 0,
+   "lc_dominant_220_snow_ice": 0,
+   "lat_le_-60_antarctic": 0,
+   "missing_similarity_input": {
+    "slope_iso_deg": 0,
+    "roughness_m": 0
+   },
+   "mask_fraction_min": 0.5014
+  },
+  "lunar_base": {
+   "ranked": 450,
+   "mask_fraction_lt_0.3": 0,
+   "mask_fraction_eq_0": 0,
+   "elevation_missing": 0,
+   "thermal_class_agua": 0,
+   "thermal_class_hielo": 0,
+   "snow_ice_frac_ge_0.5": 0,
+   "lc_dominant_220_snow_ice": 0,
+   "lat_le_-60_antarctic": 0,
+   "missing_similarity_input": {
+    "tmin_c": 0,
+    "lst_diurnal_amp_k": 0,
+    "slope_iso_deg": 0,
+    "roughness_m": 0
+   },
+   "mask_fraction_min": 0.7316
+  }
+ },
+ "land_cells": {
+  "mask_fraction_gt_0": 25497,
+  "fail_mask_lt_0.3": 3275,
+  "elevation_missing": 252,
+  "elevation_lt_1": 177,
+  "pass_both_common_gates": 22185,
+  "lst_missing": 6761,
+  "tmin_missing": 49,
+  "slope_iso_missing": 714,
+  "roughness_missing": 376
+ },
+ "moon": {
+  "permafrost_class_values": {
+   "ninguno": 64800
+  },
+  "thermal_inertia_class_values": {
+   "regolito": 64800
+  },
+  "rain_non_null": 0,
+  "wind_non_null": 0
+ }
+}

@@ -468,19 +468,21 @@ def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
     card text."""
     decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
     assert ecfg.v("similarity_rule")["lunar_base"] == "percentile_and_real_tolerance"
-    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 6
+    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 7
     approved = ecfg.v("approved_texts")
     assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "similarity_meaning_lunar_base",
                              "rock_note", "missing_temperature_mark", "missing_temperature_note", "twin_sharing_note",
-                             "no_twin_note", "solar_limitation", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+                             "no_twin_note", "solar_limitation", "lunar_base_pair_sentence", "no_twin_note_lunar_base",
+                             "solar_similarity_saturation"}
     lunar_base_texts = {"similarity_meaning_lunar_base", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+    audit_texts = {"solar_similarity_saturation"}   # statistical audit 2026-11-15: test_audit_corrections_1
     for key, t in approved.items():   # the Lunar base texts of 08:55 are checked in test_lunar_base_position
-        if key != "missing_temperature_mark" and key not in lunar_base_texts:  # the short mark: the team's answer 3
+        if key != "missing_temperature_mark" and key not in lunar_base_texts | audit_texts:  # the short mark: the team's answer 3
             assert f'> "{t["text"]}"' in decisions, key
     assert approved["missing_temperature_mark"]["text"] == "no temperature data: similarity computed with 3 variables"
     sj = real["objects"]["similarity.json"]
     filled = {k: v["text"].replace("{lunar_day}", f"{ecfg.v('lunar_day_earth_days'):.1f}") for k, v in approved.items() if "text" in v}
-    assert {k: v["text"] for k, v in sj["texts"].items() if "text" in v} == filled
+    assert {k: v["text"] for k, v in sj["texts"].items() if "text" in v and k in approved} == filled
     assert sj["texts"]["no_twin_note_lunar_base"] == approved["no_twin_note_lunar_base"]
     solar = next(m for m in real["objects"]["missions.json"]["missions"] if m["id"] == "solar")
     assert approved["solar_limitation"]["mission_card"] is False

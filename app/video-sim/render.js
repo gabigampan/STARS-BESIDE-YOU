@@ -181,7 +181,15 @@ function probe() {
   console.log(JSON.stringify(res, null, 1));
 }
 
+// The render refuses to start if a value of the scenario differs from the tables or the shipped bundle
+// (tools/prepare.py --checks-only: table_values against the 1-degree tables, pair_values against
+// app/public/data/v2). It exits non-zero on the first mismatch.
+function preCheck() {
+  execFileSync('python3', ['-I', path.join(HERE, 'tools', 'prepare.py'), scPath, '--work', WORK, '--checks-only'], { stdio: 'inherit' });
+}
+
 (async () => {
+  preCheck();
   if (!flag('encode-only') && !flag('captions-only')) await renderFrames();
   if (opt('stills', null) || opt('frames', null) || flag('topdown') || flag('timeline')) return;
   if (!flag('captions-only')) encode();

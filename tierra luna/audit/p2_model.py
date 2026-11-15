@@ -91,7 +91,9 @@ def suitability(e, mission, ms, decimals=6):
     den = np.zeros(len(e))
     for v, spec in soft.items():
         u = utility(e, v, spec)
-        u = np.where(np.isfinite(u), np.round(u, decimals), np.nan)   # published utilities (6 decimals)
+        # published utilities (6 decimals), Python round on Python floats (correct decimal rounding;
+        # numpy.round scales and rints, which differs on exact halves)
+        u = np.array([round(float(x), decimals) if np.isfinite(x) else np.nan for x in u])
         ok = np.isfinite(u)
         num_ += np.where(ok, spec["weight"] * np.nan_to_num(u), 0.0)
         den += np.where(ok, spec["weight"], 0.0)
@@ -284,7 +286,7 @@ def run(mission, e=None, m=None, eng=None, ms=None, keep_matrix_for=None):
     suit = suitability(e, mission, ms)[passing]
     alpha = float(eng["mix_factor"]["value"])
     final = np.where(has, alpha * sim_pub + (1 - alpha) * suit, np.nan)
-    final2 = np.array([round(x, 2) if np.isfinite(x) else np.nan for x in final])
+    final2 = np.array([round(float(x), 2) if np.isfinite(x) else np.nan for x in final])
     ids = passing
     order = np.lexsort((ids, -np.nan_to_num(final2, nan=-1e9)))
     rank = np.zeros(n, dtype=int)

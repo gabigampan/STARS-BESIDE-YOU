@@ -1,0 +1,762 @@
+{
+ "saturation": {
+  "rover": {
+   "paired": 10192,
+   "quantiles_published": {
+    "q00": 56.13,
+    "q01": 71.06819999999999,
+    "q10": 81.12,
+    "q25": 85.34,
+    "q50": 93.29,
+    "q75": 98.07,
+    "q90": 99.24,
+    "q99": 99.86,
+    "q100": 100.0
+   },
+   "share_ge_99": 0.14050235478806908,
+   "share_ge_99.9": 0.006475667189952904,
+   "share_ge_99.99": 0.0003924646781789639,
+   "share_published_100.00": 9.811616954474098e-05,
+   "share_display_100.0_one_decimal": 0.0020604395604395605,
+   "share_display_100_integer": 0.06279434850863422,
+   "count_ge_99": 1432,
+   "count_published_100.00": 1,
+   "distinct_values_published_2dp": 2519,
+   "distinct_values_full_from_scores": 10125,
+   "real_difference_for_similarity": {
+    "S=99.0": {
+     "fraction_of_tolerance_when_equal": 0.1417768376957354,
+     "per_variable": {
+      "slope_deg": {
+       "only_this_variable_differs": 0.4500471796093374,
+       "all_variables_equal_fraction": 0.2835536753914708,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 6.75070769414006,
+       "all_variables_equal_fraction": 4.253305130872062,
+       "unit": "m"
+      },
+      "elevation_rel_m": {
+       "only_this_variable_differs": 160.1457061359289,
+       "all_variables_equal_fraction": 70.8884188478677,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.9": {
+     "fraction_of_tolerance_when_equal": 0.04473254594997748,
+     "per_variable": {
+      "slope_deg": {
+       "only_this_variable_differs": 0.14150986447928965,
+       "all_variables_equal_fraction": 0.08946509189995495,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 2.122647967189345,
+       "all_variables_equal_fraction": 1.3419763784993244,
+       "unit": "m"
+      },
+      "elevation_rel_m": {
+       "only_this_variable_differs": 50.062669842628004,
+       "all_variables_equal_fraction": 22.36627297498874,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.99": {
+     "fraction_of_tolerance_when_equal": 0.014142489196280715,
+     "per_variable": {
+      "slope_deg": {
+       "only_this_variable_differs": 0.04472415501353993,
+       "all_variables_equal_fraction": 0.02828497839256143,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 0.670862325203099,
+       "all_variables_equal_fraction": 0.42427467588842144,
+       "unit": "m"
+      },
+      "elevation_rel_m": {
+       "only_this_variable_differs": 15.813365259845485,
+       "all_variables_equal_fraction": 7.071244598140358,
+       "unit": "m"
+      }
+     }
+    }
+   },
+   "selection_effect": {
+    "zone_cells": 5400,
+    "zone_cells_passing_filter_per_point": {
+     "q00": 1.0,
+     "q10": 1.0,
+     "q50": 21.0,
+     "q90": 243.0,
+     "q100": 461.0
+    },
+    "zone_cells_passing_with_similarity_ge_99_per_point": {
+     "q00": 0.0,
+     "q10": 0.0,
+     "q50": 0.0,
+     "q90": 1.0,
+     "q100": 9.0
+    },
+    "share_points_with_ge_10_cells_at_99": 0.0,
+    "median_similarity_of_the_passing_cells_per_point": {
+     "q10": 72.0284792515461,
+     "q50": 78.65469201739106,
+     "q90": 83.1253321814433
+    },
+    "best_minus_second_full": {
+     "q10": 0.181166,
+     "q50": 1.593375,
+     "q90": 10.924547
+    }
+   },
+   "rounding": {
+    "similarity_rows_in_tie_groups_published": 9546,
+    "similarity_rows_in_tie_groups_full": 134,
+    "final_rows_in_tie_groups_published": 9512,
+    "final_rows_in_tie_groups_full": 14
+   },
+   "top6_final_full": [
+    {
+     "rank": 1,
+     "earth_id": 17566,
+     "final_published": 99.39,
+     "final_full": 99.39446,
+     "similarity_full": 99.56574,
+     "suitability_full": 99.22318
+    },
+    {
+     "rank": 2,
+     "earth_id": 23945,
+     "final_published": 99.21,
+     "final_full": 99.210633,
+     "similarity_full": 99.75928,
+     "suitability_full": 98.661985
+    },
+    {
+     "rank": 3,
+     "earth_id": 18282,
+     "final_published": 99.17,
+     "final_full": 99.171975,
+     "similarity_full": 98.76734,
+     "suitability_full": 99.57661
+    },
+    {
+     "rank": 4,
+     "earth_id": 18280,
+     "final_published": 99.08,
+     "final_full": 99.079657,
+     "similarity_full": 99.49538,
+     "suitability_full": 98.663935
+    },
+    {
+     "rank": 5,
+     "earth_id": 15395,
+     "final_published": 98.91,
+     "final_full": 98.907657,
+     "similarity_full": 99.1221,
+     "suitability_full": 98.693215
+    },
+    {
+     "rank": 6,
+     "earth_id": 18281,
+     "final_published": 98.87,
+     "final_full": 98.868415,
+     "similarity_full": 98.06296,
+     "suitability_full": 99.67387
+    }
+   ]
+  },
+  "solar": {
+   "paired": 6360,
+   "quantiles_published": {
+    "q00": 68.99,
+    "q01": 70.96,
+    "q10": 88.03500000000001,
+    "q25": 99.67750000000001,
+    "q50": 99.93,
+    "q75": 99.97,
+    "q90": 99.99,
+    "q99": 100.0,
+    "q100": 100.0
+   },
+   "share_ge_99": 0.779874213836478,
+   "share_ge_99.9": 0.6165094339622641,
+   "share_ge_99.99": 0.1770440251572327,
+   "share_published_100.00": 0.08081761006289308,
+   "share_display_100.0_one_decimal": 0.39937106918238996,
+   "share_display_100_integer": 0.7572327044025158,
+   "count_ge_99": 4960,
+   "count_published_100.00": 514,
+   "distinct_values_published_2dp": 247,
+   "distinct_values_full_from_scores": 5249,
+   "real_difference_for_similarity": {
+    "S=99.0": {
+     "fraction_of_tolerance_when_equal": 0.1417768376957354,
+     "per_variable": {
+      "irradiance_toa_kwh_m2_day": {
+       "only_this_variable_differs": 0.09516681768841098,
+       "all_variables_equal_fraction": 0.08506610261744124,
+       "unit": "kWh/m2/day"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.9180872100528414,
+       "all_variables_equal_fraction": 0.2835536753914708,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 13.771308150792622,
+       "all_variables_equal_fraction": 4.253305130872062,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.9": {
+     "fraction_of_tolerance_when_equal": 0.04473254594997748,
+     "per_variable": {
+      "irradiance_toa_kwh_m2_day": {
+       "only_this_variable_differs": 0.03000938135300149,
+       "all_variables_equal_fraction": 0.026839527569986487,
+       "unit": "kWh/m2/day"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.28355367539146287,
+       "all_variables_equal_fraction": 0.08946509189995495,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 4.253305130871943,
+       "all_variables_equal_fraction": 1.3419763784993244,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.99": {
+     "fraction_of_tolerance_when_equal": 0.014142489196280715,
+     "per_variable": {
+      "irradiance_toa_kwh_m2_day": {
+       "only_this_variable_differs": 0.009487129464112102,
+       "all_variables_equal_fraction": 0.008485493517768429,
+       "unit": "kWh/m2/day"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.08946509189998478,
+       "all_variables_equal_fraction": 0.02828497839256143,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 1.3419763784997716,
+       "all_variables_equal_fraction": 0.42427467588842144,
+       "unit": "m"
+      }
+     }
+    }
+   },
+   "selection_effect": {
+    "zone_cells": 6686,
+    "zone_cells_passing_filter_per_point": {
+     "q00": 2.0,
+     "q10": 385.9000000000001,
+     "q50": 1843.5,
+     "q90": 3648.1000000000004,
+     "q100": 4357.0
+    },
+    "zone_cells_passing_with_similarity_ge_99_per_point": {
+     "q00": 0.0,
+     "q10": 0.0,
+     "q50": 76.0,
+     "q90": 235.0,
+     "q100": 320.0
+    },
+    "share_points_with_ge_10_cells_at_99": 0.7459119496855345,
+    "median_similarity_of_the_passing_cells_per_point": {
+     "q10": 75.42520122815247,
+     "q50": 86.09238619875387,
+     "q90": 89.11193817406229
+    },
+    "best_minus_second_full": {
+     "q10": 0.00023990000000000008,
+     "q50": 0.0042450000000000005,
+     "q90": 0.06676420000000005
+    }
+   },
+   "rounding": {
+    "similarity_rows_in_tie_groups_published": 6237,
+    "similarity_rows_in_tie_groups_full": 1983,
+    "final_rows_in_tie_groups_published": 5735,
+    "final_rows_in_tie_groups_full": 10
+   },
+   "top6_final_full": [
+    {
+     "rank": 1,
+     "earth_id": 38464,
+     "final_published": 98.45,
+     "final_full": 98.445813,
+     "similarity_full": 99.99218,
+     "suitability_full": 96.899445
+    },
+    {
+     "rank": 2,
+     "earth_id": 38105,
+     "final_published": 98.39,
+     "final_full": 98.391715,
+     "similarity_full": 99.88212,
+     "suitability_full": 96.90131
+    },
+    {
+     "rank": 3,
+     "earth_id": 38744,
+     "final_published": 98.36,
+     "final_full": 98.359475,
+     "similarity_full": 99.94806,
+     "suitability_full": 96.77089
+    },
+    {
+     "rank": 4,
+     "earth_id": 37746,
+     "final_published": 98.3,
+     "final_full": 98.296115,
+     "similarity_full": 99.9765,
+     "suitability_full": 96.61573
+    },
+    {
+     "rank": 5,
+     "earth_id": 38465,
+     "final_published": 98.24,
+     "final_full": 98.236548,
+     "similarity_full": 99.99684,
+     "suitability_full": 96.476255
+    },
+    {
+     "rank": 6,
+     "earth_id": 38385,
+     "final_published": 98.23,
+     "final_full": 98.232775,
+     "similarity_full": 99.99747,
+     "suitability_full": 96.46808
+    }
+   ]
+  },
+  "lunar_base": {
+   "paired": 450,
+   "quantiles_published": {
+    "q00": 54.12,
+    "q01": 66.48110000000001,
+    "q10": 75.42,
+    "q25": 81.0625,
+    "q50": 87.39500000000001,
+    "q75": 92.9175,
+    "q90": 96.003,
+    "q99": 99.16080000000001,
+    "q100": 99.48
+   },
+   "share_ge_99": 0.015555555555555555,
+   "share_ge_99.9": 0.0,
+   "share_ge_99.99": 0.0,
+   "share_published_100.00": 0.0,
+   "share_display_100.0_one_decimal": 0.0,
+   "share_display_100_integer": 0.0,
+   "count_ge_99": 7,
+   "count_published_100.00": 0,
+   "distinct_values_published_2dp": 414,
+   "distinct_values_full_from_scores": 450,
+   "real_difference_for_similarity": {
+    "S=99.0": {
+     "fraction_of_tolerance_when_equal": 0.1417768376957354,
+     "per_variable": {
+      "tmin_k": {
+       "only_this_variable_differs": 2.2502358980466868,
+       "all_variables_equal_fraction": 1.417768376957354,
+       "unit": "percentile points"
+      },
+      "lst_diurnal_amp_k": {
+       "only_this_variable_differs": 2.2502358980466868,
+       "all_variables_equal_fraction": 1.417768376957354,
+       "unit": "percentile points"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.9180872100528414,
+       "all_variables_equal_fraction": 0.2835536753914708,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 13.771308150792622,
+       "all_variables_equal_fraction": 4.253305130872062,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.9": {
+     "fraction_of_tolerance_when_equal": 0.04473254594997748,
+     "per_variable": {
+      "tmin_k": {
+       "only_this_variable_differs": 0.7075493223964482,
+       "all_variables_equal_fraction": 0.44732545949977476,
+       "unit": "percentile points"
+      },
+      "lst_diurnal_amp_k": {
+       "only_this_variable_differs": 0.7075493223964482,
+       "all_variables_equal_fraction": 0.44732545949977476,
+       "unit": "percentile points"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.28355367539146287,
+       "all_variables_equal_fraction": 0.08946509189995495,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 4.253305130871943,
+       "all_variables_equal_fraction": 1.3419763784993244,
+       "unit": "m"
+      }
+     }
+    },
+    "S=99.99": {
+     "fraction_of_tolerance_when_equal": 0.014142489196280715,
+     "per_variable": {
+      "tmin_k": {
+       "only_this_variable_differs": 0.22362077506769965,
+       "all_variables_equal_fraction": 0.14142489196280716,
+       "unit": "percentile points"
+      },
+      "lst_diurnal_amp_k": {
+       "only_this_variable_differs": 0.22362077506769965,
+       "all_variables_equal_fraction": 0.14142489196280716,
+       "unit": "percentile points"
+      },
+      "slope_deg": {
+       "only_this_variable_differs": 0.08946509189998478,
+       "all_variables_equal_fraction": 0.02828497839256143,
+       "unit": "deg"
+      },
+      "roughness_m": {
+       "only_this_variable_differs": 1.3419763784997716,
+       "all_variables_equal_fraction": 0.42427467588842144,
+       "unit": "m"
+      }
+     }
+    }
+   },
+   "selection_effect": {
+    "zone_cells": 280,
+    "zone_cells_passing_filter_per_point": {
+     "q00": 1.0,
+     "q10": 1.0,
+     "q50": 4.0,
+     "q90": 11.0,
+     "q100": 23.0
+    },
+    "zone_cells_passing_with_similarity_ge_99_per_point": {
+     "q00": 0.0,
+     "q10": 0.0,
+     "q50": 0.0,
+     "q90": 0.0,
+     "q100": 1.0
+    },
+    "share_points_with_ge_10_cells_at_99": 0.0,
+    "median_similarity_of_the_passing_cells_per_point": {
+     "q10": 72.31234334084809,
+     "q50": 80.7792214545311,
+     "q90": 87.09470825668012
+    },
+    "best_minus_second_full": {
+     "q10": 0.7011605999999999,
+     "q50": 4.040094,
+     "q90": 11.080069000000002
+    }
+   },
+   "rounding": {
+    "similarity_rows_in_tie_groups_published": 70,
+    "similarity_rows_in_tie_groups_full": 0,
+    "final_rows_in_tie_groups_published": 98,
+    "final_rows_in_tie_groups_full": 0
+   },
+   "top6_final_full": [
+    {
+     "rank": 1,
+     "earth_id": 17538,
+     "final_published": 72.29,
+     "final_full": 72.289682,
+     "similarity_full": 97.31043,
+     "suitability_full": 47.268935
+    },
+    {
+     "rank": 2,
+     "earth_id": 16830,
+     "final_published": 72.28,
+     "final_full": 72.283665,
+     "similarity_full": 96.60771,
+     "suitability_full": 47.95962
+    },
+    {
+     "rank": 3,
+     "earth_id": 15751,
+     "final_published": 71.73,
+     "final_full": 71.731513,
+     "similarity_full": 96.86364,
+     "suitability_full": 46.599385
+    },
+    {
+     "rank": 4,
+     "earth_id": 21054,
+     "final_published": 71.63,
+     "final_full": 71.632968,
+     "similarity_full": 99.35648,
+     "suitability_full": 43.909455
+    },
+    {
+     "rank": 5,
+     "earth_id": 17187,
+     "final_published": 71.28,
+     "final_full": 71.283197,
+     "similarity_full": 95.02611,
+     "suitability_full": 47.540285
+    },
+    {
+     "rank": 6,
+     "earth_id": 42949,
+     "final_published": 71.24,
+     "final_full": 71.238306,
+     "similarity_full": 93.40556,
+     "suitability_full": 49.071053
+    }
+   ]
+  }
+ },
+ "units": {
+  "rover": {
+   "elevation_body_means_m": {
+    "EARTH": 695.9244011890817,
+    "MOON": -248.3894020283722
+   },
+   "earth_mean_cells": 25245,
+   "earth_land_elev_min_max": [
+    -2569.9,
+    5420.3
+   ]
+  },
+  "solar": {
+   "earth_toa_range_pairs_kwh": [
+    8.478424072265625,
+    9.973928451538086
+   ],
+   "moon_irr_range_pairs_kwh": [
+    9.04800033569336,
+    10.017000198364258
+   ],
+   "earth_ground_range_pairs_kwh": [
+    2.9660000801086426,
+    6.440000057220459
+   ],
+   "lost_share_median": 0.45333144068717957,
+   "lost_share_check_max_abs": 7.168648563649072e-08,
+   "tolerance_0.6_kwh_in_w_m2_daily_mean": 25.0,
+   "moon_equator_row_irradiance_kwh_and_w_m2": [
+    10.395,
+    433.125
+   ],
+   "moon_equator_S0_over_pi_kwh": 10.397274122307339,
+   "earth_toa_equator_kwh": 9.973927609214712,
+   "earth_toa_unique_values_on_pairs": 34,
+   "earth_toa_unique_values_on_passing": 90,
+   "moon_zone_irradiance_unique_values": 30
+  },
+  "lunar_base": {
+   "tmin_k_earth_equals_tmin_c_plus_273.15_max_abs": 1.464843751364242e-05,
+   "tmin_k_moon_equals_lunar_tmin_k_column_max_abs": 3.662109378410605e-06,
+   "moon_colder_tmin_all_pairs": true,
+   "moon_colder_mean_all_pairs": true,
+   "moon_larger_swing_all_pairs": true,
+   "tmin_k_diff_median_K": 207.8750057220459,
+   "earth_tmin_c_range_pairs": [
+    -35.37999572753904,
+    4.249993896484398
+   ],
+   "moon_tmin_k_range_pairs": [
+    39.0,
+    66.88999938964844
+   ],
+   "earth_amp_range_pairs_K": [
+    15.010000228881836,
+    25.059999465942383
+   ],
+   "moon_amp_range_pairs_K": [
+    123.16000366210938,
+    202.44000244140625
+   ],
+   "earth_tmin_pct_if_population_were_all_land_cells": {
+    "cells": 25484,
+    "pairs_median_shift_points": 14.415728537745572,
+    "pairs_share_shift_gt_10_points": 0.6333333333333333
+   },
+   "earth_amp_pct_if_population_were_all_land_cells": {
+    "cells": 18738,
+    "pairs_median_shift_points": 52.31348180796322,
+    "pairs_share_shift_gt_10_points": 0.9955555555555555
+   },
+   "moon_tmin_pct_if_population_were_lat_le_-75": {
+    "cells": 5400,
+    "pairs_median_shift_points": -3.3214282989501953
+   }
+  },
+  "slope_iso_deg_EARTH": {
+   "min": 0.004,
+   "max": 17.19,
+   "median": 0.48
+  },
+  "roughness_m_EARTH": {
+   "min": 0.01,
+   "max": 559.11,
+   "median": 18.09
+  },
+  "slope_iso_deg_MOON": {
+   "min": 0.051,
+   "max": 22.846,
+   "median": 4.91
+  },
+  "roughness_m_MOON": {
+   "min": 1.57,
+   "max": 616.28,
+   "median": 159.745
+  },
+  "slope_2deg_as_percent_grade": 3.492076949174773,
+  "slope_4deg_as_percent_grade": 6.992681194351041
+ },
+ "table": [
+  {
+   "mission": "rover",
+   "variable": "slope_deg",
+   "role": "key",
+   "unit": "deg",
+   "tolerance": 2.0,
+   "bound": 2.0,
+   "median": 0.40799999237060547,
+   "p90": 0.8510000109672546,
+   "max": 1.9709999561309814
+  },
+  {
+   "mission": "rover",
+   "variable": "roughness_m",
+   "role": "key",
+   "unit": "m",
+   "tolerance": 30.0,
+   "bound": 30.0,
+   "median": 5.340000152587891,
+   "p90": 20.548999404907224,
+   "max": 29.969999313354492
+  },
+  {
+   "mission": "rover",
+   "variable": "elevation_rel_m",
+   "role": "secondary",
+   "unit": "m",
+   "tolerance": 500.0,
+   "bound": 1000.0,
+   "median": 247.88619232177734,
+   "p90": 798.876171875,
+   "max": 999.9862060546875
+  },
+  {
+   "mission": "solar",
+   "variable": "irradiance_toa_kwh_m2_day",
+   "role": "key",
+   "unit": "kWh/m2/day",
+   "tolerance": 0.6,
+   "bound": 0.6,
+   "median": 0.020764432847499847,
+   "p90": 0.3222457468509674,
+   "max": 0.569575846195221
+  },
+  {
+   "mission": "solar",
+   "variable": "slope_deg",
+   "role": "secondary",
+   "unit": "deg",
+   "tolerance": 2.0,
+   "bound": 4.0,
+   "median": 0.03400000184774399,
+   "p90": 0.1459999978542328,
+   "max": 1.940999984741211
+  },
+  {
+   "mission": "solar",
+   "variable": "roughness_m",
+   "role": "secondary",
+   "unit": "m",
+   "tolerance": 30.0,
+   "bound": 60.0,
+   "median": 0.5,
+   "p90": 2.359999895095825,
+   "max": 58.13999938964844
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "tmin_k",
+   "role": "key",
+   "unit": "percentile points",
+   "tolerance": 10.0,
+   "bound": 10.0,
+   "median": 3.1685171127319336,
+   "p90": 7.715156984329225,
+   "max": 9.786290168762207
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "tmin_k (real)",
+   "role": "key",
+   "unit": "K",
+   "tolerance": NaN,
+   "bound": NaN,
+   "median": 207.875,
+   "p90": 210.5530029296875,
+   "max": 211.94000244140625
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "lst_diurnal_amp_k",
+   "role": "key",
+   "unit": "percentile points",
+   "tolerance": 10.0,
+   "bound": 10.0,
+   "median": 2.988690733909607,
+   "p90": 7.66661262512207,
+   "max": 9.95297622680664
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "lst_diurnal_amp_k (real)",
+   "role": "key",
+   "unit": "K",
+   "tolerance": NaN,
+   "bound": NaN,
+   "median": 153.76499938964844,
+   "p90": 161.28199920654296,
+   "max": 179.39999389648438
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "slope_deg",
+   "role": "secondary",
+   "unit": "deg",
+   "tolerance": 2.0,
+   "bound": 4.0,
+   "median": 1.506500005722046,
+   "p90": 2.6943000078201296,
+   "max": 3.9170000553131104
+  },
+  {
+   "mission": "lunar_base",
+   "variable": "roughness_m",
+   "role": "secondary",
+   "unit": "m",
+   "tolerance": 30.0,
+   "bound": 60.0,
+   "median": 27.265000343322754,
+   "p90": 54.425998306274415,
+   "max": 59.810001373291016
+  }
+ ]
+}

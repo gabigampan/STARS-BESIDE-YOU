@@ -1,73 +1,85 @@
 WEBVTT - Vídeo de la misión base lunar (simulación 3D), subtítulos descriptivos en español
 
 NOTE
-Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. La temperatura de la superficie sigue una curva de modelo declarada entre el mínimo (68,5 K) y el máximo (255,56 K) medidos por Diviner en la celda; el Sol es calculado; formas, tamaños y tiempos del hábitat son ilustrativos.
+Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo; el estado del panel no cambia dentro de un subtítulo. La temperatura de la superficie sigue una curva de modelo declarada entre el mínimo (41,23 K) y el máximo (194,51 K) medidos por Diviner en la celda; el Sol es calculado; formas, tamaños y tiempos del hábitat son ilustrativos. Mientras el punto está en sombra se aumenta la exposición de la imagen (no a escala).
 
 1
-00:00.000 --> 00:04.000
-Simulación 3D basada en datos de las tablas, no son imágenes reales. Noche lunar sobre el relieve real LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo, al noroeste.
-Noche lunar · Temperatura de la superficie 71,0 K (-202,2 °C, modelo) · Sol -3,2° / acimut 150,0°
-0,0 días terrestres transcurridos · ×63.800
+00:00.000 --> 00:04.067
+Simulación 3D basada en datos de las tablas, no son imágenes reales. Celda lunar M63528, 86,5° S 11,5° O, a 25,1 km de Mons Malapert, en las nueve regiones candidatas de alunizaje de la NASA cerca del polo sur lunar, sobre el relieve real LOLA. La cámara desciende hasta el punto. El Sol está sobre el horizonte pero tapado por el relieve del norte: el punto está en sombra (exposición aumentada, no a escala).
+Sol sobre el horizonte, tapado por el relieve del norte · Temperatura de la superficie 41,3 K (-231,9 °C, modelo) · Sol 4,8° / acimut 22,1°
+0,0 días terrestres transcurridos · ×21.600
 
 2
-00:04.000 --> 00:08.000
-La cámara desciende hasta el punto. Vista nocturna: exposición aumentada para mostrar la luz cenicienta.
-Noche lunar · Temperatura de la superficie 68,8 K (-204,4 °C, modelo) · Sol -0,7° / acimut 114,0°
-3,0 días terrestres transcurridos · ×63.800
+00:04.067 --> 00:05.500
+El Sol asoma sobre el relieve del norte.
+El Sol asoma sobre el relieve · Temperatura de la superficie 41,2 K (-231,9 °C, modelo) · Sol 5,0° / acimut 9,6°
+1,0 días terrestres transcurridos · ×21.600
 
 3
-00:08.000 --> 00:12.000
-Amanecer: el Sol roza el horizonte del este; el módulo cilíndrico se baja sobre sus patas.
-Colocando el módulo · Temperatura de la superficie 215,2 K (-57,9 °C, modelo) · Sol 2,7° / acimut 78,2°
-5,9 días terrestres transcurridos · ×63.800
+00:05.500 --> 00:09.500
+El módulo cilíndrico se baja sobre sus patas.
+Bajando el módulo · Temperatura de la superficie 194,4 K (-78,8 °C, modelo) · Sol 5,0° / acimut 5,2°
+1,4 días terrestres transcurridos · ×21.600
 
 4
-00:12.000 --> 00:16.000
-La sección inflable se expande desde el extremo del módulo.
-Desplegando la sección inflable · Temperatura de la superficie 245,3 K (-27,8 °C, modelo) · Sol 5,6° / acimut 42,2°
-8,9 días terrestres transcurridos · ×63.800
+00:09.500 --> 00:11.000
+El módulo queda apoyado en el suelo.
+Módulo colocado · Temperatura de la superficie 194,3 K (-78,8 °C, modelo) · Sol 5,0° / acimut 353,0°
+2,4 días terrestres transcurridos · ×21.600
 
 5
-00:16.000 --> 00:20.000
-Un muro de regolito se levanta en anillo alrededor del hábitat.
-Construyendo el muro de regolito · Temperatura de la superficie 255,4 K (-17,8 °C, modelo) · Sol 7,0° / acimut 6,0°
-11,8 días terrestres transcurridos · ×63.800
+00:11.000 --> 00:15.500
+La sección inflable se expande desde el extremo del módulo.
+Desplegando la sección inflable · Temperatura de la superficie 194,0 K (-79,2 °C, modelo) · Sol 5,0° / acimut 348,4°
+2,8 días terrestres transcurridos · ×21.600
 
 6
-00:20.000 --> 00:24.000
-El Sol no pasa de unos 7° en todo el día y se desplaza al oeste a ras del horizonte; las sombras son muy largas.
-Construyendo el muro de regolito · Temperatura de la superficie 250,4 K (-22,7 °C, modelo) · Sol 6,3° / acimut 329,8°
-14,8 días terrestres transcurridos · ×63.800
+00:15.500 --> 00:16.500
+La sección inflable está desplegada.
+Sección inflable desplegada · Temperatura de la superficie 191,9 K (-81,3 °C, modelo) · Sol 4,7° / acimut 334,6°
+3,9 días terrestres transcurridos · ×21.600
 
 7
-00:24.000 --> 00:28.000
-El Sol se oculta tras el relieve del oeste aunque sigue sobre el horizonte plano; la superficie empieza a enfriarse.
-Hábitat montado, de día · Temperatura de la superficie 228,4 K (-44,7 °C, modelo) · Sol 3,8° / acimut 293,8°
-17,7 días terrestres transcurridos · ×63.800
+00:16.500 --> 00:22.500
+Un muro de regolito se levanta en anillo alrededor del hábitat.
+Construyendo el muro de regolito · Temperatura de la superficie 191,2 K (-81,9 °C, modelo) · Sol 4,6° / acimut 331,6°
+4,1 días terrestres transcurridos · ×21.600
 
 8
-00:28.000 --> 00:32.000
-El Sol se pone bajo el horizonte: empieza la noche lunar.
-Sol tapado por el relieve · Temperatura de la superficie 135,7 K (-137,5 °C, modelo) · Sol 0,4° / acimut 257,9°
-20,7 días terrestres transcurridos · ×63.800
+00:22.500 --> 00:24.000
+El muro está terminado.
+Muro de regolito construido · Temperatura de la superficie 185,4 K (-87,8 °C, modelo) · Sol 3,9° / acimut 313,3°
+5,6 días terrestres transcurridos · ×21.600
 
 9
-00:32.000 --> 00:36.000
-Noche lunar, iluminada solo por la luz cenicienta de la Tierra (exposición aumentada, no a escala).
-Noche: la superficie se enfría · Temperatura de la superficie 92,9 K (-180,2 °C, modelo) · Sol -2,5° / acimut 222,0°
-23,6 días terrestres transcurridos · ×63.800
+00:24.000 --> 00:27.967
+El hábitat está montado. El Sol no pasa de unos 5° y se desplaza al oeste a ras del relieve; las sombras son muy largas.
+Hábitat montado, al sol · Temperatura de la superficie 183,4 K (-89,7 °C, modelo) · Sol 3,7° / acimut 308,7°
+6,0 días terrestres transcurridos · ×21.600
 
 10
-00:36.000 --> 00:40.000
-La temperatura de la superficie se acerca al mínimo medido, 68,5 K.
-Noche: la superficie se enfría · Temperatura de la superficie 77,0 K (-196,2 °C, modelo) · Sol -3,9° / acimut 186,0°
-26,6 días terrestres transcurridos · ×63.800
+00:27.967 --> 00:29.100
+El Sol empieza a ocultarse tras el relieve del oeste.
+Sol en parte tapado por el relieve · Temperatura de la superficie 177,1 K (-96,1 °C, modelo) · Sol 3,1° / acimut 296,6°
+7,0 días terrestres transcurridos · ×21.600
 
 11
-00:40.000 --> 00:43.000
-Tarjeta final: el análogo terrestre montes Kunlun, Xinjiang, China (celda E19345) frente a la celda lunar M62859 en Mons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (superficie); máxima lunar 255,56 K; temperatura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la Tierra (modelado).
+00:29.100 --> 00:34.500
+El Sol está tras el relieve del oeste aunque sigue sobre el horizonte plano: el punto queda en sombra y su superficie se enfría. Exposición aumentada para mostrar el suelo (no a escala).
+Sol tapado por el relieve: el punto queda en sombra · Temperatura de la superficie 171,6 K (-101,6 °C, modelo) · Sol 2,9° / acimut 293,1°
+7,3 días terrestres transcurridos · ×21.600
 
 12
+00:34.500 --> 00:40.000
+El punto sigue en sombra. En su posición media, la Tierra queda oculta tras el relieve desde aquí, así que no hay luz cenicienta.
+Sol tapado por el relieve: el punto queda en sombra · Temperatura de la superficie 124,3 K (-148,8 °C, modelo) · Sol 1,9° / acimut 276,7°
+8,6 días terrestres transcurridos · ×21.600
+
+13
+00:40.000 --> 00:43.000
+Tarjeta final: el análogo terrestre en Xinjiang Uygur Zizhiqu, China (celda E17538, 41,5° N 78,5° E) y su gemela lunar, la celda M63528 cerca de Mons Malapert, emparejadas por posición térmica relativa, no por temperaturas iguales. Temperatura más fría 248,61 K (−24,54 °C, aire, modelada) frente a 41,23 K (−231,92 °C, superficie, medida), percentiles 8,37 y 8,04; oscilación diaria 15,60 K frente a 153,27 K, percentiles 6,72 y 10,18; pendiente 6,652° frente a 7,179°; rugosidad 238,81 m frente a 238,49 m; temperatura media 272,06 K frente a 77,49 K (no forma parte de la similitud).
+
+14
 00:43.000 --> 00:46.000
-Kunlun reproduce una meseta alta sobre suelo helado, no el rango térmico lunar. Simulación 3D basada en datos de las tablas. No son imágenes reales.
+Este par se parece por posición térmica relativa, no por temperaturas iguales. En valores reales la gemela es 195 K más fría de media (mínima −232 °C en la superficie frente a −24,5 °C de temperatura del aire aquí) y su oscilación entre el día y la noche es 138 K mayor; la pendiente difiere en 0,5° y la rugosidad en 0,3 m. Simulación 3D basada en datos de las tablas. No son imágenes reales.
 

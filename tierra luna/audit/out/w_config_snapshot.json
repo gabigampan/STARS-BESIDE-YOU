@@ -1,0 +1,8 @@
+{
+ "config_sha256_at_start": {
+  "tierra luna/engine/engine_config.json": "53520a4b72054ff36e138d3309a85f05a2ac24c73e64f9c766364e8dfbac1c62",
+  "tierra luna/mission_scoring.json": "79ee145aead24f0378c44721cb21ea5ecaa34eb754a525041e6aec6f3f6516dc",
+  "tierra luna/engine/datasets.json": "27050f2ac9d72a08053856699a1459d407c0730f72406492988eac7f842795b2",
+  "tierra luna/engine/data/artemis_iii_regions.geojson": "c9e1b2117d1a7fd08b8772b0631edc18aa559e7b5cdbd91e7ee10ad46e32931e"
+ }
+}

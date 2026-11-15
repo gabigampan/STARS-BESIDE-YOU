@@ -1,0 +1,1624 @@
+{
+ "checks": {
+  "EARTH_slope_iso_chk_maxabs": 0.0004999949563602724,
+  "EARTH_rough1_chk_maxabs": 0.004999999044486003,
+  "MOON_slope_iso_chk_maxabs": 0.0004999992949308307,
+  "MOON_rough1_chk_maxabs": 0.0049999210510804915,
+  "baseline": {
+   "passing": 10337,
+   "paired": 10192,
+   "distinct_twins": 401,
+   "w0": [
+    10337,
+    10192,
+    401
+   ],
+   "top5_match": true
+  }
+ },
+ "correlations": {
+  "earth_land": {
+   "slope_deg": {
+    "vs_slope": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.989,
+     "pearson": 0.986,
+     "n": 24783
+    }
+   },
+   "roughness_m": {
+    "vs_slope": {
+     "spearman": 0.989,
+     "pearson": 0.986,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 24783
+    }
+   },
+   "r1_slope_iso_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.993,
+     "pearson": 0.981,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.99,
+     "pearson": 0.986,
+     "n": 24783
+    }
+   },
+   "r1_slope_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.974,
+     "pearson": 0.969,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.971,
+     "pearson": 0.984,
+     "n": 24783
+    }
+   },
+   "r1_p90_over_mean": {
+    "vs_slope": {
+     "spearman": 0.189,
+     "pearson": 0.042,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.254,
+     "pearson": 0.112,
+     "n": 24783
+    }
+   },
+   "r1_steep_frac_5": {
+    "vs_slope": {
+     "spearman": 0.83,
+     "pearson": 0.948,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.846,
+     "pearson": 0.929,
+     "n": 24783
+    }
+   },
+   "r1_steep_frac_10": {
+    "vs_slope": {
+     "spearman": 0.674,
+     "pearson": 0.783,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.69,
+     "pearson": 0.755,
+     "n": 24783
+    }
+   },
+   "r1_steep_frac_15": {
+    "vs_slope": {
+     "spearman": 0.498,
+     "pearson": 0.587,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.508,
+     "pearson": 0.561,
+     "n": 24783
+    }
+   },
+   "r1_rough2_m": {
+    "vs_slope": {
+     "spearman": 0.992,
+     "pearson": 0.989,
+     "n": 24781
+    },
+    "vs_rough": {
+     "spearman": 0.997,
+     "pearson": 0.994,
+     "n": 24781
+    }
+   },
+   "r1_hurst_h": {
+    "vs_slope": {
+     "spearman": -0.328,
+     "pearson": -0.207,
+     "n": 24781
+    },
+    "vs_rough": {
+     "spearman": -0.4,
+     "pearson": -0.255,
+     "n": 24781
+    }
+   },
+   "r1_roughness_over_slope": {
+    "vs_slope": {
+     "spearman": 0.236,
+     "pearson": -0.005,
+     "n": 24783
+    },
+    "vs_rough": {
+     "spearman": 0.356,
+     "pearson": 0.069,
+     "n": 24783
+    }
+   }
+  },
+  "moon_zone": {
+   "slope_deg": {
+    "vs_slope": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.943,
+     "pearson": 0.916,
+     "n": 5400
+    }
+   },
+   "roughness_m": {
+    "vs_slope": {
+     "spearman": 0.943,
+     "pearson": 0.916,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 5400
+    }
+   },
+   "r1_slope_iso_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.9,
+     "pearson": 0.871,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.95,
+     "pearson": 0.946,
+     "n": 5400
+    }
+   },
+   "r1_slope_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.85,
+     "pearson": 0.492,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.936,
+     "pearson": 0.679,
+     "n": 5400
+    }
+   },
+   "r1_p90_over_mean": {
+    "vs_slope": {
+     "spearman": -0.318,
+     "pearson": -0.294,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": -0.113,
+     "pearson": -0.023,
+     "n": 5400
+    }
+   },
+   "r1_steep_frac_5": {
+    "vs_slope": {
+     "spearman": 0.933,
+     "pearson": 0.892,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.828,
+     "pearson": 0.765,
+     "n": 5400
+    }
+   },
+   "r1_steep_frac_10": {
+    "vs_slope": {
+     "spearman": 0.934,
+     "pearson": 0.926,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.92,
+     "pearson": 0.821,
+     "n": 5400
+    }
+   },
+   "r1_steep_frac_15": {
+    "vs_slope": {
+     "spearman": 0.797,
+     "pearson": 0.823,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.849,
+     "pearson": 0.795,
+     "n": 5400
+    }
+   },
+   "r1_rough2_m": {
+    "vs_slope": {
+     "spearman": 0.921,
+     "pearson": 0.898,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.98,
+     "pearson": 0.979,
+     "n": 5400
+    }
+   },
+   "r1_hurst_h": {
+    "vs_slope": {
+     "spearman": 0.159,
+     "pearson": 0.156,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": 0.187,
+     "pearson": 0.153,
+     "n": 5400
+    }
+   },
+   "r1_roughness_over_slope": {
+    "vs_slope": {
+     "spearman": -0.438,
+     "pearson": -0.359,
+     "n": 5400
+    },
+    "vs_rough": {
+     "spearman": -0.165,
+     "pearson": -0.015,
+     "n": 5400
+    }
+   }
+  },
+  "rover_ranked": {
+   "slope_deg": {
+    "vs_slope": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.981,
+     "pearson": 0.988,
+     "n": 10337
+    }
+   },
+   "roughness_m": {
+    "vs_slope": {
+     "spearman": 0.981,
+     "pearson": 0.988,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 10337
+    }
+   },
+   "r1_slope_iso_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.981,
+     "pearson": 0.977,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.987,
+     "pearson": 0.986,
+     "n": 10337
+    }
+   },
+   "r1_slope_p90_deg": {
+    "vs_slope": {
+     "spearman": 0.979,
+     "pearson": 0.965,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.985,
+     "pearson": 0.981,
+     "n": 10337
+    }
+   },
+   "r1_p90_over_mean": {
+    "vs_slope": {
+     "spearman": 0.003,
+     "pearson": -0.121,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.108,
+     "pearson": -0.026,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_5": {
+    "vs_slope": {
+     "spearman": 0.931,
+     "pearson": 0.975,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.964,
+     "pearson": 0.967,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_10": {
+    "vs_slope": {
+     "spearman": 0.812,
+     "pearson": 0.851,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.853,
+     "pearson": 0.837,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_15": {
+    "vs_slope": {
+     "spearman": 0.648,
+     "pearson": 0.682,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.677,
+     "pearson": 0.668,
+     "n": 10337
+    }
+   },
+   "r1_rough2_m": {
+    "vs_slope": {
+     "spearman": 0.982,
+     "pearson": 0.988,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.995,
+     "pearson": 0.994,
+     "n": 10337
+    }
+   },
+   "r1_hurst_h": {
+    "vs_slope": {
+     "spearman": -0.134,
+     "pearson": -0.143,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": -0.193,
+     "pearson": -0.195,
+     "n": 10337
+    }
+   },
+   "r1_roughness_over_slope": {
+    "vs_slope": {
+     "spearman": -0.087,
+     "pearson": -0.162,
+     "n": 10337
+    },
+    "vs_rough": {
+     "spearman": 0.078,
+     "pearson": -0.042,
+     "n": 10337
+    }
+   }
+  },
+  "utilities_slope_vs_rough_ranked": {
+   "spearman": 0.973,
+   "pearson": 0.986,
+   "n": 10337
+  },
+  "pair_differences_decided_rule": {
+   "slope_deg": {
+    "vs_dslope": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.046,
+     "pearson": 0.034,
+     "n": 10337
+    }
+   },
+   "roughness_m": {
+    "vs_dslope": {
+     "spearman": 0.046,
+     "pearson": 0.034,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 1.0,
+     "pearson": 1.0,
+     "n": 10337
+    }
+   },
+   "r1_slope_iso_p90_deg": {
+    "vs_dslope": {
+     "spearman": 0.078,
+     "pearson": 0.04,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.065,
+     "pearson": 0.018,
+     "n": 10337
+    }
+   },
+   "r1_slope_p90_deg": {
+    "vs_dslope": {
+     "spearman": 0.072,
+     "pearson": 0.027,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.046,
+     "pearson": 0.006,
+     "n": 10337
+    }
+   },
+   "r1_p90_over_mean": {
+    "vs_dslope": {
+     "spearman": -0.071,
+     "pearson": -0.101,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.074,
+     "pearson": 0.054,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_5": {
+    "vs_dslope": {
+     "spearman": 0.025,
+     "pearson": 0.047,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.035,
+     "pearson": 0.036,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_10": {
+    "vs_dslope": {
+     "spearman": -0.039,
+     "pearson": 0.005,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.044,
+     "pearson": 0.031,
+     "n": 10337
+    }
+   },
+   "r1_steep_frac_15": {
+    "vs_dslope": {
+     "spearman": -0.026,
+     "pearson": 0.019,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.033,
+     "pearson": -0.02,
+     "n": 10337
+    }
+   },
+   "r1_rough2_m": {
+    "vs_dslope": {
+     "spearman": 0.098,
+     "pearson": 0.073,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.071,
+     "pearson": 0.055,
+     "n": 10337
+    }
+   },
+   "r1_hurst_h": {
+    "vs_dslope": {
+     "spearman": 0.138,
+     "pearson": 0.111,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.038,
+     "pearson": 0.045,
+     "n": 10337
+    }
+   },
+   "r1_roughness_over_slope": {
+    "vs_dslope": {
+     "spearman": -0.857,
+     "pearson": -0.717,
+     "n": 10337
+    },
+    "vs_drough": {
+     "spearman": 0.281,
+     "pearson": 0.225,
+     "n": 10337
+    }
+   }
+  }
+ },
+ "distributions": {
+  "slope_deg": {
+   "earth_land": [
+    0.004,
+    0.073,
+    0.2,
+    0.48,
+    1.602,
+    4.6979,
+    17.19,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    0.234,
+    2.2546,
+    4.53,
+    6.415,
+    9.043,
+    13.084,
+    22.846,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.5,
+    0.5538,
+    0.852,
+    1.567,
+    2.94,
+    5.8874,
+    13.723,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    2.2546,
+    4.6979,
+    true
+   ]
+  },
+  "roughness_m": {
+   "earth_land": [
+    0.23,
+    2.33,
+    6.78,
+    17.96,
+    63.51,
+    174.37,
+    499.02,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    7.11,
+    75.3365,
+    141.535,
+    198.49,
+    264.505,
+    386.8875,
+    616.28,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    12.24,
+    19.798,
+    33.44,
+    63.57,
+    114.04,
+    216.78,
+    478.01,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    75.3365,
+    174.37,
+    true
+   ]
+  },
+  "r1_slope_iso_p90_deg": {
+   "earth_land": [
+    0.004,
+    0.129,
+    0.369,
+    0.906,
+    3.31,
+    9.1499,
+    22.863,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    0.331,
+    4.3689,
+    8.3687,
+    11.971,
+    15.8235,
+    23.1595,
+    31.512,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.507,
+    1.031,
+    1.718,
+    3.346,
+    6.164,
+    11.4476,
+    22.863,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    4.3689,
+    9.1499,
+    true
+   ]
+  },
+  "r1_slope_p90_deg": {
+   "earth_land": [
+    0.013,
+    0.138,
+    0.439,
+    1.088,
+    3.82,
+    10.9865,
+    32.102,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    0.93,
+    5.4726,
+    9.7625,
+    13.5805,
+    18.2,
+    50.4956,
+    84.057,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.491,
+    1.1438,
+    1.914,
+    3.839,
+    7.167,
+    13.7364,
+    25.124,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    5.4726,
+    10.9865,
+    true
+   ]
+  },
+  "r1_p90_over_mean": {
+   "earth_land": [
+    0.4238,
+    1.5051,
+    1.7399,
+    1.8869,
+    2.0869,
+    2.57,
+    4.6931,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    1.1163,
+    1.368,
+    1.5697,
+    1.7663,
+    2.056,
+    2.7337,
+    4.7434,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.9459,
+    1.6635,
+    1.8184,
+    1.9703,
+    2.2002,
+    2.7183,
+    4.5933,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    1.5051,
+    2.57,
+    true
+   ]
+  },
+  "r1_steep_frac_5": {
+   "earth_land": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0273,
+    0.3971,
+    1.0,
+    24783
+   ],
+   "earth_land_share_zero": 0.623,
+   "moon_zone": [
+    0.0,
+    0.0479,
+    0.3546,
+    0.5769,
+    0.787,
+    0.9612,
+    1.0,
+    5400
+   ],
+   "moon_zone_share_zero": 0.03,
+   "rover_ranked": [
+    0.0,
+    0.0,
+    0.0006,
+    0.0316,
+    0.1678,
+    0.5273,
+    0.905,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.23,
+   "overlap_5_95": [
+    0.0479,
+    0.3971,
+    true
+   ]
+  },
+  "r1_steep_frac_10": {
+   "earth_land": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0725,
+    1.0,
+    24783
+   ],
+   "earth_land_share_zero": 0.781,
+   "moon_zone": [
+    0.0,
+    0.0,
+    0.0317,
+    0.187,
+    0.3904,
+    0.6913,
+    1.0,
+    5400
+   ],
+   "moon_zone_share_zero": 0.181,
+   "rover_ranked": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0144,
+    0.1537,
+    0.6791,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.521,
+   "overlap_5_95": [
+    0.0,
+    0.0725,
+    true
+   ]
+  },
+  "r1_steep_frac_15": {
+   "earth_land": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0067,
+    0.8571,
+    24783
+   ],
+   "earth_land_share_zero": 0.892,
+   "moon_zone": [
+    0.0,
+    0.0,
+    0.0,
+    0.0081,
+    0.1294,
+    0.3799,
+    0.9773,
+    5400
+   ],
+   "moon_zone_share_zero": 0.476,
+   "rover_ranked": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0283,
+    0.4127,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.756,
+   "overlap_5_95": [
+    0.0,
+    0.0067,
+    true
+   ]
+  },
+  "r1_rough2_m": {
+   "earth_land": [
+    0.2484,
+    4.1315,
+    11.2423,
+    28.2196,
+    97.7738,
+    263.8059,
+    797.4004,
+    24781
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    12.8135,
+    130.2295,
+    253.1323,
+    367.1914,
+    491.3645,
+    719.1339,
+    1225.9272,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    24.2809,
+    31.4672,
+    52.2422,
+    98.1842,
+    175.0727,
+    327.3835,
+    743.2798,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    130.2295,
+    263.8059,
+    true
+   ]
+  },
+  "r1_hurst_h": {
+   "earth_land": [
+    -1.4675,
+    0.4238,
+    0.5686,
+    0.663,
+    0.7848,
+    0.9257,
+    1.8167,
+    24781
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    -0.0838,
+    0.5963,
+    0.7906,
+    0.8848,
+    0.9589,
+    1.0738,
+    1.8359,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.179,
+    0.4555,
+    0.552,
+    0.6252,
+    0.7007,
+    0.8417,
+    1.3771,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    0.5963,
+    0.9257,
+    true
+   ]
+  },
+  "r1_roughness_over_slope": {
+   "earth_land": [
+    0.2744,
+    0.8063,
+    0.9661,
+    1.102,
+    1.2166,
+    1.5713,
+    18.0656,
+    24783
+   ],
+   "earth_land_share_zero": 0.0,
+   "moon_zone": [
+    0.5266,
+    0.7418,
+    0.8243,
+    0.9005,
+    1.0049,
+    1.3139,
+    2.3736,
+    5400
+   ],
+   "moon_zone_share_zero": 0.0,
+   "rover_ranked": [
+    0.6975,
+    0.9194,
+    1.0753,
+    1.1495,
+    1.2477,
+    1.5307,
+    2.852,
+    10337
+   ],
+   "rover_ranked_share_zero": 0.0,
+   "overlap_5_95": [
+    0.8063,
+    1.3139,
+    true
+   ]
+  }
+ },
+ "options": {
+  "A_decided_slope_rough": {
+   "passing": 10337,
+   "paired": 10337,
+   "distinct_twins": 1166,
+   "top5_sep2": [
+    [
+     3872,
+     79.5,
+     92.5,
+     61299,
+     -80.5,
+     -80.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     4037,
+     78.5,
+     -102.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     4742,
+     76.5,
+     -117.5,
+     63712,
+     -86.5,
+     172.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     5111,
+     75.5,
+     -108.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     5318,
+     75.5,
+     98.5,
+     59713,
+     -75.5,
+     133.5,
+     99.99,
+     100.0,
+     100.0
+    ]
+   ],
+   "top50_overlap_with_decided": null,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 7055,
+     "of": 10337,
+     "pct_from_top": 68.2,
+     "twin": 63309
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7372,
+     "of": 10337,
+     "pct_from_top": 71.3,
+     "twin": 63446
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 7128,
+     "of": 10337,
+     "pct_from_top": 69.0,
+     "twin": 62600
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2119,
+     "of": 10337,
+     "pct_from_top": 20.5,
+     "twin": 63454
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 838,
+     "of": 10337,
+     "pct_from_top": 8.1,
+     "twin": 62562
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 387,
+     "of": 10337,
+     "pct_from_top": 3.7,
+     "twin": 63305
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 369,
+     "of": 10337,
+     "pct_from_top": 3.6,
+     "twin": 63457
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 433,
+     "of": 10337,
+     "pct_from_top": 4.2,
+     "twin": 59714
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8274,
+     "of": 10337,
+     "pct_from_top": 80.0,
+     "twin": 60017
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 417,
+     "of": 10337,
+     "pct_from_top": 4.0,
+     "twin": 63306
+    }
+   },
+   "top50_overlap_with_shipped": 1
+  },
+  "B_r1_p90_over_mean_w0.2_tol0.2": {
+   "passing": 10337,
+   "paired": 10332,
+   "distinct_twins": 992,
+   "top5_sep2": [
+    [
+     5111,
+     75.5,
+     -108.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     24340,
+     22.5,
+     40.5,
+     63712,
+     -86.5,
+     172.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     5309,
+     75.5,
+     89.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.97,
+     100.0,
+     99.99
+    ],
+    [
+     17204,
+     42.5,
+     104.5,
+     62227,
+     -82.5,
+     127.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     22128,
+     28.5,
+     -11.5,
+     63710,
+     -86.5,
+     170.5,
+     99.99,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 8,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 6796,
+     "of": 10332,
+     "pct_from_top": 65.8,
+     "twin": 63438
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7231,
+     "of": 10332,
+     "pct_from_top": 70.0,
+     "twin": 60929
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6816,
+     "of": 10332,
+     "pct_from_top": 66.0,
+     "twin": 62560
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2086,
+     "of": 10332,
+     "pct_from_top": 20.2,
+     "twin": 63438
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 800,
+     "of": 10332,
+     "pct_from_top": 7.7,
+     "twin": 62954
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 326,
+     "of": 10332,
+     "pct_from_top": 3.2,
+     "twin": 59895
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 332,
+     "of": 10332,
+     "pct_from_top": 3.2,
+     "twin": 60064
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 417,
+     "of": 10332,
+     "pct_from_top": 4.0,
+     "twin": 60063
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8166,
+     "of": 10332,
+     "pct_from_top": 79.0,
+     "twin": 61708
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 470,
+     "of": 10332,
+     "pct_from_top": 4.5,
+     "twin": 59895
+    }
+   }
+  },
+  "B_r1_p90_over_mean_w0.333_tol0.2": {
+   "passing": 10337,
+   "paired": 10332,
+   "distinct_twins": 1038,
+   "top5_sep2": [
+    [
+     5111,
+     75.5,
+     -108.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     22176,
+     28.5,
+     36.5,
+     59451,
+     -75.5,
+     -128.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     24340,
+     22.5,
+     40.5,
+     63712,
+     -86.5,
+     172.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     17204,
+     42.5,
+     104.5,
+     62227,
+     -82.5,
+     127.5,
+     99.98,
+     100.0,
+     99.99
+    ],
+    [
+     22128,
+     28.5,
+     -11.5,
+     63710,
+     -86.5,
+     170.5,
+     99.99,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 8,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 6792,
+     "of": 10332,
+     "pct_from_top": 65.7,
+     "twin": 63438
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7183,
+     "of": 10332,
+     "pct_from_top": 69.5,
+     "twin": 60929
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6783,
+     "of": 10332,
+     "pct_from_top": 65.7,
+     "twin": 62560
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2090,
+     "of": 10332,
+     "pct_from_top": 20.2,
+     "twin": 63438
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 792,
+     "of": 10332,
+     "pct_from_top": 7.7,
+     "twin": 62954
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 324,
+     "of": 10332,
+     "pct_from_top": 3.1,
+     "twin": 59895
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 348,
+     "of": 10332,
+     "pct_from_top": 3.4,
+     "twin": 60064
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 418,
+     "of": 10332,
+     "pct_from_top": 4.0,
+     "twin": 60063
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8128,
+     "of": 10332,
+     "pct_from_top": 78.7,
+     "twin": 61708
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 499,
+     "of": 10332,
+     "pct_from_top": 4.8,
+     "twin": 63090
+    }
+   }
+  },
+  "B_r1_hurst_h_w0.2_tol0.1": {
+   "passing": 10337,
+   "paired": 10336,
+   "distinct_twins": 644,
+   "top5_sep2": [
+    [
+     5125,
+     75.5,
+     -94.5,
+     60716,
+     -78.5,
+     56.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     6212,
+     72.5,
+     -87.5,
+     59716,
+     -75.5,
+     136.5,
+     99.98,
+     100.0,
+     99.99
+    ],
+    [
+     6381,
+     72.5,
+     81.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     6548,
+     71.5,
+     -111.5,
+     59716,
+     -75.5,
+     136.5,
+     99.97,
+     100.0,
+     99.99
+    ],
+    [
+     22489,
+     27.5,
+     -10.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.98,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 10,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 7051,
+     "of": 10336,
+     "pct_from_top": 68.2,
+     "twin": 61481
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7235,
+     "of": 10336,
+     "pct_from_top": 70.0,
+     "twin": 61709
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6875,
+     "of": 10336,
+     "pct_from_top": 66.5,
+     "twin": 61568
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2108,
+     "of": 10336,
+     "pct_from_top": 20.4,
+     "twin": 63079
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 816,
+     "of": 10336,
+     "pct_from_top": 7.9,
+     "twin": 61598
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 475,
+     "of": 10336,
+     "pct_from_top": 4.6,
+     "twin": 60060
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 242,
+     "of": 10336,
+     "pct_from_top": 2.3,
+     "twin": 63715
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 495,
+     "of": 10336,
+     "pct_from_top": 4.8,
+     "twin": 60424
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8073,
+     "of": 10336,
+     "pct_from_top": 78.1,
+     "twin": 60029
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 425,
+     "of": 10336,
+     "pct_from_top": 4.1,
+     "twin": 60440
+    }
+   }
+  }
+ },
+ "sites": [
+  [
+   "Bardenas",
+   42.1612,
+   -1.4663
+  ],
+  [
+   "Tabernas",
+   37.0676,
+   -2.5295
+  ],
+  [
+   "Dumont",
+   35.6811,
+   -116.2248
+  ],
+  [
+   "MDRS",
+   38.4065,
+   -110.7919
+  ],
+  [
+   "Yungay",
+   -24.08,
+   -70.0
+  ],
+  [
+   "Erfoud",
+   31.435,
+   -4.2328
+  ],
+  [
+   "Dhofar",
+   18.1395,
+   55.1754
+  ],
+  [
+   "Ramon",
+   30.612,
+   34.8012
+  ],
+  [
+   "Haughton",
+   75.3833,
+   -89.6667
+  ],
+  [
+   "Death Valley",
+   36.2309,
+   -116.7847
+  ],
+  [
+   "Qaidam",
+   38.7367,
+   93.3335
+  ]
+ ]
+}

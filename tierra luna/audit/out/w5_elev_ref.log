@@ -1,0 +1,34 @@
+{'ref_a_m': 695.9244011890817, 'ref_b_m': 810.713806162676, 'ref_c_m': 0.0}
+a_cos_lat ref 695.9 pass 10337 paired 10192 twins 401 broken []
+    1 E17566 Bayinbaolige M59895 Casatus 99.57 99.22 99.39
+    2 E23945 Tamanrasset M59895 Casatus 99.76 98.66 99.21
+    3 E18282 Ehen Hudag M59895 Casatus 98.77 99.58 99.17
+    4 E18280 Banqiao M59895 Casatus 99.5 98.66 99.08
+    5 E15395 Buga M59895 Casatus 99.12 98.69 98.91
+       {'track': 1, 'earth': 'E17566', 'moon': 'M59895', 'status': 'same'}
+       {'track': 2, 'earth': 'E23945', 'moon': 'M59895', 'status': 'same'}
+       {'track': 3, 'earth': 'E18282', 'moon': 'M59895', 'status': 'same'}
+       {'track': 4, 'earth': 'E18280', 'moon': 'M59895', 'status': 'same'}
+       {'track': 5, 'earth': 'E15395', 'moon': 'M59895', 'status': 'same'}
+b_cos_lat_x_land_fraction ref 810.7 pass 10337 paired 10240 twins 426 broken [1, 2, 3, 5]
+    1 E15395 Buga M59895 Casatus 99.77 98.69 99.23
+    2 E16121 Bayan Uula Sumu M59895 Casatus 99.7 98.63 99.16
+    3 E20752 Na'in M59895 Casatus 99.48 98.54 99.01
+    4 E18280 Banqiao M59895 Casatus 99.14 98.66 98.9
+    5 E16478 Bulgan M59895 Casatus 99.14 98.58 98.86
+       {'track': 1, 'earth': 'E17566', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 7)'}
+       {'track': 2, 'earth': 'E23945', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 9)'}
+       {'track': 3, 'earth': 'E18282', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 10)'}
+       {'track': 4, 'earth': 'E18280', 'moon': 'M59895', 'status': 'same'}
+       {'track': 5, 'earth': 'E15395', 'moon': 'M59895', 'status': 'moves to 1'}
+c_sea_level ref 0.0 pass 10337 paired 10198 twins 292 broken [1, 2, 3, 4, 5]
+    1 E22563 Panjgur M59895 Casatus 99.79 99.33 99.56
+    2 E24318 Aozou M59895 Casatus 99.96 99.11 99.54
+    3 E25749 Alaghsas M59895 Casatus 99.74 99.25 99.49
+    4 E22199 Mohammadabad M59895 Casatus 99.95 98.88 99.42
+    5 E25776 Sawakin M59895 Casatus 99.42 99.41 99.41
+       {'track': 1, 'earth': 'E17566', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 306)'}
+       {'track': 2, 'earth': 'E23945', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 401)'}
+       {'track': 3, 'earth': 'E18282', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 373)'}
+       {'track': 4, 'earth': 'E18280', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 325, twin M61037)'}
+       {'track': 5, 'earth': 'E15395', 'moon': 'M59895', 'status': 'leaves top 5 (now rank 365, twin M61037)'}

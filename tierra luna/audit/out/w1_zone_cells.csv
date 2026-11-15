@@ -1,0 +1,281 @@
+moon_id,lat,lon,zone_a,frac_footprint,centre_in,regions_touched,frac_by_region
+62133,-82.5,33.5,True,0.006756649788674465,,Mons Mouton Plateau,Mons Mouton Plateau:0.00676
+62134,-82.5,34.5,True,0.07177866462348484,,Mons Mouton Plateau,Mons Mouton Plateau:0.07178
+62135,-82.5,35.5,True,0.1340348080497037,,Mons Mouton Plateau,Mons Mouton Plateau:0.13403
+62136,-82.5,36.5,True,0.029508852523585608,,Mons Mouton Plateau,Mons Mouton Plateau:0.02951
+62387,-83.5,-72.5,True,0.08633655827552404,,Peak Near Cabeus B,Peak Near Cabeus B:0.08634
+62388,-83.5,-71.5,True,0.43200724350997527,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.43201
+62389,-83.5,-70.5,True,0.6270345406115544,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.62703
+62390,-83.5,-69.5,True,0.6704330472276674,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.67043
+62391,-83.5,-68.5,True,0.7163363557144315,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.71634
+62392,-83.5,-67.5,True,0.7400777966868911,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.74008
+62393,-83.5,-66.5,True,0.5656132218205209,Peak Near Cabeus B,Peak Near Cabeus B,Peak Near Cabeus B:0.56561
+62394,-83.5,-65.5,True,0.2651128450810632,,Peak Near Cabeus B,Peak Near Cabeus B:0.26511
+62395,-83.5,-64.5,True,0.02857292768829968,,Peak Near Cabeus B,Peak Near Cabeus B:0.02857
+62475,-83.5,15.5,True,0.03723033352130157,,Mons Mouton Plateau,Mons Mouton Plateau:0.03723
+62476,-83.5,16.5,True,0.07838694760261719,,Mons Mouton Plateau,Mons Mouton Plateau:0.07839
+62477,-83.5,17.5,True,0.10889303786766885,,Mons Mouton Plateau,Mons Mouton Plateau:0.10889
+62478,-83.5,18.5,True,0.14167064837454288,,Mons Mouton Plateau,Mons Mouton Plateau:0.14167
+62479,-83.5,19.5,True,0.176811813764971,,Mons Mouton Plateau,Mons Mouton Plateau:0.17681
+62480,-83.5,20.5,True,0.21441687148037827,,Mons Mouton Plateau,Mons Mouton Plateau:0.21442
+62481,-83.5,21.5,True,0.25459558149141687,,Mons Mouton Plateau,Mons Mouton Plateau:0.25460
+62482,-83.5,22.5,True,0.297467002485948,,Mons Mouton Plateau,Mons Mouton Plateau:0.29747
+62483,-83.5,23.5,True,0.343160288263474,,Mons Mouton Plateau,Mons Mouton Plateau:0.34316
+62484,-83.5,24.5,True,0.39181675227727825,,Mons Mouton Plateau,Mons Mouton Plateau:0.39182
+62485,-83.5,25.5,True,0.4435887551047303,,Mons Mouton Plateau,Mons Mouton Plateau:0.44359
+62486,-83.5,26.5,True,0.49864317113680645,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.49864
+62487,-83.5,27.5,True,0.5571611515762507,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.55716
+62488,-83.5,28.5,True,0.6193398189592366,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.61934
+62489,-83.5,29.5,True,0.6853935273271169,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.68539
+62490,-83.5,30.5,True,0.7555564760824808,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.75556
+62491,-83.5,31.5,True,0.8300832489535811,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.83008
+62492,-83.5,32.5,True,0.909252710882914,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.90925
+62493,-83.5,33.5,True,0.985577511589551,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.98558
+62494,-83.5,34.5,True,0.9999999999999996,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62495,-83.5,35.5,True,0.9999999999999996,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62496,-83.5,36.5,True,0.9870862762265079,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.98709
+62497,-83.5,37.5,True,0.849948383330114,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.84995
+62498,-83.5,38.5,True,0.6921585713100684,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.69216
+62499,-83.5,39.5,True,0.5464193234802004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.54642
+62500,-83.5,40.5,True,0.41157010313263487,,Mons Mouton Plateau,Mons Mouton Plateau:0.41157
+62501,-83.5,41.5,True,0.28658832308179305,,Mons Mouton Plateau,Mons Mouton Plateau:0.28659
+62502,-83.5,42.5,True,0.17056944114846712,,Mons Mouton Plateau,Mons Mouton Plateau:0.17057
+62503,-83.5,43.5,True,0.0627122386166296,,Mons Mouton Plateau,Mons Mouton Plateau:0.06271
+62504,-83.5,44.5,True,0.0006403870518598481,,Mons Mouton Plateau,Mons Mouton Plateau:0.00064
+62514,-83.5,54.5,True,0.014225990890020532,,Nobile Rim 2,Nobile Rim 2:0.01423
+62515,-83.5,55.5,True,0.13549706260535865,,Nobile Rim 2,Nobile Rim 2:0.13550
+62516,-83.5,56.5,True,0.2895451879929508,,Nobile Rim 2,Nobile Rim 2:0.28955
+62517,-83.5,57.5,True,0.445666107344057,,Nobile Rim 2,Nobile Rim 2:0.44567
+62518,-83.5,58.5,True,0.4335692808162215,,Nobile Rim 2,Nobile Rim 2:0.43357
+62519,-83.5,59.5,True,0.3672191366081209,,Nobile Rim 2,Nobile Rim 2:0.36722
+62520,-83.5,60.5,True,0.30475514300451906,,Nobile Rim 2,Nobile Rim 2:0.30476
+62521,-83.5,61.5,True,0.24595027472443334,,Nobile Rim 2,Nobile Rim 2:0.24595
+62522,-83.5,62.5,True,0.15086843290242574,,Nobile Rim 2,Nobile Rim 2:0.15087
+62523,-83.5,63.5,True,0.0032047794320189302,,Nobile Rim 2,Nobile Rim 2:0.00320
+62749,-84.5,-70.5,True,0.07787811144205986,,Peak Near Cabeus B,Peak Near Cabeus B:0.07788
+62750,-84.5,-69.5,True,0.05935270002834646,,Peak Near Cabeus B,Peak Near Cabeus B:0.05935
+62751,-84.5,-68.5,True,0.01654893703737694,,Peak Near Cabeus B,Peak Near Cabeus B:0.01655
+62835,-84.5,15.5,True,0.07726305365290057,,Mons Mouton Plateau,Mons Mouton Plateau:0.07726
+62836,-84.5,16.5,True,0.41656292290293223,,Mons Mouton Plateau,Mons Mouton Plateau:0.41656
+62837,-84.5,17.5,True,0.724646725955404,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.72465
+62838,-84.5,18.5,True,0.9618467091379125,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.96185
+62839,-84.5,19.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62840,-84.5,20.5,True,0.9999999999999994,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62841,-84.5,21.5,True,1.0,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62842,-84.5,22.5,True,0.9999999999999993,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62843,-84.5,23.5,True,1.0,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62844,-84.5,24.5,True,1.0000000000000002,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62845,-84.5,25.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62846,-84.5,26.5,True,0.9999999999999994,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62847,-84.5,27.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62848,-84.5,28.5,True,0.9999999999999997,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62849,-84.5,29.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62850,-84.5,30.5,True,0.9999999999999998,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62851,-84.5,31.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62852,-84.5,32.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62853,-84.5,33.5,True,1.0000000000000002,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62854,-84.5,34.5,True,0.9999999999999997,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62855,-84.5,35.5,True,1.0000000000000004,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62856,-84.5,36.5,True,1.0,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:1.00000
+62857,-84.5,37.5,True,1.0,Mons Mouton Plateau,Mons Mouton Plateau;Nobile Rim 1,Mons Mouton Plateau:1.00000;Nobile Rim 1:0.01611
+62858,-84.5,38.5,True,0.9924525188794797,Mons Mouton Plateau,Mons Mouton Plateau;Nobile Rim 1,Mons Mouton Plateau:0.99241;Nobile Rim 1:0.01537
+62859,-84.5,39.5,True,0.9354969266858959,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.93550
+62860,-84.5,40.5,True,0.8660926699506261,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.86609
+62861,-84.5,41.5,True,0.7920237586972922,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.79202
+62862,-84.5,42.5,True,0.712905364087879,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.71291
+62863,-84.5,43.5,True,0.628312463365401,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.62831
+62864,-84.5,44.5,True,0.4924919585631816,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.49249
+62865,-84.5,45.5,True,0.2856851164604104,,Mons Mouton Plateau,Mons Mouton Plateau:0.28569
+62866,-84.5,46.5,True,0.07998527866794697,,Mons Mouton Plateau,Mons Mouton Plateau:0.07999
+62874,-84.5,54.5,True,0.04576537494622407,,Nobile Rim 2,Nobile Rim 2:0.04577
+62875,-84.5,55.5,True,0.13750189105679742,,Nobile Rim 2,Nobile Rim 2:0.13750
+62876,-84.5,56.5,True,0.21032960347480173,,Nobile Rim 2,Nobile Rim 2:0.21033
+62877,-84.5,57.5,True,0.27885306948533634,,Nobile Rim 2,Nobile Rim 2:0.27885
+62878,-84.5,58.5,True,0.34334386070811995,,Nobile Rim 2,Nobile Rim 2:0.34334
+62879,-84.5,59.5,True,0.40405042150049186,,Nobile Rim 2,Nobile Rim 2:0.40405
+62880,-84.5,60.5,True,0.36397861160395106,,Nobile Rim 2,Nobile Rim 2:0.36398
+62881,-84.5,61.5,True,0.1760925620944092,,Nobile Rim 2,Nobile Rim 2:0.17609
+62882,-84.5,62.5,True,0.01324135413955484,,Nobile Rim 2,Nobile Rim 2:0.01324
+63174,-85.5,-5.5,True,0.01917369448539595,,Malapert Massif,Malapert Massif:0.01917
+63175,-85.5,-4.5,True,0.3403524317068771,,Malapert Massif,Malapert Massif:0.34035
+63176,-85.5,-3.5,True,0.3591877097731866,,Malapert Massif,Malapert Massif:0.35919
+63177,-85.5,-2.5,True,0.35528493897664726,,Malapert Massif,Malapert Massif:0.35528
+63178,-85.5,-1.5,True,0.3526885314194795,,Malapert Massif,Malapert Massif:0.35269
+63179,-85.5,-0.5,True,0.35139195432616016,,Malapert Massif,Malapert Massif:0.35139
+63180,-85.5,0.5,True,0.3513919543261603,,Malapert Massif,Malapert Massif:0.35139
+63181,-85.5,1.5,True,0.3526885314194793,,Malapert Massif,Malapert Massif:0.35269
+63182,-85.5,2.5,True,0.35528493897664715,,Malapert Massif,Malapert Massif:0.35528
+63183,-85.5,3.5,True,0.35918770977318654,,Malapert Massif,Malapert Massif:0.35919
+63184,-85.5,4.5,True,0.19381407614408222,,Malapert Massif,Malapert Massif:0.19381
+63198,-85.5,18.5,True,0.027274663403622185,,Mons Mouton Plateau,Mons Mouton Plateau:0.02727
+63199,-85.5,19.5,True,0.2502135936845679,,Mons Mouton Plateau,Mons Mouton Plateau:0.25021
+63200,-85.5,20.5,True,0.48128884512952924,,Mons Mouton Plateau,Mons Mouton Plateau:0.48129
+63201,-85.5,21.5,True,0.6808675192780107,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.68087
+63202,-85.5,22.5,True,0.7825563506965575,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.78256
+63203,-85.5,23.5,True,0.7546489207041075,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.75465
+63204,-85.5,24.5,True,0.7229838928391006,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.72298
+63205,-85.5,25.5,True,0.6892894900502541,Mons Mouton Plateau,Mons Mouton Plateau,Mons Mouton Plateau:0.68929
+63206,-85.5,26.5,True,0.6534567640471936,Mons Mouton Plateau,Mons Mouton;Mons Mouton Plateau,Mons Mouton:0.00055;Mons Mouton Plateau:0.65346
+63207,-85.5,27.5,True,0.615367294250442,Mons Mouton Plateau,Mons Mouton;Mons Mouton Plateau,Mons Mouton:0.11743;Mons Mouton Plateau:0.61537
+63208,-85.5,28.5,True,0.599921934795607,Mons Mouton;Mons Mouton Plateau,Mons Mouton;Mons Mouton Plateau,Mons Mouton:0.31265;Mons Mouton Plateau:0.57489
+63209,-85.5,29.5,True,0.7132207873756463,Mons Mouton;Mons Mouton Plateau,Mons Mouton;Mons Mouton Plateau,Mons Mouton:0.49578;Mons Mouton Plateau:0.53189
+63210,-85.5,30.5,True,0.8083161244572523,Mons Mouton,Mons Mouton;Mons Mouton Plateau,Mons Mouton:0.64294;Mons Mouton Plateau:0.48621
+63211,-85.5,31.5,True,0.7807351582328048,Mons Mouton,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.67066;Mons Mouton Plateau:0.43769;Nobile Rim 1:0.04406
+63212,-85.5,32.5,True,0.7367277049707471,Mons Mouton,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.67807;Mons Mouton Plateau:0.38614;Nobile Rim 1:0.21751
+63213,-85.5,33.5,True,0.6927852082777343,Mons Mouton;Nobile Rim 1,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.54361;Mons Mouton Plateau:0.33136;Nobile Rim 1:0.39213
+63214,-85.5,34.5,True,0.7477259254902501,Mons Mouton;Nobile Rim 1,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.36132;Mons Mouton Plateau:0.27314;Nobile Rim 1:0.56009
+63215,-85.5,35.5,True,0.8464001212646703,Mons Mouton;Nobile Rim 1,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.18706;Mons Mouton Plateau:0.21124;Nobile Rim 1:0.72277
+63216,-85.5,36.5,True,0.9131380093642671,Mons Mouton;Nobile Rim 1,Mons Mouton;Mons Mouton Plateau;Nobile Rim 1,Mons Mouton:0.03142;Mons Mouton Plateau:0.14540;Nobile Rim 1:0.85760
+63217,-85.5,37.5,True,0.874834358734502,Nobile Rim 1,Mons Mouton Plateau;Nobile Rim 1,Mons Mouton Plateau:0.07533;Nobile Rim 1:0.87207
+63218,-85.5,38.5,True,0.8106203939178166,Nobile Rim 1,Mons Mouton Plateau;Nobile Rim 1,Mons Mouton Plateau:0.00999;Nobile Rim 1:0.81062
+63219,-85.5,39.5,True,0.6565243208981567,Nobile Rim 1,Nobile Rim 1,Nobile Rim 1:0.65652
+63220,-85.5,40.5,True,0.48817853174634784,Nobile Rim 1,Nobile Rim 1,Nobile Rim 1:0.48818
+63221,-85.5,41.5,True,0.3237725535936184,Nobile Rim 1,Nobile Rim 1,Nobile Rim 1:0.32377
+63222,-85.5,42.5,True,0.16224386830227866,Nobile Rim 1,Nobile Rim 1,Nobile Rim 1:0.16224
+63223,-85.5,43.5,True,0.021189886983104384,,Nobile Rim 1,Nobile Rim 1:0.02119
+63504,-86.5,-35.5,True,0.003017192460837273,,Haworth,Haworth:0.00302
+63505,-86.5,-34.5,True,0.07462026401392716,,Haworth,Haworth:0.07462
+63506,-86.5,-33.5,True,0.16377735140782584,,Haworth,Haworth:0.16378
+63507,-86.5,-32.5,True,0.2438197785693042,,Haworth,Haworth:0.24382
+63508,-86.5,-31.5,True,0.33168122074326917,,Haworth,Haworth:0.33168
+63509,-86.5,-30.5,True,0.42840651460027235,,Haworth,Haworth:0.42841
+63510,-86.5,-29.5,True,0.5352130853366692,Haworth,Haworth,Haworth:0.53521
+63511,-86.5,-28.5,True,0.6535343285005913,Haworth,Haworth,Haworth:0.65353
+63512,-86.5,-27.5,True,0.7850702984604314,Haworth,Haworth,Haworth:0.78507
+63513,-86.5,-26.5,True,0.8728880925932062,Haworth,Haworth,Haworth:0.87289
+63514,-86.5,-25.5,True,0.8408184532114215,Haworth,Haworth,Haworth:0.84082
+63515,-86.5,-24.5,True,0.8065102185441464,Haworth,Haworth,Haworth:0.80651
+63516,-86.5,-23.5,True,0.7742688576957107,Haworth,Haworth,Haworth:0.77427
+63517,-86.5,-22.5,True,0.7439925876779961,Haworth,Haworth,Haworth:0.74399
+63518,-86.5,-21.5,True,0.7155876614679367,Haworth,Haworth,Haworth:0.71559
+63519,-86.5,-20.5,True,0.6889688527832214,Haworth,Haworth,Haworth:0.68897
+63520,-86.5,-19.5,True,0.6640551521313394,Haworth,Haworth,Haworth:0.66406
+63521,-86.5,-18.5,True,0.6407758496531015,Haworth,Haworth,Haworth:0.64078
+63522,-86.5,-17.5,True,0.6190635036951602,Haworth,Haworth,Haworth:0.61906
+63523,-86.5,-16.5,True,0.5988559451910901,Haworth,Haworth,Haworth:0.59886
+63524,-86.5,-15.5,True,0.5800980610369513,Haworth,Haworth,Haworth:0.58010
+63525,-86.5,-14.5,True,0.5621917253053302,Haworth,Haworth,Haworth:0.56219
+63526,-86.5,-13.5,True,0.4347117626284912,Haworth,Haworth,Haworth:0.43471
+63527,-86.5,-12.5,True,0.19148480345078778,Haworth,Haworth,Haworth:0.19148
+63528,-86.5,-11.5,True,0.0042925819557581525,,Haworth,Haworth:0.00429
+63534,-86.5,-5.5,True,0.17009066062477923,,Malapert Massif,Malapert Massif:0.17009
+63535,-86.5,-4.5,True,0.37248401156265326,,Malapert Massif,Malapert Massif:0.37248
+63536,-86.5,-3.5,True,0.3771451476778249,,Malapert Massif,Malapert Massif:0.37715
+63537,-86.5,-2.5,True,0.38063116323438506,,Malapert Massif,Malapert Massif:0.38063
+63538,-86.5,-1.5,True,0.3829506503559508,,Malapert Massif,Malapert Massif:0.38295
+63539,-86.5,-0.5,True,0.3841090334360451,,Malapert Massif,Malapert Massif:0.38411
+63540,-86.5,0.5,True,0.38410903343604524,,Malapert Massif,Malapert Massif:0.38411
+63541,-86.5,1.5,True,0.38295065035595066,,Malapert Massif,Malapert Massif:0.38295
+63542,-86.5,2.5,True,0.38063116323438506,,Malapert Massif,Malapert Massif:0.38063
+63543,-86.5,3.5,True,0.3771451476778246,,Malapert Massif,Malapert Massif:0.37715
+63544,-86.5,4.5,True,0.34530517370175945,,Malapert Massif,Malapert Massif:0.34531
+63545,-86.5,5.5,True,0.014556529322116912,,Malapert Massif,Malapert Massif:0.01456
+63657,-86.5,117.5,True,0.0004382404303915905,,Slater Plain,Slater Plain:0.00044
+63658,-86.5,118.5,True,0.016787742254084404,,Slater Plain,Slater Plain:0.01679
+63659,-86.5,119.5,True,0.04223092600301619,,Slater Plain,Slater Plain:0.04223
+63660,-86.5,120.5,True,0.06926010421817821,,Slater Plain,Slater Plain:0.06926
+63661,-86.5,121.5,True,0.09797306909430256,,Slater Plain,Slater Plain:0.09797
+63662,-86.5,122.5,True,0.12847858279852056,,Slater Plain,Slater Plain:0.12848
+63663,-86.5,123.5,True,0.16089416162957976,,Slater Plain,Slater Plain:0.16089
+63664,-86.5,124.5,True,0.19534871124319464,,Slater Plain,Slater Plain:0.19535
+63665,-86.5,125.5,True,0.2319835609681369,,Slater Plain,Slater Plain:0.23198
+63666,-86.5,126.5,True,0.2699877918461705,,Slater Plain,Slater Plain:0.26999
+63667,-86.5,127.5,True,0.2412318734926481,,Slater Plain,Slater Plain:0.24123
+63668,-86.5,128.5,True,0.17452372478698236,,Slater Plain,Slater Plain:0.17452
+63669,-86.5,129.5,True,0.11292437345564203,,Slater Plain,Slater Plain:0.11292
+63670,-86.5,130.5,True,0.055940425526184855,,Slater Plain,Slater Plain:0.05594
+63671,-86.5,131.5,True,0.00801054614413971,,Slater Plain,Slater Plain:0.00801
+63821,-87.5,-78.5,True,5.059509853014115e-05,,de Gerlache Rim 2,de Gerlache Rim 2:0.00005
+63822,-87.5,-77.5,True,0.0038374923989636365,,de Gerlache Rim 2,de Gerlache Rim 2:0.00384
+63823,-87.5,-76.5,True,0.010341478118921586,,de Gerlache Rim 2,de Gerlache Rim 2:0.01034
+63824,-87.5,-75.5,True,0.017424736322168663,,de Gerlache Rim 2,de Gerlache Rim 2:0.01742
+63825,-87.5,-74.5,True,0.025106445704403808,,de Gerlache Rim 2,de Gerlache Rim 2:0.02511
+63826,-87.5,-73.5,True,0.03340706480939116,,de Gerlache Rim 2,de Gerlache Rim 2:0.03341
+63827,-87.5,-72.5,True,0.04234892269735285,,de Gerlache Rim 2,de Gerlache Rim 2:0.04235
+63828,-87.5,-71.5,True,0.05195734238889223,,de Gerlache Rim 2,de Gerlache Rim 2:0.05196
+63829,-87.5,-70.5,True,0.062259044210292866,,de Gerlache Rim 2,de Gerlache Rim 2:0.06226
+63830,-87.5,-69.5,True,0.07328365842945642,,de Gerlache Rim 2,de Gerlache Rim 2:0.07328
+63831,-87.5,-68.5,True,0.08506339757108906,,de Gerlache Rim 2,de Gerlache Rim 2:0.08506
+63832,-87.5,-67.5,True,0.09763384144431929,,de Gerlache Rim 2,de Gerlache Rim 2:0.09763
+63833,-87.5,-66.5,True,0.11103311678410654,,de Gerlache Rim 2,de Gerlache Rim 2:0.11103
+63834,-87.5,-65.5,True,0.12530206878160433,,de Gerlache Rim 2,de Gerlache Rim 2:0.12530
+63835,-87.5,-64.5,True,0.14048617398974528,,de Gerlache Rim 2,de Gerlache Rim 2:0.14049
+63836,-87.5,-63.5,True,0.15663413139836738,,de Gerlache Rim 2,de Gerlache Rim 2:0.15663
+63837,-87.5,-62.5,True,0.1738000285469221,,de Gerlache Rim 2,de Gerlache Rim 2:0.17380
+63838,-87.5,-61.5,True,0.19204149986125355,,de Gerlache Rim 2,de Gerlache Rim 2:0.19204
+63839,-87.5,-60.5,True,0.18671575743679766,,de Gerlache Rim 2,de Gerlache Rim 2:0.18672
+63840,-87.5,-59.5,True,0.1306864014128036,,de Gerlache Rim 2,de Gerlache Rim 2:0.13069
+63841,-87.5,-58.5,True,0.0781473466599686,,de Gerlache Rim 2,de Gerlache Rim 2:0.07815
+63842,-87.5,-57.5,True,0.030425153698,,de Gerlache Rim 2,de Gerlache Rim 2:0.03043
+63843,-87.5,-56.5,True,0.0007456079990625079,,de Gerlache Rim 2,de Gerlache Rim 2:0.00075
+63866,-87.5,-33.5,True,0.01991846064657393,,Haworth,Haworth:0.01992
+63867,-87.5,-32.5,True,0.0597913514020029,,Haworth,Haworth:0.05979
+63868,-87.5,-31.5,True,0.09732250048333314,,Haworth,Haworth:0.09732
+63869,-87.5,-30.5,True,0.13264902830305697,,Haworth,Haworth:0.13265
+63870,-87.5,-29.5,True,0.1659026506949261,,Haworth,Haworth:0.16590
+63871,-87.5,-28.5,True,0.1972054279575495,,Haworth,Haworth:0.19721
+63872,-87.5,-27.5,True,0.22666870400729153,,Haworth,Haworth:0.22667
+63873,-87.5,-26.5,True,0.2543944629676241,,Haworth,Haworth:0.25439
+63874,-87.5,-25.5,True,0.280477199816578,,Haworth,Haworth:0.28048
+63875,-87.5,-24.5,True,0.3050024393426427,,Haworth,Haworth:0.30500
+63876,-87.5,-23.5,True,0.3280502608602225,,Haworth,Haworth:0.32805
+63877,-87.5,-22.5,True,0.3496920494095765,,Haworth,Haworth:0.34969
+63878,-87.5,-21.5,True,0.3699965532500364,,Haworth,Haworth:0.37000
+63879,-87.5,-20.5,True,0.3890244084617396,,Haworth,Haworth:0.38902
+63880,-87.5,-19.5,True,0.4068322483126106,,Haworth,Haworth:0.40683
+63881,-87.5,-18.5,True,0.4234723496799579,,Haworth,Haworth:0.42347
+63882,-87.5,-17.5,True,0.438992011753334,,Haworth,Haworth:0.43899
+63883,-87.5,-16.5,True,0.44270470036622994,,Haworth,Haworth:0.44270
+63884,-87.5,-15.5,True,0.30708577208291776,,Haworth,Haworth:0.30709
+63885,-87.5,-14.5,True,0.09990094342068677,,Haworth,Haworth:0.09990
+64015,-87.5,115.5,True,8.943976688768106e-06,,Slater Plain,Slater Plain:0.00001
+64016,-87.5,116.5,True,0.07677373333644724,,Slater Plain,Slater Plain:0.07677
+64017,-87.5,117.5,True,0.21904986698415005,,Slater Plain,Slater Plain:0.21905
+64018,-87.5,118.5,True,0.32946403001454827,,Slater Plain,Slater Plain:0.32946
+64019,-87.5,119.5,True,0.4192144487997147,,Slater Plain,Slater Plain:0.41921
+64020,-87.5,120.5,True,0.5002258533267345,,Slater Plain,Slater Plain:0.50023
+64021,-87.5,121.5,True,0.5735868409989215,Slater Plain,Slater Plain,Slater Plain:0.57359
+64022,-87.5,122.5,True,0.640222864220696,Slater Plain,Slater Plain,Slater Plain:0.64022
+64023,-87.5,123.5,True,0.6890782869472437,Slater Plain,Slater Plain,Slater Plain:0.68908
+64024,-87.5,124.5,True,0.6719393462115979,Slater Plain,Slater Plain,Slater Plain:0.67194
+64025,-87.5,125.5,True,0.6440312517460779,Slater Plain,Slater Plain,Slater Plain:0.64403
+64026,-87.5,126.5,True,0.6143434603577196,Slater Plain,Slater Plain,Slater Plain:0.61434
+64027,-87.5,127.5,True,0.5827472433881413,Slater Plain,Slater Plain,Slater Plain:0.58275
+64028,-87.5,128.5,True,0.54909848778471,,Slater Plain,Slater Plain:0.54910
+64029,-87.5,129.5,True,0.5132415412913751,,Slater Plain,Slater Plain:0.51324
+64030,-87.5,130.5,True,0.47500207809069755,,Slater Plain,Slater Plain:0.47500
+64031,-87.5,131.5,True,0.4273666176996192,,Slater Plain,Slater Plain:0.42737
+64032,-87.5,132.5,True,0.3263874598596856,,Slater Plain,Slater Plain:0.32639
+64033,-87.5,133.5,True,0.21601162612000563,,Slater Plain,Slater Plain:0.21601
+64034,-87.5,134.5,True,0.10676379180900748,,Slater Plain,Slater Plain:0.10676
+64035,-87.5,135.5,True,0.012602286682871274,,Slater Plain,Slater Plain:0.01260
+64181,-88.5,-78.5,True,0.028831186418955677,,de Gerlache Rim 2,de Gerlache Rim 2:0.02883
+64182,-88.5,-77.5,True,0.2039146658943191,,de Gerlache Rim 2,de Gerlache Rim 2:0.20391
+64183,-88.5,-76.5,True,0.36266201722515856,,de Gerlache Rim 2,de Gerlache Rim 2:0.36266
+64184,-88.5,-75.5,True,0.4896593761877941,,de Gerlache Rim 2,de Gerlache Rim 2:0.48966
+64185,-88.5,-74.5,True,0.5928426622738784,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.59284
+64186,-88.5,-73.5,True,0.6778125555710789,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.67781
+64187,-88.5,-72.5,True,0.7408287812783146,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.74083
+64188,-88.5,-71.5,True,0.7442294004462853,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.74423
+64189,-88.5,-70.5,True,0.7371058567489489,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.73711
+64190,-88.5,-69.5,True,0.7294821931015353,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.72948
+64191,-88.5,-68.5,True,0.7213358551976674,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.72134
+64192,-88.5,-67.5,True,0.7126431544528637,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.71264
+64193,-88.5,-66.5,True,0.7033776875808287,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.70338
+64194,-88.5,-65.5,True,0.6935106085008969,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.69351
+64195,-88.5,-64.5,True,0.6830106512755526,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.68301
+64196,-88.5,-63.5,True,0.6718439925513668,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.67184
+64197,-88.5,-62.5,True,0.6599733237770399,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.65997
+64198,-88.5,-61.5,True,0.6473585150814021,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.64736
+64199,-88.5,-60.5,True,0.6339559639037489,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.63396
+64200,-88.5,-59.5,True,0.6197178424680164,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.61972
+64201,-88.5,-58.5,True,0.6045920972834344,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.60459
+64202,-88.5,-57.5,True,0.5885220203871794,de Gerlache Rim 2,de Gerlache Rim 2,de Gerlache Rim 2:0.58852
+64203,-88.5,-56.5,True,0.5484673508930044,,de Gerlache Rim 2,de Gerlache Rim 2:0.54847
+64204,-88.5,-55.5,True,0.46540381245803325,,de Gerlache Rim 2,de Gerlache Rim 2:0.46540
+64205,-88.5,-54.5,True,0.38553432647353447,,de Gerlache Rim 2,de Gerlache Rim 2:0.38553
+64206,-88.5,-53.5,True,0.3094183547804349,,de Gerlache Rim 2,de Gerlache Rim 2:0.30942
+64207,-88.5,-52.5,True,0.23644446661325216,,de Gerlache Rim 2,de Gerlache Rim 2:0.23644
+64208,-88.5,-51.5,True,0.16605914240835168,,de Gerlache Rim 2,de Gerlache Rim 2:0.16606
+64209,-88.5,-50.5,True,0.09775650769309312,,de Gerlache Rim 2,de Gerlache Rim 2:0.09776
+64210,-88.5,-49.5,True,0.03109355745936514,,de Gerlache Rim 2,de Gerlache Rim 2:0.03109

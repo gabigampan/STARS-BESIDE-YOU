@@ -1,0 +1,17 @@
+{
+ "rover": {
+  "paired": 10192,
+  "different": 0,
+  "examples": []
+ },
+ "solar": {
+  "paired": 6360,
+  "different": 0,
+  "examples": []
+ },
+ "lunar_base": {
+  "paired": 450,
+  "different": 0,
+  "examples": []
+ }
+}

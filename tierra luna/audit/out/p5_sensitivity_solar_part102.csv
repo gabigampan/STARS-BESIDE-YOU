@@ -1,0 +1,7 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,toa.solar_constant_w_m2x1.01,constant,TOA constant solar_constant_w_m2 (1361.0) x1.01,18777,0,0,6546,186,0,4815,0,False,0,False,38105-39760;38464-40045;38744-24688;37746-39378;38109-25011
+solar,toa.obliquity_degx1.01,constant,TOA constant obliquity_deg (23.44) x1.01,18777,0,0,6360,0,0,677,3,False,38,False,38105-24336;38385-24227
+solar,toa.eccentricityx1.01,constant,TOA constant eccentricity (0.0167) x1.01,18777,0,0,6360,0,0,4,5,True,50,True,
+solar,toa.sun_longitude_at_perihelion_degx1.01,constant,TOA constant sun_longitude_at_perihelion_deg (282.9) x1.01,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,toa.hours_per_dayx1.01,constant,TOA constant hours_per_day (24.0) x1.01,18777,0,0,6546,186,0,4815,0,False,0,False,38105-39760;38464-40045;38744-24688;37746-39378;38109-25011
+solar,moon_irradiance x1.01,constant,lunar irradiance column x1.01 (= lunar S0 or day factor +1 %),18777,0,0,6163,0,197,4587,0,False,0,False,38105-40853;38464-23968;38744-23605;37746-24359;38109-40826
