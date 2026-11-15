@@ -69,59 +69,31 @@
    },
    "similarity_2dp": {
     "n": 10337,
-    "equal": 10334,
-    "different": 3,
-    "max_abs_diff": 0.010000000000005116,
-    "first_different_index": [
-     2836,
-     4129,
-     5717
-    ]
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "suitability_2dp": {
     "n": 10337,
-    "equal": 10325,
-    "different": 12,
-    "max_abs_diff": 0.010000000000005116,
-    "first_different_index": [
-     768,
-     1301,
-     1530,
-     1655,
-     2800,
-     5274,
-     5950,
-     5969,
-     6355,
-     7348
-    ]
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "final_2dp": {
     "n": 10337,
-    "equal": 10336,
-    "different": 1,
-    "max_abs_diff": 0.009999999999990905,
-    "first_different_index": [
-     10005
-    ]
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "rank": {
     "n": 10337,
-    "equal": 10327,
-    "different": 10,
-    "max_abs_diff": 9.0,
-    "first_different_index": [
-     2241,
-     2840,
-     2933,
-     3075,
-     3489,
-     3763,
-     6958,
-     7266,
-     8781,
-     10005
-    ]
+    "equal": 10337,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "pairs.slope_deg.earth": {
     "n": 10337,
@@ -266,32 +238,24 @@
    },
    "similarity_2dp": {
     "n": 18777,
-    "equal": 18768,
-    "different": 9,
+    "equal": 18771,
+    "different": 6,
     "max_abs_diff": 0.010000000000005116,
     "first_different_index": [
      6578,
      6605,
      6609,
      6645,
-     7978,
-     9178,
-     9200,
      12229,
      12260
     ]
    },
    "suitability_2dp": {
     "n": 18777,
-    "equal": 18773,
-    "different": 4,
-    "max_abs_diff": 0.010000000000005116,
-    "first_different_index": [
-     3226,
-     5455,
-     8654,
-     9272
-    ]
+    "equal": 18777,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "final_2dp": {
     "n": 18777,
@@ -482,16 +446,10 @@
    },
    "suitability_2dp": {
     "n": 2419,
-    "equal": 2414,
-    "different": 5,
-    "max_abs_diff": 0.010000000000001563,
-    "first_different_index": [
-     436,
-     888,
-     1354,
-     1556,
-     1673
-    ]
+    "equal": 2419,
+    "different": 0,
+    "max_abs_diff": 0.0,
+    "first_different_index": []
    },
    "final_2dp": {
     "n": 2419,

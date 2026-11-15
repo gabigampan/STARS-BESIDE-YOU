@@ -1,0 +1,1195 @@
+{
+ "rover": {
+  "funnel": 10337,
+  "paired": 10192,
+  "distinct_twins": 401,
+  "suitability_variables": {
+   "slope_300m_deg": {
+    "weight": 0.45,
+    "n_with_value": 10337,
+    "n_funnel": 10337,
+    "share_u0": 0.0,
+    "share_u1": 0.3184,
+    "utility": {
+     "min": 0.0912,
+     "p10": 0.7376,
+     "median": 0.9595,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 10337
+    },
+    "spearman_with_abs_lat": -0.004,
+    "raw": {
+     "min": 0.5,
+     "p10": 0.613,
+     "median": 1.567,
+     "p90": 4.6742,
+     "max": 13.723,
+     "n": 10337
+    },
+    "share_of_suitability_spread": 0.235
+   },
+   "rough_300m_m": {
+    "weight": 0.3,
+    "n_with_value": 10337,
+    "n_funnel": 10337,
+    "share_u0": 0.0,
+    "share_u1": 0.2074,
+    "utility": {
+     "min": 0.2774,
+     "p10": 0.7656,
+     "median": 0.9459,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 10337
+    },
+    "spearman_with_abs_lat": 0.03,
+    "raw": {
+     "min": 12.24,
+     "p10": 22.916,
+     "median": 63.57,
+     "p90": 175.32,
+     "max": 478.01,
+     "n": 10337
+    },
+    "share_of_suitability_spread": 0.073
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.25,
+    "n_with_value": 10337,
+    "n_funnel": 10337,
+    "share_u0": 0.2713,
+    "share_u1": 0.09,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.0,
+     "median": 0.0111,
+     "p90": 0.9278,
+     "max": 1.0,
+     "n": 10337
+    },
+    "spearman_with_abs_lat": 0.156,
+    "raw": {
+     "min": 0.0,
+     "p10": 0.0,
+     "median": 0.0078,
+     "p90": 0.6495,
+     "max": 1.0,
+     "n": 10337
+    },
+    "share_of_suitability_spread": 0.534
+   }
+  },
+  "utility_spearman": {
+   "slope_300m_deg~rough_300m_m": 0.973,
+   "slope_300m_deg~rock_or_bare_frac": -0.221,
+   "rough_300m_m~rock_or_bare_frac": -0.221
+  },
+  "similarity_variables": {
+   "slope_deg": {
+    "role": "key",
+    "weight": 0.4,
+    "tolerance": 2.0,
+    "diff_over_tol": {
+     "min": 0.0,
+     "p10": 0.051,
+     "median": 0.204,
+     "p90": 0.4255,
+     "max": 0.9855,
+     "n": 10192
+    },
+    "share_score_ge_0.999": 0.0858,
+    "share_score_eq_1": 0.0028,
+    "earth_funnel_values": {
+     "min": 0.5,
+     "p10": 0.613,
+     "median": 1.567,
+     "p90": 4.6742,
+     "max": 13.723,
+     "n": 10337
+    },
+    "moon_zone_values": {
+     "min": 0.234,
+     "p10": 3.076,
+     "median": 6.415,
+     "p90": 11.6195,
+     "max": 22.846,
+     "n": 5400
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.047
+   },
+   "roughness_m": {
+    "role": "key",
+    "weight": 0.4,
+    "tolerance": 30.0,
+    "diff_over_tol": {
+     "min": 0.0,
+     "p10": 0.031,
+     "median": 0.178,
+     "p90": 0.685,
+     "max": 0.999,
+     "n": 10192
+    },
+    "share_score_ge_0.999": 0.1474,
+    "share_score_eq_1": 0.005,
+    "earth_funnel_values": {
+     "min": 12.24,
+     "p10": 22.916,
+     "median": 63.57,
+     "p90": 175.32,
+     "max": 478.01,
+     "n": 10337
+    },
+    "moon_zone_values": {
+     "min": 7.11,
+     "p10": 99.205,
+     "median": 198.49,
+     "p90": 336.373,
+     "max": 616.28,
+     "n": 5400
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.227
+   },
+   "elevation_rel_m": {
+    "role": "secondary",
+    "weight": 0.2,
+    "tolerance": 500.0,
+    "diff_over_tol": {
+     "min": 0.0,
+     "p10": 0.0576,
+     "median": 0.4958,
+     "p90": 1.5978,
+     "max": 2.0,
+     "n": 10192
+    },
+    "share_score_ge_0.999": 0.079,
+    "share_score_eq_1": 0.0031,
+    "earth_funnel_values": {
+     "min": -686.5244,
+     "p10": -515.5244,
+     "median": -93.3244,
+     "p90": 1166.0556,
+     "max": 4724.3756,
+     "n": 10337
+    },
+    "moon_zone_values": {
+     "min": -6150.5106,
+     "p10": -3326.4706,
+     "median": -1127.5606,
+     "p90": 1591.2194,
+     "max": 6344.5894,
+     "n": 5400
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.528
+   }
+  },
+  "top5": [
+   {
+    "rank": 1,
+    "earth": 17566,
+    "moon": 59895,
+    "suitability": 99.22,
+    "similarity": 99.57,
+    "scores": {
+     "slope_deg": 0.998489,
+     "roughness_m": 0.999751,
+     "elevation_rel_m": 0.981807
+    },
+    "diff": {
+     "slope_deg": 0.11,
+     "roughness_m": 0.67,
+     "elevation_rel_m": 95.8138
+    },
+    "utilities": {
+     "slope_300m_deg": 0.9973,
+     "rough_300m_m": 0.9782,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "rank": 2,
+    "earth": 23945,
+    "moon": 59895,
+    "suitability": 98.66,
+    "similarity": 99.76,
+    "scores": {
+     "slope_deg": 0.999439,
+     "roughness_m": 0.999617,
+     "elevation_rel_m": 0.989852
+    },
+    "diff": {
+     "slope_deg": 0.067,
+     "roughness_m": 0.83,
+     "elevation_rel_m": 71.4138
+    },
+    "utilities": {
+     "slope_300m_deg": 0.9846,
+     "rough_300m_m": 0.9784,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "rank": 3,
+    "earth": 18282,
+    "moon": 59895,
+    "suitability": 99.58,
+    "similarity": 98.77,
+    "scores": {
+     "slope_deg": 0.992826,
+     "roughness_m": 0.983634,
+     "elevation_rel_m": 0.985447
+    },
+    "diff": {
+     "slope_deg": 0.24,
+     "roughness_m": 5.45,
+     "elevation_rel_m": 85.6138
+    },
+    "utilities": {
+     "slope_300m_deg": 1.0,
+     "rough_300m_m": 0.9859,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "rank": 4,
+    "earth": 18280,
+    "moon": 59895,
+    "suitability": 98.66,
+    "similarity": 99.5,
+    "scores": {
+     "slope_deg": 0.999964,
+     "roughness_m": 0.987751,
+     "elevation_rel_m": 0.999339
+    },
+    "diff": {
+     "slope_deg": 0.017,
+     "roughness_m": 4.71,
+     "elevation_rel_m": 18.1862
+    },
+    "utilities": {
+     "slope_300m_deg": 0.9906,
+     "rough_300m_m": 0.9695,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "rank": 5,
+    "earth": 15395,
+    "moon": 59895,
+    "suitability": 98.69,
+    "similarity": 99.12,
+    "scores": {
+     "slope_deg": 0.999032,
+     "roughness_m": 0.995434,
+     "elevation_rel_m": 0.967173
+    },
+    "diff": {
+     "slope_deg": 0.088,
+     "roughness_m": 2.87,
+     "elevation_rel_m": 129.1862
+    },
+    "utilities": {
+     "slope_300m_deg": 0.9831,
+     "rough_300m_m": 0.9817,
+     "rock_or_bare_frac": 1.0
+    }
+   }
+  ],
+  "similarity_of_pairs": {
+   "min": 56.1334,
+   "p10": 81.1173,
+   "median": 93.2907,
+   "p90": 99.2441,
+   "max": 99.9969,
+   "n": 10192
+  },
+  "share_similarity_ge_99.99": 0.0001
+ },
+ "solar": {
+  "funnel": 18777,
+  "paired": 6360,
+  "distinct_twins": 1704,
+  "suitability_variables": {
+   "irradiance_kwh_m2_day": {
+    "weight": 0.35,
+    "n_with_value": 18777,
+    "n_funnel": 18777,
+    "share_u0": 0.0004,
+    "share_u1": 0.0438,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.1103,
+     "median": 0.358,
+     "p90": 0.8834,
+     "max": 1.0,
+     "n": 18777
+    },
+    "spearman_with_abs_lat": -0.673,
+    "raw": {
+     "min": 2.5,
+     "p10": 2.886,
+     "median": 3.753,
+     "p90": 5.592,
+     "max": 6.44,
+     "n": 18777
+    },
+    "share_of_suitability_spread": 0.306
+   },
+   "sun_elev_max_deg": {
+    "weight": 0.15,
+    "n_with_value": 18777,
+    "n_funnel": 18777,
+    "share_u0": 0.0,
+    "share_u1": 0.4239,
+    "utility": {
+     "min": 0.2323,
+     "p10": 0.3156,
+     "median": 0.8823,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 18777
+    },
+    "spearman_with_abs_lat": -0.961,
+    "raw": {
+     "min": 23.939,
+     "p10": 28.939,
+     "median": 62.939,
+     "p90": 90.0,
+     "max": 90.0,
+     "n": 18777
+    },
+    "share_of_suitability_spread": 0.058
+   },
+   "sun_low_frac_0_5deg": {
+    "weight": 0.15,
+    "n_with_value": 18777,
+    "n_funnel": 18777,
+    "share_u0": 0.0,
+    "share_u1": 0.0,
+    "utility": {
+     "min": 0.1772,
+     "p10": 0.3237,
+     "median": 0.6861,
+     "p90": 0.867,
+     "max": 0.8732,
+     "n": 18777
+    },
+    "spearman_with_abs_lat": -0.878,
+    "raw": {
+     "min": 0.0579,
+     "p10": 0.0593,
+     "median": 0.099,
+     "p90": 0.1788,
+     "max": 0.211,
+     "n": 18777
+    },
+    "share_of_suitability_spread": 0.034
+   },
+   "slope_deg": {
+    "weight": 0.15,
+    "n_with_value": 18777,
+    "n_funnel": 18777,
+    "share_u0": 0.0003,
+    "share_u1": 0.7166,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.8245,
+     "median": 1.0,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 18777
+    },
+    "spearman_with_abs_lat": 0.209,
+    "raw": {
+     "min": 0.006,
+     "p10": 0.095,
+     "median": 0.383,
+     "p90": 2.931,
+     "max": 13.723,
+     "n": 18777
+    },
+    "share_of_suitability_spread": 0.01
+   },
+   "lst_diurnal_amp_k": {
+    "weight": 0.1,
+    "n_with_value": 12717,
+    "n_funnel": 18777,
+    "share_u0": 0.0002,
+    "share_u1": 0.4264,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.5868,
+     "median": 0.9436,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 12717
+    },
+    "spearman_with_abs_lat": 0.29,
+    "raw": {
+     "min": 2.63,
+     "p10": 6.22,
+     "median": 11.41,
+     "p90": 20.33,
+     "max": 35.7,
+     "n": 12717
+    },
+    "share_of_suitability_spread": 0.011
+   },
+   "roughness_m": {
+    "weight": 0.1,
+    "n_with_value": 18777,
+    "n_funnel": 18777,
+    "share_u0": 0.0005,
+    "share_u1": 0.6641,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.7744,
+     "median": 1.0,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 18777
+    },
+    "spearman_with_abs_lat": 0.255,
+    "raw": {
+     "min": 0.27,
+     "p10": 3.09,
+     "median": 13.97,
+     "p90": 113.474,
+     "max": 478.01,
+     "n": 18777
+    },
+    "share_of_suitability_spread": 0.006
+   }
+  },
+  "utility_spearman": {
+   "irradiance_kwh_m2_day~sun_elev_max_deg": 0.69,
+   "irradiance_kwh_m2_day~sun_low_frac_0_5deg": 0.763,
+   "irradiance_kwh_m2_day~slope_deg": -0.008,
+   "irradiance_kwh_m2_day~lst_diurnal_amp_k": -0.705,
+   "irradiance_kwh_m2_day~roughness_m": -0.027,
+   "sun_elev_max_deg~sun_low_frac_0_5deg": 0.834,
+   "sun_elev_max_deg~slope_deg": -0.263,
+   "sun_elev_max_deg~lst_diurnal_amp_k": -0.525,
+   "sun_elev_max_deg~roughness_m": -0.302,
+   "sun_low_frac_0_5deg~slope_deg": -0.14,
+   "sun_low_frac_0_5deg~lst_diurnal_amp_k": -0.29,
+   "sun_low_frac_0_5deg~roughness_m": -0.179,
+   "slope_deg~lst_diurnal_amp_k": -0.082,
+   "slope_deg~roughness_m": 0.938,
+   "lst_diurnal_amp_k~roughness_m": -0.099
+  },
+  "similarity_variables": {
+   "irradiance_toa_kwh_m2_day": {
+    "role": "key",
+    "weight": 0.8,
+    "tolerance": 0.6,
+    "diff_over_tol": {
+     "min": 0.0023,
+     "p10": 0.0059,
+     "median": 0.0346,
+     "p90": 0.5371,
+     "max": 0.9493,
+     "n": 6360
+    },
+    "share_score_ge_0.999": 0.6247,
+    "share_score_eq_1": 0.0,
+    "earth_funnel_values": {
+     "min": 4.1368,
+     "p10": 4.1778,
+     "median": 6.7624,
+     "p90": 9.7918,
+     "max": 9.9739,
+     "n": 18777
+    },
+    "moon_zone_values": {
+     "min": 9.048,
+     "p10": 9.221,
+     "median": 9.967,
+     "p90": 10.376,
+     "max": 10.395,
+     "n": 6686
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.99
+   },
+   "slope_deg": {
+    "role": "secondary",
+    "weight": 0.1,
+    "tolerance": 2.0,
+    "diff_over_tol": {
+     "min": 0.0,
+     "p10": 0.003,
+     "median": 0.017,
+     "p90": 0.073,
+     "max": 0.9705,
+     "n": 6360
+    },
+    "share_score_ge_0.999": 0.7942,
+    "share_score_eq_1": 0.0461,
+    "earth_funnel_values": {
+     "min": 0.006,
+     "p10": 0.095,
+     "median": 0.383,
+     "p90": 2.931,
+     "max": 13.723,
+     "n": 18777
+    },
+    "moon_zone_values": {
+     "min": 0.051,
+     "p10": 0.252,
+     "median": 1.1285,
+     "p90": 6.236,
+     "max": 13.501,
+     "n": 6686
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.0
+   },
+   "roughness_m": {
+    "role": "secondary",
+    "weight": 0.1,
+    "tolerance": 30.0,
+    "diff_over_tol": {
+     "min": 0.0,
+     "p10": 0.0023,
+     "median": 0.0167,
+     "p90": 0.0787,
+     "max": 1.938,
+     "n": 6360
+    },
+    "share_score_ge_0.999": 0.7789,
+    "share_score_eq_1": 0.0472,
+    "earth_funnel_values": {
+     "min": 0.27,
+     "p10": 3.09,
+     "median": 13.97,
+     "p90": 113.474,
+     "max": 478.01,
+     "n": 18777
+    },
+    "moon_zone_values": {
+     "min": 1.57,
+     "p10": 8.235,
+     "median": 46.305,
+     "p90": 205.7,
+     "max": 401.04,
+     "n": 6686
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.001
+   }
+  },
+  "top5": [
+   {
+    "rank": 1,
+    "earth": 38464,
+    "moon": 24296,
+    "suitability": 96.9,
+    "similarity": 99.99,
+    "scores": {
+     "irradiance_toa_kwh_m2_day": 0.999983,
+     "slope_deg": 0.99937,
+     "roughness_m": 0.999984
+    },
+    "diff": {
+     "irradiance_toa_kwh_m2_day": 0.0035,
+     "slope_deg": 0.071,
+     "roughness_m": 0.17
+    },
+    "utilities": {
+     "irradiance_kwh_m2_day": 1.0,
+     "sun_elev_max_deg": 1.0,
+     "sun_low_frac_0_5deg": 0.8603,
+     "slope_deg": 1.0,
+     "lst_diurnal_amp_k": 0.9244,
+     "roughness_m": 0.9751
+    }
+   },
+   {
+    "rank": 2,
+    "earth": 38105,
+    "moon": 24583,
+    "suitability": 96.9,
+    "similarity": 99.88,
+    "scores": {
+     "irradiance_toa_kwh_m2_day": 0.998915,
+     "slope_deg": 0.998896,
+     "roughness_m": 0.997996
+    },
+    "diff": {
+     "irradiance_toa_kwh_m2_day": 0.028,
+     "slope_deg": 0.094,
+     "roughness_m": 1.9
+    },
+    "utilities": {
+     "irradiance_kwh_m2_day": 1.0,
+     "sun_elev_max_deg": 1.0,
+     "sun_low_frac_0_5deg": 0.8619,
+     "slope_deg": 0.988,
+     "lst_diurnal_amp_k": 0.9492,
+     "roughness_m": 0.9661
+    }
+   },
+   {
+    "rank": 3,
+    "earth": 38744,
+    "moon": 40854,
+    "suitability": 96.77,
+    "similarity": 99.95,
+    "scores": {
+     "irradiance_toa_kwh_m2_day": 0.99943,
+     "slope_deg": 0.999594,
+     "roughness_m": 0.999772
+    },
+    "diff": {
+     "irradiance_toa_kwh_m2_day": 0.0203,
+     "slope_deg": 0.057,
+     "roughness_m": 0.64
+    },
+    "utilities": {
+     "irradiance_kwh_m2_day": 0.9906,
+     "sun_elev_max_deg": 1.0,
+     "sun_low_frac_0_5deg": 0.8587,
+     "slope_deg": 1.0,
+     "lst_diurnal_amp_k": 0.922,
+     "roughness_m": 1.0
+    }
+   },
+   {
+    "rank": 4,
+    "earth": 37746,
+    "moon": 24761,
+    "suitability": 96.62,
+    "similarity": 99.98,
+    "scores": {
+     "irradiance_toa_kwh_m2_day": 0.999766,
+     "slope_deg": 0.999736,
+     "roughness_m": 0.999786
+    },
+    "diff": {
+     "irradiance_toa_kwh_m2_day": 0.013,
+     "slope_deg": 0.046,
+     "roughness_m": 0.62
+    },
+    "utilities": {
+     "irradiance_kwh_m2_day": 1.0,
+     "sun_elev_max_deg": 1.0,
+     "sun_low_frac_0_5deg": 0.8632,
+     "slope_deg": 1.0,
+     "lst_diurnal_amp_k": 0.8668,
+     "roughness_m": 1.0
+    }
+   },
+   {
+    "rank": 5,
+    "earth": 38465,
+    "moon": 40406,
+    "suitability": 96.48,
+    "similarity": 100.0,
+    "scores": {
+     "irradiance_toa_kwh_m2_day": 0.999983,
+     "slope_deg": 0.99988,
+     "roughness_m": 0.99994
+    },
+    "diff": {
+     "irradiance_toa_kwh_m2_day": 0.0035,
+     "slope_deg": 0.031,
+     "roughness_m": 0.33
+    },
+    "utilities": {
+     "irradiance_kwh_m2_day": 1.0,
+     "sun_elev_max_deg": 1.0,
+     "sun_low_frac_0_5deg": 0.8603,
+     "slope_deg": 1.0,
+     "lst_diurnal_amp_k": 0.866,
+     "roughness_m": 0.9912
+    }
+   }
+  ],
+  "similarity_of_pairs": {
+   "min": 68.9898,
+   "p10": 88.035,
+   "median": 99.9346,
+   "p90": 99.9937,
+   "max": 99.9998,
+   "n": 6360
+  },
+  "share_similarity_ge_99.99": 0.139
+ },
+ "lunar_base": {
+  "funnel": 2419,
+  "paired": 450,
+  "distinct_twins": 103,
+  "suitability_variables": {
+   "lst_diurnal_amp_k": {
+    "weight": 0.35,
+    "n_with_value": 2419,
+    "n_funnel": 2419,
+    "share_u0": 0.0008,
+    "share_u1": 0.0008,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.047,
+     "median": 0.2165,
+     "p90": 0.4555,
+     "max": 1.0,
+     "n": 2419
+    },
+    "spearman_with_abs_lat": -0.333,
+    "raw": {
+     "min": 15.0,
+     "p10": 15.94,
+     "median": 19.33,
+     "p90": 24.11,
+     "max": 35.7,
+     "n": 2419
+    },
+    "share_of_suitability_spread": 0.214
+   },
+   "tmin_c": {
+    "weight": 0.25,
+    "n_with_value": 2419,
+    "n_funnel": 2419,
+    "share_u0": 0.0008,
+    "share_u1": 0.0,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.0141,
+     "median": 0.2109,
+     "p90": 0.5224,
+     "max": 0.7364,
+     "n": 2419
+    },
+    "spearman_with_abs_lat": 0.706,
+    "raw": {
+     "min": -35.5,
+     "p10": -23.734,
+     "median": -6.6,
+     "p90": 4.222,
+     "max": 5.0,
+     "n": 2419
+    },
+    "share_of_suitability_spread": 0.157
+   },
+   "thermal_inertia_class": {
+    "weight": 0.15,
+    "n_with_value": 2419,
+    "n_funnel": 2419,
+    "share_u0": 0.0,
+    "share_u1": 0.4196,
+    "utility": {
+     "min": 0.6,
+     "p10": 0.6,
+     "median": 0.6,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 2419
+    },
+    "spearman_with_abs_lat": -0.03,
+    "classes": {
+     "suelo": 1404,
+     "regolito": 1014,
+     "roca": 1
+    },
+    "share_of_suitability_spread": 0.058
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.1,
+    "n_with_value": 2419,
+    "n_funnel": 2419,
+    "share_u0": 0.3659,
+    "share_u1": 0.3278,
+    "utility": {
+     "min": 0.0,
+     "p10": 0.0,
+     "median": 0.3768,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 2419
+    },
+    "spearman_with_abs_lat": -0.001,
+    "raw": {
+     "min": 0.0,
+     "p10": 0.0008,
+     "median": 0.3261,
+     "p90": 0.996,
+     "max": 1.0,
+     "n": 2419
+    },
+    "share_of_suitability_spread": 0.133
+   },
+   "irradiance_kwh_m2_day": {
+    "weight": 0.1,
+    "n_with_value": 2419,
+    "n_funnel": 2419,
+    "share_u0": 0.0,
+    "share_u1": 0.0471,
+    "utility": {
+     "min": 0.0887,
+     "p10": 0.3247,
+     "median": 0.5597,
+     "p90": 0.9146,
+     "max": 1.0,
+     "n": 2419
+    },
+    "spearman_with_abs_lat": -0.842,
+    "raw": {
+     "min": 3.266,
+     "p10": 3.974,
+     "median": 4.679,
+     "p90": 5.7438,
+     "max": 6.271,
+     "n": 2419
+    },
+    "share_of_suitability_spread": 0.03
+   },
+   "permafrost_class": {
+    "weight": 0.05,
+    "n_with_value": 1812,
+    "n_funnel": 2419,
+    "share_u0": 0.0,
+    "share_u1": 0.1959,
+    "utility": {
+     "min": 0.3,
+     "p10": 0.3,
+     "median": 0.3,
+     "p90": 1.0,
+     "max": 1.0,
+     "n": 1812
+    },
+    "spearman_with_abs_lat": 0.021,
+    "classes": {
+     "ninguno": 1406,
+     "esporadico": 266,
+     "discontinuo": 89,
+     "continuo": 51
+    },
+    "share_of_suitability_spread": 0.013
+   }
+  },
+  "utility_spearman": {
+   "lst_diurnal_amp_k~tmin_c": 0.051,
+   "lst_diurnal_amp_k~thermal_inertia_class": 0.348,
+   "lst_diurnal_amp_k~rock_or_bare_frac": 0.365,
+   "lst_diurnal_amp_k~irradiance_kwh_m2_day": 0.343,
+   "lst_diurnal_amp_k~permafrost_class": 0.12,
+   "tmin_c~thermal_inertia_class": -0.093,
+   "tmin_c~rock_or_bare_frac": -0.062,
+   "tmin_c~irradiance_kwh_m2_day": -0.786,
+   "tmin_c~permafrost_class": 0.598,
+   "thermal_inertia_class~rock_or_bare_frac": 0.893,
+   "thermal_inertia_class~irradiance_kwh_m2_day": 0.178,
+   "thermal_inertia_class~permafrost_class": -0.147,
+   "rock_or_bare_frac~irradiance_kwh_m2_day": 0.163,
+   "rock_or_bare_frac~permafrost_class": -0.112,
+   "irradiance_kwh_m2_day~permafrost_class": -0.349
+  },
+  "similarity_variables": {
+   "tmin_k": {
+    "role": "key",
+    "weight": 0.4,
+    "tolerance": 10.0,
+    "diff_over_tol": {
+     "min": 0.0006,
+     "p10": 0.0568,
+     "median": 0.3169,
+     "p90": 0.7715,
+     "max": 0.9786,
+     "n": 450
+    },
+    "share_score_ge_0.999": 0.0733,
+    "share_score_eq_1": 0.0022,
+    "earth_funnel_values": {
+     "min": 0.0207,
+     "p10": 10.0331,
+     "median": 50.0,
+     "p90": 89.938,
+     "max": 99.9587,
+     "n": 2419
+    },
+    "moon_zone_values": "percentiles",
+    "earth_real_values_if_percentile": {
+     "min": 237.65,
+     "p10": 249.416,
+     "median": 266.55,
+     "p90": 277.372,
+     "max": 278.15,
+     "n": 2419
+    },
+    "moon_real_values_if_percentile": {
+     "min": 32.89,
+     "p10": 41.784,
+     "median": 58.825,
+     "p90": 69.975,
+     "max": 75.23,
+     "n": 280
+    },
+    "share_of_similarity_spread": 0.248
+   },
+   "lst_diurnal_amp_k": {
+    "role": "key",
+    "weight": 0.4,
+    "tolerance": 10.0,
+    "diff_over_tol": {
+     "min": 0.0002,
+     "p10": 0.0663,
+     "median": 0.2989,
+     "p90": 0.7667,
+     "max": 0.9953,
+     "n": 450
+    },
+    "share_score_ge_0.999": 0.0689,
+    "share_score_eq_1": 0.0044,
+    "earth_funnel_values": {
+     "min": 0.0413,
+     "p10": 10.0041,
+     "median": 50.0207,
+     "p90": 90.0372,
+     "max": 99.9793,
+     "n": 2419
+    },
+    "moon_zone_values": "percentiles",
+    "earth_real_values_if_percentile": {
+     "min": 15.0,
+     "p10": 15.94,
+     "median": 19.33,
+     "p90": 24.11,
+     "max": 35.7,
+     "n": 2419
+    },
+    "moon_real_values_if_percentile": {
+     "min": 87.58,
+     "p10": 153.258,
+     "median": 178.535,
+     "p90": 208.44,
+     "max": 233.6,
+     "n": 280
+    },
+    "share_of_similarity_spread": 0.246
+   },
+   "slope_deg": {
+    "role": "secondary",
+    "weight": 0.1,
+    "tolerance": 2.0,
+    "diff_over_tol": {
+     "min": 0.0085,
+     "p10": 0.1673,
+     "median": 0.7532,
+     "p90": 1.3472,
+     "max": 1.9585,
+     "n": 450
+    },
+    "share_score_ge_0.999": 0.0267,
+    "share_score_eq_1": 0.0,
+    "earth_funnel_values": {
+     "min": 0.018,
+     "p10": 0.1638,
+     "median": 0.93,
+     "p90": 3.9088,
+     "max": 10.223,
+     "n": 2419
+    },
+    "moon_zone_values": {
+     "min": 3.072,
+     "p10": 4.1482,
+     "median": 9.545,
+     "p90": 14.5518,
+     "max": 21.426,
+     "n": 280
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.074
+   },
+   "roughness_m": {
+    "role": "secondary",
+    "weight": 0.1,
+    "tolerance": 30.0,
+    "diff_over_tol": {
+     "min": 0.0073,
+     "p10": 0.1698,
+     "median": 0.9088,
+     "p90": 1.8142,
+     "max": 1.9937,
+     "n": 450
+    },
+    "share_score_ge_0.999": 0.0156,
+    "share_score_eq_1": 0.0,
+    "earth_funnel_values": {
+     "min": 0.61,
+     "p10": 6.602,
+     "median": 36.04,
+     "p90": 139.972,
+     "max": 342.55,
+     "n": 2419
+    },
+    "moon_zone_values": {
+     "min": 90.85,
+     "p10": 128.054,
+     "median": 261.6,
+     "p90": 390.759,
+     "max": 568.77,
+     "n": 280
+    },
+    "earth_real_values_if_percentile": null,
+    "moon_real_values_if_percentile": null,
+    "share_of_similarity_spread": 0.137
+   }
+  },
+  "top5": [
+   {
+    "rank": 1,
+    "earth": 17538,
+    "moon": 63528,
+    "suitability": 47.27,
+    "similarity": 97.31,
+    "scores": {
+     "tmin_k": 0.999437,
+     "lst_diurnal_amp_k": 0.941868,
+     "slope_deg": 0.96588,
+     "roughness_m": 0.999943
+    },
+    "diff": {
+     "tmin_k": 0.3355,
+     "lst_diurnal_amp_k": 3.4609,
+     "slope_deg": 0.527,
+     "roughness_m": 0.32
+    },
+    "utilities": {
+     "lst_diurnal_amp_k": 0.03,
+     "tmin_c": 0.5371,
+     "thermal_inertia_class": 1.0,
+     "rock_or_bare_frac": 0.9148,
+     "irradiance_kwh_m2_day": 0.3643,
+     "permafrost_class": 1.0
+    }
+   },
+   {
+    "rank": 2,
+    "earth": 16830,
+    "moon": 63841,
+    "suitability": 47.96,
+    "similarity": 96.61,
+    "scores": {
+     "tmin_k": 0.963531,
+     "lst_diurnal_amp_k": 0.998248,
+     "slope_deg": 0.863162,
+     "roughness_m": 0.950493
+    },
+    "diff": {
+     "tmin_k": 2.7258,
+     "lst_diurnal_amp_k": 0.5922,
+     "slope_deg": 1.085,
+     "roughness_m": 9.56
+    },
+    "utilities": {
+     "lst_diurnal_amp_k": 0.1505,
+     "tmin_c": 0.4338,
+     "thermal_inertia_class": 1.0,
+     "rock_or_bare_frac": 0.7287,
+     "irradiance_kwh_m2_day": 0.456,
+     "permafrost_class": 1.0
+    }
+   },
+   {
+    "rank": 3,
+    "earth": 15751,
+    "moon": 64018,
+    "suitability": 46.6,
+    "similarity": 96.86,
+    "scores": {
+     "tmin_k": 0.997134,
+     "lst_diurnal_amp_k": 0.993954,
+     "slope_deg": 0.729919,
+     "roughness_m": 0.992093
+    },
+    "diff": {
+     "tmin_k": 0.7576,
+     "lst_diurnal_amp_k": 1.1013,
+     "slope_deg": 1.587,
+     "roughness_m": 3.78
+    },
+    "utilities": {
+     "lst_diurnal_amp_k": 0.052,
+     "tmin_c": 0.5609,
+     "thermal_inertia_class": 1.0,
+     "rock_or_bare_frac": 0.7373,
+     "irradiance_kwh_m2_day": 0.3383,
+     "permafrost_class": 1.0
+    }
+   },
+   {
+    "rank": 4,
+    "earth": 21054,
+    "moon": 62517,
+    "suitability": 43.91,
+    "similarity": 99.36,
+    "scores": {
+     "tmin_k": 0.999985,
+     "lst_diurnal_amp_k": 0.988262,
+     "slope_deg": 0.993748,
+     "roughness_m": 0.988912
+    },
+    "diff": {
+     "tmin_k": 0.054,
+     "lst_diurnal_amp_k": 1.5367,
+     "slope_deg": 0.224,
+     "roughness_m": 4.48
+    },
+    "utilities": {
+     "lst_diurnal_amp_k": 0.1855,
+     "tmin_c": 0.1185,
+     "thermal_inertia_class": 1.0,
+     "rock_or_bare_frac": 1.0,
+     "irradiance_kwh_m2_day": 0.7953,
+     "permafrost_class": 0.3
+    }
+   },
+   {
+    "rank": 5,
+    "earth": 17187,
+    "moon": 62523,
+    "suitability": 47.54,
+    "similarity": 95.03,
+    "scores": {
+     "tmin_k": 0.9964,
+     "lst_diurnal_amp_k": 0.962979,
+     "slope_deg": 0.740874,
+     "roughness_m": 0.924221
+    },
+    "diff": {
+     "tmin_k": 0.8493,
+     "lst_diurnal_amp_k": 2.7468,
+     "slope_deg": 1.549,
+     "roughness_m": 11.91
+    },
+    "utilities": {
+     "lst_diurnal_amp_k": 0.158,
+     "tmin_c": 0.4245,
+     "thermal_inertia_class": 1.0,
+     "rock_or_bare_frac": 0.7223,
+     "irradiance_kwh_m2_day": 0.4173,
+     "permafrost_class": 1.0
+    }
+   }
+  ],
+  "similarity_of_pairs": {
+   "min": 54.1164,
+   "p10": 75.4162,
+   "median": 87.3996,
+   "p90": 96.0022,
+   "max": 99.4809,
+   "n": 450
+  },
+  "share_similarity_ge_99.99": 0.0
+ }
+}

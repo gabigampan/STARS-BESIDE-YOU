@@ -110,8 +110,8 @@ def main():
         # scores, similarity, suitability, final, rank
         for q, v in enumerate(sp["vars"]):
             res[f"s.{v}"] = cmp(r["scores"][:, q], eb[f"s.{v}"], 5e-7)
-        res["similarity_2dp"] = cmp(np.array([round(x, 2) if np.isfinite(x) else np.nan for x in r["sim_pub"]]), eb["similarity"], 1e-9)
-        res["suitability_2dp"] = cmp(np.array([round(x, 2) if np.isfinite(x) else np.nan for x in r["suit"]]), eb["suitability"], 1e-9)
+        res["similarity_2dp"] = cmp(np.array([round(float(x), 2) if np.isfinite(x) else np.nan for x in r["sim_pub"]]), eb["similarity"], 1e-9)
+        res["suitability_2dp"] = cmp(np.array([round(float(x), 2) if np.isfinite(x) else np.nan for x in r["suit"]]), eb["suitability"], 1e-9)
         res["final_2dp"] = cmp(r["final2"], eb["final"], 1e-9)
         brank = np.where(np.isfinite(eb["rank"]), eb["rank"], 0).astype(int)
         res["rank"] = cmp(r["rank"], brank, 0)

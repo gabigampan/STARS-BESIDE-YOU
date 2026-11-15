@@ -297,16 +297,34 @@ def rule_arrays(m: str, P: Dict, sim_w: Optional[Dict[str, float]] = None, drop:
 
 
 def twins(ev: np.ndarray, mv: np.ndarray, mids: np.ndarray, roles, w, tau, bound, in_sim, in_f,
-          chunk: int = 256):
+          chunk: int = 64):
     """Own twin search. ev n x k, mv z x k (mids increasing). Returns twin id (-1),
     similarity from per-variable scores rounded to 6 decimals (published rule), NaN if none."""
     n, k = ev.shape
     key = np.array([r == "key" for r in roles])
     twin = np.full(n, -1, dtype=np.int64)
     tpos = np.full(n, -1, dtype=np.int64)
+    # Speed-up (exact): Earth rows are processed in order of the first key variable, and
+    # each block is compared only with the zone cells whose value of that key lies within
+    # the block's range +- its bound (any other cell fails the key filter anyway). The
+    # candidates are kept in increasing id order, so ties still go to the lowest id.
+    q0 = int(np.flatnonzero(key & in_f)[0])
+    eorder = np.argsort(np.where(np.isfinite(ev[:, q0]), ev[:, q0], np.inf), kind="mergesort")
+    zvals = mv[:, q0]
+    zs = np.argsort(np.where(np.isfinite(zvals), zvals, np.inf), kind="mergesort")
+    zsorted = np.where(np.isfinite(zvals), zvals, np.inf)[zs]
     for a in range(0, n, chunk):
         b = min(n, a + chunk)
-        d = np.abs(ev[a:b, None, :] - mv[None, :, :])
+        rows = eorder[a:b]
+        x0 = ev[rows, q0]
+        if not np.isfinite(x0).any():
+            continue
+        lo = np.searchsorted(zsorted, np.nanmin(x0) - bound[q0], "left")
+        hi = np.searchsorted(zsorted, np.nanmax(x0) + bound[q0], "right")
+        cand = np.sort(zs[lo:hi])
+        if cand.size == 0:
+            continue
+        d = np.abs(ev[rows, None, :] - mv[None, cand, :])
         fin = np.isfinite(d)
         dd = np.where(fin, d, np.inf)
         within = dd <= bound
@@ -325,8 +343,8 @@ def twins(ev: np.ndarray, mv: np.ndarray, mids: np.ndarray, roles, w, tau, bound
         sv = np.where(okf & np.isfinite(sv), sv, -np.inf)
         j = np.argmax(sv, axis=1)
         got = np.isfinite(sv[np.arange(b - a), j])
-        tpos[a:b] = np.where(got, j, -1)
-        twin[a:b] = np.where(got, mids[j], -1)
+        tpos[rows] = np.where(got, cand[j], -1)
+        twin[rows] = np.where(got, mids[cand[j]], -1)
     has = tpos >= 0
     sim = np.full(n, np.nan)
     if has.any():

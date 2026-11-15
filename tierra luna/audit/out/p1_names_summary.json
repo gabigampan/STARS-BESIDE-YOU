@@ -59,21 +59,39 @@
   "rover": {
    "ranked": 10192,
    "place_not_gc_nearest": 2242,
+   "place_not_gc_nearest_shown_le_300km_not_antarctic": 916,
+   "top100_place_not_gc_nearest": 12,
    "median_extra_km_when_wrong": 108.17426038872456,
    "max_extra_km": 5614.947645502272
   },
   "solar": {
    "ranked": 6360,
    "place_not_gc_nearest": 191,
+   "place_not_gc_nearest_shown_le_300km_not_antarctic": 167,
+   "top100_place_not_gc_nearest": 1,
    "median_extra_km_when_wrong": 1.2619242483609376,
    "max_extra_km": 43.9654569935052
   },
   "lunar_base": {
    "ranked": 450,
    "place_not_gc_nearest": 50,
+   "place_not_gc_nearest_shown_le_300km_not_antarctic": 50,
+   "top100_place_not_gc_nearest": 10,
    "median_extra_km_when_wrong": 2.158597672676784,
    "max_extra_km": 16.06926906286401
   }
+ },
+ "earth_place_rule_breakdown": {
+  "not_nearest_lat_le_-60": 5009,
+  "land_cells_lat_le_-60": 6589,
+  "not_nearest_elsewhere": 3275,
+  "land_cells_elsewhere": 18908,
+  "not_nearest_elsewhere_and_shown_le_300km": 1754,
+  "shown_le_300km_elsewhere": 16098,
+  "extra_km_elsewhere_shown_median": 6.267785255745697,
+  "extra_km_elsewhere_shown_p90": 50.499406466702105,
+  "extra_km_elsewhere_shown_max": 164.87318548822546,
+  "same_name_but_other_row": 3
  },
  "lunar_feature_rule_all_cells": {
   "cells": 64800,
