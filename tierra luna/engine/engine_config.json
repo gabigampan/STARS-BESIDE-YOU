@@ -1,8 +1,8 @@
 {
   "_note": "Engine-only settings. Every threshold, weight, utility bound and tolerance of the missions lives in mission_scoring.json and is NOT repeated here. Each setting has a value and a why; every one is also listed in /ASSUMPTIONS.md with its effect on results.",
   "engine_version": {
-    "value": "3.0.0",
-    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
+    "value": "3.1.0",
+    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.1.0: the similarity rule is a per-mission setting; Rover and Solar panels use the real-value rule real_value_tolerance (team decision of 2026-11-15, morning); Lunar base keeps zone_twin unchanged. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
   },
   "mission_config": {
     "value": "mission_scoring.json",
@@ -215,16 +215,21 @@
     "why": "Team lead decision 1: rover is shown as provisional (its JSON block says so) and the solar and thermal thresholds are team design values with no external source (the JSON note says so). Both labels are carried into missions.json so the app shows them next to every number of the mission."
   },
   "similarity_rule": {
-    "value": "zone_twin",
-    "why": "Team decision of 2026-11-15 (the team lead's delegate, answer 1 to docs/DECISIONS.md): zone_twin is the active rule, with the repository's fixed DEFAULT_WEIGHTS without radar or rock (on the real tables slope 33.3 %, roughness 26.7 %, relative elevation 20 %, temperature 20 %), not the mission domain weights. Earlier (team lead decision 4, 2026-11-14) the default was repo_global_mean pending this approval; repo_global_mean stays available ('--similarity-rule repo_global_mean') and tested."
+    "value": {
+      "rover": "real_value_tolerance",
+      "solar": "real_value_tolerance",
+      "lunar_base": "zone_twin"
+    },
+    "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'): the similarity rule is a per-mission setting. Rover and Solar panels use real_value_tolerance (similarity on real values within stated tolerances, real_value_similarity). Lunar base keeps zone_twin exactly as shipped before (z-scores on the nine NASA regions) until the team confirms a new proposal. Earlier: zone_twin for all three missions (team decision of 2026-11-15, answer 1 to docs/DECISIONS.md), before that repo_global_mean (team lead decision 4, 2026-11-14). A plain string applies one rule to every mission; '--similarity-rule RULE' does that for one build (repo_global_mean, zone_twin and physical_pooled stay available and tested)."
   },
   "similarity_rule_options": {
     "value": {
       "repo_global_mean": "What the repository does by default (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin. Kept available for comparison; not the shipped rule since 2026-11-15.",
-      "zone_twin": "Active since the team decision of 2026-11-15 (approved after docs/SIMILARITY_PROPOSAL.md and docs/DECISIONS.md): the same formula against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id) and its similarity is the one used in the final score. Lunar cells are not passed through the mission filters.",
-      "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default."
+      "zone_twin": "Active for lunar_base (team decision of 2026-11-15; for rover and solar until the morning decision of the same day): z-score formula of analog_finder against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id). Lunar cells are not passed through the mission filters.",
+      "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default.",
+      "real_value_tolerance": "Active for rover and solar since the team decision of 2026-11-15 (morning): per variable a score exp(-0.5 * (|earth - moon| / tolerance)^2) on REAL values; similarity = 100 * weighted mean of the scores; pair filter: every key variable within its tolerance and every secondary within twice its tolerance, otherwise no twin; twin = the zone cell passing the filter with the highest similarity (ties: lowest id). Variables, roles, weights, tolerances and zones in real_value_similarity."
     },
-    "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers."
+    "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers of each mission."
   },
   "repo_similarity": {
     "value": {
@@ -320,5 +325,217 @@
       }
     },
     "why": "The English web texts approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; missing_temperature_mark is the short mark the team asked for in answer 3. Exported in similarity.json 'texts'; a text with a 'mission' is also the first item of that mission's missions.json 'known_limitations'."
+  },
+  "real_value_similarity": {
+    "value": {
+      "score": "s = exp(-0.5 * (|earth value - moon value| / tolerance)^2)",
+      "similarity": "100 * sum(weight * s) / sum(weight) over the variables with a value on both sides, in the listed order",
+      "filter_bound_multiplier": {
+        "key": 1.0,
+        "secondary": 2.0
+      },
+      "missing_key": "a key variable without a value on either side fails the filter (no pair)",
+      "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised",
+      "score_decimals": 6,
+      "variables": {
+        "slope_deg": {
+          "sources": {
+            "EARTH": {
+              "kind": "column",
+              "column": "slope_deg",
+              "level": "from the column (variables.json slope_deg)",
+              "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)"
+            },
+            "MOON": {
+              "kind": "column",
+              "column": "slope_deg",
+              "level": "from the column (variables.json slope_deg)",
+              "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)"
+            }
+          }
+        },
+        "roughness_m": {
+          "sources": {
+            "EARTH": {
+              "kind": "column",
+              "column": "roughness_m",
+              "level": "from the column (variables.json roughness_m)",
+              "text": "deviogram roughness at a ~1.9 km lag"
+            },
+            "MOON": {
+              "kind": "column",
+              "column": "roughness_m",
+              "level": "from the column (variables.json roughness_m)",
+              "text": "deviogram roughness at a ~1.9 km lag"
+            }
+          }
+        },
+        "elevation_rel_m": {
+          "sources": {
+            "EARTH": {
+              "kind": "relative_to_body_mean",
+              "column": "elevation_m",
+              "level": "DERIVED",
+              "text": "elevation_m minus the area-weighted (cos latitude) mean elevation_m of every Earth cell with a value (land cells; ocean cells have no elevation_m in the real table)"
+            },
+            "MOON": {
+              "kind": "relative_to_body_mean",
+              "column": "elevation_m",
+              "level": "DERIVED",
+              "text": "elevation_m minus the area-weighted (cos latitude) mean elevation_m of every lunar cell"
+            }
+          }
+        },
+        "irradiance_toa_kwh_m2_day": {
+          "sources": {
+            "EARTH": {
+              "kind": "toa_insolation",
+              "level": "DERIVED",
+              "text": "annual-mean daily sunlight on a horizontal surface at the top of Earth's atmosphere, from the cell-centre latitude (toa_insolation); a formula, not a measurement"
+            },
+            "MOON": {
+              "kind": "column",
+              "column": "irradiance_kwh_m2_day",
+              "level": "from the column (variables.json irradiance_kwh_m2_day: DERIVED)",
+              "text": "lunar surface irradiance of the lunar table (no atmosphere, so it is also the sunlight above the surface)"
+            }
+          }
+        }
+      },
+      "missions": {
+        "rover": {
+          "zone": {
+            "kind": "lat_max",
+            "lat_max": -75.0,
+            "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+            "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+            "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+          },
+          "variables": [
+            {
+              "variable": "slope_deg",
+              "role": "key",
+              "weight": 0.4,
+              "label": "Slope",
+              "unit": "deg",
+              "tolerance": 2.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+              "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+            },
+            {
+              "variable": "roughness_m",
+              "role": "key",
+              "weight": 0.4,
+              "label": "Roughness",
+              "unit": "m",
+              "tolerance": 30.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+              "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
+            },
+            {
+              "variable": "elevation_rel_m",
+              "role": "secondary",
+              "weight": 0.2,
+              "label": "Relative elevation",
+              "unit": "m",
+              "tolerance": 500.0,
+              "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
+              "why": "Half the robust Earth scale of elevation (1,007 m, docs/ANALOG_PRINCIPLE.md section C), rounded; set by the delegate on 2026-11-15."
+            }
+          ],
+          "weights_why": "Key variables carry 80 % of the weight (team decision of 2026-11-15, morning): slope 40 %, roughness 40 %, relative elevation 20 %."
+        },
+        "solar": {
+          "zone": {
+            "kind": "abs_lat_max_elevation_max",
+            "abs_lat_max": 30.0,
+            "elevation_max_m": -1200.0,
+            "elevation_column": "elevation_m",
+            "name": "Mare Tranquillitatis & Equatorial Maria",
+            "source": "analog_finder.build_lunar_reference_zones: '\"Mare Tranquillitatis & Equatorial Maria\": ((np.abs(lat) <= 30.0) & (moon_norm_df[\"elevation_m\"] <= -1200.0))'",
+            "why": "Team decision of 2026-11-15 (morning): the equatorial maria as analog_finder defines them (absolute latitude <= 30 degrees and elevation <= -1,200 m), applied to the real lunar table."
+          },
+          "variables": [
+            {
+              "variable": "irradiance_toa_kwh_m2_day",
+              "role": "key",
+              "weight": 0.8,
+              "label": "Sunlight without atmosphere",
+              "unit": "kWh/m2/day",
+              "tolerance": 0.6,
+              "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
+              "why": "Set by the delegate on 2026-11-15 (from half the robust Earth scale of ground irradiance, 1.22 kWh/m2/day; docs/ANALOG_PRINCIPLE.md section C)."
+            },
+            {
+              "variable": "slope_deg",
+              "role": "secondary",
+              "weight": 0.1,
+              "label": "Slope",
+              "unit": "deg",
+              "tolerance": 2.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+              "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+            },
+            {
+              "variable": "roughness_m",
+              "role": "secondary",
+              "weight": 0.1,
+              "label": "Roughness",
+              "unit": "m",
+              "tolerance": 30.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+              "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
+            }
+          ],
+          "weights_why": "Key variable 80 % (team decision of 2026-11-15, morning): sunlight without atmosphere 80 %, slope 10 %, roughness 10 %, with the rover's tolerances for slope and roughness."
+        }
+      },
+      "reference_tolerances_not_used": {
+        "temp_k": {
+          "tolerance": 10.0,
+          "unit": "K"
+        },
+        "lst_diurnal_amp_k": {
+          "tolerance": 5.0,
+          "unit": "K"
+        },
+        "note": "Reference values only (docs/ANALOG_PRINCIPLE.md section C); no mission uses them now (team decision of 2026-11-15, morning)."
+      },
+      "info_differences": {
+        "rover": [
+          "temp_k",
+          "lst_diurnal_amp_k",
+          "irradiance_kwh_m2_day"
+        ],
+        "solar": [
+          "temp_k",
+          "lst_diurnal_amp_k"
+        ],
+        "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them)."
+      }
+    },
+    "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'). Method (P1-P9 of the team lead, 2026-11-15 04:47-04:49 CET): similarity on real values with a Gaussian score per variable, key variables 80 % of the weight, pair filter key <= tolerance and secondary <= 2 x tolerance. Tolerances: rover slope 2 deg and roughness 30 m are illustrative team values (rover_preset.py version 3, 5 km baseline); relative elevation 500 m and irradiance 0.6 kWh/m2/day were set by the delegate on the team lead's behalf on 2026-11-15. Zones: rover south pole (unchanged), solar the equatorial maria of analog_finder. Temperature 10 K and amplitude 5 K are reference values only and not used. score_decimals = the published precision of the per-variable scores (int32 q / 1e6), so the browser recomputes similarity exactly."
+  },
+  "toa_insolation": {
+    "value": {
+      "solar_constant_w_m2": 1361.0,
+      "obliquity_deg": 23.44,
+      "eccentricity": 0.0167,
+      "sun_longitude_at_perihelion_deg": 282.9,
+      "mean_anomaly_samples": 3650,
+      "kepler_iterations": 20,
+      "hours_per_day": 24.0,
+      "reference_values_kwh_m2_day": {
+        "0": 9.97,
+        "30": 8.77,
+        "45": 7.37,
+        "60": 5.67
+      }
+    },
+    "why": "New DERIVED value for the solar key variable (team decision of 2026-11-15, morning): Earth's annual-mean daily sunlight on a horizontal surface at the top of the atmosphere, from latitude only, with a Kepler orbit (the checker's corrected formula, docs/ANALOG_PRINCIPLE.md 'Comprobación' item 1: mean anomaly sampled uniformly in time, so the annual mean is the same in both hemispheres). Solar constant 1361.0 W/m2: the value already cited in the provenance of the lunar irradiance (real_data/provenance_moon.csv, irradiance_kwh_m2_day: NASA NSSDC Moon fact sheet). Obliquity 23.44 deg and eccentricity 0.0167: NASA NSSDC Earth fact sheet (https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html). Sun's longitude at perihelion 282.9 deg = Earth's longitude of perihelion (102.9 deg, same fact sheet) + 180; it only shifts the season and does not change the annual mean. 3650 samples and 20 fixed-point iterations: numerical settings of the checker's code (converged far below the published 4 decimals). reference_values_kwh_m2_day are the checker's figures at 0 / 30 / 45 / 60 degrees, checked by a test."
+  },
+  "lunar_day_earth_days": {
+    "value": 29.53,
+    "why": "Length of the lunar day (synodic month) in Earth days, as cited in real_data/provenance_moon.csv (irradiance_kwh_m2_day: 'Lunar day = 29.53 Earth days'); used, rounded to one decimal, in the solar pair text the team asked for on 2026-11-15 (morning)."
   }
 }

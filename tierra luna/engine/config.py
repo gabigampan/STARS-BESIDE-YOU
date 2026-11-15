@@ -97,6 +97,9 @@ class EngineConfig(BaseModel):
     twin_tie_rule: Setting
     detail_tile_rows: Setting
     approved_texts: Optional[Setting] = None
+    real_value_similarity: Optional[Setting] = None
+    toa_insolation: Optional[Setting] = None
+    lunar_day_earth_days: Optional[Setting] = None
     # filled from the dataset descriptor (engine/datasets.json)
     dataset: Optional[Setting] = None
     inputs: Optional[Setting] = None
@@ -189,7 +192,11 @@ def load_mission_config(path: Optional[str] = None, engine_cfg: Optional[EngineC
     return mission_scoring.load_config(path)
 
 
-SIMILARITY_RULES = ("repo_global_mean", "zone_twin", "physical_pooled")
+SIMILARITY_RULES = ("repo_global_mean", "zone_twin", "physical_pooled", "real_value_tolerance")
+# Rules that use the repository's z-score context (analog_finder normalisation).
+REPO_RULES = ("repo_global_mean", "zone_twin")
+# Rules that pair every ranked Earth cell with one lunar twin.
+TWIN_RULES = ("zone_twin", "physical_pooled", "real_value_tolerance")
 # Fields of a mission block that define its filters and scores (a component copy must match them all).
 MISSION_DEFINITION_KEYS = ("require_present", "gates", "soft", "weights")
 
@@ -235,12 +242,34 @@ def check_components(mission_cfg: Dict, missions: List[str]) -> None:
                 raise ValueError(f"{m} must be an exact copy of {comp['core']}; differs in {diff}")
 
 
+def similarity_rules(engine_cfg: EngineConfig, missions: Optional[List[str]] = None) -> Dict[str, str]:
+    """{mission: rule} (engine_config similarity_rule). The value is either one rule for
+    every mission (a string) or a per-mission table; every mission needs a known rule."""
+    raw = engine_cfg.v("similarity_rule")
+    ms = list(missions) if missions is not None else list(engine_cfg.v("missions"))
+    if isinstance(raw, str):
+        out = {m: raw for m in ms}
+    else:
+        missing = [m for m in ms if m not in raw]
+        if missing:
+            raise KeyError(f"similarity_rule has no rule for {missing}")
+        out = {m: str(raw[m]) for m in ms}
+    for m, r in out.items():
+        if r not in SIMILARITY_RULES:
+            raise ValueError(f"unknown similarity_rule {r!r} for {m}; known: {SIMILARITY_RULES}")
+    return out
+
+
+def mission_similarity_rule(engine_cfg: EngineConfig, mission: str) -> str:
+    """The similarity rule of one mission."""
+    return similarity_rules(engine_cfg, [mission])[mission]
+
+
 def similarity_rule(engine_cfg: EngineConfig) -> str:
-    """The active similarity rule (engine_config similarity_rule)."""
-    r = str(engine_cfg.v("similarity_rule"))
-    if r not in SIMILARITY_RULES:
-        raise ValueError(f"unknown similarity_rule {r!r}; known: {SIMILARITY_RULES}")
-    return r
+    """The rule of every offered mission when they share one, else 'per_mission'
+    (manifest.json similarity_rule; the per-mission table is similarity_rules)."""
+    rules = set(similarity_rules(engine_cfg).values())
+    return rules.pop() if len(rules) == 1 else "per_mission"
 
 
 def gate_applies(variable: str, body: str, engine_cfg: EngineConfig) -> bool:
