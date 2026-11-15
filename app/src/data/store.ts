@@ -4,7 +4,7 @@
 // the weight sliders need every utility), place details and twins (only when the rule has them).
 // No DOM: the Node tests import this file directly.
 
-import { finalOf, pyRound2, similarityOf, suitabilityOf, type MissionMatrix } from './recompute.ts';
+import { finalOf, pairSimilarityOf, pyRound2, similarityOf, suitabilityOf, unrankedOrder, type MissionMatrix } from './recompute.ts';
 import type {
   Column,
   Columns,
@@ -14,7 +14,10 @@ import type {
   Manifest,
   Mission,
   MissionsJson,
+  MissionZonesJson,
   NumArray,
+  PairVariable,
+  PlaceholderSpec,
   PlaceDetailJson,
   PlacesJson,
   ReasonCode,
@@ -102,6 +105,53 @@ export interface MissionData {
   passPos: Int32Array; // land -> passing position, -1 = eliminated
   table: Table;
   twin: Int32Array | null; // passing -> lunar id
+  /** Revision 5: earth_<m>_pairs.bin of a real-value mission (null for z-score rules). */
+  pairs: Table | null;
+}
+
+/** Why a passing point has no lunar twin (earth_<m>_pairs.bin nopair_*), with the approved sentence filled in. */
+export interface NoPair {
+  kind: string;
+  variable: PairVariable | null;
+  /** The smallest gap found, as the bundle stores it (float32 shown at its shortest decimal); null without an Earth value. */
+  gap: number | null;
+  /** texts.no_twin_note (or its no_joint_match variant), placeholders filled. */
+  sentence: string;
+}
+
+/** One similarity variable of a real-value pair, both sides and the difference. */
+export interface PairRow {
+  def: PairVariable;
+  earth: number | null;
+  moon: number | null;
+  diff: number | null;
+  /** s.<v> (0-1); null when the variable has no value on a side. */
+  score: number | null;
+  /** The weight in use (a similarity slider or the team's). */
+  weight: number;
+  /** |difference| <= bound (key: 1 x tolerance, secondary: 2 x); null without both values. */
+  within: boolean | null;
+  /** Further columns a later revision adds for this variable (e.g. percentiles), by their key in pairs_columns. */
+  extra: Record<string, number | null>;
+}
+
+/** An approved per-pair sentence of the bundle (a text with pairs-file placeholders), filled for one pair. */
+export interface PairSentence {
+  key: string;
+  text: string;
+}
+
+/** A value shown for information next to a pair: both sides and the difference. */
+export interface PairInfoRow {
+  variable: string;
+  label: string;
+  unit: string;
+  earth: number | string | null;
+  moon: number | string | null;
+  diff: number | null;
+  /** Unit of the difference (a difference of degrees Celsius is in kelvin). */
+  diffUnit: string;
+  levels: { EARTH: Level | null; MOON: Level | null };
 }
 
 /** One value of a cell with its meaning: number, class name, or missing. */
@@ -128,11 +178,14 @@ export interface RankedPoint {
   passPos: number;
   lat: number;
   lon: number;
-  rank: number;
-  final: number;
+  /** null for a passing point without a final (no lunar twin). */
+  rank: number | null;
+  final: number | null;
   suitability: number;
-  similarity: number;
+  similarity: number | null;
   twinId: number | null;
+  /** True when the point has a final score (a twin, or a rule that scores every point). */
+  scored: boolean;
   /** How many similarity variables the pair used (earth_<m>.bin sim_vars_used); null in older bundles. */
   simVarsUsed: number | null;
   /** True when the temp_k bit of sim_missing_bits is set (decision 3: mark the pair). */
@@ -215,7 +268,44 @@ export interface MissionOutcome {
   simVarsUsed: number | null;
   /** The pair's similarity left temperature out (sim_missing_bits temp_k bit). */
   missingTemp: boolean;
+  /** The mission's similarity rule (manifest similarity_rules). */
+  rule: string;
+  /** True when the rule pairs on real values (missions.json similarity.variables). */
+  valueRule: boolean;
+  /** Real-value rules: one row per similarity variable (empty for an eliminated point). */
+  pairRows: PairRow[];
+  /** Real-value rules: the passing point has no twin, and why. */
+  noPair: NoPair | null;
+  /** Approved per-pair sentences filled for this pair (e.g. the solar sentence). */
+  pairSentences: PairSentence[];
+  /** Real-value rules: values not part of the similarity, both sides and the difference. */
+  pairInfo: PairInfoRow[];
 }
+
+/** The shortest decimal that reads back as the same float32 (30.02 stays 30.02, not 30.0200004). */
+export function f32Decimal(x: number): number {
+  if (!Number.isFinite(x)) return x;
+  for (let d = 1; d <= 9; d++) {
+    const y = Number(x.toPrecision(d));
+    if (Math.fround(y) === Math.fround(x)) return y;
+  }
+  return x;
+}
+
+/** A gap with 2 decimals rounded UP (texts.no_twin_note): 0.6563 -> 0.66, 30.02 -> 30.02. */
+export function ceil2(x: number): number {
+  const d = f32Decimal(x);
+  return Math.ceil(Math.round(d * 1e6) / 1e4) / 100;
+}
+
+/** Unit words inside a sentence ("within 2 degrees", "kWh/m²/day"). */
+const SENTENCE_UNIT: Record<string, string> = { deg: 'degrees', 'kWh/m2/day': 'kWh/m²/day', degC: '°C', K: 'K', m: 'm', km: 'km' };
+export const sentenceUnit = (u: string): string => SENTENCE_UNIT[u] ?? u;
+
+const nfSentence = (v: number, d: number) => new Intl.NumberFormat('en-GB', { maximumFractionDigits: d, minimumFractionDigits: 0 }).format(v);
+
+/** A label inside a sentence: lower-case first letter ("Sunlight without atmosphere" -> "sunlight without atmosphere"). */
+const midSentence = (label: string) => (/^[A-Z][a-z]/.test(label) ? label[0].toLowerCase() + label.slice(1) : label);
 
 export class DataStore {
   manifest!: Manifest;
@@ -237,6 +327,10 @@ export class DataStore {
   private twinIndex = new Map<string, Map<number, Twin>>();
   private varByName = new Map<string, VariableInfo>();
   private matrices = new Map<string, MissionMatrix>();
+  private moonTable: Table | null = null;
+  private moonLoad: Promise<Table> | null = null;
+  zones: MissionZonesJson | null = null;
+  private zonesLoad: Promise<MissionZonesJson | null> | null = null;
   /** Bytes fetched so far, by file name (for tests and the budget check). */
   readonly fetched = new Map<string, number>();
 
@@ -334,9 +428,41 @@ export class DataStore {
     return m;
   }
 
-  /** True when the active similarity rule designates a lunar twin per Earth point (zone_twin). */
-  hasTwins(): boolean {
-    return this.similarity.target.kind === 'zone_twin' && this.manifest.files.some((f) => f.name === 'twins.json');
+  private listed(name: string): boolean {
+    return this.manifest.files.some((f) => f.name === name);
+  }
+
+  /** The similarity rule of a mission (manifest similarity_rules, else the mission's, else the bundle's one rule). */
+  ruleOf(missionId: string): string {
+    return this.manifest.similarity_rules?.[missionId] ?? this.mission(missionId).similarity.rule ?? this.similarity.rule;
+  }
+
+  /**
+   * True when the mission pairs on per-variable values (revision 5 real_value_tolerance, and any later
+   * rule written the same way): missions.json similarity.variables with score columns and a pairs file.
+   */
+  isValueRule(missionId: string): boolean {
+    const s = this.mission(missionId).similarity;
+    return Array.isArray(s.variables) && s.variables.length > 0 && !!s.pairs_file && this.listed(s.pairs_file);
+  }
+
+  /**
+   * True when the bundle designates a lunar twin per Earth point: for one mission, when its Earth file
+   * has a twin column and twins.json is published; without a mission, when any mission has twins.
+   */
+  hasTwins(missionId?: string): boolean {
+    if (!this.listed('twins.json')) return false;
+    const ids = missionId ? [missionId] : this.missionsJson.offered_missions;
+    return ids.some((id) => {
+      const e = this.manifest.files.find((f) => f.name === this.mission(id).files.EARTH);
+      return !!e?.columns?.some((c) => c.name === 'twin');
+    });
+  }
+
+  /** Every passing point of the mission has a final score (no point is left without a twin). */
+  everyPointScored(missionId: string): boolean {
+    const m = this.mission(missionId);
+    return m.ranked_count === m.pass_counts.EARTH;
   }
 
   isMissionLoaded(id: string): boolean {
@@ -354,7 +480,8 @@ export class DataStore {
       const passPos = new Int32Array(failBits.length).fill(-1);
       for (let p = 0; p < landIndex.length; p++) passPos[landIndex[p]] = p;
       const twin = (table.cols['twin'] as Int32Array | undefined) ?? null;
-      const md: MissionData = { mission, failBits, landIndex, passPos, table, twin };
+      const pairs = this.isValueRule(id) ? await this.table(mission.similarity.pairs_file as string) : null;
+      const md: MissionData = { mission, failBits, landIndex, passPos, table, twin, pairs };
       this.missionData.set(id, md);
       return md;
     })();
@@ -379,17 +506,22 @@ export class DataStore {
     return c.divisor ? v / c.divisor : v;
   }
 
-  /** The ranked Earth points of a mission with the stored scores, best first. */
+  /**
+   * Every passing Earth point of a mission with the stored scores, in the bundle's list order: the
+   * points with a final by rank, then the points without a twin by suitability (earth_<m>_pairs.bin
+   * list_order when the bundle has it; the same rule otherwise).
+   */
   ranked(id: string): RankedPoint[] {
     const md = this.missionDataOf(id);
     const t = md.table;
+    const missing = this.manifest.encoding.int32_missing;
+    const n = md.landIndex.length;
     const out: RankedPoint[] = [];
-    for (let p = 0; p < md.landIndex.length; p++) {
+    for (let p = 0; p < n; p++) {
       const rank = this.q(t, 'rank', p);
-      if (rank == null) continue;
       const landPos = md.landIndex[p];
       const cellId = this.landIds[landPos];
-      const tw = md.twin ? md.twin[p] : this.manifest.encoding.int32_missing;
+      const tw = md.twin ? md.twin[p] : missing;
       out.push({
         id: cellId,
         landPos,
@@ -397,15 +529,122 @@ export class DataStore {
         lat: this.latOf(cellId),
         lon: this.lonOf(cellId),
         rank,
-        final: this.q(t, 'final', p) as number,
+        final: this.q(t, 'final', p),
         suitability: this.q(t, 'suitability', p) as number,
-        similarity: this.q(t, 'similarity', p) as number,
-        twinId: tw === this.manifest.encoding.int32_missing ? null : tw,
+        similarity: this.q(t, 'similarity', p),
+        twinId: tw === missing ? null : tw,
+        scored: rank != null,
         simVarsUsed: this.q(t, 'sim_vars_used', p),
         missingTemp: this.missingTempAt(id, p),
       });
     }
-    out.sort((a, b) => a.rank - b.rank);
+    const order = md.pairs?.cols['list_order'];
+    if (order) {
+      out.sort((a, b) => order[a.passPos] - order[b.passPos]);
+      return out;
+    }
+    const scored = out.filter((r) => r.scored).sort((a, b) => (a.rank as number) - (b.rank as number));
+    const rest = out.filter((r) => !r.scored);
+    const ids = rest.map((r) => r.id);
+    const fin = rest.map(() => NaN);
+    const suit = rest.map((r) => r.suitability ?? NaN);
+    return [...scored, ...unrankedOrder(ids, fin, suit).map((i) => rest[i])];
+  }
+
+  /** Points with a final score and points without a twin, as the bundle counts them. */
+  pairCounts(id: string): { passing: number; paired: number; unpaired: number } {
+    const m = this.mission(id);
+    return { passing: m.pass_counts.EARTH, paired: m.ranked_count, unpaired: m.passing_without_similarity ?? m.pass_counts.EARTH - m.ranked_count };
+  }
+
+  // ---------- real-value pairs (revision 5) ----------
+
+  private pairValue(md: MissionData, column: string | undefined, p: number): number | null {
+    if (!md.pairs || !column || p < 0) return null;
+    const v = this.q(md.pairs, column, p);
+    return v == null ? null : f32Decimal(v);
+  }
+
+  /** The similarity variables of a real-value mission (missions.json similarity.variables, in order). */
+  pairVariables(missionId: string): PairVariable[] {
+    return this.isValueRule(missionId) ? (this.mission(missionId).similarity.variables ?? []) : [];
+  }
+
+  /** One row per similarity variable of the pair at passing position p (both values, difference, score). */
+  pairRowsAt(missionId: string, p: number, simWeights?: readonly number[]): PairRow[] {
+    const md = this.missionDataOf(missionId);
+    const defs = this.pairVariables(missionId);
+    return defs.map((def, i) => {
+      const earth = this.pairValue(md, def.pairs_columns.earth, p);
+      const moon = this.pairValue(md, def.pairs_columns.moon, p);
+      const diff = this.pairValue(md, def.pairs_columns.diff, p);
+      const score = p >= 0 ? this.q(md.table, def.score_column, p) : null;
+      const extra: Record<string, number | null> = {};
+      for (const [k, col] of Object.entries(def.pairs_columns)) if (k !== 'earth' && k !== 'moon' && k !== 'diff') extra[k] = this.pairValue(md, col, p);
+      const within = diff == null ? null : diff <= def.bound * (1 + 1e-6) + 1e-9;
+      return { def, earth, moon, diff, score, weight: simWeights?.[i] ?? def.weight, within, extra };
+    });
+  }
+
+  /** Why the passing point at position p has no twin, with texts.no_twin_note filled; null when it is paired. */
+  noPairAt(missionId: string, p: number): NoPair | null {
+    const md = this.missionDataOf(missionId);
+    if (!md.pairs || p < 0) return null;
+    const missing = this.manifest.encoding.int32_missing;
+    const k = md.pairs.cols['nopair_kind']?.[p];
+    if (k == null || k === missing) return null;
+    const sim = md.mission.similarity;
+    const kind = sim.nopair_kinds?.[k] ?? String(k);
+    const vi = md.pairs.cols['nopair_var']?.[p];
+    const def = vi == null || vi === missing ? null : (sim.variables?.[vi] ?? null);
+    const g = md.pairs.cols['nopair_gap']?.[p];
+    const gap = g == null || Number.isNaN(g) ? null : f32Decimal(g);
+    return { kind, variable: def, gap, sentence: this.noTwinSentence(kind, def, gap) };
+  }
+
+  /** texts.no_twin_note (its no_joint_match variant when that is the reason) with the placeholders filled. */
+  noTwinSentence(kind: string, def: PairVariable | null, gap: number | null): string {
+    const t = this.similarity.texts?.['no_twin_note'];
+    if (!t) return '';
+    const template = kind === 'no_joint_match' && typeof t.variant_no_joint_match === 'string' ? t.variant_no_joint_match : t.text;
+    const unit = def ? sentenceUnit(def.unit) : '';
+    const filled = template
+      .replace(/\{variable\}/g, def ? midSentence(def.label) : 'a key variable')
+      .replace(/\{bound\}/g, def ? nfSentence(def.bound, 2) : '')
+      .replace(/\{gap\}/g, gap == null ? 'no value' : nfSentence(ceil2(gap), 2))
+      .replace(/\{unit\}/g, unit)
+      .replace(/ {2,}/g, ' ');
+    return filled;
+  }
+
+  /**
+   * The approved per-pair sentences for the pair at position p: every text of similarity.json that
+   * names this mission and has placeholders read from a pairs-file column (decimals and multiplier
+   * from the bundle). A sentence whose placeholders cannot all be filled is left out, never shown half-filled.
+   */
+  pairSentencesAt(missionId: string, p: number): PairSentence[] {
+    const md = this.missionDataOf(missionId);
+    const out: PairSentence[] = [];
+    if (!md.pairs || p < 0 || !md.twin || md.twin[p] === this.manifest.encoding.int32_missing) return out;
+    for (const [key, t] of Object.entries(this.similarity.texts ?? {})) {
+      const forThis = (t.missions ?? (t.mission ? [t.mission] : [])).includes(missionId);
+      const specs = Object.entries(t.placeholders ?? {}).filter((e): e is [string, PlaceholderSpec] => typeof e[1] === 'object' && e[1] !== null && 'column' in e[1]);
+      if (!forThis || !specs.length) continue;
+      let text = t.text;
+      let completed = true;
+      for (const [name, spec] of specs) {
+        const fileTable = spec.file === md.pairs.entry.name ? md.pairs : spec.file === md.table.entry.name ? md.table : null;
+        const raw = fileTable ? this.q(fileTable, spec.column, p) : null;
+        if (raw == null) {
+          completed = false;
+          break;
+        }
+        const v = f32Decimal(raw) * (spec.multiply ?? 1);
+        const d = spec.decimals ?? 1;
+        text = text.split(`{${name}}`).join(new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v));
+      }
+      if (completed && !/\{[a-z_]+\}/.test(text)) out.push({ key, text });
+    }
     return out;
   }
 
@@ -591,9 +830,20 @@ export class DataStore {
     const utilities = wvs.map(() => new Float64Array(n));
     const similarity = new Float64Array(n);
     const ids = new Int32Array(n);
+    const defs = this.pairVariables(id);
+    const simScores = defs.length ? defs.map(() => new Float64Array(n)) : null;
+    const paired = defs.length ? new Uint8Array(n) : null;
+    const missing = this.manifest.encoding.int32_missing;
     for (let p = 0; p < n; p++) {
       const lp = md.landIndex[p];
       ids[p] = this.landIds[lp];
+      if (simScores && paired) {
+        paired[p] = md.twin && md.twin[p] !== missing ? 1 : 0;
+        defs.forEach((d, v) => {
+          const sc = this.q(md.table, d.score_column, p);
+          simScores[v][p] = sc == null ? NaN : sc;
+        });
+      }
       const s = this.q(md.table, 'similarity', p);
       similarity[p] = s == null ? NaN : s;
       const tp = this.tilePos(lp);
@@ -603,7 +853,7 @@ export class DataStore {
         utilities[v][p] = u == null ? NaN : u;
       });
     }
-    const m = { ids, similarity, utilities };
+    const m: MissionMatrix = { ids, similarity, utilities, simScores, paired };
     this.matrices.set(id, m);
     return m;
   }
@@ -612,6 +862,7 @@ export class DataStore {
 
   loadTwins(): Promise<TwinsJson | null> {
     if (!this.hasTwins()) return Promise.resolve(null);
+    if (this.twins) return Promise.resolve(this.twins);
     if (this.twinsLoad) return this.twinsLoad;
     this.twinsLoad = this.json<TwinsJson>('twins.json').then((t) => {
       this.twins = t;
@@ -628,6 +879,72 @@ export class DataStore {
 
   twin(missionId: string, twinId: number): Twin | null {
     return this.twinIndex.get(missionId)?.get(twinId) ?? null;
+  }
+
+  // ---------- lunar regions and mission zones (revision 6) ----------
+
+  /** True when the bundle publishes the zone explanations (mission_zones.json and the region column of moon_base.bin). */
+  hasZones(): boolean {
+    if (!this.listed('mission_zones.json')) return false;
+    const e = this.manifest.files.find((f) => f.name === 'moon_base.bin');
+    return !!e?.columns?.some((c) => c.name === 'region');
+  }
+
+  /** mission_zones.json and the lunar region of every cell (moon_base.bin region); null when the bundle has none. */
+  loadZones(): Promise<MissionZonesJson | null> {
+    if (!this.hasZones()) return Promise.resolve(null);
+    if (this.zonesLoad) return this.zonesLoad;
+    this.zonesLoad = Promise.all([this.json<MissionZonesJson>('mission_zones.json'), this.loadMoonBase()]).then(([z]) => {
+      this.zones = z;
+      return z;
+    });
+    this.zonesLoad.catch(() => (this.zonesLoad = null));
+    return this.zonesLoad;
+  }
+
+  loadMoonBase(): Promise<Table> {
+    if (this.moonLoad) return this.moonLoad;
+    this.moonLoad = this.table('moon_base.bin').then((t) => (this.moonTable = t));
+    this.moonLoad.catch(() => (this.moonLoad = null));
+    return this.moonLoad;
+  }
+
+  /** The region of a lunar cell (index into mission_zones.json regions, or its code), null before loadZones(). */
+  regionOfCell(id: number): MissionZonesJson['regions'][number] | null {
+    const z = this.zones;
+    const col = this.moonTable?.cols['region'];
+    if (!z || !col || id < 0 || id >= col.length) return null;
+    const v = col[id];
+    if (v === this.manifest.encoding.int32_missing) return null;
+    return z.regions[v] ?? null;
+  }
+
+  /** The region codes of a mission's search zone (mission_zones.json mission_zone_regions). */
+  zoneCodes(missionId: string): string[] {
+    return this.zones?.mission_zone_regions[missionId] ?? [];
+  }
+
+  /** One byte per lunar cell: 1 when the cell is inside the mission's search zone. */
+  zoneMask(missionId: string): Uint8Array | null {
+    const z = this.zones;
+    const col = this.moonTable?.cols['region'];
+    if (!z || !col) return null;
+    const inZone = new Set(this.zoneCodes(missionId));
+    const idx = z.regions.map((r) => inZone.has(r.code));
+    const out = new Uint8Array(col.length);
+    for (let i = 0; i < col.length; i++) out[i] = idx[col[i]] ? 1 : 0;
+    return out;
+  }
+
+  /** The lunar cell that holds (lat, lon) on the shared 1-degree grid. */
+  moonCellAt(lat: number, lon: number): number {
+    const g = this.manifest.grid;
+    const row = Math.min(g.rows - 1, Math.max(0, Math.floor((90 - lat) / g.cell_deg)));
+    let l = lon;
+    while (l < -180) l += 360;
+    while (l >= 180) l -= 360;
+    const col = Math.min(g.cols - 1, Math.max(0, Math.floor((l + 180) / g.cell_deg)));
+    return row * g.cols + col;
   }
 
   // ---------- the funnel of one cell ----------
@@ -653,7 +970,7 @@ export class DataStore {
    * The full funnel of one Earth cell for one mission (docs/DATA_CONTRACT.md "The funnel"), with
    * the suitability rows for `weights` (the mission's own weights when omitted). Call prepareCell first.
    */
-  outcome(id: number, missionId: string, weights?: readonly number[], alpha?: number): MissionOutcome {
+  outcome(id: number, missionId: string, weights?: readonly number[], alpha?: number, simWeights?: readonly number[]): MissionOutcome {
     const md = this.missionDataOf(missionId);
     const mission = md.mission;
     const landPos = this.landPosOf(id);
@@ -699,13 +1016,23 @@ export class DataStore {
 
     const p = landPos >= 0 ? md.passPos[landPos] : -1;
     const stored = (name: string) => (p >= 0 ? this.q(md.table, name, p) : null);
-    const similarity = stored('similarity');
+    const valueRule = this.isValueRule(missionId);
+    const pairRows = pass && valueRule ? this.pairRowsAt(missionId, p, simWeights) : [];
+    let similarity = stored('similarity');
     let final = stored('final');
     let rank = stored('rank');
     const a = alpha ?? mission.alpha;
-    const custom = weights !== undefined || alpha !== undefined;
+    const custom = weights !== undefined || alpha !== undefined || simWeights !== undefined;
+    let simExact: number | null = similarity;
+    if (valueRule && pass && similarity != null && simWeights !== undefined) {
+      simExact = pairSimilarityOf(
+        pairRows.map((r) => r.score),
+        pairRows.map((r) => r.weight),
+      );
+      similarity = simExact == null ? null : pyRound2(simExact);
+    }
     if (custom) {
-      final = suit?.suitability != null && similarity != null ? pyRound2(finalOf(a, similarity, suit.suitability)) : null;
+      final = suit?.suitability != null && simExact != null ? pyRound2(finalOf(a, simExact, suit.suitability)) : null;
       rank = null; // the caller knows the recomputed rank
     }
     const ci = stored('confidence');
@@ -715,7 +1042,8 @@ export class DataStore {
     const twinId = p >= 0 && md.twin ? md.twin[p] : this.manifest.encoding.int32_missing;
     const twin = twinId !== this.manifest.encoding.int32_missing ? this.twin(missionId, twinId) : null;
     const target = this.similarity.target;
-    const similarityRows: SimilarityRow[] = this.similarity.active_variables.map((f) => {
+    const zRows = !valueRule;
+    const similarityRows: SimilarityRow[] = (zRows ? this.similarity.active_variables : []).map((f) => {
       const sv = this.similarity.variables.find((v) => v.variable === f)!;
       const { label, unit } = this.similarityLabel(f);
       const ez = tp ? this.q(tp.tile, `z.${f}`, tp.pos) : null;
@@ -726,7 +1054,7 @@ export class DataStore {
         mz = target.profile[f]?.z ?? null;
         mv = target.profile[f]?.value ?? null;
       } else if (twin) {
-        mz = twin.z[f] ?? null;
+        mz = twin.z?.[f] ?? null;
         mv = twin.values[f] ?? null;
       }
       return {
@@ -739,7 +1067,7 @@ export class DataStore {
         clipped: Math.abs(ez ?? 0) >= 4 || Math.abs(mz ?? 0) >= 4,
       };
     });
-    const infoRows: InfoRow[] = this.similarity.not_part_of_similarity.map((variable) => {
+    const infoRows: InfoRow[] = (zRows ? this.similarity.not_part_of_similarity : []).map((variable) => {
       const info = this.varByName.get(variable);
       const earth = this.earthValue(info?.bodies.EARTH?.column ?? variable, landPos);
       let moonValue: number | string | null = null;
@@ -803,7 +1131,40 @@ export class DataStore {
       ice,
       simVarsUsed: pass ? stored('sim_vars_used') : null,
       missingTemp: pass && p >= 0 ? this.missingTempAt(missionId, p) : false,
+      rule: this.ruleOf(missionId),
+      valueRule,
+      pairRows,
+      noPair: pass && valueRule ? this.noPairAt(missionId, p) : null,
+      pairSentences: pass && valueRule ? this.pairSentencesAt(missionId, p) : [],
+      pairInfo: pass && valueRule ? this.pairInfoOf(landPos, twin) : [],
     };
+  }
+
+  /**
+   * Values that are not part of a real-value similarity, for information: every value the twin row
+   * carries (twins.json not_part_of_similarity) against the Earth cell's own, with the difference.
+   * Without a twin, the Earth values of the bundle's information list for the rule.
+   */
+  pairInfoOf(landPos: number, twin: Twin | null): PairInfoRow[] {
+    const names = twin ? Object.keys(twin.not_part_of_similarity) : [];
+    return names.map((variable) => {
+      const info = this.varByName.get(variable);
+      const ev = this.earthValue(info?.bodies.EARTH?.column ?? variable, landPos).value;
+      const e = typeof ev === 'number' ? f32Decimal(ev) : ev;
+      const mo = twin?.not_part_of_similarity[variable] ?? null;
+      const unit = info?.unit ?? '';
+      const diff = typeof e === 'number' && typeof mo === 'number' ? Math.abs(e - mo) : null;
+      return {
+        variable,
+        label: info?.label ?? variable,
+        unit,
+        earth: e,
+        moon: mo,
+        diff,
+        diffUnit: unit === 'degC' ? 'K' : unit,
+        levels: { EARTH: info?.bodies.EARTH?.level ?? null, MOON: info?.bodies.MOON?.level ?? null },
+      };
+    });
   }
 
   /** The real column a mission variable is read from (gates or weighted variables say it). */
@@ -825,8 +1186,18 @@ export class DataStore {
   }
 
   /** Recompute the stored similarity of a passing cell from its z-scores (for the exact check). */
-  recomputeSimilarity(missionId: string, landPos: number): number | null {
+  recomputeSimilarity(missionId: string, landPos: number, simWeights?: readonly number[]): number | null {
     const md = this.missionDataOf(missionId);
+    if (this.isValueRule(missionId)) {
+      const p = md.passPos[landPos];
+      if (p < 0 || !md.twin || md.twin[p] === this.manifest.encoding.int32_missing) return null;
+      const rows = this.pairRowsAt(missionId, p, simWeights);
+      const v = pairSimilarityOf(
+        rows.map((r) => r.score),
+        rows.map((r) => r.weight),
+      );
+      return v == null ? null : pyRound2(v);
+    }
     const tp = this.tilePos(landPos);
     if (!tp) throw new Error('tile not loaded');
     const F = this.similarity.active_variables;
@@ -838,7 +1209,7 @@ export class DataStore {
     else {
       const p = md.passPos[landPos];
       const tw = md.twin ? this.twin(missionId, md.twin[p]) : null;
-      zm = F.map((f) => tw?.z[f] ?? null);
+      zm = F.map((f) => tw?.z?.[f] ?? null);
     }
     return similarityOf(ze, zm, nw, this.similarity.formula.decay);
   }

@@ -1,5 +1,7 @@
 """Tests of the team decision of 2026-11-15 (morning): similarity on real values within
-stated tolerances for Rover and Solar panels; Lunar base unchanged (zone_twin).
+stated tolerances for Rover and Solar panels. Since the decision of 2026-11-15 08:55 CET
+Lunar base uses percentile_and_real_tolerance (tests/test_lunar_base_position.py); here the
+Rover and Solar panels files are checked byte for byte against the revision 5 bundle.
 
 Tolerances, weights and zones are read from engine_config.json, never typed here,
 except in the hand-built cases and in the figures of the checked proposal
@@ -26,14 +28,27 @@ from engine.real_similarity import (NOPAIR_KINDS, area_weighted_mean, find_twins
 
 REAL = "real_1deg"
 
-# The shipped bundle before this change (contract revision 4, built 2026-11-15 from the
-# same inputs): the Lunar base files and JSON parts must stay exactly as they were.
-LUNAR_BASE_BEFORE = {
-    "earth_lunar_base.bin": "56c1fc9a29ae825057f292929330ec60de6494c6df78422db59526b84e577f98",
-    "moon_lunar_base.bin": "55f1843246be6f6afdb09babc4b04eb4d006b8bba41ddfc0aca3547d924fd635",
-    "twins.json/missions/lunar_base": "412ccab94727bd95151dd11843f06551f4a479347356f3b3b603e00951ce3895",
-    "explain.json/missions/lunar_base": "f43a8af63e2ba2a5e91b6d302d8af36f7b6cae8bab2a8e8af854b5024a750143",
-    "missions.json/missions[lunar_base]": "12316c9ccd0962cc799ef7cf26b230a520ca0e5a978f7a77609b5efe719354f5",
+# The shipped bundle of contract revision 5 (built 2026-11-15, morning, from the same
+# inputs; a copy was kept in the scratchpad as ref-rev5 before the Lunar base change of
+# 08:55 CET): the Rover and Solar panels files and JSON parts must stay exactly as they were.
+ROVER_SOLAR_REV5 = {
+    "earth_rover.bin": "ab199f5c62ea709242449bcaca60b43a8c76a296073ba3a83fe41a7c5235c5ce",
+    "earth_rover_pairs.bin": "5f5637b79e710f7ee96022efed85ff15c2564db184cf57b6b1af499c745f9104",
+    "moon_rover.bin": "9abf5276f5182b0084976ad3cb973701d9723f59929327d4ee4ad7f22e17d8ea",
+    "earth_solar.bin": "a07219d6bcd5198d47b836893277a4dd7bd8143dcbfbe77f522b41fc3aa0d5fd",
+    "earth_solar_pairs.bin": "f0658d8b938ae99e6ad2cab46a58f2d7f4241bc46b707cff95e4edcb58487834",
+    "moon_solar.bin": "7d4b328f4ead1e8de974d6f12ff1a090be14bfc76b2441387d42598660cd2516",
+    "earth_base.bin": "a3a9787e13e35e04c7c67fd9931781f0a8adc3884353e18feafc0f269eeb0e94",
+    "twins.json/missions/rover": "9080f4c605aebde0805d16366af8055ca4e21d2e196c040dbc2ed24142754ec7",
+    "explain.json/missions/rover": "0248f0084a20040179a82ef538fe50f6d7004e0ee596cca551f87d2390cc71ec",
+    "missions.json/missions[rover]": "b7325b34db3c1ec1131c9deecfbd694a6cf65780fcaa182ec809ca29be6326d6",
+    "lunar_named_sites.json rover": "e5870fb266f43225c7af792e7450e4eaf63aa1991e27f1a0991dd0233bf228b2",
+    "twins.json/missions/solar": "5c0a0dc20a2e4ecbf8cd0869f1180bffcefd9043fb8519b7467aeed6a7a57276",
+    "explain.json/missions/solar": "3ecb9f2bcfce411336e56a7107de657b620bf6a95725181a246a141357b3e7de",
+    "missions.json/missions[solar]": "38d0fc61b692b812d2a3ab21226694d4bf7febe6d50bd572106b44429dad8b0a",
+    "lunar_named_sites.json solar": "afc05cf7036e65f886e7400ea1fec1d9018fa790566b3f23c50a317bf745178b",
+    # the funnel of every mission (utilities and the ice component) did not change either
+    "detail tiles: id and the utilities of every mission": "ae49437a90419b1485a2c19a4c1202c8e165ae9bc8742e4ff2234e4e46f99c33",
 }
 
 
@@ -62,9 +77,10 @@ def real_dir(real, tmp_path_factory):
 # ----------------------------------------------------------------------------- configuration
 def test_rule_is_a_per_mission_setting(ecfg):
     rules = similarity_rules(ecfg)
-    assert rules == {"rover": "real_value_tolerance", "solar": "real_value_tolerance", "lunar_base": "zone_twin"}
+    assert rules == {"rover": "real_value_tolerance", "solar": "real_value_tolerance",
+                     "lunar_base": "percentile_and_real_tolerance"}
     assert similarity_rule(ecfg) == "per_mission"
-    assert mission_similarity_rule(ecfg, "lunar_base") == "zone_twin"
+    assert mission_similarity_rule(ecfg, "lunar_base") == "percentile_and_real_tolerance"
     e = load_engine_config(dataset=REAL)
     e.similarity_rule = Setting(value="zone_twin", why="test")   # one string = every mission (earlier rules stay available)
     assert set(similarity_rules(e).values()) == {"zone_twin"} and similarity_rule(e) == "zone_twin"
@@ -230,25 +246,44 @@ def test_every_surviving_pair_is_within_its_bounds(real, real_dir, mission):
         assert np.all(d <= v["bound"] * (1 + 1e-6)), v["variable"]
 
 
-def test_lunar_base_is_unchanged_from_the_previous_bundle(real):
-    files, objs = real["files"], real["objects"]
-    assert hashlib.sha256(files["earth_lunar_base.bin"]).hexdigest() == LUNAR_BASE_BEFORE["earth_lunar_base.bin"]
-    assert hashlib.sha256(files["moon_lunar_base.bin"]).hexdigest() == LUNAR_BASE_BEFORE["moon_lunar_base.bin"]
-    assert _digest(objs["twins.json"]["missions"]["lunar_base"]) == LUNAR_BASE_BEFORE["twins.json/missions/lunar_base"]
-    assert _digest(objs["explain.json"]["missions"]["lunar_base"]) == LUNAR_BASE_BEFORE["explain.json/missions/lunar_base"]
-    lb = next(m for m in objs["missions.json"]["missions"] if m["id"] == "lunar_base")
-    assert _digest(lb) == LUNAR_BASE_BEFORE["missions.json/missions[lunar_base]"]
-    assert real["results"]["lunar_base"].rule == "zone_twin"
-    assert objs["similarity.json"]["target"]["zones"].keys() == {"lunar_base"}
+def _rover_solar_digests(files, objs):
+    out = {f: hashlib.sha256(files[f]).hexdigest() for f in
+           ("earth_rover.bin", "earth_rover_pairs.bin", "moon_rover.bin", "earth_solar.bin", "earth_solar_pairs.bin",
+            "moon_solar.bin", "earth_base.bin")}
+    for m in ("rover", "solar"):
+        out[f"twins.json/missions/{m}"] = _digest(objs["twins.json"]["missions"][m])
+        out[f"explain.json/missions/{m}"] = _digest(objs["explain.json"]["missions"][m])
+        out[f"missions.json/missions[{m}]"] = _digest(next(x for x in objs["missions.json"]["missions"] if x["id"] == m))
+        out[f"lunar_named_sites.json {m}"] = _digest([[s["cell_id"], (s["missions"] or {}).get(m)]
+                                                      for s in objs["lunar_named_sites.json"]["sites"]])
+    man = objs["manifest.json"]
+    h = hashlib.sha256()
+    for t in man["detail_tiles"]["files"]:
+        f = next(x for x in man["files"] if x["name"] == t["name"])
+        raw = files[t["name"]]
+        for c in f["columns"]:
+            if c["name"] == "id" or c["name"].split(".")[0] in ("rover", "solar", "lunar_base"):
+                h.update(c["name"].encode())
+                h.update(raw[c["offset"]:c["offset"] + 4 * c["length"]])
+    out["detail tiles: id and the utilities of every mission"] = h.hexdigest()
+    return out
+
+
+def test_rover_and_solar_are_byte_identical_to_revision_5(real):
+    """Decision of 2026-11-15 08:55 CET: Rover and Solar panels do not change. Their files,
+    their parts of the shared JSON files and every mission's funnel columns are those of
+    the revision 5 bundle, byte for byte."""
+    assert _rover_solar_digests(real["files"], real["objects"]) == ROVER_SOLAR_REV5
+    assert real["results"]["lunar_base"].rule == "percentile_and_real_tolerance"
 
 
 # ----------------------------------------------------------------------------- bundle (contract revision 5)
 def test_bundle_carries_the_real_value_pairs(real, real_dir):
     b = load_bundle(real_dir)
     man = b.manifest
-    assert man["contract_revision"] == 5 and man["similarity_rule"] == "per_mission"
+    assert man["contract_revision"] == 6 and man["similarity_rule"] == "per_mission"
     assert man["similarity_rules"] == {"rover": "real_value_tolerance", "solar": "real_value_tolerance",
-                                       "lunar_base": "zone_twin"}
+                                       "lunar_base": "percentile_and_real_tolerance"}
     ms = {m["id"]: m for m in b.json("missions.json")["missions"]}
     sj = b.json("similarity.json")
     assert sj["rules"] == man["similarity_rules"] and set(sj["real_value"]["missions"]) == {"rover", "solar"}
@@ -270,7 +305,7 @@ def test_bundle_carries_the_real_value_pairs(real, real_dir):
         assert "z" not in tw["twins"][0] and "temp_k" in tw["twins"][0]["not_part_of_similarity"]
         ex = b.json("explain.json")["missions"][mid][0]
         assert ex["rank"] == 1 and [x["variable"] for x in ex["similarity"]["variables"]] == [v["variable"] for v in sb["variables"]]
-    assert {"lunar_base"} == {m for m, r in sj["rules"].items() if r == "zone_twin"}
+    assert not {m for m, r in sj["rules"].items() if r == "zone_twin"} and "z_rule_missions" not in sj
     # the Earth sunlight above the atmosphere is stored per grid row and labelled DERIVED
     col = next(c for c in b.file_entry("earth_base.bin")["columns"] if c["name"] == "d.irradiance_toa_kwh_m2_day")
     assert col["rows"] == "grid_rows" and col["level"] == "DERIVED"
@@ -304,8 +339,9 @@ def test_meaning_texts_per_rule(real):
     texts = real["objects"]["similarity.json"]["texts"]
     assert "real values within stated tolerances" in texts["similarity_meaning_real_values"]["text"]
     assert texts["similarity_meaning_real_values"]["missions"] == ["rover", "solar"]
-    assert texts["similarity_meaning"]["missions"] == ["lunar_base"]
-    assert "same place in each world's range" in texts["similarity_meaning"]["text"]
+    assert texts["similarity_meaning"]["missions"] == [] and "no longer applies" in texts["similarity_meaning"]["status"]
+    assert "same place in each world's range" in texts["similarity_meaning"]["text"]       # kept verbatim, marked
+    assert texts["similarity_meaning_lunar_base"]["missions"] == ["lunar_base"]
 
 
 def test_slider_on_similarity_weights_recomputes_exactly(real, real_dir):
@@ -334,50 +370,10 @@ def test_slider_on_similarity_weights_recomputes_exactly(real, real_dir):
 
 
 # ----------------------------------------------------------------------------- verifier's additions (2026-11-15)
-# Digests of the previous shipped bundle (contract revision 4, scratchpad ref/v2_before,
-# same inputs) for the Lunar base parts the first test does not cover.
-LUNAR_BASE_BEFORE_MORE = {
-    "detail tiles: id, z.*, lunar_base.*": "98270f91dbba2400ca8b8705a14c3358733360c23dcb931389abf9290a7e2e58",
-    "similarity.json z-score keys": "3aa20dec00fdae82c09b0da9f644ddc07879689d96bd4f5906a438b328cb3fb5",
-    "similarity.json/target/zones/lunar_base": "df773ede4822d97c39ac8273afcda59214fca4e789b5f27c35dbc6614b5087ff",
-    "lunar_named_sites.json lunar_base": "0a1315eaf06e60f1ade10406aea7f53ea103ea0dcca0a462a447231ec654dcc0",
-    "manifest counts lunar_base": "cb4a11b998e4a23114eda071ac7e06809087533d18feb7f876d7be95bd327d97",
-}
-Z_RULE_KEYS = ["function", "features_and_weights", "formula", "meaning", "earth_population", "moon_population",
-               "variables", "active_variables", "variation_threshold", "variation_findings",
-               "not_part_of_similarity", "not_part_of_similarity_note", "z_decimals"]
-
-
-def _lunar_base_more_digests(path):
-    with open(os.path.join(path, "manifest.json"), encoding="utf-8") as fh:
-        man = json.load(fh)
-    h = hashlib.sha256()
-    for t in man["detail_tiles"]["files"]:
-        f = next(x for x in man["files"] if x["name"] == t["name"])
-        with open(os.path.join(path, t["name"]), "rb") as fh:
-            raw = fh.read()
-        for c in f["columns"]:
-            if c["name"] == "id" or c["name"].startswith("lunar_base.") or c["name"].startswith("z."):
-                h.update(c["name"].encode())
-                h.update(raw[c["offset"]:c["offset"] + 4 * c["length"]])
-    with open(os.path.join(path, "similarity.json"), encoding="utf-8") as fh:
-        sj = json.load(fh)
-    with open(os.path.join(path, "lunar_named_sites.json"), encoding="utf-8") as fh:
-        sites = json.load(fh)["sites"]
-    counts = {k: v for k, v in man["counts"]["missions"]["lunar_base"].items() if k != "unpaired_EARTH"}
-    return {"detail tiles: id, z.*, lunar_base.*": h.hexdigest(),
-            "similarity.json z-score keys": _digest({k: sj.get(k) for k in Z_RULE_KEYS}),
-            "similarity.json/target/zones/lunar_base": _digest(sj["target"]["zones"]["lunar_base"]),
-            "lunar_named_sites.json lunar_base": _digest([[s["cell_id"], (s["missions"] or {}).get("lunar_base")]
-                                                          for s in sites]),
-            "manifest counts lunar_base": _digest(counts)}
-
-
-def test_lunar_base_tiles_z_rule_named_sites_and_counts_are_unchanged(real_dir):
-    """Verifier: the Lunar base utilities and ice columns, the z-scores its similarity reads,
-    the z-score description in similarity.json, its zone, its named-site outcomes and its
-    counts are byte for byte those of the previous bundle (2,419 ranked, 48 twins)."""
-    assert _lunar_base_more_digests(real_dir) == LUNAR_BASE_BEFORE_MORE
+# The verifier's test that the Lunar base tiles, z-score keys, named sites and counts were
+# unchanged (revision 5) no longer applies: Lunar base changed rule on 2026-11-15 08:55 CET.
+# The funnel columns of every mission are still checked against revision 5 above
+# (test_rover_and_solar_are_byte_identical_to_revision_5).
 
 
 @pytest.mark.parametrize("mission", ["rover", "solar"])

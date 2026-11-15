@@ -1,0 +1,261 @@
+{
+ "consulted_on": "2026-11-15",
+ "source_document": "docs/MISSION_ZONES.md",
+ "approved_by": "the delegate, on the team lead's behalf, 2026-11-15 08:55 CET, with the corrections of 2026-11-15 applied",
+ "region_labels": {
+  "A": "The nine NASA candidate regions",
+  "B": "South-polar region outside the nine NASA regions",
+  "C": "North-polar region",
+  "D": "Low equatorial plains (the maria)",
+  "E": "Far side",
+  "F": "Near-side highlands and mid-latitudes (includes the northern maria beyond 30 degrees)"
+ },
+ "general_note": "Spacecraft have landed in many parts of the Moon: Apollo and Luna near the equator, Chang'e 4 and 6 on the far side, IM-2 near the south pole. Each test is searched in one zone the team chose; other regions are explained, not ruled out.",
+ "zone_why": {
+  "rover": "Why the south pole: our rover test follows NASA's plans there, such as the VIPER rover, meant to map water ice in permanently shadowed craters. It is not the best match by terrain: in our data the north pole pairs about as many Earth sites (9,888 against 10,192) and more closely (median slope gap 0.10° against 0.41°).",
+  "solar": "Why the equatorial maria: we target a high Sun on the lowest, flattest plains (median slope 1.1°), where Apollo landed, with sunlight as high as anywhere in our data: about 10 kWh/m² a day (highlands: 8 to 9). Nearly every Earth site without a twin here would have one in the highlands. Flat polar ground gets at most 2.48, below the 3.54 our sites need.",
+  "lunar_base": "Why NASA's nine regions: our base test follows NASA's crew-landing plan, which named nine candidate regions near the south pole in October 2024. This is the team's choice, not a physical limit. Each pair is a likeness of thermal position (how cold and how variable a place is within its own world), not of temperature; the real difference is shown with every pair."
+ },
+ "outside": {
+  "rover": {
+   "C": "Not our rover zone, but our data do not rule it out: by terrain the north pole matches Earth sites as closely or more (median similarity 99.7 against 93.3 in our south-pole zone). Our rover test follows NASA's south-pole plans, such as VIPER, for water ice. NASA's GRAIL probes ended their mission here in 2012.",
+   "D": "Rovers have driven here, like Lunokhod 2 in 1973. Our rover test is about finding water ice, as NASA plans with VIPER, and NASA says that ice lies at the poles, in permanently shadowed areas, so we search near the south pole.",
+   "E": "China's Yutu-2 rover drove here after Chang'e 4 landed in 2019, so rovers work on the far side. Our rover test targets polar water ice, like NASA's VIPER, and far-side missions also need a relay satellite to talk to Earth.",
+   "F": "Rovers have worked here: Lunokhod 1, China's Yutu and India's Pragyan, which reached 69° S in 2023 on what India calls a south-pole landing. Our rover test follows NASA's VIPER plan for water ice in permanently shadowed craters, so the team set its zone at 75° S and beyond."
+  },
+  "solar": {
+   "A": "Near the pole the Sun stays low: in our data no flat ground beyond 75° S gets more than 2.48 kWh/m² a day, and even our least sunny Earth site would need 3.54 for a twin. Some ridges stay lit most of the year, suiting vertical panels, a different test. IM-2 landed here in 2025.",
+   "B": "IM-1 landed here in 2024, and spots on Shackleton's rim are jointly lit over 90% of the year. But for a flat panel the Sun stays low: in our data no flat ground beyond 75° S gets more than 2.48 kWh/m² a day, below the 3.54 our least sunny Earth site would need.",
+   "C": "The Sun stays near the horizon here: in our data no flat ground beyond 75° N gets more than 2.45 kWh/m² a day, below the 3.54 our least sunny Earth site would need for a twin. Our panel test is designed for a high Sun on flat ground, so we search the maria.",
+   "E": "Our data do not rule this region out: 18,776 of our 18,777 Earth sites would find a sunlight twin here, including 12,416 with none in the maria. Chang'e 4 and 6 landed here. The team chose the maria as its design target: more sunlight on average (about 10 vs 9 kWh/m² a day) on lower, flatter plains.",
+   "F": "Our data do not rule this region out: 18,776 of our 18,777 Earth sites would find a sunlight twin here, including 12,416 with none in the maria. Apollo 14 and 16, SLIM and Chang'e 3 and 5 landed here. The team chose the maria as its design target: more sunlight on average (about 10 vs 8 kWh/m² a day) on lower, flatter plains."
+  },
+  "lunar_base": {
+   "B": "IM-1 landed here in 2024, and more robotic missions target the south-polar region. Our base test follows NASA's plan for its first Artemis crew landing, Artemis IV, so it uses only the nine candidate regions NASA named in October 2024. This is the team's choice, not a physical limit.",
+   "C": "NASA's crewed landing plans point to the south pole, not here, although the north pole also has cold shadowed craters. NASA's GRAIL probes ended their mission here in 2012. Our base zone is NASA's nine south-polar regions.",
+   "D": "Apollo 11, 12, 15 and 17 landed crews here; early Apollo sites stayed near the equator for operational reasons, such as a safe return path. NASA's next crew landing, Artemis IV, targets the south pole, where shadowed areas can preserve water. We follow that.",
+   "E": "Chang'e 4 and 6 landed here; Chang'e 6 landed with support from the Queqiao-2 relay satellite. NASA lists communication with Earth among its criteria for crew landing sites and chose nine south-polar regions; our base test uses those regions.",
+   "F": "Apollo 14 and 16, India's Chandrayaan-3 and Japan's SLIM landed here. NASA's next crew landing, Artemis IV, targets the south pole, where shadowed areas can preserve water, in nine regions picked for lighting, terrain and Earth communication. Our base test uses them."
+  }
+ },
+ "figures": [
+  {
+   "value": "9,888",
+   "unit": "Earth sites",
+   "used_in": [
+    "zone_why.rover"
+   ],
+   "how_computed": "Rover, shipped real-value method (slope 2 deg, roughness 30 m, relative elevation 500 m; filter 2 deg / 30 m / 1,000 m) searched in the north-polar cells (lat >= 75): ranked Earth sites with a twin; out of 10,337 (docs/MISSION_ZONES.md, Corrections of 2026-11-15; ZONE_CONTRAST.md 3.1)"
+  },
+  {
+   "value": "10,192",
+   "unit": "Earth sites",
+   "used_in": [
+    "zone_why.rover"
+   ],
+   "how_computed": "Rover twins in the shipped south-polar zone (lat <= -75), out of 10,337; recomputed and identical, twin by twin, to app/public/data/v2 earth_rover.bin"
+  },
+  {
+   "value": "0.10",
+   "unit": "deg",
+   "used_in": [
+    "zone_why.rover"
+   ],
+   "how_computed": "median |slope Earth - slope twin| of the 9,888 north-polar pairs (0.104)"
+  },
+  {
+   "value": "0.41",
+   "unit": "deg",
+   "used_in": [
+    "zone_why.rover"
+   ],
+   "how_computed": "median |slope Earth - slope twin| of the 10,192 shipped south-polar pairs (0.408)"
+  },
+  {
+   "value": "99.7",
+   "unit": "similarity 0-100",
+   "used_in": [
+    "outside.rover.C"
+   ],
+   "how_computed": "median similarity of the 9,888 north-polar pairs (99.72)"
+  },
+  {
+   "value": "93.3",
+   "unit": "similarity 0-100",
+   "used_in": [
+    "outside.rover.C"
+   ],
+   "how_computed": "median similarity of the 10,192 shipped south-polar pairs (93.29)"
+  },
+  {
+   "value": "1.1",
+   "unit": "deg",
+   "used_in": [
+    "zone_why.solar"
+   ],
+   "how_computed": "area-weighted (cos latitude) median over the region's cells of tierra luna/output_real/moon_real_1deg.csv slope_deg in region D (1.134), the lowest of the six regions"
+  },
+  {
+   "value": "10",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "zone_why.solar",
+    "outside.solar.E",
+    "outside.solar.F"
+   ],
+   "how_computed": "area-weighted (cos latitude) median over the region's cells of tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day in region D (10.017); the same as equatorial ground outside the maria (abs(lat) <= 30, area-weighted median 10.108; the table maximum 10.395 is reached in both), so the strings say 'sunlight as high as anywhere in our data', not 'the most'; the highlands' 8 and 9 are medians over regions that reach 75 degrees of latitude"
+  },
+  {
+   "value": "8",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "zone_why.solar",
+    "outside.solar.F"
+   ],
+   "how_computed": "area-weighted (cos latitude) median over the region's cells of tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day in region F (8.248)"
+  },
+  {
+   "value": "9",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "zone_why.solar",
+    "outside.solar.E"
+   ],
+   "how_computed": "area-weighted (cos latitude) median over the region's cells of tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day in region E (8.958)"
+  },
+  {
+   "value": "2.48",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "zone_why.solar",
+    "outside.solar.A",
+    "outside.solar.B"
+   ],
+   "how_computed": "maximum irradiance_kwh_m2_day (horizontal surface) over the cells at lat <= -75 of tierra luna/output_real/moon_real_1deg.csv (2.475); also the maximum at abs(lat) >= 75"
+  },
+  {
+   "value": "2.45",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "outside.solar.C"
+   ],
+   "how_computed": "maximum irradiance_kwh_m2_day over the cells at lat >= 75 of tierra luna/output_real/moon_real_1deg.csv (2.451)"
+  },
+  {
+   "value": "3.54",
+   "unit": "kWh/m2/day",
+   "used_in": [
+    "zone_why.solar",
+    "outside.solar.A",
+    "outside.solar.B",
+    "outside.solar.C"
+   ],
+   "how_computed": "least sunlight above the atmosphere among the 18,777 ranked solar Earth sites (4.137, earth_base.bin d.irradiance_toa_kwh_m2_day) minus the 0.6 tolerance (3.537): the least a lunar cell needs to pair with any of them; every ranked solar Earth site needs at least this much (independently re-derived 2026-11-15: 4.1368 at the -89.5 row with an own Kepler-weighted insolation integral)"
+  },
+  {
+   "value": "75",
+   "unit": "deg latitude",
+   "used_in": [
+    "outside.solar.A",
+    "outside.solar.B",
+    "outside.solar.C",
+    "outside.rover.F"
+   ],
+   "how_computed": "the polar limit used by the regions (Rover zone: lat <= -75)"
+  },
+  {
+   "value": "18,776",
+   "unit": "Earth sites",
+   "used_in": [
+    "outside.solar.E",
+    "outside.solar.F"
+   ],
+   "how_computed": "solar Earth sites that find a twin with the shipped real-value method searched in region E alone and in region F alone (18,776 in each)"
+  },
+  {
+   "value": "18,777",
+   "unit": "Earth sites",
+   "used_in": [
+    "outside.solar.E",
+    "outside.solar.F"
+   ],
+   "how_computed": "solar Earth sites that pass the funnel (ranked list)"
+  },
+  {
+   "value": "12,416",
+   "unit": "Earth sites",
+   "used_in": [
+    "outside.solar.E",
+    "outside.solar.F"
+   ],
+   "how_computed": "of the 12,417 solar Earth sites without a twin in the maria, those that find one in region E (12,416) and in region F (12,416); the remaining one (E19334) has none anywhere"
+  },
+  {
+   "value": "90",
+   "unit": "% of the year",
+   "used_in": [
+    "outside.solar.B"
+   ],
+   "how_computed": "NASA, S26: three points on Shackleton's rim 'collectively sunlit for more than 90 percent of the year'"
+  },
+  {
+   "value": "69",
+   "unit": "deg S",
+   "used_in": [
+    "outside.rover.F"
+   ],
+   "how_computed": "Chandrayaan-3 landing latitude, S1 -69.3741; ISRO S21 '69.3° S'"
+  },
+  {
+   "value": "1973",
+   "unit": "year",
+   "used_in": [
+    "outside.rover.D"
+   ],
+   "how_computed": "Luna 21 / Lunokhod 2 landing, S1 15 January 1973"
+  },
+  {
+   "value": "2019",
+   "unit": "year",
+   "used_in": [
+    "outside.rover.E"
+   ],
+   "how_computed": "Chang'e 4 landing, S1 3 January 2019"
+  },
+  {
+   "value": "2023",
+   "unit": "year",
+   "used_in": [
+    "outside.rover.F"
+   ],
+   "how_computed": "Chandrayaan-3 landing, S1 23 August 2023"
+  },
+  {
+   "value": "2012",
+   "unit": "year",
+   "used_in": [
+    "outside.rover.C",
+    "outside.lunar_base.C"
+   ],
+   "how_computed": "GRAIL A and B impacts, S1 17 December 2012"
+  },
+  {
+   "value": "2024",
+   "unit": "year",
+   "used_in": [
+    "zone_why.lunar_base",
+    "outside.solar.B",
+    "outside.lunar_base.B"
+   ],
+   "how_computed": "IM-1 landing, S1 22 February 2024; NASA RELEASE24-136 (nine regions), 28 October 2024"
+  },
+  {
+   "value": "2025",
+   "unit": "year",
+   "used_in": [
+    "outside.solar.A"
+   ],
+   "how_computed": "IM-2 landing, S1 6 March 2025"
+  }
+ ]
+}

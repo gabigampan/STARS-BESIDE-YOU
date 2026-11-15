@@ -1,4 +1,4 @@
-// Types of the engine's static bundle v2 (docs/DATA_CONTRACT.md, contract revision 4).
+// Types of the engine's static bundle v2 (docs/DATA_CONTRACT.md, contract revisions 4 to 6).
 // Only the fields the app reads are typed; everything else stays available as unknown JSON.
 
 export type BodyKey = 'EARTH' | 'MOON';
@@ -46,6 +46,8 @@ export interface Manifest {
   dataset: { id: string; why: string };
   build_time: string;
   similarity_rule: string;
+  /** Revision 5: the similarity rule of each mission. */
+  similarity_rules?: Record<string, string>;
   grid: {
     rows: number;
     cols: number;
@@ -56,12 +58,13 @@ export interface Manifest {
   counts: {
     EARTH: { cells: number; land_cells: number };
     MOON: { cells: number };
-    missions: Record<string, { pass_EARTH: number; pass_MOON: number; ranked_EARTH: number; distinct_twins: number }>;
+    missions: Record<string, { pass_EARTH: number; pass_MOON: number; ranked_EARTH: number; unpaired_EARTH?: number; distinct_twins: number }>;
   };
   load: { first_view: string[]; default_mission: string };
   detail_tiles: { rows_per_tile: number; lookup: string; files: DetailTile[] };
   files: FileEntry[];
   credits: string[];
+  sizes?: { budget: { first_view_max: number; total_max: number } };
 }
 
 export interface Gate {
@@ -114,15 +117,61 @@ export interface FunnelStep {
 export interface ZoneInfo {
   name: string;
   kind: string;
-  used: string;
-  reason: string;
+  used?: string;
+  reason?: string;
+  why?: string;
   cells: number;
-  regions: string[] | null;
+  regions?: string[] | null;
   source?: string;
+  lat_max?: number | null;
+  abs_lat_max?: number;
+  elevation_max_m?: number;
+}
+
+/** Revision 5: one similarity variable of a real-value mission (missions.json similarity.variables). */
+export interface PairVariable {
+  variable: string;
+  label: string;
+  unit: string;
+  role: 'key' | 'secondary' | string;
+  weight: number;
+  tolerance: number;
+  bound: number;
+  tolerance_set_by: string;
+  why?: string;
+  sides?: Record<BodyKey, { kind: string; column: string | null; level: Level | null; text: string }>;
+  /** Columns of earth_<m>_pairs.bin: earth, moon, diff (revision 6 may add percentile columns). */
+  pairs_columns: Record<string, string>;
+  score_column: string;
+  /** Any further keys a later revision adds (scale, percentile columns...). */
+  [key: string]: unknown;
+}
+
+export interface UnpairedReason {
+  kind: string;
+  variable: string;
+  role: string;
+  bound: number;
+  earth_cells: number;
+  gap_min: number;
+  gap_median: number;
+  gap_max: number;
 }
 
 export interface MissionSimilarity {
   rule: string;
+  variables?: PairVariable[];
+  weights_why?: string;
+  score?: string;
+  similarity_formula?: string;
+  filter?: Record<string, string>;
+  passing_count?: number;
+  paired_count?: number;
+  unpaired_count?: number;
+  nopair_kinds?: string[];
+  unpaired_reasons?: UnpairedReason[];
+  pairs_file?: string;
+  list_rule?: string;
   twins?: unknown;
   no_twin_reason?: string;
   zone?: ZoneInfo;
@@ -219,16 +268,34 @@ export interface ZoneTwinTarget {
   zones: Record<string, ZoneInfo>;
 }
 
+export interface PlaceholderSpec {
+  file: string;
+  column: string;
+  decimals?: number;
+  multiply?: number;
+  meaning?: string;
+}
+
 export interface BundleText {
-  decision: number;
+  decision: number | string;
   text: string;
   where: string;
   mission?: string;
-  placeholders?: Record<string, string>;
+  /** Revision 5: the missions the text applies to. */
+  missions?: string[];
+  mission_card?: boolean;
+  /** Plain placeholders (a description) or per-pair placeholders (a pairs-file column). */
+  placeholders?: Record<string, string | PlaceholderSpec>;
+  variant_no_joint_match?: string;
+  [key: string]: unknown;
 }
 
 export interface SimilarityJson {
   rule: string;
+  /** Revision 5: the rule of each mission. */
+  rules?: Record<string, string>;
+  z_rule_missions?: string[];
+  real_value?: { info_differences?: Record<string, string[] | string>; [key: string]: unknown };
   rule_why: string;
   rule_options: Record<string, string>;
   alpha: number;
@@ -274,6 +341,8 @@ export interface VariableInfo {
   kind: string;
   description: string;
   categories: string[] | null;
+  /** English display labels of the categories, when the bundle provides them. */
+  category_labels?: Record<string, string> | string[] | null;
   bodies: Partial<Record<BodyKey, BodyProvenance>>;
 }
 
@@ -313,7 +382,8 @@ export interface Twin {
   lat: number;
   lon: number;
   earth_cells: number;
-  z: Record<string, number | null>;
+  /** z-score rules only. */
+  z?: Record<string, number | null>;
   values: Record<string, number | null>;
   not_part_of_similarity: Record<string, number | string | null>;
   feature: { name: string; type: string; distance_km: number; url: string } | null;
@@ -343,3 +413,24 @@ export interface IauFeatures {
 
 export type NumArray = Float32Array | Int32Array;
 export type Columns = Record<string, NumArray>;
+
+/** Revision 6: mission_zones.json (the lunar regions and why each mission is posed where it is). */
+export interface ZoneRegion {
+  code: string;
+  label: string;
+  rule: string;
+  cells: number;
+}
+
+export interface MissionZonesJson {
+  consulted_on: string;
+  source_document: string;
+  regions: ZoneRegion[];
+  mission_zone_regions: Record<string, string[]>;
+  texts: null | {
+    general_note: string;
+    zone_why: Record<string, string>;
+    outside: Record<string, Record<string, string>>;
+  };
+  [key: string]: unknown;
+}

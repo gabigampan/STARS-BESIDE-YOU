@@ -29,8 +29,8 @@ import numpy as np
 import pandas as pd
 
 from engine import provenance
-from engine.config import (BODIES, REPO_RULES, TWIN_RULES, EngineConfig, mission_components, resolve_path, sha256_bytes,
-                           similarity_rule, similarity_rules)
+from engine.config import (BODIES, REAL_RULES, REPO_RULES, TWIN_RULES, EngineConfig, mission_components, resolve_path,
+                           sha256_bytes, similarity_rule, similarity_rules)
 from engine.dataset import Dataset
 from engine.export import (_dec, _subset, build_explain, build_iau_features, dumps, mission_facts, reason_code_table,
                            rnd)
@@ -294,6 +294,16 @@ def funnel_steps(mission_cfg: Dict, engine_cfg: EngineConfig) -> List[Dict[str, 
                       f"similarity = 100 * weighted mean of s; the twin is the lunar zone cell with every key variable within {mult['key']:g} x its tolerance "
                       f"and every secondary within {mult['secondary']:g} x its tolerance that has the highest similarity; a point with no such cell has no twin, "
                       "no similarity and no final (it keeps its suitability).")
+    pct_ms = [m for m, r in rules.items() if r == "percentile_and_real_tolerance"]
+    if pct_ms:
+        rv = engine_cfg.v("real_value_similarity")
+        mult = rv["filter_bound_multiplier"]
+        parts5.append(f"{', '.join(pct_ms)}: similarity on thermal position and real terrain (missions.json similarity, rule percentile_and_real_tolerance): "
+                      "the variables with scale 'percentile_within_population' are compared as their percentile within their own population "
+                      "(Earth: the points passing the mission's funnel; Moon: the cells of the zone), the others in real values; per variable "
+                      f"s = exp(-0.5 * (difference / tolerance)^2), similarity = 100 * weighted mean of s; the twin is the zone cell with every key variable within {mult['key']:g} x its tolerance "
+                      f"and every secondary within {mult['secondary']:g} x its tolerance that has the highest similarity; a point with no such cell has no twin, "
+                      "no similarity and no final (it keeps its suitability). A likeness of position, not of equal values: the real values are shown with every pair.")
     if repo_ms and decay is not None:
         parts5.append(f"{', '.join(repo_ms)}: the repository's similarity (similarity.json): per-body z-scores of the analog_finder variables, "
                       f"weighted distance d, similarity = 100 * exp(-{decay} * d).")
@@ -422,7 +432,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
                 "columns_in": "earth_detail_*.bin: <mission>.<component>.fail_bits, .u.<variable>, .suitability",
             }
         sim_block: Dict[str, Any] = {"rule": res.rule}
-        if res.rule == "real_value_tolerance":
+        if res.rule in REAL_RULES:
             sim_block.update(real_similarity_block(res, reg, engine_cfg))
         if res.rule == "zone_twin":
             z = res.extra["repo_context"].zones[mid]
@@ -505,11 +515,21 @@ def real_variable_rows(res: MissionResult, reg: Dict, engine_cfg: EngineConfig) 
                 lvl = reg["variables"][col]["bodies"][b]["level"] if col in reg.get("variables", {}) else lvl
             sides[b] = {"kind": n["kind"], "column": n.get("column"), "level": lvl, "text": n.get("text"),
                         "body_mean": rnd(n.get("body_mean"), 4), "cells_in_mean": n.get("cells_in_mean")}
-        rows.append({"variable": v, "label": x.get("label", v), "unit": x["unit"], "role": spec.roles[q],
-                     "weight": spec.weights[q], "tolerance": spec.tau[q], "bound": spec.bound[q],
-                     "tolerance_set_by": x["tolerance_set_by"], "why": x.get("why"), "sides": sides,
-                     "pairs_columns": {"earth": f"{v}.earth", "moon": f"{v}.moon", "diff": f"{v}.diff"},
-                     "score_column": f"s.{v}"})
+        row = {"variable": v, "label": x.get("label", v), "unit": x["unit"], "role": spec.roles[q],
+               "weight": spec.weights[q], "tolerance": spec.tau[q], "bound": spec.bound[q],
+               "tolerance_set_by": x["tolerance_set_by"], "why": x.get("why"), "sides": sides,
+               "pairs_columns": {"earth": f"{v}.earth", "moon": f"{v}.moon", "diff": f"{v}.diff"},
+               "score_column": f"s.{v}"}
+        if real.get("rule") == "percentile_and_real_tolerance":
+            pct = spec.scales[q] == "percentile_within_population"
+            row["scale"] = spec.scales[q]
+            row["real_unit"] = x.get("real_unit", x["unit"])
+            if pct:
+                row["pairs_columns"].update({"earth_pct": f"{v}.earth_pct", "moon_pct": f"{v}.moon_pct", "diff_pct": f"{v}.diff_pct"})
+                row["population_size"] = real["populations"][v]
+            row["compared_columns"] = ({"earth": f"{v}.earth_pct", "moon": f"{v}.moon_pct", "diff": f"{v}.diff_pct"} if pct
+                                       else {"earth": f"{v}.earth", "moon": f"{v}.moon", "diff": f"{v}.diff"})
+        rows.append(row)
     return rows
 
 
@@ -524,6 +544,8 @@ def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfi
     paired = int((res.twin_id[passing] >= 0).sum())
     z = dict(mrule["zone"])
     z["cells"] = real["zone_cells"]
+    if real.get("rule") == "percentile_and_real_tolerance":
+        return percentile_similarity_block(res, reg, engine_cfg, z, passing, paired)
     return {
         "variables": real_variable_rows(res, reg, engine_cfg),
         "weights_why": mrule.get("weights_why"),
@@ -541,6 +563,45 @@ def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfi
     }
 
 
+def percentile_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfig, zone: Dict[str, Any],
+                                passing: np.ndarray, paired: int) -> Dict[str, Any]:
+    """missions.json similarity block of a percentile_and_real_tolerance mission (lunar_base)."""
+    from engine.real_similarity import nopair_summary
+
+    real = res.extra["real"]
+    rv = real["settings"]
+    mrule = real["mission_rule"]
+    kinds = real["nopair_kinds"]
+    nk = real["nopair_kind"][passing]
+    info_units = {"temp_k": "K", "elevation_rel_m": "m", "irradiance_kwh_m2_day": "kWh/m2/day"}
+    return {
+        "variables": real_variable_rows(res, reg, engine_cfg),
+        "weights_why": mrule.get("weights_why"),
+        "meaning": "A likeness of thermal POSITION, not of temperature: the two key variables are compared as percentiles within their own population; slope and roughness in real values. Show the real values and differences of every pair (texts.lunar_base_pair_sentence).",
+        "populations": {b: {"rule": mrule["populations"][b]["rule"], "why": mrule["populations"][b]["why"],
+                            "cells": int(len(passing)) if b == "EARTH" else int(real["zone_cells"]),
+                            "cells_with_value": {v: n[b] for v, n in real["populations"].items()}}
+                        for b in BODIES},
+        "percentile": mrule["percentile"],
+        "score": rv["score"], "similarity_formula": rv["similarity"],
+        "filter": {"key": f"|difference| <= {rv['filter_bound_multiplier']['key']:g} x tolerance (percentile points for the percentile variables)",
+                   "secondary": f"|difference| <= {rv['filter_bound_multiplier']['secondary']:g} x tolerance (real values)",
+                   "missing_key": rv["missing_key"] + "; a cell without a value has no percentile", "missing_secondary": rv["missing_secondary"]},
+        "score_decimals": int(rv["score_decimals"]),
+        "zone": zone,
+        "passing_count": int(passing.size), "paired_count": paired, "unpaired_count": int(passing.size - paired),
+        "nopair_kinds": kinds,
+        "nopair_groups": mrule["nopair_groups"], "nopair_groups_why": mrule.get("nopair_groups_why"),
+        "unpaired_by_kind": {k: int((nk == j).sum()) for j, k in enumerate(kinds)},
+        "unpaired_reasons": nopair_summary(_rt_view(real), real["spec"], passing, 4, kinds),
+        "info_columns": [{"variable": v, "unit": info_units.get(v), "columns": {s: f"info.{v}.{s}" for s in ("earth", "moon", "diff")},
+                          "part_of_similarity": False} for v in real["info"]],
+        "pair_sentence": mrule.get("pair_sentence"),
+        "pairs_file": f"earth_{res.mission}_pairs.bin",
+        "list_rule": "paired points by rank, then the points without a twin by published suitability descending, ties by Earth cell id (earth_<mission>_pairs.bin list_order)",
+    }
+
+
 class _rt_view:  # minimal view of the per-row reason arrays for nopair_summary
     def __init__(self, real: Dict) -> None:
         self.nopair_kind, self.nopair_var, self.nopair_gap = real["nopair_kind"], real["nopair_var"], real["nopair_gap"]
@@ -551,13 +612,38 @@ def real_pair_values(res: MissionResult, i: int, engine_cfg: EngineConfig) -> Li
     real = res.extra["real"]
     spec = real["spec"]
     out = []
+    pct_rule = real.get("rule") == "percentile_and_real_tolerance"
     for q, v in enumerate(spec.variables):
         dd = _dec(engine_cfg, v)
-        out.append({"variable": v, "role": spec.roles[q], "weight": spec.weights[q], "tolerance": spec.tau[q],
-                    "bound": spec.bound[q], "earth": rnd(real["earth_values"][i, q], dd),
-                    "moon": rnd(real["moon_values"][i, q], dd), "difference": rnd(real["diff"][i, q], dd),
-                    "score": rnd(real["scores"][i, q], int(real["settings"]["score_decimals"]))})
+        if not pct_rule:
+            out.append({"variable": v, "role": spec.roles[q], "weight": spec.weights[q], "tolerance": spec.tau[q],
+                        "bound": spec.bound[q], "earth": rnd(real["earth_values"][i, q], dd),
+                        "moon": rnd(real["moon_values"][i, q], dd), "difference": rnd(real["diff"][i, q], dd),
+                        "score": rnd(real["scores"][i, q], int(real["settings"]["score_decimals"]))})
+            continue
+        x = real["mission_rule"]["variables"][q]
+        row = {"variable": v, "role": spec.roles[q], "scale": spec.scales[q], "weight": spec.weights[q],
+               "tolerance": spec.tau[q], "bound": spec.bound[q], "unit": x["unit"],
+               "earth": rnd(real["compared_earth"][i, q], dd), "moon": rnd(real["compared_moon"][i, q], dd),
+               "difference": rnd(real["compared_diff"][i, q], dd),
+               "real_unit": x.get("real_unit", x["unit"]), "earth_real": rnd(real["earth_values"][i, q], dd),
+               "moon_real": rnd(real["moon_values"][i, q], dd), "difference_real": rnd(real["diff"][i, q], dd),
+               "score": rnd(real["scores"][i, q], int(real["settings"]["score_decimals"]))}
+        out.append(row)
     return out
+
+
+def fill_pair_sentence(template: Dict[str, Any], values: Dict[str, float]) -> str:
+    """Fill a per-pair text template (approved_texts entry with placeholders {file, column,
+    decimals[, subtract][, multiply]}) from the pair's values {column: value}; the browser
+    does the same from the pairs file."""
+    text = template["text"]
+    for name, ph in (template.get("placeholders") or {}).items():
+        if not isinstance(ph, dict) or ph.get("filled_at_build"):
+            continue
+        x = float(values[ph["column"]]) * float(ph.get("multiply", 1.0)) - float(ph.get("subtract", 0.0))
+        text = text.replace("{" + name + "}", f"{x:.{int(ph['decimals'])}f}")
+    return text
 
 
 def similarity_levels(reg: Dict, columns: Dict[str, Dict[str, Optional[str]]], var: str) -> Dict[str, Optional[str]]:
@@ -609,6 +695,9 @@ def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine
     real_ms = [m for m, r in rules.items() if r == "real_value_tolerance"]
     if real_ms:
         base["real_value"] = real_value_json(results, real_ms, ds, engine_cfg)
+    pct_ms = [m for m, r in rules.items() if r == "percentile_and_real_tolerance"]
+    if pct_ms:
+        base["percentile_and_real"] = percentile_rule_json(results, pct_ms, ds, engine_cfg)
     repo_ms = [m for m, r in rules.items() if r in REPO_RULES]
     if ctx is None or not repo_ms:
         if any(r == "physical_pooled" for r in rules.values()):
@@ -746,6 +835,35 @@ def real_value_json(results: Dict[str, MissionResult], missions: List[str], ds: 
     }
 
 
+def percentile_rule_json(results: Dict[str, MissionResult], missions: List[str], ds: Dataset,
+                         engine_cfg: EngineConfig) -> Dict[str, Any]:
+    """similarity.json 'percentile_and_real': the rule of Lunar base (team decision of
+    2026-11-15 08:55 CET) and, per mission, its variables, populations and zone."""
+    rv = engine_cfg.v("real_value_similarity")
+    opts = engine_cfg.v("similarity_rule_options")
+    out = {"rule": "percentile_and_real_tolerance", "missions": missions,
+           "why": opts["percentile_and_real_tolerance"],
+           "score": rv["score"], "similarity": rv["similarity"], "filter_bound_multiplier": rv["filter_bound_multiplier"],
+           "missing_key": rv["missing_key"] + "; a cell without a value has no percentile", "missing_secondary": rv["missing_secondary"],
+           "score_decimals": int(rv["score_decimals"]),
+           "twin": "the zone cell that passes the filter with the highest similarity, compared at full precision; ties: lowest lunar id; lunar cells are not passed through the mission filters",
+           "meaning": "A likeness of thermal POSITION, not of temperature: a percentile variable says where a place ranks within its own population (Earth: the mission's candidates; Moon: the zone cells), so equal percentiles do not mean equal values. Terrain is compared in real values. The real values and differences are exported for every pair.",
+           "missions_detail": {}}
+    for m in missions:
+        real = results[m].extra["real"]
+        mrule = real["mission_rule"]
+        out["missions_detail"][m] = {
+            "variables": real_variable_rows(results[m], ds.reg, engine_cfg),
+            "percentile": mrule["percentile"],
+            "populations": {b: {"rule": mrule["populations"][b]["rule"],
+                                "cells_with_value": {v: n[b] for v, n in real["populations"].items()}} for b in BODIES},
+            "zone": {**mrule["zone"], "cells": real["zone_cells"]},
+            "weights_why": mrule.get("weights_why"),
+            "not_part_of_similarity": list(real["info"]),
+        }
+    return out
+
+
 def lunar_info_summary(ds: Dataset, engine_cfg: EngineConfig) -> Dict[str, Any]:
     """Whole-Moon summary of the variables that are not part of the similarity (mean for
     numbers, commonest class for categories), for the repo_global_mean target."""
@@ -793,6 +911,16 @@ def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg:
                 dv = real["derived"].values
                 row["values"] = {v: rnd(dv[v]["MOON"][p], _dec(engine_cfg, v)) for v in real["spec"].variables}
                 info_vars = ["temp_k"] + NOT_IN_SIMILARITY + list(ctx.excluded if ctx is not None else [])
+            elif res.rule == "percentile_and_real_tolerance":
+                real = res.extra["real"]
+                dv = real["derived"].values
+                spec = real["spec"]
+                row["values"] = {v: rnd(dv[v]["MOON"][p], _dec(engine_cfg, v)) for v in spec.variables}
+                row["percentiles"] = {v: rnd(real["moon_percentile"][p, q], 4) for q, v in enumerate(spec.variables)
+                                      if spec.scales[q] == "percentile_within_population"}
+                used = set(spec.variables) | {"tmin_c"}
+                info_vars = ["temp_k"] + [v for v in NOT_IN_SIMILARITY if v not in used] + list(ctx.excluded if ctx is not None else [])
+
             else:
                 if ctx is not None:
                     row["z"] = {f: rnd(ctx.moon.z[f][p], zd) for f in ctx.active}
@@ -804,6 +932,11 @@ def build_twins_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg:
                     x = moon[v].iat[p]
                     info[v] = (None if pd.isna(x) else str(x)) if ds.reg["variables"][v]["kind"] == "categorical" \
                         else rnd(x, _dec(engine_cfg, v))
+            if res.rule == "percentile_and_real_tolerance":
+                dv = res.extra["real"]["derived"].values
+                for v in res.extra["real"]["info"]:
+                    if v in dv and v not in info:      # derived (the centred relative elevation)
+                        info[v] = rnd(dv[v]["MOON"][p], _dec(engine_cfg, v))
             row["not_part_of_similarity"] = info
             row["feature"] = {"name": moon_feat["name"][p], "type": moon_feat["type"][p],
                               "distance_km": rnd(moon_feat["distance_km"][p], dkm),
@@ -847,7 +980,7 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
                            "level": ds.reg["variables"][v]["bodies"]["EARTH"]["level"]})
             br.sort(key=lambda r: (-(r["contribution"] if r["contribution"] is not None else -1.0), r["variable"]))
             sim = {"value": rnd(res.similarity_pct[i], scd), "rule": res.rule}
-            if res.rule == "real_value_tolerance":
+            if res.rule in REAL_RULES:
                 real = res.extra["real"]
                 t = int(res.twin_id[i])
                 sim["twin"] = {"id": t, "lat": rnd(ds.cells["MOON"]["lat_deg"].iat[t], ll),
@@ -860,6 +993,12 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
                                                  for v, x in real["info"].items()}
                 if "atm" in real:
                     sim["atmosphere"] = {k: rnd(a[i], 4) for k, a in real["atm"].items()}
+                if res.rule == "percentile_and_real_tolerance":
+                    sim["meaning"] = "likeness of thermal position, not of temperature"
+                    key = real["mission_rule"].get("pair_sentence")
+                    tpl = (engine_cfg.v("approved_texts") or {}).get(key) if key else None
+                    if tpl:
+                        sim["pair_sentence"] = fill_pair_sentence(tpl, pair_columns_of_row(res, i))
             elif ctx is not None:
                 sim["earth"] = {f: {"z": rnd(ctx.earth.z[f][i], 4), "value": rnd(ctx.earth.values[f][i], 4)} for f in ctx.active}
                 if res.rule == "zone_twin":
@@ -892,6 +1031,20 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
             items.append(item)
         out[mid] = items
     return {"bundle_version": engine_cfg.v("bundle_version"), "top_n": n, "missions": out}
+
+
+def pair_columns_of_row(res: MissionResult, i: int) -> Dict[str, float]:
+    """{pairs-file column: value as stored (float32)} of one Earth row of a real-value
+    mission, so a text filled here reads exactly what the browser reads."""
+    real = res.extra["real"]
+    out: Dict[str, float] = {}
+    for q, v in enumerate(real["spec"].variables):
+        for side, arr in (("earth", "earth_values"), ("moon", "moon_values"), ("diff", "diff")):
+            out[f"{v}.{side}"] = float(np.float32(real[arr][i, q]))
+    for v, x in real["info"].items():
+        for side in ("earth", "moon", "diff"):
+            out[f"info.{v}.{side}"] = float(np.float32(x[side][i]))
+    return out
 
 
 def build_places(earth_places: Dict[str, list], land_idx: np.ndarray) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, np.ndarray]]:
@@ -1084,12 +1237,22 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     mb.i32("feature", np.asarray(moon_feat["index"]), "all", codes="iau_moon_features.json (array position)")
     mb.f32("feature_km", moon_feat["distance_km"], "all", unit="km",
            description="great-circle distance from the cell centre to that feature's centre")
+    zones_obj = zones_status = None
+    if engine_cfg.v("lunar_regions"):
+        from engine.lunar_regions import check_mission_zones, mission_zones_json, region_codes, zone_from_config
+        rcodes, _ = region_codes(moon, engine_cfg)
+        rv_m = (engine_cfg.v("real_value_similarity") or {}).get("missions", {})
+        check_mission_zones(moon, engine_cfg, rcodes,
+                            {m: zone_from_config(moon, engine_cfg, f"real_value_similarity.missions.{m}.zone") for m in rv_m})
+        mb.i32("region", rcodes, "all", codes="mission_zones.json regions (array position)",
+               description="lunar region of the cell (docs/MISSION_ZONES.md section 2: A the nine NASA regions, B south-polar outside them, C north-polar, D low equatorial plains, E far side, F the rest); for the web's 'why not here' texts")
+        zones_obj, zones_status = mission_zones_json(moon, engine_cfg, rcodes)
 
     # --- per mission: map columns
     ud, scd, cd = qd["utility"], qd["score"], qd["confidence_score"]
     for mid, res in results.items():
         has_twins = res.rule in TWIN_RULES
-        is_real = res.rule == "real_value_tolerance"
+        is_real = res.rule in REAL_RULES
         bits_e = fail_bits(res.earth_gates, codes[mid])
         outside = np.flatnonzero(res.earth_gates.passed & ~land)
         if outside.size:
@@ -1155,7 +1318,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
         name = f"earth_detail_{t0 // tile_rows:02d}.bin"
         tf = BinFile(name, enc)
         tf.i32("id", earth["id"].to_numpy()[sel], "tile_land", description="Earth cell id (land cells of this tile, ascending)")
-        if ctx is not None:
+        if ctx is not None and any(r.rule in REPO_RULES for r in results.values()):
             for f in ctx.active:
                 tf.quantised(f"z.{f}", ctx.earth.z[f][sel], zd, "tile_land",
                              description=f"per-body z-score of {f} (similarity.json); missing = no value or outside the normalised population")
@@ -1204,13 +1367,16 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     if sites is not None:
         add_json("lunar_named_sites.json", sites, "on_demand", "named lunar sites, their cell and per-mission outcome")
     add_json("validity.json", validity, "on_demand", "schema validation report of the input tables")
+    if zones_obj is not None:
+        add_json("mission_zones.json", zones_obj, "on_demand",
+                 "the six lunar regions (moon_base.bin 'region'), each mission's zone as regions, and the texts for a cell outside a mission's zone")
 
     order = ["missions.json", "similarity.json", "variables.json", "places.json", "earth_base.bin",
              f"earth_{missions[0]}.bin"] + [f"earth_{m}.bin" for m in missions[1:]] + \
         [f"earth_{m}_pairs.bin" for m in missions] + [t["name"] for t in tiles] + \
         ["moon_base.bin"] + [f"moon_{m}.bin" for m in missions] + \
         ["twins.json", "earth_place_detail.bin", "place_detail.json", "explain.json", "iau_moon_features.json",
-         "lunar_named_sites.json", "validity.json"]
+         "lunar_named_sites.json", "mission_zones.json", "validity.json"]
     order = [n for n in order if n in files]
     first = [n for n in order if meta[n]["load"] == "start"]
     budget = engine_cfg.v("first_view_budget_bytes")
@@ -1218,7 +1384,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     data_credits = sorted({reg["variables"][v]["bodies"][b].get("licence_credit") or "" for v in eng_vars for b in BODIES} - {""})
     manifest = {
         "bundle_version": engine_cfg.v("bundle_version"),
-        "contract_revision": 5,
+        "contract_revision": 6,
         "engine_version": engine_cfg.v("engine_version"),
         "dataset": {"id": ds.id, "why": engine_cfg.dataset.why},
         "build_time": build_time,
@@ -1253,6 +1419,8 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
                   "budget": budget},
         "credits": list(engine_cfg.v("credits")) + data_credits,
     }
+    if zones_status is not None:
+        manifest["mission_zone_texts"] = {"status": zones_status, "texts_present": zones_obj["texts"] is not None}
     files["manifest.json"] = dumps(manifest)
     objs["manifest.json"] = manifest
     return files, objs, manifest
@@ -1264,6 +1432,8 @@ def real_pairs_file(res: MissionResult, idx: np.ndarray, enc: Dict) -> BinFile:
 
     real = res.extra["real"]
     spec = real["spec"]
+    if real.get("rule") == "percentile_and_real_tolerance":
+        return percentile_pairs_file(res, idx, enc)
     pf = BinFile(f"earth_{res.mission}_pairs.bin", enc)
     pf.i32("list_order", real["list_order"][idx], "passing",
            description="display order of the passing cells: paired cells by rank, then cells without a twin by published suitability descending, ties by id")
@@ -1289,6 +1459,50 @@ def real_pairs_file(res: MissionResult, idx: np.ndarray, enc: Dict) -> BinFile:
                description={"ground_kwh_m2_day": "Earth irradiance at the ground (v.irradiance_kwh_m2_day)",
                             "toa_kwh_m2_day": "Earth sunlight above the atmosphere (DERIVED, toa_insolation)",
                             "lost_share": "1 - ground / above the atmosphere: the share lost in the atmosphere at the Earth site"}.get(k, k))
+    return pf
+
+
+def percentile_pairs_file(res: MissionResult, idx: np.ndarray, enc: Dict) -> BinFile:
+    """earth_<mission>_pairs.bin of a percentile_and_real_tolerance mission (lunar_base;
+    rows: passing cells)."""
+    real = res.extra["real"]
+    spec = real["spec"]
+    kinds = real["nopair_kinds"]
+    pf = BinFile(f"earth_{res.mission}_pairs.bin", enc)
+    pf.i32("list_order", real["list_order"][idx], "passing",
+           description="display order of the passing cells: paired cells by rank, then cells without a twin by published suitability descending, ties by id")
+    for q, v in enumerate(spec.variables):
+        x = real["mission_rule"]["variables"][q]
+        ru = x.get("real_unit", x["unit"])
+        pf.f32(f"{v}.earth", real["earth_values"][idx, q], "passing", unit=ru,
+               description=f"{v} of the Earth cell, real value (NaN = no value)")
+        pf.f32(f"{v}.moon", real["moon_values"][idx, q], "passing", unit=ru,
+               description=f"{v} of the lunar twin, real value (NaN = no twin or no value)")
+        pf.f32(f"{v}.diff", real["diff"][idx, q], "passing", unit=ru,
+               description=f"|Earth - twin| of {v} in real values, double precision (NaN = no twin or no value)")
+        if spec.scales[q] == "percentile_within_population":
+            pf.f32(f"{v}.earth_pct", real["compared_earth"][idx, q], "passing", unit="percentile points",
+                   description=f"percentile of the Earth cell's {v} among the Earth points passing the mission (mid-rank, 0-100)")
+            pf.f32(f"{v}.moon_pct", real["compared_moon"][idx, q], "passing", unit="percentile points",
+                   description=f"percentile of the twin's {v} among the cells of the zone (mid-rank, 0-100; NaN = no twin)")
+            pf.f32(f"{v}.diff_pct", real["compared_diff"][idx, q], "passing", unit="percentile points",
+                   description=f"|Earth percentile - twin percentile| of {v}: the compared difference (filter and score)")
+    units = {"temp_k": "K", "elevation_rel_m": "m", "irradiance_kwh_m2_day": "kWh/m2/day"}
+    for v, x in real["info"].items():
+        for side, txt in (("earth", "of the Earth cell"), ("moon", "of the lunar twin"), ("diff", "|Earth - twin|")):
+            pf.f32(f"info.{v}.{side}", x[side][idx], "passing", unit=units.get(v),
+                   description=f"{v} {txt}: not part of the similarity, shown as a difference (NaN = no twin or no value)")
+    nk = real["nopair_kind"][idx]
+    pf.i32("nopair_kind", nk, "passing", missing=nk < 0, codes="missions.json similarity.nopair_kinds",
+           description="why the cell has no twin: " + "; ".join(f"{k} = {t}" for k, t in enumerate(kinds)) + "; missing = paired")
+    for suffix, which in (("", "first"), ("2", "second")):
+        nv = real["nopair_var" + suffix][idx]
+        pf.i32("nopair_var" + suffix, nv, "passing", missing=nv < 0,
+               codes="missions.json similarity.variables (array position)",
+               description=("the similarity variable that blocks the pair (the thermal group when both fail)" if not suffix
+                            else "no_cell_meets_either only: the blocking variable of the second group (terrain)") + "; missing = paired or not set")
+        pf.f32("nopair_gap" + suffix, real["nopair_gap" + suffix][idx], "passing",
+               description=f"the smallest gap found for nopair_var{suffix}, in its compared unit (percentile points for the thermal variables): its difference at the zone cell nearest to meeting the group's bounds (no_single_cell_meets_both: every bound); NaN = paired or not set")
     return pf
 
 

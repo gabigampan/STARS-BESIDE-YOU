@@ -186,7 +186,7 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
     norm_w = {v["variable"]: v["norm_weight"] for v in sim_json["variables"] if v["status"] == "active"} if has_z else {}
     decay = sim_json["formula"]["decay"] if has_z else None
     ez = {f: tile_column(b, f"z.{f}") for f in norm_w}
-    twins = b.json("twins.json") if any(r in ("zone_twin", "real_value_tolerance") for r in rules.values()) else None
+    twins = b.json("twins.json") if any(r in ("zone_twin", "real_value_tolerance", "percentile_and_real_tolerance") for r in rules.values()) else None
     checked = 0
     recomputed: Dict[str, Dict[str, np.ndarray]] = {}
     for m in missions["missions"]:
@@ -230,12 +230,12 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
                 lat = b.column("moon_base.bin", "lat")
                 if np.any(lat[twin[twin != sent] // man["grid"]["cols"]] > zone["lat_max"]):
                     raise ValueError(f"{mid}: a twin lies outside its zone")
-        elif rule == "real_value_tolerance":
+        elif rule in ("real_value_tolerance", "percentile_and_real_tolerance"):
             sim, twin = _check_real_mission(b, m, li, earth_ids, twins, sent, sim_weights)
             mz = None
         else:
             raise ValueError(f"validate_bundle_v2 does not check rule {rule!r}")
-        if "sim_missing_bits" in b.columns(ef) and rule != "real_value_tolerance":  # contract revision 4: variables used per pair
+        if "sim_missing_bits" in b.columns(ef) and rule not in ("real_value_tolerance", "percentile_and_real_tolerance"):  # contract revision 4: variables used per pair
             ok = {f: np.isfinite(ez[f][li]) & np.isfinite(mz[f]) for f in norm_w}
             want_bits = sum(np.where(ok[f], 0, 1 << k) for k, f in enumerate(sim_json["active_variables"]))
             want_n = sum(ok[f].astype(np.int64) for f in sim_json["active_variables"])
@@ -283,8 +283,9 @@ def _check_real_mission(b: Bundle, m: Dict[str, Any], li: np.ndarray, earth_ids:
             raise ValueError(f"{mid}: a cell without a twin has a score for {v}")
     pf = sb["pairs_file"]
     for v in vars_:
-        d = b.column(pf, f"{v['variable']}.diff")
-        e, mo = b.column(pf, f"{v['variable']}.earth"), b.column(pf, f"{v['variable']}.moon")
+        cc = v.get("compared_columns") or v["pairs_columns"]      # percentile variables: compared as percentiles
+        d = b.column(pf, cc["diff"])
+        e, mo = b.column(pf, cc["earth"]), b.column(pf, cc["moon"])
         fin = np.isfinite(d)
         if np.any(fin & ~paired):
             raise ValueError(f"{mid}: a cell without a twin has a difference for {v['variable']}")
@@ -307,6 +308,12 @@ def _check_real_mission(b: Bundle, m: Dict[str, Any], li: np.ndarray, earth_ids:
     tl = lat[twin[paired] // cols]
     if zone["kind"] == "lat_max" and np.any(tl > zone["lat_max"]):
         raise ValueError(f"{mid}: a twin lies outside its zone")
+    if zone["kind"] == "similarity_zone" and "region" in b.columns("moon_base.bin"):
+        mz = b.json("mission_zones.json")
+        codes = [r["code"] for r in mz["regions"]]
+        allowed = [codes.index(c) for c in mz["mission_zone_regions"][mid]]
+        if not np.all(np.isin(b.int_column("moon_base.bin", "region")[twin[paired]], allowed)):
+            raise ValueError(f"{mid}: a twin lies outside its zone")
     if zone["kind"] == "abs_lat_max_elevation_max":
         el = b.column("moon_base.bin", f"v.{zone['elevation_column']}")[twin[paired]]
         if np.any(np.abs(tl) > zone["abs_lat_max"]) or np.any(el > zone["elevation_max_m"]):

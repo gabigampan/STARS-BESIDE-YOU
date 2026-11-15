@@ -73,6 +73,10 @@ def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]]
         "iau_moon_nomenclature.csv": sha256_file(resolve_path(ecfg.v("lunar_gazetteer_csv"))),
         "ne_110m_admin_0_countries.geojson": sha256_file(resolve_path(ecfg.v("earth_country_polygons"))),
     }
+    if ecfg.v("lunar_regions"):
+        texts = resolve_path(ecfg.v("lunar_regions")["texts_file"])
+        if os.path.exists(texts):
+            cfg_hashes[os.path.basename(texts)] = sha256_file(texts)
     regions = resolve_path(ecfg.v("similarity_zones")["lunar_base"]["regions_file"])
     if os.path.exists(regions):
         cfg_hashes[os.path.basename(regions)] = sha256_file(regions)

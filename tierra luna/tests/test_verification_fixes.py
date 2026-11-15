@@ -16,7 +16,7 @@ REPO = os.path.dirname(ROOT)
 sys.path.insert(0, ROOT)
 
 from engine.bundle_v2 import load_bundle, tile_int_column  # noqa: E402
-from engine.config import load_engine_config, load_mission_config, resolve_path  # noqa: E402
+from engine.config import Setting, load_engine_config, load_mission_config, resolve_path  # noqa: E402
 from engine.export_v2 import funnel_steps, reason_entries, reason_entries_v2  # noqa: E402
 from engine.places import polygon_codes_from_places  # noqa: E402
 from engine.similarity_context import load_region_cells  # noqa: E402
@@ -67,7 +67,13 @@ def test_funnel_text_is_built_from_the_configuration():
     assert [s["step"] for s in steps] == [1, 2, 3, 4, 5, 6]
     for var, g in mcfg["common_gates"].items():
         assert f"{var} >= {g['min']}" in steps[0]["text"]
-    assert f"exp(-{ecfg.v('repo_similarity')['decay']} * d)" in steps[4]["text"]
+    # revision 6: no shipped mission uses the z-score rule, so its decay appears only in a
+    # build that does (one rule for every mission)
+    assert f"exp(-{ecfg.v('repo_similarity')['decay']} * d)" not in steps[4]["text"]
+    assert "percentile" in steps[4]["text"] and "real values" in steps[4]["text"]
+    z = copy.deepcopy(ecfg)
+    z.similarity_rule = Setting(value="zone_twin", why="test")
+    assert f"exp(-{ecfg.v('repo_similarity')['decay']} * d)" in funnel_steps(mcfg, z)[4]["text"]
     changed = copy.deepcopy(mcfg)
     var = next(iter(changed["common_gates"]))
     changed["common_gates"][var]["min"] = changed["common_gates"][var]["min"] + 1.0

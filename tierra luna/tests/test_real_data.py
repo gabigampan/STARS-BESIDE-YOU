@@ -289,8 +289,8 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
     ids_all = b.int_column("earth_base.bin", "id")
     sent = b.manifest["encoding"]["int32_missing"]
     sj = b.json("similarity.json")
-    assert sj["rule"] == "per_mission" and sj["rules"]["lunar_base"] == "zone_twin"
-    norm_w = {v["variable"]: v["norm_weight"] for v in sj["variables"] if v["status"] == "active"}
+    assert sj["rule"] == "per_mission" and sj["rules"]["lunar_base"] == "percentile_and_real_tolerance"
+    norm_w = {v["variable"]: v["norm_weight"] for v in sj.get("variables", []) if v["status"] == "active"}
     twins = b.json("twins.json")["missions"]
     total = 0
     r2 = np.vectorize(lambda x: round(float(x), 2) if np.isfinite(x) else np.nan)
@@ -301,7 +301,7 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
         w = {x["variable"]: x["weight"] for x in m["weighted_variables"]}
         suit = browser_suitability({v: tile_column(b, f"{m['id']}.u.{v}")[li] for v in order}, w, order)
         tw = b.int_column(ef, "twin")
-        if sj["rules"][m["id"]] == "real_value_tolerance":   # contract revision 5: scores on real values
+        if sj["rules"][m["id"]] in ("real_value_tolerance", "percentile_and_real_tolerance"):   # revisions 5-6: published scores
             sv = [x["variable"] for x in m["similarity"]["variables"]]
             sw = {x["variable"]: x["weight"] for x in m["similarity"]["variables"]}
             sim = browser_real_similarity({v: b.column(ef, f"s.{v}") for v in sv}, sw, sv)
@@ -451,32 +451,13 @@ def test_benchmark_lookup_matches_the_results(real, tmp_path):
 
 # ----------------------------------------------------------------------------- team decisions of 2026-11-15
 def test_similarity_variables_used_and_missing_per_pair(real_dir):
-    """Decision 3: every ranked pair carries, in the per-mission file the ranking reads, how
-    many similarity variables were used and which are missing. An Antarctic cell without
-    temperature shows 3 used and temp_k missing; a cell with every value shows 4 and none."""
+    """Decision 3 (zone_twin only): since contract revision 6 no shipped mission uses the
+    z-score rule, so no mission file carries sim_vars_used / sim_missing_bits and the tiles
+    carry no z-scores (the zone_twin build still does: test_missions_similarity)."""
     b = load_bundle(real_dir)
-    active = b.json("similarity.json")["active_variables"]
-    assert active == ["elevation_rel_m", "slope_deg", "roughness_m", "temp_k"]
-    t_bit = 1 << active.index("temp_k")
-    ids = b.int_column("earth_base.bin", "id")
-    lat_row = b.column("earth_base.bin", "lat")
-    temp = b.column("earth_base.bin", "v.temp_k")
-    no_temp = {}
-    for mid in ("rover", "solar"):   # contract revision 5: the real-value missions do not use temperature
+    for mid in ("rover", "solar", "lunar_base"):
         assert not {"sim_vars_used", "sim_missing_bits"} & set(b.columns(f"earth_{mid}.bin"))
-    for mid in ("lunar_base",):
-        ef = f"earth_{mid}.bin"
-        li = b.int_column(ef, "land_index")
-        used, bits = b.int_column(ef, "sim_vars_used"), b.int_column(ef, "sim_missing_bits")
-        lat = lat_row[ids[li] // 360]
-        antarctic = (lat <= -60) & np.isnan(temp[li])
-        assert np.all(used[antarctic] == 3) and np.all(bits[antarctic] == t_bit)
-        full = np.isfinite(temp[li]) & np.isfinite(tile_column(b, "z.slope_deg")[li]) \
-            & np.isfinite(tile_column(b, "z.roughness_m")[li]) & np.isfinite(tile_column(b, "z.elevation_rel_m")[li])
-        assert full.any() and np.all(used[full] == 4) and np.all(bits[full] == 0)
-        assert np.array_equal(used, 4 - np.array([bin(int(x)).count("1") for x in bits]))
-        no_temp[mid] = int(((bits & t_bit) != 0).sum())
-    assert no_temp["lunar_base"] == 0
+    assert not [c for c in b.columns("earth_detail_05.bin") if c.startswith("z.")]
 
 
 def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
@@ -486,20 +467,26 @@ def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
     replaces the solar limitation of decision 5 and is a per-pair template, not a mission
     card text."""
     decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
-    assert ecfg.v("similarity_rule")["lunar_base"] == "zone_twin" and real["manifest"]["similarity_rule"] == "per_mission"
-    assert real["manifest"]["contract_revision"] == 5
+    assert ecfg.v("similarity_rule")["lunar_base"] == "percentile_and_real_tolerance"
+    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 6
     approved = ecfg.v("approved_texts")
-    assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "rock_note", "missing_temperature_mark",
-                             "missing_temperature_note", "twin_sharing_note", "no_twin_note", "solar_limitation"}
-    for key, t in approved.items():
-        if key != "missing_temperature_mark":  # the short mark comes from the team's answer 3, not section 8
+    assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "similarity_meaning_lunar_base",
+                             "rock_note", "missing_temperature_mark", "missing_temperature_note", "twin_sharing_note",
+                             "no_twin_note", "solar_limitation", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+    lunar_base_texts = {"similarity_meaning_lunar_base", "lunar_base_pair_sentence", "no_twin_note_lunar_base"}
+    for key, t in approved.items():   # the Lunar base texts of 08:55 are checked in test_lunar_base_position
+        if key != "missing_temperature_mark" and key not in lunar_base_texts:  # the short mark: the team's answer 3
             assert f'> "{t["text"]}"' in decisions, key
     assert approved["missing_temperature_mark"]["text"] == "no temperature data: similarity computed with 3 variables"
     sj = real["objects"]["similarity.json"]
-    filled = {k: v["text"].replace("{lunar_day}", f"{ecfg.v('lunar_day_earth_days'):.1f}") for k, v in approved.items()}
-    assert {k: v["text"] for k, v in sj["texts"].items()} == filled
+    filled = {k: v["text"].replace("{lunar_day}", f"{ecfg.v('lunar_day_earth_days'):.1f}") for k, v in approved.items() if "text" in v}
+    assert {k: v["text"] for k, v in sj["texts"].items() if "text" in v} == filled
+    assert sj["texts"]["no_twin_note_lunar_base"] == approved["no_twin_note_lunar_base"]
     solar = next(m for m in real["objects"]["missions.json"]["missions"] if m["id"] == "solar")
     assert approved["solar_limitation"]["mission_card"] is False
     assert all(filled["solar_limitation"] != x for x in solar["known_limitations"])
-    assert "rock_or_bare_frac" in sj["not_part_of_similarity"]
-    assert next(v for v in sj["variables"] if v["variable"] == "rock_or_bare_frac")["status"] == "excluded"
+    # decision 2: bare ground is information only (revision 6: no z-score keys in the shipped
+    # similarity.json; every twin row lists it as not part of the similarity)
+    for mid, tw in real["objects"]["twins.json"]["missions"].items():
+        assert "rock_or_bare_frac" in tw["twins"][0]["not_part_of_similarity"], mid
+    assert "rock_or_bare_frac" not in json.dumps([m["similarity"].get("variables") for m in real["objects"]["missions.json"]["missions"]])

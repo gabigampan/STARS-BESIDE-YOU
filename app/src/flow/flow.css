@@ -1297,3 +1297,171 @@ table.rows .sub.note {
 body.view-open .topbar {
   z-index: 7;
 }
+
+/* ---------- revision 5: points without a lunar twin, real-value pairs ---------- */
+.list-divider {
+  margin: 10px 0 2px;
+  padding: 10px 12px;
+  border-top: 2px solid var(--edge-strong);
+  border-left: 3px solid var(--edge-strong);
+  background: rgba(255, 255, 255, 0.025);
+}
+.list-divider .divider-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font: 600 var(--step-0) var(--font-head);
+}
+.list-divider .divider-why {
+  margin: 4px 0 0;
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+.rank-row.is-unpaired {
+  background: transparent;
+  border-style: dashed;
+}
+.rank-notwin {
+  margin-top: 2px;
+  font-size: var(--step--1);
+  color: var(--text);
+}
+.rank-score.is-suit .rank-final {
+  font-weight: 400;
+}
+.show-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 4px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.slider-group {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+.pair-strip.is-unpaired .pair-reason {
+  margin: 8px 0 0;
+}
+.pair-strip.is-unpaired .figs {
+  grid-template-columns: minmax(0, 1fr);
+}
+.pair-sentence {
+  border-left-color: var(--text);
+}
+.pair-sentence p {
+  font-size: var(--step-0);
+}
+.pair-vars {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+.pair-var {
+  padding: 10px 12px;
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+}
+.pair-var.role-key {
+  border-color: var(--edge-strong);
+  border-left: 3px solid var(--text);
+}
+.pair-var-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0 0 6px;
+  font: 600 var(--step-0) var(--font-head);
+}
+.pair-vals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5em, 1fr));
+  gap: 6px 14px;
+  margin: 0;
+}
+.pair-vals dt {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+.pair-vals dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.pair-vals dd .sub {
+  display: block;
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+.pair-vals [data-k='tolerance'] {
+  grid-column: 1 / -1;
+}
+.result.is-unpaired .final {
+  font-weight: 600;
+}
+
+/* ---------- revision 6: the mission's search zone on the Moon ---------- */
+.zone-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin-top: 4px;
+}
+.zone-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.zone-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 12px;
+  border: 1px solid rgba(240, 226, 196, 0.95);
+  background: rgba(232, 214, 176, 0.16);
+  flex: none;
+}
+.zone-caption .btn {
+  pointer-events: auto;
+}
+.zone-dialog .zone-tapped {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px solid var(--edge-strong);
+  border-left: 3px solid var(--sodium);
+  border-radius: 3px;
+}
+.zone-regions {
+  display: grid;
+  gap: 8px;
+}
+.zone-region {
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  padding: 0 12px;
+}
+.zone-region[open] {
+  border-color: var(--edge-strong);
+  padding-bottom: 10px;
+}
+.zone-region summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.zone-region summary .muted {
+  font-weight: 400;
+}
+.zone-foot {
+  margin-top: 14px;
+}

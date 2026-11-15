@@ -100,6 +100,7 @@ class EngineConfig(BaseModel):
     real_value_similarity: Optional[Setting] = None
     toa_insolation: Optional[Setting] = None
     lunar_day_earth_days: Optional[Setting] = None
+    lunar_regions: Optional[Setting] = None
     # filled from the dataset descriptor (engine/datasets.json)
     dataset: Optional[Setting] = None
     inputs: Optional[Setting] = None
@@ -192,11 +193,14 @@ def load_mission_config(path: Optional[str] = None, engine_cfg: Optional[EngineC
     return mission_scoring.load_config(path)
 
 
-SIMILARITY_RULES = ("repo_global_mean", "zone_twin", "physical_pooled", "real_value_tolerance")
+SIMILARITY_RULES = ("repo_global_mean", "zone_twin", "physical_pooled", "real_value_tolerance", "percentile_and_real_tolerance")
 # Rules that use the repository's z-score context (analog_finder normalisation).
 REPO_RULES = ("repo_global_mean", "zone_twin")
 # Rules that pair every ranked Earth cell with one lunar twin.
-TWIN_RULES = ("zone_twin", "physical_pooled", "real_value_tolerance")
+TWIN_RULES = ("zone_twin", "physical_pooled", "real_value_tolerance", "percentile_and_real_tolerance")
+# Rules on the real-value machinery (engine.real_similarity): per-variable tolerances, pair filter, no twin
+# when no zone cell passes; percentile_and_real_tolerance adds a per-variable scale (percentile within population).
+REAL_RULES = ("real_value_tolerance", "percentile_and_real_tolerance")
 # Fields of a mission block that define its filters and scores (a component copy must match them all).
 MISSION_DEFINITION_KEYS = ("require_present", "gates", "soft", "weights")
 

@@ -22,6 +22,14 @@ computed from them (so the browser reproduces it exactly). A cell with no zone c
 similarity, no final and no rank; the reason is recorded (which variable and the
 smallest gap found).
 
+Rule ``percentile_and_real_tolerance`` (Lunar base, team decision of 2026-11-15 08:55
+CET): the same machinery with a scale per variable. A variable with scale
+``percentile_within_population`` is compared as its mid-rank percentile within its own
+population (Earth: the points passing the mission's funnel; Moon: the cells of the zone),
+p = 100 * (rank - 0.5) / n with ties averaged (:func:`midrank_percentile`); a cell without a
+value has no percentile. The reason of a point without a twin is given by groups of
+variables (:func:`group_reasons`): thermal position, terrain, both, or no single cell.
+
 Derived variables (DERIVED, never MEASURED):
 
 * ``elevation_rel_m``: elevation_m minus the area-weighted (cos latitude) mean of
@@ -40,6 +48,42 @@ import numpy as np
 import pandas as pd
 
 NOPAIR_KINDS = ["key_value_missing_on_earth", "no_zone_cell_within_bound", "no_joint_match"]
+SCALES = ("real", "percentile_within_population")
+
+
+def group_nopair_kinds(groups: Dict[str, List[str]]) -> List[str]:
+    """No-pair kinds of a rule with reason groups (exactly two groups, e.g. thermal
+    position and terrain): missing key value, no cell meeting group 1, group 2, either,
+    or no single cell meeting both."""
+    names = list(groups)
+    if len(names) != 2:
+        raise ValueError("reason groups must be exactly two")
+    return ["key_value_missing_on_earth"] + [f"no_cell_meets_{g}" for g in names] + ["no_cell_meets_either",
+                                                                                      "no_single_cell_meets_both"]
+
+
+def midrank_percentile(values: np.ndarray) -> np.ndarray:
+    """Mid-rank percentile of every finite value within the finite values of ``values``:
+    100 * (rank - 0.5) / n, rank 1-based in ascending order, ties averaged; NaN stays NaN."""
+    v = np.asarray(values, dtype=np.float64)
+    out = np.full(v.shape, np.nan)
+    ok = np.isfinite(v)
+    n = int(ok.sum())
+    if n == 0:
+        return out
+    x = v[ok]
+    order = np.argsort(x, kind="mergesort")
+    xs = x[order]
+    ranks = np.empty(n, dtype=np.float64)
+    i = 0
+    while i < n:                      # average the 1-based ranks of each run of equal values
+        j = i
+        while j + 1 < n and xs[j + 1] == xs[i]:
+            j += 1
+        ranks[order[i:j + 1]] = (i + j) / 2.0 + 1.0
+        i = j + 1
+    out[ok] = 100.0 * (ranks - 0.5) / n
+    return out
 
 
 # ----------------------------------------------------------------------------- derived values
@@ -113,6 +157,9 @@ def derive_values(earth: pd.DataFrame, moon: pd.DataFrame, var_defs: Dict[str, D
                 a = raw - (mean if mean is not None else np.nan)
                 note = {"kind": kind, "column": src["column"], "body_mean": mean,
                         "cells_in_mean": int(np.isfinite(raw).sum())}
+            elif kind == "celsius_to_kelvin":
+                a = pd.to_numeric(df[src["column"]], errors="coerce").to_numpy(dtype=np.float64) + float(src["offset_k"])
+                note = {"kind": kind, "column": src["column"], "offset_k": float(src["offset_k"])}
             elif kind == "toa_insolation":
                 a = toa_daily_insolation_kwh(df["lat_deg"].to_numpy(dtype=np.float64), toa_cfg)
                 note = {"kind": kind}
@@ -149,6 +196,7 @@ class RuleSpec:
     tau: np.ndarray
     bound: np.ndarray           # tau * multiplier of the role
     score_decimals: int
+    scales: Tuple[str, ...] = ()  # per variable: "real" or "percentile_within_population" (empty = all real)
 
     @property
     def key(self) -> np.ndarray:
@@ -162,9 +210,14 @@ def rule_spec(mission_rule: Dict, multipliers: Dict[str, float], score_decimals:
     if bad:
         raise ValueError(f"unknown variable role(s) {bad}")
     tau = np.array([float(x["tolerance"]) for x in vs])
+    scales = tuple(x.get("scale", "real") for x in vs)
+    bad = [x for x in scales if x not in SCALES]
+    if bad:
+        raise ValueError(f"unknown variable scale(s) {bad}")
     return RuleSpec(variables=[x["variable"] for x in vs], roles=roles,
                     weights=np.array([float(x["weight"]) for x in vs]), tau=tau,
-                    bound=np.array([float(multipliers[r]) for r in roles]) * tau, score_decimals=score_decimals)
+                    bound=np.array([float(multipliers[r]) for r in roles]) * tau, score_decimals=score_decimals,
+                    scales=scales)
 
 
 def quantise(s: np.ndarray, decimals: int) -> np.ndarray:
@@ -280,6 +333,61 @@ def find_twins(ev: np.ndarray, mv: np.ndarray, zone_ids: np.ndarray, spec: RuleS
                      best_gap=best_gap)
 
 
+def group_reasons(ev: np.ndarray, mv: np.ndarray, spec: RuleSpec, groups: Dict[str, List[str]],
+                  rows: np.ndarray) -> Dict[str, np.ndarray]:
+    """Reasons of the Earth rows ``rows`` (positions in ``ev``) that have no twin, by groups
+    of variables (rule percentile_and_real_tolerance). For each group g a zone cell
+    'meets g' when every key variable of g is within its bound and every secondary of g is
+    within its bound or missing. Kinds (:func:`group_nopair_kinds`): a key value missing on
+    Earth; no cell meets group 1; no cell meets group 2; no cell meets either; or each
+    group is met by some cell but no cell meets all bounds at once.
+
+    Gaps, in the compared unit of the variable: for a failed group, the zone cell nearest
+    to meeting it (smallest worst ratio |d| / bound over the group, ties lowest id) and the
+    variable with the largest ratio there; for 'no single cell', the same over every
+    variable. ``var``/``gap`` hold the first failed group (or the joint gap), ``var2``/
+    ``gap2`` the second group when both fail."""
+    names = list(groups)
+    kinds = group_nopair_kinds(groups)
+    gidx = {g: [spec.variables.index(v) for v in groups[g]] for g in names}
+    key = spec.key
+    n = len(rows)
+    out = {"kind": np.full(n, -1, dtype=np.int64), "var": np.full(n, -1, dtype=np.int64), "gap": np.full(n, np.nan),
+           "var2": np.full(n, -1, dtype=np.int64), "gap2": np.full(n, np.nan)}
+
+    def nearest(d: np.ndarray, cols: List[int]):
+        fin = np.isfinite(d[:, cols])
+        r = np.where(fin, d[:, cols] / spec.bound[cols], np.where(key[cols], np.inf, 0.0))
+        worst = r.max(axis=1)
+        c = int(np.argmin(worst))
+        q = cols[int(np.argmax(r[c]))]
+        return worst[c], q, d[c, q]
+
+    for t, i in enumerate(rows):
+        miss = [q for q in range(len(spec.variables)) if key[q] and not np.isfinite(ev[i, q])]
+        if miss:
+            out["kind"][t], out["var"][t] = kinds.index("key_value_missing_on_earth"), miss[0]
+            continue
+        d = np.abs(ev[i][None, :] - mv)
+        failed = []
+        for g in names:
+            w, q, gap = nearest(d, gidx[g])
+            if not w <= 1.0:
+                failed.append((g, q, gap))
+        if len(failed) == 2:
+            out["kind"][t] = kinds.index("no_cell_meets_either")
+            out["var"][t], out["gap"][t] = failed[0][1], failed[0][2]
+            out["var2"][t], out["gap2"][t] = failed[1][1], failed[1][2]
+        elif len(failed) == 1:
+            out["kind"][t] = kinds.index(f"no_cell_meets_{failed[0][0]}")
+            out["var"][t], out["gap"][t] = failed[0][1], failed[0][2]
+        else:
+            _, q, gap = nearest(d, list(range(len(spec.variables))))
+            out["kind"][t] = kinds.index("no_single_cell_meets_both")
+            out["var"][t], out["gap"][t] = q, gap
+    return out
+
+
 def list_order(rank: np.ndarray, suitability_published: np.ndarray, passing: np.ndarray, ids: np.ndarray) -> np.ndarray:
     """Display order of the passing cells: the paired cells by rank, then the cells without
     a twin by published suitability descending, ties by id; 0 for cells not passing."""
@@ -294,10 +402,13 @@ def list_order(rank: np.ndarray, suitability_published: np.ndarray, passing: np.
     return order
 
 
-def nopair_summary(rt: RealTwins, spec: RuleSpec, rows: np.ndarray, decimals: int) -> List[Dict]:
+def nopair_summary(rt: RealTwins, spec: RuleSpec, rows: np.ndarray, decimals: int,
+                   kinds: Optional[List[str]] = None) -> List[Dict]:
     """Counts of the no-pair reasons among ``rows`` (Earth rows passing the funnel), by
     kind and variable, commonest first, with the smallest and median gap."""
     from engine.export import rnd
+
+    kinds = kinds or NOPAIR_KINDS
 
     out: Dict[Tuple[int, int], List[float]] = {}
     for i in rows:
@@ -307,10 +418,11 @@ def nopair_summary(rt: RealTwins, spec: RuleSpec, rows: np.ndarray, decimals: in
     for (kd, q), gaps in out.items():
         g = np.array(gaps)
         g = g[np.isfinite(g)]
-        res.append({"kind": NOPAIR_KINDS[kd], "variable": spec.variables[q], "role": spec.roles[q],
-                    "bound": rnd(spec.bound[q], 6), "earth_cells": len(gaps),
+        res.append({"kind": kinds[kd], "variable": spec.variables[q] if q >= 0 else None,
+                    "role": spec.roles[q] if q >= 0 else None,
+                    "bound": rnd(spec.bound[q], 6) if q >= 0 else None, "earth_cells": len(gaps),
                     "gap_min": rnd(g.min(), decimals) if g.size else None,
                     "gap_median": rnd(float(np.median(g)), decimals) if g.size else None,
                     "gap_max": rnd(g.max(), decimals) if g.size else None})
-    res.sort(key=lambda r: (-r["earth_cells"], r["kind"], r["variable"]))
+    res.sort(key=lambda r: (-r["earth_cells"], r["kind"], r["variable"] or ""))
     return res

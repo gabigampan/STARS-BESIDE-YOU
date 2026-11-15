@@ -18,8 +18,8 @@ import pandas as pd
 
 import mission_scoring
 from engine import provenance
-from engine.config import (REPO_RULES, EngineConfig, mission_components, mission_ids, mission_similarity_rule,
-                           similarity_rules)
+from engine.config import (REAL_RULES, REPO_RULES, EngineConfig, mission_components, mission_ids,
+                           mission_similarity_rule, similarity_rules)
 from engine.confidence import pair_confidence
 from engine.gates import GateResult, evaluate_gates
 from engine.pairing import pair_twins
@@ -96,8 +96,8 @@ def run_mission(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_c
     the two repository rules need ``ctx`` and the real-value rule ``real`` (both built
     once by :func:`run_all`)."""
     rule = mission_similarity_rule(engine_cfg, mission)
-    if rule == "real_value_tolerance":
-        return _run_mission_real(mission, earth, moon, mission_cfg, engine_cfg, reg, real)
+    if rule in REAL_RULES:
+        return _run_mission_real(mission, earth, moon, mission_cfg, engine_cfg, reg, real, rule)
     if rule != "physical_pooled":
         return _run_mission_repo(mission, earth, moon, mission_cfg, engine_cfg, reg, ctx, rule)
     eg = evaluate_gates(earth, "EARTH", mission, mission_cfg, engine_cfg)
@@ -271,22 +271,46 @@ def build_real_context(earth: pd.DataFrame, moon: pd.DataFrame, engine_cfg: Engi
     return {"settings": rv, "derived": dv}
 
 
+def real_zone_mask(moon: pd.DataFrame, zone: Dict, engine_cfg: EngineConfig) -> np.ndarray:
+    """Lunar cells of a real-value zone; kind ``similarity_zone`` reuses a zone of
+    engine_config similarity_zones (Lunar base: the nine NASA regions), the other kinds
+    are real_similarity.zone_mask_real."""
+    from engine.real_similarity import zone_mask_real
+
+    if zone["kind"] == "similarity_zone":
+        from engine.similarity_context import resolve_zones
+        z = resolve_zones(moon, engine_cfg, [zone["similarity_zones_key"]])[zone["similarity_zones_key"]]
+        if z["used"] != z["kind"] or z["kind"] != engine_cfg.v("similarity_zones")[zone["similarity_zones_key"]]["kind"]:
+            raise ValueError(f"the configured zone {zone['similarity_zones_key']!r} is not available: {z['reason']}")
+        return z["mask"]
+    return zone_mask_real(moon, zone)
+
+
 def _run_mission_real(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mission_cfg: Dict,
-                      engine_cfg: EngineConfig, reg: Dict, real: Optional[Dict]) -> MissionResult:
-    """One mission with the real-value rule (engine.real_similarity).
+                      engine_cfg: EngineConfig, reg: Dict, real: Optional[Dict],
+                      rule: str = "real_value_tolerance") -> MissionResult:
+    """One mission with a rule of the real-value machinery (engine.real_similarity):
+    real_value_tolerance or percentile_and_real_tolerance.
 
     Funnel unchanged: gates -> suitability of the survivors. Each survivor is compared
-    with every lunar cell of the mission's zone on real values; the twin is the cell
-    passing the pair filter with the highest similarity. A survivor without a twin keeps
-    its suitability and has no similarity, final or rank (it is listed after the paired
-    cells by suitability, real_similarity.list_order)."""
-    from engine.real_similarity import find_twins, list_order, rule_spec, zone_mask_real
+    with every lunar cell of the mission's zone (real values, or for a variable with scale
+    'percentile_within_population' its percentile within the survivors and within the
+    zone cells); the twin is the cell passing the pair filter with the highest
+    similarity. A survivor without a twin keeps its suitability and has no similarity,
+    final or rank (it is listed after the paired cells by suitability,
+    real_similarity.list_order)."""
+    from engine.real_similarity import (find_twins, group_nopair_kinds, group_reasons, list_order,
+                                        midrank_percentile, rule_spec)
 
     if real is None:
         real = build_real_context(earth, moon, engine_cfg)
     rv = real["settings"]
     mrule = rv["missions"][mission]
+    if mrule.get("rule", "real_value_tolerance") != rule:
+        raise ValueError(f"{mission}: similarity_rule is {rule!r} but real_value_similarity.missions.{mission} is written for {mrule.get('rule', 'real_value_tolerance')!r}")
     spec = rule_spec(mrule, rv["filter_bound_multiplier"], int(rv["score_decimals"]))
+    if rule == "real_value_tolerance" and any(x != "real" for x in spec.scales):
+        raise ValueError(f"{mission}: real_value_tolerance compares real values only")
     eg = evaluate_gates(earth, "EARTH", mission, mission_cfg, engine_cfg)
     mg = evaluate_gates(moon, "MOON", mission, mission_cfg, engine_cfg)
     es = evaluate_suitability(earth, "EARTH", mission, mission_cfg, engine_cfg)
@@ -295,13 +319,40 @@ def _run_mission_real(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mis
     svars = soft_variables(mission_cfg, mission)
     weights_all = soft_weights(mission_cfg, mission)
     moon_ids = moon["id"].to_numpy()
-    zone = zone_mask_real(moon, mrule["zone"])
+    zone = real_zone_mask(moon, mrule["zone"], engine_cfg)
     zi = np.flatnonzero(zone)
     dv = real["derived"].values
     ev_all = np.column_stack([dv[v]["EARTH"] for v in spec.variables])
     mv_all = np.column_stack([dv[v]["MOON"] for v in spec.variables])
     passing = np.flatnonzero(eg.passed)
-    rt = find_twins(ev_all[passing], mv_all[zi], moon_ids[zi], spec, int(engine_cfg.v("pairing_chunk_rows")))
+    # compared values: real, or the percentile within the population (Earth: the passing
+    # points; Moon: the zone cells) for a variable with scale percentile_within_population
+    ev_cmp, mv_cmp = ev_all.copy(), mv_all.copy()
+    pops: Dict[str, Dict[str, int]] = {}
+    for q, sc in enumerate(spec.scales or ("real",) * len(spec.variables)):
+        if sc == "percentile_within_population":
+            ev_cmp[:, q] = np.nan
+            ev_cmp[passing, q] = midrank_percentile(ev_all[passing, q])
+            mv_cmp[:, q] = np.nan
+            mv_cmp[zi, q] = midrank_percentile(mv_all[zi, q])
+            pops[spec.variables[q]] = {"EARTH": int(np.isfinite(ev_all[passing, q]).sum()),
+                                       "MOON": int(np.isfinite(mv_all[zi, q]).sum())}
+    rt = find_twins(ev_cmp[passing], mv_cmp[zi], moon_ids[zi], spec, int(engine_cfg.v("pairing_chunk_rows")))
+    groups = mrule.get("nopair_groups")
+    nopair_kinds = None
+    nopair2 = None
+    if groups:
+        nopair_kinds = group_nopair_kinds(groups)
+        un = np.flatnonzero(rt.twin < 0)
+        gr = group_reasons(ev_cmp[passing], mv_cmp[zi], spec, groups, un)
+        rt.nopair_kind[:] = -1
+        rt.nopair_var[:] = -1
+        rt.nopair_gap[:] = np.nan
+        rt.nopair_kind[un], rt.nopair_var[un], rt.nopair_gap[un] = gr["kind"], gr["var"], gr["gap"]
+        v2 = np.full(len(passing), -1, dtype=np.int64)
+        g2 = np.full(len(passing), np.nan)
+        v2[un], g2[un] = gr["var2"], gr["gap2"]
+        nopair2 = (v2, g2)
     n = len(earth)
     k = len(spec.variables)
 
@@ -326,21 +377,41 @@ def _run_mission_real(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mis
     conf, conf_s, extra = _confidence(mission, svars, weights_all, earth, moon, es, rank, tpos, engine_cfg, reg)
     twin_count = np.zeros(len(moon), dtype=np.int64)
     np.add.at(twin_count, tpos[has_twin], 1)
-    info_vars = [v for v in rv["info_differences"].get(mission, []) if v in earth.columns and v in moon.columns]
+    info_vars = [v for v in rv["info_differences"].get(mission, [])
+                 if (v in earth.columns and v in moon.columns) or v in dv]
     info = {}
     for v in info_vars:
-        e = pd.to_numeric(earth[v], errors="coerce").to_numpy(dtype=np.float64)
-        m = pd.to_numeric(moon[v], errors="coerce").to_numpy(dtype=np.float64)
+        if v in dv:      # a derived variable (e.g. the centred relative elevation)
+            e, m = dv[v]["EARTH"], dv[v]["MOON"]
+        else:
+            e = pd.to_numeric(earth[v], errors="coerce").to_numpy(dtype=np.float64)
+            m = pd.to_numeric(moon[v], errors="coerce").to_numpy(dtype=np.float64)
         mt = np.where(has_twin, m[tpos], np.nan)
         info[v] = {"earth": np.where(has_twin, e, np.nan), "moon": mt, "diff": np.abs(np.where(has_twin, e, np.nan) - mt)}
     extra["real"] = {
-        "spec": spec, "mission_rule": mrule, "zone_mask": zone, "zone_cells": int(zone.sum()),
+        "rule": rule, "spec": spec, "mission_rule": mrule, "zone_mask": zone, "zone_cells": int(zone.sum()),
         "scores": full(rt.scores), "earth_values": full(rt.earth_values), "moon_values": full(rt.moon_values),
         "diff": full(rt.diff), "nopair_kind": full(rt.nopair_kind, -1, np.int64),
         "nopair_var": full(rt.nopair_var, -1, np.int64), "nopair_gap": full(rt.nopair_gap),
         "best_gap": full(rt.best_gap), "list_order": order, "info": info, "derived": real["derived"],
         "settings": rv,
     }
+    if rule == "percentile_and_real_tolerance":
+        # compared values (percentile for the percentile variables) stay in compared_*; the
+        # real values on both sides and their difference replace earth/moon_values and diff
+        ex = extra["real"]
+        ex["compared_earth"], ex["compared_moon"], ex["compared_diff"] = ex["earth_values"], ex["moon_values"], ex["diff"]
+        ev_real = np.full((n, k), np.nan)
+        ev_real[passing] = ev_all[passing]
+        mv_real = np.full((n, k), np.nan)
+        mv_real[has_twin] = mv_all[tpos[has_twin]]
+        ex["earth_values"], ex["moon_values"] = ev_real, mv_real
+        ex["diff"] = np.where(has_twin[:, None], np.abs(ev_real - mv_real), np.nan)
+        ex["moon_percentile"] = mv_cmp                       # per lunar cell (NaN outside the zone)
+        ex["populations"] = pops
+        ex["nopair_kinds"] = nopair_kinds
+        ex["nopair_var2"] = full(nopair2[0], -1, np.int64) if nopair2 else np.full(n, -1, dtype=np.int64)
+        ex["nopair_gap2"] = full(nopair2[1]) if nopair2 else np.full(n, np.nan)
     atm = rv.get("atmosphere_comparison")
     if atm and atm["variable"] in spec.variables:  # sunlight above vs below Earth's atmosphere
         toa = dv[atm["variable"]]["EARTH"]
@@ -356,7 +427,7 @@ def _run_mission_real(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mis
         sim_vars=list(spec.variables), sim_excluded={}, kinds={v: "numeric" for v in spec.variables},
         scales={}, twin_id=twin, sims={v: extra["real"]["scores"][:, q] for q, v in enumerate(spec.variables)},
         similarity_pct=sim, final=final, final_published=final_pub, rank=rank, confidence=conf,
-        confidence_score=conf_s, moon_twin_count=twin_count, alpha=alpha, rule="real_value_tolerance", extra=extra,
+        confidence_score=conf_s, moon_twin_count=twin_count, alpha=alpha, rule=rule, extra=extra,
     )
 
 
@@ -382,10 +453,12 @@ def run_all(cells: Dict[str, pd.DataFrame], mission_cfg: Dict, engine_cfg: Engin
             raise ValueError(f"{body} cells must be sorted by unique id")
     missions = mission_ids(mission_cfg, engine_cfg)
     rules = similarity_rules(engine_cfg, missions)
-    if any(r in REPO_RULES for r in rules.values()) and ctx is None:
+    if ctx is None and any(r in REPO_RULES + REAL_RULES for r in rules.values()):
+        # built for the real-value rules too: the bundle lists the repository's excluded
+        # variables (ctx.excluded) next to every twin
         from engine.similarity_context import build_repo_context
         ctx = build_repo_context(earth, moon, engine_cfg, missions)
-    real = build_real_context(earth, moon, engine_cfg) if "real_value_tolerance" in rules.values() else None
+    real = build_real_context(earth, moon, engine_cfg) if any(r in REAL_RULES for r in rules.values()) else None
     out = {m: run_mission(m, earth, moon, mission_cfg, engine_cfg, reg, ctx, real) for m in missions}
     for m, res in out.items():
         res.components = {c: run_component(c, earth, moon, mission_cfg, engine_cfg)

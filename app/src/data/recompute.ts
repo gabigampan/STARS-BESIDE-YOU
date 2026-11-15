@@ -124,24 +124,67 @@ export function rankByFinal(ids: ArrayLike<number>, finals: ArrayLike<number>): 
  */
 export interface MissionMatrix {
   ids: Int32Array;
-  similarity: Float64Array; // NaN = no similarity
+  similarity: Float64Array; // NaN = no similarity (stored values)
   utilities: Float64Array[]; // [variable][cell]
+  /**
+   * Real-value rules (revision 5): the per-variable similarity scores s.<v> ([variable][cell], NaN =
+   * missing) and the pair flag (the twin is fixed at build time). Null for z-score rules, whose
+   * similarity is fixed in the browser.
+   */
+  simScores: Float64Array[] | null;
+  paired: Uint8Array | null;
+}
+
+/**
+ * Real-value similarity: 100 * sum ws_v s_v / sum ws_v over the variables with a score, in the
+ * listed order; null when nothing has a score or the weights of those variables sum to 0.
+ */
+export function pairSimilarityOf(s: readonly (number | null)[], ws: readonly number[]): number | null {
+  let num = 0;
+  let den = 0;
+  for (let i = 0; i < ws.length; i++) {
+    const v = s[i];
+    if (v == null || Number.isNaN(v)) continue;
+    num += ws[i] * v;
+    den += ws[i];
+  }
+  return den > 0 ? (100 * num) / den : null;
 }
 
 export interface MissionScores {
   suitability: Float64Array; // unrounded, NaN = none
   coverage: Float64Array;
+  similarity: Float64Array; // NaN = none (recomputed for real-value rules, stored otherwise)
   final: Float64Array; // unrounded, NaN = none
   ranks: Int32Array; // 0 = not ranked
-  order: Int32Array; // cell positions, best first
+  order: Int32Array; // cell positions with a final, best first
+  /** The whole list: `order`, then the passing cells without a final by round(suitability, 2) descending, ties by id. */
+  list: Int32Array;
 }
 
-export function recomputeMission(m: MissionMatrix, weights: readonly number[], alpha: number): MissionScores {
+/** The cells without a final, after the ranked ones: by round(suitability, 2) descending, ties by id (missing suitability last). */
+export function unrankedOrder(ids: ArrayLike<number>, final: ArrayLike<number>, suitability: ArrayLike<number>): number[] {
+  const idx: number[] = [];
+  for (let i = 0; i < ids.length; i++) if (Number.isNaN(final[i])) idx.push(i);
+  const key = (i: number) => (Number.isNaN(suitability[i]) ? -Infinity : pyRound2(suitability[i]));
+  idx.sort((a, b) => key(b) - key(a) || ids[a] - ids[b]);
+  return idx;
+}
+
+export function recomputeMission(
+  m: MissionMatrix,
+  weights: readonly number[],
+  alpha: number,
+  simWeights?: readonly number[],
+): MissionScores {
   const n = m.ids.length;
   const nv = weights.length;
   const suitability = new Float64Array(n);
   const coverage = new Float64Array(n);
   const final = new Float64Array(n);
+  const similarity = new Float64Array(n);
+  const ns = m.simScores?.length ?? 0;
+  const sw = simWeights ?? [];
   let total = 0;
   for (let v = 0; v < nv; v++) total += weights[v];
   for (let i = 0; i < n; i++) {
@@ -156,9 +199,28 @@ export function recomputeMission(m: MissionMatrix, weights: readonly number[], a
     const s = den > 0 ? (100 * num) / den : NaN;
     suitability[i] = s;
     coverage[i] = total > 0 ? den / total : 0;
-    const sim = m.similarity[i];
+    let sim = m.similarity[i];
+    if (m.simScores && m.paired) {
+      sim = NaN;
+      if (m.paired[i]) {
+        let sn = 0;
+        let sd = 0;
+        for (let v = 0; v < ns; v++) {
+          const sc = m.simScores[v][i];
+          if (sc !== sc) continue;
+          sn += sw[v] * sc;
+          sd += sw[v];
+        }
+        if (sd > 0) sim = (100 * sn) / sd;
+      }
+    }
+    similarity[i] = sim;
     final[i] = s === s && sim === sim ? alpha * sim + (1 - alpha) * s : NaN;
   }
   const { ranks, order } = rankByFinal(m.ids, final);
-  return { suitability, coverage, final, ranks, order };
+  const list = new Int32Array(n);
+  list.set(order);
+  let k = order.length;
+  for (const i of unrankedOrder(m.ids, final, suitability)) list[k++] = i;
+  return { suitability, coverage, similarity, final, ranks, order, list };
 }

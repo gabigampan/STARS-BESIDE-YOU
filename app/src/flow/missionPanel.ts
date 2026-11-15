@@ -5,7 +5,8 @@
 import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { missionLine, missionName, statusWords } from './copy';
+import { firstSentence, missionLine, missionName, roleWord, statusWords } from './copy';
+import { sentenceUnit } from '../data/store.ts';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
 import { levelLegend } from './legend';
@@ -21,6 +22,9 @@ export class MissionPanel {
   private statusEl: HTMLElement | null = null;
   private weightsOpen = false;
   private query = '';
+  /** Which points the list shows: all, only those with a lunar twin, only those without. */
+  private show: 'all' | 'paired' | 'unpaired' = 'all';
+  private showFor: string | null = null;
 
   constructor(
     private readonly app: FlowApp,
@@ -71,18 +75,22 @@ export class MissionPanel {
     );
 
     // the counts sit under the list heading, one line, so the list starts in the first view (checklist 06/03)
+    const pc = store.pairCounts(m.id);
+    const twinsHere = this.app.missionHasTwins(m);
     const counts = h(
       'p',
-      { class: 'counts', 'aria-label': 'How many places pass' },
-      h('strong', null, `${int(pass)} pass`),
-      ` the ${missionName(m).toLowerCase()} filters and are ranked, of ${int(land)} land cells on Earth; ${int(land - pass)} are eliminated.`,
+      { class: 'counts', 'aria-label': 'How many places pass', 'data-paired': String(pc.paired), 'data-unpaired': String(pc.unpaired) },
+      twinsHere && pc.unpaired > 0
+        ? [h('strong', null, `${int(pc.paired)} of ${int(pass)} points have a lunar twin.`), ` ${int(pass)} pass the ${missionName(m).toLowerCase()} filters, of ${int(land)} land cells on Earth; ${int(land - pass)} are eliminated.`]
+        : [h('strong', null, `${int(pass)} pass`), ` the ${missionName(m).toLowerCase()} filters and are ranked${twinsHere ? ', each with a lunar twin' : ''}, of ${int(land)} land cells on Earth; ${int(land - pass)} are eliminated.`],
     );
     // the rule and the true cell size, right under the list (so the list starts in the first view)
     const about = h(
       'section',
       { class: 'panel-sec about', 'aria-label': 'How to read the ranking' },
       h('p', { class: 'muted', 'data-note': 'mission-line' }, `${missionName(m)} mission: ${missionLine(m).replace(/^./, (c) => c.toLowerCase())}`),
-      h('p', { class: 'muted', 'data-note': 'rule', 'data-verbatim': this.app.store.hasTwins() ? null : 'no_twin_reason' }, this.app.ruleText()),
+      h('p', { class: 'muted', 'data-note': 'rule', 'data-verbatim': twinsHere ? null : 'no_twin_reason' }, this.app.ruleText()),
+      h('div', { class: 'zone-slot', 'data-slot': 'zone' }),
       h('p', { class: 'muted', 'data-note': 'cell-size' }, this.app.cellSizeText()),
     );
     const funnel = h(
@@ -132,6 +140,33 @@ export class MissionPanel {
         ),
       );
     });
+    // real-value rules: the similarity weights may change too (the twin stays the one chosen at build time)
+    const simDefs = store.pairVariables(m.id);
+    const sw = this.app.simWeights();
+    const simInputs: HTMLInputElement[] = [];
+    if (simDefs.length) {
+      sliders.append(h('p', { class: 'slider-group' }, 'Similarity weights (the twin of each point stays the same)'));
+      simDefs.forEach((d, i) => {
+        const id = `sw-${d.variable}`;
+        const out = h('output', { for: id, class: 'slider-val' }, num(sw[i], 2));
+        const input = h('input', { type: 'range', id, min: '0', max: '1', step: '0.05', value: String(sw[i]), 'aria-describedby': `${id}-team` }) as HTMLInputElement;
+        simInputs.push(input);
+        input.addEventListener('input', () => {
+          out.textContent = num(Number(input.value), 2);
+          void this.app.setWeights(this.app.state.weights ?? this.app.teamWeights(m), this.app.state.alpha, simInputs.map((x) => Number(x.value)));
+        });
+        sliders.append(
+          h(
+            'div',
+            { class: 'slider' },
+            h('label', { for: id }, `${d.label} (${roleWord(d.role)})`),
+            out,
+            input,
+            h('p', { class: 'slider-team', id: `${id}-team` }, `Team value ${num(d.weight, 2)}`),
+          ),
+        );
+      });
+    }
     const a = this.app.alpha();
     const aOut = h('output', { for: 'w-alpha', class: 'slider-val' }, num(a, 2));
     const aIn = h('input', { type: 'range', id: 'w-alpha', min: '0', max: '1', step: '0.05', value: String(a), 'aria-describedby': 'w-alpha-team' }) as HTMLInputElement;
@@ -151,7 +186,13 @@ export class MissionPanel {
     );
     this.statusEl = h('p', { class: 'recompute-status', role: 'status' });
     details.append(
-      h('p', { class: 'muted' }, 'Weights change the suitability only; the hard filters and the similarity stay as the team set them.'),
+      h(
+        'p',
+        { class: 'muted' },
+        simDefs.length
+          ? 'Weights change the suitability and the similarity score; the hard filters and the lunar twin of each point stay as the team set them.'
+          : 'Weights change the suitability only; the hard filters and the similarity stay as the team set them.',
+      ),
       sliders,
       button("Reset to team values", () => void this.app.resetWeights(), { kind: 'secondary', id: 'reset-weights' }),
       this.statusEl,
@@ -165,7 +206,7 @@ export class MissionPanel {
       type: 'search',
       id: 'rank-search',
       class: 'search-input',
-      placeholder: this.app.store.hasTwins() ? 'Find a country, region or lunar feature' : 'Find a country or region',
+      placeholder: twinsHere ? 'Find a country, region or lunar feature' : 'Find a country or region',
       autocomplete: 'off',
       spellcheck: 'false',
     }) as HTMLInputElement;
@@ -186,6 +227,35 @@ export class MissionPanel {
       h('label', { for: 'rank-search', class: 'search-label sr-only' }, 'Find a ranked place'),
       h('div', { class: 'search-field' }, icon('search'), search),
     );
+    if (this.showFor !== m.id) {
+      this.show = 'all';
+      this.showFor = m.id;
+    }
+    if (!(twinsHere && pc.unpaired > 0)) this.show = 'all';
+    const showBox =
+      twinsHere && pc.unpaired > 0
+        ? h(
+            'fieldset',
+            { class: 'show-filter' },
+            h('legend', { class: 'sr-only' }, 'Show'),
+            (
+              [
+                ['all', 'All'],
+                ['paired', `Paired (${int(pc.paired)})`],
+                ['unpaired', `No twin (${int(pc.unpaired)})`],
+              ] as const
+            ).map(([k, text]) => {
+              const input = h('input', { type: 'radio', name: 'show', value: k, id: `show-${k}`, checked: k === this.show }) as HTMLInputElement;
+              input.addEventListener('change', () => {
+                if (!input.checked) return;
+                this.show = k;
+                this.limit = PAGE;
+                this.renderList();
+              });
+              return h('label', { class: 'seg' }, input, h('span', null, text));
+            }),
+          )
+        : null;
     const ranking = h(
       'section',
       { class: 'panel-sec ranking', 'aria-labelledby': 'ranking-title' },
@@ -194,10 +264,11 @@ export class MissionPanel {
       h(
         'p',
         { class: 'muted pick-hint' },
-        `Pick a ${this.app.store.hasTwins() ? 'pair' : 'place'} or a marker on the globe to compare it.`,
-        h('span', { class: 'sr-only' }, ` Each row: rank, ${this.app.store.hasTwins() ? 'Earth place and its lunar twin' : 'place'}, final score. Up and Down move through the list; Enter opens the comparison.`),
+        `Pick a ${twinsHere ? 'pair' : 'place'} or a marker on the globe to compare it.`,
+        h('span', { class: 'sr-only' }, ` Each row: rank, ${twinsHere ? 'Earth place and its lunar twin' : 'place'}, final score. Up and Down move through the list; Enter opens the comparison.`),
       ),
       searchBox,
+      showBox,
       this.listEl,
       this.moreEl,
     );
@@ -208,17 +279,21 @@ export class MissionPanel {
     this.app.updateMoonNote();
   }
 
-  /** Decision 5: the approved limitation of a mission, in full on its card (only where the bundle names the mission). */
+  /**
+   * Decision 5: the approved limitation of a mission, in full on its card (only where the bundle names
+   * the mission). Since revision 5 the solar text is a per-pair template (mission_card false): it is
+   * shown filled on every solar pair, never on the card.
+   */
   private limitationNote(m: Mission): HTMLElement | null {
     const t = this.app.store.similarity.texts?.['solar_limitation'];
-    if (!t || t.mission !== m.id || !this.app.store.hasTwins()) return null;
+    if (!t || t.mission_card === false || /\{[a-z_]+\}/.test(t.text) || t.mission !== m.id || !this.app.store.hasTwins(m.id)) return null;
     return h('div', { class: 'note-box limitation', 'data-note': 'limitation' }, icon('info'), h('p', null, t.text));
   }
 
   /** The lunar side of a ranked row in words: "Moon: near <feature>" with twins, else nothing. */
   private twinWords(it: RankItem): string | null {
     const mid = this.app.state.missionId;
-    if (!mid || !this.app.store.hasTwins() || it.twinId == null) return null;
+    if (!mid || !this.app.store.hasTwins(mid) || it.twinId == null) return null;
     const t = this.app.store.twin(mid, it.twinId);
     if (!t) return null;
     return t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`;
@@ -226,10 +301,27 @@ export class MissionPanel {
 
   /** The ranking, filtered by the search words (place text and lunar twin name). */
   private visibleItems(): RankItem[] {
-    const items = this.app.ranking();
+    let items = this.app.ranking();
+    if (this.show !== 'all') items = items.filter((it) => (this.show === 'paired' ? it.final != null : it.final == null));
     const q = this.query;
     if (!q) return items;
     return items.filter((it) => it.place.toLowerCase().includes(q) || (this.twinWords(it)?.toLowerCase().includes(q) ?? false));
+  }
+
+  /** One sentence on why the points after the divider have no twin, from the bundle's counts (missions.json similarity.unpaired_reasons). */
+  private unpairedWhy(m: Mission, n: number): string {
+    const sim = m.similarity;
+    const zone = this.app.zoneName(m) ?? "the mission's lunar zone";
+    const parts: string[] = [];
+    const joint = (sim.unpaired_reasons ?? []).filter((r) => r.kind === 'no_joint_match').reduce((s, r) => s + r.earth_cells, 0);
+    for (const r of sim.unpaired_reasons ?? []) {
+      const d = sim.variables?.find((v) => v.variable === r.variable);
+      const label = d?.label.toLowerCase() ?? 'a key value';
+      if (r.kind === 'no_zone_cell_within_bound') parts.push(`for ${int(r.earth_cells)}, no cell of ${zone} has ${label} within ${num(r.bound, 2)} ${sentenceUnit(d?.unit ?? '')}`);
+      else if (r.kind === 'key_value_missing_on_earth') parts.push(`${int(r.earth_cells)} have no ${label} value on Earth`);
+    }
+    if (joint) parts.push(`for ${int(joint)}, each value alone has a close lunar cell but no single cell is within every tolerance at once`);
+    return `${int(n)} points pass the filters but have no lunar twin${parts.length ? `: ${parts.join('; ')}` : ''}. They keep their suitability, have no similarity or final score, and are listed by suitability.`;
   }
 
   /** Keyboard focus on the main action of this screen: the first ranked place. */
@@ -244,39 +336,46 @@ export class MissionPanel {
     const all = this.app.ranking();
     const items = this.visibleItems();
     const shown = items.slice(0, this.limit);
-    const rows = shown.map((it) => {
-      const twin = this.twinWords(it);
-      const where = `${latLonText(it.lat, it.lon)}${twin ? ` · ${twin}` : ''}`;
-      const b = h(
-        'button',
-        { type: 'button', class: 'rank-row', 'data-id': String(it.id) },
-        h('span', { class: 'rank-n' }, int(it.rank)),
-        h('span', { class: 'rank-place' }, h('span', { class: 'rank-name' }, it.place), h('span', { class: 'rank-where' }, where), it.missingTemp ? tempMark(this.app) : null),
-        h('span', { class: 'rank-score' }, h('span', { class: 'rank-final' }, fixed(it.final, 2)), h('span', { class: 'rank-final-k' }, 'final')),
-      );
-      b.setAttribute('aria-label', `Rank ${int(it.rank)}: ${it.place}, ${where}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`);
-      if (it.missingTemp) b.dataset.missingTemp = 'true';
-      b.addEventListener('click', () => globesApi.markers.activate('earth', it.id));
-      b.addEventListener('focus', () => globesApi.markers.setHighlighted('earth', it.id));
-      b.addEventListener('blur', () => globesApi.markers.setHighlighted('earth', null));
-      b.addEventListener('keydown', (e) => this.rowKey(e, b));
-      return h('li', null, b);
-    });
+    const m = this.app.mission();
+    const mid = this.app.state.missionId;
+    const unpairedTotal = all.filter((it) => it.final == null).length;
+    const rows: HTMLElement[] = [];
+    let dividerDone = false;
+    for (const it of shown) {
+      if (it.final == null && !dividerDone && m) {
+        dividerDone = true;
+        rows.push(
+          h(
+            'li',
+            { class: 'list-divider', 'data-divider': 'no-twin' },
+            h('p', { class: 'divider-title' }, icon('info'), h('span', null, `No lunar twin: ${int(unpairedTotal)} ${unpairedTotal === 1 ? 'point' : 'points'}`)),
+            h('p', { class: 'divider-why' }, this.unpairedWhy(m, unpairedTotal)),
+          ),
+        );
+      }
+      rows.push(h('li', null, this.row(it, mid)));
+    }
     this.listEl.replaceChildren(...rows);
-    const zeroWeights = this.app.usingCustom() && this.app.weights().every((w) => w === 0);
+    const zeroWeights = this.app.usingCustom() && (this.app.weights().every((w) => w === 0) || (this.app.simWeights().length > 0 && this.app.simWeights().every((w) => w === 0)));
     if (zeroWeights) {
       this.listEl.append(
-        h('li', { class: 'empty', 'data-empty': 'zero-weights' }, 'All weights are zero, so no suitability can be computed and no place can be ranked; the filters have not changed. Set at least one weight above 0, or use "Reset to team values".'),
+        h(
+          'li',
+          { class: 'empty', 'data-empty': 'zero-weights' },
+          this.app.weights().every((w) => w === 0)
+            ? 'All suitability weights are zero, so no suitability can be computed and no place can be ranked; the filters have not changed. Set at least one weight above 0, or use "Reset to team values".'
+            : 'All similarity weights are zero, so no similarity or final score can be computed and no place can be ranked; the filters and the twins have not changed. Set at least one similarity weight above 0, or use "Reset to team values".',
+        ),
       );
     } else if (!all.length) {
       this.listEl.append(h('li', { class: 'empty' }, 'No place passes this mission with these settings. Use "Reset to team values" or choose another mission.'));
     } else if (!items.length) {
-      this.listEl.append(h('li', { class: 'empty', 'data-empty': 'search' }, `No ranked place matches "${this.query}". Clear the search box to see all ${int(all.length)} ranked places.`));
+      this.listEl.append(h('li', { class: 'empty', 'data-empty': 'search' }, this.query ? `No place in this list matches "${this.query}". Clear the search box to see all ${int(all.length)} places.` : 'No place to show with this choice. Choose "All" above to see every place.'));
     }
     this.moreEl.replaceChildren();
     if (items.length > this.limit) {
       this.moreEl.append(
-        h('p', { class: 'muted' }, `Showing ${int(shown.length)} of ${int(items.length)} ${this.query ? 'matching ' : ''}ranked places.`),
+        h('p', { class: 'muted' }, `Showing ${int(shown.length)} of ${int(items.length)} ${this.query ? 'matching ' : ''}places.`),
         button(`Show ${Math.min(PAGE, items.length - this.limit)} more`, () => {
           const first = this.limit;
           this.limit += PAGE;
@@ -284,7 +383,45 @@ export class MissionPanel {
           (this.listEl?.querySelectorAll<HTMLElement>('.rank-row')[first])?.focus();
         }, { kind: 'secondary', id: 'show-more' }),
       );
-    } else if (items.length) this.moreEl.append(h('p', { class: 'muted' }, this.query ? `${int(items.length)} ranked places match "${this.query}".` : `All ${int(items.length)} ranked places are listed.`));
+    } else if (items.length) this.moreEl.append(h('p', { class: 'muted' }, this.query ? `${int(items.length)} places match "${this.query}".` : `All ${int(items.length)} places are listed.`));
+  }
+
+  /** One row of the list: rank, the Earth place and its lunar twin, the final score; or "No lunar twin" with the reason. */
+  private row(it: RankItem, mid: string | null): HTMLButtonElement {
+    const twin = this.twinWords(it);
+    const coords = latLonText(it.lat, it.lon);
+    const paired = it.final != null;
+    const noPair = !paired && mid ? this.app.store.noPairAt(mid, it.passPos) : null;
+    const reason = noPair ? firstSentence(noPair.sentence).replace(/^No lunar analog:\s*/, '') : '';
+    const where = paired ? `${coords}${twin ? ` · ${twin}` : ''}` : coords;
+    const b = h(
+      'button',
+      { type: 'button', class: `rank-row${paired ? '' : ' is-unpaired'}`, 'data-id': String(it.id), 'data-paired': String(paired) },
+      h('span', { class: 'rank-n', 'aria-hidden': paired ? null : 'true' }, paired && it.rank != null ? int(it.rank) : ''),
+      h(
+        'span',
+        { class: 'rank-place' },
+        h('span', { class: 'rank-name' }, it.place),
+        h('span', { class: 'rank-where' }, where),
+        paired ? null : h('span', { class: 'rank-notwin', 'data-note': 'no-twin' }, h('strong', null, 'No lunar twin'), reason ? `: ${reason}` : ''),
+        it.missingTemp ? tempMark(this.app) : null,
+      ),
+      paired
+        ? h('span', { class: 'rank-score' }, h('span', { class: 'rank-final' }, fixed(it.final, 2)), h('span', { class: 'rank-final-k' }, 'final'))
+        : h('span', { class: 'rank-score is-suit' }, h('span', { class: 'rank-final' }, fixed(it.suitability, 2)), h('span', { class: 'rank-final-k' }, 'suitability')),
+    );
+    b.setAttribute(
+      'aria-label',
+      paired
+        ? `Rank ${int(it.rank ?? 0)}: ${it.place}, ${where}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`
+        : `${it.place}, ${coords}, no lunar twin${reason ? `: ${reason}` : ''}; suitability ${fixed(it.suitability, 2)} of 100`,
+    );
+    if (it.missingTemp) b.dataset.missingTemp = 'true';
+    b.addEventListener('click', () => (paired ? globesApi.markers.activate('earth', it.id) : void this.app.select(it.id)));
+    b.addEventListener('focus', () => globesApi.markers.setHighlighted('earth', paired ? it.id : null));
+    b.addEventListener('blur', () => globesApi.markers.setHighlighted('earth', null));
+    b.addEventListener('keydown', (e) => this.rowKey(e, b));
+    return b;
   }
 
   private rowKey(e: KeyboardEvent, b: HTMLElement): void {

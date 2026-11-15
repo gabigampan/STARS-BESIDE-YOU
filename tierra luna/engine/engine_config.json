@@ -1,8 +1,8 @@
 {
   "_note": "Engine-only settings. Every threshold, weight, utility bound and tolerance of the missions lives in mission_scoring.json and is NOT repeated here. Each setting has a value and a why; every one is also listed in /ASSUMPTIONS.md with its effect on results.",
   "engine_version": {
-    "value": "3.1.0",
-    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.1.0: the similarity rule is a per-mission setting; Rover and Solar panels use the real-value rule real_value_tolerance (team decision of 2026-11-15, morning); Lunar base keeps zone_twin unchanged. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
+    "value": "3.2.0",
+    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.2.0: Lunar base uses the rule percentile_and_real_tolerance (Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md): coldest temperature and daily amplitude compared as percentile positions within each body's population, slope and roughness in real values; moon_base.bin gains the lunar region of every cell and the bundle the file mission_zones.json (contract revision 6). 3.1.0: the similarity rule is a per-mission setting; Rover and Solar panels use the real-value rule real_value_tolerance (team decision of 2026-11-15, morning); Lunar base keeps zone_twin unchanged. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
   },
   "mission_config": {
     "value": "mission_scoring.json",
@@ -218,16 +218,17 @@
     "value": {
       "rover": "real_value_tolerance",
       "solar": "real_value_tolerance",
-      "lunar_base": "zone_twin"
+      "lunar_base": "percentile_and_real_tolerance"
     },
-    "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'): the similarity rule is a per-mission setting. Rover and Solar panels use real_value_tolerance (similarity on real values within stated tolerances, real_value_similarity). Lunar base keeps zone_twin exactly as shipped before (z-scores on the nine NASA regions) until the team confirms a new proposal. Earlier: zone_twin for all three missions (team decision of 2026-11-15, answer 1 to docs/DECISIONS.md), before that repo_global_mean (team lead decision 4, 2026-11-14). A plain string applies one rule to every mission; '--similarity-rule RULE' does that for one build (repo_global_mean, zone_twin and physical_pooled stay available and tested)."
+    "why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: Lunar base uses percentile_and_real_tolerance (real_value_similarity.missions.lunar_base): coldest temperature and daily thermal amplitude compared as mid-rank percentiles within their own population (Earth: the points passing the Lunar base funnel; Moon: the cells of the zone), slope and roughness in real values, pair filter, no twin when no zone cell passes it. Rover and Solar panels keep real_value_tolerance unchanged. Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'): the similarity rule is a per-mission setting. Rover and Solar panels use real_value_tolerance (similarity on real values within stated tolerances, real_value_similarity). Lunar base kept zone_twin (z-scores on the nine NASA regions) until 2026-11-15 08:55 CET. Earlier: zone_twin for all three missions (team decision of 2026-11-15, answer 1 to docs/DECISIONS.md), before that repo_global_mean (team lead decision 4, 2026-11-14). A plain string applies one rule to every mission; '--similarity-rule RULE' does that for one build (repo_global_mean, zone_twin and physical_pooled stay available and tested; percentile_and_real_tolerance needs a real_value_similarity block for the mission, so only Lunar base can use it)."
   },
   "similarity_rule_options": {
     "value": {
       "repo_global_mean": "What the repository does by default (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin. Kept available for comparison; not the shipped rule since 2026-11-15.",
-      "zone_twin": "Active for lunar_base (team decision of 2026-11-15; for rover and solar until the morning decision of the same day): z-score formula of analog_finder against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id). Lunar cells are not passed through the mission filters.",
+      "zone_twin": "Used by lunar_base until 2026-11-15 08:55 CET (and by rover and solar until the morning decision of the same day); kept available with --similarity-rule zone_twin: z-score formula of analog_finder against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id). Lunar cells are not passed through the mission filters.",
       "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default.",
-      "real_value_tolerance": "Active for rover and solar since the team decision of 2026-11-15 (morning): per variable a score exp(-0.5 * (|earth - moon| / tolerance)^2) on REAL values; similarity = 100 * weighted mean of the scores; pair filter: every key variable within its tolerance and every secondary within twice its tolerance, otherwise no twin; twin = the zone cell passing the filter with the highest similarity (ties: lowest id). Variables, roles, weights, tolerances and zones in real_value_similarity."
+      "real_value_tolerance": "Active for rover and solar since the team decision of 2026-11-15 (morning): per variable a score exp(-0.5 * (|earth - moon| / tolerance)^2) on REAL values; similarity = 100 * weighted mean of the scores; pair filter: every key variable within its tolerance and every secondary within twice its tolerance, otherwise no twin; twin = the zone cell passing the filter with the highest similarity (ties: lowest id). Variables, roles, weights, tolerances and zones in real_value_similarity.",
+      "percentile_and_real_tolerance": "Active for lunar_base since the team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: the real_value_tolerance machinery with a scale per variable. Variables with scale 'percentile_within_population' (coldest temperature, daily thermal amplitude) are compared as mid-rank percentiles, 100 * (rank - 0.5) / n with ties averaged, within their own population (Earth: the points that pass the mission's funnel; Moon: the cells of the mission's zone); variables with scale 'real' (slope, roughness) in real values. Per variable s = exp(-0.5 * (difference / tolerance)^2); similarity = 100 * weighted mean; pair filter: key variables within 1 x tolerance, secondary within 2 x tolerance; twin = the zone cell passing the filter with the highest similarity (ties: lowest id); no twin otherwise. It is a likeness of thermal POSITION, not of temperature: the real values and differences are exported per pair."
     },
     "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers of each mission."
   },
@@ -291,10 +292,9 @@
       "similarity_meaning": {
         "decision": 1,
         "text": "Each Earth point is paired with its lunar twin: the single 1-degree lunar cell, inside the mission's target zone, that holds the most similar relative position on the Moon as the Earth point holds on Earth (slope, roughness, relative elevation and surface temperature, each compared within its own world). A high similarity means 'same place in each world's range', not 'same values': both sets of values are shown side by side.",
-        "where": "lunar_base only (zone_twin rule): wherever a similarity is shown, next to the absolute values of every similarity variable on Earth (earth_base.bin v.<column>) and on the Moon (twins.json values)",
-        "missions": [
-          "lunar_base"
-        ]
+        "where": "nowhere in the shipped bundle (no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)); kept for the --similarity-rule zone_twin and repo_global_mean builds",
+        "missions": [],
+        "status": "no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)"
       },
       "similarity_meaning_real_values": {
         "decision": "2026-11-15 morning",
@@ -305,6 +305,14 @@
         "text": "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Both values and their difference are shown side by side.",
         "where": "rover and solar (real_value_tolerance rule): wherever a similarity is shown, next to each similarity variable's Earth value, lunar value, difference and tolerance (earth_<mission>_pairs.bin '<variable>.earth', '<variable>.moon', '<variable>.diff'; tolerances in missions.json similarity.variables)"
       },
+      "similarity_meaning_lunar_base": {
+        "decision": "2026-11-15 08:55 CET",
+        "missions": [
+          "lunar_base"
+        ],
+        "text": "Each Earth point is paired with its lunar twin: the 1-degree cell, among NASA's nine candidate landing regions near the lunar south pole, that holds the same thermal position and has a similar terrain. The coldest temperature and the daily temperature swing are compared as positions: where the point ranks among Earth's lunar-base candidates against where its twin ranks among the cells of the nine regions, each within 10 percentile points; the two places are not equally cold and the real values are far apart. Slope and roughness are compared in real values (the twin within 4 degrees and 60 m). The real values on both sides and their differences are shown next to every pair.",
+        "where": "lunar_base (percentile_and_real_tolerance rule): wherever a similarity is shown, next to each variable's percentile on both sides (earth_lunar_base_pairs.bin '<variable>.earth_pct', '.moon_pct', '.diff_pct') and the real values and differences ('<variable>.earth', '.moon', '.diff', 'info.<variable>.*')"
+      },
       "rock_note": {
         "decision": 2,
         "text": "Bare-ground fraction is shown for information only. It is not part of the similarity: on the Moon it is 1 everywhere by definition, so it cannot tell lunar places apart.",
@@ -313,23 +321,21 @@
       "missing_temperature_mark": {
         "decision": 3,
         "text": "no temperature data: similarity computed with 3 variables",
-        "where": "lunar_base only (rover and solar no longer use temperature in the similarity): on every pair whose similarity used fewer variables because temperature is missing (earth_<mission>.bin sim_missing_bits has the temp_k bit), in the panel and in the ranking list",
-        "missions": [
-          "lunar_base"
-        ]
+        "where": "nowhere in the shipped bundle (no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)); kept for the --similarity-rule zone_twin and repo_global_mean builds",
+        "missions": [],
+        "status": "no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)"
       },
       "missing_temperature_note": {
         "decision": 3,
         "text": "No surface temperature here: the satellite climatology we use does not cover Antarctica. This twin was chosen on relief only (slope, roughness, relative elevation), so its similarity is not comparable with points that include temperature.",
-        "where": "lunar_base only: in the panel of those points",
-        "missions": [
-          "lunar_base"
-        ]
+        "where": "nowhere in the shipped bundle (no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)); kept for the --similarity-rule zone_twin and repo_global_mean builds",
+        "missions": [],
+        "status": "no longer applies: it described the z-score rule (zone_twin) that Lunar base used until 2026-11-15 08:55 CET; Lunar base now uses percentile_and_real_tolerance (texts similarity_meaning_lunar_base, lunar_base_pair_sentence)"
       },
       "twin_sharing_note": {
         "decision": 4,
         "text": "This lunar twin is shared by N Earth points (X % of the ranked points for this mission). The lunar base zone is small (280 cells), cold and rugged, so a few gentle cells are the best match for most places on Earth.",
-        "where": "next to the twin; N = twins.json earth_cells (or moon_<mission>.bin twin_count), X = 100 * N / missions.json ranked_count (the paired points). The second sentence is about lunar_base; for rover and solar show the first sentence only",
+        "where": "next to the twin; N = twins.json earth_cells (or moon_<mission>.bin twin_count), X = 100 * N / missions.json ranked_count (the paired points). Show the FIRST sentence only, for every mission: the second sentence described Lunar base under the z-score rule (48 twins, 27.7 % on one cell) and no longer applies since 2026-11-15 08:55 CET (103 twins, at most 5.6 %).",
         "placeholders": {
           "N": "Earth points sharing the twin",
           "X": "their share of the mission's ranked points, in percent"
@@ -393,9 +399,83 @@
             "from": "engine_config lunar_day_earth_days, 1 decimal"
           }
         }
+      },
+      "lunar_base_pair_sentence": {
+        "decision": "2026-11-15 08:55 CET (the sentence proposed in docs/LUNAR_BASE_PROPOSAL.md, 'Frase para la web', approved as a per-pair template; the zone named without a mission number)",
+        "mission": "lunar_base",
+        "missions": [
+          "lunar_base"
+        ],
+        "mission_card": false,
+        "text": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is {temp_diff_k} K colder on average (minimum {tmin_moon_c} °C at the surface against {tmin_earth_c} °C air temperature here) and its day-night swing is {amp_diff_k} K larger; slope differs by {slope_diff}° and roughness by {rough_diff} m.",
+        "where": "on EVERY lunar_base pair (earth_lunar_base.bin twin present), in the panel next to the twin and the similarity (the team's condition: every pair says it is a likeness of thermal position, not of temperature, with the real difference written)",
+        "placeholders": {
+          "temp_diff_k": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "info.temp_k.diff",
+            "decimals": 0,
+            "meaning": "mean temperature, Earth minus twin, in K (the twin is colder on every pair: checked by a test)"
+          },
+          "tmin_moon_c": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "tmin_k.moon",
+            "subtract": 273.15,
+            "decimals": 0,
+            "meaning": "the twin's coldest SURFACE temperature (Diviner, measured), K converted to degrees C"
+          },
+          "tmin_earth_c": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "tmin_k.earth",
+            "subtract": 273.15,
+            "decimals": 1,
+            "meaning": "the Earth point's coldest AIR temperature (WorldClim, modelled), K converted to degrees C"
+          },
+          "amp_diff_k": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "lst_diurnal_amp_k.diff",
+            "decimals": 0,
+            "meaning": "daily temperature swing, twin minus Earth, in K (the twin's is larger on every pair: checked by a test)"
+          },
+          "slope_diff": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "slope_deg.diff",
+            "decimals": 1,
+            "meaning": "|slope difference| in degrees"
+          },
+          "rough_diff": {
+            "file": "earth_lunar_base_pairs.bin",
+            "column": "roughness_m.diff",
+            "decimals": 1,
+            "meaning": "|roughness difference| in m"
+          }
+        },
+        "number_1_example": "filled with the number 1 pair in explain.json missions.lunar_base[0].similarity.pair_sentence"
+      },
+      "no_twin_note_lunar_base": {
+        "decision": "2026-11-15 08:55 CET (a point without a twin is treated exactly as in Rover and Solar panels, with the reason)",
+        "missions": [
+          "lunar_base"
+        ],
+        "variants": {
+          "no_cell_meets_thermal_position": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole ranks within 10 percentile points of this point in both coldest temperature and daily temperature swing (closest: {variable} {gap} points away). The point keeps its suitability; it has no similarity and no final score.",
+          "no_cell_meets_terrain": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole has a terrain close enough to this point's (slope within 4 degrees and roughness within 60 m; closest: {variable} {gap} {unit} away). The point keeps its suitability; it has no similarity and no final score.",
+          "no_cell_meets_either": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole matches this point's thermal position (closest: {variable} {gap} points away) or its terrain (closest: {variable2} {gap2} {unit2} away). The point keeps its suitability; it has no similarity and no final score.",
+          "no_single_cell_meets_both": "No lunar twin: some cells of NASA's nine candidate landing regions near the lunar south pole match this point's thermal position and others its terrain, but no single cell matches both (closest: {variable} {gap} {unit} away, bound {bound} {unit}). The point keeps its suitability; it has no similarity and no final score.",
+          "key_value_missing_on_earth": "No lunar twin: this point has no value of {variable}, so it has no position to compare. The point keeps its suitability; it has no similarity and no final score."
+        },
+        "where": "lunar_base: on every passing point without a twin (earth_lunar_base.bin twin missing), in the panel and the ranking list (after the paired points, by suitability); pick the variant by earth_lunar_base_pairs.bin nopair_kind (missions.json similarity.nopair_kinds)",
+        "placeholders": {
+          "variable": "label of missions.json similarity.variables[nopair_var]",
+          "unit": "that variable's unit (percentile points for the two thermal variables)",
+          "bound": "that variable's bound",
+          "gap": "nopair_gap with 2 decimals rounded UP (ceil)",
+          "variable2": "label of similarity.variables[nopair_var2] (no_cell_meets_either only)",
+          "unit2": "its unit",
+          "gap2": "nopair_gap2 with 2 decimals rounded UP (ceil)"
+        }
       }
     },
-    "why": "English web texts. similarity_meaning, rock_note, missing_temperature_mark, missing_temperature_note and twin_sharing_note: approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; similarity_meaning and the temperature texts now apply to lunar_base only ('missions'). similarity_meaning_real_values, no_twin_note and solar_limitation: written for the team decision of 2026-11-15 (morning; the delegate's conditions: the meaning must say that similarity is computed on real values within stated tolerances; the solar text says that the pair is matched on sunlight above the atmosphere, how much reaches the ground at the Earth site, that the lunar day lasts 29.5 Earth days and that terrain is secondary, in at most three sentences, and never says or implies that panels charge the same in both places); the solar_limitation of decision 5 is superseded. A text with 'placeholders' is a template the app fills per pair from the named file and column. Exported in similarity.json 'texts'; a text with 'mission' and 'mission_card' not false is also the first item of that mission's missions.json 'known_limitations'."
+    "why": "English web texts. similarity_meaning, rock_note, missing_temperature_mark, missing_temperature_note and twin_sharing_note: approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; similarity_meaning and the temperature texts now apply to lunar_base only ('missions'). similarity_meaning_real_values, no_twin_note and solar_limitation: written for the team decision of 2026-11-15 (morning; the delegate's conditions: the meaning must say that similarity is computed on real values within stated tolerances; the solar text says that the pair is matched on sunlight above the atmosphere, how much reaches the ground at the Earth site, that the lunar day lasts 29.5 Earth days and that terrain is secondary, in at most three sentences, and never says or implies that panels charge the same in both places); the solar_limitation of decision 5 is superseded. A text with 'placeholders' is a template the app fills per pair from the named file and column. Exported in similarity.json 'texts'; a text with 'mission' and 'mission_card' not false is also the first item of that mission's missions.json 'known_limitations'. 2026-11-15 08:55 CET (Lunar base decision): lunar_base_pair_sentence is the approved sentence of docs/LUNAR_BASE_PROPOSAL.md as a per-pair template, with the zone named \"NASA's nine candidate landing regions near the lunar south pole\" (no mission number); similarity_meaning_lunar_base and no_twin_note_lunar_base were written by the engine agent for that decision (meaning: percentile position for the two thermal variables, real values for terrain); similarity_meaning and the two temperature texts no longer apply (status)."
   },
   "real_value_similarity": {
     "value": {
@@ -469,6 +549,41 @@
               "column": "irradiance_kwh_m2_day",
               "level": "from the column (variables.json irradiance_kwh_m2_day: DERIVED)",
               "text": "lunar surface irradiance of the lunar table (no atmosphere, so it is also the sunlight above the surface)"
+            }
+          }
+        },
+        "tmin_k": {
+          "sources": {
+            "EARTH": {
+              "kind": "celsius_to_kelvin",
+              "column": "tmin_c",
+              "offset_k": 273.15,
+              "level": "from the column (variables.json tmin_c: MODELLED)",
+              "text": "coldest temperature: WorldClim modelled AIR temperature of the coldest month (minimum), converted from degrees C to K (K = degC + 273.15); a modelled climatology, not a measurement"
+            },
+            "MOON": {
+              "kind": "celsius_to_kelvin",
+              "column": "tmin_c",
+              "offset_k": 273.15,
+              "level": "from the column (variables.json tmin_c: MEASURED)",
+              "text": "coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature"
+            }
+          },
+          "offset_why": "273.15: the definition of the kelvin scale (K = degC + 273.15); the lunar table's tmin_c is tmin_k - 273.15 (checked by a test)."
+        },
+        "lst_diurnal_amp_k": {
+          "sources": {
+            "EARTH": {
+              "kind": "column",
+              "column": "lst_diurnal_amp_k",
+              "level": "from the column (variables.json lst_diurnal_amp_k)",
+              "text": "daily thermal amplitude: MODIS land-surface temperature 10:30 minus 22:30 overpass (understates the daily range)"
+            },
+            "MOON": {
+              "kind": "column",
+              "column": "lst_diurnal_amp_k",
+              "level": "from the column (variables.json lst_diurnal_amp_k)",
+              "text": "daily thermal amplitude: Diviner surface temperature, maximum minus minimum of the diurnal cycle"
             }
           }
         }
@@ -559,6 +674,93 @@
             }
           ],
           "weights_why": "Key variable 80 % (team decision of 2026-11-15, morning): sunlight without atmosphere 80 %, slope 10 %, roughness 10 %, with the rover's tolerances for slope and roughness."
+        },
+        "lunar_base": {
+          "rule": "percentile_and_real_tolerance",
+          "zone": {
+            "kind": "similarity_zone",
+            "similarity_zones_key": "lunar_base",
+            "name": "NASA's nine candidate landing regions near the lunar south pole",
+            "source": "engine_config similarity_zones.lunar_base: the lunar cells intersecting the nine candidate landing regions NASA announced on 28 October 2024 (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK); 280 cells",
+            "why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: the zone is the nine NASA regions (the 280-cell footprint already in the engine), unchanged."
+          },
+          "populations": {
+            "EARTH": {
+              "rule": "the Earth points that pass the Lunar base funnel (hard filters of mission_scoring.json), with a value of the variable",
+              "why": "Confirmed design D4b: the position of a point among Earth's lunar-base candidates."
+            },
+            "MOON": {
+              "rule": "the lunar cells of the mission's zone, with a value of the variable",
+              "why": "Confirmed design D4b: the position of a cell among the cells of the nine NASA regions."
+            }
+          },
+          "percentile": {
+            "formula": "p = 100 * (rank - 0.5) / n, rank = position in the population sorted ascending (1-based), ties get the mean of their ranks, n = cells of the population with a value",
+            "why": "Mid-rank percentile of docs/LUNAR_BASE_PROPOSAL.md (checker's definition): symmetric, never 0 or 100, ties averaged; a cell without a value has no percentile."
+          },
+          "variables": [
+            {
+              "variable": "tmin_k",
+              "role": "key",
+              "weight": 0.4,
+              "scale": "percentile_within_population",
+              "label": "Coldest temperature (position)",
+              "unit": "percentile points",
+              "real_unit": "K",
+              "tolerance": 10.0,
+              "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+              "why": "Key variable of the mission's own filters and weights (tmin_c); 10 percentile points = a band of +-10 % of each population (docs/LUNAR_BASE_PROPOSAL.md section 5). Earth: modelled air temperature; Moon: measured surface temperature: only the positions are compared."
+            },
+            {
+              "variable": "lst_diurnal_amp_k",
+              "role": "key",
+              "weight": 0.4,
+              "scale": "percentile_within_population",
+              "label": "Daily temperature swing (position)",
+              "unit": "percentile points",
+              "real_unit": "K",
+              "tolerance": 10.0,
+              "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+              "why": "Key variable of the mission's own filters and weights; 10 percentile points as for the coldest temperature."
+            },
+            {
+              "variable": "slope_deg",
+              "role": "secondary",
+              "weight": 0.1,
+              "scale": "real",
+              "label": "Slope",
+              "unit": "deg",
+              "real_unit": "deg",
+              "tolerance": 2.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted for Lunar base by the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+              "why": "Terrain in real values with the illustrative team value of rover_preset.py (5 km baseline); filter bound 4 deg (twice the tolerance)."
+            },
+            {
+              "variable": "roughness_m",
+              "role": "secondary",
+              "weight": 0.1,
+              "scale": "real",
+              "label": "Roughness",
+              "unit": "m",
+              "real_unit": "m",
+              "tolerance": 30.0,
+              "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted for Lunar base by the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+              "why": "Terrain in real values with the illustrative team value of rover_preset.py (5 km baseline); filter bound 60 m (twice the tolerance)."
+            }
+          ],
+          "weights_why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: coldest temperature 40 % and daily thermal amplitude 40 % (positions), slope 10 % and roughness 10 % (real values); mean temperature and relative elevation leave the similarity and are shown as differences.",
+          "nopair_groups": {
+            "thermal_position": [
+              "tmin_k",
+              "lst_diurnal_amp_k"
+            ],
+            "terrain": [
+              "slope_deg",
+              "roughness_m"
+            ]
+          },
+          "nopair_groups_why": "The reason of a point without a twin, as in the confirmed proposal: no zone cell meets the thermal position (both keys within 10 points), no zone cell meets the terrain (slope within 4 deg and roughness within 60 m), neither, or each is met by some cell but never by the same cell.",
+          "pair_sentence": "lunar_base_pair_sentence"
         }
       },
       "reference_tolerances_not_used": {
@@ -582,7 +784,12 @@
           "temp_k",
           "lst_diurnal_amp_k"
         ],
-        "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them)."
+        "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them). lunar_base (2026-11-15 08:55 CET): mean temperature and relative elevation leave the similarity and are shown as differences; irradiance for information.",
+        "lunar_base": [
+          "temp_k",
+          "elevation_rel_m",
+          "irradiance_kwh_m2_day"
+        ]
       },
       "atmosphere_comparison": {
         "variable": "irradiance_toa_kwh_m2_day",
@@ -590,7 +797,7 @@
         "why": "Team condition of 2026-11-15 (morning): every solar pair also carries the Earth cell's irradiance at the ground and the share lost in the atmosphere (1 - ground / above the atmosphere)."
       }
     },
-    "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'). Method (P1-P9 of the team lead, 2026-11-15 04:47-04:49 CET): similarity on real values with a Gaussian score per variable, key variables 80 % of the weight, pair filter key <= tolerance and secondary <= 2 x tolerance. Tolerances: rover slope 2 deg and roughness 30 m are illustrative team values (rover_preset.py version 3, 5 km baseline); relative elevation 500 m and irradiance 0.6 kWh/m2/day were set by the delegate on the team lead's behalf on 2026-11-15. Zones: rover south pole (unchanged), solar the equatorial maria of analog_finder. Temperature 10 K and amplitude 5 K are reference values only and not used. score_decimals = the published precision of the per-variable scores (int32 q / 1e6), so the browser recomputes similarity exactly."
+    "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'). Method (P1-P9 of the team lead, 2026-11-15 04:47-04:49 CET): similarity on real values with a Gaussian score per variable, key variables 80 % of the weight, pair filter key <= tolerance and secondary <= 2 x tolerance. Tolerances: rover slope 2 deg and roughness 30 m are illustrative team values (rover_preset.py version 3, 5 km baseline); relative elevation 500 m and irradiance 0.6 kWh/m2/day were set by the delegate on the team lead's behalf on 2026-11-15. Zones: rover south pole (unchanged), solar the equatorial maria of analog_finder. Temperature 10 K and amplitude 5 K are reference values only and not used. score_decimals = the published precision of the per-variable scores (int32 q / 1e6), so the browser recomputes similarity exactly. Lunar base (Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md): rule percentile_and_real_tolerance in missions.lunar_base (variables with a 'scale'; tolerances 10 percentile points for the two keys, 2 deg and 30 m for terrain, filter bounds 10 points, 10 points, 4 deg and 60 m; zone the nine NASA regions; populations: the Earth points passing the funnel, 2,419 today, and the 280 zone cells)."
   },
   "toa_insolation": {
     "value": {
@@ -613,5 +820,79 @@
   "lunar_day_earth_days": {
     "value": 29.53,
     "why": "Length of the lunar day (synodic month) in Earth days, as cited in real_data/provenance_moon.csv (irradiance_kwh_m2_day: 'Lunar day = 29.53 Earth days'); used, rounded to one decimal, in the solar pair text the team asked for on 2026-11-15 (morning)."
+  },
+  "lunar_regions": {
+    "value": {
+      "source_document": "docs/MISSION_ZONES.md",
+      "texts_file": "engine/mission_zone_texts.json",
+      "texts_required_keys": [
+        "consulted_on",
+        "source_document",
+        "region_labels",
+        "general_note",
+        "zone_why",
+        "outside"
+      ],
+      "texts_copied_if_present": [
+        "figures",
+        "approved_by"
+      ],
+      "regions": [
+        {
+          "code": "A",
+          "kind": "zone_of",
+          "zone": "similarity_zones.lunar_base",
+          "fallback_label": "The nine NASA candidate regions",
+          "rule": "the cell is one of the 280 cells of the nine candidate landing regions NASA announced on 28 October 2024 (the Lunar base zone)"
+        },
+        {
+          "code": "B",
+          "kind": "zone_of",
+          "zone": "real_value_similarity.missions.rover.zone",
+          "fallback_label": "South-polar region outside the nine NASA regions",
+          "rule": "latitude at or below 75 degrees south, not in A"
+        },
+        {
+          "code": "C",
+          "kind": "mirror_of",
+          "zone": "real_value_similarity.missions.rover.zone",
+          "fallback_label": "North-polar region",
+          "rule": "latitude at or above 75 degrees north"
+        },
+        {
+          "code": "D",
+          "kind": "zone_of",
+          "zone": "real_value_similarity.missions.solar.zone",
+          "fallback_label": "Low equatorial plains (the maria)",
+          "rule": "within 30 degrees of the equator and elevation at or below -1,200 m (the Solar panels zone)"
+        },
+        {
+          "code": "E",
+          "kind": "abs_lon_greater_than",
+          "abs_lon_gt": 90.0,
+          "fallback_label": "Far side",
+          "rule": "longitude more than 90 degrees from the central meridian (far side), not in A to D"
+        },
+        {
+          "code": "F",
+          "kind": "rest",
+          "fallback_label": "Near-side highlands and mid-latitudes",
+          "rule": "every other cell: near side (longitude within 90 degrees of the central meridian), between 75 S and 75 N, outside the low equatorial plains"
+        }
+      ],
+      "mission_zone_regions": {
+        "rover": [
+          "A",
+          "B"
+        ],
+        "solar": [
+          "D"
+        ],
+        "lunar_base": [
+          "A"
+        ]
+      }
+    },
+    "why": "The six lunar regions of docs/MISSION_ZONES.md section 2 (zone-texts agent, 2026-11-15), evaluated in this order, the first match wins, so every cell has exactly one region. A, B and D reuse the zone definitions already in the engine (Lunar base, Rover and Solar panels zones), C mirrors the Rover latitude bound to the north, E splits near and far side at 90 degrees of longitude (MISSION_ZONES.md: 'Near side' and 'far side' are split at 90 degrees; libration makes the visible edge a few degrees wider). mission_zone_regions: each mission's zone as a union of regions (Rover = A + B, Solar panels = D, Lunar base = A), checked by a test against the zone masks. Written to moon_base.bin 'region' and mission_zones.json for the web's 'why not here' explanations; the texts come verbatim from texts_file (fallback_label is used only when that file is absent or incomplete)."
   }
 }

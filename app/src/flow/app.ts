@@ -7,13 +7,14 @@ import { DataError, DataStore, type RankedPoint } from '../data/store.ts';
 import { pyRound2, recomputeMission, type MissionScores } from '../data/recompute.ts';
 import type { Mission } from '../data/types.ts';
 import { missionName } from './copy';
-import { renderDataDialog, openDataDialog } from './dataDialog';
+import { renderDataDialog, openDataDialog, renderZoneSources } from './dataDialog';
 import { meaningText, renderDetail, renderDetailLoading } from './detailPanel';
 import { renderIntro } from './intro';
 import { anyVideo, hasVideo, loadMediaIndex, videoSpec } from './media';
 import { MissionPanel } from './missionPanel';
 import { renderSteps, type Step } from './steps';
 import { h } from './dom';
+import { ZoneView } from './zones';
 
 export interface RankItem extends RankedPoint {
   place: string;
@@ -26,11 +27,13 @@ export interface FlowState {
   /** null = the team's weights / alpha. */
   weights: number[] | null;
   alpha: number | null;
+  /** Real-value rules: similarity weights (null = the team's). */
+  simWeights: number[] | null;
 }
 
 export class FlowApp {
   readonly store = new DataStore();
-  readonly state: FlowState = { step: 'choose', missionId: null, selectedId: null, weights: null, alpha: null };
+  readonly state: FlowState = { step: 'choose', missionId: null, selectedId: null, weights: null, alpha: null, simWeights: null };
   private dataError: string | null = null;
   private dataReady = false;
   private loadingMission: string | null = null;
@@ -47,6 +50,8 @@ export class FlowApp {
   private readonly stepsNav = document.getElementById('steps') as HTMLElement;
   readonly ready: Promise<void>;
   private detailSeq = 0;
+  /** The mission's search zone on the Moon (revision 6 data; inactive without it). */
+  readonly zones = new ZoneView(this);
 
   constructor() {
     document.body.classList.add('flow');
@@ -70,7 +75,7 @@ export class FlowApp {
     this.renderIntro();
     this.renderSteps();
     if (this.dataReady) {
-      renderDataDialog(this.store, this.ruleText(), meaningText(this));
+      renderDataDialog(this.store, (m) => this.ruleText(m), (m) => meaningText(this, m));
       // Place names for the list come next; they are small and needed as soon as a mission is open.
       this.store.loadPlaceDetail().then(
         () => {
@@ -109,8 +114,16 @@ export class FlowApp {
   alpha(): number {
     return this.state.alpha ?? this.mission()?.alpha ?? this.store.missionsJson.alpha;
   }
+  /** The team's similarity weights of a real-value mission (empty for other rules). */
+  teamSimWeights(m: Mission): number[] {
+    return this.store.pairVariables(m.id).map((v) => v.weight);
+  }
+  simWeights(): number[] {
+    const m = this.mission();
+    return this.state.simWeights ?? (m ? this.teamSimWeights(m) : []);
+  }
   usingCustom(): boolean {
-    return this.state.weights !== null || this.state.alpha !== null;
+    return this.state.weights !== null || this.state.alpha !== null || this.state.simWeights !== null;
   }
   lastRecomputeMs(): number | null {
     return this.recomputeTimes.length ? this.recomputeTimes[this.recomputeTimes.length - 1] : null;
@@ -145,6 +158,16 @@ export class FlowApp {
   rankOf(id: number): number | null {
     if (this.custom) return this.custom.rankOf.get(id) ?? null;
     return this.ranking().find((r) => r.id === id)?.rank ?? null;
+  }
+
+  /** True when the point is in the open mission's list (ranked or passing without a twin). */
+  inList(id: number): boolean {
+    return this.ranking().some((r) => r.id === id);
+  }
+
+  /** The open mission has twins (its own rule decides, read from the bundle). */
+  missionHasTwins(m: Mission | null = this.mission()): boolean {
+    return !!m && this.store.hasTwins(m.id);
   }
 
   missionHasVideo(): boolean {
@@ -229,6 +252,7 @@ export class FlowApp {
     if (changed) {
       this.state.weights = null;
       this.state.alpha = null;
+      this.state.simWeights = null;
       this.custom = null;
     }
     await this.store.loadTwins().catch(() => undefined);
@@ -242,13 +266,18 @@ export class FlowApp {
     this.missionPanel.render();
     this.updateMarkers();
     this.renderIntro();
+    void this.zones.show(id).then(() => renderZoneSources(this.store));
     if (!opts.keepSelection) {
       this.viewTopEarth();
       // the chosen card is gone: keyboard focus goes to the main action of the new screen, the first ranked place
       this.missionPanel.focusFirst();
     }
     const m = this.store.mission(id);
-    this.announce(`${missionName(m)} mission chosen: ${this.ranking().length} places on Earth pass its filters.`);
+    const c = this.store.pairCounts(id);
+    this.announce(
+      `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth pass its filters` +
+        (c.unpaired > 0 && this.missionHasTwins(m) ? `; ${c.paired.toLocaleString('en-GB')} of them have a lunar twin.` : '.'),
+    );
     // Start fetching the utilities for the weight sliders in the background.
     window.setTimeout(() => void this.store.loadAllTiles().catch(() => undefined), 1500);
   }
@@ -256,7 +285,7 @@ export class FlowApp {
   /** With twins, turn the Moon camera to the lunar zone that holds the mission's twins. */
   private async viewTwinZone(): Promise<void> {
     const m = this.mission();
-    if (!m || !this.store.hasTwins()) return;
+    if (!m || !this.store.hasTwins(m.id)) return;
     const twins = this.store.twinsOf(m.id);
     if (!twins.length) return;
     const rad = Math.PI / 180;
@@ -284,6 +313,7 @@ export class FlowApp {
     this.state.selectedId = null;
     globesApi.markers.clearMarkers('earth');
     globesApi.markers.clearMarkers('moon');
+    this.zones.hide();
     this.setStep('choose');
     globesApi.resetView();
     this.renderIntro();
@@ -293,7 +323,8 @@ export class FlowApp {
   // ---------- markers ----------
 
   updateMarkers(): void {
-    const items = this.ranking();
+    // markers are the points with a final score (the pairs); points without a twin are in the list only
+    const items = this.ranking().filter((it): it is RankItem & { final: number } => it.final != null);
     if (!items.length) {
       globesApi.markers.clearMarkers('earth');
       globesApi.markers.clearMarkers('moon');
@@ -306,11 +337,11 @@ export class FlowApp {
       hi = Math.max(hi, it.final);
     }
     const span = hi - lo || 1;
-    const earth: MarkerItem[] = items.map((it) => ({ id: it.id, lat: it.lat, lon: it.lon, score: (it.final - lo) / span, rank: it.rank, label: it.place }));
+    const earth: MarkerItem[] = items.map((it) => ({ id: it.id, lat: it.lat, lon: it.lon, score: (it.final - lo) / span, rank: it.rank ?? undefined, label: it.place }));
     globesApi.markers.setMarkers('earth', earth, { topLabels: 10 });
-    if (this.store.hasTwins() && this.state.missionId) {
+    if (this.state.missionId && this.store.hasTwins(this.state.missionId)) {
       // The lunar twins of the ranked points; each carries the best final of the Earth points sharing it.
-      const best = new Map<number, RankItem>();
+      const best = new Map<number, RankItem & { final: number }>();
       for (const it of items) if (it.twinId != null && !best.has(it.twinId)) best.set(it.twinId, it);
       const moon: MarkerItem[] = [];
       for (const [tid, it] of best) {
@@ -326,10 +357,10 @@ export class FlowApp {
   private onPick(body: 'earth' | 'moon', id: string | number): void {
     if (this.state.step === 'choose' || !this.state.missionId) return;
     if (body === 'earth') {
-      if (typeof id !== 'number' || this.rankOf(id) == null) return;
+      if (typeof id !== 'number' || !this.inList(id)) return;
       void this.select(id);
     } else {
-      if (!this.store.hasTwins() || typeof id !== 'number') return;
+      if (!this.store.hasTwins(this.state.missionId) || typeof id !== 'number') return;
       const first = this.ranking().find((r) => r.twinId === id);
       if (first) void this.select(first.id);
     }
@@ -337,13 +368,15 @@ export class FlowApp {
 
   // ---------- weights ----------
 
-  async setWeights(weights: number[] | null, alpha: number | null): Promise<number | null> {
+  async setWeights(weights: number[] | null, alpha: number | null, simWeights: number[] | null = this.state.simWeights): Promise<number | null> {
     const m = this.mission();
     if (!m) return null;
     const team = this.teamWeights(m);
-    const same = (a: number[] | null) => !a || a.every((v, i) => v === team[i]);
-    this.state.weights = same(weights) ? null : weights;
+    const teamSim = this.teamSimWeights(m);
+    const same = (a: number[] | null, ref: number[]) => !a || a.every((v, i) => v === ref[i]);
+    this.state.weights = same(weights, team) ? null : weights;
     this.state.alpha = alpha === null || alpha === m.alpha ? null : alpha;
+    this.state.simWeights = same(simWeights, teamSim) ? null : simWeights;
     const seq = ++this.recomputeSeq;
     if (!this.usingCustom()) {
       this.custom = null;
@@ -362,25 +395,28 @@ export class FlowApp {
     }
     const t0 = performance.now();
     const mat = this.store.matrix(m.id);
-    const scores = recomputeMission(mat, this.weights(), this.alpha());
+    const scores = recomputeMission(mat, this.weights(), this.alpha(), this.simWeights());
     const items: RankItem[] = [];
     const rankOf = new Map<number, number>();
-    for (let k = 0; k < scores.order.length; k++) {
-      const p = scores.order[k];
+    for (let k = 0; k < scores.list.length; k++) {
+      const p = scores.list[k];
       const id = mat.ids[p];
       const lp = this.store.landPosOf(id);
-      rankOf.set(id, k + 1);
+      const scored = k < scores.order.length;
+      if (scored) rankOf.set(id, k + 1);
+      const sim = scores.similarity[p];
       items.push({
         id,
         landPos: lp,
         passPos: p,
         lat: this.store.latOf(id),
         lon: this.store.lonOf(id),
-        rank: k + 1,
-        final: pyRound2(scores.final[p]),
+        rank: scored ? k + 1 : null,
+        final: scored ? pyRound2(scores.final[p]) : null,
         suitability: scores.suitability[p],
-        similarity: mat.similarity[p],
+        similarity: Number.isNaN(sim) ? null : pyRound2(sim),
         twinId: this.ranking0(m.id, p),
+        scored,
         simVarsUsed: null,
         missingTemp: this.store.missingTempAt(m.id, p),
         place: this.placeText(id),
@@ -433,6 +469,7 @@ export class FlowApp {
     this.setStep('compare');
     const ranked = this.rankOf(id) != null;
     globesApi.markers.setSelected('earth', ranked ? id : null);
+    this.zones?.closePanel();
     if (!this.store.isTileLoaded(this.store.tileIndexOf(id)) || !this.store.offeredMissions().every((x) => this.store.isMissionLoaded(x.id))) {
       renderDetailLoading(this.detail, this, id);
     }
@@ -446,7 +483,8 @@ export class FlowApp {
     if (seq !== this.detailSeq) return;
     const o = this.renderDetailNow(id);
     (this.detail.querySelector('h2') as HTMLElement | null)?.focus({ preventScroll: true });
-    this.announce(`${this.placeText(id)}: ${o.pass ? `rank ${this.rankOf(id)}` : 'eliminated for this mission'}.`);
+    const r = this.rankOf(id);
+    this.announce(`${this.placeText(id)}: ${o.pass ? (r != null ? `rank ${r.toLocaleString('en-GB')}` : 'passes, no lunar twin') : 'eliminated for this mission'}.`);
     // the pair on the globes
     const lat = this.store.latOf(id);
     const lon = this.store.lonOf(id);
@@ -471,7 +509,8 @@ export class FlowApp {
 
   renderDetailNow(id: number) {
     const m = this.mission()!;
-    const o = this.store.outcome(id, m.id, this.usingCustom() ? this.weights() : undefined, this.usingCustom() ? this.alpha() : undefined);
+    const c = this.usingCustom();
+    const o = this.store.outcome(id, m.id, c ? this.weights() : undefined, c ? this.alpha() : undefined, c && this.store.isValueRule(m.id) ? this.simWeights() : undefined);
     renderDetail(this.detail, this, id, o);
     return o;
   }
@@ -520,33 +559,44 @@ export class FlowApp {
     return m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
   }
 
+  /** The mission's search zone name on the Moon (missions.json similarity.zone, else similarity.json target.zones). */
+  zoneName(m: Mission | null = this.mission()): string | null {
+    if (!m) return null;
+    const t = this.store.similarity.target as { zones?: Record<string, { name?: string }> };
+    return m.similarity.zone?.name ?? t.zones?.[m.id]?.name ?? null;
+  }
+
   /** The true cell size in plain words (both bodies). */
   cellSizeText(): string {
     const g = this.store.manifest.grid.bodies;
     return `Each point is a 1° cell: about ${Math.round(g.EARTH.cell_ns_km)} km across on Earth and ${Math.round(g.MOON.cell_ns_km)} km on the Moon (narrower east-west towards the poles). Values are averages over the whole cell.`;
   }
 
-  ruleText(): string {
+  ruleText(m: Mission | null = this.mission()): string {
     if (!this.dataReady) return '';
-    if (this.store.hasTwins()) {
-      const m = this.mission();
-      const zone = m?.similarity.zone?.name;
+    if (m ? this.store.hasTwins(m.id) : this.store.hasTwins()) {
+      const zone = this.zoneName(m);
       return `Similarity rule: each Earth point is paired with its most similar lunar cell inside the mission's target zone${zone ? ` (${zone})` : ''}.`;
     }
-    return `Similarity rule: ${this.noTwinText()}`;
+    return `Similarity rule: ${this.noTwinText(m)}`;
   }
 
   updateMoonNote(): void {
     if (!this.dataReady) return;
     this.moonNote.replaceChildren();
-    if (this.store.hasTwins()) {
-      const m = this.mission();
-      if (!m) return;
+    const m = this.mission();
+    if (m && this.store.hasTwins(m.id)) {
       const t = this.store.twinsOf(m.id).length;
-      this.moonNote.append(h('p', null, `Markers: the ${t} lunar twins of the ranked Earth points, inside ${m.similarity.zone?.name ?? "the mission's target zone"}.`));
-    } else {
+      this.moonNote.append(h('p', null, `Markers: the ${t.toLocaleString('en-GB')} lunar twins of the paired Earth points, inside ${this.zoneName(m) ?? "the mission's target zone"}.`));
+    } else if (m) {
       this.moonNote.append(h('p', { 'data-verbatim': 'no_twin_reason' }, this.noTwinText()));
     }
+    const zc = m ? this.zones.control(m) : null;
+    if (zc) this.moonNote.append(zc);
+    // the same control in the mission panel (the Moon caption is hidden on small screens)
+    const slot = document.querySelector('#mission-panel [data-slot="zone"]');
+    const zp = m ? this.zones.control(m, 'zone-why-panel') : null;
+    slot?.replaceChildren(...(zp ? [zp] : []));
     this.updateEarthNote();
   }
 
@@ -557,8 +607,9 @@ export class FlowApp {
     const m = this.mission();
     el.replaceChildren();
     if (!this.dataReady || !m) return;
-    const n = this.ranking().length;
-    el.append(h('p', null, `Markers: the ${n.toLocaleString('en-GB')} ranked places; larger and brighter means a higher final score; numbers are the top 10 ranks.`));
+    const n = this.ranking().filter((r) => r.final != null).length;
+    const what = this.missionHasTwins(m) ? 'places with a lunar twin' : 'ranked places';
+    el.append(h('p', null, `Markers: the ${n.toLocaleString('en-GB')} ${what}; larger and brighter means a higher final score; numbers are the top 10 ranks.`));
   }
 
   /** Turn the Earth camera to the best-ranked places of the open mission. */

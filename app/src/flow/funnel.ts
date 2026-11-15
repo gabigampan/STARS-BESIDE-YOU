@@ -5,6 +5,7 @@
 import type { DataStore } from '../data/store.ts';
 import type { Gate, Mission } from '../data/types.ts';
 import { limitWords, num } from './dom';
+import { missionName } from './copy';
 
 function unit(store: DataStore, m: Mission, variable: string): string {
   return store.variable(variable)?.unit ?? m.weighted_variables.find((w) => w.variable === variable)?.unit ?? '';
@@ -30,6 +31,19 @@ export function plainFunnel(store: DataStore, m: Mission | null, meaning: string
   const common = ref.gates.filter((g) => g.step === 1).map((g) => gateWords(store, ref, g));
   const sim = store.similarity;
   const active = sim.active_variables.map((v) => store.similarityLabel(v).label);
+  /** The similarity step of one mission, from its own rule. */
+  const simText = (x: Mission): string => {
+    const vars = store.pairVariables(x.id);
+    if (vars.length) {
+      const key = vars.filter((v) => v.role === 'key').map((v) => v.label.toLowerCase());
+      const sec = vars.filter((v) => v.role !== 'key').map((v) => v.label.toLowerCase());
+      return (
+        `Compared on real values: key ${key.length === 1 ? 'variable' : 'variables'} ${key.join(' and ')}${sec.length ? `; secondary ${sec.join(' and ')}` : ''}. ` +
+        'A point is paired only with a lunar cell of the mission\'s zone whose key values are within their tolerance and secondary values within twice theirs; a point with no such cell keeps its suitability but has no twin, no similarity and no final score.'
+      );
+    }
+    return `Computed from ${active.length} variables (${active.join(', ')}) with z-scores taken separately on each body. ${x === m ? meaning : ''}`.trim();
+  };
   const steps: FunnelStep[] = [
     { name: 'Common filters', text: `Every mission first keeps only cells with ${common.join(' and ')}. A cell that fails one is eliminated.` },
     m
@@ -44,9 +58,12 @@ export function plainFunnel(store: DataStore, m: Mission | null, meaning: string
     },
     {
       name: 'Similarity to the Moon (0-100)',
-      text: `Computed from ${active.length} variables (${active.join(', ')}) with z-scores taken separately on each body. ${meaning}`,
+      text: m ? `${simText(m)}${store.pairVariables(m.id).length ? ` ${meaning}` : ''}` : store.offeredMissions().map((x) => `${missionName(x)}: ${simText(x)}`).join(' '),
     },
-    { name: 'Final score', text: `Final = alpha x similarity + (1 - alpha) x suitability, with alpha = ${num(alpha, 2)}. The cells that pass are ranked by the final score.` },
+    {
+      name: 'Final score',
+      text: `Final = alpha x similarity + (1 - alpha) x suitability, with alpha = ${num(alpha, 2)}. The points with a final score are ranked by it; points without a lunar twin are listed after them by suitability.`,
+    },
   ];
   return steps;
 }
