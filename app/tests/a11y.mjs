@@ -624,8 +624,38 @@ async function run(browser, base, variant, size, full) {
     await ctx.close();
   }
 
+  // ---- phones: the team lead's five acceptance items, measured in every step
+  if (size.width < 900) {
+    const { page, ctx } = await openPage(browser, base, { size });
+    await page.evaluate(() => (document.getElementById('loading').hidden = true));
+    const portrait = size.height > size.width;
+    const measure = () => page.evaluate(() => {
+      const g = (id) => { const r = document.getElementById(id).getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; };
+      const centreFree = (id) => { const cv = document.querySelector(`#${id} canvas`); if (!cv) return false; const r = cv.getBoundingClientRect(); const e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return e === cv; };
+      const t = document.querySelector('#guide-caption .caption-text');
+      return { earth: g('earth-pane'), moon: g('moon-pane'), freeE: centreFree('earth-globe'), freeM: centreFree('moon-globe'), capClip: t.scrollHeight > t.clientHeight + 1 || getComputedStyle(document.getElementById('guide-caption')).overflow === 'hidden' && document.getElementById('guide-caption').scrollHeight > document.getElementById('guide-caption').clientHeight + 1, expanded: document.getElementById('guide-caption').dataset.expanded };
+    });
+    // start screen: at least the first mission card fully visible
+    const first = await page.evaluate(() => { const c = document.querySelector('#intro .choice'); const r = c.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.bottom), window.innerHeight]; });
+    check(first[1] <= first[2], `${tag}: the first mission card is visible on the first screen (bottom ${first[1]} of ${first[2]} px)`);
+    let mm0 = await measure();
+    check(!mm0.capClip || mm0.expanded === 'false', `${tag} start: the caption is not clipped${mm0.expanded === 'false' ? ' (folded by choice, "Full text" control)' : ''}`);
+    for (const [key, st] of [['1', 'pick'], ['1', 'compare']]) {
+      await press(page, key);
+      await waitStep(page, st);
+      await page.waitForTimeout(800);
+      const m = await measure();
+      check(m.earth.h >= 120 && m.moon.h >= 120, `${tag} ${st}: neither globe has zero height (Earth ${Math.round(m.earth.w)}x${Math.round(m.earth.h)}, Moon ${Math.round(m.moon.w)}x${Math.round(m.moon.h)} px)`);
+      if (portrait) check(m.moon.y >= m.earth.y + m.earth.h - 2 && Math.abs(m.moon.x - m.earth.x) < 2, `${tag} ${st}: Earth above, Moon below`);
+      check(m.freeE && m.freeM, `${tag} ${st}: nothing (credits, captions) covers the centre of either globe`);
+      check(!m.capClip, `${tag} ${st}: the caption is not clipped`);
+    }
+    await page.screenshot({ path: join(SHOTS, `${variant}-${size.width}x${size.height}-phone-pair.png`) });
+    await ctx.close();
+  }
+
   // ---- touch: two-finger pinch changes the camera distance, one-finger drag changes the heading
-  if (size.width < 900 && size.height > size.width && twins) {
+  if (size.width < 900 && twins) {
     const { page, ctx } = await openPage(browser, base, { size, touch: true });
     await press(page, '1');
     await waitStep(page, 'pick');

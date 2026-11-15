@@ -831,9 +831,8 @@ a:hover {
 /* unfolded (the guide is on, or "Show the full text"): the whole transcript; a very long one scrolls
    inside a box that is reachable with Tab and has a visible scroll bar, never cut */
 .caption[data-expanded='true'] .caption-text {
-  max-height: 40vh;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  max-height: none;
+  overflow: visible;
 }
 /* folded: two lines and a fade, with "Show the full text" beside the title */
 .caption[data-expanded='false'] .caption-text {
@@ -929,9 +928,7 @@ kbd.key {
   .caption[data-expanded='false'] .caption-text {
     max-height: 1.45em;
   }
-  .caption[data-expanded='true'] .caption-text {
-    max-height: 30vh;
-  }
+
 }
 @media (max-width: 520px) {
   /* the name stays the page heading for screen readers; the row goes to the controls */

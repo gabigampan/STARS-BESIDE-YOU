@@ -109,11 +109,12 @@ export class AudioGuide {
     this.textEl = document.createElement('p');
     this.textEl.className = 'caption-text';
     this.textEl.id = 'caption-text';
-    this.textEl.tabIndex = 0;
+    this.textEl.tabIndex = -1;
     root.setAttribute('aria-labelledby', 'caption-title');
     root.append(head, this.textEl);
     // the whole text is shown while the guide speaks; with the guide off it starts folded (one control unfolds it)
-    this.setExpanded(this.enabled);
+    // the whole caption is always shown (never clipped); "Show less" folds it on request
+    this.setExpanded(!(window.matchMedia?.('(max-height: 500px) and (min-aspect-ratio: 1/1)').matches ?? false));
 
     this.el.addEventListener('playing', () => this.setState('playing'));
     this.el.addEventListener('pause', () => {
@@ -200,7 +201,7 @@ export class AudioGuide {
 
   setEnabled(on: boolean): void {
     this.enabled = on;
-    this.setExpanded(on);
+    if (on) this.setExpanded(true);
     if (!on) {
       this.stop();
       this.setState('text-only');
