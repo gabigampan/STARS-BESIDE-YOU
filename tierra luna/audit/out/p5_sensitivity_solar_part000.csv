@@ -55,3 +55,16 @@ solar,soft.slope_deg.badx1.1,soft_utility,bad of slope_deg (12.0) x1.1,18777,0,0
 solar,soft.slope_deg.goodx0.9,soft_utility,good of slope_deg (1.0) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
 solar,soft.slope_deg.goodx1.1,soft_utility,good of slope_deg (1.0) x1.1,18777,0,0,6360,0,0,0,5,False,50,False,
 solar,soft.lst_diurnal_amp_k.weight0,soft_weight,suitability weight of lst_diurnal_amp_k (0.1) -> 0,18777,0,0,6360,0,0,0,0,False,19,False,30104-26120;30105-26056;30106-26040;30107-26155;30108-26159
+solar,soft.lst_diurnal_amp_k.weight x0.9,soft_weight,suitability weight of lst_diurnal_amp_k x0.9,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.lst_diurnal_amp_k.weight x1.1,soft_weight,suitability weight of lst_diurnal_amp_k x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.lst_diurnal_amp_k.badx0.9,soft_utility,bad of lst_diurnal_amp_k (35.0) x0.9,18777,0,0,6360,0,0,0,4,False,48,False,38385-24227
+solar,soft.lst_diurnal_amp_k.badx1.1,soft_utility,bad of lst_diurnal_amp_k (35.0) x1.1,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.lst_diurnal_amp_k.goodx0.9,soft_utility,good of lst_diurnal_amp_k (10.0) x0.9,18777,0,0,6360,0,0,0,5,True,48,False,
+solar,soft.lst_diurnal_amp_k.goodx1.1,soft_utility,good of lst_diurnal_amp_k (10.0) x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.roughness_m.weight0,soft_weight,suitability weight of roughness_m (0.1) -> 0,18777,0,0,6360,0,0,0,5,False,47,False,
+solar,soft.roughness_m.weight x0.9,soft_weight,suitability weight of roughness_m x0.9,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.roughness_m.weight x1.1,soft_weight,suitability weight of roughness_m x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.roughness_m.badx0.9,soft_utility,bad of roughness_m (400.0) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.roughness_m.badx1.1,soft_utility,bad of roughness_m (400.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.roughness_m.goodx0.9,soft_utility,good of roughness_m (30.0) x0.9,18777,0,0,6360,0,0,0,4,False,48,False,38385-24227
+solar,soft.roughness_m.goodx1.1,soft_utility,good of roughness_m (30.0) x1.1,18777,0,0,6360,0,0,0,5,True,49,False,
