@@ -68,7 +68,7 @@ def resolve_zones(moon: pd.DataFrame, engine_cfg: EngineConfig, missions: List[s
             status = status.replace(resolve_path(z["regions_file"]), z["regions_file"])
             if mask is not None and mask.any():
                 out[m] = {"name": z["name"], "kind": "artemis_regions", "source": z["source"], "regions": names,
-                          "used": "artemis_regions", "reason": status, "mask": mask}
+                          "used": "artemis_regions", "reason": status, "mask": mask, "cells": int(mask.sum())}
                 continue
             fb = z["fallback"]
             out[m] = {"name": fb["name"], "kind": fb["kind"], "lat_max": fb.get("lat_max"), "source": fb["source"],

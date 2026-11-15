@@ -1,0 +1,13 @@
+{
+  "name": "stars-video-sim",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deterministic frame-by-frame renderer for the Solar and Lunar-base mission videos (development tool, not shipped with the site).",
+  "type": "commonjs",
+  "scripts": {
+    "render": "node render.js"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  }
+}

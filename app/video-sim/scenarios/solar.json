@@ -1,0 +1,94 @@
+{
+  "name": "solar",
+  "mission": "Solar panels",
+  "output_dir": "../public/media/solar",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration_s": 42,
+  "card_s": 6,
+
+  "site": {
+    "body": "MOON",
+    "cell_id": "M59479",
+    "lat_deg": -75.5,
+    "lon_deg": -100.5,
+    "label": "75.5° S 100.5° W",
+    "place": "west of Boltzmann crater (far side)",
+    "place_ref": {"feature": "Boltzmann", "iau_lat": -74.8229, "iau_lon_e": 269.5931, "diameter_km": 72.31, "source": "IAU/USGS Gazetteer of Planetary Nomenclature, MOON_nomenclature_center_pts.zip, https://planetarynames.wr.usgs.gov/Feature/805"}
+  },
+  "earth_site": {"body": "EARTH", "cell_id": "E44120", "lat_deg": -32.5, "lon_deg": 20.5, "name": "Western Cape, South Africa"},
+
+  "table_values": {
+    "moon": {
+      "elevation_m": {"value": 122.4, "level": "MEASURED", "unit": "m above the 1737.4 km sphere"},
+      "slope_deg": {"value": 10.693, "level": "DERIVED", "unit": "deg (3.79 km baseline)"},
+      "illum_frac": {"value": 0.4543, "level": "DERIVED", "unit": "fraction of time lit (LOLA topography)"},
+      "irradiance_kwh_m2_day": {"value": 2.372, "level": "DERIVED", "unit": "kWh/m2/day, horizontal"},
+      "sun_elev_max_deg": {"value": 16.04, "level": "DERIVED", "unit": "deg"},
+      "sun_low_frac_0_5deg": {"value": 0.2271, "level": "DERIVED", "unit": "fraction of daylight"},
+      "tmin_k": {"value": 75.27, "level": "MEASURED", "unit": "K"},
+      "tmax_k": {"value": 299.25, "level": "MEASURED", "unit": "K"}
+    },
+    "earth": {
+      "elevation_m": {"value": 1127.1, "level": "MEASURED", "unit": "m above the EGM2008 geoid"},
+      "slope_deg": {"value": 2.137, "level": "DERIVED", "unit": "deg (3.71 km baseline)"},
+      "irradiance_kwh_m2_day": {"value": 5.518, "level": "MODELLED", "unit": "kWh/m2/day, horizontal, at the ground"},
+      "sun_elev_max_deg": {"value": 80.939, "level": "DERIVED", "unit": "deg"},
+      "sun_low_frac_0_5deg": {"value": 0.07016, "level": "DERIVED", "unit": "fraction of daylight"}
+    }
+  },
+
+  "constants": {
+    "solar_constant_W_m2": {"value": 1361.0, "level": "MEASURED", "source": "NSSDC Moon fact sheet, 'Solar irradiance (W/m2) 1361.0', https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"},
+    "moon_obliquity_deg": {"value": 1.54, "level": "MEASURED", "source": "NASA Photojournal PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map (same value as the table formula, provenance_moon.csv)"},
+    "synodic_period_days": {"value": 29.53, "level": "MEASURED", "source": "NSSDC Moon fact sheet, 'Synodic period (days) 29.53', https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"},
+    "moon_radius_m": {"value": 1737400, "level": "MEASURED", "source": "NSSDC Moon fact sheet, volumetric mean radius 1737.4 km; LOLA reference sphere"}
+  },
+
+  "dem": {
+    "near": {"product": "LOLA LDEM_75S_60M (polar stereographic, V2.0)", "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_75s_60m.img", "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_75s_60m.lbl", "half_extent_m": 6000},
+    "far": {"product": "LOLA LDEM_60S_240M (polar stereographic, V2.0)", "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_60s_240m.img", "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_60s_240m.lbl", "half_extent_m": 60000, "render_step_px": 2},
+    "line_sign": -1,
+    "horizon_azimuths": 90
+  },
+
+  "sun": {
+    "declination_deg": -1.54,
+    "declination_note": "Southern-summer solstice: the Sun reaches the table's sun_elev_max_deg (16.04 deg) at local noon. Illustrative choice of season.",
+    "hour_angle_start_deg": -95.5,
+    "hour_angle_end_deg": 95.5,
+    "sim_end_s": 36
+  },
+
+  "earth_visibility": {
+    "source": "JPL Horizons API (DE441), observer at the site (coord@301, 259.5 E, -75.5, 0 km), target 399, QUANTITIES=4, airless, 2026-01-01..2044-12-31 every 12 h",
+    "elev_min_deg": -11.43, "elev_max_deg": 5.63, "elev_mean_deg": -2.88, "frac_above_flat_horizon": 0.351,
+    "az_min_deg": 90.82, "az_max_deg": 109.52,
+    "draw": false,
+    "decision": "Mean elevation below the horizon: the Earth is not drawn."
+  },
+
+  "array": {
+    "assumption": "Illustrative engineering shape, not a real design: vertical mast 8.0 m; two wings of 3 hinged panels, each panel 2.0 m x 1.2 m (total 14.4 m2); panels end vertical (tilt 90 deg from horizontal) and the mast turns them to face the Sun's azimuth (one-axis tracking).",
+    "mast_height_m": 8.0,
+    "panel_w_m": 2.0,
+    "panel_h_m": 1.2,
+    "panels_per_wing": 3,
+    "final_tilt_deg": 90,
+    "deploy_start_s": 5.0,
+    "deploy_end_s": 11.0,
+    "hub_height_m": 6.0
+  },
+
+  "camera": {
+    "keys": [
+      {"t": 0.0, "dist": 2600, "elev_deg": 52, "az_deg": 200, "target_z": 0},
+      {"t": 4.5, "dist": 70,  "elev_deg": 14, "az_deg": 150, "target_z": 4},
+      {"t": 11.0, "dist": 48, "elev_deg": 9, "az_deg": 140, "target_z": 4.5},
+      {"t": 24.0, "dist": 52, "elev_deg": 10, "az_deg": 175, "target_z": 4.5},
+      {"t": 36.0, "dist": 60, "elev_deg": 11, "az_deg": 205, "target_z": 4.5}
+    ],
+    "fov_deg": 50
+  }
+}

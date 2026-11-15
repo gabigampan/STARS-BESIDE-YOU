@@ -5,6 +5,7 @@
     python -m engine report     [--dataset ID] [--benchmark CSV] [--top N] [--out JSON]
     python -m engine datasets
     python -m engine gazetteer  --shp MOON_nomenclature_center_pts.shp [--zip MOON_nomenclature_center_pts.zip]
+    python -m engine artemis    --grids <folder of the USGS Artemis III 1 km region grids>
 
 Datasets are defined in engine/datasets.json. The default (real_1deg) writes the v2
 bundle the app ships to app/public/data/v2; legacy_2deg writes the v1 JSON bundle to
@@ -90,6 +91,16 @@ def _cmd_gazetteer(a: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_artemis(a: argparse.Namespace) -> int:
+    from engine.artemis import write_regions
+
+    ecfg = load_engine_config()
+    out = resolve_path(ecfg.v("similarity_zones")["lunar_base"]["regions_file"])
+    n = write_regions(a.grids, out)
+    print(f"wrote {out} ({n} regions)")
+    return 0
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     p = argparse.ArgumentParser(prog="python -m engine", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -114,6 +125,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     g = sub.add_parser("gazetteer", help="extract the IAU lunar gazetteer to engine/data")
     g.add_argument("--shp", required=True)
     g.add_argument("--zip", default=None)
+    ar = sub.add_parser("artemis", help="convert the USGS Artemis III region grids to engine/data GeoJSON")
+    ar.add_argument("--grids", required=True, help="folder with one sub-folder per region holding *_1km_S_Grid.shp")
     a = p.parse_args(argv)
     return {"build": _cmd_build, "validate": _cmd_validate, "report": _cmd_report, "datasets": _cmd_datasets,
-            "gazetteer": _cmd_gazetteer}[a.cmd](a)
+            "gazetteer": _cmd_gazetteer, "artemis": _cmd_artemis}[a.cmd](a)

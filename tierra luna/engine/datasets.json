@@ -114,16 +114,14 @@
        "Provisional team block. Interior Greenland ice-sheet cells rank near the top: the soft criteria have no surface-type term, ice counts as bare ground in rock_or_bare_frac, and 2-degree slope and roughness are smooth on an ice sheet. Whether ice or snow cells (thermal_inertia_class 'hielo') should be gated out is a question for Robotics 1; the engine does not change the gates."
       ],
       "solar": [
-       "The solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of the latitude given in facts.moon_pass_abs_lat_max, so no lunar polar ridge or rim can be a twin. R2 section 1 and R3 section 4 say a lunar solar test should target those lit polar ridges. The gates are kept as written, pending a team decision (R3 open question 3)."
+       "Similarity is the repository's own (analog_finder, repo_global_mean): per-body z-scores of the six analog variables against the mean lunar profile, exactly as compute_analog_ranking computes it on this table (tested)."
       ],
-      "thermal": [
-       "Lunar diurnal amplitude is a latitude-only formula (MODELLED) that Diviner contradicts at low and mid latitudes (R2 section 3, R3 F10 and F12). Earth amplitudes are closest to its clipped polar minimum, so thermal twins are a few cells near the lunar poles (facts.twins)."
-      ],
-      "ice": [
-       "Provisional team block. permafrost_class has no lunar equivalent (R3, ice row) and is left out of the similarity. With temp_k alone, twins are the warmest passing lunar cells, at the warm edge of the MODELLED lunar permafrost-class temperature thresholds, because those are closest to Earth temperatures. Ice twins therefore say little until a lunar cold-trap variable exists."
+      "lunar_base": [
+       "lunar_base is an exact copy of the thermal block; the ice block is shown per Earth cell as information only.",
+       "Lunar diurnal amplitude is a latitude-only formula (MODELLED) that Diviner contradicts at low and mid latitudes (R2 section 3, R3 F10 and F12)."
       ]
      },
-     "why": "Known limitations of each mission's results on the legacy table, exported in missions.json 'known_limitations'. They describe the data and the team configuration; nothing is tuned to hide them."
+     "why": "Known limitations of each offered mission's results on the legacy table, exported in missions.json 'known_limitations'."
     },
     "similarity_columns": {
      "value": {
@@ -433,23 +431,23 @@
      "value": {
       "rover": [
        "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
-       "Similarity is close to 100 for almost every passing cell (distributions.similarity): with two relief variables and tens of thousands of candidate lunar cells, nearly every Earth cell finds an almost exact lunar match, so the rover ranking is driven by suitability. The soft criteria have no surface-type term: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale. rock_or_bare_frac is not in the similarity (1 by definition on the Moon).",
-       "Many cells reach the maximum final score (facts and distributions.final): suitability 100 (flat, smooth and bare at the km scale) and similarity near 100. Cells tied on the published final are ordered by cell id, i.e. from north to south, so the order among the tied top cells carries no information."
+       "Similarity is the repository's own (analog_finder): per-body z-scores of elevation, slope, roughness and mean temperature, distance to the mean profile of the whole Moon (repo_global_mean), the same number for all three missions. Each body is normalised on its own, so a high similarity means the cell sits at the same RELATIVE position on Earth as the average lunar cell does on the Moon (close to Earth's median slope and roughness), not that its values equal lunar values: lunar slopes and roughness are several times larger in absolute terms (similarity.json stats).",
+       "Among ranked rover cells slope carries about half of the squared distance and roughness about two fifths; elevation and temperature little. 1,156 ranked rover cells (all in Antarctica) have no land surface temperature: temp_k drops out of their distance and the remaining weights are renormalised (never a 0).",
+       "The soft criteria have no surface-type term: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale."
       ],
       "solar": [
-       "Earth irradiance is surface solar energy under the atmosphere and clouds (interpolated WorldClim climatology); lunar irradiance is airless geometry. Earth values are therefore well below low-latitude lunar values, and the irradiance term pairs sunny Earth deserts with mid- and high-latitude lunar cells (facts.twin_abs_lat_range). The similarity uses irradiance with that caveat.",
-       "The gates on irradiance, maximum sun elevation and low-sun fraction are kept as written; facts.moon_pass_abs_lat_max gives the most poleward passing lunar cell, so the lit polar ridges are excluded. A 1-degree polar cell is also a strip that averages lit ridges with shadowed floors (real_data/README.md)."
+       "Similarity is the repository's own (analog_finder): per-body z-scores of elevation, slope, roughness and mean temperature, distance to the mean profile of the whole Moon (repo_global_mean), the same number for all three missions. Each body is normalised on its own, so a high similarity means the cell sits at the same RELATIVE position on Earth as the average lunar cell does on the Moon (close to Earth's median slope and roughness), not that its values equal lunar values: lunar slopes and roughness are several times larger in absolute terms (similarity.json stats).",
+       "Irradiance, sun geometry and the diurnal amplitude are suitability criteria only (not part of the similarity). Earth irradiance is surface solar energy under the atmosphere and clouds (WorldClim) and lunar irradiance is airless geometry; the solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of facts.moon_pass_abs_lat_max (shown in the lunar fail bits only: lunar cells are not filtered for the similarity).",
+       "6,060 ranked solar cells (all in Antarctica) have no land surface temperature: the amplitude weight drops out of their suitability and temp_k out of their similarity, with the remaining weights renormalised; their confidence is lower."
       ],
-      "thermal": [
-       "tmin_c is left out of the similarity: on Earth it is an interpolated air temperature, on the Moon a surface temperature. Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range; Earth amplitudes (tens of kelvin) are far below most lunar amplitudes (hundreds of kelvin), so every Earth cell is closest to the few lunar cells with the smallest amplitude and lowest irradiance, near the south pole (facts.twins). Thermal twins say little beyond that.",
+      "lunar_base": [
+       "lunar_base is an exact copy of the team's thermal block (team design values, no external source). The ice block is shown per Earth cell as information only (passes or not, its suitability) and never changes this ranking; no lunar cell passes ice because lunar permafrost_class is the MODELLED label 'ninguno', which the ice gate excludes.",
+       "Similarity is the repository's own (analog_finder): per-body z-scores of elevation, slope, roughness and mean temperature, distance to the mean profile of the whole Moon (repo_global_mean), the same number for all three missions. Each body is normalised on its own, so a high similarity means the cell sits at the same RELATIVE position on Earth as the average lunar cell does on the Moon (close to Earth's median slope and roughness), not that its values equal lunar values: lunar slopes and roughness are several times larger in absolute terms (similarity.json stats).",
+       "tmin_c is an interpolated air temperature on Earth and a surface temperature on the Moon; it is a suitability criterion only. Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range.",
        "Antarctica has no land surface temperature product here, so its cells fail on lst_diurnal_amp_k with 'no data' (missing_data)."
-      ],
-      "ice": [
-       "permafrost_class has no lunar data. The ice block requires it (require_present and a gate), so every lunar cell is eliminated with 'no data' and no Earth cell can have a lunar twin, a similarity, a final score or a rank. Earth suitability is still computed for the passing Earth cells. A lunar cold-trap variable would be needed; that is a team decision, not made here.",
-       "Earth permafrost_class is empty where the Obu maps have no pixel (south of about 18-25 N except Antarctic outcrops, and on ice sheets), so those cells fail with 'no data', not 'ninguno'."
       ]
      },
-     "why": "Known limitations of each mission's results on the real tables, exported in missions.json 'known_limitations' next to computed 'facts'. They describe the data and the team configuration; nothing was tuned."
+     "why": "Known limitations of each offered mission's results on the real tables, exported in missions.json 'known_limitations' next to computed 'facts'. Written after seeing the results; nothing was tuned."
     },
     "similarity_columns": {
      "value": {

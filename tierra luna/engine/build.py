@@ -73,6 +73,9 @@ def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]]
         "iau_moon_nomenclature.csv": sha256_file(resolve_path(ecfg.v("lunar_gazetteer_csv"))),
         "ne_110m_admin_0_countries.geojson": sha256_file(resolve_path(ecfg.v("earth_country_polygons"))),
     }
+    regions = resolve_path(ecfg.v("similarity_zones")["lunar_base"]["regions_file"])
+    if os.path.exists(regions):
+        cfg_hashes[os.path.basename(regions)] = sha256_file(regions)
     return {"engine_cfg": ecfg, "mission_cfg": mcfg, "dataset": ds, "cells": ds.cells, "registry": ds.reg,
             "validity": validity, "land": land, "earth_places": e_places, "features": feats, "moon_features": m_feat,
             "results": results, "iau_source": iau_source, "config_sha256": cfg_hashes}
