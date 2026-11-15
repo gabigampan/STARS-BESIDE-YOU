@@ -144,7 +144,13 @@ for (const [w, h] of runs('DE') ? [[1366, 768], [1440, 900], [1920, 1080]] : [])
       const logo = [...document.querySelectorAll('.cesium-credit-logoContainer a')].map((a) => {
         const b = a.getBoundingClientRect();
         const img = a.querySelector('img')?.getBoundingClientRect();
-        return { w: Math.round(b.width), h: Math.round(b.height), imgH: img ? Math.round(img.height) : 0 };
+        // real hit area: from the box centre, probe 1 px steps with elementFromPoint (a pseudo-element hits as its link)
+        const cx = Math.round(b.left + b.width / 2), cy = Math.round(b.top + b.height / 2);
+        const hits = (x, y) => { const e = document.elementFromPoint(x, y); return !!e && (e === a || a.contains(e)); };
+        const reach = (dx, dy) => { let k = 0; while (k < 400 && hits(cx + (k + 1) * dx, cy + (k + 1) * dy)) k++; return k; };
+        const c = hits(cx, cy);
+        const hw = c ? reach(-1, 0) + reach(1, 0) + 1 : 0, hh = c ? reach(0, -1) + reach(0, 1) + 1 : 0;
+        return { w: Math.round(b.width), h: Math.round(b.height), hw, hh, imgH: img ? Math.round(img.height) : 0 };
       });
       const lastBtn = btns.length ? btns[btns.length - 1].getBoundingClientRect().bottom : 1e9;
       const mp = document.getElementById('mission-panel');
@@ -166,7 +172,7 @@ for (const [w, h] of runs('DE') ? [[1366, 768], [1440, 900], [1920, 1080]] : [])
     check(r.titleTop >= 0 && r.lastRow <= r.vh - 8 && r.scrollers.length === 0, `E ${w}x${h} ${m}: heading top ${r.titleTop}, last folded row bottom ${r.lastRow} <= ${r.vh - 8}, scrolling boxes [${r.scrollers.join(',')}]`);
     check(r.heights.every((x) => x >= 44) && r.minFont >= 14 && r.cut.length === 0, `E ${w}x${h} ${m}: button heights ${r.heights.join(',')} (>= 44), smallest text ${r.minFont} px (>= 14), cut numbers [${r.cut.join(',')}]`);
     check(r.twinCut.length === 0, `E ${w}x${h} ${m}: visible twin line of the five not truncated (cut: [${r.twinCut.join('; ')}]); places cut [${r.placeCut.join(',')}]`);
-    check(r.logo.length > 0 && r.logo.every((l) => l.w >= 44 && l.h >= 44), `D ${w}x${h} ${m}: credit logo links ${r.logo.map((l) => `${l.w}x${l.h} (logo ${l.imgH} px)`).join('; ')}`);
+    check(r.logo.length > 0 && r.logo.every((l) => l.hw >= 44 && l.hh >= 44), `D ${w}x${h} ${m}: ${r.logo.map((l) => `credit logo painted ${l.w}x${l.h}, hit area ${l.hw}x${l.hh} (logo ${l.imgH} px)`).join('; ')}`);
   }
   await ctx.close();
 }
