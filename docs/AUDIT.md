@@ -72,8 +72,8 @@ Nothing in these documents describes the content of either zip.
 
 | Path | What it is |
 |---|---|
-| `STARS-BESIDE-YOU-main (2).zip` (14,031,467 B) | a copy of the whole tree (see the comparison below) |
-| `Instruciones filtros solar y temp` (no extension) | the author's note for the new filter system (Spanish) |
+| `archive/STARS-BESIDE-YOU-main (2).zip` (14,031,467 B) | a copy of the whole tree (see the comparison below) |
+| `archive/Instruciones filtros solar y temp` (no extension) | the author's note for the new filter system (Spanish) |
 | `.gitignore` | added in 618bc45 |
 | `tierra luna/*.py` | `main.py`, `config.py`, `lunar_extractor.py`, `earth_extractor.py`, `pds_reader.py`, `harmonizer_cleaner.py`, `analog_finder.py`, `mission_filters.py`, `rover_preset.py`, `mission_scoring.py` (3,304 lines in all) |
 | `tierra luna/*.json` | `mission_filters.json` (old system), `mission_scoring.json` (new system) |
@@ -114,7 +114,7 @@ The tracked files were compared by sha256 with the zip entries (script `docscrip
 
 | Result | Files |
 |---|---|
-| Identical | **all 50 files in the zip**: `Instruciones filtros solar y temp`, all 49 files of `tierra luna/` in the zip (sources, data cache, outputs, web, tests, `.pyc`), including `mission_scoring.py` and `mission_scoring.json`, which 618bc45 copied byte for byte |
+| Identical | **all 50 files in the zip**: `archive/Instruciones filtros solar y temp`, all 49 files of `tierra luna/` in the zip (sources, data cache, outputs, web, tests, `.pyc`), including `mission_scoring.py` and `mission_scoring.json`, which 618bc45 copied byte for byte |
 | Only in the repository | `tierra luna/mission_filters.py`, `tierra luna/mission_filters.json`, `.gitignore`, and the zip itself |
 | Only in the zip | none |
 | Different content | none |
@@ -515,7 +515,7 @@ An independent verifier re-checked the three documents (AUDIT.md, DATA_DICTIONAR
 
 ## Differences between the team lead's description of the data and the committed files
 
-Revised 2026-11-14 for the similarity proposal ([SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md)). Every number below was re-counted with `scratchpad/stars/venv/bin/python` on two tables: the **committed** legacy table `tierra luna/output_py/earth_moon_harmonized_clean.csv` (SHA-256 starting `572b6ca64950ada9`; the copy inside the root zip `STARS-BESIDE-YOU-main (2).zip` is identical) and the table inside the **team's local zip** (`scratchpad/stars/ziplocal/STARS-BESIDE-YOU-main/tierra luna/output_py/earth_moon_harmonized_clean.csv`, SHA-256 starting `45e6faccec1ba7eb`). Both have 16,200 EARTH and 16,200 MOON rows. Nothing in the repository's data or code was changed.
+Revised 2026-11-14 for the similarity proposal ([SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md)). Every number below was re-counted with `scratchpad/stars/venv/bin/python` on two tables: the **committed** legacy table `tierra luna/output_py/earth_moon_harmonized_clean.csv` (SHA-256 starting `572b6ca64950ada9`; the copy inside the root zip `archive/STARS-BESIDE-YOU-main (2).zip` is identical) and the table inside the **team's local zip** (`scratchpad/stars/ziplocal/STARS-BESIDE-YOU-main/tierra luna/output_py/earth_moon_harmonized_clean.csv`, SHA-256 starting `45e6faccec1ba7eb`). Both have 16,200 EARTH and 16,200 MOON rows. Nothing in the repository's data or code was changed.
 
 | Item | The description said | Committed table (re-counted) | Team's local zip table (re-counted) |
 |---|---|---|---|

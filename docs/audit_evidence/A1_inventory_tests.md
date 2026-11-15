@@ -12,7 +12,7 @@ Not available in this session, so not compared: the zip of pull request #1 ("fil
 
 ## 1. Repository vs zip, superfluous/risky content, secret scan
 
-### 1.1 File-by-file sha256 ("tierra luna/" in repo vs "tierra luna/" in `STARS-BESIDE-YOU-main (2).zip`)
+### 1.1 File-by-file sha256 ("tierra luna/" in repo vs "tierra luna/" in `archive/STARS-BESIDE-YOU-main (2).zip`)
 Command: `find . -type f | sort | xargs sha256sum` in both trees, then `diff` of names and `join` on path (lists in `$S/run-A1/_a1/run_a1_{repo,zip}.sha`).
 
 | Result | Files |
@@ -21,7 +21,7 @@ Command: `find . -type f | sort | xargs sha256sum` in both trees, then `diff` of
 | Only in repo | `mission_filters.py`, `mission_filters.json` |
 | Only in zip | `mission_scoring.py` (sha256 b10d1bcf...), `mission_scoring.json` (d4faf620...) |
 | Changed | none |
-| Root file `Instruciones filtros solar y temp` | identical in repo root and zip root (b14e782c...) |
+| Root file `archive/Instruciones filtros solar y temp` | identical in repo root and zip root (b14e782c...) |
 
 Correction to the baseline: the zip does not differ in `__pycache__` either; the trees differ only in the 4 files above.
 
@@ -31,12 +31,12 @@ Correction to the baseline: the zip does not differ in `__pycache__` either; the
 
 | Item | Evidence | Effect |
 |---|---|---|
-| 13.4 MiB zip committed at root | `STARS-BESIDE-YOU-main (2).zip` 14,031,467 B, commit d4a11e4 | Duplicates the whole tree; pack is already 25.93 MiB. Deleting it in a new commit does not shrink history (needs history rewrite, which is the owner's decision). |
+| 13.4 MiB zip committed at root | `archive/STARS-BESIDE-YOU-main (2).zip` 14,031,467 B, commit d4a11e4 | Duplicates the whole tree; pack is already 25.93 MiB. Deleting it in a new commit does not shrink history (needs history rewrite, which is the owner's decision). |
 | Compiled bytecode committed | 9 files: `tierra luna/__pycache__/*.cpython-312.pyc` (8) + `tests/__pycache__/test_pipeline.cpython-312-pytest-9.2.0.pyc` | Machine/version specific, stale risk (a pyc for `mission_filters` travels in the zip without its source). |
 | No `.gitignore`, no `.gitattributes` | `ls -a` of repo root shows only `.git`, the zip, the notes file and `tierra luna` | Nothing stops pycache, outputs, caches being re-committed. No LFS. |
 | Generated outputs committed | `output_py/` 10 files (largest `earth_moon_harmonized_clean.csv` 6.1 MB), `web/analog_data.js` 2.5 MB, `output_py/analog_web_data.json` 2.5 MB (same payload, verified equal) | Every run rewrites them; diffs are noisy. Committed CSVs are CRLF (`git ls-files --eol`: `i/crlf`), regenerated ones LF, so a byte diff appears even when content is equal. |
 | Downloaded/cached data committed without LFS | `data/cache/`: `ldem_64...rows_8466_8596.bin` 5.99 MB, `ldem_4.img` 2.07 MB, three Diviner `rows_3272_3339.bin` 1.54 MB each, `earth_global_real.npz` 150 KB, `moon_global_pds.npz` 383 KB | The two `.npz` files have no producer in the repo (see 5.3); the pipeline silently prefers them over the code paths. |
-| Folder names with spaces / odd names | `tierra luna/`, `STARS-BESIDE-YOU-main (2).zip`, `Instruciones filtros solar y temp` (no extension, misspelt) | Needs quoting in every shell/CI command. |
+| Folder names with spaces / odd names | `tierra luna/`, `archive/STARS-BESIDE-YOU-main (2).zip`, `archive/Instruciones filtros solar y temp` (no extension, misspelt) | Needs quoting in every shell/CI command. |
 | Side-effect write into a tracked file | `analog_finder.py:53` `merge_into_presets(Path(PRESETS_JSON_PATH), preset, name="rover", refreeze=True)` | Every pipeline run and every `pytest` run rewrites `data/presets/presets.json` (`frozen_at`, `refrozen_from` timestamps). Observed: work copy sha 692a9290 -> eef63e9b after `pytest`; the director's baseline run had already changed the work copy (repo sha 87a52b48, `frozen_at` 18:34:24 vs work copy 20:32:21). |
 | Dangling reference | `rover_preset.py:1` "Declared in docs/AI_USE.md" | No `docs/` folder exists in the repo. |
 
