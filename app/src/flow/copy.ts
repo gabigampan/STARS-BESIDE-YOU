@@ -170,3 +170,8 @@ export function staleForRule(store: DataStore, m: Mission, text: string): boolea
 export function plainName(name: string): string {
   return name.replace(/_/g, ' ');
 }
+
+/** A bundle note in plain words: plainText, and no file name left behind (e.g. "rover_preset.py"). */
+export function noteText(store: DataStore, text: string, mission?: Mission): string {
+  return plainText(store, text.replace(/\b[\w-]+\.(?:py|json|csv|bin|md)\b/g, "the team's files"), mission).replace(/\s{2,}/g, ' ').replace(/\s+([,.;])/g, '$1');
+}

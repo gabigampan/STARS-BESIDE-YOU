@@ -4,7 +4,7 @@
 
 import type { DataStore } from '../data/store.ts';
 import type { Mission } from '../data/types.ts';
-import { missionName, plainName, plainText, roleWord, setByWords, staleForRule, statusWords } from './copy';
+import { missionName, plainName, plainText, noteText, roleWord, setByWords, staleForRule, statusWords } from './copy';
 import { gateWords, plainFunnel } from './funnel';
 import { append, h, int, levelTag, valueText } from './dom';
 
@@ -53,11 +53,11 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
       // an entry that describes the z-score similarity is left out for a mission that no longer uses it
       h('ul', { 'data-record': m.id }, m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => h('li', null, plainText(store, l, m)))),
       // the bundle's notes for this place ("show" includes data_and_limits), verbatim
-      ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, plainText(store, n.text, m))),
+      ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(store, n.text, m))),
     );
   }
   const general = store.notesFor('data_and_limits', null).filter((n) => !n.missions);
-  if (general.length) add(wrap, h('h3', { class: 'dlg-h' }, 'Notes on every mission'), ...general.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, plainText(store, n.text))));
+  if (general.length) add(wrap, h('h3', { class: 'dlg-h' }, 'Notes on every mission'), ...general.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(store, n.text))));
 
   add(wrap, 
     h('h3', { class: 'dlg-h' }, 'Data levels'),

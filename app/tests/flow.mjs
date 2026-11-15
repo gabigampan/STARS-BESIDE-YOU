@@ -768,7 +768,7 @@ async function checkPanel(page, label, store, m, id, twins) {
       if (!b) return;
       const pct = r.def.unit === 'percentile points';
       const close = (txt, v, p1 = pct) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= (p1 ? 0.051 : 0.006 * Math.abs(v) + 0.006);
-      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.def.unit === 'percentile points' && r.earth != null && r.moon != null ? Math.abs(Math.round(b.vals.earth * 10) - Math.round(b.vals.moon * 10)) / 10 : r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
+      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.def.unit === 'percentile points' && r.earth != null && r.moon != null ? Math.abs(Math.round(nums(b.vals.earth)[0] * 10) - Math.round(nums(b.vals.moon)[0] * 10)) / 10 : r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
       if (r.real && (!close(b.vals['earth-real'], r.real.earth, false) || !close(b.vals['moon-real'], r.real.moon, false) || !close(b.vals['diff-real'], r.real.diff, false) || !/\bK\b/.test(b.vals['diff-real'] ?? '') === (r.real.unit === 'K'))) bad.push(`real values ${r.def.variable}: ${b.vals['earth-real']} / ${b.vals['moon-real']} / ${b.vals['diff-real']}`);
       if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${setByWords(r.def.tolerance_set_by)}`)) bad.push(`tolerance ${r.def.variable}`);
       if (!b.vals.within.includes(r.within ? 'Within' : 'Outside') || b.within !== String(r.within)) bad.push(`within ${r.def.variable}`);

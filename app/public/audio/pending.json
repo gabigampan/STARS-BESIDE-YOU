@@ -1,0 +1,4 @@
+{
+ "pending_rerecord": [],
+ "note": "Tracks whose new text is already in transcripts.json while the MP3 is still the old recording (maintained by the director; empty = none)."
+}

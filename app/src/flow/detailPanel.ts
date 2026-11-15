@@ -8,7 +8,7 @@ import type { GateRow, MissionOutcome, PairRow, RequiredRow } from '../data/stor
 import { displayedTenths } from '../data/store.ts';
 import type { Level, Mission, ReasonCode } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { REGION_CAVEAT, firstSentence, missionName, plainName, plainText, roleWord, setByWords, statusWords } from './copy';
+import { REGION_CAVEAT, firstSentence, missionName, plainName, plainText, noteText, roleWord, setByWords, statusWords } from './copy';
 import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, limitWords, num, valueText, verdict } from './dom';
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
@@ -531,7 +531,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       sec(
         'Similarity to the Moon',
         ...(o.pass && o.final != null && o.pairRows.length
-          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, plainText(app.store, n.text, m))))]
+          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, noteText(app.store, n.text, m))))]
           : [
               h(
                 'p',

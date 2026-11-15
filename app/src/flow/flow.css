@@ -1640,3 +1640,14 @@ body.view-open .topbar {
   font-size: var(--step--1);
   color: var(--text-dim);
 }
+@media (max-height: 500px) {
+  .choice {
+    min-height: 0;
+    padding: 8px 12px;
+    gap: 2px;
+  }
+  .choice-meta,
+  .intro-audience {
+    display: none;
+  }
+}
