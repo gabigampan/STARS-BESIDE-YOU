@@ -26,6 +26,7 @@
     <main class="stage" id="stage">
       <section class="pane" id="earth-pane" aria-label="Earth globe">
         <div class="globe" id="earth-globe"></div>
+        <p class="pane-status" id="earth-status"><span class="spinner" aria-hidden="true"></span><span class="pane-status-text">Loading the Earth…</span></p>
         <div class="pane-caption">
           <h2 class="pane-title">Earth</h2>
           <div class="pane-rule earth-rule" id="earth-rule" hidden></div>
@@ -34,6 +35,7 @@
       </section>
       <section class="pane" id="moon-pane" aria-label="Moon globe">
         <div class="globe" id="moon-globe"></div>
+        <p class="pane-status" id="moon-status"><span class="spinner" aria-hidden="true"></span><span class="pane-status-text">Loading the Moon…</span></p>
         <div class="pane-caption">
           <h2 class="pane-title">Moon</h2>
           <div class="pane-rule moon-rule" id="moon-rule" hidden></div>
@@ -46,18 +48,8 @@
       <section class="intro" id="intro" aria-labelledby="intro-title" hidden></section>
     </main>
 
-    <div class="loading" id="loading" role="status" aria-live="polite">
-      <div class="loading-inner">
-        <p class="loading-title">Stars Beside You</p>
-        <p class="loading-lead" id="loading-lead">Loading imagery for both globes.</p>
-        <ul class="loading-list">
-          <li id="loading-earth"><span class="state">Loading</span> Earth: NASA GIBS Blue Marble</li>
-          <li id="loading-moon"><span class="state">Loading</span> Moon: NASA Moon Trek LRO WAC mosaic</li>
-        </ul>
-        <p class="loading-error" id="loading-error" hidden></p>
-        <button type="button" class="btn" id="loading-retry" hidden>Reload</button>
-      </div>
-    </div>
+    <div class="sr-only" id="loading" role="status" aria-live="polite"><span id="loading-error" hidden></span></div>
+    <button type="button" class="btn btn-quiet pane-retry" id="loading-retry" hidden>Retry</button>
 
     <dialog class="credits" id="credits-dialog" aria-labelledby="credits-title">
       <div class="credits-head">

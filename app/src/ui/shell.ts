@@ -80,11 +80,19 @@ export function setupResetButtons(reset: (body?: Body) => void): void {
   });
 }
 
+const BODY_NAME: Record<Body, string> = { earth: 'the Earth', moon: 'the Moon' };
+const SOURCE: Record<Body, string> = { earth: 'NASA GIBS (Earth)', moon: 'NASA Moon Trek (Moon)' };
+
+/**
+ * Non-blocking loading: each globe's own box shows one short line ("Loading the Earth…") until its
+ * first imagery is drawn, or one short failure line with a small Retry. The rest of the page is
+ * usable at once. #loading is a screen-reader-only live region: it carries the failure sentence and
+ * is hidden once both globes are ready (the automated tests wait on that).
+ */
 export class LoadingScreen {
   private readonly root = $('loading');
   private readonly error = $('loading-error');
   private readonly retry = $('loading-retry');
-  private readonly lead = $('loading-lead');
   private readonly state: Record<Body, ImageryStatus> = { earth: { ready: false }, moon: { ready: false } };
   private done = false;
   private resolveFn: (error?: string) => void = () => undefined;
@@ -94,51 +102,63 @@ export class LoadingScreen {
     this.finished = new Promise((r) => (this.resolveFn = r));
     this.retry.addEventListener('click', () => window.location.reload());
     window.setTimeout(() => {
-      if (this.done) return;
-      const waiting = (['earth', 'moon'] as Body[]).filter((b) => !this.state[b].ready);
-      const names = waiting.map((b) => (b === 'earth' ? 'NASA GIBS (Earth)' : 'NASA Moon Trek (Moon)')).join(' and ');
-      this.fail(
-        `Imagery from ${names} has not finished loading after ${Math.round(timeoutMs / 1000)} seconds. ` +
-          'The service may be slow or unreachable from this network. Reload to try again.',
-      );
+      for (const b of ['earth', 'moon'] as Body[]) {
+        if (this.state[b].ready || this.state[b].error) continue;
+        this.failBody(
+          b,
+          `Imagery from ${SOURCE[b]} has not finished loading after ${Math.round(timeoutMs / 1000)} seconds. ` +
+            'The service may be slow or unreachable from this network. Reload to try again.',
+        );
+      }
     }, timeoutMs);
   }
 
-  update(body: Body, status: ImageryStatus): void {
-    if (this.done) return;
-    this.state[body] = { ...status };
-    const row = $(`loading-${body}`);
-    const tag = row.querySelector('.state');
-    if (tag) tag.textContent = status.error ? 'Failed' : status.ready ? 'Ready' : 'Loading';
-    row.dataset.state = status.error ? 'failed' : status.ready ? 'ready' : 'loading';
-    if (status.error) {
-      this.fail(status.error);
-      return;
-    }
-    if (this.state.earth.ready && this.state.moon.ready) this.finish();
+  private line(body: Body): HTMLElement {
+    return $(`${body}-status`);
   }
 
-  fail(message: string): void {
-    if (this.done) return;
-    this.done = true;
-    this.lead.textContent = 'Imagery could not be loaded.';
-    this.error.textContent = message;
-    this.error.hidden = false;
+  update(body: Body, status: ImageryStatus): void {
+    if (this.state[body].error) return;
+    this.state[body] = { ...status };
+    if (status.error) return this.failBody(body, status.error);
+    if (status.ready) this.line(body).hidden = true;
+    if (this.state.earth.ready && this.state.moon.ready && !this.done) {
+      this.done = true;
+      this.root.dataset.state = 'done';
+      this.root.hidden = true;
+      this.resolveFn(undefined);
+    }
+  }
+
+  private failBody(body: Body, message: string): void {
+    this.state[body] = { ready: false, error: message };
+    const line = this.line(body);
+    line.hidden = false;
+    line.dataset.state = 'failed';
+    (line.querySelector('.pane-status-text') as HTMLElement).textContent = `The imagery of ${BODY_NAME[body]} did not load.`;
+    line.querySelector('.spinner')?.remove();
+    line.append(this.retry);
     this.retry.hidden = false;
     this.root.dataset.state = 'failed';
-    this.retry.focus();
-    this.resolveFn(message);
+    this.error.textContent = this.error.textContent ? `${this.error.textContent} ${message}` : message;
+    this.error.hidden = false;
+    if (!this.done) {
+      this.done = true;
+      this.resolveFn(message);
+    }
   }
 
-  private finish(): void {
+  /** No WebGL: one short message in place of the globes, nothing else waits for them. */
+  noGlobes(message: string): void {
     this.done = true;
-    this.root.dataset.state = 'done';
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const remove = () => {
-      this.root.hidden = true;
-    };
-    if (reduce) remove();
-    else window.setTimeout(remove, 450);
-    this.resolveFn(undefined);
+    this.root.dataset.state = 'failed';
+    this.root.hidden = true;
+    const earth = this.line('earth');
+    earth.dataset.state = 'off';
+    earth.querySelector('.spinner')?.remove();
+    (earth.querySelector('.pane-status-text') as HTMLElement).textContent = message;
+    this.line('moon').hidden = true;
+    document.body.classList.add('no-globes');
+    this.resolveFn(message);
   }
 }

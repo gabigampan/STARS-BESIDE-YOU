@@ -10,7 +10,7 @@ import { Cartesian2, Cartesian3, Math as CesiumMath, SceneTransforms, type Cesiu
 import { resetView, type Body, type BodyView, type Globes } from './scene/globes';
 import type { BeamsApi } from './modules/beams';
 import type { FocusApi } from './modules/focus';
-import type { MarkersApi } from './modules/markers';
+import type { MarkersApi, PickListener } from './modules/markers';
 import type { SunlightApi } from './modules/sunlight';
 import type { VideoApi } from './modules/video';
 
@@ -57,6 +57,8 @@ export interface GlobesApi {
   setLabelsVisible(visible: boolean): void;
   /** True while the user asks for reduced motion (flights become instant). */
   prefersReducedMotion(): boolean;
+  /** False when this browser cannot draw the globes (no WebGL): every globe call is then a no-op. */
+  hasGlobes(): boolean;
 
   /** Sunlight and time (header control): 'full-moon' (default), 'now', 'even'. */
   readonly sunlight: SunlightApi;
@@ -100,6 +102,20 @@ let labelsSetter: (v: boolean) => void = () => undefined;
 const listeners = new Set<CameraMoveListener>();
 const reducedQuery = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : undefined;
 
+// Without WebGL there are no viewers: the flow still runs, and every globe call does nothing.
+let noGlobes = false;
+const noop = () => undefined;
+const stubScene = {
+  requestRender: noop,
+  imageryLayers: { add: noop, remove: noop },
+  camera: { pickEllipsoid: () => undefined },
+  get canvas() {
+    return (stubCanvas ??= document.createElement('canvas'));
+  },
+} as unknown as Scene;
+let stubCanvas: HTMLCanvasElement | undefined;
+const stubWidget = { resize: noop, scene: stubScene } as unknown as CesiumWidget;
+
 function view(body: Body): BodyView {
   if (!globes) throw new Error('globesApi used before the globes were created; await globesApi.ready');
   return body === 'earth' ? globes.earth : globes.moon;
@@ -110,6 +126,7 @@ export const globesApi: GlobesApi = {
   imageryReady,
 
   flyTo(body, lat, lon, heightKm, durationSeconds = 2) {
+    if (noGlobes) return Promise.resolve(false);
     const v = view(body);
     const camera = v.scene.camera;
     const destination = Cartesian3.fromDegrees(lon, lat, heightKm * 1000, v.ellipsoid);
@@ -134,6 +151,7 @@ export const globesApi: GlobesApi = {
   },
 
   toCanvas(body, lat, lon, heightM = 0) {
+    if (noGlobes) return null;
     const v = view(body);
     const scene = v.scene;
     const ellipsoid = v.ellipsoid;
@@ -151,13 +169,14 @@ export const globesApi: GlobesApi = {
   },
 
   resetView(body) {
+    if (noGlobes) return;
     const instant = this.prefersReducedMotion();
     if (!body || body === 'earth') resetView(view('earth'), instant);
     if (!body || body === 'moon') resetView(view('moon'), instant);
   },
 
-  viewer: (body) => view(body).widget,
-  scene: (body) => view(body).scene,
+  viewer: (body) => (noGlobes ? stubWidget : view(body).widget),
+  scene: (body) => (noGlobes ? stubScene : view(body).scene),
 
   onCameraMove(listener) {
     listeners.add(listener);
@@ -170,6 +189,10 @@ export const globesApi: GlobesApi = {
 
   prefersReducedMotion() {
     return reducedQuery?.matches ?? false;
+  },
+
+  hasGlobes() {
+    return !noGlobes;
   },
 
   get sunlight() {
@@ -199,6 +222,29 @@ export function bindGlobes(g: Globes, setLabels: (v: boolean) => void, m: Module
     v.scene.camera.changed.addEventListener(fire);
     v.scene.camera.moveEnd.addEventListener(fire);
   }
+  resolveReady();
+}
+
+/**
+ * Internal: called once by main.ts when the globes cannot be created (no WebGL). The panels, the
+ * video and the audio guide keep working; markers, beams, focus and flights become no-ops.
+ */
+export function bindNoGlobes(video: VideoApi): void {
+  noGlobes = true;
+  const pick = () => () => undefined;
+  // the list buttons of the mission panel "activate" a marker: the flow hears it as a pick, as with globes
+  const picks = new Set<PickListener>();
+  modules = {
+    video,
+    sunlight: { mode: () => 'full-moon', set: noop, fullMoonDate: () => new Date(), describe: () => '', subsolar: () => ({ lat: 0, lon: 0 }), onChange: pick },
+    markers: {
+      setMarkers: noop, clearMarkers: noop, setSelected: noop, selected: () => null, setHighlighted: noop,
+      onPick: (l) => (picks.add(l), () => void picks.delete(l)),
+      activate: (body, id) => picks.forEach((l) => l(body, id, 'keyboard')), setAutoSelect: noop, count: () => 0, screenState: () => null,
+    },
+    focus: { focusPair: () => Promise.resolve(false), exitFocus: () => Promise.resolve(false), isFocused: () => false, outline: noop, lastFlight: () => null },
+    beams: { setBeams: noop, clearBeams: noop, lastDrawn: () => [], drawCount: () => 0 },
+  };
   resolveReady();
 }
 

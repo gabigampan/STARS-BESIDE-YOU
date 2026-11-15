@@ -389,75 +389,48 @@ a:hover {
   }
 }
 
-/* ---------- loading screen ---------- */
+/* ---------- loading, per globe (src/ui/shell.ts LoadingScreen): one quiet line in each globe's box ---------- */
 
-.loading {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: grid;
-  place-items: center;
-  padding: 24px 16px;
-  background: var(--sky);
-  transition: opacity 0.4s ease;
+.pane-status {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: calc(var(--pad) + 40px); /* above Cesium's credit line */
+  width: fit-content;
+  margin-inline: auto;
+  z-index: 7; /* above the start screen's shade (.intro, z-index 6) */
+  display: flex;
+  align-items: center;
+  gap: 4px 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 36em;
+  padding: 6px 12px;
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--text-dim);
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
 }
-.loading[data-state='done'] {
-  opacity: 0;
-  pointer-events: none;
-}
-.loading[hidden] {
+.pane-status[hidden],
+.pane-retry[hidden] {
   display: none;
 }
-
-.loading-inner {
-  width: min(460px, 100%);
+.pane-status .spinner {
+  margin-right: 0;
 }
-
-.loading-title {
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: var(--step-1);
+.pane-status[data-state='failed'] {
+  color: var(--text);
 }
-
-.loading-lead {
-  color: var(--text-dim);
-  margin-top: 4px;
+.pane-status[data-state='off'] {
+  bottom: var(--pad); /* no Cesium credit line without globes */
+  color: var(--text);
 }
-
-.loading-list {
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 0;
-  border-top: 1px solid var(--edge);
-}
-.loading-list li {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--edge);
-  font-size: var(--step--1);
-}
-.loading-list .state {
-  flex: none;
-  width: 4.5em;
-  color: var(--text-dim);
-  font-variant-numeric: tabular-nums;
-}
-.loading-list li[data-state='ready'] .state {
-  color: var(--sodium);
-}
-.loading-list li[data-state='failed'] .state {
-  color: var(--danger);
-}
-
-.loading-error {
-  margin-top: 16px;
-  color: var(--danger);
-  font-size: var(--step--1);
-}
-.loading .btn {
-  margin-top: 16px;
+/* no WebGL: the reset buttons have no view to reset */
+body.no-globes .pane-reset {
+  display: none;
 }
 
 /* ---------- credits dialog ---------- */
@@ -700,12 +673,6 @@ a:hover {
 }
 .video-credit:last-child {
   padding-bottom: 18px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .loading {
-    transition: none;
-  }
 }
 
 /* ---------- accessibility switches (src/a11y/switches.ts) ---------- */

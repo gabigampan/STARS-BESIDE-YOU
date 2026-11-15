@@ -6,7 +6,7 @@ import 'cesium/Build/Cesium/Widgets/CesiumWidget/CesiumWidget.css';
 import './styles.css';
 import './flow/flow.css';
 
-import { bindGlobes, globesApi, settleImagery } from './api';
+import { bindGlobes, bindNoGlobes, globesApi, settleImagery } from './api';
 import { IMAGERY_TIMEOUT_MS } from './config';
 import { createGlobes, resetView } from './scene/globes';
 import { applyIonUpgrade, ionEnabled } from './scene/ionUpgrade';
@@ -31,21 +31,67 @@ declare global {
   }
 }
 
+const NO_GLOBES_MESSAGE =
+  'This browser cannot show the 3D globes (WebGL is off). The missions, the five analogs, the pair details, the videos and the audio guide still work.';
+
+function hasWebGL(): boolean {
+  try {
+    const c = document.createElement('canvas');
+    const gl = c.getContext('webgl2') ?? c.getContext('webgl');
+    gl?.getExtension('WEBGL_lose_context')?.loseContext(); // only a probe: give the context back
+    return !!gl;
+  } catch {
+    return false;
+  }
+}
+
+const CREDITS = () => [
+  {
+    source: 'Audio guide (19 recordings)',
+    used: 'The spoken guide of the start screen, the three mission introductions and the five analogs shown for each mission (public/audio). Off by default; its text is always shown as a caption.',
+    credit: 'Recorded by the Stars Beside You team (text to speech, American English voice); shipped unchanged, with SHA-256 checksums.',
+    licence: "The team's own recordings for this project.",
+    link: '',
+  },
+  {
+    source: 'Colour-blind mode palette: Okabe-Ito colours',
+    used: 'Every colour of the interface and of the globe overlays when "Colour-blind mode" is on; checked with the culori colour-vision-deficiency simulation (protanopia, deuteranopia, tritanopia).',
+    credit: 'M. Okabe and K. Ito, "Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people", J*Fly.',
+    licence: 'Published colour values.',
+    link: 'https://jfly.uni-koeln.de/color/',
+  },
+  ...(ionEnabled()
+    ? [
+        {
+          source: 'Cesium ion (optional upgrade)',
+          used: 'Cesium World Terrain, Bing Maps aerial imagery and Cesium Moon terrain when the deployment has an ion token.',
+          credit: 'Cesium ion; imagery credits are shown on the globe.',
+          licence: 'Cesium ion terms of service.',
+          link: 'https://cesium.com/platform/cesium-ion/',
+        },
+      ]
+    : []),
+];
+
 function main(): void {
   // the switches, caption and palette first: they are on every screen, even when the 3D view fails
   window.starsA11y = a11y();
   const loading = new LoadingScreen(IMAGERY_TIMEOUT_MS);
+  const earthEl = document.getElementById('earth-globe') as HTMLElement;
+  const moonEl = document.getElementById('moon-globe') as HTMLElement;
   let globes;
   try {
-    globes = createGlobes(
-      document.getElementById('earth-globe') as HTMLElement,
-      document.getElementById('moon-globe') as HTMLElement,
-      () => globesApi.prefersReducedMotion(),
-    );
+    // checked first, so Cesium never puts up its own error box next to ours
+    if (!hasWebGL()) throw new Error('WebGL is off');
+    globes = createGlobes(earthEl, moonEl, () => globesApi.prefersReducedMotion());
   } catch (err) {
-    const reason = err instanceof Error ? err.message : String(err);
-    loading.fail(`The 3D view could not start: ${reason}. This browser or device may not support WebGL 2 or WebGL.`);
+    console.warn(`[globes] the 3D view could not start: ${err instanceof Error ? err.message : String(err)}`);
+    for (const el of [earthEl, moonEl]) el.replaceChildren();
+    loading.noGlobes(NO_GLOBES_MESSAGE);
+    bindNoGlobes(new VideoDialog());
+    window.starsBesideYou = globesApi;
     settleImagery('WebGL unavailable');
+    setupCredits(CREDITS());
     return;
   }
 
@@ -85,33 +131,7 @@ function main(): void {
     console.warn(`[labels] lunar feature names unavailable: ${err instanceof Error ? err.message : String(err)}`);
   });
 
-  setupCredits([
-    {
-      source: 'Audio guide (19 recordings)',
-      used: 'The spoken guide of the start screen, the three mission introductions and the five analogs shown for each mission (public/audio). Off by default; its text is always shown as a caption.',
-      credit: 'Recorded by the Stars Beside You team (text to speech, American English voice); shipped unchanged, with SHA-256 checksums.',
-      licence: "The team's own recordings for this project.",
-      link: '',
-    },
-    {
-      source: 'Colour-blind mode palette: Okabe-Ito colours',
-      used: 'Every colour of the interface and of the globe overlays when "Colour-blind mode" is on; checked with the culori colour-vision-deficiency simulation (protanopia, deuteranopia, tritanopia).',
-      credit: 'M. Okabe and K. Ito, "Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people", J*Fly.',
-      licence: 'Published colour values.',
-      link: 'https://jfly.uni-koeln.de/color/',
-    },
-    ...(ionEnabled()
-      ? [
-          {
-            source: 'Cesium ion (optional upgrade)',
-            used: 'Cesium World Terrain, Bing Maps aerial imagery and Cesium Moon terrain when the deployment has an ion token.',
-            credit: 'Cesium ion; imagery credits are shown on the globe.',
-            licence: 'Cesium ion terms of service.',
-            link: 'https://cesium.com/platform/cesium-ion/',
-          },
-        ]
-      : []),
-  ]);
+  setupCredits(CREDITS());
   // "Place names" is a switch of the header (src/a11y/index.ts), on by default
   window.starsA11y?.setPlaceNamesHandler(setLabels);
   setupResetButtons((body) => globesApi.resetView(body));
@@ -137,5 +157,18 @@ function startFlow(): void {
   setupKeys(window.starsFlow, a11y());
 }
 
-main();
+// Boot: the panels first (they need only the data bundle), then the globes once the start screen
+// has its mission cards (or after 1.5 s), so a slow 3D start never holds the page.
+window.starsA11y = a11y();
 startFlow();
+whenStartScreenShown(main);
+
+function whenStartScreenShown(then: () => void): void {
+  const t0 = performance.now();
+  const tick = () => {
+    const f = window.starsFlow;
+    if (!f || f.hasData() || f.error() || performance.now() - t0 > 1500) window.setTimeout(then, 0);
+    else requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
