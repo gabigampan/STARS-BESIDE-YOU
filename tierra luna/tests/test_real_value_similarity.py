@@ -211,6 +211,7 @@ def test_list_order_puts_unpaired_cells_after_the_pairs_by_suitability():
 
 
 # ----------------------------------------------------------------------------- the results (checked proposal)
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_rover_results_match_the_checked_proposal(real):
     r = real["results"]["rover"]
     e = real["cells"]["EARTH"]
@@ -224,6 +225,7 @@ def test_rover_results_match_the_checked_proposal(real):
     assert len(np.unique(r.twin_id[r.twin_id >= 0])) == 1166
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_solar_results_match_the_checked_proposal(real):
     r = real["results"]["solar"]
     e = real["cells"]["EARTH"]
@@ -309,6 +311,7 @@ def _rover_solar_digests(files, objs):
     return out
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_rover_and_solar_are_byte_identical_to_revision_5(real):
     """Decision of 2026-11-15 08:55 CET: Rover and Solar panels do not change (Rover changed
     on purpose at 11:23 CET and is left out since; tests/test_decisions_1123.py). Their files,
@@ -326,6 +329,7 @@ def test_rover_and_solar_are_byte_identical_to_revision_5(real):
 
 
 # ----------------------------------------------------------------------------- bundle (contract revision 5)
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_bundle_carries_the_real_value_pairs(real, real_dir):
     b = load_bundle(real_dir)
     man = b.manifest
@@ -360,6 +364,7 @@ def test_bundle_carries_the_real_value_pairs(real, real_dir):
     assert validate_bundle_v2(real_dir)["ok"]
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_solar_pairs_carry_ground_sunlight_and_the_share_lost(real, real_dir, ecfg):
     b = load_bundle(real_dir)
     pf = "earth_solar_pairs.bin"
@@ -392,6 +397,7 @@ def _half_up_tenths_independent(raw: float) -> int:
     return int(np.floor(x * 10 + Fraction(1, 2)))
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_solar_sentence_share_lost_agrees_with_the_printed_numbers(real, real_dir, ecfg):
     """Wording and display rounding, 2026-11-15: in texts.solar_limitation the share lost
     ({loss_pct}) is computed from the two printed numbers ({toa_earth}, {ground_earth},
