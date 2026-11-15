@@ -246,9 +246,29 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
     region_share: Dict[str, Dict[int, Dict[str, Any]]] = {}
     for mid, res in results.items():
         rule = {"count": sel["count"], **sel["missions"][mid], "sentence": sel["sentences"][sel["missions"][mid]["rule"]]}
-        rows = t5.select(res.rank, lat, lon, rule)
+        cols = {sk["column"]: pd.to_numeric(earth[sk["column"]], errors="coerce").to_numpy(dtype=np.float64)
+                for sk in (rule.get("skips") or {}).values()}
+        rows = t5.select(res.rank, lat, lon, rule, cols, res.final_published, res.similarity_pct, ids)
         rows5[mid] = rows
         top5[mid] = t5.top5_block(rule, rows, ids, res.rank, float(radii[sel["radius_body"]]), int(sel["km_decimals"]))
+        tied = t5.top_tie(res.rank, res.final_published)
+        skipm = t5.skip_mask(rule, cols, len(ids))
+        top5[mid].update({
+            "rule_id": rule["rule"],
+            "skips": {k: {"enabled": bool(v.get("enabled")), "column": v["column"], "op": v["op"], "value": v["value"]}
+                      for k, v in (rule.get("skips") or {}).items()},
+            "top_tie_n": int(len(tied)), "top_tie_n_after_skips": int((~skipm[tied]).sum()),
+            "alternative_rule": rule.get("alternative_rule"),
+        })
+        top5[mid]["rule"] = top5[mid]["rule"].replace("{tied_n}", fmt_int(top5[mid]["top_tie_n_after_skips"]))
+        alt = rule.get("alternative_rule")
+        if alt:
+            arule = {"count": sel["count"], **sel["missions"][mid], "rule": alt, "sentence": sel["sentences"][alt]}
+            arows = t5.select(res.rank, lat, lon, arule, cols, res.final_published, res.similarity_pct, ids)
+            top5[mid]["alternative"] = {"rule_id": alt, "ids": [int(ids[i]) for i in arows],
+                                        "overall_ranks": [int(res.rank[i]) for i in arows],
+                                        "rule": t5.top5_block(arule, arows, ids, res.rank, float(radii[sel["radius_body"]]),
+                                                              int(sel["km_decimals"]))["rule"]}
         # (a) order and wording of the five
         t = lt["list_order"]
         texts[f"list_order_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"],

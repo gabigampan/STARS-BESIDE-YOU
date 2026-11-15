@@ -197,6 +197,14 @@ class RuleSpec:
     bound: np.ndarray           # tau * multiplier of the role
     score_decimals: int
     scales: Tuple[str, ...] = ()  # per variable: "real" or "percentile_within_population" (empty = all real)
+    # per variable measurement uncertainty sigma (NaN = none): when set, the score is
+    # exp(-0.5 * max(0, |d| / sigma - 1)^2) (research_5_rover_escala.md, 'Para implementar')
+    # and the pair filter still uses ``bound``; twins tie-break on sum (d / sigma)^2.
+    sigma: Optional[np.ndarray] = None
+
+    @property
+    def has_sigma(self) -> bool:
+        return self.sigma is not None and bool(np.isfinite(self.sigma).any())
 
     @property
     def key(self) -> np.ndarray:
@@ -214,10 +222,23 @@ def rule_spec(mission_rule: Dict, multipliers: Dict[str, float], score_decimals:
     bad = [x for x in scales if x not in SCALES]
     if bad:
         raise ValueError(f"unknown variable scale(s) {bad}")
+    sig = np.array([float(x["uncertainty_scale"]["sigma"]) if x.get("uncertainty_scale") else np.nan for x in vs])
     return RuleSpec(variables=[x["variable"] for x in vs], roles=roles,
                     weights=np.array([float(x["weight"]) for x in vs]), tau=tau,
                     bound=np.array([float(multipliers[r]) for r in roles]) * tau, score_decimals=score_decimals,
-                    scales=scales)
+                    scales=scales, sigma=sig if np.isfinite(sig).any() else None)
+
+
+def raw_scores(d: np.ndarray, spec: "RuleSpec") -> np.ndarray:
+    """Full-precision per-variable scores (last axis = variables). Gaussian on the
+    tolerance, or, for a variable with a measurement uncertainty sigma, a dead band of
+    one sigma then a Gaussian in sigma units."""
+    gauss = np.exp(-0.5 * (d / spec.tau) ** 2)
+    if not spec.has_sigma:
+        return gauss
+    sig = np.where(np.isfinite(spec.sigma), spec.sigma, 1.0)
+    band = np.exp(-0.5 * np.maximum(0.0, d / sig - 1.0) ** 2)
+    return np.where(np.isfinite(spec.sigma), band, gauss)
 
 
 def quantise(s: np.ndarray, decimals: int) -> np.ndarray:
@@ -290,10 +311,17 @@ def find_twins(ev: np.ndarray, mv: np.ndarray, zone_ids: np.ndarray, spec: RuleS
         d = np.abs(ev[a:b, None, :] - mv[None, :, :])                # rows x zone x k
         fin = np.isfinite(d)
         ok = passes_filter(d, spec)
-        s = np.where(fin, np.exp(-0.5 * (np.where(fin, d, 0.0) / spec.tau) ** 2), np.nan)  # full precision
+        s = np.where(fin, raw_scores(np.where(fin, d, 0.0), spec), np.nan)  # full precision
         sv = weighted_similarity(s, fin, spec.weights)
         sv = np.where(ok & np.isfinite(sv), sv, -np.inf)
-        j = np.argmax(sv, axis=1)                                     # first maximum = lowest id
+        if spec.has_sigma:
+            # ties on the maximum: smallest sum (d / sigma)^2 over variables with sigma, then lowest id
+            top = sv == sv.max(axis=1, keepdims=True)
+            sig = np.where(np.isfinite(spec.sigma), spec.sigma, np.inf)
+            dist = np.sum(np.where(fin, (np.where(fin, d, 0.0) / sig) ** 2, 0.0), axis=-1)
+            j = np.argmin(np.where(top & np.isfinite(sv), dist, np.inf), axis=1)
+        else:
+            j = np.argmax(sv, axis=1)                                 # first maximum = lowest id
         best = sv[np.arange(b - a), j]
         got = np.isfinite(best)
         twin[a:b] = np.where(got, zone_ids[j] if zone_ids.size else -1, -1)
@@ -324,7 +352,7 @@ def find_twins(ev: np.ndarray, mv: np.ndarray, zone_ids: np.ndarray, spec: RuleS
     moon_vals[has] = mv[tpos[has]]
     diff = np.abs(ev - moon_vals)
     fin = np.isfinite(diff)
-    sc = np.where(fin, scores(np.where(fin, diff, 0.0), spec.tau, spec.score_decimals), np.nan)
+    sc = np.where(fin, quantise(raw_scores(np.where(fin, diff, 0.0), spec), spec.score_decimals), np.nan)
     sc[~has] = np.nan
     # published similarity: from the published (rounded) scores, as the browser recomputes it
     sim_pub = np.where(has, weighted_similarity(sc, fin, spec.weights), np.nan)

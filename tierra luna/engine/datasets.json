@@ -159,6 +159,10 @@
     "lunar_info_columns": {
      "value": {},
      "why": "No extra lunar information column on the legacy table."
+    },
+    "supplements": {
+     "value": [],
+     "why": "No supplementary columns on this dataset (the supplementary tables are on the real 1-degree grid)."
     }
    }
   },
@@ -307,6 +311,12 @@
        "unit": "m/s",
        "kind": "numeric",
        "description": "Earth: WorldClim 2.1 windiest-month mean 10 m wind. Moon: not applicable. Not used by the engine (only by rover workable_days)."
+      },
+      "clear_frac_isccp": {
+       "label": "Clear-sky fraction (ISCCP satellite clouds)",
+       "unit": "fraction 0-1",
+       "kind": "numeric",
+       "description": "Earth: 1 minus the mean ISCCP-H cloud amount over 2012-2016 (60 monthly means, NOAA NCEI ISCCP-H HGM v01r00, DERIVED). Moon: no data (no atmosphere). Licence: no constraints on data access or use; cite Rossow and Schiffer 1999."
       }
      },
      "why": "Display label, unit, kind and a short definition of each mission variable on this dataset. Definitions summarise real_data/provenance_*.csv and column_aliases.json; levels, sources and caveats are read from those files, not from here."
@@ -380,6 +390,10 @@
       "wind_max_ms": {
        "status": "not_comparable",
        "reason": "No lunar data (no atmosphere)."
+      },
+      "clear_frac_isccp": {
+       "status": "not_comparable",
+       "reason": "An Earth-only atmospheric quantity: the Moon has no clouds, so it enters the Solar panels suitability on Earth only, never the similarity."
       }
      },
      "why": "One row per variable: whether the Earth and lunar values are the same physical quantity, decided from the definitions in the provenance files (pending team confirmation). 'not_comparable' variables are left out of the Earth-Moon similarity and the twin search but stay in suitability; 'comparable_with_caveat' variables are used and carry the reason to the interface."
@@ -498,6 +512,22 @@
       }
      },
      "why": "Lunar columns exported as information next to the lunar values (team lead decision 3 allows the Diviner rock abundance as a separate lunar information value with its source). Level and source come from provenance_moon.csv."
+    },
+    "supplements": {
+     "value": [
+      {
+       "file": "real_data/supplement/earth_cloud_isccp_1deg.csv",
+       "provenance": "real_data/supplement/provenance_earth_cloud_isccp.csv",
+       "body": "EARTH",
+       "key_column": "cell_id",
+       "key_prefix": "E",
+       "columns": [
+        "clear_frac_isccp"
+       ],
+       "caveat": "ISCCP-H HGM v01r00 (NOAA NCEI) mean clear-sky fraction 2012-2016, 1 - cloud amount; DERIVED; least reliable over snow, ice and polar night; cloud amount is not irradiance"
+      }
+     ],
+     "why": "Supplementary columns joined by cell id at load time (engine.dataset.load_supplements), each with its own provenance file, so a new measured column does not require rebuilding the big tables. clear_frac_isccp: research 2 option E2, approved by the team lead at 11:51 CET on 2026-11-15 (docs/stats_audit/research_2_solar_idoneidad.md); written by tierra luna/research/r2_build_cloud.py from ISCCP-H HGM v01r00 (NOAA NCEI, 2012-2016); cite Rossow and Schiffer 1999, BAMS 80:2261-2287."
     }
    }
   }

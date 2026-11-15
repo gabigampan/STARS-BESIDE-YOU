@@ -72,9 +72,10 @@
       "pair_rule": "min(Earth score, Moon score) * coverage, where coverage = share of the mission's soft weight with data on both cells",
       "high_min": 0.8,
       "medium_min": 0.5,
-      "high_max_cell_km": 1.0
+      "high_max_cell_km": 1.0,
+      "export_per_pair": false
     },
-    "why": "Confidence must say how much the numbers behind a ranking can be trusted. A MEASURED value counts fully, a DERIVED one (a stated formula on a measured value) a little less, an UNDOCUMENTED cached array less, and a MODELLED formula least. The weaker body limits the pair. The criteria act at rover-to-site scale, so a cell larger than high_max_cell_km (every 2-degree cell: about 222 km on Earth, about 61 km on the Moon; every 1-degree cell: about 111 km and 30 km) can never be 'high'. A variable counts on a body only where that body's cell has a value; coverage is the share of the soft weight with data on both the Earth cell and its twin."
+    "why": "Confidence must say how much the numbers behind a ranking can be trusted. A MEASURED value counts fully, a DERIVED one (a stated formula on a measured value) a little less, an UNDOCUMENTED cached array less, and a MODELLED formula least. The weaker body limits the pair. The criteria act at rover-to-site scale, so a cell larger than high_max_cell_km (every 2-degree cell: about 222 km on Earth, about 61 km on the Moon; every 1-degree cell: about 111 km and 30 km) can never be 'high'. A variable counts on a body only where that body's cell has a value; coverage is the share of the soft weight with data on both the Earth cell and its twin. Revision 8 (the team lead's order of 2026-11-15 11:36 CET: remove from the model what carries no information per pair): the label was uniform per mission (every Rover and Solar panels pair 'medium', every Lunar base pair 'low'; 'high' unreachable on 1-degree cells), so export_per_pair is false: the confidence and confidence_score columns of earth_<mission>.bin stay (every value missing, so an older web build reads them and shows no label), and the explain.json fields and missions.json confidence_counts / distributions.confidence_score are gone. Its place is taken by the stability text (top5_stability)."
   },
   "explain_top_n": {
     "value": 25,
@@ -629,7 +630,15 @@
               "tolerance": 2.0,
               "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
               "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C).",
-              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)"
+              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)",
+              "uncertainty_scale": {
+                "sigma": 0.265093,
+                "unit": "deg",
+                "formula": "sqrt((7.17/(sqrt(2)*1853))^2 + (10/(sqrt(2)*1895.2))^2) rad = 0.265093 deg",
+                "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025, ESSD 17, 1835-1849); LOLA about 10 m radial (Smith et al. 2010, GRL 37, L18204); docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
+                "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (2 deg)",
+                "set_by": "the team lead, 2026-11-15 11:51 CET (desaturate the key variable by the measurement uncertainty), specified by research 5"
+              }
             },
             {
               "variable": "roughness_m",
@@ -640,7 +649,15 @@
               "tolerance": 30.0,
               "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
               "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies).",
-              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)"
+              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)",
+              "uncertainty_scale": {
+                "sigma": 17.401661,
+                "unit": "m",
+                "formula": "sqrt(2*7.17^2 + 2*10^2) = 17.401661 m",
+                "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025); LOLA about 10 m radial (Smith et al. 2010); research_5_rover_escala.md 'Para implementar'",
+                "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (30 m)",
+                "set_by": "the team lead, 2026-11-15 11:51 CET, specified by research 5"
+              }
             }
           ],
           "weights_why": "Decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf (decision 1): relative elevation goes to weight zero (it has no physical sense for a rover and clashes with the principle of 04:47, Rover = slope and roughness); its weight is shared among the terrain variables, with no new variable: slope 50 % and roughness 50 %, both key, tolerances unchanged (2 deg and 30 m). The director's reading, told to the team lead: relative elevation also leaves the pair filter (a zero-weight variable must not decide which pairs exist) and stays as an information row with its difference (info_differences.rover). Before (team decision of 2026-11-15, morning): slope 40 %, roughness 40 % (key), relative elevation 20 % (secondary, tolerance 500 m, filter bound 1,000 m)."
@@ -945,15 +962,432 @@
       },
       "sentences": {
         "min_separation": "The five shown are chosen down the full ranking by final score: the best point is kept, and any point whose cell centre lies within {deg} degrees of arc (about {km} km) of one already kept is skipped, so that neighbouring cells of one place do not fill the list. The full ranking itself is unchanged and stays ordered by final score.",
-        "by_rank": "The five shown are numbers 1 to 5 of the full ranking, ordered by final score."
+        "by_rank": "The five shown are numbers 1 to 5 of the full ranking, ordered by final score.",
+        "rank_with_skips": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within {deg} degrees of arc (about {km} km) of one already kept. The full ranking itself is unchanged.",
+        "spread_within_top_tie": "{tied_n} sites tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
       }
     },
     "why": "Decision 2 of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf: a minimum separation of 2 degrees between the analogs of the top 5 in Rover and in Solar panels, so that neighbouring cells of one place do not fill the list. The director's reading: a rule for choosing the FIVE (greedy by rank: keep the best, skip any whose cell centre is within 2 degrees of arc, great circle on the sphere of body_radius_km EARTH = 6371.0 km, about 222.4 km, of one already kept); the full ranking stays by final score. Lunar base keeps ranks 1 to 5 (the rule would change nothing there today: docs/stats_audit/7_efecto_decisiones_pendientes.md P2). Exported as missions.json missions[].top5."
   },
+  "criteria_sets": {
+    "value": {
+      "datasets": [
+        "real_1deg"
+      ],
+      "selected": {
+        "rover": "corrected",
+        "solar": "corrected",
+        "lunar_base": "corrected"
+      },
+      "missions": {
+        "rover": {
+          "sets": {
+            "audited_morning": {
+              "title": "State audited this morning (commit 42d8bba)",
+              "engine_patch": {
+                "real_value_similarity.missions.rover": {
+                  "zone": {
+                    "kind": "lat_max",
+                    "lat_max": -75.0,
+                    "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+                    "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+                    "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+                  },
+                  "variables": [
+                    {
+                      "variable": "slope_deg",
+                      "role": "key",
+                      "weight": 0.4,
+                      "label": "Slope",
+                      "unit": "deg",
+                      "tolerance": 2.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+                      "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+                    },
+                    {
+                      "variable": "roughness_m",
+                      "role": "key",
+                      "weight": 0.4,
+                      "label": "Roughness",
+                      "unit": "m",
+                      "tolerance": 30.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+                      "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
+                    },
+                    {
+                      "variable": "elevation_rel_m",
+                      "role": "secondary",
+                      "weight": 0.2,
+                      "label": "Relative elevation",
+                      "unit": "m",
+                      "tolerance": 500.0,
+                      "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
+                      "why": "Half the robust Earth scale of elevation (1,007 m, docs/ANALOG_PRINCIPLE.md section C), rounded; set by the delegate on 2026-11-15."
+                    }
+                  ],
+                  "weights_why": "Key variables carry 80 % of the weight (team decision of 2026-11-15, morning): slope 40 %, roughness 40 %, relative elevation 20 %."
+                },
+                "real_value_similarity.info_differences.rover": [
+                  "temp_k",
+                  "lst_diurnal_amp_k",
+                  "irradiance_kwh_m2_day"
+                ],
+                "real_value_similarity.info_in_pairs_file.rover": [],
+                "top5_selection.missions.rover": {
+                  "rule": "by_rank"
+                }
+              },
+              "mission_scoring_deviations": []
+            },
+            "corrected": {
+              "title": "Corrected (11:23, 11:28, 11:36 and 11:51 CET)",
+              "engine_patch": {
+                "top5_selection.missions.rover": {
+                  "rule": "spread_within_top_tie",
+                  "min_separation_deg": 2.0,
+                  "skips": {
+                    "ice": {
+                      "enabled": true,
+                      "column": "snow_ice_frac",
+                      "op": ">=",
+                      "value": 0.5,
+                      "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+                    },
+                    "water": {
+                      "enabled": true,
+                      "column": "mask_fraction",
+                      "op": "<",
+                      "value": 0.5,
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                    }
+                  },
+                  "alternative_rule": "rank_with_skips"
+                }
+              },
+              "mission_scoring_deviations": [],
+              "note": "Slope and roughness only (relative elevation an information row, 11:23), similarity desaturated by the measurement uncertainty of the elevation models (research_5, 11:51), five by geographic spread among the tied points. The rule and its variables are the main real_value_similarity.missions.rover block."
+            }
+          }
+        },
+        "solar": {
+          "sets": {
+            "audited_morning": {
+              "title": "State audited this morning (commit 42d8bba)",
+              "engine_patch": {
+                "real_value_similarity.missions.solar": {
+                  "zone": {
+                    "kind": "abs_lat_max_elevation_max",
+                    "abs_lat_max": 30.0,
+                    "elevation_max_m": -1200.0,
+                    "elevation_column": "elevation_m",
+                    "name": "Mare Tranquillitatis & Equatorial Maria",
+                    "source": "analog_finder.build_lunar_reference_zones: '\"Mare Tranquillitatis & Equatorial Maria\": ((np.abs(lat) <= 30.0) & (moon_norm_df[\"elevation_m\"] <= -1200.0))'",
+                    "why": "Team decision of 2026-11-15 (morning): the equatorial maria as analog_finder defines them (absolute latitude <= 30 degrees and elevation <= -1,200 m), applied to the real lunar table."
+                  },
+                  "variables": [
+                    {
+                      "variable": "irradiance_toa_kwh_m2_day",
+                      "role": "key",
+                      "weight": 0.8,
+                      "label": "Sunlight without atmosphere",
+                      "unit": "kWh/m2/day",
+                      "tolerance": 0.6,
+                      "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
+                      "why": "Set by the delegate on 2026-11-15 (from half the robust Earth scale of ground irradiance, 1.22 kWh/m2/day; docs/ANALOG_PRINCIPLE.md section C)."
+                    },
+                    {
+                      "variable": "slope_deg",
+                      "role": "secondary",
+                      "weight": 0.1,
+                      "label": "Slope",
+                      "unit": "deg",
+                      "tolerance": 2.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+                      "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+                    },
+                    {
+                      "variable": "roughness_m",
+                      "role": "secondary",
+                      "weight": 0.1,
+                      "label": "Roughness",
+                      "unit": "m",
+                      "tolerance": 30.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+                      "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
+                    }
+                  ],
+                  "weights_why": "Key variable 80 % (team decision of 2026-11-15, morning): sunlight without atmosphere 80 %, slope 10 %, roughness 10 %, with the rover's tolerances for slope and roughness."
+                },
+                "top5_selection.missions.solar": {
+                  "rule": "by_rank"
+                }
+              },
+              "mission_scoring_deviations": []
+            },
+            "corrected": {
+              "title": "Corrected (research 2 option E2, approved 11:51 CET)",
+              "engine_patch": {
+                "top5_selection.missions.solar": {
+                  "rule": "rank_with_skips",
+                  "min_separation_deg": 2.0,
+                  "skips": {
+                    "ice": {
+                      "enabled": true,
+                      "column": "snow_ice_frac",
+                      "op": ">=",
+                      "value": 0.5,
+                      "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+                    },
+                    "water": {
+                      "enabled": true,
+                      "column": "mask_fraction",
+                      "op": "<",
+                      "value": 0.5,
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                    }
+                  }
+                }
+              },
+              "mission_scoring_deviations": [
+                {
+                  "criterion": "irradiance_kwh_m2_day",
+                  "team": {
+                    "weight": 0.35,
+                    "bad": 2.5,
+                    "good": 6.0,
+                    "why": "energia disponible"
+                  },
+                  "ours": null,
+                  "reason": "A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost).",
+                  "source": "docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET"
+                },
+                {
+                  "criterion": "sun_elev_max_deg",
+                  "team": {
+                    "weight": 0.15,
+                    "bad": 10.0,
+                    "good": 70.0,
+                    "why": "mejor captacion con sol alto"
+                  },
+                  "ours": null,
+                  "reason": "Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged.",
+                  "source": "research_2 option E2, approved 11:51 CET"
+                },
+                {
+                  "criterion": "sun_low_frac_0_5deg",
+                  "team": {
+                    "weight": 0.15,
+                    "bad": 0.25,
+                    "good": 0.03,
+                    "why": "menos tiempo de sol rasante"
+                  },
+                  "ours": null,
+                  "reason": "Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged.",
+                  "source": "research_2 option E2, approved 11:51 CET"
+                },
+                {
+                  "criterion": "clear_frac_isccp",
+                  "team": null,
+                  "ours": {
+                    "weight": 0.35,
+                    "bad": 0.308,
+                    "good": 0.671,
+                    "why": "cielo despejado medido por satelite (ISCCP-H, 2012-2016): menos nubes = mas produccion"
+                  },
+                  "reason": "A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised.",
+                  "source": "ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET"
+                }
+              ]
+            }
+          }
+        },
+        "lunar_base": {
+          "sets": {
+            "audited_morning": {
+              "title": "State audited this morning (commit 42d8bba)",
+              "engine_patch": {
+                "real_value_similarity.missions.lunar_base": {
+                  "rule": "percentile_and_real_tolerance",
+                  "zone": {
+                    "kind": "similarity_zone",
+                    "similarity_zones_key": "lunar_base",
+                    "name": "NASA's nine candidate landing regions near the lunar south pole",
+                    "source": "engine_config similarity_zones.lunar_base: the lunar cells intersecting the nine candidate landing regions NASA announced on 28 October 2024 (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK); 280 cells",
+                    "why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: the zone is the nine NASA regions (the 280-cell footprint already in the engine), unchanged."
+                  },
+                  "populations": {
+                    "EARTH": {
+                      "rule": "the Earth points that pass the Lunar base funnel (hard filters of mission_scoring.json), with a value of the variable",
+                      "why": "Confirmed design D4b: the position of a point among Earth's lunar-base candidates."
+                    },
+                    "MOON": {
+                      "rule": "the lunar cells of the mission's zone, with a value of the variable",
+                      "why": "Confirmed design D4b: the position of a cell among the cells of the nine NASA regions."
+                    }
+                  },
+                  "percentile": {
+                    "formula": "p = 100 * (rank - 0.5) / n, rank = position in the population sorted ascending (1-based), ties get the mean of their ranks, n = cells of the population with a value",
+                    "why": "Mid-rank percentile of docs/LUNAR_BASE_PROPOSAL.md (checker's definition): symmetric, never 0 or 100, ties averaged; a cell without a value has no percentile."
+                  },
+                  "variables": [
+                    {
+                      "variable": "tmin_k",
+                      "role": "key",
+                      "weight": 0.4,
+                      "scale": "percentile_within_population",
+                      "label": "Coldest temperature (position)",
+                      "unit": "percentile points",
+                      "real_unit": "K",
+                      "tolerance": 10.0,
+                      "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+                      "why": "Key variable of the mission's own filters and weights (tmin_c); 10 percentile points = a band of +-10 % of each population (docs/LUNAR_BASE_PROPOSAL.md section 5). Earth: modelled air temperature; Moon: measured surface temperature: only the positions are compared."
+                    },
+                    {
+                      "variable": "lst_diurnal_amp_k",
+                      "role": "key",
+                      "weight": 0.4,
+                      "scale": "percentile_within_population",
+                      "label": "Daily temperature swing (position)",
+                      "unit": "percentile points",
+                      "real_unit": "K",
+                      "tolerance": 10.0,
+                      "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+                      "why": "Key variable of the mission's own filters and weights; 10 percentile points as for the coldest temperature."
+                    },
+                    {
+                      "variable": "slope_deg",
+                      "role": "secondary",
+                      "weight": 0.1,
+                      "scale": "real",
+                      "label": "Slope",
+                      "unit": "deg",
+                      "real_unit": "deg",
+                      "tolerance": 2.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted for Lunar base by the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+                      "why": "Terrain in real values with the illustrative team value of rover_preset.py (5 km baseline); filter bound 4 deg (twice the tolerance)."
+                    },
+                    {
+                      "variable": "roughness_m",
+                      "role": "secondary",
+                      "weight": 0.1,
+                      "scale": "real",
+                      "label": "Roughness",
+                      "unit": "m",
+                      "real_unit": "m",
+                      "tolerance": 30.0,
+                      "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted for Lunar base by the team lead's delegate on the team lead's behalf, 2026-11-15 08:55 CET (confirming docs/LUNAR_BASE_PROPOSAL.md, design D4b)",
+                      "why": "Terrain in real values with the illustrative team value of rover_preset.py (5 km baseline); filter bound 60 m (twice the tolerance)."
+                    }
+                  ],
+                  "weights_why": "Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: coldest temperature 40 % and daily thermal amplitude 40 % (positions), slope 10 % and roughness 10 % (real values); mean temperature and relative elevation leave the similarity and are shown as differences.",
+                  "nopair_groups": {
+                    "thermal_position": [
+                      "tmin_k",
+                      "lst_diurnal_amp_k"
+                    ],
+                    "terrain": [
+                      "slope_deg",
+                      "roughness_m"
+                    ]
+                  },
+                  "nopair_groups_why": "The reason of a point without a twin, as in the confirmed proposal: no zone cell meets the thermal position (both keys within 10 points), no zone cell meets the terrain (slope within 4 deg and roughness within 60 m), neither, or each is met by some cell but never by the same cell.",
+                  "pair_sentence": "lunar_base_pair_sentence"
+                },
+                "top5_selection.missions.lunar_base": {
+                  "rule": "by_rank"
+                }
+              },
+              "mission_scoring_deviations": []
+            },
+            "corrected": {
+              "title": "Corrected (research 3 option R, approved 11:51 CET)",
+              "engine_patch": {
+                "top5_selection.missions.lunar_base": {
+                  "rule": "rank_with_skips",
+                  "min_separation_deg": 2.0,
+                  "skips": {
+                    "ice": {
+                      "enabled": true,
+                      "column": "snow_ice_frac",
+                      "op": ">=",
+                      "value": 0.5,
+                      "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+                    },
+                    "water": {
+                      "enabled": true,
+                      "column": "mask_fraction",
+                      "op": "<",
+                      "value": 0.5,
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                    }
+                  }
+                }
+              },
+              "mission_scoring_deviations": [
+                {
+                  "criterion": "thermal_inertia_class",
+                  "team": {
+                    "weight": 0.15,
+                    "map": {
+                      "roca": 1.0,
+                      "regolito": 1.0,
+                      "arena": 0.9,
+                      "suelo": 0.6,
+                      "hielo": 0.4
+                    },
+                    "default": 0.5,
+                    "why": "superficie de baja inercia, parecida al regolito"
+                  },
+                  "ours": null,
+                  "reason": "Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'.",
+                  "source": "docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET"
+                },
+                {
+                  "criterion": "rock_or_bare_frac",
+                  "team": {
+                    "weight": 0.1,
+                    "bad": 0.1,
+                    "good": 0.7,
+                    "why": "superficie expuesta, sin vegetacion que amortigue"
+                  },
+                  "ours": {
+                    "weight": 0.25,
+                    "bad": 0.1,
+                    "good": 0.7,
+                    "why": "superficie expuesta, sin vegetacion que amortigue"
+                  },
+                  "reason": "Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out.",
+                  "source": "research_3 option R, approved 11:51 CET"
+                },
+                {
+                  "criterion": "permafrost_class",
+                  "team": {
+                    "weight": 0.05,
+                    "map": {
+                      "esporadico": 1.0,
+                      "discontinuo": 1.0,
+                      "continuo": 0.7,
+                      "ninguno": 0.3
+                    },
+                    "default": 0.5,
+                    "why": "ciclos congelacion-deshielo"
+                  },
+                  "ours": null,
+                  "reason": "Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility.",
+                  "source": "research_3 option R, approved 11:51 CET"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "why": "The team lead's order (2026-11-15 11:28/11:36 CET, through his delegate): each mission is published in the version that passes the independent re-audit; a mission whose corrected version does not pass returns to the state audited this morning (commit 42d8bba) by changing 'selected' and rebuilding, with no code to undo (engine/criteria.py). audited_morning = exactly the rule, weights, gates, filter and top-5 choice of 42d8bba for that mission; corrected = everything decided since. Deviations from the team's mission_scoring.json are listed against the team's value with reason and source; the team's file is never edited. Shipped: corrected for the three missions. tests/test_decisions_1128.py builds each mission with audited_morning and compares it with the 42d8bba bundle."
+  },
   "top5_stability": {
     "value": {
       "show": [
-        "top5",
+        "mission_card",
         "data_and_limits"
       ],
       "decision": "2026-11-15 11:23 CET, point 4 (state the fragility of each top 5 with its stability percentages)",
@@ -969,7 +1403,8 @@
           "simulations": null,
           "weights_pm10_survivors": null,
           "source": null,
-          "note": "To be filled by the independent re-audit of the 11:23 Rover rule (slope and roughness 50 % each) and of the five chosen with the 2-degree separation: ids = missions.json top5.ids in order; in_top5_share / in_top20_share = percent of the simulations in which each of the five stays in the top 5 / top 20 of the full ranking; simulations = number of runs; weights_pm10_survivors = how many of the five stay in the top 5 under every change of plus or minus 10 % of one weight; source = the re-audit file. Until every figure is filled and ids equal the five shown, the build ships pending_sentence."
+          "note": "To be filled by the independent re-audit of the corrected Rover (slope and roughness, desaturated by the elevation models' uncertainty, five by spread among the tied points): ids = missions.json top5.ids in order; in_top5_share / in_top20_share = percent of the simulations in which each of the five stays in the top 5 / top 20; simulations; weights_pm10_survivors; source. Also wanted: how often the five repeat exactly (five_repeat_share). Until every figure is filled and ids equal the five shown, the build ships pending_sentence.",
+          "five_repeat_share": null
         },
         "solar": {
           "status": "pending_reaudit",
@@ -979,35 +1414,19 @@
           "simulations": null,
           "weights_pm10_survivors": null,
           "source": null,
-          "note": "As rover: the five shown change with the 2-degree separation, so the audited figures of the first five no longer describe them."
+          "note": "As rover: the five shown change with the 2-degree separation, so the audited figures of the first five no longer describe them.",
+          "five_repeat_share": null
         },
         "lunar_base": {
-          "status": "audited",
-          "ids": [
-            17538,
-            16830,
-            15751,
-            21054,
-            17187
-          ],
-          "in_top5_share": [
-            43.5,
-            14.0,
-            14.5,
-            5.5,
-            7.5
-          ],
-          "in_top20_share": [
-            61.0,
-            42.5,
-            45.0,
-            34.5,
-            39.5
-          ],
-          "simulations": 200,
-          "weights_pm10_survivors": 4,
-          "source": "docs/stats_audit/3_robustez_validacion_ranking.md: section F.4 (Monte Carlo, 200 runs, table 'Por pareja del audio', columns Top 5 and Top 20) and point 5 ('Si solo se cuentan los cambios de peso de +-10 %: ... Base lunar 4/5')",
-          "note": "Lunar base pairing and ranks 1 to 5 are unchanged at 11:23, so the audited figures describe the five shown (checked at build: ids must equal missions.json top5.ids)."
+          "status": "pending_reaudit",
+          "ids": null,
+          "in_top5_share": null,
+          "in_top20_share": null,
+          "simulations": null,
+          "weights_pm10_survivors": null,
+          "source": null,
+          "note": "Lunar base criteria changed at 11:51 CET (research 3 option R) and its five now use the 2-degree separation: the audited figures of the morning (ids 17538, 16830, 15751, 21054, 17187; 200 runs) no longer describe the five shown. To be filled by the independent re-audit.",
+          "five_repeat_share": null
         }
       }
     },
