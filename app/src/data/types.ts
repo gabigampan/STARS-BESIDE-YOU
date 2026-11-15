@@ -422,6 +422,8 @@ export interface Twin {
   values: Record<string, number | null>;
   not_part_of_similarity: Record<string, number | string | null>;
   feature: { name: string; type: string; distance_km: number; url: string } | null;
+  /** Revision 7: where the twin lies against NASA's candidate regions, in words ("in" / "at the edge of"). */
+  nasa_region?: { region?: string; phrase?: string; text?: string } | null;
 }
 
 export interface TwinsJson {

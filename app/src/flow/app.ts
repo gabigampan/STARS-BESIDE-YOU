@@ -357,7 +357,7 @@ export class FlowApp {
         // the introduction names the five analogs: offered only when the five pair tracks match the bundle's five
         track: this.recordedFiveMatch(m) ? g.track('mission', m.id) : null,
         title: `${missionName(m)} mission`,
-        fallback: `${missionName(m)}. ${missionLine(m)} Its five best analogs are listed first: press a number from 1 to 5 to open one, or Escape to go back.`,
+        fallback: `${missionName(m)}. ${missionLine(m)} Five of its analogs are listed first: press a number from 1 to 5 to open one, or Escape to go back.`,
       });
       return;
     }
@@ -612,7 +612,7 @@ export class FlowApp {
     else this.missionPanel.focusFirst();
     this.updateGuide();
     const m = this.mission();
-    if (m) this.announce(`Back to the ${missionName(m)} mission: its five best analogs and the full ranking.`);
+    if (m) this.announce(`Back to the ${missionName(m)} mission: its five analogs and the full ranking.`);
   }
 
   async startMission(): Promise<void> {
@@ -695,7 +695,7 @@ export class FlowApp {
     el.append(h('p', null, `Markers: the ${n.toLocaleString('en-GB')} ${what}; larger and brighter means a higher final score; numbers are the top 10 ranks.`));
   }
 
-  /** Turn the Earth camera to the best-ranked places of the open mission. */
+  /** Turn the Earth camera to the top of the open mission's ranking. */
   private viewTopEarth(): void {
     const top = this.ranking()[0];
     if (top) void globesApi.flyTo('earth', top.lat, top.lon, 9000, 1.2);

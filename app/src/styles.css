@@ -970,3 +970,16 @@ kbd.key {
     padding: 0 10px;
   }
 }
+
+@media (max-width: 520px) {
+  /* the whole state in words stays visible ("Text only: new recording pending") */
+  .caption-head {
+    flex-wrap: wrap;
+  }
+  .caption-state {
+    white-space: normal;
+    overflow: visible;
+    flex: 1 1 100%;
+    order: 5;
+  }
+}

@@ -1481,7 +1481,7 @@ body.view-open .topbar {
   border-top: 1px dashed var(--edge);
 }
 
-/* ---------- keyboard guide: key hints, the five best analogs, shortcuts (src/a11y/keys.ts) ---------- */
+/* ---------- keyboard guide: key hints, the five analogs, shortcuts (src/a11y/keys.ts) ---------- */
 
 .choice-key {
   display: flex;

@@ -297,7 +297,7 @@ export class MissionPanel {
     if (!mid || !this.app.store.hasTwins(mid) || it.twinId == null) return null;
     const t = this.app.store.twin(mid, it.twinId);
     if (!t) return null;
-    return t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`;
+    return (t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`) + (t.nasa_region?.text ? `, ${t.nasa_region.text}` : '');
   }
 
   /** The ranking, filtered by the search words (place text and lunar twin name). */
@@ -330,13 +330,13 @@ export class MissionPanel {
   }
 
   /** Keyboard focus on the main action of this screen: the first ranked place. */
-  /** A new step: keyboard focus goes to its heading (the five best analogs follow it). */
+  /** A new step: keyboard focus goes to its heading (the five analogs follow it). */
   focusFirst(): void {
     (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus({ preventScroll: true });
   }
 
   /**
-   * The five best analogs of the mission under the TEAM's weights (read from the bundle at run time):
+   * The five analogs of the mission under the TEAM's weights (read from the bundle at run time):
    * five large numbered buttons, keys 1 to 5; each opens the comparison of that pair.
    */
   topFiveItems(m: Mission): (RankItem & { pos: number })[] {
@@ -361,12 +361,20 @@ export class MissionPanel {
     );
   }
 
+  /** The heading of the five, as the team worded it (never "best"); the tie count comes from the bundle. */
+  private topFiveHeading(m: Mission, n: number, twins: boolean): string {
+    const count = n === 5 ? 'Five' : String(n);
+    const tie = (m.top5 as { top_tie_n?: number } | undefined)?.top_tie_n;
+    if (tie != null && tie > n) return `${count} of the ${int(tie)} sites tied at the top of our model`;
+    return `${count} of the highest-scoring ${twins ? 'analogs' : 'places'} in our model`;
+  }
+
   private topFive(m: Mission): HTMLElement {
     const items = this.topFiveItems(m);
     const twins = this.app.missionHasTwins(m);
     const sec = h('section', { class: 'panel-sec top5', 'aria-labelledby': 'top5-title' });
     sec.append(
-      h('h3', { id: 'top5-title' }, `The ${items.length === 5 ? 'five' : items.length} best ${twins ? 'analogs' : 'places'}`),
+      h('h3', { id: 'top5-title' }, this.topFiveHeading(m, items.length, twins)),
       h(
         'p',
         { class: 'muted top5-note' },

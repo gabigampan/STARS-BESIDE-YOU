@@ -667,7 +667,7 @@ export class DataStore {
     if (!t) return '';
     const template = t.variants?.[kind] ?? (kind === 'no_joint_match' && typeof t.variant_no_joint_match === 'string' ? t.variant_no_joint_match : t.text);
     const label = (d: PairVariable | null) => (d ? midSentence(d.label) : 'a key variable');
-    const gapText = (x: number | null) => (x == null ? 'no value' : nfSentence(ceil2(x), 2));
+    const gapText = (x: number | null) => (x == null ? 'no value' : new Intl.NumberFormat('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(ceil2(x)));
     const filled = template
       .replace(/\{variable2\}/g, label(def2))
       .replace(/\{gap2\}/g, gapText(gap2))
