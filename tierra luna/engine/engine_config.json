@@ -1,8 +1,8 @@
 {
   "_note": "Engine-only settings. Every threshold, weight, utility bound and tolerance of the missions lives in mission_scoring.json and is NOT repeated here. Each setting has a value and a why; every one is also listed in /ASSUMPTIONS.md with its effect on results.",
   "engine_version": {
-    "value": "3.2.0",
-    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.2.0: Lunar base uses the rule percentile_and_real_tolerance (Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md): coldest temperature and daily amplitude compared as percentile positions within each body's population, slope and roughness in real values; moon_base.bin gains the lunar region of every cell and the bundle the file mission_zones.json (contract revision 6). 3.1.0: the similarity rule is a per-mission setting; Rover and Solar panels use the real-value rule real_value_tolerance (team decision of 2026-11-15, morning); Lunar base keeps zone_twin unchanged. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
+    "value": "3.3.0",
+    "why": "Version of the engine code that produced a bundle; written into manifest.json so a bundle can be traced to the code. The package's __version__ is read from here. 3.3.0 (contract revision 7, decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf): Rover similarity on slope and roughness only (50 % each, relative elevation out of the similarity and of the pair filter, kept as an information row); missions.json 'top5' (the five shown, with a 2-degree separation for Rover and Solar panels); the honest-limits texts with a 'show' field; the NASA region of every Lunar base twin. 3.2.0: Lunar base uses the rule percentile_and_real_tolerance (Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md): coldest temperature and daily amplitude compared as percentile positions within each body's population, slope and roughness in real values; moon_base.bin gains the lunar region of every cell and the bundle the file mission_zones.json (contract revision 6). 3.1.0: the similarity rule is a per-mission setting; Rover and Solar panels use the real-value rule real_value_tolerance (team decision of 2026-11-15, morning); Lunar base keeps zone_twin unchanged. 3.0.0: three offered missions (rover, solar, lunar_base), the step-by-step funnel export, the repository's own similarity (analog_finder) behind the similarity_rule setting, tiled per-cell detail files. 2.0.0: dataset descriptors, the real 1-degree tables, the v2 binary bundle. 1.1.0: review fixes."
   },
   "mission_config": {
     "value": "mission_scoring.json",
@@ -465,7 +465,13 @@
         ],
         "mission_card": true,
         "text": "The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability.",
-        "where": "on EVERY solar pair (earth_solar.bin twin present), next to the similarity and the real differences (earth_solar_pairs.bin '<variable>.earth', '.moon', '.diff'), and on the Solar panels mission card (it is the first item of missions.json missions[solar].known_limitations)"
+        "where": "on EVERY solar pair (earth_solar.bin twin present), next to the similarity and the real differences (earth_solar_pairs.bin '<variable>.earth', '.moon', '.diff'), and on the Solar panels mission card (it is the first item of missions.json missions[solar].known_limitations)",
+        "show": [
+          "mission_card",
+          "pair_panel",
+          "data_and_limits"
+        ],
+        "show_why": "Decision of 2026-11-15 11:23 CET, point 4 (keep and state honestly the saturation of the Solar panels similarity): the first correction round's text is kept with its figures (recomputed by tests/test_audit_corrections_1.py) and is also shown in 'Data and limits'."
       },
       "no_twin_note_lunar_base": {
         "decision": "2026-11-15 08:55 CET (a point without a twin is treated exactly as in Rover and Solar panels, with the reason)",
@@ -804,6 +810,13 @@
         "variable": "irradiance_toa_kwh_m2_day",
         "ground_column": "irradiance_kwh_m2_day",
         "why": "Team condition of 2026-11-15 (morning): every solar pair also carries the Earth cell's irradiance at the ground and the share lost in the atmosphere (1 - ground / above the atmosphere)."
+      },
+      "info_in_pairs_file": {
+        "rover": [
+          "elevation_rel_m"
+        ],
+        "solar": [],
+        "note": "Information rows written to earth_<mission>_pairs.bin as info.<variable>.earth / .moon / .diff for a real_value_tolerance mission (a percentile_and_real_tolerance mission writes every information row). Rover: relative elevation, which left the similarity and the pair filter at 2026-11-15 11:23 CET (decision 1), is still shown per pair with both values and the difference (the director's reading); the other Rover information rows (temperature, amplitude, irradiance) and the Solar panels ones stay in explain.json only, as before, so the Solar panels pairs file is unchanged."
       }
     },
     "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'). Method (P1-P9 of the team lead, 2026-11-15 04:47-04:49 CET): similarity on real values with a Gaussian score per variable, key variables 80 % of the weight, pair filter key <= tolerance and secondary <= 2 x tolerance. Tolerances: rover slope 2 deg and roughness 30 m are illustrative team values (rover_preset.py version 3, 5 km baseline); relative elevation 500 m and irradiance 0.6 kWh/m2/day were set by the delegate on the team lead's behalf on 2026-11-15. Zones: rover south pole (unchanged), solar the equatorial maria of analog_finder. Temperature 10 K and amplitude 5 K are reference values only and not used. score_decimals = the published precision of the per-variable scores (int32 q / 1e6), so the browser recomputes similarity exactly. Lunar base (Team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md): rule percentile_and_real_tolerance in missions.lunar_base (variables with a 'scale'; tolerances 10 percentile points for the two keys, 2 deg and 30 m for terrain, filter bounds 10 points, 10 points, 4 deg and 60 m; zone the nine NASA regions; populations: the Earth points passing the funnel, 2,419 today, and the 280 zone cells)."
@@ -903,5 +916,252 @@
       }
     },
     "why": "The six lunar regions of docs/MISSION_ZONES.md section 2 (zone-texts agent, 2026-11-15), evaluated in this order, the first match wins, so every cell has exactly one region. A, B and D reuse the zone definitions already in the engine (Lunar base, Rover and Solar panels zones), C mirrors the Rover latitude bound to the north, E splits near and far side at 90 degrees of longitude (MISSION_ZONES.md: 'Near side' and 'far side' are split at 90 degrees; libration makes the visible edge a few degrees wider). mission_zone_regions: each mission's zone as a union of regions (Rover = A + B, Solar panels = D, Lunar base = A), checked by a test against the zone masks. Written to moon_base.bin 'region' and mission_zones.json for the web's 'why not here' explanations; the texts come verbatim from texts_file (fallback_label is used only when that file is absent or incomplete)."
+  },
+  "mission_titles_short": {
+    "value": {
+      "rover": "Rover",
+      "solar": "Solar panels",
+      "lunar_base": "Lunar base"
+    },
+    "why": "Short English mission names used inside the honest-limits texts (limit_texts) that list several missions."
+  },
+  "top5_selection": {
+    "value": {
+      "count": 5,
+      "radius_body": "EARTH",
+      "km_decimals": 1,
+      "missions": {
+        "rover": {
+          "rule": "min_separation",
+          "min_separation_deg": 2.0
+        },
+        "solar": {
+          "rule": "min_separation",
+          "min_separation_deg": 2.0
+        },
+        "lunar_base": {
+          "rule": "by_rank"
+        }
+      },
+      "sentences": {
+        "min_separation": "The five shown are chosen down the full ranking by final score: the best point is kept, and any point whose cell centre lies within {deg} degrees of arc (about {km} km) of one already kept is skipped, so that neighbouring cells of one place do not fill the list. The full ranking itself is unchanged and stays ordered by final score.",
+        "by_rank": "The five shown are numbers 1 to 5 of the full ranking, ordered by final score."
+      }
+    },
+    "why": "Decision 2 of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf: a minimum separation of 2 degrees between the analogs of the top 5 in Rover and in Solar panels, so that neighbouring cells of one place do not fill the list. The director's reading: a rule for choosing the FIVE (greedy by rank: keep the best, skip any whose cell centre is within 2 degrees of arc, great circle on the sphere of body_radius_km EARTH = 6371.0 km, about 222.4 km, of one already kept); the full ranking stays by final score. Lunar base keeps ranks 1 to 5 (the rule would change nothing there today: docs/stats_audit/7_efecto_decisiones_pendientes.md P2). Exported as missions.json missions[].top5."
+  },
+  "top5_stability": {
+    "value": {
+      "show": [
+        "top5",
+        "data_and_limits"
+      ],
+      "decision": "2026-11-15 11:23 CET, point 4 (state the fragility of each top 5 with its stability percentages)",
+      "pending_sentence": "Stability figures pending the independent re-audit.",
+      "sentence": "How stable these five are: under the documented uncertainty of the input data ({simulations} simulations), {per_analog}. Under a change of plus or minus 10 % in any one weight, {survivors} of the {count} stay in the top 5.",
+      "per_analog": "number {n} stays in the top 5 in {top5} % of the simulations and in the top 20 in {top20} %",
+      "missions": {
+        "rover": {
+          "status": "pending_reaudit",
+          "ids": null,
+          "in_top5_share": null,
+          "in_top20_share": null,
+          "simulations": null,
+          "weights_pm10_survivors": null,
+          "source": null,
+          "note": "To be filled by the independent re-audit of the 11:23 Rover rule (slope and roughness 50 % each) and of the five chosen with the 2-degree separation: ids = missions.json top5.ids in order; in_top5_share / in_top20_share = percent of the simulations in which each of the five stays in the top 5 / top 20 of the full ranking; simulations = number of runs; weights_pm10_survivors = how many of the five stay in the top 5 under every change of plus or minus 10 % of one weight; source = the re-audit file. Until every figure is filled and ids equal the five shown, the build ships pending_sentence."
+        },
+        "solar": {
+          "status": "pending_reaudit",
+          "ids": null,
+          "in_top5_share": null,
+          "in_top20_share": null,
+          "simulations": null,
+          "weights_pm10_survivors": null,
+          "source": null,
+          "note": "As rover: the five shown change with the 2-degree separation, so the audited figures of the first five no longer describe them."
+        },
+        "lunar_base": {
+          "status": "audited",
+          "ids": [
+            17538,
+            16830,
+            15751,
+            21054,
+            17187
+          ],
+          "in_top5_share": [
+            43.5,
+            14.0,
+            14.5,
+            5.5,
+            7.5
+          ],
+          "in_top20_share": [
+            61.0,
+            42.5,
+            45.0,
+            34.5,
+            39.5
+          ],
+          "simulations": 200,
+          "weights_pm10_survivors": 4,
+          "source": "docs/stats_audit/3_robustez_validacion_ranking.md: section F.4 (Monte Carlo, 200 runs, table 'Por pareja del audio', columns Top 5 and Top 20) and point 5 ('Si solo se cuentan los cambios de peso de +-10 %: ... Base lunar 4/5')",
+          "note": "Lunar base pairing and ranks 1 to 5 are unchanged at 11:23, so the audited figures describe the five shown (checked at build: ids must equal missions.json top5.ids)."
+        }
+      }
+    },
+    "why": "Decision of 2026-11-15 11:23 CET, point 4: the fragility of each top 5 is stated with its stability percentages. Rover and Solar panels figures must come from the independent re-audit of the new rule, which runs after this build; the table is filled by the re-auditor. The build refuses to ship a stability sentence with empty figures: until a mission's entry is 'audited', complete and about the five shown, it ships pending_sentence. Lunar base: the audited figures of docs/stats_audit/3_robustez_validacion_ranking.md."
+  },
+  "limit_facts": {
+    "value": {
+      "cell_classes": {
+        "ice": {
+          "label": "ice-sheet or snow-and-ice cell",
+          "any_of": [
+            {
+              "column": "snow_ice_frac",
+              "at_least": 0.5
+            },
+            {
+              "column": "thermal_inertia_class",
+              "equals": "hielo"
+            }
+          ],
+          "why": "The rule of the first correction round and of the auditor (docs/stats_audit/7_efecto_decisiones_pendientes.md P4): snow and ice cover at least half of the cell, or the team's thermal class is 'hielo'."
+        },
+        "water": {
+          "label": "cell whose commonest land cover is water",
+          "any_of": [
+            {
+              "column": "lc_dominant_cci_code",
+              "equals": 210
+            }
+          ],
+          "why": "ESA CCI land cover class 210 'water bodies' is the commonest class of the cell (open sea along a coast, or lakes); such a cell still passes mask_fraction >= 0.3. Salt flats have no class of their own in ESA CCI (they fall in the bare classes 200-202), so they cannot be counted from these columns."
+        }
+      }
+    },
+    "why": "Surface classes counted in the honest-limits texts (decision of 2026-11-15 11:23 CET, point 4: ice cells in the Rover ranking). Read from the land-cover and mask columns of the Earth table; nothing is filtered by them."
+  },
+  "external_validation": {
+    "value": {
+      "benchmark_csv": "data/benchmark/analog_benchmark.csv",
+      "unverified_rule": {
+        "coord_quality_contains": "from memory",
+        "source_status_starts_with": "FROM MEMORY",
+        "source_status_regex": "location[^;)]*from memory"
+      },
+      "show": [
+        "data_and_limits"
+      ],
+      "decision": "2026-11-15 11:23 CET, point 4 (state honestly what was checked)",
+      "missions": {
+        "rover": {
+          "names_module": "rover_preset",
+          "positives": "MOBILITY_POSITIVES",
+          "mismatches": "MOBILITY_MISMATCHES",
+          "ranked_item": "{name} (top {pct} %)",
+          "unranked_item": "{name} (does not pass the funnel: {reasons})",
+          "text": "What was checked against known places (Rover only): the mobility analog sites named in rover_preset.py, with coordinates checked in our benchmark, are placed in the full ranking of {ranked} points as follows: {positives}. Sites named there as mismatches: {mismatches}. Not checked because their benchmark coordinates are marked as written from memory: {unverified}. A low percentage is a high place in the list; the check describes the ranking, it does not prove it.",
+          "source": "computed at build from tierra luna/data/benchmark/analog_benchmark.csv and rover_preset.py MOBILITY_POSITIVES / MOBILITY_MISMATCHES, with the auditor's rule for unverified coordinates (docs/stats_audit/3_robustez_validacion_ranking.md section 6.1)"
+        },
+        "solar": {
+          "text": "No external validation exists for Solar panels: no site of our benchmark was chosen as an analog for solar energy, so there is no list of known places to check the ranking against.",
+          "source": "docs/stats_audit/3_robustez_validacion_ranking.md section 6.1 ('Placas solares ... Ningún sitio del CSV se usó para energía solar, así que no hay positivos propiamente dichos')"
+        },
+        "lunar_base": {
+          "text": "No external validation exists for Lunar base: the cold and polar analog sites of our benchmark do not pass the Lunar base funnel (no land surface temperature in Antarctica, or a daily swing below the 15 K gate), and the benchmark sites that pass it have no twin among the cells of NASA's nine candidate regions.",
+          "source": "docs/stats_audit/3_robustez_validacion_ranking.md section 6.1 ('Base lunar (N = 450) ... No hay, por tanto, validación externa positiva de Base lunar con este benchmark')"
+        }
+      }
+    },
+    "why": "Decision of 2026-11-15 11:23 CET: re-audit Rover with an external validation (Qaidam, Haughton, Ramon and Yungay) and state honestly what was checked. The Rover rank percentiles are recomputed at every build under the shipped rule (100 x (rank - 0.5) / ranked points, the auditor's definition)."
+  },
+  "twin_zone_regions": {
+    "value": {
+      "lunar_base": {
+        "regions_file": "engine/data/artemis_iii_regions.geojson",
+        "projection_pole_lat": -90.0,
+        "cell_deg": 1.0,
+        "densify_points": 40,
+        "in_min_share": 0.5,
+        "share_decimals": 4,
+        "phrase_in": "in",
+        "phrase_edge": "at the edge of",
+        "text": "{phrase} NASA's {region} candidate region"
+      }
+    },
+    "why": "Decision 3 of 2026-11-15 11:23 CET: the Lunar base zone is kept as it is (the 280 cells that touch the footprint of NASA's nine candidate regions), and texts must say 'at the edge of NASA's ... candidate region' when little of a twin's cell lies inside its region. Per twin: the region it shares most area with and that share of the cell, in a south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere with the cell square densified along the parallels (the auditor's method, docs/stats_audit/7_efecto_decisiones_pendientes.md P1); 'in' at 50 % or more, 'at the edge of' below (the director's rule). Exported in twins.json missions.lunar_base.twins[].nasa_region."
+  },
+  "limit_texts": {
+    "value": {
+      "list_order": {
+        "show": [
+          "top5",
+          "mission_card"
+        ],
+        "decision": "2026-11-15 11:23 CET, points 4 and 5",
+        "text": "The list is ordered by the final score: {alpha_pct} % similarity to the lunar twin and {rest_pct} % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best."
+      },
+      "surface_classes": {
+        "kind": "surface_classes",
+        "missions": [
+          "rover"
+        ],
+        "classes": [
+          "ice",
+          "water"
+        ],
+        "top_n": 50,
+        "show": [
+          "mission_card",
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 11:23 CET, point 4 (ice cells in the Rover ranking)",
+        "source": "computed at build from the Earth table columns snow_ice_frac, thermal_inertia_class and lc_dominant_cci_code (engine_config limit_facts)",
+        "text": "Ice sheets are not excluded: the funnel has no surface-type gate and the soft criteria have no surface-type term. {ice_n} of the {ranked_n} ranked points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'); the best of them is number {ice_best}, {ice_top} are in the top {top_n} and {ice_shown} among the five shown. {water_n} ranked points are cells whose commonest land cover is water (open sea along a coast, or lakes; ESA CCI class 210); the best is number {water_best}, {water_top} are in the top {top_n} and {water_shown} among the five shown ({water_shown_ids})."
+      },
+      "gate_elevation_land": {
+        "gate": "elevation_m",
+        "land_share_gate": "mask_fraction",
+        "elevation_column": "elevation_m",
+        "land_share_column": "mask_fraction",
+        "show": [
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 11:23 CET, point 4 (the common gate elevation >= 1 m)",
+        "source": "computed at build from the Earth table (elevation_m, mask_fraction); the same figures as docs/stats_audit/7_efecto_decisiones_pendientes.md P6",
+        "text": "The common gate elevation >= {gate_min} m was written to remove the ocean, but in our Earth table the ocean has no elevation at all: what the gate removes is {below_n} real land cells below that height, {below_land_n} of them with at least {land_min_pct} % land (depressions below sea level). It is kept as the team wrote it."
+      },
+      "numbers_without_effect": {
+        "show": [
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 11:23 CET, point 4 (the numbers that have no effect)",
+        "source": "inert gates: computed at build (Earth land cells that fail only that gate bound: none); values no code reads: docs/stats_audit/5_inventario_sentido_fisico.md section A.5 (i)",
+        "unread_keys": [
+          "tolerances",
+          "workable_days",
+          "weights"
+        ],
+        "unread_labels": {
+          "tolerances": "the 'tolerances' block",
+          "workable_days": "the 'workable_days' block",
+          "weights": "the domain 'weights' (relieve, material, termico, luz, agua)"
+        },
+        "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: {inert_gates}. Values of the team's file mission_scoring.json that no code reads: {unread_values}. The team's file is quoted as it is: these numbers are listed here, not removed."
+      },
+      "zone_edge": {
+        "show": [
+          "pair_panel",
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 11:23 CET, decision 3 (the Lunar base zone is kept)",
+        "source": "computed at build from engine/data/artemis_iii_regions.geojson (engine_config twin_zone_regions)",
+        "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions ({zone_cells} cells), so a twin may lie mostly outside the region nearest to it: {edge_n} of the {twins_n} Lunar base twins have less than {in_min_pct} % of their cell inside a region. Each twin says whether it is 'in' or 'at the edge of' NASA's candidate region it touches most (twins.json nasa_region)."
+      }
+    },
+    "why": "Decision of 2026-11-15 11:23 CET, point 4 (taken by the delegate on the team lead's behalf): keep and state honestly, in the web's 'Data and limits', the ice cells in the Rover ranking, the common gate elevation >= 1 m, the saturation of the Solar panels similarity (approved_texts.solar_similarity_saturation), the fragility of each top 5 (top5_stability) and the numbers that have no effect; point 5: 'five of the highest-scoring analogs in our model', ordered by final score; decision 3: 'at the edge of' a NASA region. Templates only: every figure is computed at build (engine/limits.py) or taken from the audit file named in 'source'. Exported in similarity.json 'texts' with 'missions' (absent = every mission) and 'show' (mission_card, top5, pair_panel, data_and_limits)."
   }
 }

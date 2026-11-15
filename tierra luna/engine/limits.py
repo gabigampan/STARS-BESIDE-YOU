@@ -354,7 +354,9 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
     for mid, shares in region_share.items():
         t = lt["zone_edge"]
         edge = sum(1 for s in shares.values() if s["phrase"] == tz[mid]["phrase_edge"])
-        zc = int(results[mid].extra["real"]["zone_cells"]) if "real" in results[mid].extra else None
+        if "real" not in results[mid].extra:
+            continue
+        zc = int(results[mid].extra["real"]["zone_cells"])
         vals = {"zone_cells": fmt_int(zc), "edge_n": fmt_int(edge), "twins_n": fmt_int(len(shares)),
                 "in_min_pct": f"{100 * float(tz[mid]['in_min_share']):g}"}
         texts[f"zone_edge_{mid}"] = {"missions": [mid], "show": t["show"], "decision": t["decision"], "source": t["source"],
