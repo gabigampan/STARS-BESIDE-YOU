@@ -54,6 +54,7 @@ def main():
     ap.add_argument("--template", default=os.path.join(HERE, "scenarios", "solar.template.json"))
     ap.add_argument("--out", default=os.path.join(HERE, "scenarios", "solar.json"))
     ap.add_argument("--preview-earth", type=int); ap.add_argument("--preview-moon", type=int)
+    ap.add_argument("--timeline", help="<work>/solar/timeline.json from render.js --timeline: adds a cue at every other label change (real terrain hiding the Sun)")
     a = ap.parse_args()
     sc = json.load(open(a.template))
     gen = sc.pop("generator")
@@ -213,6 +214,24 @@ def main():
                 e["name"], e["cell_id"], ll(elat, elon, ","), es(e["nearest_place_km"]), e["nearest_place"], m["cell_id"], m["place_ref"]["feature"], es(toa["earth"]), es(toa["moon"]), es(toa["difference"]), es(toa["tolerance"]),
                 es(at["ground_kwh_m2_day"]), es(at["ground_display"]), es(at["toa_display"]), at["loss_pct_display"], es(sl["earth"]), es(sl["moon"]), es(ro["earth"]), es(ro["moon"]), es(pv["suitability"]), es(pv["similarity"]), es(pv["final"])),
             "Un panel en el punto terrestre no recibe lo mismo que un panel en la Luna: allí solo llega la luz que alcanza el suelo, mientras que el día lunar dura 29,5 días terrestres, aproximadamente la mitad a oscuras. La temperatura media de la superficie, %s K frente a %s K, y la oscilación diaria, %s K frente a %s K, no forman parte de la similitud. Simulación 3D basada en datos de las tablas. No son imágenes reales." % (es(tk["earth"]), es(tk["moon"]), es(sw["earth"]), es(sw["moon"]))]
+    # extra cues where the real terrain hides the Sun (labels 'partly' / 'blocked'), from the timeline
+    extra = {S["partly"]: ("The Sun starts to go behind the real terrain; the light on the array fades.",
+                           "El Sol empieza a ocultarse tras el relieve real; la luz sobre los paneles se apaga."),
+             S["blocked"]: ("The Sun is behind the real terrain while still above the flat horizon: the array is in shadow and the power is zero.",
+                            "El Sol está tras el relieve real aunque sigue sobre el horizonte plano: los paneles quedan en sombra y la potencia es cero."),
+             S["night"]: ("The Sun is below the horizon: lunar night.", "El Sol está bajo el horizonte: noche lunar.")}
+    cues = sc["captions"]["cue_times"]
+    if a.timeline:
+        tl = json.load(open(a.timeline)); prev = None
+        for i, x in enumerate(tl[:nf]):
+            if x["status"] != prev and i > 0:
+                t = fr(i)
+                if not any(abs(t - c) < 1e-6 for c in cues):
+                    if x["status"] not in extra:
+                        raise SystemExit("label change at %.3f s to '%s' is not a cue; adjust the template" % (t, x["status"]))
+                    k = next(j for j, c in enumerate(cues) if c > t)
+                    cues.insert(k, t); en.insert(k, extra[x["status"]][0]); esl.insert(k, extra[x["status"]][1])
+            prev = x["status"]
     sc["captions"]["en"]["text"], sc["captions"]["es"]["text"] = en, esl
     assert len(en) == len(esl) == len(sc["captions"]["cue_times"])
     if a.out != os.path.join(HERE, "scenarios", "solar.json"):

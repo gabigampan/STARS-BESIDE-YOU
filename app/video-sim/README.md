@@ -15,7 +15,10 @@ cd app/video-sim
 npm install                       # three@0.170.0 only (node_modules is git-ignored)
 W=/path/to/scratch/work           # downloads, terrain assets, frames (large; keep out of git)
 # solar: put sldem2015_512_00n_30n_315_360_float.img in $W/cache first (URL in media/solar/README.md)
+python3 -I tools/solar_pair.py                                    # writes scenarios/solar.json from the bundle (never edit it by hand)
 python3 -I tools/prepare.py scenarios/solar.json --work $W        # terrain + checks (~40 s)
+node render.js scenarios/solar.json --work $W --timeline          # label of every frame
+python3 -I tools/solar_pair.py --timeline $W/solar/timeline.json  # adds cues where the real terrain hides the Sun
 node render.js scenarios/solar.json --work $W                     # frames + mp4/webm/posters/vtt + ffprobe
 python3 -I tools/prepare.py scenarios/lunar-base.json --work $W   # (~80 s)
 node render.js scenarios/lunar-base.json --work $W
@@ -50,6 +53,7 @@ runs the table and bundle checks without the terrain.
 |---|---|
 | `scenarios/*.json` | All inputs of one video. Every number on screen comes from here or from a stated formula. |
 | `tools/dem.py` | LOLA polar stereographic IMG access by HTTP range (only the needed rows), projection, LDEM_16 cross-check; simple cylindrical tiles (SLDEM2015, LDEM_xxx) read locally by memory map (`"projection": "simple_cylindrical"`, `"file"` in `$W/cache`). |
+| `tools/solar_pair.py` | Solar panels: writes `scenarios/solar.json` from `scenarios/solar.template.json`, the shipped bundle (first id of `missions.json` `missions[solar].top5.ids`, else `explain.json` rank 1) and the tables: cells, places, card, caption numbers, Sun season, cue times. `--preview-earth/--preview-moon` writes a PREVIEW scenario for a pair not in the bundle (stills, timeline and terrain only; `render.js` refuses a full render; `prepare.py` refuses a non-preview scenario whose Earth point is not the bundle's first). |
 | `tools/prepare.py` | Table check, DEM fetch and georeference check, local grids, horizon maps, shaded relief, `terrain.json`. |
 | `tools/check_relief.py` | Side-by-side of the shaded relief and the renderer's straight-down view, with their correlation. |
 | `page/model.js` | The formulas (Sun position, disc visibility, panel power, temperature model, time compression). |

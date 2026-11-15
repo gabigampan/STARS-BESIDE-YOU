@@ -499,3 +499,21 @@ Diferencias reales de los pares (mediana / P90 / máximo, todos los emparejados)
 Paneles solares: los cinco mostrados pasan de los puestos 1-5 (E38464 Derby, E38105 Derby, E38744 Maintirano, E37746 Kununurra, E38465 Derby) a los puestos **1, 3, 4, 7 y 9**: E38464 Derby (98,45), E38744 Maintirano (98,36), E37746 Kununurra (98,30), E37750 Katherine (98,19) y E29749 Eyl, Somalia (98,16; su clase de cobertura más frecuente es agua, ESA CCI 210, aunque tiene 66 % de tierra). Coincide con la auditoría (`7_efecto_decisiones_pendientes.md` P2). Los ficheros `.bin` de Paneles solares y Base lunar son **idénticos byte a byte** a los del paquete anterior (`tests/test_decisions_1123.py`).
 
 Lectura: con solo pendiente y rugosidad, el polo sur lunar tiene casi siempre una celda que iguala a cada punto de la Tierra (diferencia mediana 0,03° y 0,5 m), así que **la similitud de Rover también queda saturada**: 74 puntos llegan a un final de 100,00 y la cabeza del ranking la decide la idoneidad (los cinco mostrados tienen idoneidad 100) y, dentro del empate, el id de celda. Los cinco mostrados son ahora altas latitudes del Ártico (Taimyr y el archipiélago canadiense) con gemelos variados (Drygalski, Sverdrup, Haynes, Schrödinger) en lugar de cinco puntos de Asia central y del Sáhara con el mismo gemelo (Casatus). Los análogos conocidos de movilidad caen en el percentil 3,6 a 8,1 % (Ramon 3,6, Qaidam 4,0, Haughton 4,2, Yungay 8,1), frente a 0,2 a 9,2 % antes.
+
+## Resultado tras las decisiones de las 11:28, 11:36 y 11:51 (15-11-2026)
+
+Paquete publicado (revisión 8). Coordenadas = centro de celda; final = 50 % similitud + 50 % idoneidad.
+
+| Misión | Pasan | Emparejados | Gemelos distintos | Regla de los cinco |
+|---|---|---|---|---|
+| Rover | 10.337 | 10.337 | 1.144 | dispersión entre los 254 empatados (241 sin hielo ni agua) |
+| Paneles solares | 18.777 | 6.360 | 1.704 | rango con saltos y 2° |
+| Base lunar | 2.419 | 450 | 103 | rango con saltos y 2° |
+
+**Rover** (pendiente y rugosidad Tierra / Luna y diferencias en `earth_rover_pairs.bin`; todos con similitud 100,00, idoneidad 100,00, final 100,00): E4037 (78,5, −102,5) gemelo M63714; E50510 (−50,5, −69,5) M59438; E44239 (−32,5, 139,5) M59712; E26510 (16,5, 50,5) M63711; E26087 (17,5, −12,5) M61294. Alternativa por rango con saltos: E4037, E4742, E4751, E4962, E5125 (todos 100,00, rangos 3, 6, 9, 10, 15).
+
+**Paneles solares**: E40184 (−21,5, 44,5) M23206 sim 99,83 id 97,94 final 98,88; E29749 (7,5, 49,5) M26063 99,97 / 97,56 / 98,76; E23648 (24,5, 68,5) M22156 99,93 / 97,20 / 98,56; E29746 (7,5, 46,5) M26056 99,97 / 97,08 / 98,52; E28670 (10,5, 50,5) M25483 99,94 / 96,81 / 98,37.
+
+**Base lunar**: E21054 (31,5, −5,5) M62517 sim 99,36 id 44,64 final 72,00; E17538 (41,5, 78,5) M63528 97,31 / 43,15 / 70,23; E21833 (29,5, 53,5) M62515 92,50 / 47,25 / 69,87; E18627 (38,5, 87,5) M62479 83,98 / 55,63 / 69,80; E19672 (35,5, 52,5) M63657 93,33 / 46,12 / 69,73.
+
+Los valores reales lado a lado y las diferencias de cada pareja están en `earth_<misión>_pairs.bin` y en `explain.json`; no se repiten aquí. No calculado aquí: la estabilidad de los cinco (pendiente de la re-auditoría).

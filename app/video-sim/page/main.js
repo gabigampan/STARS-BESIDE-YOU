@@ -462,6 +462,7 @@ function buildSolarPairCard() {
 }
 
 function buildCard() {
+  if (SC.preview) { document.getElementById('cardInner').innerHTML = '<h1>PREVIEW: pair not in the shipped bundle; no card</h1>'; return; }
   if (SC.pair_values && SC.pair_values.mission === 'solar') return buildSolarPairCard();
   if (SC.pair_values) return buildPairCard();
   const C = SC.card, tv = SC.table_values;
