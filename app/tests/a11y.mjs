@@ -168,7 +168,7 @@ const STAND_IN = () => {
   setInterval(M.sample, 4);
 };
 
-async function openPage(browser, base, { size, storage = null, standIn = true, block = [], init = null, touch = false } = {}) {
+async function openPage(browser, base, { size, storage = null, standIn = true, block = [], init = null, touch = false, keepPending = false } = {}) {
   const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: 1, hasTouch: touch, isMobile: touch });
   const page = await ctx.newPage();
   const errors = [];
@@ -183,6 +183,8 @@ async function openPage(browser, base, { size, storage = null, standIn = true, b
   page.on('request', (r) => {
     if (/\/audio\/[^/]+\.mp3/.test(r.url())) audioRequests.push(r.url());
   });
+  // the logic checks run with no track awaiting a new recording (the pending block sets its own list)
+  if (!keepPending) await page.route('**/audio/pending.json', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"pending_rerecord": []}' }));
   for (const b of block) await page.route(b, (r) => r.fulfill({ status: 404, body: 'not found' }));
   if (storage) await page.addInitScript((s) => { for (const [k, v] of Object.entries(s)) localStorage.setItem(k, v); }, storage);
   if (standIn) await page.addInitScript(STAND_IN);
@@ -582,6 +584,7 @@ async function run(browser, base, variant, size, full) {
     const ctx = await browser.newContext({ viewport: size });
     const page = await ctx.newPage();
     await page.addInitScript(() => localStorage.setItem('starsBesideYou.audioGuide', 'on'));
+    await page.route('**/audio/pending.json', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"pending_rerecord": []}' }));
     await page.goto(base, { timeout: T });
     await page.waitForFunction(() => window.starsFlow?.hasData() && window.starsA11y, null, { timeout: T });
     const kr = await page.evaluate(() => window.starsFlow.store.offeredMissions().findIndex((m) => m.id === 'lunar_base') + 1);
