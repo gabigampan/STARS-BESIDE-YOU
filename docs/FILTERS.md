@@ -396,9 +396,9 @@ R3 notes that permafrost has no lunar equivalent by definition. The lunar analog
 
 ## (i) Effective weights of the domain mapping
 
-Added 2026-11-14 with [SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md) (section 4.1 there has every variant on both datasets). Domain weights from `mission_scoring.json` (relieve / material / termico / luz / agua): rover 0.35 / 0.30 / 0.10 / 0.10 / 0.15; solar 0.15 / 0.10 / 0.20 / 0.45 / 0.10; lunar base = thermal 0.15 / 0.25 / 0.45 / 0.10 / 0.05. Percent of the similarity weight per variable.
+Added 2026-11-14 with [SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md) (its section 4.1 lists every variant on both datasets). Domain weights from `mission_scoring.json` (relieve / material / termico / luz / agua): rover 0.35 / 0.30 / 0.10 / 0.10 / 0.15; solar 0.15 / 0.10 / 0.20 / 0.45 / 0.10; lunar base = thermal 0.15 / 0.25 / 0.45 / 0.10 / 0.05. Values are percent of the similarity weight.
 
-**Today** (`map_domain_weights_to_features`, the web page's "Use Weights", six variables; recomputed with the module's own function, confirming section (e)):
+**Today** (`map_domain_weights_to_features`, used by the web page's "Use Weights"; six variables; recomputed with the module's own function, confirming section (e)):
 
 | Mission | slope | roughness | relative elevation | temperature | bare fraction | radar |
 |---|---|---|---|---|---|---|
@@ -406,12 +406,27 @@ Added 2026-11-14 with [SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md) (section 
 | Solar panels | 13.50 | 7.25 | 20.75 | 36.25 | 16.25 | 6.00 |
 | Lunar base (thermal) | 8.25 | 10.25 | 7.50 | 41.75 | 24.25 | 8.00 |
 
-"luz" and "agua" have no variable among the six, so the matrix spreads them over slope, relative elevation, temperature, bare fraction and radar: for the rover, temperature (18.25) outweighs slope (17.25) although relieve is 0.35 and termico 0.10.
+"luz" and "agua" have no variable among the six, so the matrix spreads them over slope, relative elevation, temperature, bare fraction and radar. For the rover, temperature (18.25) outweighs slope (17.25) although relieve is 0.35 and termico 0.10. On the real 1-degree data radar is absent and bare fraction is removed (constant on the Moon), and the same matrix renormalised over the four remaining variables gives:
 
-**Proposed (A3a, pending approval):** each domain spends its weight only on its own variables among those in the similarity (relieve: slope, roughness, relative elevation; material: bare fraction, radar; termico: temperature), split inside a domain in proportion to `DEFAULT_WEIGHTS`; "luz" and "agua" are dropped and the rest renormalised.
+| Mission (real data) | slope | roughness | relative elevation | temperature |
+|---|---|---|---|---|
+| Rover | 25.65 | 27.14 | 20.07 | 27.14 |
+| Solar panels | 17.36 | 9.32 | 26.69 | 46.62 |
+| Lunar base (thermal) | 12.18 | 15.13 | 11.07 | 61.62 |
+
+**Proposed (A3a, pending approval).** Each domain spends its weight only on its own variables among those in the similarity (relieve: slope, roughness, relative elevation; material: bare fraction and radar; termico: temperature), split inside a domain in proportion to `DEFAULT_WEIGHTS`; "luz" and "agua" are dropped and the rest renormalised.
 
 | Mission | dataset | slope | roughness | relative elevation | temperature | bare fraction | radar |
 |---|---|---|---|---|---|---|---|
-| Rover | legacy 2-degree (six variables) | 19.44 | 15.56 | 11.67 | 13.33 | 24.00 | 16.00 |
-| Rover | real 1-degree (no radar; bare fraction removed) | 32.41 | 25.93 | 19.44 | 22.22 | | |
-| Solar panels | legacy 2-degree | 8.33 | 6.67 | 5.00 | 26.67 | ... | ... |
+| Rover | legacy 2-degree | 19.44 | 15.56 | 11.67 | 13.33 | 24.00 | 16.00 |
+| Rover | real 1-degree | 32.41 | 25.93 | 19.44 | 22.22 |  |  |
+| Solar panels | legacy 2-degree | 13.89 | 11.11 | 8.33 | 44.44 | 13.33 | 8.89 |
+| Solar panels | real 1-degree | 17.86 | 14.29 | 10.71 | 57.14 |  |  |
+| Lunar base (thermal) | legacy 2-degree | 7.35 | 5.88 | 4.41 | 52.94 | 17.65 | 11.76 |
+| Lunar base (thermal) | real 1-degree | 10.42 | 8.33 | 6.25 | 75.00 |  |  |
+
+For reference, the approved rule without mission weights (A1, `DEFAULT_WEIGHTS` renormalised) is slope 25 / roughness 20 / relative elevation 15 / temperature 15 / bare fraction 15 / radar 10 on the legacy table and 33.33 / 26.67 / 20.00 / 20.00 on the real table, for all three missions. Adding the light variables (A3b) is shown in the proposal; it is not recommended, because maximum sun elevation and low-sun fraction are flat-horizon formulas of latitude on both bodies, and irradiance on Earth is an interpolated climatology under the atmosphere.
+
+## (j) Scope: three missions
+
+The product ranks Earth analog points for three missions: Rover, Solar panels and Lunar base. **Lunar base is a copy of the `thermal` block** of `mission_scoring.json` (team decision): the same required variables (`lst_diurnal_amp_k`, `tmin_c`, `thermal_inertia_class`), hard filters (amplitude >= 15 K, minimum <= 5 C, not water), soft criteria and domain weights; only its lunar target zone differs (the nine NASA candidate landing regions, [SIMILARITY_PROPOSAL.md](SIMILARITY_PROPOSAL.md) section 1). The `thermal` and `ice` blocks stay in `mission_scoring.json` as components: `thermal` is the source of Lunar base and `ice` keeps its gates and soft criteria for later use, but neither is shown as a separate mission. Nothing in the JSON files was changed for this.

@@ -437,9 +437,17 @@ def build_manifest(files: Dict[str, bytes], engine_cfg: EngineConfig, input_info
     }
 
 
-def write_bundle(files: Dict[str, bytes], out_dir: str) -> List[str]:
-    """Write every file (bytes already serialised). Returns written paths."""
+def write_bundle(files: Dict[str, bytes], out_dir: str, prune: bool = True) -> List[str]:
+    """Write every file (bytes already serialised). Returns written paths.
+
+    With ``prune`` a .json or .bin file already in ``out_dir`` that is not part of this
+    bundle (e.g. the file of a mission no longer offered) is removed, so the folder
+    holds exactly the bundle the manifest lists."""
     os.makedirs(out_dir, exist_ok=True)
+    if prune:
+        for old in sorted(os.listdir(out_dir)):
+            if old not in files and old.endswith((".json", ".bin")) and os.path.isfile(os.path.join(out_dir, old)):
+                os.remove(os.path.join(out_dir, old))
     paths = []
     for name, data in files.items():
         p = os.path.join(out_dir, name)

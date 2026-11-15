@@ -30,7 +30,8 @@ from engine.suitability import evaluate_suitability, recompute_from_utilities, s
 from engine.dataset import grid_of  # noqa: E402
 from engine.table import load_cells, split_bodies  # noqa: E402
 
-MISSIONS = ["rover", "solar", "thermal", "ice"]
+MISSIONS = ["rover", "solar", "lunar_base"]          # offered (engine_config missions)
+TEAM_MISSIONS = ["rover", "solar", "thermal", "ice"]  # the team's original blocks (counts declared by their authors)
 LEGACY = "legacy_2deg"  # these tests check the engine on the legacy 2-degree table (test_real_data.py: real tables)
 
 
@@ -64,6 +65,22 @@ def cells(ecfg, grid):
 def bundle():
     from engine.build import build_bundle
     return build_bundle(dataset=LEGACY)
+
+
+@pytest.fixture(scope="module")
+def pooled_ecfg():
+    """Legacy settings with the integration's earlier rule (physical_pooled), for the
+    tests of that rule's pieces (it stays available as a third similarity_rule value)."""
+    from engine.config import Setting
+    e = load_engine_config(dataset=LEGACY)
+    e.similarity_rule = Setting(value="physical_pooled", why="test")
+    return e
+
+
+@pytest.fixture(scope="module")
+def pooled_results(cells, mcfg, pooled_ecfg, reg):
+    from engine.pipeline import run_all
+    return run_all(cells, mcfg, pooled_ecfg, reg)
 
 
 def _passing_row(df, body, mission, mcfg, ecfg, n=1):
@@ -215,7 +232,8 @@ def test_rank_ties_broken_by_cell_id():
     assert r.tolist() == [3, 1, 2, 0]
 
 
-def test_run_mission_on_small_table_with_missing_similarity_variable(cells, mcfg, ecfg, reg):
+def test_run_mission_on_small_table_with_missing_similarity_variable(cells, mcfg, pooled_ecfg, reg):
+    ecfg = pooled_ecfg
     e = _passing_row(cells["EARTH"], "EARTH", "solar", mcfg, ecfg, n=3)
     m = _passing_row(cells["MOON"], "MOON", "solar", mcfg, ecfg, n=5)
     e.loc[0, "roughness_m"] = np.nan
@@ -287,27 +305,23 @@ def test_author_declared_counts_reproduce_on_earth(cells, mcfg, bundle):
     assert int(res["pass_solar"].sum()) == 5192
     assert int(res["pass_thermal"].sum()) == 2613
     assert int(res["pass_all"].sum()) == 1986
-    res4 = mission_scoring.evaluate(earth, MISSIONS, mcfg)
-    assert [int(res4[f"pass_{m}"].sum()) for m in MISSIONS] == [5297, 5192, 2613, 3023]
+    res4 = mission_scoring.evaluate(earth, TEAM_MISSIONS, mcfg)
+    assert [int(res4[f"pass_{m}"].sum()) for m in TEAM_MISSIONS] == [5297, 5192, 2613, 3023]
     assert int(res4["pass_all"].sum()) == 1728
     counts = bundle["manifest"]["counts"]["missions"]
-    assert [counts[m]["pass_EARTH"] for m in MISSIONS] == [5297, 5192, 2613, 3023]
+    assert [counts[m]["pass_EARTH"] for m in MISSIONS] == [5297, 5192, 2613]   # lunar_base = thermal
+    ice = bundle["results"]["lunar_base"].components["ice"]
+    assert int(ice.earth_gates.passed.sum()) == 3023
 
 
 # ----------------------------------------------------------------------------- bundle
 def test_no_gate_failed_cell_in_any_new_ranking(bundle):
-    earth = bundle["objects"]["earth_cells.json"]
-    pos = {c: i for i, c in enumerate(earth["id"])}
-    for mid, blk in earth["missions"].items():
-        for cid, rank in zip(blk["passing"]["id"], blk["passing"]["rank"]):
-            assert blk["pass"][pos[cid]] == 1
-        failed = {c for c, p in zip(earth["id"], blk["pass"]) if p == 0}
-        assert not failed & set(blk["passing"]["id"])
-        for item in bundle["objects"]["explain.json"]["missions"][mid]:
-            assert blk["pass"][pos[item["id"]]] == 1
+    from engine.bundle_v2 import load_bundle
     for mid, r in bundle["results"].items():
         assert np.all(r.rank[~r.earth_gates.passed] == 0)
         assert np.all(np.isnan(r.final[~r.earth_gates.passed]))
+        ids = set(bundle["cells"]["EARTH"]["id"].to_numpy()[~r.earth_gates.passed].tolist())
+        assert not ids & {it["id"] for it in bundle["objects"]["explain.json"]["missions"][mid]}
 
 
 def test_no_gate_failed_cell_ranked_in_old_analog_finder(cells, tmp_path, monkeypatch):
@@ -318,7 +332,7 @@ def test_no_gate_failed_cell_ranked_in_old_analog_finder(cells, tmp_path, monkey
     monkeypatch.setattr(analog_finder, "get_rover_preset_bundle", lambda: {})
     moon, earth = cells["MOON"].drop(columns="id"), cells["EARTH"].drop(columns="id")
     _, scored, meta = analog_finder.compute_analog_ranking(moon, earth, top_k=20)
-    for m in MISSIONS + ["all"]:
+    for m in list(meta["mission_filters"]["missions"]) + ["all"]:
         failed = scored[f"pass_{m}"] == 0
         assert failed.any() and scored.loc[failed, f"score_{m}"].isna().all()
         assert scored.loc[~failed, f"score_{m}"].notna().all()
@@ -340,7 +354,7 @@ def test_old_analog_finder_uses_the_engine_gates(cells, mcfg, ecfg, monkeypatch)
     moon, earth = cells["MOON"].drop(columns="id"), cells["EARTH"].drop(columns="id")
     top, scored, meta = analog_finder.compute_analog_ranking(moon, earth, top_k=200)
     sub = cells["EARTH"].set_index(["row", "col"]).loc[list(zip(scored["row"], scored["col"]))].reset_index()
-    for m in MISSIONS:
+    for m in list(meta["mission_filters"]["missions"]):
         g = evaluate_gates(sub, "EARTH", m, mcfg, ecfg)
         assert scored[f"pass_{m}"].tolist() == g.passed.astype(int).tolist(), m
         assert meta["mission_stats"][m]["pass"] == int(g.passed.sum())
@@ -357,83 +371,37 @@ def test_bundle_is_deterministic(bundle):
 
 
 def test_bundle_validates_against_contract(bundle, tmp_path):
+    """The legacy table goes through the same v2 exporter; the bundle alone reproduces
+    every stored suitability, similarity, final and rank."""
+    from engine.bundle_v2 import validate_bundle_v2
     from engine.export import write_bundle
     write_bundle(bundle["files"], str(tmp_path))
-    assert validate_bundle_dir(str(tmp_path))["ok"]
-    total = sum(len(b) for b in bundle["files"].values())
-    assert total < 12 * 1024 * 1024
-
-
-def test_published_bundle_matches_a_fresh_build(bundle, ecfg):
-    """The last v1 bundle (app/public/data/v1, built by engine 1.1.0) has the same content
-    as a fresh legacy build: the dataset refactor changed no legacy result. The manifest
-    differs (engine version, config hashes) and is not compared. The legacy build now goes
-    to a folder outside app/public (it is not shipped)."""
-    out = resolve_path(ecfg.v("output_dir"))
+    rep = validate_bundle_v2(str(tmp_path))
+    assert rep["ok"] and rep["cells_checked"] == sum(int(r.earth_gates.passed.sum()) for r in bundle["results"].values())
+    out = resolve_path(bundle["engine_cfg"].v("output_dir"))
     assert "public" not in os.path.normpath(out).split(os.sep)
-    v1 = resolve_path("../app/public/data/v1")
-    if not os.path.isdir(v1):
-        pytest.skip("app/public/data/v1 was removed")
-    for name, data in bundle["files"].items():
-        if name == "manifest.json":
-            continue
-        with open(os.path.join(v1, name), "rb") as fh:
-            assert fh.read() == data, f"{name}: a fresh legacy build differs from app/public/data/v1"
 
 
-def _browser_scores(p, w, k, alpha):
-    """DATA_CONTRACT formulas on one passing cell, from the bundle alone, summing in
-    the mission's variable order (as the browser does)."""
-    un = ud = sn = sd = 0.0
-    for v in p["u"]:
-        if p["u"][v][k] is not None:
-            un += w[v] * p["u"][v][k]
-            ud += w[v]
-    for v in p["sim"]:
-        if p["sim"][v][k] is not None:
-            sn += w[v] * p["sim"][v][k]
-            sd += w[v]
-    suit, sim = 100.0 * un / ud, 100.0 * sn / sd
-    return suit, sim, alpha * sim + (1.0 - alpha) * suit
-
-
-def test_browser_recompute_matches_engine(bundle, mcfg):
-    """With default weights the browser reproduces the published scores exactly (the
-    engine computes them from the published utilities and similarities), and ranking
-    its rounded finals by (final desc, id) gives the stored rank."""
-    earth = bundle["objects"]["earth_cells.json"]
-    alpha = bundle["engine_cfg"].v("mix_factor")
-    for mid, blk in earth["missions"].items():
-        p = blk["passing"]
-        w = soft_weights(mcfg, mid)
-        mine = []
-        for k in range(len(p["id"])):
-            suit, sim, fin = _browser_scores(p, w, k, alpha)
-            assert round(suit, 2) == p["suitability"][k]
-            assert round(sim, 2) == p["similarity"][k]
-            assert round(fin, 2) == p["final"][k]
-            mine.append((-round(fin, 2), p["id"][k]))
-        order = {cid: r + 1 for r, (_, cid) in enumerate(sorted(mine))}
-        assert [order[c] for c in p["id"]] == p["rank"]
-
-
-def test_provisional_flags_and_mix_factor_exported(bundle, mcfg):
+def test_provisional_flags_threshold_status_and_alpha_exported(bundle, mcfg):
     ms = {m["id"]: m for m in bundle["objects"]["missions.json"]["missions"]}
     for mid in MISSIONS:
         assert ms[mid]["provisional"] == bool(mcfg["missions"][mid].get("provisional"))
-        assert ms[mid]["mix_factor"] == bundle["engine_cfg"].v("mix_factor")
-    assert ms["rover"]["provisional"] and ms["ice"]["provisional"]
+        assert ms[mid]["alpha"] == bundle["engine_cfg"].v("mix_factor")
+    assert ms["rover"]["provisional"] and ms["rover"]["threshold_status"]["status"] == "provisional"
+    assert ms["solar"]["threshold_status"]["status"] == "team_design_values"
+    assert ms["lunar_base"]["threshold_status"]["status"] == "team_design_values"
+    assert ms["lunar_base"]["component_results"]["ice"]["provisional"]
 
 
 def test_explanations_add_up(bundle):
     for mid, items in bundle["objects"]["explain.json"]["missions"].items():
         assert [it["rank"] for it in items] == list(range(1, len(items) + 1))
         for it in items:
-            sp = sum(v["suitability_points"] or 0 for v in it["variables"])
-            mp = sum(v["similarity_points"] or 0 for v in it["variables"])
-            assert abs(sp - it["suitability"]) <= 0.1
-            assert abs(mp - it["similarity"]) <= 0.1
-            assert len(it["helps_most"]) == 2
+            pts = sum(v["points"] or 0 for v in it["breakdown"])
+            assert abs(pts - it["suitability"]) <= 0.1
+            contrib = [v["contribution"] for v in it["breakdown"] if v["contribution"] is not None]
+            assert contrib == sorted(contrib, reverse=True)          # sorted by contribution
+            assert abs(it["final"] - (it["alpha"] * it["similarity"]["value"] + (1 - it["alpha"]) * it["suitability"])) <= 0.01
 
 
 def test_explain_cell_hand_case():
@@ -448,11 +416,10 @@ def test_explain_cell_hand_case():
 
 
 def test_places_are_computed(bundle):
-    earth = bundle["objects"]["earth_cells.json"]
-    moon = bundle["objects"]["moon_cells.json"]
-    land = earth["land"]
-    assert all((c is not None) == bool(l) for c, l in zip(earth["place"]["country_code"], land))
-    assert all(n is not None for n in moon["feature"]["name"])
+    land = bundle["land"]
+    pl = bundle["earth_places"]
+    assert all((c is not None) == bool(l) for c, l in zip(pl["country_code"], land))
+    assert all(n is not None for n in bundle["moon_features"]["name"])
     feats = bundle["objects"]["iau_moon_features.json"]
     i = feats["name"].index("Tycho")
     assert feats["lat"][i] == pytest.approx(-43.3, abs=0.1) and feats["lon"][i] == pytest.approx(-11.2, abs=0.1)
@@ -460,9 +427,10 @@ def test_places_are_computed(bundle):
 
 
 # ----------------------------------------------------------------------------- review fixes
-def test_final_uses_unrounded_suitability(cells, mcfg, ecfg, reg):
+def test_final_uses_unrounded_suitability(cells, mcfg, pooled_ecfg, reg):
     """final = alpha*similarity + (1-alpha)*suitability with the suitability NOT rounded
     to 2 decimals (review: mission_scoring rounds its score; final was built on it)."""
+    ecfg = pooled_ecfg
     res = run_mission("solar", cells["EARTH"], cells["MOON"], mcfg, ecfg, reg)
     ok = res.rank > 0
     soft = mcfg["missions"]["solar"]["soft"]
@@ -478,57 +446,36 @@ def test_final_uses_unrounded_suitability(cells, mcfg, ecfg, reg):
 
 def test_stored_rank_follows_the_contract_rule_on_stored_final(bundle):
     from engine.contract import check_rank_rule
-    for mid, blk in bundle["objects"]["earth_cells.json"]["missions"].items():
-        p = blk["passing"]
-        check_rank_rule(mid, p["id"], p["final"], p["rank"])
+    ids = bundle["cells"]["EARTH"]["id"].to_numpy()
+    for mid, r in bundle["results"].items():
+        ok = r.rank > 0
+        check_rank_rule(mid, ids[ok].tolist(), r.final_published[ok].tolist(), r.rank[ok].tolist())
     # a tie on the published final is broken by the lower id
     r = rank_scores(np.array([86.47, 86.47, 90.0]), np.array([10590, 10411, 5]))
     assert r.tolist() == [3, 2, 1]
 
 
-def _small_bundle_objects(cells, mcfg, ecfg, reg, mission, edits):
-    """Build earth_cells / explain objects for a few passing cells with edits applied."""
-    from engine.export import build_cells, build_explain
-    e = _passing_row(cells["EARTH"], "EARTH", mission, mcfg, ecfg, n=4)
-    m = _passing_row(cells["MOON"], "MOON", mission, mcfg, ecfg, n=6)
-    for (row, var), val in edits.items():
-        e.loc[row, var] = val
-    res = {mission: run_mission(mission, e, m, mcfg, ecfg, reg)}
-    n = len(e)
-    places = {k: [None] * n for k in ("country_code", "country", "region", "nearest_place", "nearest_place_km", "label_rule")}
-    feats = {"name": ["x"] * len(m), "type": ["t"] * len(m), "diameter_km": [None] * len(m), "distance_km": [0.0] * len(m)}
-    land = np.ones(n, dtype=bool)
-    obj = build_cells("EARTH", e, res, ecfg, reg, places, {}, land)
-    ex = build_explain(res, {"EARTH": e, "MOON": m}, mcfg, ecfg, reg, places, feats)
-    return e, res[mission], obj, ex
-
-
-def test_missing_values_are_exported_as_null_never_zero(cells, mcfg, ecfg, reg):
-    """Review mutation M11 (rnd returning 0.0 for NaN) passed every test; this one fails it."""
+def test_missing_values_stay_missing_never_zero(cells, mcfg, ecfg, reg):
+    """A missing weighted value has no utility (renormalised, never 0) and a missing
+    similarity value has no z-score (the repository would use 0)."""
+    from engine.pipeline import run_all
     soft = mcfg["missions"]["solar"]
     ungated = [v for v in soft["soft"] if v not in soft["gates"] and v not in soft["require_present"]]
-    sim_var = ungated[0]                       # a weighted, similarity variable without a gate
-    gated = next(iter(soft["gates"]))          # a gated variable: the cell is eliminated
-    e, res, obj, ex = _small_bundle_objects(cells, mcfg, ecfg, reg, "solar",
-                                            {(0, sim_var): np.nan, (1, gated): np.nan})
-    from engine.contract import check_values_match_input
-    check_values_match_input(obj, e, provenance.variables(reg))
-    assert obj["values"][sim_var][0] is None and obj["values"][gated][1] is None
-    blk = obj["missions"]["solar"]
-    assert blk["pass"][1] == 0 and e["id"].iat[1] not in blk["passing"]["id"]
-    k = blk["passing"]["id"].index(int(e["id"].iat[0]))
-    assert blk["passing"]["u"][sim_var][k] is None
-    if sim_var in blk["passing"]["sim"]:
-        assert blk["passing"]["sim"][sim_var][k] is None
-    for item in ex["missions"]["solar"]:
-        if item["id"] == int(e["id"].iat[0]):
-            row = next(r for r in item["variables"] if r["variable"] == sim_var)
-            assert row["earth"] is None and row["utility"] is None and row["difference"] is None
+    e = cells["EARTH"].copy()
+    k = int(np.flatnonzero(evaluate_gates(e, "EARTH", "solar", mcfg, ecfg).passed)[0])
+    e.loc[k, ungated[0]] = np.nan
+    e.loc[k, "temp_k"] = np.nan
+    res = run_all({"EARTH": e, "MOON": cells["MOON"]}, mcfg, ecfg, reg)["solar"]
+    assert np.isnan(res.earth_suit.utilities[ungated[0]][k]) and np.isfinite(res.earth_suit.score[k])
+    ctx = res.extra["repo_context"]
+    assert np.isnan(ctx.earth.z["temp_k"][k]) and np.isfinite(res.similarity_pct[k])
 
 
-def test_cell_without_comparable_variable_has_no_twin_final_or_rank(cells, mcfg, ecfg, reg):
-    e, res, obj, _ = _small_bundle_objects(cells, mcfg, ecfg, reg, "ice", {})
-    sim_vars = res.sim_vars
+def test_cell_without_comparable_variable_has_no_twin_final_or_rank(cells, mcfg, pooled_ecfg, reg):
+    ecfg = pooled_ecfg
+    e = _passing_row(cells["EARTH"], "EARTH", "ice", mcfg, ecfg, n=4)
+    m0 = _passing_row(cells["MOON"], "MOON", "ice", mcfg, ecfg, n=6)
+    sim_vars = run_mission("ice", e, m0, mcfg, ecfg, reg).sim_vars
     e2 = e.copy()
     for v in sim_vars:
         e2.loc[0, v] = np.nan
@@ -544,19 +491,19 @@ def test_cell_without_comparable_variable_has_no_twin_final_or_rank(cells, mcfg,
 def test_mask_fraction_gate_applies_on_both_bodies(cells, mcfg, ecfg):
     gmin = mcfg["common_gates"]["mask_fraction"]["min"]
     for body in ("EARTH", "MOON"):
-        df = _passing_row(cells[body], body, "thermal", mcfg, ecfg)
+        df = _passing_row(cells[body], body, "lunar_base", mcfg, ecfg)
         df.loc[0, "mask_fraction"] = np.nextafter(gmin, -np.inf)
-        g = evaluate_gates(df, body, "thermal", mcfg, ecfg)
+        g = evaluate_gates(df, body, "lunar_base", mcfg, ecfg)
         assert not g.passed[0] and g.reasons[0] == ("mask_fraction:below_min",)
 
 
-def test_scale_population_is_the_passing_cells_and_twins_pass(bundle):
-    for mid, r in bundle["results"].items():
+def test_scale_population_is_the_passing_cells_and_twins_pass(pooled_results, cells):
+    for mid, r in pooled_results.items():
         n_pass = int(r.earth_gates.passed.sum() + r.moon_gates.passed.sum())
         for v, sc in r.scales.items():
             if sc["kind"] == "numeric":
                 assert sc["n"] == n_pass, (mid, v)
-        moon_ids = bundle["cells"]["MOON"]["id"].to_numpy()
+        moon_ids = cells["MOON"]["id"].to_numpy()
         passing_moon = set(moon_ids[r.moon_gates.passed].tolist())
         twins = set(r.twin_id[r.twin_id >= 0].tolist())
         assert twins and twins <= passing_moon
@@ -569,15 +516,13 @@ def test_recompute_from_utilities_renormalises_over_missing():
     assert out[1] == pytest.approx(25.0) and np.isnan(out[2])
 
 
-def test_non_comparable_variables_are_left_out_of_the_similarity(bundle, reg, mcfg):
+def test_non_comparable_variables_are_left_out_of_the_pooled_similarity(pooled_results, reg, mcfg):
     excluded = {v for v in provenance.variables(reg) if not provenance.comparable(reg, v)}
     assert {"rock_or_bare_frac", "permafrost_class"} <= excluded
-    ms = {m["id"]: m for m in bundle["objects"]["missions.json"]["missions"]}
-    for mid, r in bundle["results"].items():
+    for mid, r in pooled_results.items():
         assert not excluded & set(r.sim_vars)
         soft = set(mcfg["missions"][mid]["soft"])
-        assert set(ms[mid]["excluded_from_similarity"]) == soft & excluded
-        assert not excluded & set(bundle["objects"]["earth_cells.json"]["missions"][mid]["passing"]["sim"])
+        assert set(r.sim_excluded) == soft & excluded
 
 
 def test_comparability_switch_restores_the_old_variable_set(cells, mcfg, reg):
@@ -589,16 +534,19 @@ def test_comparability_switch_restores_the_old_variable_set(cells, mcfg, reg):
     assert "rock_or_bare_frac" in excl2 and "rock_or_bare_frac" not in used2
 
 
-def test_ocean_fills_are_exported_as_null(bundle, ecfg):
-    earth = bundle["objects"]["earth_cells.json"]
-    spec = ecfg.v("earth_ocean_fill")
-    land = earth["land"]
-    for v in spec["variables"]:
-        assert all(x is None for x, l in zip(earth["values"][v], land) if l == 0), v
-        assert any(x is not None for x, l in zip(earth["values"][v], land) if l == 1), v
-    assert earth["ocean_fill"]["fill_values_in_input"]["elevation_m"] is not None
-    from engine.contract import check_values_match_input
-    check_values_match_input(earth, bundle["cells"]["EARTH"], list(earth["values"]))
+def test_ocean_fills_are_never_exported(bundle, ecfg):
+    """v2 Earth files hold land cells only (the legacy land = the common land gate), so
+    the ocean fills of the cached bands are never exported as values."""
+    from engine.bundle_v2 import load_bundle  # noqa: F401
+    land = bundle["land"]
+    ids = np.frombuffer(bundle["files"]["earth_base.bin"][:4 * int(land.sum())], dtype="<i4")
+    assert np.array_equal(ids, bundle["cells"]["EARTH"]["id"].to_numpy()[land])
+    elev = bundle["cells"]["EARTH"]["elevation_m"].to_numpy()
+    assert np.all(elev[land] >= mcfg_min(bundle))
+
+
+def mcfg_min(bundle):
+    return bundle["mission_cfg"]["common_gates"]["elevation_m"]["min"]
 
 
 def test_derived_level_is_never_stronger_than_its_input(reg):
@@ -621,12 +569,12 @@ def test_confidence_is_null_without_data(ecfg):
 
 
 def test_country_by_polygon_and_region_only_when_near(bundle):
-    earth = bundle["objects"]["earth_cells.json"]
-    pos = {(la, lo): i for i, (la, lo) in enumerate(zip(earth["lat"], earth["lon"]))}
-    pl = earth["place"]
+    earth = bundle["cells"]["EARTH"]
+    pos = {(la, lo): i for i, (la, lo) in enumerate(zip(earth["lat_deg"], earth["lon_deg"]))}
+    pl = bundle["earth_places"]
     for (la, lo), cc in (((83.0, -29.0), "GL"), ((69.0, -141.0), "US"), ((25.0, -5.0), "MR")):
         i = pos[(la, lo)]
-        if earth["land"][i]:
+        if bundle["land"][i]:
             assert pl["country_code"][i] == cc, (la, lo, pl["country_code"][i])
     lim = bundle["engine_cfg"].v("region_max_place_km")
     for r, d in zip(pl["region"], pl["nearest_place_km"]):
@@ -639,4 +587,4 @@ def test_mission_notes_and_facts_exported(bundle, ecfg):
     for m in bundle["objects"]["missions.json"]["missions"]:
         assert m["known_limitations"] == notes.get(m["id"], [])
         f = m["facts"]
-        assert f["distinct_twins"] >= 1 and isinstance(f["confidence_constant"], bool)
+        assert f["distinct_twins"] == 0 and isinstance(f["confidence_constant"], bool)   # repo_global_mean: no twin

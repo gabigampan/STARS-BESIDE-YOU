@@ -259,7 +259,7 @@
       },
       "lunar_base": {
         "kind": "artemis_regions",
-        "regions_file": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/artemis/artemis_iii_regions.geojson",
+        "regions_file": "engine/data/artemis_iii_regions.geojson",
         "verified_flag": "verified",
         "name": "NASA Artemis III candidate landing regions (9, announced 2024-10-28)",
         "source": "USGS outlines, DOI 10.5066/P1MEQ6UK, CC0",
@@ -271,7 +271,7 @@
         }
       }
     },
-    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS outlines, if a verified outline file (GeoJSON whose top-level 'verified' is true) is present; otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Pending team confirmation."
+    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS outlines, if a verified outline file is present in the repository (engine/data/artemis_iii_regions.geojson: GeoJSON in planetocentric degrees, longitude -180..180 east-positive, top-level 'verified': true, copied from the proposal agent's verified outlines); otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Pending team confirmation."
   },
   "twin_tie_rule": {
     "value": "lowest_lunar_id",

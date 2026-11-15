@@ -51,12 +51,12 @@
      "why": "Comparability of the legacy variables is in the legacy registry (provenance.json comparable_across_bodies, built by engine/build_provenance.py COMPARABILITY)."
     },
     "bundle_format": {
-     "value": "v1",
-     "why": "The legacy table is exported in the v1 JSON format (docs/DATA_CONTRACT.md, appendix) so that the before-and-after comparison uses the code that produced the v1 bundle."
+     "value": "v2",
+     "why": "Since engine 3.0.0 the legacy table is exported with the same v2 exporter as the real tables (three missions, funnel detail, similarity rules), so before-and-after comparisons and the tests use one contract. The v1 JSON exporter (engine/export.py) assumed a lunar twin for every ranked cell, which the default repo_global_mean rule does not have; it is kept in the code only for the physical_pooled rule and is no longer the legacy format."
     },
     "bundle_version": {
-     "value": "v1",
-     "why": "Version of the v1 file structure, written in every v1 file."
+     "value": "v2",
+     "why": "Version of the v2 file structure, written in every file."
     },
     "output_dir": {
      "value": "build/legacy_2deg",

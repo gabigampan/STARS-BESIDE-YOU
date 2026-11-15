@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from engine.config import EngineConfig
+from engine.config import EngineConfig, resolve_path
 from engine.repo_similarity import RepoContext, build_context, zone_mask
 
 
@@ -64,7 +64,8 @@ def resolve_zones(moon: pd.DataFrame, engine_cfg: EngineConfig, missions: List[s
     for m in missions:
         z = zones_cfg[m]
         if z["kind"] == "artemis_regions":
-            mask, status, names = load_region_cells(z["regions_file"], z["verified_flag"], moon, cell_deg)
+            mask, status, names = load_region_cells(resolve_path(z["regions_file"]), z["verified_flag"], moon, cell_deg)
+            status = status.replace(resolve_path(z["regions_file"]), z["regions_file"])
             if mask is not None and mask.any():
                 out[m] = {"name": z["name"], "kind": "artemis_regions", "source": z["source"], "regions": names,
                           "used": "artemis_regions", "reason": status, "mask": mask}

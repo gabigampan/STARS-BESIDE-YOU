@@ -75,24 +75,44 @@ def load_bundle(path: str) -> Bundle:
         return Bundle(path=path, manifest=json.load(fh))
 
 
-def browser_scores(u: Dict[str, np.ndarray], s: Dict[str, np.ndarray], weights: Dict[str, float],
-                   order: List[str], alpha: float):
-    """DATA_CONTRACT recompute formulas on decoded arrays, summing in ``order`` (the
-    mission's weighted-variable order). Returns (suitability, similarity, final)."""
+def browser_suitability(u: Dict[str, np.ndarray], weights: Dict[str, float], order: List[str]) -> np.ndarray:
+    """DATA_CONTRACT step 4 on decoded utilities: 100 * sum(w*u) / sum(w with a utility),
+    summed in ``order`` (the mission's weighted-variable order)."""
     n = len(next(iter(u.values())))
-    un, ud, sn, sd = np.zeros(n), np.zeros(n), np.zeros(n), np.zeros(n)
+    un, ud = np.zeros(n), np.zeros(n)
     for v in order:
-        if v in u:
-            ok = np.isfinite(u[v])
-            un = un + np.where(ok, weights[v] * np.where(ok, u[v], 0.0), 0.0)
-            ud = ud + np.where(ok, weights[v], 0.0)
-        if v in s:
-            ok = np.isfinite(s[v])
-            sn = sn + np.where(ok, weights[v] * np.where(ok, s[v], 0.0), 0.0)
-            sd = sd + np.where(ok, weights[v], 0.0)
-    suit = np.where(ud > 0, 100.0 * un / np.where(ud > 0, ud, 1.0), np.nan)
-    sim = np.where(sd > 0, 100.0 * sn / np.where(sd > 0, sd, 1.0), np.nan)
-    return suit, sim, alpha * sim + (1.0 - alpha) * suit
+        ok = np.isfinite(u[v])
+        un = un + np.where(ok, weights[v] * np.where(ok, u[v], 0.0), 0.0)
+        ud = ud + np.where(ok, weights[v], 0.0)
+    return np.where(ud > 0, 100.0 * un / np.where(ud > 0, ud, 1.0), np.nan)
+
+
+def browser_similarity(ez: Dict[str, np.ndarray], mz: Dict[str, np.ndarray], norm_w: Dict[str, float],
+                       decay: float) -> np.ndarray:
+    """DATA_CONTRACT step 5 on decoded z-scores (similarity.json formula), summed in the
+    order of ``norm_w``: d^2 = sum(norm_w * diff^2) when every variable is present, else
+    that sum / sum(norm_w present); similarity = round(100 * exp(-decay * d), 2)."""
+    sq = wsum = full = None
+    for f, w in norm_w.items():
+        diff = np.asarray(ez[f], dtype=np.float64) - np.asarray(mz[f], dtype=np.float64)
+        ok = np.isfinite(diff)
+        part = np.where(ok, w * np.where(ok, diff, 0.0) ** 2, 0.0)
+        sq = part if sq is None else sq + part
+        wsum = np.where(ok, w, 0.0) if wsum is None else wsum + np.where(ok, w, 0.0)
+        full = ok if full is None else full & ok
+    d2 = np.where(full, sq, np.where(wsum > 0, sq / np.where(wsum > 0, wsum, 1.0), np.nan))
+    return np.round(100.0 * np.exp(-decay * np.sqrt(d2)), 2)
+
+
+def tile_column(b: "Bundle", name: str) -> np.ndarray:
+    """A detail-tile column over every Earth land cell (tiles concatenated in order)."""
+    parts = [b.column(t["name"], name) for t in b.manifest["detail_tiles"]["files"]]
+    return np.concatenate(parts)
+
+
+def tile_int_column(b: "Bundle", name: str) -> np.ndarray:
+    parts = [b.int_column(t["name"], name) for t in b.manifest["detail_tiles"]["files"]]
+    return np.concatenate(parts)
 
 
 def rank_rule(final: np.ndarray, ids: np.ndarray) -> np.ndarray:
@@ -107,8 +127,8 @@ def rank_rule(final: np.ndarray, ids: np.ndarray) -> np.ndarray:
 
 def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]] = None) -> Dict[str, Any]:
     """Check hashes, column layout, cross-file consistency and the exact recompute of
-    suitability, similarity, final and rank for every passing cell of every mission.
-    ``weights`` defaults to each mission's published weights."""
+    suitability, similarity, final and rank for every passing cell of every mission,
+    from the bundle alone. ``weights`` defaults to each mission's published weights."""
     b = load_bundle(path)
     man = b.manifest
     for f in man["files"]:
@@ -124,51 +144,73 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
             if end != len(data):
                 raise ValueError(f"{f['name']}: columns do not cover the file")
     missions = b.json("missions.json")
+    sim_json = b.json("similarity.json")
     land_n = b.file_entry("earth_base.bin")["row_sets"]["land"]
     earth_ids = b.int_column("earth_base.bin", "id")
     if np.any(np.diff(earth_ids) <= 0):
         raise ValueError("earth_base.bin ids are not increasing")
+    if not np.array_equal(tile_int_column(b, "id"), earth_ids):
+        raise ValueError("detail tiles do not cover the land cells in id order")
+    rule = sim_json["rule"]
+    sent = man["encoding"]["int32_missing"]
+    norm_w = {v["variable"]: v["norm_weight"] for v in sim_json["variables"] if v["status"] == "active"}
+    decay = sim_json["formula"]["decay"]
+    ez = {f: tile_column(b, f"z.{f}") for f in norm_w}
+    twins = b.json("twins.json") if rule == "zone_twin" else None
     checked = 0
     for m in missions["missions"]:
+        mid = m["id"]
         ef, mf = m["files"]["EARTH"], m["files"]["MOON"]
         bits = b.int_column(ef, "fail_bits")
         li = b.int_column(ef, "land_index")
         if len(bits) != land_n or not np.array_equal(np.flatnonzero(bits == 0), li):
-            raise ValueError(f"{m['id']}: passing cells and fail bits disagree")
+            raise ValueError(f"{mid}: passing cells and fail bits disagree")
         if int((bits == 0).sum()) != m["pass_counts"]["EARTH"]:
-            raise ValueError(f"{m['id']}: Earth pass count")
-        mbits = b.int_column(mf, "fail_bits")
-        if int((mbits == 0).sum()) != m["pass_counts"]["MOON"]:
-            raise ValueError(f"{m['id']}: Moon pass count")
-        twin = b.int_column(ef, "twin")
-        sent = man["encoding"]["int32_missing"]
-        has_twin = twin != sent
-        if np.any(mbits[twin[has_twin]] != 0):
-            raise ValueError(f"{m['id']}: a twin fails the mission on the Moon")
-        tc = b.int_column(mf, "twin_count")
-        if int(tc.sum()) != int(has_twin.sum()):
-            raise ValueError(f"{m['id']}: twin counts do not add up")
+            raise ValueError(f"{mid}: Earth pass count")
+        if int((b.int_column(mf, "fail_bits") == 0).sum()) != m["pass_counts"]["MOON"]:
+            raise ValueError(f"{mid}: Moon pass count")
         order = [w["variable"] for w in m["weighted_variables"]]
-        w = (weights or {}).get(m["id"]) or {x["variable"]: x["weight"] for x in m["weighted_variables"]}
-        u = {v: b.column(ef, f"u.{v}") for v in order}
-        s = {v: b.column(ef, f"s.{v}") for v in m["similarity_variables"]}
-        for v in m["excluded_from_similarity"]:
-            if f"s.{v}" in b.columns(ef):
-                raise ValueError(f"{m['id']}: excluded variable {v} has similarities")
-        suit, sim, fin = browser_scores(u, s, w, order, m["mix_factor"])
+        w = (weights or {}).get(mid) or {x["variable"]: x["weight"] for x in m["weighted_variables"]}
+        u = {v: tile_column(b, f"{mid}.u.{v}")[li] for v in order}
+        for v in order:  # utilities exist only for passing cells
+            full = tile_column(b, f"{mid}.u.{v}")
+            if np.any(np.isfinite(full[bits != 0])):
+                raise ValueError(f"{mid}: an eliminated cell has a utility for {v}")
+        suit = browser_suitability(u, w, order)
+        if rule == "repo_global_mean":
+            tz = {f: np.float64(next(x for x in sim_json["variables"] if x["variable"] == f)["target_global_mean"]["z"])
+                  for f in norm_w}
+            sim = browser_similarity({f: ez[f][li] for f in norm_w}, tz, norm_w, decay)
+            if "twin" in b.columns(ef):
+                raise ValueError(f"{mid}: repo_global_mean must not carry twins")
+        elif rule == "zone_twin":
+            twin = b.int_column(ef, "twin")
+            tz_by_id = {t["id"]: t["z"] for t in twins["missions"][mid]["twins"]}
+            mz = {f: np.array([tz_by_id[int(t)][f] if t != sent and tz_by_id[int(t)][f] is not None else np.nan
+                               for t in twin], dtype=np.float64) for f in norm_w}
+            sim = browser_similarity({f: ez[f][li] for f in norm_w}, mz, norm_w, decay)
+            tc = b.int_column(mf, "twin_count")
+            if int(tc.sum()) != int((twin != sent).sum()):
+                raise ValueError(f"{mid}: twin counts do not add up")
+            zone = sim_json["target"]["zones"][mid]
+            if zone.get("lat_max") is not None and zone["kind"] == "lat_max":
+                lat = b.column("moon_base.bin", "lat")
+                if np.any(lat[twin[twin != sent] // man["grid"]["cols"]] > zone["lat_max"]):
+                    raise ValueError(f"{mid}: a twin lies outside its zone")
+        else:
+            raise ValueError(f"validate_bundle_v2 does not check rule {rule!r}")
+        alpha = m["alpha"]
+        fin = alpha * sim + (1.0 - alpha) * suit
         st_suit, st_sim = b.column(ef, "suitability"), b.column(ef, "similarity")
         st_fin, st_rank = b.column(ef, "final"), b.int_column(ef, "rank")
         if weights is None:
             for name, mine, stored in (("suitability", suit, st_suit), ("similarity", sim, st_sim), ("final", fin, st_fin)):
                 mr = np.array([round(float(x), 2) if np.isfinite(x) else np.nan for x in mine])
                 if not np.array_equal(np.isnan(mr), np.isnan(stored)) or np.any(mr[np.isfinite(mr)] != stored[np.isfinite(stored)]):
-                    raise ValueError(f"{m['id']}: recomputed {name} differs from the stored value")
+                    raise ValueError(f"{mid}: recomputed {name} differs from the stored value")
             fr = np.array([round(float(x), 2) if np.isfinite(x) else np.nan for x in fin])
-            ids = earth_ids[li]
-            rr = rank_rule(fr, ids)
+            rr = rank_rule(fr, earth_ids[li])
             if not np.array_equal(np.where(st_rank == sent, 0, st_rank), rr):
-                raise ValueError(f"{m['id']}: stored rank does not follow the rank rule")
-            if not np.array_equal(np.isnan(st_fin), ~has_twin):
-                raise ValueError(f"{m['id']}: final must be missing exactly when there is no twin")
+                raise ValueError(f"{mid}: stored rank does not follow the rank rule")
         checked += len(li)
-    return {"ok": True, "cells_checked": checked, "files": [f["name"] for f in man["files"]]}
+    return {"ok": True, "cells_checked": checked, "rule": rule, "files": [f["name"] for f in man["files"]]}

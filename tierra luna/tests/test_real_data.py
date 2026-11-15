@@ -18,7 +18,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from engine import config as engine_config_module  # noqa: E402
-from engine.bundle_v2 import browser_scores, load_bundle, rank_rule, validate_bundle_v2  # noqa: E402
+from engine.bundle_v2 import (browser_similarity, browser_suitability, load_bundle, rank_rule,  # noqa: E402
+                              tile_column, validate_bundle_v2)  # noqa: E402
 from engine.config import (DATASET_SETTINGS, ENGINE_CONFIG_PATH, dataset_ids, default_dataset,  # noqa: E402
                            load_engine_config, load_mission_config, resolve_path)
 from engine.confidence import pair_confidence  # noqa: E402
@@ -78,7 +79,7 @@ def test_dataset_switch_selects_grid_inputs_format_and_output():
     assert load_engine_config().dataset_id == REAL                      # the default
     assert (grid_of(legacy).rows, grid_of(legacy).cols) == (90, 180)
     assert (grid_of(real_cfg).rows, grid_of(real_cfg).cols) == (180, 360)
-    assert legacy.v("bundle_format") == "v1" and real_cfg.v("bundle_format") == "v2"
+    assert legacy.v("bundle_format") == "v2" and real_cfg.v("bundle_format") == "v2"
     assert real_cfg.v("output_dir").endswith("public/data/v2")
     assert "public" not in os.path.normpath(resolve_path(legacy.v("output_dir"))).split(os.sep)
     assert legacy.v("provenance")["kind"] == "registry" and real_cfg.v("provenance")["kind"] == "csv"
@@ -170,46 +171,33 @@ def test_levels_come_from_the_provenance_files(real):
         for v, e in reg["variables"].items():
             col = reg["columns"][v][b]["column"]
             assert e["bodies"][b]["level"] == normalise_level(rows[col]["level"])[0], (v, b)
-    assert reg["variables"]["permafrost_class"]["bodies"]["MOON"]["level"] == "NO_DATA"
+    # team lead decision 5: a MODELLED label 'ninguno' on every lunar cell, never NO_DATA / empty
+    assert reg["variables"]["permafrost_class"]["bodies"]["MOON"]["level"] == "MODELLED"
     with pytest.raises(ValueError):
         normalise_level("probably measured")
 
 
-def test_comparability_exclusions(real, real_dir, mcfg):
+def test_comparability_statuses_reach_variables_json(real, real_dir):
     reg = real["dataset"].reg
     b = load_bundle(real_dir)
-    missions = {m["id"]: m for m in b.json("missions.json")["missions"]}
-    for mid, r in real["results"].items():
-        soft = list(mcfg["missions"][mid]["soft"])
-        for v in soft:
-            status = reg["variables"][v]["comparability"]
-            cols = b.columns(missions[mid]["files"]["EARTH"])
-            w = next(x for x in missions[mid]["weighted_variables"] if x["variable"] == v)
-            assert w["comparability"] == status and w["comparability_note"]
-            if status == "not_comparable":
-                assert v not in r.sim_vars and v in r.sim_excluded and f"s.{v}" not in cols, (mid, v)
-            elif v in r.sim_vars:
-                assert f"s.{v}" in cols
-    assert "tmin_c" in real["results"]["thermal"].sim_excluded
-    assert "rock_or_bare_frac" in real["results"]["rover"].sim_excluded
-    assert "irradiance_kwh_m2_day" in real["results"]["solar"].sim_vars
-    assert reg["variables"]["irradiance_kwh_m2_day"]["comparability"] == "comparable_with_caveat"
     var = {v["name"]: v for v in b.json("variables.json")["variables"]}
     assert all(v["comparability"]["status"] and v["comparability"]["reason"] for v in var.values())
+    assert reg["variables"]["irradiance_kwh_m2_day"]["comparability"] == "comparable_with_caveat"
+    assert "ninguno" in var["permafrost_class"]["comparability"]["reason"]
 
 
 # ----------------------------------------------------------------------------- 4. hard filters and missing data
 def test_missing_gated_value_eliminates_the_cell_with_no_data_reason(real, mcfg):
     ecfg_ = real["engine_cfg"]
     earth = real["cells"]["EARTH"]
-    g = evaluate_gates(earth, "EARTH", "thermal", mcfg, ecfg_)
+    g = evaluate_gates(earth, "EARTH", "lunar_base", mcfg, ecfg_)
     df = earth.iloc[np.flatnonzero(g.passed)[:3]].reset_index(drop=True).copy()
     df.loc[0, "lst_diurnal_amp_k"] = np.nan          # gated and required
     df.loc[1, "elevation_m"] = np.nan                # common land gate
-    g2 = evaluate_gates(df, "EARTH", "thermal", mcfg, ecfg_)
+    g2 = evaluate_gates(df, "EARTH", "lunar_base", mcfg, ecfg_)
     assert g2.passed.tolist() == [False, False, True]
     assert "lst_diurnal_amp_k:missing" in g2.reasons[0] and g2.reasons[1] == ("elevation_m:missing",)
-    s = evaluate_suitability(df, "EARTH", "thermal", mcfg, ecfg_)
+    s = evaluate_suitability(df, "EARTH", "lunar_base", mcfg, ecfg_)
     assert np.isnan(s.score[0]) and np.isnan(s.score[1]) and np.isfinite(s.score[2])
     label = ecfg_.v("missing_data_reason")["label"]
     ent = {e["code"]: e for e in reason_entries(["lst_diurnal_amp_k:missing", "tmin_c:above_max"], ecfg_)}
@@ -219,18 +207,20 @@ def test_missing_gated_value_eliminates_the_cell_with_no_data_reason(real, mcfg)
 
 def test_missing_data_losses_are_counted_per_mission(real, real_dir):
     earth, land = real["cells"]["EARTH"], real["land"]
-    res = real["results"]["thermal"]
+    res = real["results"]["lunar_base"]
     no_lst = land & ~_present(earth["lst_diurnal_amp_k"])
     assert no_lst.sum() > 0
     assert all("lst_diurnal_amp_k:missing" in res.earth_gates.reasons[i] for i in np.flatnonzero(no_lst))
     ant = land & (earth["lat_deg"].to_numpy() <= -65)
     assert ant.sum() > 0 and not _present(earth["lst_diurnal_amp_k"])[ant].any()   # no LST in Antarctica here
     m = {x["id"]: x for x in load_bundle(real_dir).json("missions.json")["missions"]}
-    md = m["thermal"]["missing_data"]["EARTH_LAND"]
+    md = m["lunar_base"]["missing_data"]["EARTH_LAND"]
     assert md["by_variable"]["lst_diurnal_amp_k"] == int(no_lst.sum())
-    ice = real["results"]["ice"]
-    assert not ice.moon_gates.passed.any() and (ice.rank > 0).sum() == 0
-    assert m["ice"]["missing_data"]["MOON"]["cells_failing_only_on_missing_data"] == len(real["cells"]["MOON"])
+    # the ice component: no lunar cell passes (permafrost 'ninguno' is excluded by the ice gate), never 'no data'
+    ice = real["results"]["lunar_base"].components["ice"]
+    assert not ice.moon_gates.passed.any()
+    assert all(r == ("permafrost_class:excluded",) for r in ice.moon_gates.reasons)
+    assert m["lunar_base"]["component_results"]["ice"]["pass_counts"]["MOON"] == 0
 
 
 def test_land_gate_is_earth_only_and_mask_fraction_is_land_share(real, mcfg):
@@ -280,14 +270,10 @@ def test_binary_round_trip_equals_the_frames(real, real_dir):
     for mid, r in real["results"].items():
         ef = f"earth_{mid}.bin"
         assert np.array_equal(b.int_column(ef, "fail_bits") == 0, r.earth_gates.passed[li])
-        idx = np.flatnonzero(r.earth_gates.passed)
         for v in r.soft_vars:
-            assert _nan_equal(b.column(ef, f"u.{v}"), r.earth_suit.utilities[v][idx])
-        for v in r.sim_vars:
-            assert _nan_equal(b.column(ef, f"s.{v}"), r.sims[v][idx])
-        tw = b.column(ef, "twin")
-        assert _nan_equal(tw, np.where(r.twin_id[idx] >= 0, r.twin_id[idx], np.nan))
-        assert np.array_equal(b.int_column(f"moon_{mid}.bin", "twin_count"), r.moon_twin_count)
+            u = tile_column(b, f"{mid}.u.{v}")
+            assert _nan_equal(u, np.where(r.earth_gates.passed[li], r.earth_suit.utilities[v][li], np.nan))
+        assert "twin" not in b.columns(ef) and "twin_count" not in b.columns(f"moon_{mid}.bin")  # repo_global_mean
         codes = [e["code"] for e in next(m for m in b.json("missions.json")["missions"] if m["id"] == mid)["reason_codes"]]
         mb = b.int_column(f"moon_{mid}.bin", "fail_bits")
         for i in range(0, len(mb), 997):
@@ -300,36 +286,40 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
     b = load_bundle(real_dir)
     ids_all = b.int_column("earth_base.bin", "id")
     sent = b.manifest["encoding"]["int32_missing"]
+    sj = b.json("similarity.json")
+    assert sj["rule"] == "repo_global_mean"
+    norm_w = {v["variable"]: v["norm_weight"] for v in sj["variables"] if v["status"] == "active"}
+    tz = {v["variable"]: v["target_global_mean"]["z"] for v in sj["variables"] if v["status"] == "active"}
     total = 0
+    r2 = np.vectorize(lambda x: round(float(x), 2) if np.isfinite(x) else np.nan)
     for m in b.json("missions.json")["missions"]:
         ef = m["files"]["EARTH"]
+        li = b.int_column(ef, "land_index")
         order = [w["variable"] for w in m["weighted_variables"]]
         w = {x["variable"]: x["weight"] for x in m["weighted_variables"]}
-        u = {v: b.column(ef, f"u.{v}") for v in order}
-        s = {v: b.column(ef, f"s.{v}") for v in m["similarity_variables"]}
-        suit, sim, fin = browser_scores(u, s, w, order, m["mix_factor"])
-        r2 = np.vectorize(lambda x: round(float(x), 2) if np.isfinite(x) else np.nan)
+        suit = browser_suitability({v: tile_column(b, f"{m['id']}.u.{v}")[li] for v in order}, w, order)
+        sim = browser_similarity({f: tile_column(b, f"z.{f}")[li] for f in norm_w}, tz, norm_w, sj["formula"]["decay"])
+        fin = m["alpha"] * sim + (1 - m["alpha"]) * suit
         for mine, stored in ((suit, "suitability"), (sim, "similarity"), (fin, "final")):
-            st = b.column(ef, stored)
-            assert _nan_equal(r2(mine) if len(mine) else mine, st), (m["id"], stored)
+            assert _nan_equal(r2(mine), b.column(ef, stored)), (m["id"], stored)
         rank = b.int_column(ef, "rank")
-        ids = ids_all[b.int_column(ef, "land_index")]
-        assert np.array_equal(np.where(rank == sent, 0, rank), rank_rule(r2(fin) if len(fin) else fin, ids))
-        total += len(ids)
+        assert np.array_equal(np.where(rank == sent, 0, rank), rank_rule(r2(fin), ids_all[li]))
+        total += len(li)
     assert total == sum(int(r.earth_gates.passed.sum()) for r in real["results"].values())
     assert validate_bundle_v2(real_dir)["cells_checked"] == total
 
 
 def test_slider_weights_recompute_matches_the_engine(real, real_dir, mcfg):
-    """Moving a slider: the browser formula on the bundle equals the engine's
-    suitability with the replacement weights, on the same utilities (twin unchanged)."""
+    """Moving a slider: the browser formula on the bundle's utilities equals the engine's
+    suitability with the replacement weights."""
     b = load_bundle(real_dir)
     m = next(x for x in b.json("missions.json")["missions"] if x["id"] == "solar")
+    li = b.int_column("earth_solar.bin", "land_index")
     order = [w["variable"] for w in m["weighted_variables"]]
     new_w = {order[0]: 0.05, order[-1]: 0.5}
     w = soft_weights(mcfg, "solar", new_w)
-    u = {v: b.column("earth_solar.bin", f"u.{v}") for v in order}
-    suit, _, _ = browser_scores(u, {}, w, order, m["mix_factor"])
+    u = {v: tile_column(b, f"solar.u.{v}")[li] for v in order}
+    suit = browser_suitability(u, w, order)
     eng = evaluate_suitability(real["cells"]["EARTH"], "EARTH", "solar", mcfg, real["engine_cfg"], weights=new_w)
     assert np.array_equal(suit, eng.score[eng.passed])
 
@@ -348,9 +338,13 @@ def test_bundle_sizes_and_split(real, ecfg):
     sizes = {f["name"]: f["bytes"] for f in man["files"]}
     first = sum(sizes[n] for n in man["load"]["first_view"]) + len(real["files"]["manifest.json"])
     total = sum(sizes.values()) + len(real["files"]["manifest.json"])
-    assert set(man["load"]["first_view"]) == {"missions.json", "variables.json", "places.json", "earth_base.bin",
-                                              f"earth_{man['load']['default_mission']}.bin"}
+    assert set(man["load"]["first_view"]) == {"missions.json", "similarity.json", "variables.json", "places.json",
+                                              "earth_base.bin", f"earth_{man['load']['default_mission']}.bin"}
     assert first < budget["first_view_max"] and total < budget["total_max"], (first, total)
+    # the funnel detail of any land cell is one tile, a small fraction of the bundle
+    tiles = man["detail_tiles"]["files"]
+    assert sum(t["land_cells"] for t in tiles) == int(real["land"].sum())
+    assert max(sizes[t["name"]] for t in tiles) < budget["first_view_max"] / 5
 
 
 def test_published_v2_matches_a_fresh_build(real, ecfg):
