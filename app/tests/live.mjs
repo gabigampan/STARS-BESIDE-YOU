@@ -125,8 +125,8 @@ try {
     out.lists[mid] = list;
     const want = top5[mid].ids, wr = top5[mid].overall_ranks;
     const okIds = JSON.stringify(list.map((l) => l.id)) === JSON.stringify(want);
-    // the row prints "Ranked N overall" only when N differs from its place among the five
-    const okRanks = !wr || list.every((l, i) => String(wr[i]) === l.overall && (wr[i] === i + 1 || l.text.includes(`Ranked ${wr[i]} overall`)));
+    // the row prints "Number N in the full list" only when N differs from its place among the five
+    const okRanks = !wr || list.every((l, i) => String(wr[i]) === l.overall && (wr[i] === i + 1 || l.text.includes(`Number ${wr[i]} in the full list`)));
     if (!okIds) fault(`${mid} list ids ${list.map((l) => l.id)} vs bundle ${want}`);
     if (!okRanks) fault(`${mid} overall ranks ${list.map((l) => l.overall)} vs bundle ${wr}`);
     if (mid === 'solar') await p.screenshot({ path: join(SHOTS, 'desktop_mission_solar.png') });

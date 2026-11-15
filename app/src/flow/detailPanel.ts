@@ -232,16 +232,49 @@ function shortReasons(_app: FlowApp, o: MissionOutcome): HTMLElement | null {
       const real = r.real;
       const here = real ? valueText(real.earth, real.unit) : shownValue(r.earth, r.def.unit);
       const there = real ? valueText(real.moon, real.unit) : shownValue(r.moon, r.def.unit);
-      return h('li', { 'data-variable': r.def.variable }, h('strong', null, `${r.def.label}: `), `${here} here, ${there} at its twin.`);
+      const unit = real ? real.unit : r.def.unit;
+      return h('li', { 'data-variable': r.def.variable }, h('strong', null, `${plainLabel(r.def.label, unit, !!real)}: `), `${plainUnit(here, unit)} here, ${plainUnit(there, unit)} at its twin.`);
     }),
   );
+}
+
+/**
+ * Plain words for a key line (point 18): the bundle label stays, the bare "(position)" tag becomes
+ * the bundle's own wording of the Lunar base rule ("compared as positions: where the point ranks ...",
+ * similarity.json similarity_meaning_lunar_base), and kWh/m²/day is spelt out once.
+ */
+function plainLabel(label: string, unit: string, ranked: boolean): string {
+  let t = label.replace(/\s*\(position\)\s*$/, ranked ? ', compared by rank' : '');
+  if (unit === 'kWh/m2/day') t += ', in kilowatt-hours per square metre each day (kWh/m²/day)';
+  return t;
+}
+/** Kelvin in words (the figure and its decimals unchanged); kWh/m²/day is already named in the label. */
+function plainUnit(v: string, unit: string): string {
+  if (unit === 'K') return v.replace(/ K$/, ' kelvin');
+  if (unit === 'kWh/m2/day') return v.replace(/\s*kWh\/m²\/day$/, '');
+  return v;
+}
+
+/**
+ * Short captions under the three score names (point 18), from the bundle's own words: missions.json
+ * alpha_why weighs "lunar likeness against mission fitness"; final = alpha * similarity + (1 - alpha) *
+ * suitability with alpha 0.5 (half of each) unless the user moves the slider.
+ */
+function scoreHint(key: string, alpha: number): string {
+  if (key === 'similarity') return 'likeness to its twin';
+  if (key === 'suitability') return 'fit for the mission';
+  const a = Math.round(alpha * 100);
+  return a === 50 ? 'half of each' : `${a}% likeness, ${100 - a}% fit`;
 }
 
 function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
   if (!o.pass) return null;
   const st = app.store;
   const twins = st.hasTwins(o.mission.id);
-  const fig = (k: string, v: string, key: string) => h('div', { class: 'fig', 'data-fig': key }, h('dt', null, k), h('dd', null, v));
+  const fig = (k: string, v: string, key: string) => {
+    const hint = scoreHint(key, app.alpha());
+    return h('div', { class: 'fig', 'data-fig': key, 'aria-description': `${k}: ${hint}` }, h('dt', null, k, h('br'), h('span', { 'data-hint': key }, hint)), h('dd', null, v));
+  };
   if (o.noPair || (o.valueRule && o.final == null)) {
     return h(
       'div',

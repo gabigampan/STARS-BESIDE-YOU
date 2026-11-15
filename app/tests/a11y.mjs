@@ -347,7 +347,7 @@ async function run(browser, base, variant, size, full) {
       // the bundle's five (missions.json top5.ids, revision 7), else ranks 1 to 5
       const spec = await page.evaluate((m) => { const ms = window.starsFlow.store.mission(m); return { ids: ms.top5?.ids ?? window.starsFlow.store.ranked(m).filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => a.rank - b.rank).map((p) => p.id), rule: ms.top5?.rule ?? null }; }, mid);
       check(top.length === 5 && top.every((b, k) => b.rank === k + 1 && b.id === spec.ids[k]), `${tag} ${mid}: five numbered buttons, the bundle's five in its order (${spec.ids.join(', ')})`);
-      check(top.every((b) => (b.overall !== b.rank ? b.text.includes(`Ranked ${b.overall} overall`) : !/overall/.test(b.text))), `${tag} ${mid}: a button whose pair ranks elsewhere in the full list says "Ranked N overall"`);
+      check(top.every((b) => (b.overall !== b.rank ? b.text.includes(`Number ${b.overall} in the full list`) : !/in the full list/.test(b.text))), `${tag} ${mid}: a button whose pair ranks elsewhere in the full list says "Number N in the full list"`);
       if (spec.rule) check(await page.evaluate((r) => [...document.querySelectorAll('.top5 [data-text="top5.rule"]')].some((e) => e.textContent === r), spec.rule), `${tag} ${mid}: the rule of the five is shown under them, verbatim`);
       const notesOk = await page.evaluate((m) => {
         const st = window.starsFlow.store;
