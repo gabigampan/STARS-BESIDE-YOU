@@ -151,6 +151,20 @@ user's own weights are in use the panel says so in words.
   `docs/AUDIO_TOP5.json`: rank n of each mission there is track `<mission>_n`). It holds no caption
   text. A pair track plays only when the pair on screen has exactly those two cell ids (and the
   team's weights are in use); otherwise the caption is built from the data on screen and nothing plays.
+- **The five analogs** come from the bundle: `missions.json` `missions[].top5` (`ids` in order,
+  `overall_ranks`, `rule`, revision 7); without it, ranks 1 to 5. A button whose pair is elsewhere in
+  the full ranking says "Ranked N overall"; the rule text and the notes marked `top5` are shown
+  under the five. A pair track plays only for the button number it was recorded as and the same two
+  cell ids; a mission introduction (which names the five) plays only when all five recordings match
+  the bundle's five, otherwise a caption from the screen is shown.
+- **Tracks awaiting a new recording**: `public/audio/pending.json`
+  (`{"pending_rerecord": ["m1_rover.mp3", ...], "note": "..."}`, maintained by the director; absent
+  or empty = none). A listed track shows its (new) caption with "Text only: new recording pending"
+  and is never requested, not even with R.
+- **Notes from the bundle**: every `similarity.json` text with `show` is rendered verbatim in each
+  place it names (`mission_card`: behind "Limits of this list" in the mission panel; `top5`: under
+  the five; `pair_panel`: next to the similarity of every pair; `data_and_limits`: in the dialog),
+  for the missions it names; no per-key code.
 - **Replacing a track**: overwrite the MP3 under the same name, put its new text in
   `transcripts.json` under the same key and update `SHA256SUMS.txt`
   (`sha256sum *.mp3 > SHA256SUMS.txt` in `public/audio`). No code change.
