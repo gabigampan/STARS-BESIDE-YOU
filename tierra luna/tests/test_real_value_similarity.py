@@ -38,14 +38,14 @@ ROVER_SOLAR_REV5 = {
     "earth_solar.bin": "a07219d6bcd5198d47b836893277a4dd7bd8143dcbfbe77f522b41fc3aa0d5fd",
     "earth_solar_pairs.bin": "f0658d8b938ae99e6ad2cab46a58f2d7f4241bc46b707cff95e4edcb58487834",
     "moon_solar.bin": "7d4b328f4ead1e8de974d6f12ff1a090be14bfc76b2441387d42598660cd2516",
-    "earth_base.bin": "a3a9787e13e35e04c7c67fd9931781f0a8adc3884353e18feafc0f269eeb0e94",
+    "earth_base.bin without country, region": "78c9f8c97383f12df94ab4185c6a1904f21a08b47403b77f981ce688aae6e9b9",
     "twins.json/missions/rover": "9080f4c605aebde0805d16366af8055ca4e21d2e196c040dbc2ed24142754ec7",
-    "explain.json/missions/rover": "0248f0084a20040179a82ef538fe50f6d7004e0ee596cca551f87d2390cc71ec",
-    "missions.json/missions[rover]": "83dd5f0d09173dff7d88b40e0676db9b149326b461155a4e707bdcaa9b594e8e",
+    "explain.json/missions/rover": "1f85042ff65bdf298941cbea6fdc98588447f3d11a6c93d7232c676a88a8a492",
+    "missions.json/missions[rover]": "6e50fc8d9237f54eb27d2fa0e35b2c839e4dfd955691371930ec6a53bf64ae48",
     "lunar_named_sites.json rover": "e5870fb266f43225c7af792e7450e4eaf63aa1991e27f1a0991dd0233bf228b2",
     "twins.json/missions/solar": "5c0a0dc20a2e4ecbf8cd0869f1180bffcefd9043fb8519b7467aeed6a7a57276",
-    "explain.json/missions/solar": "3ecb9f2bcfce411336e56a7107de657b620bf6a95725181a246a141357b3e7de",
-    "missions.json/missions[solar]": "c12d01bfc0e09c6273ed9a96112caba9ba12b06805911cbc3518aa6211231482",
+    "explain.json/missions/solar": "9e2d082c993e430b1701f32b55f95c88bceec8af3c325af244dbde226199a21b",
+    "missions.json/missions[solar]": "5d2686835e82265906ce77cf27cea6d6f673544b845cdc9125c9151f10fb4c39",
     "lunar_named_sites.json solar": "afc05cf7036e65f886e7400ea1fec1d9018fa790566b3f23c50a317bf745178b",
     # the funnel of every mission (utilities and the ice component) did not change either
     "detail tiles: id and the utilities of every mission": "ae49437a90419b1485a2c19a4c1202c8e165ae9bc8742e4ff2234e4e46f99c33",
@@ -63,9 +63,10 @@ KNOWN_LIMITATIONS = {
         "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
         "Similarity is computed on real values within stated tolerances (team decision of 2026-11-15, morning; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline) and whose relative elevation is within 1,000 m (twice 500 m), with the highest similarity. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
         "Temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K).",
-        "The soft criteria have no surface-type term: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale.",
+        "The soft criteria have no surface-type term and the funnel has no surface-type gate: polar deserts, ice-free Arctic plateaus and steppe score alike when bare and smooth at the km scale, and ice sheets are not excluded. 1,445 of the 10,192 ranked Rover points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'): 1,101 in Antarctica and 201 in Greenland. None of them ranks in the top 500; the best is number 722.",  # audit correction 2b (2026-11-15)
     ],
     "solar": [
+        "The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability.",  # audit correction 2c (2026-11-15)
         "The solar twin is matched on sunlight above the atmosphere (team decision of 2026-11-15, morning): Earth's annual-mean sunlight at the top of the atmosphere (DERIVED from latitude) against the lunar surface irradiance of the equatorial maria (|lat| <= 30 deg, elevation <= -1,200 m), within 0.6 kWh/m2/day, with slope and roughness as secondary criteria. Only part of that sunlight reaches the ground on Earth (shown per pair); on the Moon all of it does, in a lunar day of 29.5 Earth days. The maria receive the sunlight of Earth's tropics, so only points within about 33.5 deg of the equator find a twin; the others keep their suitability with no twin (missions.json similarity.unpaired_reasons).",
         "Earth irradiance at the ground, sun geometry and the diurnal amplitude are suitability criteria. Earth irradiance at the ground is surface solar energy under the atmosphere and clouds (WorldClim) and lunar irradiance is airless geometry; the solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of facts.moon_pass_abs_lat_max (shown in the lunar fail bits only: lunar cells are not filtered for the similarity).",
         "Temperature and diurnal amplitude are not part of the solar similarity: their values on both sides and the difference are shown for information. 6,060 passing solar cells (all in Antarctica) have no land surface temperature: the amplitude weight drops out of their suitability with the remaining weights renormalised. None of them has a lunar twin (they lie at 64.5 S or further south, far from the latitudes whose sunlight matches the maria), so they have no similarity, no final score and no confidence.",
@@ -268,15 +269,30 @@ def test_every_surviving_pair_is_within_its_bounds(real, real_dir, mission):
 
 
 def _rover_solar_digests(files, objs):
+    # Statistical audit corrections of 2026-11-15 (docs/stats_audit/correcciones_1.md): the
+    # place labels (earth_base.bin country / region, explain.json place: the true great-circle
+    # nearest place) and the text not_used_by_engine.why changed on purpose; the digests leave
+    # them out (checked equal on the bundle shipped before the corrections), so every number,
+    # pair and twin is still the revision 5 one, byte for byte.
     out = {f: hashlib.sha256(files[f]).hexdigest() for f in
            ("earth_rover.bin", "earth_rover_pairs.bin", "moon_rover.bin", "earth_solar.bin", "earth_solar_pairs.bin",
-            "moon_solar.bin", "earth_base.bin")}
+            "moon_solar.bin")}
+    man0 = objs["manifest.json"]
+    eb = next(x for x in man0["files"] if x["name"] == "earth_base.bin")
+    hb = hashlib.sha256()
+    for c in eb["columns"]:
+        if c["name"] not in ("country", "region"):
+            hb.update(c["name"].encode())
+            hb.update(files["earth_base.bin"][c["offset"]:c["offset"] + 4 * c["length"]])
+    out["earth_base.bin without country, region"] = hb.hexdigest()
     for m in ("rover", "solar"):
         out[f"twins.json/missions/{m}"] = _digest(objs["twins.json"]["missions"][m])
-        out[f"explain.json/missions/{m}"] = _digest([dict(it, similarity={k: v for k, v in it["similarity"].items() if k != "pair_sentence"})
-                                                      for it in objs["explain.json"]["missions"][m]])
-        out[f"missions.json/missions[{m}]"] = _digest({k: v for k, v in next(x for x in objs["missions.json"]["missions"] if x["id"] == m).items()
-                                                       if k != "known_limitations"})
+        out[f"explain.json/missions/{m}"] = _digest([dict({k: v for k, v in it.items() if k != "place"},
+                                                          similarity={k: v for k, v in it["similarity"].items() if k != "pair_sentence"})
+                                                     for it in objs["explain.json"]["missions"][m]])
+        mm = next(x for x in objs["missions.json"]["missions"] if x["id"] == m)
+        out[f"missions.json/missions[{m}]"] = _digest({k: (v if k != "not_used_by_engine" else {a: b for a, b in v.items() if a != "why"})
+                                                       for k, v in mm.items() if k != "known_limitations"})
         out[f"lunar_named_sites.json {m}"] = _digest([[s["cell_id"], (s["missions"] or {}).get(m)]
                                                       for s in objs["lunar_named_sites.json"]["sites"]])
     man = objs["manifest.json"]
