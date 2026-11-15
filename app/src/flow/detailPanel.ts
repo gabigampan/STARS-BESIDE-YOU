@@ -606,7 +606,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       ),
     );
   }
-  if (o.pass && o.confidence != null) {
+  // revision 8: no per-pair confidence is shown (the team lead removed it; one label per mission said nothing about a pair)
+  if (false as boolean) {
     // 8. confidence
     const levels = m.weighted_variables.map((w) => `${w.label}: Earth ${LEVEL_WORDS[w.levels.EARTH ?? 'NO_DATA']}, Moon ${LEVEL_WORDS[w.levels.MOON ?? 'NO_DATA']}`);
     sections.push(

@@ -397,6 +397,8 @@ export class MissionPanel {
     sec.append(ol);
     // the rule of the five and the bundle's notes for this list (texts with "show": top5), verbatim
     if (m.top5?.rule) sec.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
+    const tie = (m.top5 as { top_tie_n?: number } | undefined)?.top_tie_n;
+    if (tie != null && tie > 5 && !(m.top5?.rule ?? '').includes(int(tie))) sec.append(h('p', { class: 'muted', 'data-text': 'top5.top_tie_n' }, `${int(tie)} points are tied at the top score.`));
     for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, noteText(this.app.store, n.text, m)));
     return sec;
   }

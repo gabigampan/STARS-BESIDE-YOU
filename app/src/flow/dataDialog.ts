@@ -52,6 +52,7 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
       // the engine's record, in plain words (file, code and column references left out)
       // an entry that describes the z-score similarity is left out for a mission that no longer uses it
       h('ul', { 'data-record': m.id }, m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => h('li', null, plainText(store, l, m)))),
+      criteriaTable(store, m),
       // the bundle's notes for this place ("show" includes data_and_limits), verbatim
       ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(store, n.text, m))),
     );
@@ -151,4 +152,29 @@ function usedLevels(store: DataStore): Set<string> {
   for (const v of Array.isArray(vars) ? vars : Object.values(vars ?? {})) for (const b of Object.values(v?.bodies ?? {})) if (b?.level) used.add(b.level);
   if (!used.size) for (const k of Object.keys(store.variables.levels)) used.add(k);
   return used;
+}
+
+/** Revision 8: the criteria set the mission was built with, and how it departs from the team's set. */
+function criteriaTable(store: DataStore, m: Mission): HTMLElement | null {
+  const cs = (m as unknown as { criteria_set?: { set?: string; title?: string; deviations?: { criterion: string; team?: { weight?: number } | null; ours?: { weight?: number } | null; reason?: string }[] } }).criteria_set;
+  if (!cs) return null;
+  const label = (v: string) => store.variables.variables?.[v as never]?.['label' as never] ?? plainText(store, v, m);
+  const w = (x?: { weight?: number } | null) => (x == null ? 'not used' : x.weight != null ? `weight ${x.weight}` : 'used');
+  const rows = (cs.deviations ?? []).map((d) =>
+    h('tr', null, h('td', null, String(label(d.criterion))), h('td', null, w(d.team)), h('td', null, w(d.ours)), h('td', null, d.reason ? noteText(store, d.reason, m) : '')),
+  );
+  return h(
+    'div',
+    { class: 'criteria-set', 'data-criteria': cs.set ?? '' },
+    h('p', null, h('strong', null, 'Criteria used: '), cs.title ?? cs.set ?? ''),
+    rows.length
+      ? h(
+          'table',
+          { class: 'keys-table' },
+          h('caption', { class: 'sr-only' }, `Departures from the team's criteria, ${missionName(m)} mission`),
+          h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Criterion'), h('th', { scope: 'col' }, "Team's set"), h('th', { scope: 'col' }, 'Used here'), h('th', { scope: 'col' }, 'Why'))),
+          h('tbody', null, rows),
+        )
+      : h('p', { class: 'muted' }, "No departure from the team's criteria."),
+  );
 }
