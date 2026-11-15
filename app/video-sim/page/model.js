@@ -57,7 +57,9 @@ export function panelPower(S0, tiltDeg, sunElev, visible) {
 }
 
 // Lunar base: temperature shape model between the measured Tmin and Tmax (stated in the scenario).
-export function buildTemperatureCurve(sc, n = 4000) {
+// visFn(H) = visible fraction of the solar disc at the site (real terrain horizon); the surface is
+// treated as sunlit while more than half of the disc is visible.
+export function buildTemperatureCurve(sc, visFn, n = 4000) {
   const tau = sc.temperature_model.tau_days;
   const lat = sc.site.lat_deg, decl = sc.sun.declination_deg;
   const P = sc.constants.synodic_period_days.value;
@@ -68,7 +70,7 @@ export function buildTemperatureCurve(sc, n = 4000) {
     const H = -180 + 360 * (k / n);
     const tDays = P * k / n;
     const h = sunENU(lat, decl, H).elev;
-    if (h > 0) { g[k] = Math.pow(Math.sin(h * D2R), 0.25); up = true; }
+    if (h > 0 && visFn(H) > 0.5) { g[k] = Math.pow(Math.sin(h * D2R), 0.25); up = true; }
     else { if (up) { gSet = g[k - 1]; tSet = tDays; up = false; } g[k] = gSet * Math.exp(-(tDays - tSet) / tau); }
   }
   const second = g.slice(n);

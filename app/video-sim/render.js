@@ -47,7 +47,7 @@ async function openPage(srv) {
   const logs = [];
   page.on('console', (m) => logs.push(m.text()));
   page.on('pageerror', (e) => logs.push('PAGEERROR ' + e.message));
-  await page.goto(`http://127.0.0.1:${srv.address().port}/?aa=${opt('aa', '1')}`);
+  await page.goto(`http://127.0.0.1:${srv.address().port}/?aa=${opt('aa', '1')}&tdaz=${opt('tdaz', '315')}`);
   try { await page.waitForFunction(() => window.__ready === true, null, { timeout: 300000 }); }
   catch (e) { console.error(logs.join('\n')); throw e; }
   const gl = await page.evaluate(() => { const g = document.getElementById('gl').getContext('webgl2'); const d = g.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER); });

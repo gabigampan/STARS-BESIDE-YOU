@@ -318,7 +318,10 @@ if (isSolar) {
   }
 }
 const seriesAt = (t) => series[Math.max(0, Math.min(series.length - 1, Math.round(t * SC.fps * 4)))];
-const Tcurve = isSolar ? null : M.buildTemperatureCurve(SC);
+const Tcurve = isSolar ? null : M.buildTemperatureCurve(SC, (Hh) => {
+  const s = M.sunENU(SC.site.lat_deg, SC.sun.declination_deg, Hh);
+  return M.discVisible(s.elev, M.horizonAt(objProfile, TR.obj_hz_step_deg, s.az));
+});
 
 // ------------------------------------------------------------------ overlay
 const panel = document.getElementById('panel');
@@ -500,7 +503,7 @@ window.renderAt = function (t) {
 // Check view: the near terrain patch seen straight down (orthographic, north up), lit from the
 // north-west at 25 deg like the shaded-relief PNG written by prepare.py, objects and overlays hidden.
 window.renderTopdown = function () {
-  const s = { az: 315, elev: 25 };
+  const s = { az: Number(qs.get('tdaz') ?? 315), elev: 25 };
   const sd = dirFromAzEl(s.az, s.elev);
   sunU.sunElev.value = s.elev; updateHz(nearTex, nearHz, NEAR.n * NEAR.n, TR.n_az, s.az);
   camU.microFade.value = 0; objLit.value = 0; root.visible = false; if (earth) earth.visible = false; sunDisc.visible = false;

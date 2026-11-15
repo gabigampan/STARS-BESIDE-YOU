@@ -167,7 +167,7 @@
     "sim_end_s": 40
   },
   "temperature_model": {
-    "description": "Stated shape model, not a measurement: T = Tmin + (Tmax - Tmin) * g, where g is the cycle-normalised value of a radiative-equilibrium shape (sin h)^(1/4) while the Sun is above the flat horizon, decaying after sunset as g_sunset * exp(-t_after_sunset / tau). The curve is rescaled so that over the full cycle shown it reaches exactly the cell's measured Diviner minimum and maximum.",
+    "description": "Stated shape model, not a measurement: T = Tmin + (Tmax - Tmin) * g, where g is the cycle-normalised value of a radiative-equilibrium shape (sin h)^(1/4) while the Sun is above the flat horizon AND more than half of its disc clears the real terrain horizon at the habitat, decaying after the last sunlit moment as g_sunset * exp(-t / tau). The curve is rescaled so that over the full cycle shown it reaches exactly the cell's measured Diviner minimum and maximum.",
     "tau_days": 3.0,
     "inset_tint": "small inset only, blue (Tmin) to warm grey (Tmax)"
   },
@@ -195,18 +195,18 @@
     "steps": [
       {
         "name": "Module placed",
-        "t0": 4.0,
+        "t0": 5.0,
         "t1": 9.0
       },
       {
         "name": "Inflatable section deploying",
-        "t0": 10.0,
-        "t1": 16.0
+        "t0": 9.5,
+        "t1": 14.5
       },
       {
         "name": "Regolith berm built",
-        "t0": 17.0,
-        "t1": 25.0
+        "t0": 15.0,
+        "t1": 21.5
       }
     ]
   },
@@ -227,24 +227,31 @@
         "target_z": 2
       },
       {
-        "t": 16.0,
+        "t": 13.0,
         "dist": 66,
-        "elev_deg": 10,
-        "az_deg": 165,
+        "elev_deg": 11,
+        "az_deg": 100,
         "target_z": 2
       },
       {
-        "t": 27.0,
+        "t": 20.0,
+        "dist": 62,
+        "elev_deg": 11,
+        "az_deg": 65,
+        "target_z": 2
+      },
+      {
+        "t": 28.0,
         "dist": 64,
         "elev_deg": 9,
-        "az_deg": 150,
+        "az_deg": 122,
         "target_z": 2
       },
       {
         "t": 40.0,
-        "dist": 70,
-        "elev_deg": 9,
-        "az_deg": 125,
+        "dist": 72,
+        "elev_deg": 7,
+        "az_deg": 140,
         "target_z": 2
       }
     ],
@@ -383,12 +390,12 @@
       "text": [
         "3D simulation driven by table data, not real footage. Lunar night over the real LOLA relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the north-west sky.",
         "The camera descends to the site. Night view: exposure raised to show earthshine.",
-        "Sunrise: the Sun skims the horizon; the cylindrical module is lowered onto its legs.",
-        "The Sun stays below about 7° all day; shadows are very long.",
+        "Sunrise: the Sun skims the eastern horizon; the cylindrical module is lowered onto its legs.",
         "The inflatable section expands from the end of the module.",
         "A regolith berm rises in a ring around the habitat.",
-        "The habitat is assembled; the Sun moves west along the horizon.",
-        "Sunset: the ground falls into shadow and the surface starts to cool.",
+        "The Sun stays below about 7° all day and moves west along the horizon; shadows are very long.",
+        "The Sun goes behind the western terrain while still above the flat horizon; the surface starts to cool.",
+        "The Sun sets below the horizon: lunar night begins.",
         "Lunar night, lit only by earthshine (exposure raised, not to scale).",
         "The surface temperature approaches the measured minimum, 68.5 K.",
         "Closing card: Earth analog Kunlun Mountains, Xinjiang, China (cell E19345) against the lunar cell M62859 on Mons Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against −204.65 °C (surface); lunar maximum 255.56 K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Earth (modelled).",
@@ -419,12 +426,12 @@
       "text": [
         "Simulación 3D basada en datos de las tablas, no son imágenes reales. Noche lunar sobre el relieve real LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo, al noroeste.",
         "La cámara desciende hasta el punto. Vista nocturna: exposición aumentada para mostrar la luz cenicienta.",
-        "Amanecer: el Sol roza el horizonte; el módulo cilíndrico se baja sobre sus patas.",
-        "El Sol no pasa de unos 7° en todo el día; las sombras son muy largas.",
+        "Amanecer: el Sol roza el horizonte del este; el módulo cilíndrico se baja sobre sus patas.",
         "La sección inflable se expande desde el extremo del módulo.",
         "Un muro de regolito se levanta en anillo alrededor del hábitat.",
-        "El hábitat está montado; el Sol se desplaza al oeste a ras del horizonte.",
-        "Puesta de Sol: el suelo queda en sombra y la superficie empieza a enfriarse.",
+        "El Sol no pasa de unos 7° en todo el día y se desplaza al oeste a ras del horizonte; las sombras son muy largas.",
+        "El Sol se oculta tras el relieve del oeste aunque sigue sobre el horizonte plano; la superficie empieza a enfriarse.",
+        "El Sol se pone bajo el horizonte: empieza la noche lunar.",
         "Noche lunar, iluminada solo por la luz cenicienta de la Tierra (exposición aumentada, no a escala).",
         "La temperatura de la superficie se acerca al mínimo medido, 68,5 K.",
         "Tarjeta final: el análogo terrestre montes Kunlun, Xinjiang, China (celda E19345) frente a la celda lunar M62859 en Mons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (superficie); máxima lunar 255,56 K; temperatura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la Tierra (modelado).",
