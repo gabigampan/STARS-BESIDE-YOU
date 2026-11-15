@@ -8,7 +8,7 @@ import { append, h, int, levelTag } from './dom';
 
 const add = (el: Element, ...c: (Node | string | null)[]) => append(el, c);
 
-export function renderDataDialog(store: DataStore): void {
+export function renderDataDialog(store: DataStore, ruleText: string, meaning: string): void {
   const body = document.getElementById('credits-body');
   if (!body) return;
   body.querySelector('.data-sections')?.remove();
@@ -19,8 +19,9 @@ export function renderDataDialog(store: DataStore): void {
   add(wrap, 
     h('h3', { class: 'dlg-h' }, 'How to read the results'),
     h('p', null, `Every point is a 1° grid cell: about ${int(g.EARTH.cell_ns_km)} km north-south on Earth and ${int(g.MOON.cell_ns_km)} km on the Moon (narrower east-west towards the poles). Every value is an average over the whole cell; nothing here describes a rover-scale site.`),
-    h('p', null, sim.meaning),
-    h('p', null, h('strong', null, 'Similarity rule in use: '), sim.rule_options[sim.rule] ?? sim.rule),
+    h('p', { 'data-note': 'meaning' }, meaning),
+    h('p', { 'data-note': 'rule' }, h('strong', null, 'Similarity rule in use. '), ruleText.replace(/^Similarity rule: /, '')),
+    h('p', { class: 'muted' }, `Technical detail (${sim.rule}): ${sim.rule_options[sim.rule] ?? ''}`),
     sim.no_twin_reason ? h('p', null, sim.no_twin_reason) : null,
     h('p', null, 'Final score = alpha x similarity + (1 - alpha) x suitability; ', `alpha = ${store.missionsJson.alpha}. `, store.missionsJson.alpha_why),
   );

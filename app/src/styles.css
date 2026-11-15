@@ -336,6 +336,15 @@ a:hover {
 }
 .cesium-widget-credits a {
   color: #e8e6e1 !important;
+  /* Credit links are controls too: 44 px tall and 8 px apart (checklist 06). */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.cesium-widget-credits .cesium-credit-logoContainer {
+  margin-right: 8px;
 }
 
 /* ---------- reserved panels (built by the next stage) ---------- */

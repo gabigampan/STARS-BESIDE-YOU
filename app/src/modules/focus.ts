@@ -56,6 +56,8 @@ export interface FocusApi {
   /** Return both cameras to the views they had before focusPair, and restore the layout. */
   exitFocus(options?: Pick<FocusOptions, 'durationMs' | 'timeSource'>): Promise<boolean>;
   isFocused(): boolean;
+  /** Outline one cell on one body without the paired view (null removes it); focusPair and exitFocus replace it. */
+  outline(body: Body, cell: CellFootprint | null): void;
   /** Timing of the last flight (for tests and tuning). */
   lastFlight(): FlightReport | null;
 }
@@ -214,6 +216,10 @@ export class Focus implements FocusApi {
 
   lastFlight(): FlightReport | null {
     return this.report;
+  }
+
+  outline(body: Body, cell: CellFootprint | null): void {
+    this.outlines[body].set(cell ?? undefined);
   }
 
   focusPair(pair: { earth: FocusPoint; moon: FocusPoint }, options: FocusOptions = {}): Promise<boolean> {

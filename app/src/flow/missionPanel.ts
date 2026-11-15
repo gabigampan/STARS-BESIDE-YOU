@@ -8,6 +8,7 @@ import type { FlowApp } from './app';
 import { missionLine, missionName, statusWords } from './copy';
 import { button, capitalise, fixed, h, icon, int, num } from './dom';
 import { levelLegend } from './legend';
+import { tempMark } from './detailPanel';
 
 const PAGE = 50;
 
@@ -64,6 +65,7 @@ export class MissionPanel {
         h('span', { class: `tag tag-status` }, icon('info'), statusWords(m)),
         h('button', { type: 'button', class: 'linklike', onclick: () => this.app.openLimits(m.id) }, 'Known limitations'),
       ),
+      this.limitationNote(m),
     );
 
     const counts = h(
@@ -71,6 +73,18 @@ export class MissionPanel {
       { class: 'panel-sec counts', 'aria-label': 'How many places pass' },
       h('p', { class: 'lead' }, `Of ${int(land)} land cells on Earth, `, h('strong', null, `${int(pass)} pass`), ` the ${missionName(m).toLowerCase()} filters and are ranked; ${int(land - pass)} are eliminated.`),
       h('p', { class: 'muted' }, this.app.ruleText()),
+      h('p', { class: 'muted' }, this.app.cellSizeText()),
+    );
+    const funnel = h(
+      'details',
+      { class: 'panel-sec funnel-sec' },
+      h('summary', null, 'How the places are chosen'),
+      h(
+        'ol',
+        { class: 'funnel' },
+        store.missionsJson.funnel.map((f) => h('li', null, h('strong', null, `${capitalise(f.name)}. `), f.text)),
+      ),
+      h('p', { class: 'muted' }, `Alpha for this mission: ${num(m.alpha, 2)} (the team's value); it can be changed under "Adjust the weights".`),
     );
     const elim = h(
       'section',
@@ -146,10 +160,17 @@ export class MissionPanel {
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, counts, details, ranking, elim, levelLegend()));
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, counts, details, ranking, elim, funnel, levelLegend()));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
+  }
+
+  /** Decision 5: the approved limitation of a mission, in full on its card (only where the bundle names the mission). */
+  private limitationNote(m: Mission): HTMLElement | null {
+    const t = this.app.store.similarity.texts?.['solar_limitation'];
+    if (!t || t.mission !== m.id || !this.app.store.hasTwins()) return null;
+    return h('div', { class: 'note-box limitation', 'data-note': 'limitation' }, icon('info'), h('p', null, t.text));
   }
 
   renderList(): void {
@@ -161,10 +182,11 @@ export class MissionPanel {
         'button',
         { type: 'button', class: 'rank-row', 'data-id': String(it.id) },
         h('span', { class: 'rank-n' }, String(it.rank)),
-        h('span', { class: 'rank-place' }, it.place),
+        h('span', { class: 'rank-place' }, it.place, it.missingTemp ? tempMark(this.app) : null),
         h('span', { class: 'rank-score' }, h('span', { class: 'score-bar', style: `--v:${Math.max(0, Math.min(100, it.final))}%`, 'aria-hidden': 'true' }), fixed(it.final, 2)),
       );
-      b.setAttribute('aria-label', `Rank ${it.rank}: ${it.place}, final score ${fixed(it.final, 2)} of 100`);
+      b.setAttribute('aria-label', `Rank ${it.rank}: ${it.place}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`);
+      if (it.missingTemp) b.dataset.missingTemp = 'true';
       b.addEventListener('click', () => globesApi.markers.activate('earth', it.id));
       b.addEventListener('focus', () => globesApi.markers.setHighlighted('earth', it.id));
       b.addEventListener('blur', () => globesApi.markers.setHighlighted('earth', null));

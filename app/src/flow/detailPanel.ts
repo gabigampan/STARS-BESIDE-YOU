@@ -12,6 +12,9 @@ import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, level
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
 
+/** Beyond this distance the nearest populated place says little about the cell, so it is not shown. */
+const NEAREST_PLACE_MAX_KM = 300;
+
 function cellSize(app: FlowApp, lat: number, body: 'EARTH' | 'MOON'): string {
   const g = app.store.manifest.grid.bodies[body];
   const ns = g.cell_ns_km;
@@ -39,7 +42,7 @@ export function renderDetailLoading(root: HTMLElement, app: FlowApp, id: number,
 }
 
 const sec = (title: string, ...children: (Node | string | null | false)[]) =>
-  h('section', { class: 'panel-sec' }, h('h3', null, title), ...children);
+  h('section', { class: 'panel-sec', 'data-sec': title.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '') }, h('h3', null, title), ...children);
 
 function gateTable(caption: string, rows: GateRow[], app: FlowApp, m: MissionOutcome): HTMLElement | null {
   if (!rows.length) return null;
@@ -54,7 +57,7 @@ function gateTable(caption: string, rows: GateRow[], app: FlowApp, m: MissionOut
       rows.map((r) =>
         h(
           'tr',
-          { class: r.pass ? 'is-pass' : 'is-fail' },
+          { class: r.pass ? 'is-pass' : 'is-fail', 'data-variable': r.gate.variable, 'data-pass': String(r.pass) },
           h('th', { scope: 'row' }, app.store.labelOfMissionVariable(m.mission, r.gate.variable)),
           h('td', { class: 'mono' }, r.gate.limit),
           h('td', null, valueText(r.value.value, app.store.variable(r.gate.variable)?.unit ?? m.mission.weighted_variables.find((w) => w.variable === r.gate.variable)?.unit ?? '')),
@@ -87,6 +90,29 @@ function zText(z: number | null): string {
   return Math.abs(z) >= 4 ? `z ${s} (at the clip: at least 4 spreads from the median)` : `z ${s}`;
 }
 
+/** The plain-words meaning of the similarity, from the bundle (decision 1; the generic meaning without twins). */
+export function meaningText(app: FlowApp): string {
+  const st = app.store;
+  if (st.hasTwins()) return st.text('similarity_meaning') ?? st.similarity.meaning;
+  // The approved sentence describes twins; without them the bundle's general meaning applies (its first sentence).
+  return /^.*?\.(?=\s|$)/.exec(st.similarity.meaning)?.[0] ?? st.similarity.meaning;
+}
+
+function meaningNote(app: FlowApp): HTMLElement {
+  return h('p', { class: 'meaning', 'data-note': 'meaning' }, icon('info'), h('span', null, meaningText(app)));
+}
+
+/** The short mark of decision 3, shared by the list and the panel. */
+export function tempMark(app: FlowApp): HTMLElement | null {
+  const t = app.store.text('missing_temperature_mark');
+  return t ? h('span', { class: 'mark-temp', 'data-mark': 'missing-temperature' }, icon('info'), h('span', null, t)) : null;
+}
+
+function missingTempNote(app: FlowApp): HTMLElement | null {
+  const t = app.store.text('missing_temperature_note');
+  return h('div', { class: 'note-box', 'data-note': 'missing-temperature' }, tempMark(app), t ? h('p', null, t) : null);
+}
+
 export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: MissionOutcome): void {
   const store = app.store;
   const m = o.mission;
@@ -107,19 +133,21 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     h('h2', { class: 'panel-title', tabindex: '-1' }, place.text ?? 'Unnamed land cell'),
     h('p', { class: 'coords' }, `${latLonText(lat, lon)} · cell ${id}`),
     h('p', { class: 'muted' }, `A 1° cell of about ${cellSize(app, lat, 'EARTH')}: every value below is an average over the whole cell, not a site.`),
-    place.nearest && place.nearestKm != null ? h('p', { class: 'muted' }, `Nearest populated place: ${place.nearest}, ${num(place.nearestKm, 0)} km from the cell centre.`) : null,
+    place.nearest && place.nearestKm != null && place.nearestKm <= NEAREST_PLACE_MAX_KM ? h('p', { class: 'muted' }, `Nearest populated place: ${place.nearest}, ${num(place.nearestKm, 0)} km from the cell centre.`) : null,
   );
 
   // 2. result
   const result = o.pass
     ? h(
         'p',
-        { class: 'result is-pass', 'data-result': 'pass' },
+        { class: 'result is-pass', 'data-result': 'pass', 'data-rank': String(rank ?? '') },
         verdict(true, ['Passes', '']),
         h('span', null, ` Rank ${rank ?? 'not ranked'} of ${int(total)} · final score `, h('strong', { class: 'final' }, fixed(o.final, 2)), ' / 100'),
+        h('span', { class: 'tag' }, statusWords(m)),
         custom ? h('span', { class: 'tag' }, 'your weights') : null,
+        o.missingTemp ? tempMark(app) : null,
       )
-    : h('p', { class: 'result is-fail', 'data-result': 'fail' }, verdict(false, ['', 'Eliminated for this mission']), h('span', { class: 'reason' }, `: ${o.line}`));
+    : h('p', { class: 'result is-fail', 'data-result': 'fail' }, verdict(false, ['', 'Eliminated for this mission:']), h('span', { class: 'reason' }, o.line));
 
   // 3. the lunar side, up front: which place on the Moon this point is compared with
   let lunar: HTMLElement;
@@ -137,7 +165,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         t.feature ? ` (${t.feature.type.replace(/,.*$/, '').toLowerCase()}), ${num(t.feature.distance_km, 1)} km from its centre` : '',
       ),
       h('p', { class: 'coords' }, `Twin cell centre ${latLonText(t.lat, t.lon)} · cell of about ${cellSize(app, t.lat, 'MOON')}`),
-      h('p', { class: 'share' }, `${int(share)} Earth ${share === 1 ? 'point has' : 'points share'} this twin for the ${missionName(m).toLowerCase()} mission.`),
+      h('p', { class: 'share', 'data-share': String(share) }, store.twinSharingText(m.id, share) ?? `${int(share)} Earth points share this twin.`),
       t.feature ? h('p', null, h('a', { href: t.feature.url, target: '_blank', rel: 'noopener' }, `${t.feature.name} in the USGS/IAU Gazetteer of Planetary Nomenclature`, icon('ext'))) : null,
       h('p', { class: 'muted' }, `The twin is the most similar lunar cell inside ${m.similarity.zone?.name ?? "the mission's target zone"}. It is marked on the Moon globe and joined to this point by the beam.`),
     );
@@ -169,7 +197,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     const rows = o.breakdown.map((r) =>
       h(
         'tr',
-        null,
+        { 'data-variable': r.wv.variable },
         h('th', { scope: 'row' }, r.wv.label, h('span', { class: 'sub' }, valueText(r.value.value, r.wv.unit), ' · ', levelTag(r.wv.levels.EARTH))),
         h('td', null, bar(r.utility), h('span', { class: 'num' }, r.utility == null ? 'no data' : num(r.utility, 3))),
         h('td', { class: 'num' }, num(r.weight, 2)),
@@ -179,7 +207,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     sections.push(
       sec(
         'Suitability',
-        h('p', { class: 'lead' }, `Suitability `, h('strong', null, fixed(o.suitability, 2)), ' / 100', custom ? ' with your weights' : " with the team's weights", ` · ${statusWords(m).toLowerCase()}`),
+        h('p', { class: 'lead' }, `Suitability `, h('strong', { 'data-value': 'suitability' }, fixed(o.suitability, 2)), ' / 100', custom ? ' with your weights' : " with the team's weights", ` · ${statusWords(m).toLowerCase()}`),
         h('p', { class: 'muted' }, 'Each variable becomes a utility from 0 (the team\'s "bad" value) to 1 (its "good" value); suitability is the weighted mean x 100. Rows are sorted by contribution = weight x utility.'),
         h(
           'table',
@@ -187,47 +215,54 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
           h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Variable and value'), h('th', { scope: 'col' }, 'Utility 0-1'), h('th', { scope: 'col' }, 'Weight'), h('th', { scope: 'col' }, 'Contribution'))),
           h('tbody', null, rows),
         ),
-        h('p', null, `Coverage ${num((o.coverage ?? 0) * 100, 1)} %: share of the total weight with data for this cell${(o.coverage ?? 1) < 1 ? '; the missing variables are ignored and the other weights renormalised' : ''}.`),
+        h('p', { 'data-value': 'coverage' }, `Coverage ${num((o.coverage ?? 0) * 100, 1)} %: share of the total weight with data for this cell${(o.coverage ?? 1) < 1 ? '; the missing variables are ignored and the other weights renormalised' : ''}.`),
       ),
     );
   }
 
   // 6. similarity (shown for every cell, so an eliminated cell still shows how it compares)
-  const moonHead = twins ? 'Lunar twin' : 'Whole-Moon average';
+  const moonHead = twins ? (o.twin?.feature ? `Lunar twin, near ${o.twin.feature.name}` : 'Lunar twin') : 'Whole-Moon average';
+  // An eliminated cell has no twin under a twin rule: show its Earth values only.
+  const showMoon = o.pass || !twins;
+  const moonCell = (c: HTMLElement) => (showMoon ? c : null);
   const simRows = o.similarityRows.map((r) =>
     h(
       'tr',
-      { class: r.clipped ? 'is-clipped' : '' },
+      { class: r.clipped ? 'is-clipped' : '', 'data-variable': r.sv.variable },
       h('th', { scope: 'row' }, r.label, h('span', { class: 'sub' }, `weight ${num(r.normWeight, 3)}`)),
       h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, zText(r.earth.z), ' · ', levelTag(r.earth.level))),
-      h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, zText(r.moon.z), ' · ', levelTag(r.moon.level))),
+      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, zText(r.moon.z), ' · ', levelTag(r.moon.level)))),
     ),
   );
   const notActive = store.similarity.variables.filter((v) => v.status !== 'active');
   const infoRows = o.infoRows.map((r) =>
     h(
       'tr',
-      null,
-      h('th', { scope: 'row' }, r.label, h('span', { class: 'sub' }, 'not part of the similarity')),
+      { 'data-variable': r.variable },
+      h(
+        'th',
+        { scope: 'row' },
+        r.label,
+        h('span', { class: 'sub' }, 'not part of the similarity'),
+        r.variable === 'rock_or_bare_frac' && store.text('rock_note') ? h('span', { class: 'sub note', 'data-note': 'rock' }, store.text('rock_note')) : null,
+      ),
       h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, levelTag(r.earth.level))),
-      h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, r.moon.how === 'commonest' ? 'commonest class · ' : r.moon.how === 'mean' ? 'whole-Moon mean · ' : '', levelTag(r.moon.level))),
+      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, r.moon.how === 'commonest' ? 'commonest class · ' : r.moon.how === 'mean' ? 'whole-Moon mean · ' : '', levelTag(r.moon.level)))),
     ),
   );
   sections.push(
     sec(
       'Similarity to the Moon',
-      o.pass ? h('p', { class: 'lead' }, 'Similarity ', h('strong', null, fixed(o.similarity, 2)), ' / 100') : h('p', { class: 'lead' }, 'No similarity is scored for an eliminated cell; the values are shown for comparison.'),
-      h(
-        'p',
-        { class: 'meaning' },
-        icon('info'),
-        h('span', null, 'What "similar" means here: each body is scaled on its own (z-scores), so a high similarity means this place sits in the same relative position on Earth as the lunar side does on the Moon. It does not mean equal values: compare the absolute values in each row.'),
-      ),
+      o.pass
+        ? h('p', { class: 'lead' }, 'Similarity ', h('strong', { 'data-value': 'similarity' }, fixed(o.similarity, 2)), ' / 100', o.simVarsUsed != null ? h('span', { class: 'muted' }, ` · computed with ${o.simVarsUsed} of ${store.similarity.active_variables.length} variables`) : null)
+        : h('p', { class: 'lead' }, twins ? 'No similarity and no lunar twin are computed for a cell eliminated for this mission; its Earth values are shown for reference.' : 'No similarity is scored for an eliminated cell; the values are shown for comparison.'),
+      meaningNote(app),
+      o.missingTemp ? missingTempNote(app) : null,
       h(
         'table',
         { class: 'rows sim' },
         h('caption', null, 'Part of the similarity'),
-        h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Variable'), h('th', { scope: 'col' }, 'This Earth cell'), h('th', { scope: 'col' }, moonHead))),
+        h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Variable'), h('th', { scope: 'col' }, 'This Earth cell'), moonCell(h('th', { scope: 'col' }, moonHead)))),
         h('tbody', null, simRows),
       ),
       notActive.length
@@ -235,7 +270,13 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
             'ul',
             { class: 'notes' },
             notActive.map((v) =>
-              h('li', null, h('strong', null, `${store.similarityLabel(v.variable).label}: `), v.status === 'excluded' ? 'excluded on these data. ' : 'not active on these data. ', capitalise(v.status_reason ?? '')),
+              h(
+                'li',
+                null,
+                h('strong', null, `${store.similarityLabel(v.variable).label}: `),
+                v.status === 'excluded' ? 'excluded on these data. ' : 'not active on these data. ',
+                v.variable === 'rock_or_bare_frac' && store.text('rock_note') ? 'shown below for information.' : capitalise(v.status_reason ?? ''),
+              ),
             ),
           )
         : null,
@@ -243,7 +284,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         'table',
         { class: 'rows info' },
         h('caption', null, 'Shown for comparison, not part of the similarity'),
-        h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Variable'), h('th', { scope: 'col' }, 'This Earth cell'), h('th', { scope: 'col' }, moonHead))),
+        h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Variable'), h('th', { scope: 'col' }, 'This Earth cell'), moonCell(h('th', { scope: 'col' }, moonHead)))),
         h('tbody', null, infoRows),
       ),
     ),
@@ -256,7 +297,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         'Final score',
         h(
           'p',
-          { class: 'arith' },
+          { class: 'arith', 'data-value': 'arith' },
           `Final = alpha x similarity + (1 - alpha) x suitability = ${num(alpha, 2)} x ${fixed(o.similarity, 2)} + ${num(1 - alpha, 2)} x ${fixed(o.suitability, 2)} = `,
           h('strong', null, fixed(o.final, 2)),
         ),
@@ -268,7 +309,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     sections.push(
       sec(
         'Confidence',
-        h('p', { class: 'lead' }, h('strong', null, capitalise(o.confidence ?? 'none')), ` (score ${num(o.confidenceScore, 3)} of 1, with the team's weights)`),
+        h('p', { class: 'lead', 'data-value': 'confidence' }, h('strong', null, capitalise(o.confidence ?? 'none')), ` (score ${num(o.confidenceScore, 3)} of 1, with the team's weights)`),
         h(
           'p',
           { class: 'muted' },
@@ -351,7 +392,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
   sections.push(levelLegend());
 
   const foot = h('div', { class: 'panel-foot' }, backButton(app));
-  if (hasVideo(m)) {
+  if (hasVideo(m) && o.pass) {
     foot.append(button(`Start the ${missionName(m).toLowerCase()} mission`, () => void app.startMission(), { kind: 'primary', icon: 'play', id: 'start-mission' }));
   }
   const body = h('div', { class: 'panel-body' }, ...sections.filter(Boolean));

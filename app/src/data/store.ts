@@ -131,6 +131,10 @@ export interface RankedPoint {
   suitability: number;
   similarity: number;
   twinId: number | null;
+  /** How many similarity variables the pair used (earth_<m>.bin sim_vars_used); null in older bundles. */
+  simVarsUsed: number | null;
+  /** True when the temp_k bit of sim_missing_bits is set (decision 3: mark the pair). */
+  missingTemp: boolean;
 }
 
 export interface GateRow {
@@ -205,6 +209,10 @@ export interface MissionOutcome {
   infoRows: InfoRow[];
   twin: Twin | null;
   ice: IceOutcome | null;
+  /** Similarity variables used by the pair (sim_vars_used); null when eliminated or absent. */
+  simVarsUsed: number | null;
+  /** The pair's similarity left temperature out (sim_missing_bits temp_k bit). */
+  missingTemp: boolean;
 }
 
 export class DataStore {
@@ -391,10 +399,48 @@ export class DataStore {
         suitability: this.q(t, 'suitability', p) as number,
         similarity: this.q(t, 'similarity', p) as number,
         twinId: tw === this.manifest.encoding.int32_missing ? null : tw,
+        simVarsUsed: this.q(t, 'sim_vars_used', p),
+        missingTemp: this.missingTempAt(id, p),
       });
     }
     out.sort((a, b) => a.rank - b.rank);
     return out;
+  }
+
+  /** The bit of `temp_k` in sim_missing_bits (its position in similarity.json active_variables), -1 when not active. */
+  tempBit(): number {
+    return this.similarity.active_variables.indexOf('temp_k');
+  }
+
+  /** True when the pair of passing position `p` left temperature out of its similarity. */
+  missingTempAt(missionId: string, p: number): boolean {
+    const md = this.missionDataOf(missionId);
+    const bits = md.table.cols['sim_missing_bits'];
+    const k = this.tempBit();
+    if (!bits || k < 0 || p < 0) return false;
+    const b = bits[p];
+    return b !== this.manifest.encoding.int32_missing && ((b >>> k) & 1) === 1;
+  }
+
+  /** An approved web text of the bundle (similarity.json texts.<key>.text), verbatim; null when absent. */
+  text(key: string): string | null {
+    return this.similarity.texts?.[key]?.text ?? null;
+  }
+
+  /**
+   * The twin-sharing sentence (decision 4) with N and X filled in. The bundle says the second
+   * sentence is about lunar_base only: other missions get the first sentence.
+   */
+  twinSharingText(missionId: string, earthCells: number): string | null {
+    const t = this.similarity.texts?.['twin_sharing_note'];
+    if (!t) return null;
+    const ranked = this.mission(missionId).ranked_count;
+    const x = ranked > 0 ? (100 * earthCells) / ranked : 0;
+    // Pick the sentences on the template (no decimals in it yet), then fill N and X.
+    let template = t.text;
+    const onlyFor = /about lunar_base/.test(t.where) ? 'lunar_base' : null;
+    if (onlyFor && missionId !== onlyFor) template = /^.*?\.(?=\s|$)/.exec(template)?.[0] ?? template;
+    return template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
   }
 
   // ---------- grid ----------
@@ -752,6 +798,8 @@ export class DataStore {
       infoRows,
       twin: pass ? twin : null,
       ice,
+      simVarsUsed: pass ? stored('sim_vars_used') : null,
+      missingTemp: pass && p >= 0 ? this.missingTempAt(missionId, p) : false,
     };
   }
 

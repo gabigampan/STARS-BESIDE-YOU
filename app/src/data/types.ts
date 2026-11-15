@@ -1,4 +1,4 @@
-// Types of the engine's static bundle v2 (docs/DATA_CONTRACT.md, contract revision 3).
+// Types of the engine's static bundle v2 (docs/DATA_CONTRACT.md, contract revision 4).
 // Only the fields the app reads are typed; everything else stays available as unknown JSON.
 
 export type BodyKey = 'EARTH' | 'MOON';
@@ -219,6 +219,14 @@ export interface ZoneTwinTarget {
   zones: Record<string, ZoneInfo>;
 }
 
+export interface BundleText {
+  decision: number;
+  text: string;
+  where: string;
+  mission?: string;
+  placeholders?: Record<string, string>;
+}
+
 export interface SimilarityJson {
   rule: string;
   rule_why: string;
@@ -234,6 +242,8 @@ export interface SimilarityJson {
   not_part_of_similarity: string[];
   not_part_of_similarity_note: string;
   target: GlobalMeanTarget | ZoneTwinTarget;
+  /** Contract revision 4: the approved web texts (decisions 1 to 5), verbatim. */
+  texts?: Record<string, BundleText>;
   twins?: unknown;
   no_twin_reason?: string;
 }

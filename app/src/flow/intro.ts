@@ -53,7 +53,7 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
       h(
         'p',
         { class: 'intro-foot' },
-        `Each point is a 1° cell: about ${int(app.store.manifest.grid.bodies.EARTH.cell_ns_km)} km across on Earth and ${int(app.store.manifest.grid.bodies.MOON.cell_ns_km)} km on the Moon. `,
+        `${app.cellSizeText()} `,
         app.ruleText(),
       ),
     );

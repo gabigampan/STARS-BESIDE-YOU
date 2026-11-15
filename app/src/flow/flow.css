@@ -974,3 +974,66 @@ table.rows tr.is-fail th {
     animation-duration: 2.4s;
   }
 }
+
+/* Decision 3 mark (list and panel) and the approved notes (decisions 2, 3, 5): one look. */
+.mark-temp {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 3px;
+  color: var(--text-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+}
+.mark-temp .icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-top: 2px;
+}
+.rank-place {
+  display: flex;
+  flex-direction: column;
+}
+.result .mark-temp {
+  flex-basis: 100%;
+}
+.note-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--edge-strong);
+  border-left: 3px solid var(--sodium);
+  border-radius: 3px;
+}
+.note-box > .icon {
+  flex: none;
+  margin-top: 2px;
+}
+.note-box p {
+  margin: 0;
+}
+div.note-box[data-note='missing-temperature'] {
+  flex-direction: column;
+  gap: 4px;
+}
+table.rows .sub.note {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+.funnel-sec summary,
+.weights summary,
+.sources summary {
+  min-height: 44px;
+}
+.funnel-sec .funnel {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+.funnel-sec .funnel li + li {
+  margin-top: 6px;
+}

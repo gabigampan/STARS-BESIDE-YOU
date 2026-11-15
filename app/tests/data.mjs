@@ -3,8 +3,8 @@
 // imported directly by Node's type stripping) and checks, for every passing Earth cell of every
 // offered mission, that the browser recompute reproduces the stored suitability, similarity,
 // final and rank (docs/DATA_CONTRACT.md "Recompute formulas"). Runs on the shipped bundle and, when
-// present, on the zone_twin preview bundle.
-// Usage: node tests/data.mjs [--bundle=DIR ...]   (default: public/data/v2 and $TWIN_BUNDLE)
+// present, on the no-twin variant (repo_global_mean).
+// Usage: node tests/data.mjs [--bundle=DIR ...]   (default: public/data/v2 and $OTHER_BUNDLE)
 
 import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -14,11 +14,12 @@ import { DataStore, DataError } from '../src/data/store.ts';
 import { pyRound2, npRound2, recomputeMission, suitabilityOf } from '../src/data/recompute.ts';
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const TWIN =
-  process.env.TWIN_BUNDLE ??
-  '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/bundle_zone_twin';
+// The no-twin variant (rule repo_global_mean), kept outside public/data.
+const OTHER =
+  process.env.OTHER_BUNDLE ??
+  '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/bundle_global_mean';
 const args = process.argv.filter((a) => a.startsWith('--bundle=')).map((a) => a.slice(9));
-const bundles = args.length ? args : [join(APP, 'public/data/v2'), ...(existsSync(TWIN) ? [TWIN] : [])];
+const bundles = args.length ? args : [join(APP, 'public/data/v2'), ...(existsSync(OTHER) ? [OTHER] : [])];
 
 const failures = [];
 const ok = (m) => console.log(`ok   ${m}`);
@@ -93,6 +94,29 @@ for (const dir of bundles) {
     check(badF === 0, `${m.id}: final recomputed exactly on all ${n} cells (${badF} differ)`);
     check(badR === 0, `${m.id}: rank recomputed exactly on all ${n} cells (${badR} differ)`);
     check(badCov === 0, `${m.id}: coverage identical through both code paths`);
+    // revision 4: the per-pair variable count and missing bits agree with the z-scores used
+    const F = store.similarity.active_variables;
+    const tb = store.tempBit();
+    let badUsed = 0, marked = 0, markedOutside = 0;
+    const svu = md.table.cols['sim_vars_used'];
+    for (let p = 0; p < n; p++) {
+      const lp = md.landIndex[p];
+      const o = store.outcome(store.landId(lp), m.id);
+      const used = o.similarityRows.filter((r) => r.earth.z != null && r.moon.z != null).length;
+      if (svu && svu[p] !== used) badUsed++;
+      const mt = store.missingTempAt(m.id, p);
+      if (mt) { marked++; if (store.latOf(store.landId(lp)) > -60) markedOutside++; }
+      if (mt !== o.similarityRows.some((r) => r.sv.variable === 'temp_k' && (r.earth.z == null || r.moon.z == null))) badUsed++;
+    }
+    check(!!svu && badUsed === 0, `${m.id}: sim_vars_used and the temp_k bit (${tb} of ${F.join(',')}) agree with the z-scores on all ${n} cells`);
+    console.log(`     ${m.id}: ${marked} pairs marked "${store.text('missing_temperature_mark')}" (${markedOutside} north of 60 S)`);
+    if (store.hasTwins()) {
+      const tw = store.twinsOf(m.id);
+      const sum = tw.reduce((s, t) => s + t.earth_cells, 0);
+      check(sum === m.ranked_count, `${m.id}: twins.json earth_cells add up to the ranked count (${sum})`);
+      const s1 = store.twinSharingText(m.id, tw[0].earth_cells);
+      check(!!s1 && !/\bN\b|\bX\b/.test(s1) && (m.id === 'lunar_base') === /lunar base zone/.test(s1), `${m.id}: sharing sentence "${s1}"`);
+    }
     if (examples.length) console.log('     ' + examples.join('; '));
     console.log(`     ${m.id}: recompute of ${n} cells took ${ms.toFixed(1)} ms in Node`);
 

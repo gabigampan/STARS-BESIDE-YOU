@@ -8,7 +8,7 @@ import { pyRound2, recomputeMission, type MissionScores } from '../data/recomput
 import type { Mission } from '../data/types.ts';
 import { missionName } from './copy';
 import { renderDataDialog, openDataDialog } from './dataDialog';
-import { renderDetail, renderDetailLoading } from './detailPanel';
+import { meaningText, renderDetail, renderDetailLoading } from './detailPanel';
 import { renderIntro } from './intro';
 import { hasVideo, loadMediaIndex, videoSpec } from './media';
 import { MissionPanel } from './missionPanel';
@@ -70,7 +70,7 @@ export class FlowApp {
     this.renderIntro();
     this.renderSteps();
     if (this.dataReady) {
-      renderDataDialog(this.store);
+      renderDataDialog(this.store, this.ruleText(), meaningText(this));
       // Place names for the list come next; they are small and needed as soon as a mission is open.
       this.store.loadPlaceDetail().then(
         () => {
@@ -376,6 +376,8 @@ export class FlowApp {
         suitability: scores.suitability[p],
         similarity: mat.similarity[p],
         twinId: this.ranking0(m.id, p),
+        simVarsUsed: null,
+        missingTemp: this.store.missingTempAt(m.id, p),
         place: this.placeText(id),
       });
     }
@@ -451,6 +453,8 @@ export class FlowApp {
       globesApi.markers.setSelected('moon', null);
       globesApi.beams.clearBeams();
       if (globesApi.focus.isFocused()) await globesApi.focus.exitFocus({ durationMs: 0 });
+      // No paired view: the Earth cell alone is outlined at its true 1-degree footprint.
+      globesApi.focus.outline('earth', this.store.cellFootprint(id));
       this.settleLayout();
       await globesApi.flyTo('earth', lat, lon, 2600, 1.2);
     }
@@ -465,6 +469,7 @@ export class FlowApp {
 
   private async leaveCompare(): Promise<void> {
     globesApi.beams.clearBeams();
+    globesApi.focus.outline('earth', null);
     globesApi.markers.setSelected('earth', null);
     globesApi.markers.setSelected('moon', null);
     if (globesApi.focus.isFocused()) await globesApi.focus.exitFocus({ durationMs: 0 });
@@ -503,6 +508,12 @@ export class FlowApp {
   /** Text block shown when the bundle has no twin (panel and Moon side). */
   noTwinText(): string {
     return 'Under the current rule each Earth point is compared with the average of the whole Moon; no single lunar place is designated.';
+  }
+
+  /** The true cell size in plain words (both bodies). */
+  cellSizeText(): string {
+    const g = this.store.manifest.grid.bodies;
+    return `Each point is a 1° cell: about ${Math.round(g.EARTH.cell_ns_km)} km across on Earth and ${Math.round(g.MOON.cell_ns_km)} km on the Moon (narrower east-west towards the poles). Values are averages over the whole cell.`;
   }
 
   ruleText(): string {

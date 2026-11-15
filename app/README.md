@@ -252,3 +252,27 @@ items made inside the test, at 1440x900 (mouse) and 375x812 (touch), plus a redu
 fails on any console error or failed request, and saves screenshots to `$SHOTS_DIR`. The video
 checks use `public/media/rover/` when present, else a clip in `$TEST_MEDIA_DIR` served as
 `/test-media/clip.webm` and `/test-media/clip.en.vtt`.
+
+## Product flow (`src/flow/`, `src/data/`)
+
+Choose a mission -> pick a point -> compare the pair -> start the mission, with a step indicator
+(`#steps`) that can go back or forward from every step.
+
+- `src/data/store.ts` reads bundle v2 exactly as `docs/DATA_CONTRACT.md` (revision 4) describes:
+  the first view at start, mission files, one detail tile per selected cell (all tiles only when a
+  weight slider moves), place details and, only when the rule has twins, `twins.json`. Twins are
+  decided from the bundle itself (`similarity.json` target kind and the manifest), so the shipped
+  `zone_twin` bundle and a `repo_global_mean` bundle work without code changes.
+- `src/data/recompute.ts`: suitability, similarity, final and rank from the exported utilities
+  and z-scores (Python / numpy rounding reproduced).
+- Every approved sentence (similarity meaning, rock note, missing-temperature mark and note, twin
+  sharing, solar limitation) is read from `similarity.json` `texts`; no threshold or weight is typed
+  in code. Mission short names and one-line descriptions are in `src/flow/copy.ts`.
+- Videos: `scripts/mediaIndex.ts` writes `media-index.json` at build time from the folders present
+  in `public/media/`; "Start mission" appears only for missions with files. Rebuild after a new
+  video folder lands.
+
+Tests: `npm run test:data` (store and recompute on every passing cell of both bundle variants, no
+browser) and `npm run test:flow` (the whole flow in Chromium on both variants at 1440x900 and
+375x812, forced failures, 768 and 3840 px layouts; screenshots in `$SHOTS_DIR`). The no-twin
+variant is read from `$OTHER_BUNDLE` and served from a temporary copy.
