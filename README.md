@@ -66,8 +66,9 @@ JavaScript: never use a token with write scopes there; use a read-only token, or
 
 ### Deployment
 
-Production URL: https://stars-beside-you.vercel.app (a rehearsal build is live; the final build is deployed after
-the web branch `web-accessibility` is merged [TO CONFIRM BY THE DIRECTOR: at 14:05 CET `git log --oneline -15` on `final-integration` shows no merge commit of `web-accessibility`]). Deploy from the repository root with the Vercel token
+**The final production deployment has NOT been made.** The attempt at 14:09 CET was blocked by Vercel (`DEPLOYMENT_BLOCKED: the commit author does not have access to this team`, block code `TEAM_ACCESS_REQUIRED`): the Vercel CLI attaches the git metadata of the last commit, and its author is an automation identity that is not a member of the account's team. Nothing was changed on the account. https://stars-beside-you.vercel.app therefore still serves the REHEARSAL build made at about 13:25 CET from web commit `70cac01` with the bundle of that hour (it still shows the heading "The five best analogs", the earlier Solar panels video and earlier texts): it is **not** the final site. How to deploy is the account owner's decision (deploy from a commit authored by a team member, or upload the built folder himself).
+
+The web branch `web-accessibility` is merged into `final-integration` (merge commits `0c5203d` and `407fdfe`). Deploy from the repository root with the Vercel token
 in the environment, never on the command line: `bash scripts/deploy_vercel.sh` (production) or
 `bash scripts/deploy_vercel.sh --preview`; configuration in `app/vercel.json`.
 
