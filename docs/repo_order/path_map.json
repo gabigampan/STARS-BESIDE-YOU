@@ -1,0 +1,1704 @@
+{
+ "generated": "2026-11-15, read-only analysis of /home/user/stars-beside-you (branch final-integration, working tree as found; other agents were editing files during the analysis: line numbers can drift, match edits by the 'old' text)",
+ "recommendation": "Move 'tierra luna/' WHOLE to engine/ (git mv, depth unchanged). Do not split real_data/ and output_real/ into data/: that needs 73 python code edits (output_real 42, real_data 31) + 8 config values + a bundle rebuild, and engine/data/ cannot move at all without editing team modules (pds_reader.py:11, config.py:6, analog_finder.py:24, rover_integration.py:50). data/ gets an index README only.",
+ "target_tree": {
+  ".gitignore": "kept (line 11 edited)",
+  "README.md": "English README for the judge",
+  "LICENSE / NOTICE": "none exists today; add only if the team chooses a licence",
+  "app/": "web, unchanged in place (public/data/v2, public/audio, public/media stay)",
+  "engine/": "was 'tierra luna/': engine/engine/ (package), tests/, tools/ (empty after G3, removed), team modules + mission_scoring.json, data/ (benchmark, cache, presets), output_real/, output_py/, real_data/, research/, validation/, audit/, requirements.txt, README.md",
+  "data/": "README.md: index of the data (engine/output_real, engine/real_data, engine/data/*, app/public/data/v2) with sizes, sha256 and rebuild commands",
+  "docs/": "kept, + ASSUMPTIONS.md; - AUDIO_TOP5.json, AUDIO_RERECORD.md",
+  "audio/": "README.md, AUDIO_TOP5.json, AUDIO_RERECORD.md, tools/make_audio_top5.py (MP3s stay in app/public/audio)",
+  "video/": "README.md, video-sim/ (renderer; MP4/WebM stay in app/public/media)",
+  "economics/": "README.md placeholder (no economics material exists in the repository)",
+  "archive/": "README.md, STARS-BESIDE-YOU-main (2).zip, team_notes/Instruciones filtros solar y temp, old_web/",
+  "scripts/": "deploy_vercel.sh, unchanged"
+ },
+ "inventory": [
+  {
+   "path": ".gitignore",
+   "size": "4K",
+   "what": "ignore rules",
+   "readers": "git; line 11 names tierra luna/output_real/earth_moon_real_1deg.csv",
+   "evidence": ".gitignore:11",
+   "destination": ".gitignore (line 11 edited)",
+   "action": "edit"
+  },
+  {
+   "path": "ASSUMPTIONS.md",
+   "size": "116K",
+   "what": "assumptions document (English)",
+   "readers": "engine tests read it",
+   "evidence": "tierra luna/tests/test_verification_fixes.py:145; tierra luna/tests/test_texts_reaudit.py:249",
+   "destination": "docs/ASSUMPTIONS.md",
+   "action": "git mv + 2 test lines"
+  },
+  {
+   "path": "Instruciones filtros solar y temp",
+   "size": "4K",
+   "what": "team chat note (Spanish) on how mission_scoring.py/json were designed (added in bfa0995)",
+   "readers": "nothing; cited in docs/FILTERS.md (4), docs/AUDIT.md (2)",
+   "evidence": "git grep: no code reference",
+   "destination": "archive/team_notes/Instruciones filtros solar y temp",
+   "action": "git mv"
+  },
+  {
+   "path": "README.md",
+   "size": "24K",
+   "what": "main README",
+   "readers": "humans",
+   "evidence": "-",
+   "destination": "README.md (rewritten in English by another agent; links at lines 130 and 163 change)",
+   "action": "keep + edit"
+  },
+  {
+   "path": "STARS-BESIDE-YOU-main (2).zip",
+   "size": "14M",
+   "what": "zip of the team's original main uploaded in d4a11e4 (50 files: 46 byte-identical to today's tree; differ: tierra luna/analog_finder.py, data/presets/presets.json, mission_scoring.json, rover_preset.py); sha256 db67dcf04ba8417369871a05fd18aeccf5f490a1f2a3e63c7f84ee9b66f66254; no token patterns found inside",
+   "readers": "nothing",
+   "evidence": "git grep: only docs mention it (docs/AUDIT.md 3, LOCAL_ZIP_COMPARISON.md 1, SIMILARITY_PROPOSAL.md 2, audit_evidence/A1 3)",
+   "destination": "archive/STARS-BESIDE-YOU-main (2).zip",
+   "action": "git mv (name kept so the records that cite it still match)"
+  },
+  {
+   "path": "app/",
+   "size": "421M on disk (node_modules, dist untracked)",
+   "what": "Vite + TypeScript + CesiumJS web",
+   "readers": "Vercel via scripts/deploy_vercel.sh",
+   "evidence": "scripts/deploy_vercel.sh:26-37 (REPO_ROOT/app)",
+   "destination": "app/ (public/data, public/audio, public/media stay)",
+   "action": "keep; app/video-sim leaves"
+  },
+  {
+   "path": "app/video-sim/",
+   "size": "30M on disk (15 tracked files; node_modules untracked)",
+   "what": "deterministic video renderer (three.js + Python prepare)",
+   "readers": "nothing in app/ imports it: app/tsconfig.json include = src, vite.config.ts, scripts/mediaIndex.ts; only text mentions in app/public/media/*/README.md",
+   "evidence": "app/tsconfig.json:20; app/video-sim/tools/prepare.py:25,54",
+   "destination": "video/video-sim/",
+   "action": "git mv + 3 python lines + 3 scenario output_dir values"
+  },
+  {
+   "path": "docs/",
+   "size": "2.0M",
+   "what": "documentation and dated audit records",
+   "readers": "engine tests read docs/DECISIONS.md, DATA_CONTRACT.md, ANALOG_PRINCIPLE.md, MISSION_ZONES.md, LUNAR_BASE_PROPOSAL.md, stats_audit/9_reauditoria_*.json; engine_config.json names docs/MISSION_ZONES.md and docs/stats_audit/research_1_rover_terreno.md",
+   "evidence": "tierra luna/tests/test_mission_zone_texts.py:15,59; tierra luna/engine/engine_config.json lunar_regions.source_document",
+   "destination": "docs/ (names unchanged; AUDIO_TOP5.json and AUDIO_RERECORD.md leave to audio/; receives ASSUMPTIONS.md)",
+   "action": "keep"
+  },
+  {
+   "path": "docs/AUDIO_TOP5.json",
+   "size": "200K",
+   "what": "the five pairs per mission and the audio texts, written by make_audio_top5.py",
+   "readers": "app/tests/a11y.mjs:50; tierra luna/tests/test_audit_corrections_1.py:121,299,331; audit scripts (20 refs)",
+   "evidence": "app/tests/a11y.mjs:50",
+   "destination": "audio/AUDIO_TOP5.json",
+   "action": "git mv + edits (G3)"
+  },
+  {
+   "path": "docs/AUDIO_RERECORD.md",
+   "size": "32K",
+   "what": "recording list, written by make_audio_top5.py write_app_files",
+   "readers": "tierra luna/tools/make_audio_top5.py:78 (writes it)",
+   "evidence": "tierra luna/tools/make_audio_top5.py:78,1317",
+   "destination": "audio/AUDIO_RERECORD.md",
+   "action": "git mv + 1 line"
+  },
+  {
+   "path": "scripts/",
+   "size": "12K",
+   "what": "scripts/deploy_vercel.sh (deployment)",
+   "readers": "people deploying",
+   "evidence": "scripts/deploy_vercel.sh:26 REPO_ROOT=..; no 'tierra luna' reference",
+   "destination": "scripts/",
+   "action": "keep, no edit"
+  },
+  {
+   "path": "tierra luna/",
+   "size": "100M on disk",
+   "what": "the team's original Python pipeline + the analog engine",
+   "readers": "see rows below",
+   "evidence": "-",
+   "destination": "engine/ (whole folder, depth unchanged)",
+   "action": "git mv \"tierra luna\" engine"
+  },
+  {
+   "path": "tierra luna/.pytest_cache/",
+   "size": "52K",
+   "what": "pytest cache (untracked, ignored)",
+   "readers": "pytest",
+   "evidence": ".gitignore:9",
+   "destination": "moves with the folder; may be deleted",
+   "action": "none"
+  },
+  {
+   "path": "tierra luna/README.md",
+   "size": "8K",
+   "what": "team pipeline README (English)",
+   "readers": "humans",
+   "evidence": "-",
+   "destination": "engine/README.md",
+   "action": "moves with folder; add a short header on the engine package"
+  },
+  {
+   "path": "tierra luna/__pycache__/",
+   "size": "432K (8 .pyc tracked + 10 untracked)",
+   "what": "compiled bytecode committed by mistake",
+   "readers": "Python (regenerated automatically)",
+   "evidence": ".gitignore:1 ignores it; git ls-files lists 8 + tests/__pycache__ 1",
+   "destination": "removed from the index (git rm -r --cached), not archived",
+   "action": "git rm --cached"
+  },
+  {
+   "path": "tierra luna/analog_finder.py",
+   "size": "32K",
+   "what": "team module (old ranking, repo z-score context)",
+   "readers": "engine",
+   "evidence": "tierra luna/engine/repo_similarity.py:49 'import analog_finder'; tests/test_pipeline.py:15",
+   "destination": "engine/analog_finder.py",
+   "action": "moves with folder, 0 lines changed"
+  },
+  {
+   "path": "tierra luna/audit/",
+   "size": "9.2M (230 tracked)",
+   "what": "independent audit scripts and their outputs (out/)",
+   "readers": "nothing at build or test; scripts locate the project as HERE/.. (audit/p1_common.py:18)",
+   "evidence": "tierra luna/audit/p1_common.py:18-19",
+   "destination": "engine/audit/",
+   "action": "moves; 23 path lines in 9 scripts edited (G1/G3/G4); out/ never rewritten"
+  },
+  {
+   "path": "tierra luna/config.py",
+   "size": "4K",
+   "what": "team pipeline grid config",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_pipeline.py:10; config.py:6 hard-codes dirname(__file__)/data/cache/ldem_4.img",
+   "destination": "engine/config.py",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/data/",
+   "size": "13M (17 tracked)",
+   "what": "benchmark/ (3 site lists), cache/ (PDS label + row caches, ldem_4.img), presets/presets.json",
+   "readers": "team modules with hard-coded dirname(__file__)/data/...: pds_reader.py:11 (cache), config.py:6 (cache), analog_finder.py:24 (presets), rover_integration.py:50 (benchmark); engine_config.json external_validation.benchmark_csv; tests/conftest.py:13",
+   "evidence": "tierra luna/pds_reader.py:11; tierra luna/rover_integration.py:50",
+   "destination": "engine/data/ (cannot leave the team modules' folder without editing team modules)",
+   "action": "moves with folder"
+  },
+  {
+   "path": "tierra luna/earth_extractor.py",
+   "size": "12K",
+   "what": "team pipeline (Earth grid)",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_pipeline.py:12",
+   "destination": "engine/earth_extractor.py",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/engine/",
+   "size": "3.1M (42 tracked)",
+   "what": "the analog engine package (python -m engine build)",
+   "readers": "tests, tools, app via the bundle",
+   "evidence": "tierra luna/engine/config.py:24-31 (PROJECT_DIR = parent folder; all config paths resolve against it, config.py:194-196)",
+   "destination": "engine/engine/",
+   "action": "moves; only comments config.py:25,195 optionally"
+  },
+  {
+   "path": "tierra luna/gee_earth_grid_export.js",
+   "size": "4K",
+   "what": "team Google Earth Engine export script (run in the GEE Code Editor)",
+   "readers": "no code; documented in the team README",
+   "evidence": "tierra luna/README.md:8",
+   "destination": "engine/gee_earth_grid_export.js (part of the documented team pipeline; not archived)",
+   "action": "moves with folder"
+  },
+  {
+   "path": "tierra luna/harmonizer_cleaner.py",
+   "size": "12K",
+   "what": "team pipeline (cleaning, GeoTIFF)",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_pipeline.py:13",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/lunar_extractor.py",
+   "size": "12K",
+   "what": "team pipeline (Moon grid)",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_pipeline.py:11",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/main.py",
+   "size": "8K",
+   "what": "team pipeline entry point (writes output_py/ and web/analog_data.js)",
+   "readers": "no importer; produces output_py/ used by the legacy_2deg dataset",
+   "evidence": "tierra luna/main.py:207 (web_dir='web'); engine/datasets.json legacy_2deg",
+   "destination": "engine/main.py",
+   "action": "moves, 0 lines (after web/ is archived, run it only after 'mkdir web')"
+  },
+  {
+   "path": "tierra luna/mission_filters.json",
+   "size": "8K",
+   "what": "team's older filter file",
+   "readers": "analog_finder",
+   "evidence": "tierra luna/analog_finder.py:21; tests/test_pipeline.py:268",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/mission_filters.py",
+   "size": "16K",
+   "what": "team module",
+   "readers": "analog_finder",
+   "evidence": "tierra luna/analog_finder.py:10",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/mission_scoring.json",
+   "size": "12K",
+   "what": "THE TEAM'S SCORING FILE (gates, weights)",
+   "readers": "engine (engine_config.json mission_config = 'mission_scoring.json', resolved against the project folder); tests check its sha256",
+   "evidence": "tierra luna/engine/config.py:192-203; tests/test_decisions_1123.py:120,130",
+   "destination": "engine/mission_scoring.json",
+   "action": "moves, 0 bytes changed (manifest config_sha256 unchanged)"
+  },
+  {
+   "path": "tierra luna/mission_scoring.py",
+   "size": "16K",
+   "what": "team module that loads the scoring file",
+   "readers": "engine",
+   "evidence": "tierra luna/engine/config.py:33; gates.py:24; pipeline.py:19; suitability.py:26; export.py:21",
+   "destination": "engine/mission_scoring.py",
+   "action": "moves, 0 lines (engine/config.py:30-31 puts the parent folder on sys.path: unchanged)"
+  },
+  {
+   "path": "tierra luna/output_py/",
+   "size": "18M (10 tracked)",
+   "what": "outputs of the team's 2-degree pipeline",
+   "readers": "legacy_2deg dataset and its tests",
+   "evidence": "tierra luna/engine/datasets.json legacy_2deg.input_csv = output_py/earth_moon_harmonized_clean.csv; tests/test_engine.py:35; tests/test_missions_similarity.py:95",
+   "destination": "engine/output_py/",
+   "action": "moves with folder"
+  },
+  {
+   "path": "tierra luna/output_real/",
+   "size": "41M (2 tracked + 1 ignored)",
+   "what": "the real 1-degree Earth and Moon tables (engine input)",
+   "readers": "engine build; tests; video-sim; make_audio_top5; audit/research/validation",
+   "evidence": "tierra luna/engine/datasets.json real_1deg.inputs; tests/test_mission_zone_texts.py:16-17; app/video-sim/tools/prepare.py:25",
+   "destination": "engine/output_real/ (42 python code refs + 2 config values: not moved to data/)",
+   "action": "moves with folder"
+  },
+  {
+   "path": "tierra luna/pds_reader.py",
+   "size": "8K",
+   "what": "team PDS3 reader",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_pipeline.py:14 (CACHE_DIR)",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/real_data/",
+   "size": "8.1M (34 tracked)",
+   "what": "how the 1-degree tables are built (build_earth/moon/combined.py), provenance, column aliases, lunar named sites, supplements, verification",
+   "readers": "engine build (provenance, column_aliases, lunar_named_sites, supplements)",
+   "evidence": "tierra luna/engine/datasets.json real_1deg.provenance/column_aliases/lunar_named_sites/supplements; real_data/build_moon.py:39 REPO_DIR = HERE.parent",
+   "destination": "engine/real_data/ (31 python code refs + 6 config values: not moved)",
+   "action": "moves; 6 absolute paths in verification/ edited"
+  },
+  {
+   "path": "tierra luna/requirements.txt",
+   "size": "4K",
+   "what": "team pipeline requirements",
+   "readers": "pip",
+   "evidence": "-",
+   "destination": "engine/requirements.txt",
+   "action": "moves"
+  },
+  {
+   "path": "tierra luna/research/",
+   "size": "3.6M",
+   "what": "research scripts r1-r5 and outputs",
+   "readers": "nothing at build/test; cited in engine_config.json texts",
+   "evidence": "tierra luna/research/r4_rank_sites.py:28 TL = dirname(HERE)",
+   "destination": "engine/research/",
+   "action": "moves; r3_base_lunar.py:15,23 NOT changed (snapshot layout of an older commit)"
+  },
+  {
+   "path": "tierra luna/rover_integration.py",
+   "size": "12K",
+   "what": "team rover hook",
+   "readers": "engine tests",
+   "evidence": "tierra luna/tests/test_rover_integration.py:16",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/rover_preset.py",
+   "size": "48K",
+   "what": "team rover preset (tolerances, named sites)",
+   "readers": "analog_finder; engine limits.py via engine_config names_module",
+   "evidence": "tierra luna/analog_finder.py:11; tierra luna/engine/limits.py:107; engine_config.json external_validation names_module",
+   "destination": "engine/",
+   "action": "moves, 0 lines"
+  },
+  {
+   "path": "tierra luna/tests/",
+   "size": "1.7M (16 tracked incl. 1 .pyc)",
+   "what": "engine suite (231 passed / 12 skipped)",
+   "readers": "pytest",
+   "evidence": "every test: ROOT = dirname(dirname(__file__)), REPO = dirname(ROOT) (e.g. tests/test_texts_1210.py:14-15)",
+   "destination": "engine/tests/",
+   "action": "moves; 6 path lines edited (G3, G4)"
+  },
+  {
+   "path": "tierra luna/tools/make_audio_top5.py",
+   "size": "~200K dir",
+   "what": "audio text generator (writes docs/AUDIO_TOP5.json, docs/AUDIO_RERECORD.md, app/public/audio/*)",
+   "readers": "tests/test_audit_corrections_1.py:297 (skipped test)",
+   "evidence": "tierra luna/tools/make_audio_top5.py:73-86",
+   "destination": "audio/tools/make_audio_top5.py (depth 2 kept, so REPO = HERE/../.. stays right)",
+   "action": "git mv + 8 required lines"
+  },
+  {
+   "path": "tierra luna/validation/",
+   "size": "604K",
+   "what": "validation suite m1-m9 and outputs",
+   "readers": "nothing at build/test",
+   "evidence": "tierra luna/validation/common.py:20-22",
+   "destination": "engine/validation/",
+   "action": "moves; m5_reproduction.py:29 NOT changed (git show 618bc45:tierra luna/...)"
+  },
+  {
+   "path": "tierra luna/web/",
+   "size": "2.6M (2 tracked)",
+   "what": "the team's first static web (index.html + generated analog_data.js)",
+   "readers": "nothing serves it; analog_finder writes web/analog_data.js only when main.py runs (tests pass tmp_path)",
+   "evidence": "tierra luna/main.py:207; tests/test_pipeline.py:170",
+   "destination": "archive/old_web/",
+   "action": "git mv"
+  }
+ ],
+ "moves": [
+  {
+   "group": "G0",
+   "title": "Preflight (no move)",
+   "commands": [
+    "cd /home/user/stars-beside-you && git status --short   # must be empty: commit or hand back the files other agents are editing first",
+    "sha256sum app/public/data/v2/* > /tmp/order_bundle_before.sha",
+    "cd 'tierra luna' && $PY tools/make_audio_top5.py --no-app-files --out /tmp/order_top5_before.json   # baseline of the generator (optional)"
+   ],
+   "test": "none"
+  },
+  {
+   "group": "G1",
+   "title": "Rename the project folder",
+   "commands": [
+    "git mv 'tierra luna' engine",
+    "git rm -r --cached -q engine/__pycache__ engine/tests/__pycache__",
+    "find engine app -name __pycache__ -type d -prune -exec rm -rf {} +",
+    "apply edits.json group G1 (34 required: .gitignore:11 and 33 python path lines; 12 optional labels/comments)"
+   ],
+   "test": "cd engine && STARS_GLOBAL_MEAN_BUNDLE=$BGM $PY -m pytest -q  (expect 231 passed / 12 skipped); $PY -m engine build --out /tmp/order_v2 && (cd /tmp/order_v2 && sha256sum *) | diff - <(cd ../app/public/data/v2 && sha256sum *)  (expect no output); git diff --cached -M --stat | grep -v '=>' (only the edited files)"
+  },
+  {
+   "group": "G2",
+   "title": "Video renderer to video/",
+   "commands": [
+    "mkdir -p video && git mv app/video-sim video/video-sim",
+    "apply edits.json group G2 (3 python lines, 3 scenario output_dir values, README.md:130 link)"
+   ],
+   "test": "python3 -I video/video-sim/tools/prepare.py video/video-sim/scenarios/solar.json --checks-only; same for lunar-base.json; python3 -I video/video-sim/tools/solar_pair.py && git diff --exit-code video/video-sim/scenarios/solar.json; cd app && npm run build"
+  },
+  {
+   "group": "G3",
+   "title": "Audio generator and its outputs to audio/",
+   "commands": [
+    "mkdir -p audio/tools && git mv docs/AUDIO_TOP5.json audio/ && git mv docs/AUDIO_RERECORD.md audio/ && git mv engine/tools/make_audio_top5.py audio/tools/",
+    "rmdir engine/tools 2>/dev/null || rm -rf engine/tools/__pycache__ && rmdir engine/tools",
+    "apply edits.json group G3 (7 required, 9 optional)"
+   ],
+   "test": "cd engine && $PY -m pytest -q tests/test_audit_corrections_1.py; $PY audio/tools/make_audio_top5.py --no-app-files --out /tmp/order_top5_after.json && diff <(jq -S 'del(.generated_by)' /tmp/order_top5_before.json) <(jq -S 'del(.generated_by)' /tmp/order_top5_after.json); cd app && npm run -s test:a11y (needs Playwright Chromium)"
+  },
+  {
+   "group": "G4",
+   "title": "ASSUMPTIONS.md to docs/",
+   "commands": [
+    "git mv ASSUMPTIONS.md docs/ASSUMPTIONS.md",
+    "apply edits.json group G4 (2 test lines + README.md:163 link; 2 optional audit lines)"
+   ],
+   "test": "cd engine && $PY -m pytest -q tests/test_verification_fixes.py tests/test_texts_reaudit.py"
+  },
+  {
+   "group": "G5",
+   "title": "Archive",
+   "commands": [
+    "mkdir -p archive/team_notes",
+    "git mv 'STARS-BESIDE-YOU-main (2).zip' archive/",
+    "git mv 'Instruciones filtros solar y temp' archive/team_notes/",
+    "git mv engine/web archive/old_web",
+    "write archive/README.md (one line per item, see archive_note)"
+   ],
+   "test": "cd engine && $PY -m pytest -q tests/test_pipeline.py tests/test_engine.py tests/test_rover_integration.py; git grep -n 'engine/web\\|tierra luna/web' -- '*.py' '*.mjs' '*.ts' '*.json' ':!*/out/*' (expect nothing)"
+  },
+  {
+   "group": "G6",
+   "title": "New index READMEs",
+   "commands": [
+    "write data/README.md, audio/README.md, video/README.md, economics/README.md (pointers only; economics/ has no material in the repository today)"
+   ],
+   "test": "ls -A at top level = .gitignore README.md app archive audio data docs economics engine scripts video"
+  },
+  {
+   "group": "G7",
+   "title": "Markdown path rewrite (living documents only)",
+   "commands": [
+    "apply markdown_rule to the files in markdown.living_documents"
+   ],
+   "test": "md_refs.py link check (0 broken links); git grep -c 'tierra luna' -- <living docs> (only the intentional history notes); full engine suite; cd app && npm run build && npm run -s test:data"
+  },
+  {
+   "group": "G8",
+   "title": "OPTIONAL: provenance prose inside the engine JSON (needs a bundle rebuild)",
+   "commands": [
+    "replace 'tierra luna/' by 'engine/' in engine/engine/engine_config.json (18), engine/engine/datasets.json (3: '_note', output_dir.why, supplements.why), engine/engine/mission_zone_texts.json (6)",
+    "cd engine && $PY -m engine build   (rewrites app/public/data/v2)"
+   ],
+   "test": "every .bin byte-identical to /tmp/order_bundle_before.sha; JSON files differ only in the 24 strings + manifest config_sha256 (engine_config.json, datasets.json, mission_zone_texts.json) and manifest files[].sha256 of missions/similarity/mission_zones.json: check with a JSON walk that masks those strings; then full engine suite (test_published_v2_matches_a_fresh_build) and npm run -s test:data"
+  }
+ ],
+ "edits": [
+  {
+   "file_now": "tierra luna/audit/a2_audio_integration_check.py",
+   "file_after_move": "engine/audit/a2_audio_integration_check.py",
+   "line": 16,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "OUT = os.path.join(ROOT, \"tierra luna\", \"audit\", \"out\", \"a2_audio_integration_check.json\")",
+   "new": "OUT = os.path.join(ROOT, \"engine\", \"audit\", \"out\", \"a2_audio_integration_check.json\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/a2_audio_integration_check.py",
+   "file_after_move": "engine/audit/a2_audio_integration_check.py",
+   "line": 84,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "rows = {r[\"file\"]: r for r in csv.DictReader(open(os.path.join(ROOT, \"tierra luna/audit/out/a_audio_files.csv\")))}",
+   "new": "rows = {r[\"file\"]: r for r in csv.DictReader(open(os.path.join(ROOT, \"engine/audit/out/a_audio_files.csv\")))}",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p1_grid.py",
+   "file_after_move": "engine/audit/p1_grid.py",
+   "line": 37,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "(\"app/README.md\", None), (\"tierra luna/engine\", (\".json\", \".py\")),",
+   "new": "(\"app/README.md\", None), (\"engine/engine\", (\".json\", \".py\")),",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p1_grid.py",
+   "file_after_move": "engine/audit/p1_grid.py",
+   "line": 38,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "(\"tierra luna/tools/make_audio_top5.py\", None), (\"tierra luna/real_data\", (\".md\", \".json\", \".csv\"))]",
+   "new": "(\"engine/tools/make_audio_top5.py\", None), (\"engine/real_data\", (\".md\", \".json\", \".csv\"))]",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p2_common.py",
+   "file_after_move": "engine/audit/p2_common.py",
+   "line": 16,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TL = os.path.join(ROOT, \"tierra luna\")",
+   "new": "TL = os.path.join(ROOT, \"engine\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p4_common.py",
+   "file_after_move": "engine/audit/p4_common.py",
+   "line": 20,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TABLES = os.path.join(REPO, \"tierra luna\", \"output_real\")",
+   "new": "TABLES = os.path.join(REPO, \"engine\", \"output_real\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p4_common.py",
+   "file_after_move": "engine/audit/p4_common.py",
+   "line": 21,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "ENGINE_DATA = os.path.join(REPO, \"tierra luna\", \"engine\", \"data\")",
+   "new": "ENGINE_DATA = os.path.join(REPO, \"engine\", \"engine\", \"data\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p4_docs_coherence.py",
+   "file_after_move": "engine/audit/p4_docs_coherence.py",
+   "line": 26,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "\"docs/LUNAR_BASE_PROPOSAL.md\", \"docs/MISSION_ZONES.md\", \"tierra luna/engine/mission_zone_texts.json\",",
+   "new": "\"docs/LUNAR_BASE_PROPOSAL.md\", \"docs/MISSION_ZONES.md\", \"engine/engine/mission_zone_texts.json\",",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 80,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "MS = \"tierra luna/mission_scoring.json\"",
+   "new": "MS = \"engine/mission_scoring.json\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 81,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "EC = \"tierra luna/engine/engine_config.json\"",
+   "new": "EC = \"engine/engine/engine_config.json\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 82,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "DS = \"tierra luna/engine/datasets.json\"",
+   "new": "DS = \"engine/engine/datasets.json\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p6_common.py",
+   "file_after_move": "engine/audit/p6_common.py",
+   "line": 18,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TL = os.path.join(REPO, \"tierra luna\")",
+   "new": "TL = os.path.join(REPO, \"engine\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/t_audio_texts.py",
+   "file_after_move": "engine/audit/t_audio_texts.py",
+   "line": 155,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "et = pd.read_csv(os.path.join(REPO, \"tierra luna\", \"output_real\", \"earth_real_1deg.csv\"), usecols=[\"cell_id\", \"snow_ice_frac\", \"mask_fraction\"])",
+   "new": "et = pd.read_csv(os.path.join(REPO, \"engine\", \"output_real\", \"earth_real_1deg.csv\"), usecols=[\"cell_id\", \"snow_ice_frac\", \"mask_fraction\"])",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/t_audio_texts.py",
+   "file_after_move": "engine/audit/t_audio_texts.py",
+   "line": 159,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "cl = pd.read_csv(os.path.join(REPO, \"tierra luna\", \"real_data\", \"supplement\", \"earth_cloud_isccp_1deg.csv\"))",
+   "new": "cl = pd.read_csv(os.path.join(REPO, \"engine\", \"real_data\", \"supplement\", \"earth_cloud_isccp_1deg.csv\"))",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/t_audio_texts.py",
+   "file_after_move": "engine/audit/t_audio_texts.py",
+   "line": 166,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "with open(os.path.join(REPO, \"tierra luna\", \"engine\", \"data\", \"iau_moon_nomenclature.csv\"), encoding=\"utf-8\") as fh:",
+   "new": "with open(os.path.join(REPO, \"engine\", \"engine\", \"data\", \"iau_moon_nomenclature.csv\"), encoding=\"utf-8\") as fh:",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/t_audio_texts.py",
+   "file_after_move": "engine/audit/t_audio_texts.py",
+   "line": 343,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "with open(os.path.join(REPO, \"tierra luna\", \"engine\", \"data\", \"artemis_iii_regions.geojson\"), encoding=\"utf-8\") as fh:",
+   "new": "with open(os.path.join(REPO, \"engine\", \"engine\", \"data\", \"artemis_iii_regions.geojson\"), encoding=\"utf-8\") as fh:",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/v_check_validation.py",
+   "file_after_move": "engine/audit/v_check_validation.py",
+   "line": 4,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "R = \"/home/user/stars-beside-you\"; B = R + \"/app/public/data/v2\"; V = R + \"/tierra luna/validation/out\"",
+   "new": "R = \"/home/user/stars-beside-you\"; B = R + \"/app/public/data/v2\"; V = R + \"/engine/validation/out\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/v_check_validation.py",
+   "file_after_move": "engine/audit/v_check_validation.py",
+   "line": 52,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "os.makedirs(R + \"/tierra luna/audit/out\", exist_ok=True)",
+   "new": "os.makedirs(R + \"/engine/audit/out\", exist_ok=True)",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/v_check_validation.py",
+   "file_after_move": "engine/audit/v_check_validation.py",
+   "line": 53,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "json.dump(res, open(R + \"/tierra luna/audit/out/v_check_validation.json\", \"w\"), indent=1)",
+   "new": "json.dump(res, open(R + \"/engine/audit/out/v_check_validation.json\", \"w\"), indent=1)",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/sanity.py",
+   "file_after_move": "engine/real_data/verification/sanity.py",
+   "line": 6,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "T = \"/home/user/stars-beside-you/tierra luna/output_real/\"",
+   "new": "T = \"/home/user/stars-beside-you/engine/output_real/\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/vearth.py",
+   "file_after_move": "engine/real_data/verification/vearth.py",
+   "line": 8,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TAB = sys.argv[1] if len(sys.argv) > 1 else \"/home/user/stars-beside-you/tierra luna/output_real/earth_real_1deg.csv\"",
+   "new": "TAB = sys.argv[1] if len(sys.argv) > 1 else \"/home/user/stars-beside-you/engine/output_real/earth_real_1deg.csv\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/vearth.py",
+   "file_after_move": "engine/real_data/verification/vearth.py",
+   "line": 9,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "CM = json.load(open(\"/home/user/stars-beside-you/tierra luna/real_data/class_mappings.json\"))[\"EARTH\"][\"thermal_inertia_class_from_esa_cci_lccs\"][\"classes\"]",
+   "new": "CM = json.load(open(\"/home/user/stars-beside-you/engine/real_data/class_mappings.json\"))[\"EARTH\"][\"thermal_inertia_class_from_esa_cci_lccs\"][\"classes\"]",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/vmoon.py",
+   "file_after_move": "engine/real_data/verification/vmoon.py",
+   "line": 8,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TAB = sys.argv[1] if len(sys.argv) > 1 else \"/home/user/stars-beside-you/tierra luna/output_real/moon_real_1deg.csv\"",
+   "new": "TAB = sys.argv[1] if len(sys.argv) > 1 else \"/home/user/stars-beside-you/engine/output_real/moon_real_1deg.csv\"",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/vmoon_iso.py",
+   "file_after_move": "engine/real_data/verification/vmoon_iso.py",
+   "line": 4,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "T=pd.read_csv(\"/home/user/stars-beside-you/tierra luna/output_real/moon_real_1deg.csv\",keep_default_na=False,na_values=[\"\"]).set_index([\"row\",\"col\"])",
+   "new": "T=pd.read_csv(\"/home/user/stars-beside-you/engine/output_real/moon_real_1deg.csv\",keep_default_na=False,na_values=[\"\"]).set_index([\"row\",\"col\"])",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/real_data/verification/vmoon_temp.py",
+   "file_after_move": "engine/real_data/verification/vmoon_temp.py",
+   "line": 4,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "T = pd.read_csv(\"/home/user/stars-beside-you/tierra luna/output_real/moon_real_1deg.csv\", keep_default_na=False, na_values=[\"\"]).set_index([\"row\", \"col\"])",
+   "new": "T = pd.read_csv(\"/home/user/stars-beside-you/engine/output_real/moon_real_1deg.csv\", keep_default_na=False, na_values=[\"\"]).set_index([\"row\", \"col\"])",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 79,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "ENGINE_DATA = os.path.join(REPO, \"tierra luna\", \"engine\", \"data\")",
+   "new": "ENGINE_DATA = os.path.join(REPO, \"engine\", \"engine\", \"data\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 80,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "EARTH_TABLE = os.path.join(REPO, \"tierra luna\", \"output_real\", \"earth_real_1deg.csv\")",
+   "new": "EARTH_TABLE = os.path.join(REPO, \"engine\", \"output_real\", \"earth_real_1deg.csv\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 81,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "CLOUD_TABLE = os.path.join(REPO, \"tierra luna\", \"real_data\", \"supplement\", \"earth_cloud_isccp_1deg.csv\")",
+   "new": "CLOUD_TABLE = os.path.join(REPO, \"engine\", \"real_data\", \"supplement\", \"earth_cloud_isccp_1deg.csv\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 82,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "CLOUD_PROV = os.path.join(REPO, \"tierra luna\", \"real_data\", \"supplement\", \"provenance_earth_cloud_isccp.csv\")",
+   "new": "CLOUD_PROV = os.path.join(REPO, \"engine\", \"real_data\", \"supplement\", \"provenance_earth_cloud_isccp.csv\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 83,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "sys.path.insert(0, os.path.join(REPO, \"tierra luna\"))",
+   "new": "sys.path.insert(0, os.path.join(REPO, \"engine\"))",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 303,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "prov = os.path.join(REPO, \"tierra luna\", \"real_data\", \"provenance_moon.csv\")",
+   "new": "prov = os.path.join(REPO, \"engine\", \"real_data\", \"provenance_moon.csv\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "app/video-sim/tools/prepare.py",
+   "file_after_move": "video/video-sim/tools/prepare.py",
+   "line": 25,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TABLES = os.path.join(HERE, \"..\", \"..\", \"tierra luna\", \"output_real\")",
+   "new": "TABLES = os.path.join(HERE, \"..\", \"..\", \"engine\", \"output_real\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "app/video-sim/tools/solar_pair.py",
+   "file_after_move": "video/video-sim/tools/solar_pair.py",
+   "line": 21,
+   "group": "G1",
+   "kind": "python-path",
+   "required": true,
+   "old": "TABLES = os.path.join(HERE, \"..\", \"..\", \"tierra luna\", \"output_real\")",
+   "new": "TABLES = os.path.join(HERE, \"..\", \"..\", \"engine\", \"output_real\")",
+   "why": "folder renamed"
+  },
+  {
+   "file_now": "tierra luna/audit/p2_recompute.py",
+   "file_after_move": "engine/audit/p2_recompute.py",
+   "line": 40,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "summary = {\"inputs\": {\"earth_csv\": \"tierra luna/output_real/earth_real_1deg.csv\",",
+   "new": "summary = {\"inputs\": {\"earth_csv\": \"engine/output_real/earth_real_1deg.csv\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/p2_recompute.py",
+   "file_after_move": "engine/audit/p2_recompute.py",
+   "line": 41,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"moon_csv\": \"tierra luna/output_real/moon_real_1deg.csv\",",
+   "new": "\"moon_csv\": \"engine/output_real/moon_real_1deg.csv\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 228,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"tierra luna/output_real/moon_real_1deg.csv irradiance_kwh_m2_day\", \"build_moon.py:625\", eff(\"solar\", \"moon_irradiance x1.01\", \"S0 both bodies x1.01\"),",
+   "new": "\"engine/output_real/moon_real_1deg.csv irradiance_kwh_m2_day\", \"build_moon.py:625\", eff(\"solar\", \"moon_irradiance x1.01\", \"S0 both bodies x1.01\"),",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 254,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"engine/display.py:1-30 (contract revision 6)\", \"tierra luna/engine/display.py\", \"engine/display.py:56-64; app/src (same rule)\",",
+   "new": "\"engine/display.py:1-30 (contract revision 6)\", \"engine/engine/display.py\", \"engine/display.py:56-64; app/src (same rule)\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 356,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"origin\": com or \"no comment in the code\", \"defined_in\": f\"tierra luna/real_data/{f}:{i + 1}\",",
+   "new": "\"origin\": com or \"no comment in the code\", \"defined_in\": f\"engine/real_data/{f}:{i + 1}\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/p5_inventory.py",
+   "file_after_move": "engine/audit/p5_inventory.py",
+   "line": 370,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"origin_class\": \"literature\", \"origin\": org, \"defined_in\": f\"tierra luna/real_data/{line}\",",
+   "new": "\"origin_class\": \"literature\", \"origin\": org, \"defined_in\": f\"engine/real_data/{line}\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/audit/ra_rover_summary.py",
+   "file_after_move": "engine/audit/ra_rover_summary.py",
+   "line": 60,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"scripts\": [\"tierra luna/audit/ra_rover_common.py\", \"ra_rover_config.py\", \"ra_rover_audit.py\", \"ra_rover_fallback.py\", \"ra_rover_weights.py\",",
+   "new": "\"scripts\": [\"engine/audit/ra_rover_common.py\", \"ra_rover_config.py\", \"ra_rover_audit.py\", \"ra_rover_fallback.py\", \"ra_rover_weights.py\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 308,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "return {\"level\": \"MEASURED\", \"from\": \"tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)\",",
+   "new": "return {\"level\": \"MEASURED\", \"from\": \"engine/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)\",",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 600,
+   "group": "G1",
+   "kind": "python-label (text written to outputs)",
+   "required": false,
+   "old": "\"package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / \"",
+   "new": "\"package, engine/engine/places.py); bundle: place_detail.json nearest_places / \"",
+   "why": "label only; changes the script's future output text, not behaviour"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 86,
+   "group": "G3",
+   "kind": "python-label",
+   "required": false,
+   "old": "SCRIPT_REL = \"tierra luna/tools/make_audio_top5.py\"",
+   "new": "SCRIPT_REL = \"audio/tools/make_audio_top5.py\"",
+   "why": "SCRIPT_REL label written to AUDIO_TOP5.json generated_by"
+  },
+  {
+   "file_now": ".gitignore",
+   "file_after_move": ".gitignore",
+   "line": 11,
+   "group": "G1",
+   "kind": "gitignore",
+   "required": true,
+   "old": "tierra luna/output_real/earth_moon_real_1deg.csv",
+   "new": "engine/output_real/earth_moon_real_1deg.csv",
+   "why": "ignored 41 MB combined table keeps being ignored"
+  },
+  {
+   "file_now": "app/tests/lib/fixtures.mjs",
+   "file_after_move": "app/tests/lib/fixtures.mjs",
+   "line": 5,
+   "group": "G1",
+   "kind": "js-comment",
+   "required": false,
+   "old": "//     cd \"tierra luna\" && python -m engine build --similarity-rule repo_global_mean --out ../app/.fixtures/bundle_global_mean",
+   "new": "//     cd engine && python -m engine build --similarity-rule repo_global_mean --out ../app/.fixtures/bundle_global_mean",
+   "why": "instructions in a comment"
+  },
+  {
+   "file_now": "tierra luna/engine/config.py",
+   "file_after_move": "engine/engine/config.py",
+   "line": 25,
+   "group": "G1",
+   "kind": "python-comment (engine package)",
+   "required": false,
+   "old": "PROJECT_DIR = os.path.dirname(ENGINE_DIR)  # \".../tierra luna\"",
+   "new": "PROJECT_DIR = os.path.dirname(ENGINE_DIR)  # \".../engine (repository folder engine/)\"",
+   "why": "comment"
+  },
+  {
+   "file_now": "tierra luna/engine/config.py",
+   "file_after_move": "engine/engine/config.py",
+   "line": 195,
+   "group": "G1",
+   "kind": "python-docstring (engine package)",
+   "required": false,
+   "old": "\"\"\"Resolve a config path relative to the project directory (\"tierra luna\").\"\"\"",
+   "new": "\"\"\"Resolve a config path relative to the project directory (the repository folder engine/).\"\"\"",
+   "why": "docstring"
+  },
+  {
+   "file_now": "app/video-sim/tools/prepare.py",
+   "file_after_move": "video/video-sim/tools/prepare.py",
+   "line": 54,
+   "group": "G2",
+   "kind": "python-path",
+   "required": true,
+   "old": "BUNDLE = os.path.join(HERE, \"..\", \"public\", \"data\", \"v2\")",
+   "new": "BUNDLE = os.path.join(HERE, \"..\", \"..\", \"app\", \"public\", \"data\", \"v2\")",
+   "why": "HERE/.. is video/ after the move, not app/"
+  },
+  {
+   "file_now": "app/video-sim/tools/solar_pair.py",
+   "file_after_move": "video/video-sim/tools/solar_pair.py",
+   "line": 20,
+   "group": "G2",
+   "kind": "python-path",
+   "required": true,
+   "old": "BUNDLE = os.path.join(HERE, \"..\", \"public\", \"data\", \"v2\")",
+   "new": "BUNDLE = os.path.join(HERE, \"..\", \"..\", \"app\", \"public\", \"data\", \"v2\")",
+   "why": "same"
+  },
+  {
+   "file_now": "app/video-sim/tools/solar_pair.py",
+   "file_after_move": "video/video-sim/tools/solar_pair.py",
+   "line": 245,
+   "group": "G2",
+   "kind": "python-path",
+   "required": true,
+   "old": "sc[\"output_dir\"] = os.path.relpath(os.path.join(HERE, \"..\", \"public\", \"media\", \"solar\"), os.path.dirname(os.path.abspath(a.out)))",
+   "new": "sc[\"output_dir\"] = os.path.relpath(os.path.join(HERE, \"..\", \"..\", \"app\", \"public\", \"media\", \"solar\"), os.path.dirname(os.path.abspath(a.out)))",
+   "why": "same"
+  },
+  {
+   "file_now": "app/video-sim/scenarios/lunar-base.json",
+   "file_after_move": "video/video-sim/scenarios/lunar-base.json",
+   "line": 4,
+   "group": "G2",
+   "kind": "json-config output_dir (render.js:21 resolves it from the scenario folder)",
+   "required": true,
+   "old": "\"output_dir\": \"../../public/media/lunar-base\",",
+   "new": "\"output_dir\": \"../../../app/public/media/lunar-base\",",
+   "why": "scenario folder is video/video-sim/scenarios"
+  },
+  {
+   "file_now": "app/video-sim/scenarios/solar.json",
+   "file_after_move": "video/video-sim/scenarios/solar.json",
+   "line": 4,
+   "group": "G2",
+   "kind": "json-config output_dir (render.js:21 resolves it from the scenario folder)",
+   "required": true,
+   "old": "\"output_dir\": \"../../public/media/solar\",",
+   "new": "\"output_dir\": \"../../../app/public/media/solar\",",
+   "why": "scenario folder is video/video-sim/scenarios"
+  },
+  {
+   "file_now": "app/video-sim/scenarios/solar.template.json",
+   "file_after_move": "video/video-sim/scenarios/solar.template.json",
+   "line": 4,
+   "group": "G2",
+   "kind": "json-config output_dir (render.js:21 resolves it from the scenario folder)",
+   "required": true,
+   "old": "\"output_dir\": \"../../public/media/solar\",",
+   "new": "\"output_dir\": \"../../../app/public/media/solar\",",
+   "why": "scenario folder is video/video-sim/scenarios"
+  },
+  {
+   "file_now": "app/video-sim/scenarios/lunar-base.json",
+   "file_after_move": "video/video-sim/scenarios/lunar-base.json",
+   "line": 29,
+   "group": "G2",
+   "kind": "json-prose",
+   "required": false,
+   "old": "\"source\": \"mission_zones.json region A (280 cells; moon_base.bin region column); the cell's 1-degree square intersects the Haworth footprint of tierra luna/engine/data/artemis_iii_regions.geojson (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK; NASA release 24-136, 2024-10-28) at its edge\"",
+   "new": "\"source\": \"mission_zones.json region A (280 cells; moon_base.bin region column); the cell's 1-degree square intersects the Haworth footprint of engine/engine/data/artemis_iii_regions.geojson (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK; NASA release 24-136, 2024-10-28) at its edge\"",
+   "why": "source text; prepare --checks-only does not compare it (verify)"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 76,
+   "group": "G3",
+   "kind": "python-path",
+   "required": true,
+   "old": "OUT = os.path.join(REPO, \"docs\", \"AUDIO_TOP5.json\")",
+   "new": "OUT = os.path.join(REPO, \"audio\", \"AUDIO_TOP5.json\")",
+   "why": "output moves to audio/"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 78,
+   "group": "G3",
+   "kind": "python-path",
+   "required": true,
+   "old": "RERECORD_MD = os.path.join(REPO, \"docs\", \"AUDIO_RERECORD.md\")",
+   "new": "RERECORD_MD = os.path.join(REPO, \"audio\", \"AUDIO_RERECORD.md\")",
+   "why": "output moves to audio/"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 29,
+   "group": "G3",
+   "kind": "python-docstring",
+   "required": false,
+   "old": "python \"tierra luna/tools/make_audio_top5.py\" [--bundle DIR] [--out FILE] [--no-app-files]",
+   "new": "python audio/tools/make_audio_top5.py [--bundle DIR] [--out FILE] [--no-app-files]",
+   "why": "usage line"
+  },
+  {
+   "file_now": "tierra luna/tools/make_audio_top5.py",
+   "file_after_move": "audio/tools/make_audio_top5.py",
+   "line": 1325,
+   "group": "G3",
+   "kind": "python-help",
+   "required": false,
+   "old": "ap.add_argument(\"--no-app-files\", action=\"store_true\", help=\"write docs/AUDIO_TOP5.json only\")",
+   "new": "ap.add_argument(\"--no-app-files\", action=\"store_true\", help=\"write audio/AUDIO_TOP5.json only\")",
+   "why": "help text"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 121,
+   "group": "G3",
+   "kind": "python-path (engine test)",
+   "required": true,
+   "old": "a = json.load(open(os.path.join(REPO, \"docs\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\"))",
+   "new": "a = json.load(open(os.path.join(REPO, \"audio\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\"))",
+   "why": "tests 116-121 and 329-331 run (not skipped)"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 299,
+   "group": "G3",
+   "kind": "python-path (engine test)",
+   "required": true,
+   "old": "shipped = open(os.path.join(REPO, \"docs\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\").read()",
+   "new": "shipped = open(os.path.join(REPO, \"audio\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\").read()",
+   "why": "tests 116-121 and 329-331 run (not skipped)"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 331,
+   "group": "G3",
+   "kind": "python-path (engine test)",
+   "required": true,
+   "old": "a = json.load(open(os.path.join(REPO, \"docs\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\"))",
+   "new": "a = json.load(open(os.path.join(REPO, \"audio\", \"AUDIO_TOP5.json\"), encoding=\"utf-8\"))",
+   "why": "tests 116-121 and 329-331 run (not skipped)"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 297,
+   "group": "G3",
+   "kind": "python-path (engine test, skipped)",
+   "required": true,
+   "old": "subprocess.run([py, os.path.join(ROOT, \"tools\", \"make_audio_top5.py\"), \"--out\", str(out)], check=True,",
+   "new": "subprocess.run([py, os.path.join(REPO, \"audio\", \"tools\", \"make_audio_top5.py\"), \"--out\", str(out)], check=True,",
+   "why": "the generator moves"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 293,
+   "group": "G3",
+   "kind": "python-text (skip reason)",
+   "required": false,
+   "old": "@pytest.mark.skip(reason='docs/AUDIO_TOP5.json and tools/make_audio_top5.py are outside what this revision may edit; the audio of the five must be regenerated by its owner for revision 8')",
+   "new": "@pytest.mark.skip(reason='audio/AUDIO_TOP5.json and audio/tools/make_audio_top5.py are outside what this revision may edit; the audio of the five must be regenerated by its owner for revision 8')",
+   "why": "text"
+  },
+  {
+   "file_now": "tierra luna/tests/test_audit_corrections_1.py",
+   "file_after_move": "engine/tests/test_audit_corrections_1.py",
+   "line": 300,
+   "group": "G3",
+   "kind": "python-text (assert message)",
+   "required": false,
+   "old": "assert out.read_text(encoding=\"utf-8\") == shipped, \"docs/AUDIO_TOP5.json is stale: run tools/make_audio_top5.py\"",
+   "new": "assert out.read_text(encoding=\"utf-8\") == shipped, \"audio/AUDIO_TOP5.json is stale: run audio/tools/make_audio_top5.py\"",
+   "why": "text"
+  },
+  {
+   "file_now": "app/tests/a11y.mjs",
+   "file_after_move": "app/tests/a11y.mjs",
+   "line": 50,
+   "group": "G3",
+   "kind": "js-path",
+   "required": true,
+   "old": "const top5 = JSON.parse(readFileSync(join(APP, '../docs/AUDIO_TOP5.json'), 'utf8'));",
+   "new": "const top5 = JSON.parse(readFileSync(join(APP, '../audio/AUDIO_TOP5.json'), 'utf8'));",
+   "why": "a11y test reads the pair list"
+  },
+  {
+   "file_now": "app/tests/a11y.mjs",
+   "file_after_move": "app/tests/a11y.mjs",
+   "line": 79,
+   "group": "G3",
+   "kind": "js-text",
+   "required": false,
+   "old": "check(agree, 'tracks.json pair tracks agree with docs/AUDIO_TOP5.json (entry n of each mission = track <mission>_n, same cell ids)');",
+   "new": "check(agree, 'tracks.json pair tracks agree with audio/AUDIO_TOP5.json (entry n of each mission = track <mission>_n, same cell ids)');",
+   "why": "message"
+  },
+  {
+   "file_now": "app/src/a11y/audio.ts",
+   "file_after_move": "app/src/a11y/audio.ts",
+   "line": 172,
+   "group": "G3",
+   "kind": "ts-comment",
+   "required": false,
+   "old": "/** The pair track recorded for exactly this pair (Earth and lunar cell ids as in docs/AUDIO_TOP5.json), or null. */",
+   "new": "/** The pair track recorded for exactly this pair (Earth and lunar cell ids as in audio/AUDIO_TOP5.json), or null. */",
+   "why": "comment; changes nothing in dist"
+  },
+  {
+   "file_now": "app/public/audio/tracks.json",
+   "file_after_move": "app/public/audio/tracks.json",
+   "line": 3,
+   "group": "G3",
+   "kind": "json-prose (served file)",
+   "required": false,
+   "old": "\"source_of_pairs\": \"docs/AUDIO_TOP5.json (entry n of each mission's pairs, in order, is track <mission>_n; rank = the place among the five shown, overall_rank = the place in the full ranking)\",",
+   "new": "\"source_of_pairs\": \"audio/AUDIO_TOP5.json (entry n of each mission's pairs, in order, is track <mission>_n; rank = the place among the five shown, overall_rank = the place in the full ranking)\",",
+   "why": "prose key source_of_pairs; not read by code (verify with test:a11y)"
+  },
+  {
+   "file_now": "tierra luna/audit/p1_grid.py",
+   "file_after_move": "engine/audit/p1_grid.py",
+   "line": 38,
+   "group": "G3",
+   "kind": "python-path (audit)",
+   "required": false,
+   "old": "(\"tierra luna/tools/make_audio_top5.py\", None), (\"tierra luna/real_data\", (\".md\", \".json\", \".csv\"))]",
+   "new": "(\"audio/tools/make_audio_top5.py\", None), (\"tierra luna/real_data\", (\".md\", \".json\", \".csv\"))]",
+   "why": "after the G1 edit this line reads engine/tools/...; set it to audio/tools/..."
+  },
+  {
+   "file_now": "tierra luna/tests/test_verification_fixes.py",
+   "file_after_move": "engine/tests/test_verification_fixes.py",
+   "line": 145,
+   "group": "G4",
+   "kind": "python-path (engine test)",
+   "required": true,
+   "old": "text = open(os.path.join(REPO, \"ASSUMPTIONS.md\"), encoding=\"utf-8\").read()",
+   "new": "text = open(os.path.join(REPO, \"docs\", \"ASSUMPTIONS.md\"), encoding=\"utf-8\").read()",
+   "why": "file moves to docs/"
+  },
+  {
+   "file_now": "tierra luna/tests/test_texts_reaudit.py",
+   "file_after_move": "engine/tests/test_texts_reaudit.py",
+   "line": 249,
+   "group": "G4",
+   "kind": "python-path (engine test)",
+   "required": true,
+   "old": "for p in (os.path.join(REPO, \"docs\", \"DATA_CONTRACT.md\"), os.path.join(REPO, \"ASSUMPTIONS.md\"),",
+   "new": "for p in (os.path.join(REPO, \"docs\", \"DATA_CONTRACT.md\"), os.path.join(REPO, \"docs\", \"ASSUMPTIONS.md\"),",
+   "why": "file moves to docs/"
+  },
+  {
+   "file_now": "tierra luna/audit/p1_grid.py",
+   "file_after_move": "engine/audit/p1_grid.py",
+   "line": 36,
+   "group": "G4",
+   "kind": "python-path (audit)",
+   "required": false,
+   "old": "(\"docs\", (\".md\", \".json\", \".csv\")), (\"ASSUMPTIONS.md\", None), (\"README.md\", None),",
+   "new": "(\"docs\", (\".md\", \".json\", \".csv\")), (\"README.md\", None),",
+   "why": "docs/ is already scanned on the same line"
+  },
+  {
+   "file_now": "tierra luna/audit/p4_docs_coherence.py",
+   "file_after_move": "engine/audit/p4_docs_coherence.py",
+   "line": 25,
+   "group": "G4",
+   "kind": "python-path (audit)",
+   "required": false,
+   "old": "\"docs/DECISIONS.md\", \"ASSUMPTIONS.md\", \"docs/DATA_CONTRACT.md\", \"docs/ANALOG_PRINCIPLE.md\",",
+   "new": "\"docs/DECISIONS.md\", \"docs/ASSUMPTIONS.md\", \"docs/DATA_CONTRACT.md\", \"docs/ANALOG_PRINCIPLE.md\",",
+   "why": "file list"
+  },
+  {
+   "file_now": "README.md",
+   "file_after_move": "README.md",
+   "line": 163,
+   "group": "G4",
+   "kind": "markdown-link",
+   "required": true,
+   "old": "| [ASSUMPTIONS.md](ASSUMPTIONS.md) | every engine setting and assumption: what was assumed, why, its effect, where to change it |",
+   "new": "| [ASSUMPTIONS.md](docs/ASSUMPTIONS.md) | every engine setting and assumption: what was assumed, why, its effect, where to change it |",
+   "why": "relative link"
+  },
+  {
+   "file_now": "README.md",
+   "file_after_move": "README.md",
+   "line": 130,
+   "group": "G2",
+   "kind": "markdown-link",
+   "required": true,
+   "old": "[app/video-sim/README.md](app/video-sim/README.md); per-video notes in `app/public/media/*/README.md`.",
+   "new": "[app/video-sim/README.md](video/video-sim/README.md); per-video notes in `app/public/media/*/README.md`.",
+   "why": "relative link"
+  }
+ ],
+ "do_not_change": [
+  {
+   "file": "engine/validation/m5_reproduction.py:29",
+   "why": "git show 618bc45:tierra luna/mission_scoring.json names a path inside an old commit"
+  },
+  {
+   "file": "engine/research/r3_base_lunar.py:5-8,15,23",
+   "why": "reads a snapshot directory of an older commit, which has the 'tierra luna' layout"
+  },
+  {
+   "file": "engine/audit/out/**, engine/validation/out/**, engine/research/out/** (944 'tierra luna' in 25 files)",
+   "why": "recorded outputs of past runs"
+  },
+  {
+   "file": "docs/stats_audit/**, docs/audit_evidence/**, docs/sources/**, docs/AUDIT.md, docs/LOCAL_ZIP_COMPARISON.md, docs/DECISIONS.md",
+   "why": "dated records and the decision log; DECISIONS.md is read verbatim by tests (tests/test_real_data.py:478) and quotes the lead"
+  },
+  {
+   "file": "audio/AUDIO_TOP5.json content (26 'tierra luna' strings)",
+   "why": "generated file; regenerate it with the generator instead of hand edits"
+  },
+  {
+   "file": "engine/mission_scoring.json and every team module",
+   "why": "0 lines need to change with the whole-folder move"
+  },
+  {
+   "file": "app/public/data/v2/* (unless G8 is run)",
+   "why": "bundle must stay byte-identical"
+  }
+ ],
+ "markdown_rule": {
+  "applies_to": "living documents (list below); never to the do_not_change records",
+  "ordered_literal_replacements": [
+   [
+    "tierra luna/tools/make_audio_top5.py",
+    "audio/tools/make_audio_top5.py"
+   ],
+   [
+    "tierra luna/web",
+    "archive/old_web"
+   ],
+   [
+    "docs/AUDIO_TOP5.json",
+    "audio/AUDIO_TOP5.json"
+   ],
+   [
+    "docs/AUDIO_RERECORD.md",
+    "audio/AUDIO_RERECORD.md"
+   ],
+   [
+    "app/video-sim",
+    "video/video-sim"
+   ],
+   [
+    "cd \"tierra luna\"",
+    "cd engine"
+   ],
+   [
+    "\"tierra luna\"",
+    "engine/"
+   ],
+   [
+    "'tierra luna'",
+    "engine/"
+   ],
+   [
+    "tierra luna/",
+    "engine/"
+   ],
+   [
+    "tierra luna",
+    "engine  (review each remaining hit by hand)"
+   ]
+  ],
+  "skip_pattern": "[0-9a-f]{7,40}:tierra luna (paths inside old commits)",
+  "links": "only 2 relative markdown links change: README.md:130 (app/video-sim/README.md -> video/video-sim/README.md) and README.md:163 (ASSUMPTIONS.md -> docs/ASSUMPTIONS.md); no link is broken today",
+  "bare_names": "bare 'ASSUMPTIONS.md' (51) and 'engine/x.py' mentions stay: say once in README that engine/... paths in documents are relative to the engine/ folder (package engine/engine/)",
+  "living_documents": {
+   "ASSUMPTIONS.md": {
+    "tierra luna": 26,
+    "AUDIO_TOP5.json": 1,
+    "make_audio_top5": 1
+   },
+   "README.md": {
+    "tierra luna": 25,
+    "app/video-sim": 7,
+    "ASSUMPTIONS.md": 4
+   },
+   "app/README.md": {
+    "AUDIO_TOP5.json": 1
+   },
+   "app/public/media/lunar-base/README.md": {
+    "tierra luna": 2,
+    "app/video-sim": 3
+   },
+   "app/public/media/rover/README.md": {
+    "tierra luna": 1
+   },
+   "app/public/media/solar/README.md": {
+    "tierra luna": 1,
+    "app/video-sim": 4
+   },
+   "app/video-sim/README.md": {
+    "app/video-sim": 1
+   },
+   "docs/AI_USE.md": {
+    "tierra luna": 15,
+    "app/video-sim": 1,
+    "ASSUMPTIONS.md": 2
+   },
+   "docs/ANALOG_PRINCIPLE.md": {
+    "tierra luna": 8,
+    "ASSUMPTIONS.md": 2
+   },
+   "docs/AUDIO_RERECORD.md": {
+    "tierra luna": 1,
+    "AUDIO_TOP5.json": 1,
+    "make_audio_top5": 1
+   },
+   "docs/DATA_CONTRACT.md": {
+    "tierra luna": 7,
+    "AUDIO_TOP5.json": 1,
+    "make_audio_top5": 1
+   },
+   "docs/DATA_DICTIONARY.md": {
+    "tierra luna": 3,
+    "Instruciones": 1
+   },
+   "docs/FILTERS.md": {
+    "tierra luna": 4,
+    "Instruciones": 4
+   },
+   "docs/KNOWN_LIMITATIONS.md": {
+    "tierra luna": 3,
+    "app/video-sim": 1,
+    "ASSUMPTIONS.md": 8
+   },
+   "docs/LUNAR_BASE_PROPOSAL.md": {
+    "tierra luna": 2,
+    "ASSUMPTIONS.md": 1
+   },
+   "docs/MISSION_ZONES.md": {
+    "tierra luna": 10
+   },
+   "docs/PR_DESCRIPTION.md": {
+    "tierra luna": 18,
+    "app/video-sim": 2,
+    "ASSUMPTIONS.md": 2
+   },
+   "docs/REAL_DATA.md": {
+    "tierra luna": 18
+   },
+   "docs/SIMILARITY_PROPOSAL.md": {
+    "tierra luna": 2,
+    "zip": 1
+   },
+   "docs/STATS_AUDIT.md": {
+    "tierra luna": 42,
+    "AUDIO_RERECORD.md": 1,
+    "make_audio_top5": 3
+   },
+   "docs/UX_REPORT.md": {
+    "AUDIO_TOP5.json": 2
+   },
+   "docs/VALIDATION.md": {
+    "tierra luna": 11
+   },
+   "docs/ZONE_CONTRAST.md": {
+    "ASSUMPTIONS.md": 1
+   }
+  },
+  "living_totals": {
+   "tierra luna": 199,
+   "AUDIO_TOP5.json": 6,
+   "make_audio_top5": 6,
+   "app/video-sim": 19,
+   "ASSUMPTIONS.md": 20,
+   "Instruciones": 5,
+   "zip": 1,
+   "AUDIO_RERECORD.md": 1
+  },
+  "records_left_as_is": {
+   "docs/AUDIT.md": {
+    "tierra luna": 21,
+    "tierra luna/web": 1,
+    "zip": 2,
+    "Instruciones": 2
+   },
+   "docs/DECISIONS.md": {
+    "tierra luna": 18,
+    "AUDIO_TOP5.json": 3,
+    "AUDIO_RERECORD.md": 1,
+    "ASSUMPTIONS.md": 18,
+    "make_audio_top5": 1
+   },
+   "docs/LOCAL_ZIP_COMPARISON.md": {
+    "tierra luna": 12
+   },
+   "docs/audit_evidence/A1_inventory_tests.md": {
+    "tierra luna": 8,
+    "zip": 3,
+    "Instruciones": 2
+   },
+   "docs/audit_evidence/A2_data_audit.md": {
+    "tierra luna": 2
+   },
+   "docs/audit_evidence/A3_filters_scoring.md": {
+    "tierra luna": 1,
+    "Instruciones": 1
+   },
+   "docs/audit_evidence/A4_points_crosscheck.md": {
+    "tierra luna": 1
+   },
+   "docs/stats_audit/10_textos_audio.md": {
+    "tierra luna": 3,
+    "make_audio_top5": 1
+   },
+   "docs/stats_audit/11_textos_finales.md": {
+    "tierra luna": 2
+   },
+   "docs/stats_audit/12_contraste_realidad_nuevos.md": {
+    "tierra luna": 3,
+    "ASSUMPTIONS.md": 1
+   },
+   "docs/stats_audit/13_comprobacion_validacion.md": {
+    "tierra luna": 2
+   },
+   "docs/stats_audit/15_audios_integrados.md": {
+    "tierra luna": 4,
+    "AUDIO_TOP5.json": 1,
+    "AUDIO_RERECORD.md": 1,
+    "make_audio_top5": 1
+   },
+   "docs/stats_audit/1_datos_rejilla_nombres.md": {
+    "tierra luna": 13,
+    "AUDIO_TOP5.json": 4,
+    "make_audio_top5": 2
+   },
+   "docs/stats_audit/2_metodo_top5_unidades.md": {
+    "tierra luna": 7,
+    "AUDIO_TOP5.json": 3,
+    "ASSUMPTIONS.md": 6
+   },
+   "docs/stats_audit/3_robustez_validacion_ranking.md": {
+    "tierra luna": 6
+   },
+   "docs/stats_audit/4_audios_coherencia.md": {
+    "tierra luna": 6,
+    "AUDIO_TOP5.json": 5,
+    "ASSUMPTIONS.md": 3,
+    "make_audio_top5": 1
+   },
+   "docs/stats_audit/5_inventario_sentido_fisico.md": {
+    "tierra luna": 10,
+    "app/video-sim": 3,
+    "ASSUMPTIONS.md": 2
+   },
+   "docs/stats_audit/6_contraste_realidad.md": {
+    "tierra luna": 12,
+    "AUDIO_TOP5.json": 3
+   },
+   "docs/stats_audit/7_efecto_decisiones_pendientes.md": {
+    "tierra luna": 10,
+    "AUDIO_TOP5.json": 1
+   },
+   "docs/stats_audit/9_reauditoria_base.md": {
+    "tierra luna": 4
+   },
+   "docs/stats_audit/9_reauditoria_rover.md": {
+    "tierra luna": 3
+   },
+   "docs/stats_audit/9_reauditoria_solar.md": {
+    "tierra luna": 3
+   },
+   "docs/stats_audit/correcciones_1.md": {
+    "tierra luna": 5,
+    "AUDIO_TOP5.json": 5,
+    "ASSUMPTIONS.md": 1,
+    "make_audio_top5": 4
+   },
+   "docs/stats_audit/research_1_rover_terreno.md": {
+    "tierra luna": 5
+   },
+   "docs/stats_audit/research_2_solar_idoneidad.md": {
+    "tierra luna": 6
+   },
+   "docs/stats_audit/research_3_base_lunar.md": {
+    "tierra luna": 2
+   },
+   "docs/stats_audit/research_4_validacion_externa.md": {
+    "tierra luna": 5,
+    "AUDIO_TOP5.json": 1
+   },
+   "docs/stats_audit/research_5_rover_escala.md": {
+    "tierra luna": 3
+   }
+  },
+  "records_totals": {
+   "tierra luna": 177,
+   "tierra luna/web": 1,
+   "zip": 5,
+   "Instruciones": 5,
+   "AUDIO_TOP5.json": 26,
+   "AUDIO_RERECORD.md": 2,
+   "ASSUMPTIONS.md": 31,
+   "make_audio_top5": 10,
+   "app/video-sim": 3
+  }
+ },
+ "bundle_strings": {
+  "required_changes": 0,
+  "optional_G8": {
+   "app/public/data/v2/similarity.json": 12,
+   "app/public/data/v2/missions.json": 6,
+   "app/public/data/v2/mission_zones.json": 6
+  },
+  "produced_by": {
+   "tolerance_set_by (missions.json 6, similarity.json 6)": "engine/engine/engine_config.json real_value_similarity...variables[].tolerance_set_by and criteria_sets...engine_patch (12 strings), exported by engine/engine/export_v2.py; the web shows only the text before the first colon (app/src/flow/copy.ts:90)",
+   "external_validation_*.source, deviations_from_team.source (similarity.json 6)": "engine_config.json external_validation.value.missions.<m>.source (5) and limit_texts.value.deviations_from_team.source (1)",
+   "figures[].how_computed (mission_zones.json 6)": "engine/engine/mission_zone_texts.json figures (6), copied verbatim",
+   "basenames only": "manifest.json inputs[].file and config_sha256 keys are basenames: moving files changes nothing; editing a config file changes its config_sha256"
+  }
+ },
+ "reference_totals": {
+  "required_line_edits": {
+   "python": 44,
+   "json_config": 3,
+   "javascript": 1,
+   "gitignore": 1,
+   "markdown_links": 2,
+   "shell": 0,
+   "package_json": 0,
+   "bundle": 0,
+   "total": 51
+  },
+  "optional_line_edits": {
+   "labels_comments_messages": 24,
+   "engine_json_prose_G8": 27,
+   "bundle_strings_after_G8": 24
+  },
+  "tierra_luna_occurrences_today": {
+   "python_code": 47,
+   "python_comments_docstrings": 83,
+   "engine_json": 27,
+   "other_json": 29,
+   "bundle_json": 24,
+   "javascript": 1,
+   "gitignore": 1,
+   "markdown": 376,
+   "generated_out": 944,
+   "csv_txt_log": 10
+  },
+  "markdown_rewrites_living": {
+   "tierra luna": 199,
+   "AUDIO_TOP5.json": 6,
+   "make_audio_top5": 6,
+   "app/video-sim": 19,
+   "ASSUMPTIONS.md": 20,
+   "Instruciones": 5,
+   "zip": 1,
+   "AUDIO_RERECORD.md": 1
+  }
+ },
+ "risks": [
+  "R1 Bundle drift: any edit to engine_config.json, datasets.json, mission_zone_texts.json or mission_scoring.json changes manifest config_sha256 and fails test_published_v2_matches_a_fresh_build unless the bundle is rebuilt. Proof: G1 build to /tmp and sha256-compare all files; G8 only with the masked JSON comparison.",
+  "R2 Team modules hard-code dirname(__file__)/data/... (pds_reader.py:11, config.py:6, analog_finder.py:21,24, rover_integration.py:50, tests/conftest.py:13): anything that separates them from engine/data, mission_filters.json or presets.json breaks tests/test_pipeline.py, test_rover_integration.py and test_engine.py. Proof: full engine suite.",
+  "R3 Name nesting engine/engine: python -m engine works only with cwd engine/ (or engine/ on sys.path); from the repository root 'engine' resolves to the folder as a namespace package. Tests are safe (they insert ROOT, e.g. tests/test_engine.py:16). Proof: engine suite from engine/; document 'cd engine' in README.",
+  "R4 Video renderer depth: after git mv, HERE/.. is video/ not app/: 3 python joins and 3 scenario output_dir values must change or renders go to video/public. node_modules/build move with the folder (untracked). Proof: prepare.py --checks-only on both scenarios, solar_pair.py reproduces solar.json, npm run build.",
+  "R5 Audio list readers: app/tests/a11y.mjs:50 and tests/test_audit_corrections_1.py:121,331 (not skipped) read docs/AUDIO_TOP5.json. Proof: pytest tests/test_audit_corrections_1.py, npm run -s test:a11y, generator diff before/after.",
+  "R6 Concurrent edits: files changed during this analysis (app/src/a11y/audio.ts, app/tests/a11y.mjs, engine_config.json, bundle). Start only from a clean tree; match edits by text.",
+  "R7 History paths: m5_reproduction.py:29 and r3_base_lunar.py must keep 'tierra luna'; a blind sed breaks them.",
+  "R8 Machine paths: 6 lines hard-code /home/user/stars-beside-you/tierra luna (real_data/verification/*.py, audit/v_check_validation.py); tests/test_real_data.py:37 defaults to /home/user/NASA/docs/research/02_analog_benchmark.csv (skips when absent). Harmless, but visible in a public repo."
+ ],
+ "fallback": "If the full plan is not green within an hour: keep G1 (whole rename + .gitignore + pyc removal; the engine suite needs 0 edits), G5 (archive: pure moves, no code reads them) and G6 (index READMEs that point to docs/AUDIO_TOP5.json, app/video-sim, ASSUMPTIONS.md where they are). Leave app/video-sim, docs/AUDIO_*, ASSUMPTIONS.md in place. Prove with the engine suite + build compare + npm run build + test:data, then stop.",
+ "archive_note": [
+  {
+   "item": "archive/STARS-BESIDE-YOU-main (2).zip",
+   "reason": "zip of the team's original main (commit d4a11e4); 46 of its 50 files are identical to the current tree, the other 4 are the team's original versions of analog_finder.py, presets.json, mission_scoring.json and rover_preset.py; sha256 db67dcf0...66254"
+  },
+  {
+   "item": "archive/team_notes/Instruciones filtros solar y temp",
+   "reason": "the team's note (Spanish) on how mission_scoring.py/json were designed; docs/FILTERS.md cites it"
+  },
+  {
+   "item": "archive/old_web/",
+   "reason": "the team's first static web, replaced by app/; engine/main.py still writes web/analog_data.js, so create engine/web/ before running main.py"
+  },
+  {
+   "item": "(removed from the index, not archived) engine/__pycache__/*.pyc and engine/tests/__pycache__/*.pyc",
+   "reason": "compiled files committed by mistake; .gitignore already ignores them; they remain in history"
+  }
+ ],
+ "test_commands": {
+  "PY": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/venv/bin/python",
+  "BGM": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/bundle_global_mean",
+  "engine_suite": "cd engine && STARS_GLOBAL_MEAN_BUNDLE=$BGM $PY -m pytest -q   # 231 passed / 12 skipped, about 8 minutes",
+  "engine_build_compare": "cd engine && $PY -m engine build --out /tmp/order_v2 && diff <(cd /tmp/order_v2 && sha256sum * | sort -k2) <(cd ../app/public/data/v2 && sha256sum * | sort -k2)",
+  "app": "cd app && npm run build && npm run -s test:data",
+  "recount": "re-run count_refs.py, md_refs.py and edits.py in this folder before executing"
+ }
+}

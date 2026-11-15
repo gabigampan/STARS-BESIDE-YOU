@@ -1,0 +1,11 @@
+parameter,value,note,source,url
+cost_elasticity_wrt_cumulative_payload,-0.34,1% more cumulative payload -> -0.34% cost/kg,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+learning_rate_per_doubling_overall,21.2,% drop in cost/kg per doubling of cumulative payload (1960-2025); R2=0.791 (0.953 in 2000-2025),Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+rate_per_doubling_post_cold_war,44,% after 1989,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+rate_per_doubling_cold_war,17,% before 1989,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+learning_within_vehicle_family,6,% per doubling (8% post-Cold War),Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+average_annual_decline_Moore,2.9,% per year,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+structural_break,2010,matches Falcon 9 / COTS program,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+NASA_standard_learning_curve,85,% (each doubling of units costs 85% of the previous); generic guideline,NASA Space Systems Cost module / Jones 2015,https://ntrs.nasa.gov/api/citations/20160001190/downloads/20160001190.pdf
+satellite_curve_Meisl_Morales,95/90/85,% for 1-10 / 11-50 / >50 units,"Anderson, ICEAA 2018 (citing Meisl and Morales)",https://www.iceaaonline.com/wp-content/uploads/2018/07/MM01-Paper-Learning-Rate-Sensitivity-Model-Anderson.pdf
+Falcon9_development_savings_vs_NASA_model,68,"% (443 M$ SpaceX vs 1,383 M$ estimated by traditional NAFCOM)",Jones 2018 citing NASA 2011,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf

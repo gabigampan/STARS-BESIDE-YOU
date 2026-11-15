@@ -1,0 +1,6 @@
+phase,method1_bottom_up,method2_min,method2_max,method3_hypothetical_project,systems_composite_min,systems_composite_max,software_min,software_max,source,url
+Requirements,1,1,1,1,1,1,1,1,"Stecklein et al. 2004, NASA JSC, Tables 12-13",https://ntrs.nasa.gov/api/citations/20100036670/downloads/20100036670.pdf
+Design,8,3,4,4,3,8,5,7,idem,https://ntrs.nasa.gov/api/citations/20100036670/downloads/20100036670.pdf
+Manufacturing,16,13,16,7,7,16,10,26,idem,https://ntrs.nasa.gov/api/citations/20100036670/downloads/20100036670.pdf
+Integration and test,21,61,78,28,21,78,50,177,idem,https://ntrs.nasa.gov/api/citations/20100036670/downloads/20100036670.pdf
+Operations,29,157,186,1615,29,1615,100,1000,"idem; the 1615x corresponds to errors that, if undetected, mean total loss of the system",https://ntrs.nasa.gov/api/citations/20100036670/downloads/20100036670.pdf

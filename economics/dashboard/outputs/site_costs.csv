@@ -1,0 +1,10 @@
+site_id,origin,p10_eur,p50_eur,p90_eur,workable_day_fraction,top_driver
+bardenas,6 people from Malaga (AGP),13173.6,14456.6,15980.1,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+tabernas,6 people from Malaga (AGP),11835.3,13127.6,14667.1,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+teide,6 people from Malaga (AGP),16995.2,19000.2,21248.7,0.794518,Small-shipment freight markup (ILLUSTRATIVE)
+lanzarote_timanfaya,6 people from Malaga (AGP),16995.2,19000.2,21248.7,0.794518,Small-shipment freight markup (ILLUSTRATIVE)
+rio_tinto,6 people from Malaga (AGP),11856.9,13149.3,14688.8,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+atacama_yungay,6 people from Malaga (AGP),28634.4,31347.6,34279.6,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+death_valley,6 people from Malaga (AGP),35185.5,38413.4,41985.5,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+holuhraun,6 people from Malaga (AGP),24661.3,27281.9,30255.8,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"
+mdrs,6 people from Malaga (AGP),53916.7,57206.6,77856,0.794518,"Workable-day fraction (generic, ILLUSTRATIVE)"

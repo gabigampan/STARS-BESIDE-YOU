@@ -1,0 +1,11 @@
+source,indicator,year,value,unit,type,note,url
+Space Foundation,global_space_economy,2023,570,billion USD (nominal),actual,"Cited as the 2023 figure before the +7.8% (Breaking Defense, search; consistent with 613/1,078)",https://breakingdefense.com/2025/07/global-military-space-spending-growth-trend-continues-in-2024-topping-60b/
+Space Foundation,global_space_economy,2024,613,billion USD (nominal),actual,"+7.8% year on year; commercial 78%, governments 22%",https://www.spacefoundation.org/2025/07/22/the-space-report-2025-q2
+Space Foundation,global_government_budgets,2024,132,billion USD,actual,US 77 (77.3 according to SpacePolicyOnline),https://www.spacefoundation.org/2025/07/22/the-space-report-2025-q2
+Space Foundation,global_space_economy,2025,686,billion USD (nominal),actual,+12% year on year (685.6 rounded); 5-year CAGR 9.8%,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+Space Foundation,commercial_revenue,2025,544.3,billion USD,actual,79% of the total; 2024 revised to 481.5,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+Space Foundation,global_government_budgets,2025,141,billion USD,actual,53 budgets; +7.4%; US 78.3 (57%),https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+McKinsey/WEF,global_space_economy,2023,630,billion USD,actual (own estimate),backbone 330 + reach 300; broader definition than Space Foundation,https://www.mckinsey.com/industries/aerospace-and-defense/our-insights/space-the-1-point-8-trillion-dollar-opportunity-for-global-economic-growth
+McKinsey/WEF,global_space_economy,2035,1800,billion USD (inflation-adjusted),forecast,~9% per year; not directly comparable with Space Foundation,https://www.mckinsey.com/industries/aerospace-and-defense/our-insights/space-the-1-point-8-trillion-dollar-opportunity-for-global-economic-growth
+OECD,OECD_government_space_budgets,2022,75,billion USD,actual,0.1% of OECD GDP (0.12% in 2008); civil+military where available,https://www.oecd.org/en/publications/the-space-economy-in-figures_fa5494aa-en.html
+OECD,operational_satellites,2022,6700,number,actual,twice as many as in 2020; >2/3 commercial,https://www.oecd.org/en/publications/the-space-economy-in-figures_fa5494aa-en.html

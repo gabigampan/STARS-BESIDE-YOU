@@ -1,0 +1,8 @@
+decade,missions_n,missions_success,missions_partial,missions_failure,pct_failure_or_partial_missions,surface_n,surface_success,surface_partial,surface_failure,pct_failure_or_partial_surface,method,url
+1960s,12,3,0,9,75.0,1,0,0,1,100.0,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+1970s,11,8,1,2,27.3,6,2,1,3,66.7,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+1980s,2,1,0,1,50.0,0,0,0,0,,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+1990s,7,2,0,5,71.4,5,2,0,3,60.0,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+2000s,6,6,0,0,0.0,4,3,0,1,25.0,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+2010s,6,5,0,1,16.7,3,2,0,1,33.3,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+2020s,3,3,0,0,0.0,4,4,0,0,0.0,"calculated from the Wikipedia list; 2025-26 missions en route excluded; ""Precluded"" (lost with its mother spacecraft) excluded",https://en.wikipedia.org/wiki/List_of_missions_to_Mars

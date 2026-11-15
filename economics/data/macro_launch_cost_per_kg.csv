@@ -1,0 +1,102 @@
+vehicle,year,usd_per_kg,unit_and_definition,source,url
+Vanguard,1957,894700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Delta E,1960,167800,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Scout,1961,111800,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Titan II,1962,31000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Atlas-Centaur,1964,28000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Proton SL-13,1965,4100,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Saturn IB,1966,17300,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Soyuz,1966,7600,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Cosmos,1967,12400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Kosmos,1967,8000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Saturn V,1968,5200,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Long March 2E,1971,7700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Long March 2C,1974,10000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Titan-Centaur,1974,11200,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Delta 3910,1975,28000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Space shuttle,1981,61700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Long March 3B,1984,6300,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Zenit 2,1985,4400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Ariane 44,1988,17900,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Delta II,1989,15300,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Taurus,1989,20400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Titan IV,1989,24700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Pegasus XL,1990,43500,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Atlas IIA,1991,19800,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Start,1993,16700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+H-2,1994,26400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Rockot,1994,10400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Athena 1,1995,31700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Athena 2,1995,16600,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Ariane 5G,1996,13100,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Delta III,1998,11700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Dnepr,1999,4900,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Zenit 3SL,1999,7600,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Falcon 9,2010,2700,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Vega,2012,10000,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Falcon Heavy,2018,1400,"USD 2018/kg to LEO (per system, 1st launch)",Jones 2018 (NASA Ames) Table A1,https://ntrs.nasa.gov/api/citations/20200001093/downloads/20200001093.pdf
+Angara,2014,4500,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Antares,2013,13600,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Ariane 44,1988,18300,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Ariane 5G,1997,10200,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Athena 1,1999,19200,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Atlas Centaur,1963,29500,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Atlas II,1991,18700,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Atlas III,2000,16000,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Atlas V,2002,8100,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta 3000-Series,1975,21400,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta 3910,1980,32800,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta E,1965,177900,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta II,1990,38800,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta III,1999,18000,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta IV,2002,10400,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Delta IV Heavy,2004,11600,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Dnepr,1999,9600,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Electron,2018,23100,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Epsilon,2013,34500,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Falcon 1,2008,12600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Falcon 9,2010,2600,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Falcon Heavy,2018,1500,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+GSLV,2001,10000,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+H-II,1994,10500,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Kosmos,1962,14900,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Kuaizhou,2013,10600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+LVM3,2017,8000,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 11,2019,10600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 2A,1975,17500,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 2C,1982,8300,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 2D,1992,9100,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 2E,1990,9900,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 3A,1994,8700,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 3B,1997,6200,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 4B,2013,7600,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Long March 5,2016,7900,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+M-V,1997,45800,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Minotaur I,2000,73100,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Minotaur IV,2017,30500,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+PSLV,1994,8500,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Pegasus,1990,41100,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Pegasus XL,1996,50600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Proton,1965,8200,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+R-36 / Cyclone,1966,8400,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Rokot,1994,20600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Saturn V,1967,5400,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Scout,1967,118500,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Shavit,1988,31100,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Shian Quxian,2019,17300,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Shtil,1998,19100,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Soyuz,1966,17900,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Space Shuttle,1981,65400,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Start,1993,23600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Strela,2003,11200,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Taurus,1994,34600,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Titan II,1964,30600,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Titan III+,1965,21000,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Titan IV,1989,30800,USD 2021/kg to LEO (dedicated launch; Heavy class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Vega,2012,20000,USD 2021/kg to LEO (dedicated launch; Small class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Zenit 2,1985,5100,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+Zenit 3SL,1999,8900,USD 2021/kg to LEO (dedicated launch; Medium class),CSIS Aerospace Security Project 2022 via OWID,https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
+WORLD AVERAGE (all launches),1960,87023,USD 2024/kg (launch-weighted average),"Terzi & Nicoli 2026, PNAS Nexus",https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+WORLD AVERAGE (all launches),2025,3868,USD 2024/kg,Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+FORECAST central scenario,2030,1600,USD 2024/kg (forecast),Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000
+FORECAST central scenario,2040,300,USD 2024/kg (forecast),Terzi & Nicoli 2026,https://academic.oup.com/pnasnexus/article/5/7/pgag217/8693000

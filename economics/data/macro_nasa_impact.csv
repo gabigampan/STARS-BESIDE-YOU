@@ -1,0 +1,12 @@
+period,indicator,value,unit,url
+FY2023,total_economic_output,75.6,billion USD,https://www.nasa.gov/news-release/new-report-shows-nasas-75-6-billion-boost-to-us-economy/
+FY2023,jobs_supported,304803,jobs,https://www.nasa.gov/news-release/new-report-shows-nasas-75-6-billion-boost-to-us-economy/
+FY2023,federal_state_local_tax_revenue,9.5,billion USD,https://www.nasa.gov/news-release/new-report-shows-nasas-75-6-billion-boost-to-us-economy/
+FY2023,labor_income,27.6,billion USD,https://www.nasa.gov/wp-content/uploads/2024/10/final-fy23-nasa-ecomomic-impact-report.pdf
+FY2023,value_added,42.4,billion USD,https://space-economy.esa.int/article/216/nasa-economic-impact-report-2024
+FY2023,NASA_direct_employment_FTE,17823,FTE,https://www.nasa.gov/wp-content/uploads/2024/10/final-fy23-nasa-ecomomic-impact-report.pdf
+FY2023,Moon_to_Mars_output,23.8,billion USD,https://www.nasa.gov/news-release/new-report-shows-nasas-75-6-billion-boost-to-us-economy/
+FY2023,Moon_to_Mars_jobs,96479,jobs,https://www.nasa.gov/news-release/new-report-shows-nasas-75-6-billion-boost-to-us-economy/
+FY2023,NASA_budget,25.384,billion USD,https://en.wikipedia.org/wiki/Budget_of_NASA
+FY2023,output_multiplier_calculated,2.98,"ratio (output/budget) - CALCULATED here; it is a gross impact multiplier (input-output), not a net return",
+1958-1969 (MRI 1971 study),discounted_return_rate_civil_R&D,33,% (historical study cited by Wikipedia),https://en.wikipedia.org/wiki/Budget_of_NASA

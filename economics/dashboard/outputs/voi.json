@@ -1,0 +1,578 @@
+{
+  "about": "M4: value of information of an analog test before flight (plan 7.3, model 4).\n\nTree: fly as is, or test first and redesign if the test fails. L = loss if a terrain defect ends\nthe mission, R = redesign and delay cost, p = prior probability of the defect, s = sensitivity\n(the test finds a real defect), c = specificity (no false alarm). A redesign removes the defect.\n\n  no information:     E0   = min(p L, R)                 (fly as is, or always redesign)\n  perfect information: EVPI = E0 - p min(L, R)\n  one analog test:    P+ = s p + (1 - c)(1 - p);  p+ = s p / P+;  p- = (1 - s) p / (1 - P+)\n                      E1 = P+ min(p+ L, R) + (1 - P+) min(p- L, R)\n                      EVSI = E0 - E1   (0 <= EVSI <= EVPI)\n  net value = EVSI - campaign cost (M1, converted to USD)\n\nL per mass class = Moon delivery cost (M6, P50) + published hardware cost where one exists (VIPER\nproject cost, OIG, January 2024). R = fraction of L. p, s, c and the fraction are ILLUSTRATIVE.\nCan claim: the value rises with fidelity and never exceeds EVPI; the order of magnitude against a\ncampaign cost. Cannot claim: anything measured; linking site similarity to s is an assumption.",
+  "units": "USD (nominal; Moon side in USD because its sources are USD)",
+  "fx_usd_per_eur": 1.1052,
+  "fx_date": "2026-11-13",
+  "label": "ILLUSTRATIVE",
+  "flags": [
+    "VOI_ILLUSTRATIVE",
+    "LOWER_BOUND_MOON",
+    "LINEAR_PER_KG"
+  ],
+  "inputs": {
+    "prior_p": [
+      0.05,
+      0.15,
+      0.3
+    ],
+    "redesign_fraction_of_L": [
+      0.1,
+      0.2,
+      0.4
+    ],
+    "fidelity_levels": {
+      "low_generic": {
+        "s": [
+          0.4,
+          0.5,
+          0.6
+        ],
+        "c": [
+          0.85,
+          0.9,
+          0.95
+        ]
+      },
+      "high_twin": {
+        "s": [
+          0.75,
+          0.85,
+          0.9
+        ],
+        "c": [
+          0.85,
+          0.9,
+          0.95
+        ]
+      },
+      "very_high": {
+        "s": [
+          0.9,
+          0.95,
+          0.98
+        ],
+        "c": [
+          0.9,
+          0.95,
+          0.98
+        ]
+      }
+    },
+    "viper_hardware_usd": 505400000.0,
+    "viper_hardware_source": "lunar_rover_programs [programme=VIPER; attribute=project_cost_latest] (m6_oig_ig24013); the rounded 'about $500 M' restatement is the same fact and is not added"
+  },
+  "classes": {
+    "micro": {
+      "label": "Micro rover (Sojourner, 11 kg)",
+      "L_usd": 15339622.87334378,
+      "L_basis": "M6 delivery P50 (no published hardware cost for this class)",
+      "R_usd": 3067924.574668756,
+      "prior_p": 0.15,
+      "E0_no_info_usd": 2300943.431001567,
+      "EVPI_usd": 1840754.7448012533,
+      "fidelity": [
+        {
+          "level": "low_generic",
+          "s": 0.5,
+          "c": 0.9,
+          "P_positive": 0.15999999999999998,
+          "p_after_positive": 0.46875000000000006,
+          "p_after_negative": 0.08928571428571427,
+          "EVSI_usd": 659603.7835537824,
+          "EVSI_usd_p10_p50_p90": [
+            167377.16483842686,
+            554565.861949291,
+            893520.7015423331
+          ],
+          "EVSI_over_EVPI": 0.3583333333333333,
+          "net_value_usd_by_site": {
+            "bardenas": 643626.341868162,
+            "tabernas": 645095.1584998699,
+            "teide": 638604.773242532,
+            "lanzarote_timanfaya": 638604.773242532,
+            "rio_tinto": 645071.2259287867,
+            "atacama_yungay": 624958.3701567429,
+            "death_valley": 617149.3329817161,
+            "holuhraun": 629451.786948985,
+            "mdrs": 596379.0580493078
+          },
+          "net_value_min_usd": 596379.0580493078,
+          "net_value_max_usd": 645095.1584998699
+        },
+        {
+          "level": "high_twin",
+          "s": 0.85,
+          "c": 0.9,
+          "P_positive": 0.21249999999999997,
+          "p_after_positive": 0.6000000000000001,
+          "p_after_negative": 0.02857142857142857,
+          "EVSI_usd": 1303867.944234221,
+          "EVSI_usd_p10_p50_p90": [
+            632645.3170625909,
+            1203925.7402590811,
+            1708615.2380208126
+          ],
+          "EVSI_over_EVPI": 0.7083333333333333,
+          "net_value_usd_by_site": {
+            "bardenas": 1287890.5025486005,
+            "tabernas": 1289359.3191803084,
+            "teide": 1282868.9339229707,
+            "lanzarote_timanfaya": 1282868.9339229707,
+            "rio_tinto": 1289335.3866092253,
+            "atacama_yungay": 1269222.5308371815,
+            "death_valley": 1261413.4936621548,
+            "holuhraun": 1273715.9476294236,
+            "mdrs": 1240643.2187297463
+          },
+          "net_value_min_usd": 1240643.2187297463,
+          "net_value_max_usd": 1289359.3191803084
+        },
+        {
+          "level": "very_high",
+          "s": 0.95,
+          "c": 0.95,
+          "P_positive": 0.18500000000000003,
+          "p_after_positive": 0.7702702702702701,
+          "p_after_negative": 0.00920245398773007,
+          "EVSI_usd": 1618330.2131377684,
+          "EVSI_usd_p10_p50_p90": [
+            913069.2056646739,
+            1531926.795056143,
+            2093359.360204032
+          ],
+          "EVSI_over_EVPI": 0.8791666666666667,
+          "net_value_usd_by_site": {
+            "bardenas": 1602352.771452148,
+            "tabernas": 1603821.5880838558,
+            "teide": 1597331.202826518,
+            "lanzarote_timanfaya": 1597331.202826518,
+            "rio_tinto": 1603797.6555127727,
+            "atacama_yungay": 1583684.799740729,
+            "death_valley": 1575875.7625657022,
+            "holuhraun": 1588178.216532971,
+            "mdrs": 1555105.4876332937
+          },
+          "net_value_min_usd": 1555105.4876332937,
+          "net_value_max_usd": 1603821.5880838558
+        }
+      ],
+      "prior_sweep": [
+        {
+          "prior_p": 0.01,
+          "EVPI_usd": 122716.98298675024,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": -2.9103830456733704e-11
+        },
+        {
+          "prior_p": 0.02,
+          "EVPI_usd": 245433.96597350048,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": 82833.96351605625
+        },
+        {
+          "prior_p": 0.05,
+          "EVPI_usd": 613584.9149337512,
+          "EVSI_low_generic_usd": 15339.622873343877,
+          "EVSI_high_twin_usd": 230094.34310015675,
+          "EVSI_very_high_usd": 437179.25189029763
+        },
+        {
+          "prior_p": 0.1,
+          "EVPI_usd": 1227169.8298675024,
+          "EVSI_low_generic_usd": 337471.7032135632,
+          "EVSI_high_twin_usd": 766981.143667189,
+          "EVSI_very_high_usd": 1027754.7325140331
+        },
+        {
+          "prior_p": 0.15,
+          "EVPI_usd": 1840754.7448012533,
+          "EVSI_low_generic_usd": 659603.7835537824,
+          "EVSI_high_twin_usd": 1303867.944234221,
+          "EVSI_very_high_usd": 1618330.2131377684
+        },
+        {
+          "prior_p": 0.2,
+          "EVPI_usd": 2454339.659735005,
+          "EVSI_low_generic_usd": 981735.863894002,
+          "EVSI_high_twin_usd": 1840754.7448012535,
+          "EVSI_very_high_usd": 2208905.6937615043
+        },
+        {
+          "prior_p": 0.25,
+          "EVPI_usd": 2300943.4310015673,
+          "EVSI_low_generic_usd": 536886.8005670323,
+          "EVSI_high_twin_usd": 1610660.401701097,
+          "EVSI_very_high_usd": 2032500.030718051
+        },
+        {
+          "prior_p": 0.3,
+          "EVPI_usd": 2147547.202268129,
+          "EVSI_low_generic_usd": 92037.73724006303,
+          "EVSI_high_twin_usd": 1380566.0586009403,
+          "EVSI_very_high_usd": 1856094.3676745973
+        },
+        {
+          "prior_p": 0.4,
+          "EVPI_usd": 1840754.7448012538,
+          "EVSI_low_generic_usd": -4.656612873077393e-10,
+          "EVSI_high_twin_usd": 920377.372400627,
+          "EVSI_very_high_usd": 1503283.0415876901
+        },
+        {
+          "prior_p": 0.5,
+          "EVPI_usd": 1533962.287334378,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 460188.68620031374,
+          "EVSI_very_high_usd": 1150471.7155007832
+        }
+      ]
+    },
+    "mid": {
+      "label": "Mid-size rover (Spirit/Opportunity, 174 kg)",
+      "L_usd": 242644943.63289255,
+      "L_basis": "M6 delivery P50 (no published hardware cost for this class)",
+      "R_usd": 48528988.72657851,
+      "prior_p": 0.15,
+      "E0_no_info_usd": 36396741.54493388,
+      "EVPI_usd": 29117393.235947102,
+      "fidelity": [
+        {
+          "level": "low_generic",
+          "s": 0.5,
+          "c": 0.9,
+          "P_positive": 0.15999999999999998,
+          "p_after_positive": 0.46875000000000006,
+          "p_after_negative": 0.08928571428571427,
+          "EVSI_usd": 10433732.576214373,
+          "EVSI_usd_p10_p50_p90": [
+            2785292.367552916,
+            8720383.961681435,
+            14209038.702998828
+          ],
+          "EVSI_over_EVPI": 0.35833333333333317,
+          "net_value_usd_by_site": {
+            "bardenas": 10417755.134528752,
+            "tabernas": 10419223.95116046,
+            "teide": 10412733.565903123,
+            "lanzarote_timanfaya": 10412733.565903123,
+            "rio_tinto": 10419200.018589377,
+            "atacama_yungay": 10399087.162817333,
+            "death_valley": 10391278.125642307,
+            "holuhraun": 10403580.579609575,
+            "mdrs": 10370507.850709898
+          },
+          "net_value_min_usd": 10370507.850709898,
+          "net_value_max_usd": 10419223.95116046
+        },
+        {
+          "level": "high_twin",
+          "s": 0.85,
+          "c": 0.9,
+          "P_positive": 0.21249999999999997,
+          "p_after_positive": 0.6000000000000001,
+          "p_after_negative": 0.02857142857142857,
+          "EVSI_usd": 20624820.208795864,
+          "EVSI_usd_p10_p50_p90": [
+            10184167.952944573,
+            19052454.149591677,
+            27152798.19138779
+          ],
+          "EVSI_over_EVPI": 0.7083333333333334,
+          "net_value_usd_by_site": {
+            "bardenas": 20608842.767110243,
+            "tabernas": 20610311.58374195,
+            "teide": 20603821.198484614,
+            "lanzarote_timanfaya": 20603821.198484614,
+            "rio_tinto": 20610287.65117087,
+            "atacama_yungay": 20590174.795398824,
+            "death_valley": 20582365.758223798,
+            "holuhraun": 20594668.212191068,
+            "mdrs": 20561595.48329139
+          },
+          "net_value_min_usd": 20561595.48329139,
+          "net_value_max_usd": 20610311.58374195
+        },
+        {
+          "level": "very_high",
+          "s": 0.95,
+          "c": 0.95,
+          "P_positive": 0.18500000000000003,
+          "p_after_positive": 0.7702702702702701,
+          "p_after_negative": 0.00920245398773007,
+          "EVSI_usd": 25599041.553270154,
+          "EVSI_usd_p10_p50_p90": [
+            14584710.26743033,
+            24266329.98393896,
+            33179404.66167924
+          ],
+          "EVSI_over_EVPI": 0.8791666666666664,
+          "net_value_usd_by_site": {
+            "bardenas": 25583064.111584533,
+            "tabernas": 25584532.92821624,
+            "teide": 25578042.542958904,
+            "lanzarote_timanfaya": 25578042.542958904,
+            "rio_tinto": 25584508.995645158,
+            "atacama_yungay": 25564396.139873113,
+            "death_valley": 25556587.102698088,
+            "holuhraun": 25568889.556665357,
+            "mdrs": 25535816.82776568
+          },
+          "net_value_min_usd": 25535816.82776568,
+          "net_value_max_usd": 25584532.92821624
+        }
+      ],
+      "prior_sweep": [
+        {
+          "prior_p": 0.01,
+          "EVPI_usd": 1941159.5490631405,
+          "EVSI_low_generic_usd": 4.656612873077393e-10,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": 0.0
+        },
+        {
+          "prior_p": 0.02,
+          "EVPI_usd": 3882319.098126281,
+          "EVSI_low_generic_usd": 9.313225746154785e-10,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": 1310282.6956176176
+        },
+        {
+          "prior_p": 0.05,
+          "EVPI_usd": 9705797.745315703,
+          "EVSI_low_generic_usd": 242644.94363289326,
+          "EVSI_high_twin_usd": 3639674.1544933897,
+          "EVSI_very_high_usd": 6915380.893537435
+        },
+        {
+          "prior_p": 0.1,
+          "EVPI_usd": 19411595.490631405,
+          "EVSI_low_generic_usd": 5338188.759923637,
+          "EVSI_high_twin_usd": 12132247.181644628,
+          "EVSI_very_high_usd": 16257211.223403798
+        },
+        {
+          "prior_p": 0.15,
+          "EVPI_usd": 29117393.235947102,
+          "EVSI_low_generic_usd": 10433732.576214373,
+          "EVSI_high_twin_usd": 20624820.208795864,
+          "EVSI_very_high_usd": 25599041.553270154
+        },
+        {
+          "prior_p": 0.2,
+          "EVPI_usd": 38823190.98126281,
+          "EVSI_low_generic_usd": 15529276.392505124,
+          "EVSI_high_twin_usd": 29117393.235947106,
+          "EVSI_very_high_usd": 34940871.883136526
+        },
+        {
+          "prior_p": 0.25,
+          "EVPI_usd": 36396741.544933885,
+          "EVSI_low_generic_usd": 8492573.027151234,
+          "EVSI_high_twin_usd": 25477719.08145372,
+          "EVSI_very_high_usd": 32150455.031358257
+        },
+        {
+          "prior_p": 0.3,
+          "EVPI_usd": 33970292.10860496,
+          "EVSI_low_generic_usd": 1455869.6617973521,
+          "EVSI_high_twin_usd": 21838044.926960334,
+          "EVSI_very_high_usd": 29360038.179579996
+        },
+        {
+          "prior_p": 0.4,
+          "EVPI_usd": 29117393.235947106,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 14558696.617973551,
+          "EVSI_very_high_usd": 23779204.476023465
+        },
+        {
+          "prior_p": 0.5,
+          "EVPI_usd": 24264494.363289256,
+          "EVSI_low_generic_usd": 7.450580596923828e-09,
+          "EVSI_high_twin_usd": 7279348.308986776,
+          "EVSI_very_high_usd": 18198370.772466935
+        }
+      ]
+    },
+    "viper": {
+      "label": "VIPER-class rover (475 kg contracted delivery mass)",
+      "L_usd": 1167792805.8943906,
+      "L_basis": "M6 delivery P50 + VIPER project cost (OIG, Jan 2024)",
+      "R_usd": 233558561.17887813,
+      "prior_p": 0.15,
+      "E0_no_info_usd": 175168920.88415858,
+      "EVPI_usd": 140135136.70732686,
+      "fidelity": [
+        {
+          "level": "low_generic",
+          "s": 0.5,
+          "c": 0.9,
+          "P_positive": 0.15999999999999998,
+          "p_after_positive": 0.46875000000000006,
+          "p_after_negative": 0.08928571428571427,
+          "EVSI_usd": 50215090.653458804,
+          "EVSI_usd_p10_p50_p90": [
+            13093638.324385144,
+            42400806.983097866,
+            68663071.24750446
+          ],
+          "EVSI_over_EVPI": 0.35833333333333345,
+          "net_value_usd_by_site": {
+            "bardenas": 50199113.21177319,
+            "tabernas": 50200582.02840489,
+            "teide": 50194091.64314755,
+            "lanzarote_timanfaya": 50194091.64314755,
+            "rio_tinto": 50200558.09583381,
+            "atacama_yungay": 50180445.24006177,
+            "death_valley": 50172636.20288674,
+            "holuhraun": 50184938.656854,
+            "mdrs": 50151865.92795433
+          },
+          "net_value_min_usd": 50151865.92795433,
+          "net_value_max_usd": 50200582.02840489
+        },
+        {
+          "level": "high_twin",
+          "s": 0.85,
+          "c": 0.9,
+          "P_positive": 0.21249999999999997,
+          "p_after_positive": 0.6000000000000001,
+          "p_after_negative": 0.02857142857142857,
+          "EVSI_usd": 99262388.5010232,
+          "EVSI_usd_p10_p50_p90": [
+            48947299.97644818,
+            92212886.49024995,
+            130810018.66436805
+          ],
+          "EVSI_over_EVPI": 0.7083333333333334,
+          "net_value_usd_by_site": {
+            "bardenas": 99246411.05933759,
+            "tabernas": 99247879.87596929,
+            "teide": 99241389.49071196,
+            "lanzarote_timanfaya": 99241389.49071196,
+            "rio_tinto": 99247855.9433982,
+            "atacama_yungay": 99227743.08762616,
+            "death_valley": 99219934.05045113,
+            "holuhraun": 99232236.5044184,
+            "mdrs": 99199163.77551873
+          },
+          "net_value_min_usd": 99199163.77551873,
+          "net_value_max_usd": 99247879.87596929
+        },
+        {
+          "level": "very_high",
+          "s": 0.95,
+          "c": 0.95,
+          "P_positive": 0.18500000000000003,
+          "p_after_positive": 0.7702702702702701,
+          "p_after_negative": 0.00920245398773007,
+          "EVSI_usd": 123202141.02185819,
+          "EVSI_usd_p10_p50_p90": [
+            70386297.79494938,
+            117063370.42783427,
+            159787159.174521
+          ],
+          "EVSI_over_EVPI": 0.8791666666666665,
+          "net_value_usd_by_site": {
+            "bardenas": 123186163.58017257,
+            "tabernas": 123187632.39680427,
+            "teide": 123181142.01154694,
+            "lanzarote_timanfaya": 123181142.01154694,
+            "rio_tinto": 123187608.46423319,
+            "atacama_yungay": 123167495.60846114,
+            "death_valley": 123159686.57128611,
+            "holuhraun": 123171989.02525339,
+            "mdrs": 123138916.29635371
+          },
+          "net_value_min_usd": 123138916.29635371,
+          "net_value_max_usd": 123187632.39680427
+        }
+      ],
+      "prior_sweep": [
+        {
+          "prior_p": 0.01,
+          "EVPI_usd": 9342342.447155125,
+          "EVSI_low_generic_usd": 1.862645149230957e-09,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": -1.862645149230957e-09
+        },
+        {
+          "prior_p": 0.02,
+          "EVPI_usd": 18684684.89431025,
+          "EVSI_low_generic_usd": 3.725290298461914e-09,
+          "EVSI_high_twin_usd": 0.0,
+          "EVSI_very_high_usd": 6306081.151829697
+        },
+        {
+          "prior_p": 0.05,
+          "EVPI_usd": 46711712.23577563,
+          "EVSI_low_generic_usd": 1167792.8058943897,
+          "EVSI_high_twin_usd": 17516892.08841586,
+          "EVSI_very_high_usd": 33282094.967990123
+        },
+        {
+          "prior_p": 0.1,
+          "EVPI_usd": 93423424.47155125,
+          "EVSI_low_generic_usd": 25691441.729676604,
+          "EVSI_high_twin_usd": 58389640.29471953,
+          "EVSI_very_high_usd": 78242117.99492416
+        },
+        {
+          "prior_p": 0.15,
+          "EVPI_usd": 140135136.70732686,
+          "EVSI_low_generic_usd": 50215090.653458804,
+          "EVSI_high_twin_usd": 99262388.5010232,
+          "EVSI_very_high_usd": 123202141.02185819
+        },
+        {
+          "prior_p": 0.2,
+          "EVPI_usd": 186846848.9431025,
+          "EVSI_low_generic_usd": 74738739.577241,
+          "EVSI_high_twin_usd": 140135136.7073269,
+          "EVSI_very_high_usd": 168162164.04879224
+        },
+        {
+          "prior_p": 0.25,
+          "EVPI_usd": 175168920.8841586,
+          "EVSI_low_generic_usd": 40872748.206303686,
+          "EVSI_high_twin_usd": 122618244.61891101,
+          "EVSI_very_high_usd": 154732546.78100675
+        },
+        {
+          "prior_p": 0.3,
+          "EVPI_usd": 163490992.82521468,
+          "EVSI_low_generic_usd": 7006756.835366368,
+          "EVSI_high_twin_usd": 105101352.53049517,
+          "EVSI_very_high_usd": 141302929.51322126
+        },
+        {
+          "prior_p": 0.4,
+          "EVPI_usd": 140135136.7073269,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 70067568.35366344,
+          "EVSI_very_high_usd": 114443694.97765025
+        },
+        {
+          "prior_p": 0.5,
+          "EVPI_usd": 116779280.58943906,
+          "EVSI_low_generic_usd": 0.0,
+          "EVSI_high_twin_usd": 35033784.17683172,
+          "EVSI_very_high_usd": 87584460.44207928
+        }
+      ]
+    }
+  },
+  "campaign_cost_p50_usd_by_site": {
+    "bardenas": 15977.441685620368,
+    "tabernas": 14508.625053912558,
+    "teide": 20999.0103112503,
+    "lanzarote_timanfaya": 20999.0103112503,
+    "rio_tinto": 14532.557624995761,
+    "atacama_yungay": 34645.41339703955,
+    "death_valley": 42454.45057206628,
+    "holuhraun": 30151.99660479744,
+    "mdrs": 63224.72550447465
+  }
+}

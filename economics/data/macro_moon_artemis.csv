@@ -1,0 +1,15 @@
+source,indicator,value,unit,type,url
+NASA OIG IG-22-003 (Nov-2021),total_cost_Artemis_FY2012-FY2025,93,billion USD,actual/projection,https://oig.nasa.gov/docs/IG-22-003.pdf
+NASA OIG IG-22-003,production_operations_cost_per_launch_SLS_Orion_Artemis_I-IV,4.1,billion USD/launch,estimate,https://oig.nasa.gov/docs/IG-22-003.pdf
+NASA OIG CT-24-001 (Jan-2024),cost_per_launch_SLS_Orion_and_ground_infrastructure,4.2,billion USD/launch (minimum),estimate; excludes 42 billion of formulation and development,https://oig.nasa.gov/wp-content/uploads/2024/02/ct-24-001.pdf
+NASA OIG CT-24-001,SLS_program_cost_through_2022,23.8,billion USD,actual,https://oig.nasa.gov/wp-content/uploads/2024/02/ct-24-001.pdf
+PwC 2021,cumulative_lunar_market_2020-2040,170,billion USD,forecast (base scenario),https://www.thespacereview.com/article/4898/1
+PwC 2021,of_which_transport,100,billion USD,forecast,https://www.thespacereview.com/article/4898/1
+PwC 2021,of_which_resource_utilization,63,billion USD,forecast,https://www.thespacereview.com/article/4898/1
+PwC 2026 (2nd ed.),cumulative_lunar_surface_revenue_2026-2050_min,93.9,billion USD,forecast (cited by New Scientist; PDF not opened),https://www.newscientist.com/article/2519623-its-time-to-monetise-the-moon-definitely-maybe
+PwC 2026 (2nd ed.),cumulative_lunar_surface_revenue_2026-2050_max,127.3,billion USD,forecast (cited by New Scientist; PDF not opened),https://www.newscientist.com/article/2519623-its-time-to-monetise-the-moon-definitely-maybe
+NSR 2021 (Moon Markets Analysis),revenue_140_missions_2021-2030,42.3,billion USD,"forecast (press release, excerpt)",https://www.globenewswire.com/news-release/2021/04/21/2214197/0/en/nsr-s-newest-report-moon-missions-to-generate-42-3b-over-the-next-decade.html
+NSR 2022,lunar_market_revenue_next_decade,105,billion USD,"forecast (press release, excerpt)",https://www.globenewswire.com/news-release/2022/04/20/2425653/0/en/nsr-developing-moon-market-propelled-by-250-missions-and-105-billion-in-revenue-through-decade.html
+NSR/Analysys Mason 2025,lunar_revenue_opportunity_2024-2034,188,billion USD,"forecast (report summary page, excerpt)",https://www.analysysmason.com/research/content/reports/lunar-market-forecast-nsi141
+Space Foundation 2026,lunar_commercial_revenue_listed_companies_2025,0.364,billion USD,"actual (sum of Intuitive Machines, Firefly, ispace...)",https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+"NASA (A. MacDonald, 2024)",current_lunar_economy_government_driven,8-10,billion USD/year,expert opinion,https://www.thespacereview.com/article/4898/1

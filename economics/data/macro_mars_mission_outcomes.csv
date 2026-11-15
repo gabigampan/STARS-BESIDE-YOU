@@ -1,0 +1,78 @@
+mission_no,element,launch_year,type,original_outcome,class,level,url
+1,1M No.1,1960,Flyby,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+2,1M No.2,1960,Flyby,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+3,2MV-4 No.1,1962,Flyby,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+4,Mars 1,1962,Flyby,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+5,2MV-3 No.1,1962,Lander,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+6,Mariner 3,1964,Flyby,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+7,Mariner 4,1964,Flyby,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+8,Zond 2,1964,Flyby,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+9,Mariner 6,1969,Flyby,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+10,2M No.521,1969,Orbiter,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+11,Mariner 7,1969,Flyby,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+12,2M No.522,1969,Orbiter,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+13,Mariner 8,1971,Orbiter,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+14,Kosmos 419,1971,Orbiter,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+15,Mars 2,1971,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+15,Mars 2 / SA 4M No.171,1971,Lander,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+15,Mars 2 / PrOP-M,1971,Rover,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+16,Mars 3,1971,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+16,Mars 3 / SA 4M No.172,1971,Lander,Partial failure,partial,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+16,Mars 3 / PrOP-M,1971,Rover,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+17,Mariner 9,1971,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+18,Mars 4,1973,Orbiter,Partial failure,partial,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+19,Mars 5,1973,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+20,Mars 6,1973,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+20,Mars 6 / Mars 6 lander,1973,Lander,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+21,Mars 7,1973,Flyby,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+21,Mars 7 / Mars 7 lander,1973,Lander,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+22,Viking 1,1975,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+22,Viking 1 / Viking 1 lander,1975,Lander,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+23,Viking 2,1975,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+23,Viking 2 / Viking 2 lander,1975,Lander,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+24,Phobos 1,1988,Orbiter,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+25,Phobos 2,1988,Orbiter,Mostly successful,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+26,Mars Observer,1992,Orbiter,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+27,Mars Global Surveyor,1996,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+28,Mars 96,1996,Orbiter,Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+28,Mars 96 / Mars 96 lander (A,1996,Lander,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+28,Mars 96 / Mars 96 lander (B,1996,Lander,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+28,Mars 96 / Mars 96 penetrator (A,1996,Penetrator,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+28,Mars 96 / Mars 96 penetrator (B,1996,Penetrator,Precluded,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+29,Mars Pathfinder,1996,Lander,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+29,Mars Pathfinder / Sojourner,1996,Rover,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+30,Nozomi,1998,Orbiter,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+31,Mars Surveyor '98 Orbiter,1998,Orbiter,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+32,Mars Surveyor '98 Lander,1999,Lander,Spacecraft failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+32,Mars Surveyor '98 Lander / Deep Space 2 (A,1999,Penetrator,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+32,Mars Surveyor '98 Lander / Deep Space 2 (B,1999,Penetrator,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+33,2001 Mars Odyssey,2001,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+34,Mars Express,2003,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+34,Mars Express / Beagle 2,2003,Lander,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+35,Spirit,2003,Rover,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+36,Opportunity,2003,Rover,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+37,Mars Reconnaissance Orbiter,2005,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+38,Phoenix,2007,Lander,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+39,China-Russia joint Mars mission,2011,Sample return (Phobos),Launch failure,failure,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+40,Mars Science Laboratory,2011,Rover,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+41,Mars Orbiter Mission,2013,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+42,MAVEN,2013,Orbiter,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+43,ExoMars,2016,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+43,ExoMars / Schiaparelli EDM,2016,Lander,Spacecraft failure,failure,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+44,Discovery 12,2018,Lander,Success,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+44,Discovery 12 / MarCO-A,2018,Flyby,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+44,Discovery 12 / MarCO-B,2018,Flyby,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+45,Emirates Mars Mission,2020,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+46,Tianwen-1,2020,Orbiter,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+46,Tianwen-1 / Tianwen-1 lander,2020,Lander,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+46,Tianwen-1 / Zhurong,2020,Rover,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+46,Tianwen-1 / Tianwen-1 Remote Camera,2020,Camera,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+46,Tianwen-1 / Tianwen-1 Deployable Camera 2,2020,Camera,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+47,Mars 2020,2020,Rover,Operational,success,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+47,Mars 2020 / Ingenuity,2020,Helicopter,Success,success,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+48,ESCAPADE,2025,Orbiter,Enroute,excluded,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+48,ESCAPADE / ESCAPADE Gold,2025,Orbiter,Enroute,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+49,Martian Moons eXploration (MMX,2026,Orbiter / Sample return,Enroute,excluded,main,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+49,Martian Moons eXploration (MMX / IDEFIX,2026,Rover,Enroute,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+49,Martian Moons eXploration (MMX / Planned mission,2026,Target,Reference,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars
+49,Martian Moons eXploration (MMX / Proposal,2026,Target,Reference,excluded,sub,https://en.wikipedia.org/wiki/List_of_missions_to_Mars

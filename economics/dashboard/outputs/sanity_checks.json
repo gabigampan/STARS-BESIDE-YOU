@@ -1,0 +1,100 @@
+{
+  "about": "Automatic checks on orders of magnitude, signs, units and rankings (run_all.py).",
+  "checks": [
+    {
+      "check": "site P10 < P50 < P90 and all positive",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "site P50 rises with distance from Malaga (Spearman > 0.6)",
+      "ok": true,
+      "detail": "Spearman 0.91"
+    },
+    {
+      "check": "every overseas site costs more than every Spanish site (P50)",
+      "ok": true,
+      "detail": "max Spain 19,000, min abroad 27,282"
+    },
+    {
+      "check": "campaign P50 in the 10^3-10^5 EUR range",
+      "ok": true,
+      "detail": "13,128-57,207"
+    },
+    {
+      "check": "Moon delivery grows with mass (micro < mid < viper)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "Moon delivery / Earth campaign ratio > 100 everywhere",
+      "ok": true,
+      "detail": "min P10 ratio 169"
+    },
+    {
+      "check": "price per kg set within 0.5-3 USD M/kg (OIG order of magnitude)",
+      "ok": true,
+      "detail": "0.84-2.41"
+    },
+    {
+      "check": "lunar tallies match the audit (13: 5/3/5; 6/2/5; 7/1/5)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "Mars tallies match the audit (18: 10/1/7; InSight partial 9/2/7; by mission 17 with 6 failures)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "Beta posterior means: strict 6/15, operator 7/15",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "Monte Carlo converged (mean and P90 within tolerance at N/2 and N, every site)",
+      "ok": true,
+      "detail": "worst relative change at any checkpoint 0.0049"
+    },
+    {
+      "check": "0 <= EVSI <= EVPI and EVSI rises with fidelity (every class)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "MDRS calibration: crew fees in the plan's 12,000-21,000 USD band (6 people)",
+      "ok": true,
+      "detail": "21,000 USD"
+    },
+    {
+      "check": "holuhraun: airport choice (low-confidence drive time) does not change the travel cost",
+      "ok": true,
+      "detail": "1 distinct band set(s) across usable airports"
+    }
+  ],
+  "findings": [
+    {
+      "finding": "Linear price-per-kg scaling overstates the VIPER-class delivery",
+      "detail": "model P50 $662 M vs contracted $190.0-322.8 M (TO-20A 2020, Dec 2021, Feb 2024; CS-7 2025 potential)",
+      "consequence": "for the VIPER class quote the contracted values; the linear estimate is shown only as a scaling check"
+    }
+  ],
+  "inflation_moon_price_per_kg": {
+    "factors": {
+      "award_pair:19D": "US index 2026(mean of 9 months)/2021",
+      "award_pair:CP-11": "US index 2026(mean of 9 months)/2021",
+      "award_pair:CP-22": "US index 2026(mean of 9 months)/2024",
+      "award_pair:(IM fifth CLPS contract, South Pole 2030)": "ref_year 2026: no inflation",
+      "oig:2019": "US index 2026(mean of 9 months)/2019",
+      "oig:2023": "US index 2026(mean of 9 months)/2023"
+    },
+    "inflated_set_usd_m_per_kg": [
+      1.2169934424977265,
+      1.0328763256204783,
+      1.5672692743270784,
+      2.4053333333333335,
+      1.2995615769236324,
+      1.308464046379805
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+year,indicator,value,unit,source,url
+2023,global_premiums,557,M USD,Slingshot/Seradata,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+2023,claims_paid,995,"M USD (ratio 1.79; Aon later puts it at 1,430 M after revising by date of occurrence)",Slingshot/Seradata,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+2024,global_premiums,560.3,M USD,Triton Space via Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+2024,claims,149.1,M USD,Triton Space via Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+2025,global_premiums,686,"M USD (+22,4%)",Triton Space via Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+2025,claims,508.2,M USD,Triton Space via Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+early 2023,premium_rate_launch_plus_1_year_GEO_Falcon9,<6,% of insured value,Slingshot Aerospace,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+late 2023-2024,premium_rate_launch_plus_1_year_GEO_Falcon9,~10,% of insured value,Slingshot Aerospace,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+early 2023,annual_in_orbit_premium_rate,0.6,% of insured value,Slingshot Aerospace,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+2024,annual_in_orbit_premium_rate,1.2,% of insured value,Slingshot Aerospace,https://satnews.com/2024/04/30/slingshot-aerospace-report-reveals-increasing-risks-of-operating-in-space/
+2025,insured_LEO_satellites,5-7,"% (excluding Starlink, self-insured)",Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
+2025,commercial_GEO_satellites_insured_at_launch,~50,%,Space Foundation 2026,https://www.spacefoundation.org/wp-content/uploads/2026/07/SF-GSE-REPORT-2026July-FOR-RELEASE.pdf
