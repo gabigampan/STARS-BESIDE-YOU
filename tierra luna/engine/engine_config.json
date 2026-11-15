@@ -255,13 +255,13 @@
       "rover": {
         "kind": "lat_max",
         "lat_max": -75.0,
-        "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+        "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
         "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
       },
       "solar": {
         "kind": "lat_max",
         "lat_max": -75.0,
-        "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+        "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
         "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
       },
       "lunar_base": {
@@ -273,7 +273,7 @@
         "fallback": {
           "kind": "lat_max",
           "lat_max": -75.0,
-          "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+          "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
           "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'"
         }
       }
@@ -616,7 +616,7 @@
           "zone": {
             "kind": "lat_max",
             "lat_max": -75.0,
-            "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+            "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
             "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
             "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
           },
@@ -989,7 +989,7 @@
                   "zone": {
                     "kind": "lat_max",
                     "lat_max": -75.0,
-                    "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+                    "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
                     "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
                     "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
                   },

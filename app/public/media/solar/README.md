@@ -1,5 +1,3 @@
-> **Status at 13:40 CET, 2026-11-15: the published Solar panels video files in this folder (`solar.mp4`, `solar.webm`, posters, `.vtt`) still show the EARLIER pair, lunar cell M59479 (75.5° S 100.5° W, south-polar zone) with Earth cell E44120 (Western Cape, South Africa), not the corrected model's first analog.** A re-render for Earth cell E40184 (21.5° S 44.5° E, Menabe, Madagascar) with lunar cell M23206 (25.5° N 13.5° W) is in progress; the rest of this README describes that new video and applies only once its files replace these. Do not present the current video as one of today's pairs.
-
 # Solar panels mission video
 
 **Credit line to show in the app:**
@@ -9,20 +7,20 @@ A 3D simulation, not real footage. The first caption cue and the closing card sa
 
 Re-rendered on 2026-11-15 for the first of the five Solar panels analogs of the shipped bundle after the Solar panels criteria were corrected (`missions.json` `missions[solar].top5.ids[0]` = 40184, overall rank 1; confirmed by the independent re-audit). It replaces the video of the earlier method (lunar cell M59479 at 75.5° S 100.5° W in the south-polar zone, with Earth cell E44120), which is not a pair of the shipped bundle. The scenario is written from the bundle by `app/video-sim/tools/solar_pair.py`; no value of the pair is typed by hand.
 
-Story (44 s): one lunar daytime, accelerated, at lunar cell **M23206 (25.5° N, 13.5° W)**, 38.5 km from Timocharis, in the **low equatorial plains (the maria)**, the Solar panels zone (within 30° of the equator and at or below −1,200 m). The camera descends to a stowed array at sunrise; a short mast rises and two wings of hinged panels unfold and come to rest flat (horizontal), as the mission's irradiance (a horizontal surface) assumes; the Sun climbs in the east to 66.0° in the south at local noon and descends to the west; the shadows shorten and lengthen again; in the last 0.3 s the Sun goes behind the real terrain to the west (2.5° high there) while still 2° above the flat horizon. The panel shows the Sun's elevation and azimuth, the real terrain horizon, the modelled power and energy per m² of a flat panel, the elapsed Earth days, the time compression and a graph of the power over one whole lunar cycle with the night half shaded. Closing card (38-44 s): pair number 1 (the first of the five shown), the Earth analog **E40184 (21.5° S, 44.5° E, Menabe, Madagascar; 18.8 km from Manja)** against the lunar cell, with real values, differences, levels, the sunlight reaching the ground at the Earth site and the share lost in the atmosphere, and the per-pair sentence.
+Story (44 s): one lunar daytime, accelerated, at lunar cell **M23206 (25.5° N, 13.5° W)**, 38.5 km from Timocharis, in the **low equatorial plains (the maria)**, the Solar panels zone (within 30° of the equator and at or below −1,200 m). The camera descends to a stowed array at sunrise; a short mast rises and two wings of hinged panels unfold and come to rest flat (horizontal), as the mission's irradiance (a horizontal surface) assumes; the Sun climbs in the east to 66.0° in the south at local noon and descends to the west; the shadows shorten and lengthen again; in the last 0.3 s the Sun goes behind the real terrain to the west (2.5° high there) while still 2° above the flat horizon. The panel shows the Sun's elevation and azimuth, the real terrain horizon, the modelled power and energy per m² of a flat panel, the elapsed Earth days, the time compression and a graph of the power over one whole lunar cycle with the night half shaded. Closing card (38-44 s): **analog 1 of the five Solar panels analogs shown (overall rank 1)**, the Earth analog **E40184 (21.5° S, 44.5° E, Menabe, Madagascar; 18.8 km from Manja)** against the lunar cell, with real values, differences, levels, the sunlight reaching the ground at the Earth site and the share lost in the atmosphere, and the per-pair sentence.
 
 ## Files
 
 | File | What it is | Size (bytes) |
 |---|---|---|
-| `solar.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, no audio, faststart, CRF 25 | @MP4@ |
-| `solar.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, two-pass CRF 34 | @WEBM@ |
-| `solar-poster.jpg` | Frame 570 (t = 19 s): local noon, Sun 66.0° up in the south, panels flat, short shadows | @JPG@ |
-| `solar-poster.webp` | Same frame, WebP quality 88 | @WEBP@ |
-| `solar.en.vtt` | English descriptive captions, 14 cues, 0-44 s; cue boundaries at every status change | @ENVTT@ |
-| `solar.es.vtt` | Spanish descriptive captions, 14 cues, 0-44 s | @ESVTT@ |
+| `solar.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, no audio, faststart, CRF 25 | 7,115,011 |
+| `solar.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 44.000 s, 1320 frames, two-pass CRF 34 | 6,199,981 |
+| `solar-poster.jpg` | Frame 570 (t = 19 s): local noon, Sun 66.0° up in the south, panels flat, short shadows | 211,537 |
+| `solar-poster.webp` | Same frame, WebP quality 88 | 88,316 |
+| `solar.en.vtt` | English descriptive captions, 14 cues, 0-44 s; cue boundaries at every status change | 5,494 |
+| `solar.es.vtt` | Spanish descriptive captions, 14 cues, 0-44 s | 6,166 |
 
-ffprobe (`-count_frames`): @FFPROBE@; both VTT files parse in ffmpeg's WebVTT demuxer.
+ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1320 frames, duration 44.000000, 1.29 Mb/s`, `moov` at byte 36 before `mdat`; webm `vp9 Profile 0 yuv420p 1920x1080 30/1, 1320 frames, duration 44.000000, 1.13 Mb/s`; both VTT files parse in ffmpeg's WebVTT demuxer.
 
 ```html
 <video controls playsinline preload="metadata" poster="/media/solar/solar-poster.webp">
@@ -50,7 +48,7 @@ node render.js scenarios/solar.json --work $W                # 1320 frames, then
 
 `render.js` runs `prepare.py --checks-only` first and refuses to start if a value of the scenario differs from the tables or from the shipped bundle.
 
-Render time: @RTIME@
+Render time: about 1,250 ms per frame on average (SwiftShader, no GPU, 4 cores shared with other jobs, screenshot included), 1320 frames in about 27 minutes (the 180 card frames were rendered again at 1,068 ms per frame after the card title was set to the pair's position among the five shown); encodes about 4.5 minutes; `prepare.py` 41 s.
 
 ## Status labels (what the picture shows)
 
@@ -84,11 +82,11 @@ The labels are computed from the same values the picture is rendered from (`page
 | Card: slope (secondary, tolerance 2°) | 0.753° / 0.757°, difference 0.004° | derived | `explain.json`; `variables.json` |
 | Card: roughness (secondary, tolerance 30 m) | 26.56 m / 27.15 m, difference 0.59 m | derived | `explain.json`; `variables.json` |
 | Card: mean surface temperature, daily swing (not part of the similarity) | 300.56 / 212.81 K (87.75 K); 13.6 / 289.73 K (276.13 K) | derived | `explain.json` `not_part_of_similarity`; `variables.json` |
-| Card: scores | pair number 1; suitability 97.94, similarity 99.83, final 98.88; the per-pair sentence and the saturation note (`similarity.json` `texts.solar_similarity_saturation`) verbatim | derived | `explain.json`, `similarity.json` |
+| Card: scores | title "solar panels, analog 1 of the five shown" (position 1 of `missions.json` `missions[solar].top5.ids`, overall rank 1); suitability 97.94, similarity 99.83, final 98.88; the per-pair sentence and the saturation note (`similarity.json` `texts.solar_similarity_saturation`) verbatim | derived | `explain.json`, `similarity.json` |
 | S0, obliquity, synodic period | 1361.0 W/m², 1.54°, 29.53 d (the bundle's `lunar_day_earth_days`) | measured | NSSDC Moon fact sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html; NASA PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map |
 | Earth (panel row) | not drawn; "~61° up, mean pos.": at its mean position (sub-Earth point 0° N 0° E) the Earth is 61.4° up (90° minus the 28.6° arc from the site; parallax and libration ignored, a geometric estimate), above the camera's view | computed | formula |
 
-`prepare.py` checks 16 table values against the two 1-degree tables and 70 values of the scenario's `pair_values` block against the bundle (that the pair is the bundle's first, ids, coordinates, scores, every Earth, Moon and difference value with its tolerance, role and weight, the atmosphere values and the displayed 9.3 / 5.7 / 39 %, the per-pair sentence, the saturation note, the lunar day, place names, the zone rule, cell count and label, and the level of every value on the card against `variables.json` and `missions.json`). A changed number, level or text stops the render (tested: share lost 36, a MEASURED level, a slope each refused, on the previous pair).
+`prepare.py` checks 16 table values against the two 1-degree tables and 72 values of the scenario's `pair_values` block against the bundle (that the pair is the bundle's first, its position among the five shown, overall rank, card title and the scores in the subtitle, ids, coordinates, scores, every Earth, Moon and difference value with its tolerance, role and weight, the atmosphere values and the displayed 9.3 / 5.7 / 39 %, the per-pair sentence, the saturation note, the lunar day, place names, the zone rule, cell count and label, and the level of every value on the card against `variables.json` and `missions.json`). A changed number, level or text stops the render (tested: share lost 36, a MEASURED level, a slope each refused, on the previous pair).
 
 ### Terrain (real relief)
 
@@ -104,7 +102,7 @@ The labels are computed from the same values the picture is rendered from (`page
 - Sun: sin h = sin(lat) sin(d) + cos(lat) cos(d) cos(H), the formula of the tables and of the Lunar base video, lat = 25.5°, d = +1.54° (northern-summer solstice, so that the noon Sun reaches the table's `sun_elev_max_deg` 66.04°), H linear from −89° to +89° over 38 s. Flat-horizon sunrise and sunset at H = ±90.73°: **14.9 Earth days of daylight and 14.6 of night in the 29.53-day lunar day**; the video shows 14.6 of the 14.9 daylight days (Sun 1.6° at the start). As the approved sentence says, the lunar day lasts 29.5 Earth days and about half of it is night; the panel says so and the graph shades the night.
 - Terrain horizon and disc visibility: from a point 2.4 m above the ground at the array, 720 azimuths, from the real relief with curvature. The Sun starts to go behind the western terrain at 37.73 s and is fully hidden from 37.87 s (Sun 2.1° above the flat horizon, terrain 2.5°).
 - **Power per m² of a flat panel (model, stated on the panel):** P = S0 x sin(h) x visible disc fraction, S0 = 1361 W/m²: 37 W/m² at the first frame, 1,244 W/m² at noon, 0 W/m² once the terrain hides the Sun. No cell efficiency, area, temperature coefficient or losses (none is in the project data), so the numbers are sunlight on the panel, not electrical output.
-- **Energy per m²:** time integral of the power from the end of deployment (10 s), trapezoid with 4 steps per frame: @EEND@ kWh/m² by 38 s.
+- **Energy per m²:** time integral of the power from the end of deployment (10 s), trapezoid with 4 steps per frame: 235.4 kWh/m² by 38 s.
 - Whole-cycle check: the same model at d = +1.54° gives 9.57 kWh/m²/day averaged over the 29.53-day cycle; at d = 0 it gives 9.384, the table's `irradiance_kwh_m2_day` 9.383 for this cell (the table does not use a season).
 - Time compression = (178° / 360°) x 29.53 d / 38 s = **x33,200** (33,198 rounded to 3 figures).
 
@@ -114,7 +112,9 @@ One parallel Sun of fixed intensity (3.2 in renderer units, lower than the polar
 
 ## Luminance check
 
-@LUMA@
+Mean luma of every frame of the 3D part (frames 0-1139, 0-37.97 s; ffmpeg signalstats YAVG, 0-255): full frame 43.5-135.3, scene area (1100 x 900 px right of the panel) 45.4-176.2; per-second full-frame means 55-135. No frame of the 3D part is below 43. The lowest frame is the last one before the card (t = 37.97 s): the Sun is behind the western terrain and the array and the ground near it are in terrain shadow under the uniform fill, with the exposure at x8 and the distant sunlit ground bright. The brightest frames are around noon (19 s). The card (38-44 s) has a dark background by design.
+
+Frames extracted from the encoded mp4 at every label change (frames 30, 60, 150, 300, 345, 451, 570, 690, 1081, 1132, 1136 and the card at 1300) were looked at: each shows what its label says (stowed array at sunrise; unfolding wings; flat panels at rest; short shadows at noon; long shadows in the west; the array going into terrain shadow; the card).
 
 ## Assumptions (illustrative, stated)
 

@@ -1,83 +1,85 @@
-WEBVTT - Solar mission video (3D simulation), English descriptive captions
+WEBVTT - Solar panels mission video (3D simulation), English descriptive captions
 
 NOTE
-No speech. Each cue gives the values on the on-screen panel at its start time. Sun, power and energy are computed; sizes and timing are illustrative.
+No speech. Each cue gives the values on the on-screen panel at its start time; the panel status does not change within a cue. The Sun is computed; power and energy are a stated model for a flat (horizontal) panel per m², before any cell efficiency; array size and timing are illustrative. While the Sun is low the display exposure is raised (not to scale).
 
 1
-00:00.000 --> 00:03.000
-3D simulation driven by table data, not real footage. Dawn over the real LOLA relief at 75.5° S 100.5° W, near Boltzmann crater on the far side; only the high ground is lit.
-Dawn: Sun behind the terrain · Sun 2.5° / azimuth 86.5° · terrain horizon 5.3°
-Power 0 W/m² · energy 0.00 kWh/m² · 0.0 Earth days elapsed · ×35,800
+00:00.000 --> 00:02.000
+3D simulation driven by table data, not real footage. Sunrise over the real relief (SLDEM2015, LOLA and Kaguya) of lunar cell M23206, 25.5° N 13.5° W, 38.5 km from Timocharis, in the low equatorial plains (the maria). The Sun is just above the eastern horizon; the exposure is raised for the low Sun (not to scale). The camera descends to the stowed panels.
+Sunrise: low Sun in the east, panels stowed · Sun 1.6° / azimuth 89.0° · terrain horizon 0.0°
+Power (model, flat panel) 37 W/m² · energy 0.00 kWh/m² · 0.0 Earth days elapsed · ×33,200
 
 2
-00:03.000 --> 00:06.000
-The Sun clears the eastern terrain at the array site; the camera descends to the stowed array.
-Dawn: array stowed · Sun 6.2° / azimuth 71.8° · terrain horizon 6.3°
-Power 469 W/m² · energy 0.00 kWh/m² · 1.2 Earth days elapsed · ×35,800
+00:02.000 --> 00:05.000
+The Sun climbs above 10°; the shadows shorten.
+Morning: Sun climbing, panels stowed · Sun 10.0° / azimuth 93.1° · terrain horizon -0.1°
+Power (model, flat panel) 237 W/m² · energy 0.00 kWh/m² · 0.8 Earth days elapsed · ×33,200
 
 3
-00:06.000 --> 00:09.000
-The mast extends and the two wings of hinged panels begin to unfold.
-Deploying the array · Sun 9.6° / azimuth 56.9° · terrain horizon 6.6°
-Power 1,342 W/m² · energy 0.00 kWh/m² · 2.5 Earth days elapsed · ×35,800
+00:05.000 --> 00:10.000
+The mast rises and two wings of hinged panels unfold upwards.
+Unfolding the flat panels · Sun 22.6° / azimuth 99.6° · terrain horizon 0.1°
+Power (model, flat panel) 523 W/m² · energy 0.00 kWh/m² · 1.9 Earth days elapsed · ×33,200
 
 4
-00:09.000 --> 00:12.000
-The wings open fully; energy is counted from the end of deployment.
-Deploying the array · Sun 12.5° / azimuth 41.7° · terrain horizon 6.5°
-Power 1,329 W/m² · energy 0.00 kWh/m² · 3.7 Earth days elapsed · ×35,800
+00:10.000 --> 00:11.500
+The panels lie flat, facing the sky; energy is counted from now.
+Panels deployed, lying flat · Sun 42.9° / azimuth 113.7° · terrain horizon 0.4°
+Power (model, flat panel) 926 W/m² · energy 0.00 kWh/m² · 3.8 Earth days elapsed · ×33,200
 
 5
-00:12.000 --> 00:15.000
-The vertical panels turn to face the Sun as it moves along the horizon.
-Tracking the Sun · Sun 14.6° / azimuth 26.2° · terrain horizon 6.0°
-Power 1,317 W/m² · energy 13.13 kWh/m² · 5.0 Earth days elapsed · ×35,800
+00:11.500 --> 00:15.033
+Morning: the Sun climbs in the east. The power of a flat panel follows the Sun's elevation (model, before cell efficiency).
+Morning: Sun climbing in the east · Sun 48.5° / azimuth 119.7° · terrain horizon 0.5°
+Power (model, flat panel) 1,020 W/m² · energy 13.48 kWh/m² · 4.4 Earth days elapsed · ×33,200
 
 6
-00:15.000 --> 00:18.000
-Long shadows of the mast and panels lie across the ground.
-Tracking the Sun · Sun 15.8° / azimuth 10.6° · terrain horizon 4.7°
-Power 1,310 W/m² · energy 52.32 kWh/m² · 6.2 Earth days elapsed · ×35,800
+00:15.033 --> 00:19.000
+The Sun is above 60°: short shadows and the most power.
+Sun high in the sky: short shadows, most power · Sun 60.1° / azimuth 140.3° · terrain horizon 0.4°
+Power (model, flat panel) 1,180 W/m² · energy 49.56 kWh/m² · 5.8 Earth days elapsed · ×33,200
 
 7
-00:18.000 --> 00:21.000
-Local noon: the Sun is at its highest, about 16° above the horizon, in the north.
-Tracking the Sun · Sun 16.0° / azimuth 354.8° · terrain horizon 3.5°
-Power 1,308 W/m² · energy 91.39 kWh/m² · 7.5 Earth days elapsed · ×35,800
+00:19.000 --> 00:23.000
+Local noon: the Sun stands in the south at the cell's highest elevation in the table (66.04°).
+Sun high in the sky: short shadows, most power · Sun 66.0° / azimuth 180.0° · terrain horizon 0.1°
+Power (model, flat panel) 1,244 W/m² · energy 94.27 kWh/m² · 7.3 Earth days elapsed · ×33,200
 
 8
-00:21.000 --> 00:24.000
-The Sun moves west along the horizon; the shadows swing round.
-Tracking the Sun · Sun 15.1° / azimuth 339.1° · terrain horizon 2.5°
-Power 1,314 W/m² · energy 130.52 kWh/m² · 8.7 Earth days elapsed · ×35,800
+00:23.000 --> 00:30.000
+Afternoon: the Sun descends towards the west; the shadows lengthen.
+Afternoon: Sun descending towards the west · Sun 60.0° / azimuth 220.0° · terrain horizon 0.3°
+Power (model, flat panel) 1,179 W/m² · energy 139.35 kWh/m² · 8.8 Earth days elapsed · ×33,200
 
 9
-00:24.000 --> 00:27.000
-Tracking the Sun · Sun 13.3° / azimuth 323.6° · terrain horizon 1.8°
-Power 1,324 W/m² · energy 169.90 kWh/m² · 10.0 Earth days elapsed · ×35,800
+00:30.000 --> 00:36.033
+The power falls as the Sun gets lower. The lunar day lasts 29.5 Earth days and about half of it is night: after sunset a panel here gets no sunlight for about two Earth weeks (shaded on the graph).
+Afternoon: Sun descending towards the west · Sun 35.0° / azimuth 252.7° · terrain horizon 2.0°
+Power (model, flat panel) 780 W/m² · energy 204.31 kWh/m² · 11.5 Earth days elapsed · ×33,200
 
 10
-00:27.000 --> 00:30.000
-Tracking the Sun · Sun 10.7° / azimuth 308.3° · terrain horizon 1.4°
-Power 1,337 W/m² · energy 209.64 kWh/m² · 11.2 Earth days elapsed · ×35,800
+00:36.033 --> 00:37.733
+Low Sun in the west: long shadows; the exposure is raised again (not to scale). Sunset and the lunar night follow.
+Low Sun in the west: long shadows · Sun 9.9° / azimuth 267.0° · terrain horizon 2.4°
+Power (model, flat panel) 233 W/m² · energy 233.06 kWh/m² · 13.8 Earth days elapsed · ×33,200
 
 11
-00:30.000 --> 00:33.000
-The Sun sinks towards the western terrain.
-Tracking the Sun · Sun 7.4° / azimuth 293.3° · terrain horizon 0.9°
-Power 1,350 W/m² · energy 249.76 kWh/m² · 12.4 Earth days elapsed · ×35,800
+00:37.733 --> 00:37.867
+The Sun starts to go behind the real terrain; the light on the array fades.
+Sun partly behind the terrain · Sun 2.7° / azimuth 270.4° · terrain horizon 2.5°
+Power (model, flat panel) 54 W/m² · energy 235.40 kWh/m² · 14.5 Earth days elapsed · ×33,200
 
 12
-00:33.000 --> 00:36.000
-Low Sun in the west: the ground near the array falls into shadow, then the Sun goes behind the western terrain and the power drops.
-Tracking the Sun · Sun 3.8° / azimuth 278.5° · terrain horizon 0.6°
-Power 1,358 W/m² · energy 290.19 kWh/m² · 13.7 Earth days elapsed · ×35,800
+00:37.867 --> 00:38.000
+The Sun is behind the real terrain while still above the flat horizon: the array is in shadow and the power is zero.
+Sun behind the terrain · Sun 2.1° / azimuth 270.7° · terrain horizon 2.5°
+Power (model, flat panel) 0 W/m² · energy 235.42 kWh/m² · 14.5 Earth days elapsed · ×33,200
 
 13
-00:36.000 --> 00:39.000
-Closing card: Earth analog Western Cape, South Africa (cell E44120) against the lunar cell M59479. Horizontal irradiance 5.518 against 2.372 kWh/m² per day; highest Sun 80.939° against 16.04°; Sun below 5° for 0.07016 against 0.2271 of daylight; lunar cell sunlit 0.4543 of the time; slope 2.137° against 10.693°; elevation 1127.1 m against 122.4 m.
+00:38.000 --> 00:41.000
+Closing card: analog 1 of the five Solar panels analogs shown (overall rank 1). The Earth analog in Menabe, Madagascar (cell E40184, 21.5° S 44.5° E, 18.8 km from Manja) and its lunar twin, cell M23206 near Timocharis, matched on sunlight above the atmosphere: 9.3437 against 9.383 kWh/m² per day (difference 0.0393, tolerance 0.6). At the Earth site only 5.745 kWh/m² per day reach the ground (modelled): 5.7 of 9.3, 39 % is lost in the atmosphere; the Moon has no atmosphere. Slope 0.753° against 0.757°; roughness 26.56 m against 27.15 m. Suitability 97.94, similarity 99.83, final 98.88.
 
 14
-00:39.000 --> 00:42.000
-The Earth cell gets 2.3 times the horizontal sunlight under a far higher Sun on gentler ground; tests there would not reproduce the low lunar Sun. 3D simulation driven by table data. Not real footage.
+00:41.000 --> 00:44.000
+A panel at the Earth site does not receive what a panel on the Moon receives: only the sunlight that reaches the ground arrives there, while the Moon's day lasts 29.5 Earth days, about half of them dark. Mean surface temperature 300.56 K against 212.81 K and daily swing 13.6 K against 289.73 K are not part of the similarity. 3D simulation driven by table data. Not real footage.
 
