@@ -335,31 +335,48 @@ a:hover {
   z-index: 3;
 }
 
-/* Cesium's own credit line stays visible; it just gets type that matches the shell. */
+/* Cesium's credit display stays in the DOM, reduced to its small logo in a corner on every size:
+   no credit text is drawn over the globes. Every imagery provider the strip can list is credited,
+   with its own wording, in "Data, limits and credits" (src/ui/credits.ts). */
 .cesium-widget-credits {
   font-family: var(--font-body) !important;
   font-size: 14px !important;
   color: #d9d7d2 !important;
   text-shadow: none;
-  max-width: calc(100% - 12px);
-  /* a solid backing: the credit must read on any imagery (checklist 05) */
-  background: rgba(10, 12, 15, 0.92);
-  padding: 0 8px;
-  border-radius: 3px;
+  left: 4px !important;
+  right: auto !important;
+  bottom: 4px !important;
+  max-width: 50%;
+  background: transparent !important;
+  padding: 0 4px;
   box-sizing: border-box;
   white-space: normal;
+  pointer-events: none;
+}
+.pane .cesium-credit-textContainer,
+.pane .cesium-credit-expand-link {
+  display: none !important;
 }
 .cesium-widget-credits a {
   color: #e8e6e1 !important;
-  /* Credit links are controls too: 44 px tall and 8 px apart (checklist 06). */
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  margin-right: 8px;
+  min-height: 28px;
   vertical-align: middle;
 }
 .cesium-widget-credits .cesium-credit-logoContainer {
-  margin-right: 8px;
+  margin-right: 0;
+  pointer-events: auto;
+}
+.cesium-widget-credits .cesium-credit-logoContainer a {
+  margin-right: 0;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(10, 12, 15, 0.55);
+}
+.cesium-widget-credits .cesium-credit-logoContainer img {
+  height: 14px !important;
+  width: auto !important;
 }
 
 /* ---------- reserved panels (built by the next stage) ---------- */

@@ -28,15 +28,18 @@ export function renderSteps(nav: HTMLElement, m: StepsModel): void {
   const ol = h('ol', { class: 'steps-list' });
   items.forEach((it, i) => {
     const state = i === ci ? 'current' : i < ci ? 'done' : 'todo';
-    const marker = h('span', { class: 'step-num', 'aria-hidden': 'true' }, state === 'done' ? icon('check') : String(i + 1));
+    // a done step shows only its check mark; the state is in the mark's accessible name (no visible word)
+    const marker =
+      state === 'done'
+        ? h('span', { class: 'step-num', role: 'img', 'aria-label': 'done:' }, icon('check'))
+        : h('span', { class: 'step-num', 'aria-hidden': 'true' }, String(i + 1));
     const text = h('span', { class: 'step-label' }, it.label);
     // the current step is announced by aria-current; no extra "(current step)" text
-    const sr = h('span', { class: 'sr-only' }, state === 'done' ? ' (done)' : '');
     let el: HTMLElement;
     if (state !== 'current' && it.reachable) {
-      el = h('button', { type: 'button', class: 'step-btn' }, marker, text, sr);
+      el = h('button', { type: 'button', class: 'step-btn' }, marker, text);
       el.addEventListener('click', () => m.go(it.key));
-    } else el = h('span', { class: 'step-btn', 'aria-current': state === 'current' ? 'step' : null }, marker, text, sr);
+    } else el = h('span', { class: 'step-btn', 'aria-current': state === 'current' ? 'step' : null }, marker, text);
     ol.append(h('li', { class: `step is-${state}` }, el));
   });
   nav.replaceChildren(ol);

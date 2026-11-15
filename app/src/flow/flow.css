@@ -742,6 +742,26 @@ details.panel-sec[open] > summary::before {
 .panel-foot .btn-primary {
   flex: 1 1 auto;
 }
+/* short or narrow screens: the action bar keeps to one row so the card's scroll area (which ends
+   at the bar's top edge; the bar is in normal flow, never over the card) keeps room for the scores */
+@media (max-width: 599px), (max-height: 600px) {
+  .panel-foot {
+    flex-wrap: nowrap;
+    align-items: stretch;
+    padding: 8px 12px;
+  }
+  .panel-foot .btn {
+    min-width: 0;
+    flex: 1 1 0;
+    white-space: normal;
+    line-height: 1.15;
+    padding: 4px 10px;
+    text-align: left;
+  }
+  .panel-foot .btn-primary {
+    flex: 1 1 0;
+  }
+}
 .result {
   display: flex;
   flex-wrap: wrap;
@@ -1938,4 +1958,11 @@ body.view-open .topbar {
 /* phones: the start card is opaque, so the globe's labels and loading notes do not show through it */
 body.mf-phone .intro-card {
   background: rgb(10, 12, 15);
+}
+
+/* start screen: the introduction is shown over the globes, so the globe tags and the reset icons
+   (not usable there) are hidden on every size; they come back once a mission is chosen */
+body.flow[data-step='choose'] .pane-caption,
+body.flow[data-step='choose'] .pane-reset {
+  display: none !important;
 }

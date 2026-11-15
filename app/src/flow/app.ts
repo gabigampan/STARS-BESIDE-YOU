@@ -545,6 +545,10 @@ export class FlowApp {
     const ranked = this.rankOf(id) != null;
     globesApi.markers.setSelected('earth', ranked ? id : null);
     this.zones?.closePanel();
+    // The cameras leave at once for a ranked pair: its place and lunar twin are known from the ranking,
+    // so the flights do not wait for the cell's data tile (the first pair of a session used to wait
+    // several seconds and end the wait still at the mission's overview heights).
+    const early = this.earlyPairFlight(id);
     if (!this.store.isTileLoaded(this.store.tileIndexOf(id)) || !this.store.offeredMissions().every((x) => this.store.isMissionLoaded(x.id))) {
       renderDetailLoading(this.detail, this, id);
     }
@@ -571,7 +575,8 @@ export class FlowApp {
       // a smooth, moderate zoom on both globes: the region around each cell stays in view (a few hundred km up)
       globesApi.focus.outline('earth', this.store.cellFootprint(id));
       globesApi.focus.outline('moon', this.store.cellFootprint(twin.id));
-      await Promise.all([globesApi.flyTo('earth', lat, lon, PAIR_VIEW_KM.earth, 1.5), globesApi.flyTo('moon', twin.lat, twin.lon, PAIR_VIEW_KM.moon, 1.5)]);
+      if (early && early.twinId === twin.id) await early.done;
+      else await Promise.all([globesApi.flyTo('earth', lat, lon, PAIR_VIEW_KM.earth, 1.5), globesApi.flyTo('moon', twin.lat, twin.lon, PAIR_VIEW_KM.moon, 1.5)]);
     } else {
       globesApi.markers.setSelected('moon', null);
       globesApi.beams.clearBeams();
@@ -581,6 +586,19 @@ export class FlowApp {
       this.settleLayout();
       await globesApi.flyTo('earth', lat, lon, PAIR_VIEW_KM.earth, 1.5);
     }
+  }
+
+  /** Start the pair flights for a ranked place with a known lunar twin; null when the twin is not known yet. */
+  private earlyPairFlight(id: number): { twinId: number; done: Promise<unknown> } | null {
+    const m = this.mission();
+    const row = m ? this.ranking().find((r) => r.id === id) : undefined;
+    const twin = m && row && row.twinId != null ? this.store.twin(m.id, row.twinId) : null;
+    if (!twin) return null;
+    const done = Promise.all([
+      globesApi.flyTo('earth', row!.lat, row!.lon, PAIR_VIEW_KM.earth, 1.5),
+      globesApi.flyTo('moon', twin.lat, twin.lon, PAIR_VIEW_KM.moon, 1.5),
+    ]);
+    return { twinId: twin.id, done };
   }
 
   renderDetailNow(id: number) {

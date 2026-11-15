@@ -67,7 +67,7 @@ const CREDITS = () => [
         {
           source: 'Cesium ion (optional upgrade)',
           used: 'Cesium World Terrain, Bing Maps aerial imagery and Cesium Moon terrain when the deployment has an ion token.',
-          credit: 'Cesium ion; imagery credits are shown on the globe.',
+          credit: 'Cesium ion, Cesium GS, Inc.; Bing Maps aerial imagery, Earthstar Geographics SIO, © Microsoft Corporation (provider credits as returned by Cesium ion for asset 2).',
           licence: 'Cesium ion terms of service.',
           link: 'https://cesium.com/platform/cesium-ion/',
         },

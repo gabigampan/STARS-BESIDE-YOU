@@ -5,7 +5,9 @@
 // collects the visible text-bearing elements (their own text's line boxes) of the header, options sheet, handle, panels and globe
 // labels, and reports: boxes of two texts that intersect by more than 1 px both ways (neither contains
 // the other), texts that stick out of their scroll container horizontally, and texts cut without an
-// ellipsis. Exit code 1 when anything is found.
+// ellipsis; also a number whose visible box lies under a fixed or sticky bar (or the pair card's
+// action bar) at rest, and a globe tag or reset icon under the start-screen introduction.
+// Exit code 1 when anything is found.
 // Usage: node tests/overlap.mjs [--shots]     Screenshots of failing states: $SHOTS_DIR/overlap
 
 import { existsSync, mkdirSync } from 'node:fs';
@@ -138,6 +140,40 @@ function scan() {
     if (el.scrollWidth > el.clientWidth + 1 && el.clientWidth > 0 && s.textOverflow !== 'ellipsis' && s.overflowX !== 'visible')
       cut.push(`${name(el)} (${el.scrollWidth} > ${el.clientWidth})`);
   }
+  // a number drawn under a fixed or sticky bar (or the pair card's action bar) at rest: the bar's
+  // box intersects the visible part of the number, whichever of the two is on top
+  const under = [];
+  const bars = [...document.querySelectorAll('body *')].filter((e) => {
+    const p = getComputedStyle(e).position;
+    return (p === 'fixed' || p === 'sticky' || e.matches('.panel-foot')) && shown(e) && !e.matches('canvas, .globe, .globe *, .beam-overlay, .cesium-widget-credits, .cesium-widget-credits *');
+  }).map((e) => ({ e, r: e.getBoundingClientRect() })).filter((b) => b.r.width > 1 && b.r.height > 1);
+  for (const root of roots) {
+    for (const el of root.querySelectorAll('*')) {
+      if (el.matches('svg, svg *, script, style') || !/\d/.test([...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join(''))) continue;
+      if (!shown(el)) continue;
+      const box = clipped(el);
+      if (!box) continue;
+      for (const b of bars) {
+        if (b.e.contains(el) || el.contains(b.e)) continue;
+        const w = Math.min(box.r, b.r.right) - Math.max(box.l, b.r.left);
+        const hh = Math.min(box.b, b.r.bottom) - Math.max(box.t, b.r.top);
+        if (w > 1 && hh > 1) { under.push(`${name(el)} under ${name(b.e).split(' ')[0]} (${w.toFixed(0)}x${hh.toFixed(0)})`); break; }
+      }
+    }
+  }
+  // the globe tags and reset icons under the start-screen introduction (covered or not)
+  const intro = document.getElementById('intro');
+  if (intro && shown(intro)) {
+    const ir = intro.getBoundingClientRect();
+    for (const el of document.querySelectorAll('.pane-caption, .pane-reset')) {
+      if (!shown(el)) continue;
+      const r = el.getBoundingClientRect();
+      const w = Math.min(r.right, ir.right) - Math.max(r.left, ir.left);
+      const hh = Math.min(r.bottom, ir.bottom) - Math.max(r.top, ir.top);
+      if (r.width > 1 && r.height > 1 && w > 1 && hh > 1) under.push(`${name(el)} under the introduction (${w.toFixed(0)}x${hh.toFixed(0)})`);
+    }
+  }
+  overlaps.push(...under);
   return { n: items.length, overlaps, outside, cut };
 }
 
