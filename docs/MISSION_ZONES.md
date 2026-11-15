@@ -43,6 +43,11 @@ The three zones are fixed by the team and are **not** changed here:
 | S27 | https://science.nasa.gov/wp-content/uploads/2024/01/lrolitho7temperaturevariation27may2014.pdf (LRO lithograph) | NASA |
 | S28 | IAU/USGS Gazetteer, local extract `tierra luna/engine/data/iau_moon_nomenclature.csv` (source in `iau_source.json`, downloaded 2026-11-14) | used only for feature centres of planned targets |
 | S29 | https://www.nasa.gov/moonbase/ "Moon Base" | NASA, last updated Nov 12, 2026 |
+| S30 | https://www.nasa.gov/news-release/nasa-adds-mission-to-artemis-lunar-program-updates-architecture/ | NASA RELEASE26-022, Feb 27, 2026 (added by the fact check) |
+| S31 | https://www.nasa.gov/blogs/missions/2026/10/23/nasa-shares-artemis-acceleration-plans-for-moon-missions/ | NASA blog, Oct 23, 2026 (added by the fact check) |
+| S32 | https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/ | NASA RELEASE26-095, Nov 7, 2026 (added by the fact check) |
+| S33 | https://www.ispace-inc.com/2026/03/27/ispace-announces-new-ultra-lunar-lander-integrating-japanese-and-u-s-lander-models/ (Mar 27, 2026) and https://www.ispace-inc.com/2026/11/13/ispace-completes-preliminary-design-review-pdrfor-the-mission-3-ultra-lander/ (Nov 13, 2026) | ispace (operator) (added by the fact check) |
+| S34 | https://iki.cosmos.ru/research/missions/luna-27 | IKI RAS (lead scientific organisation; lead agency Roscosmos), no page date (latest news item 29 Oct 2024) (added by the fact check) |
 
 Coordinate handling: S1 gives each site twice, as "7.13 N, 64.37 W" and as "7.13, 295.63" (N, E positive, 0-360). The tables below give planetocentric latitude and east-positive longitude in -180..180, converted from S1's 0-360 column by subtracting 360 when the value exceeds 180 (e.g. Luna 9: 295.63 - 360 = -64.37, which matches S1's "64.37 W"). The IAU extract is 0-360 E and is converted the same way. Zone and region membership is computed for the 1-degree cell that contains the point (row = floor(90 - lat), col = floor(lon + 180), cell = row x 360 + col); the elevation quoted is that cell's `elevation_m` in `tierra luna/output_real/moon_real_1deg.csv`.
 
@@ -133,7 +138,7 @@ Outcome words are the source's own ("Soft Landing", "Lander", "Crewed Landing", 
 
 ### 1c. Deliberate impacts and end-of-mission impacts (S1 type "Impact", orbiters and impactors)
 
-Only these matter for the polar regions: Lunar Prospector, the Chandrayaan-1 Moon Impact Probe and LCROSS in B, and GRAIL A/B in C. The others are listed for completeness. S1 also lists Apollo S-IVB and LM ascent-stage impacts (all near the equator on the near side) and objects of unknown impact site; they are not repeated here.
+Only these matter for the polar regions: Lunar Prospector, the Chandrayaan-1 Moon Impact Probe and LCROSS in B, and GRAIL A/B in C. The others are listed for completeness. S1 also lists Apollo S-IVB and LM ascent-stage impacts (all on the near side, within about 27 degrees of the equator) and objects of unknown impact site; they are not repeated here. The fact check added three S1 rows with coordinates that the draft had left out (Apollo 16 subsatellite, Chang'e 5-T1 booster, Chang'e 5 ascent craft).
 
 | Object | Date | Lat, lon | Region | Zone | S1 quote / note |
 |---|---|---|---|---|---|
@@ -152,6 +157,9 @@ Only these matter for the polar regions: Lunar Prospector, the Chandrayaan-1 Moo
 | GRAIL A and B (NASA) | 2012-12-17 | 75.6088, -26.5940 and 75.6508, -26.8341 | C | none | "75.6088, 333.4060"; "75.6508, 333.1659" |
 | LADEE (NASA) | 2014-04-18 | 11.8494, -93.2494 | E | none | "11.8494, 266.7506" |
 | Longjiang 2 (China) | 2019-07-31 | 16.6956, 159.5170 | D (a far-side low-plains cell) | Solar | "16.6956, 159.5170" |
+| Apollo 16 subsatellite (NASA) | 1972-05-29 | 10.16, 111.9 | E | none | "29 May 1972 / 10.16, 111.9" (added by the fact check) |
+| Chang'e 5 ascent craft (CNSA) | 2020-12-07 | -30, 0 (note aa: most probable site Regiomontanus, -0.21, -29.84 as printed) | F (cell M43380, +843 m) | none | "7 December 2020 / -30., 0."; note aa "intentionally crashed after returning samples to orbiter" (added by the fact check) |
+| Chang'e 5-T1 booster (probable) | 2022-03-04 | 5.226, -125.514 | E | none | "5.226, 234.486"; note bb "considered most likely to be the booster stage of the Chang'e 5-T1" (added by the fact check) |
 
 ### 1d. Planned missions (status as of 2026-11-15)
 
@@ -169,7 +177,10 @@ Planned sites are given by feature name only on the official pages; none gives l
 | Blue Ghost Mission 3 (CP-21) | Firefly for NASA | USA | robotic lander | no date on S5 | "the Gruithuisen Domes" | Mons Gruithuisen Gamma 36.5585, -40.7213 | F (centre) | none | S5 |
 | CS-11 (Schrödinger Basin; NSSDCA: Draper CP-12 on ispace APEX 1.0) | NASA CLPS | USA | robotic lander | S14 "touch down ... in 2026"; S5 no date, "Lander to be determined" | "Schrödinger Basin" | Schrödinger -74.7326, 132.9252 | E (centre at -74.7, just outside -75) | none | S5; S14 "Schrödinger basin on the lunar far side" |
 | Other CLPS south-pole deliveries: CT-3 (Blue Moon Mark 1), CS-6 (Blue Ghost Mission 4), CT-4 (Nova-D) | NASA CLPS | USA | landers | no dates on S5 | "the lunar South Pole" / "the lunar south pole" | - | A or B (not placed) | Rover | S5 |
-| PROMISE (nuclear-powered rover), MoonFall, Lunar Terrain Vehicles | NASA (Blue Origin delivery for PROMISE and LTVs) | USA | rovers / landers | MoonFall "targeted to arrive at the lunar South Pole in 2028"; LTVs "to the Moon in 2028" | lunar South Pole region | - | A or B (not placed) | Rover | S7; S29 "NASA's PROMISE rover will bring proven Mars rover technology to the lunar South Pole" |
+| CS-8 (Moon Base payloads) and CX-2 (Lunar Terrain Vehicle delivery) | NASA CLPS | USA | landers | no dates on S5 | "Lunar surface" (no site) | - | not placed | - | S5 (added by the fact check) |
+| ispace Mission 3 (ULTRA lander) | ispace | Japan | robotic lander | "scheduled for launch in 2028" (S33, Nov 13, 2026) | no site named | - | not placed | - | S33 (added by the fact check) |
+| Luna 27 (Luna-27.1, Luna-27.2) | Roscosmos / NPO Lavochkin / IKI RAS | Russia | robotic landers | "2029 и 2030" "(предполагаемые)" (tentative) | "в районе полюсов Луны", "приполярный район" (near-polar; which pole not stated) | - | not placed | - | S34 (added by the fact check; Luna 26 is an orbiter and is not listed) |
+| PROMISE (nuclear-powered rover), MoonFall, Lunar Terrain Vehicles | NASA (Blue Origin delivery for PROMISE and LTVs) | USA | rovers / landers | MoonFall "targeted to arrive at the lunar South Pole in 2028"; LTVs "to the Moon in 2028"; PROMISE: "NASA is targeting late 2028 to launch PROMISE" (S32) | lunar South Pole region; PROMISE "will land at the Moon's South Pole" (S32) | - | A or B (not placed) | Rover | S7; S29 "NASA's PROMISE rover will bring proven Mars rover technology to the lunar South Pole"; S32 |
 | Chang'e 7 (orbiter, lander, rover, hopper) | CNSA | China | lander + rover | Launch window missed: "不能在今年预定窗口实施" (cannot be carried out in this year's scheduled window), CNSA 2026-08-23; no new date | "the moon's south pole"; aims "to confirm the presence and distribution of water ice in permanently shadowed craters" (Xinhua 2025-02-04) | - (no official site) | A or B (not placed) | Rover | S17 |
 | Chang'e 8 | CNSA | China | lander + rover + robot | "around 2029" (CNSA 2025); S3 says 2028 | "the Leibnitz-Beta Plateau near the lunar south pole region" | not in the IAU extract; not placed | not placed | - | S18 "scheduled for launch around 2029", "will target the Leibnitz-Beta Plateau near the lunar south pole region" |
 | Chandrayaan-4 | ISRO | India | sample return | "2027" | "southern polar region of Moon (~84˚ to 86˚ south latitudes)" | - | A or B | Rover | S20 PIB 11 Dec 2025: "The planned timeline for Chandrayaan-4 mission is 2027. The targeted landing site ... is in the southern polar region of Moon (~84˚ to 86˚ south latitudes)" |
@@ -179,12 +190,12 @@ No landing in September 2025 to November 2026 was found on any official page: S1
 
 ### Not confirmed on an official page (excluded from the web text)
 
-- **Luna 26 / Luna 27 (Roscosmos)**: only press and encyclopedia pages found (dates 2027-2030 conflicting). No Roscosmos page opened.
+- **Luna 26 / Luna 27 (Roscosmos)**: the fact check found the IKI RAS mission page (S34): Luna 27 landers "2029 и 2030" (tentative), near-polar, pole not stated; added to 1d as not placed. Luna 26 is an orbiter. TASS (press, not official) gives other dates for Luna 26; not used.
 - **Chang'e 7 exact landing site** (press reports name a ridge near Shackleton): not on any CNSA/Xinhua/gov.cn page opened.
 - **Chang'e 8 coordinates**: "Leibnitz-Beta Plateau" is not in the IAU extract; no coordinates on CNSA pages.
 - **Exact sites and dates** of CT-3, CS-6, CT-4, PROMISE, MoonFall and the LTVs; launch dates of IM-3 and Griffin-1 beyond "2026"/"late 2026".
 - **IM-1's final attitude** (widely reported as tipped): no official page opened today states it; only "It landed" (S5).
-- **ispace Mission 3, ESA Argonaut, Korean lander plans, other commercial landers**: not searched for lack of time.
+- **ispace Mission 3**: found by the fact check (S33), launch 2028, no site; added to 1d. **ESA Argonaut, Korean lander plans, other commercial landers**: not searched (writer or fact check) for lack of time; none is named in the web text.
 - **Apollo communications as a site criterion**: S23 lists free-return, smoothness, slope, lighting; no page opened today states Earth communication as an Apollo criterion, so the web text does not claim it.
 
 ### Counts per region (from the tables above)
@@ -195,8 +206,8 @@ No landing in September 2025 to November 2026 was found on any official page: S1
 | B south-polar, other | 1 (IM-1) | 0 | 0 | 4 objects (Lunar Prospector, Chandrayaan-1 MIP, LCROSS x2) | Moon Base I and Griffin-1 by centre; Chang'e 7, Chandrayaan-4, LUPEX, CT-3, CS-6, CT-4, PROMISE, MoonFall, LTVs in A or B |
 | C north-polar | 0 | 0 | 0 | 2 (GRAIL A, B) | none found |
 | D low equatorial plains | 15 (Luna 9, 13, 16, 20, 21, 23, 24; Surveyor 1, 3, 5; Apollo 11, 12, 15, 17; Blue Ghost 1) | 4 | 4 (Luna 7, 8, 15, 18) | 7 (Luna 2, Ranger 6-9, Chang'e 1, Longjiang 2) | IM-3 (Reiner Gamma), Blue Ghost 2 (Nassau centre) |
-| E far side | 2 (Chang'e 4, Chang'e 6) | 0 | 0 | 6 (Ranger 4, Lunar Orbiter 1-3, Okina, LADEE) | CS-11 Schrödinger (centre) |
-| F near-side highlands, mid-lat | 9 (Surveyor 6, 7; Apollo 14, 16; Luna 17; Chang'e 3, 5; Chandrayaan-3; SLIM) | 2 | 8 | 4 (Lunar Orbiter 5, Hiten, SMART-1, Kaguya) | Blue Ghost 3 (Gruithuisen) |
+| E far side | 2 (Chang'e 4, Chang'e 6) | 0 | 0 | 8 (Ranger 4, Lunar Orbiter 1-3, Okina, LADEE, Apollo 16 subsatellite, Chang'e 5-T1 booster) | CS-11 Schrödinger (centre) |
+| F near-side highlands, mid-lat | 9 (Surveyor 6, 7; Apollo 14, 16; Luna 17; Chang'e 3, 5; Chandrayaan-3; SLIM) | 2 | 8 | 5 (Lunar Orbiter 5, Hiten, SMART-1, Kaguya, Chang'e 5 ascent craft) | Blue Ghost 3 (Gruithuisen) |
 | Total | 28 | 6 | 12 (+ Peregrine, no arrival) | | |
 
 ## Disagreements between sources
@@ -211,9 +222,11 @@ No landing in September 2025 to November 2026 was found on any official page: S1
 | Moon Base I date | S6 "no earlier than fall 2026" | S8 "2027" | Web text gives no date |
 | Griffin-1 site | S9 (Oct 2026) "Nobile Crater" | S5 (Oct 2026) TO20A "Mons Mouton", "in 2025" (the old VIPER delivery) | Use S9 (newer, mission-specific); web text does not name it |
 | Blue Ghost 2 date | S14 NSSDCA "early 2026" | S11 NASA "2027", Firefly "no earlier than 2027" | Use 2027 |
-| CS-11 / Draper | S14 Draper CP-12, ispace APEX 1.0, 2026 | S5 CS-11 "Lander to be determined" | Not in web text |
+| CS-11 / Draper | S14 Draper CP-12, ispace APEX 1.0, 2026 | S5 CS-11 "Lander to be determined"; S33 (ispace, Mar 27, 2026): "Mission 5: Lunar Lander launch, 2030 (formerly ispace-U.S. Mission 3)", selected "to carry NASA's CLPS Task Order CP-12 as a member of Team Draper", "the execution of CP-12 under the revised schedule is pending approval by NASA" | Not in web text; the 2026 date of S14 is out of date |
+| Chandrayaan-3 region label | Region rule: 69.37 S is region F ("near-side highlands and mid-latitudes") | PIB (S20, June 2026) calls it "Chandrayaan-3's lunar south pole landing" and says it "touched down at 69.3° South latitude" | Region F is a label of this document only; web text gives the latitude (69° S) and never says Chandrayaan-3 was not a south-polar landing |
 | Chang'e 7 | S3 "2026" | S17 CNSA: did not meet launch conditions for this year's window | Planned, no date |
 | Chang'e 8 | S3 "2028" | S18 CNSA "around 2029" | Use CNSA |
+| Artemis crew landing order | S16 Artemis IV page still has the Artemis III site-selection panel ("the first of the Artemis missions to bring crew to the lunar surface") | S30: Artemis III "now in 2027, will be designed to test out systems and operational capabilities in low Earth orbit" "to prepare for an Artemis IV landing in 2028"; S31: "Artemis IV, the first Artemis mission on the lunar surface" | Web text calls Artemis IV NASA's next crew landing (S30, S31) |
 | Equatorial night temperature | S27 140 K at night | table `tmin_k` median 94 K in D (Diviner pre-dawn minimum; R2 sec. 3 explains the 95 K vs 140 K difference) | Web text quotes only daytime |
 
 ## 3. Why each mission is not posed outside its zone
@@ -242,10 +255,10 @@ Official statements used:
 | Region | Reason (support) |
 |---|---|
 | A nine NASA regions | The Sun stays near the horizon (axis tilt 1.54°) [C-S25]; level ground gets 0.53 kWh/m2/day (median) in our table against 10.0 in the plains [D]. Some ridges are lit most of the year [C-S25, S26], but that is a vertical-panel test, not the team's flat-ground one [T]. IM-2 landed here (2025) [C-S1, S4]. |
-| B south-polar, other | Same low Sun: 1.32 kWh/m2/day median on level ground vs 10.0 in the plains [D]; peaks such as the Shackleton rim are sunlit over 90 % of the year [C-S26] and IM-1 landed near Malapert A (2024) [C-S1, S5], so panels do work here, but with a different geometry from the team's test [T]. |
+| B south-polar, other | Same low Sun: 1.32 kWh/m2/day median on level ground vs 10.0 in the plains [D]; peaks such as the Shackleton rim are sunlit over 90 % of the year [C-S26] and IM-1 landed near Malapert A (2024) [C-S1, S5], so the region is not ruled out; lit peaks call for a different panel geometry from the team's flat-ground test [T]. |
 | C north-polar | Low Sun again: 1.38 kWh/m2/day median on level ground vs 10.0 [D]. No landing in S1; GRAIL impacted here [C-S1]. The team's test is designed for high Sun on flat ground [T]. |
 | E far side | Sunlight is close to the plains' (median 8.96 vs 10.02 kWh/m2/day) and Chang'e 4 and 6 landed here [D, C-S1]. The team kept its zone to the low, flat plains (median slope 1.1° vs 6.2°) [D, T]; some far-side low plains (e.g. around Nassau) are inside the zone [D]. |
-| F near-side highlands, mid-lat | Apollo 14 and 16, SLIM, Chang'e 3 and 5 and Chandrayaan-3 landed here [C-S1], so panels work here too. The team kept the zone to the low plains: more energy (10.0 vs 8.25 kWh/m2/day) and flatter ground (1.1° vs 3.9°) [D, T]. |
+| F near-side highlands, mid-lat | Apollo 14 and 16, SLIM, Chang'e 3 and 5 and Chandrayaan-3 landed here [C-S1], so the region is not ruled out (no claim is made about how each was powered: the Apollo landers' power source was not checked on an official page). The team kept the zone to the low plains: more energy (10.0 vs 8.25 kWh/m2/day) and flatter ground (1.1° vs 3.9°) [D, T]. |
 
 ### Lunar base (zone: A, the nine NASA regions)
 
@@ -253,30 +266,30 @@ Official statements used:
 |---|---|
 | B south-polar, other | IM-1 landed here (2024) and LCROSS impacted Cabeus (2009) [C-S1]; several robotic missions target the wider south-polar region [C-S5, S7, S17, S20]. The base test follows NASA's crew-landing plan, so it uses only the nine regions NASA named in October 2024 [C-S16, T]. |
 | C north-polar | NASA's crewed plans point to the south pole [C-S16]; the north pole also has cold shadowed craters [C-S27, S28], so this is the team's choice, not a physical limit [T]. GRAIL impacted here (2012) [C-S1]. |
-| D low equatorial plains | Apollo 11, 12, 15 and 17 landed crews here [C-S1, S2]; the first Apollo sites stayed within 5° of the equator for operational reasons such as the free-return trajectory [C-S24]. NASA's next crew landing, Artemis IV (early 2028), targets the south pole, where shadowed areas can preserve water [C-S16]. Daytime reaches about 400 K and nights last 14 Earth days [C-S27]. |
-| E far side | Chang'e 4 and 6 landed here [C-S1, S19]; Chang'e 6 needed the Queqiao-2 relay to talk to Earth [C-S19]. NASA lists "communication capabilities with Earth" among its criteria and chose nine south-polar regions [C-S16]. |
+| D low equatorial plains | Apollo 11, 12, 15 and 17 landed crews here [C-S1, S2]; the first Apollo sites stayed within 5° of the equator for operational reasons such as the free-return trajectory [C-S24]. NASA's next crew landing, Artemis IV (early 2028), targets the south pole, where shadowed areas can preserve water [C-S16, S30, S31]. Daytime reaches about 400 K and nights last 14 Earth days [C-S27]. |
+| E far side | Chang'e 4 and 6 landed here [C-S1, S19]; Chang'e 6's landing was "Supported by the Queqiao-2 relay satellite" [C-S19]. NASA lists "communication capabilities with Earth" among its criteria and chose nine south-polar regions [C-S16]. |
 | F near-side highlands, mid-lat | Apollo 14 and 16, Chandrayaan-3 and SLIM landed here [C-S1]. NASA's next crew landing targets the south pole, where shadowed areas "can preserve resources, including water", and its nine regions were selected on factors including terrain, communication with Earth and lighting [C-S16]; the base test uses them [T]. |
 
 ## 4. Proposed web text (pending the team lead's approval)
 
 Rules checked for every string: no "no missions" or "never visited" claim; no "cannot work here"; no NASA endorsement (NASA is cited as the source of a plan, not as a partner); every mission named is in sec. 1 with its source; numbers are from sec. 2. Word counts in brackets.
 
-**General note (Moon view)** [43]
-> Spacecraft have landed across the Moon: Apollo and Luna near the equator, Chang'e 4 and 6 on the far side, IM-2 near the south pole. Each test here is searched in one zone the team chose; other regions are explained, not ruled out.
+**General note (Moon view)** [45]
+> Spacecraft have landed in many parts of the Moon: Apollo and Luna near the equator, Chang'e 4 and 6 on the far side, IM-2 near the south pole. Each test is searched in one zone the team chose; other regions are explained, not ruled out.
 
-Gloss: Naves han aterrizado por toda la Luna: Apolo y Luna cerca del ecuador, Chang'e 4 y 6 en la cara oculta, IM-2 cerca del polo sur. Cada prueba se busca en una zona elegida por el equipo; las demás regiones se explican, no se descartan.
+Gloss: Naves han aterrizado en muchas partes de la Luna: Apolo y Luna cerca del ecuador, Chang'e 4 y 6 en la cara oculta, IM-2 cerca del polo sur. Cada prueba se busca en una zona elegida por el equipo; las demás regiones se explican, no se descartan.
 
 ### Rover (zone: south pole, at or below 75° S)
 
-**North-polar region** [42]
-> Not our rover zone, though not ruled out: the north pole also has very cold shadowed craters. Our rover test follows NASA's VIPER plan, which looks for water ice at the south pole. NASA's GRAIL probes ended their mission here in 2012.
+**North-polar region** [44]
+> Not our rover zone, though not ruled out: the north pole also has very cold shadowed craters. Our rover test is modelled on NASA's VIPER plan to look for water ice at the south pole. NASA's GRAIL probes ended their mission here in 2012.
 
-Gloss: No es nuestra zona del rover, aunque no se descarta: el polo norte también tiene cráteres en sombra muy fríos. Nuestra prueba sigue el plan VIPER de la NASA, que busca hielo de agua en el polo sur. Las sondas GRAIL de la NASA terminaron aquí su misión en 2012.
+Gloss: No es nuestra zona del rover, aunque no se descarta: el polo norte también tiene cráteres en sombra muy fríos. Nuestra prueba se basa en el plan VIPER de la NASA para buscar hielo de agua en el polo sur. Las sondas GRAIL de la NASA terminaron aquí su misión en 2012.
 
-**Low equatorial plains (maria)** [41]
-> Rovers have driven here, like Lunokhod 2 in 1973. Our rover test is about finding water ice, as NASA's VIPER will do, and NASA places that ice in permanently shadowed craters near the poles, so we search near the south pole.
+**Low equatorial plains (maria)** [42]
+> Rovers have driven here, like Lunokhod 2 in 1973. Our rover test is about finding water ice, as NASA plans with VIPER, and NASA says that ice lies at the poles, in permanently shadowed areas, so we search near the south pole.
 
-Gloss: Aquí ya han circulado rovers, como Lunojod 2 en 1973. Nuestra prueba trata de buscar hielo de agua, como hará VIPER de la NASA, y la NASA sitúa ese hielo en cráteres en sombra permanente cerca de los polos; por eso buscamos cerca del polo sur.
+Gloss: Aquí ya han circulado rovers, como Lunojod 2 en 1973. Nuestra prueba trata de buscar hielo de agua, como planea la NASA con VIPER, y la NASA dice que ese hielo está en los polos, en zonas en sombra permanente; por eso buscamos cerca del polo sur.
 
 **Far side** [40]
 > China's Yutu-2 rover drove here after Chang'e 4 landed in 2019, so rovers work on the far side. Our rover test targets polar water ice, like NASA's VIPER, and far-side missions also need a relay satellite to talk to Earth.
@@ -285,17 +298,17 @@ Gloss: El rover chino Yutu-2 recorrió esta zona tras el aterrizaje de Chang'e 4
 
 Basis: S1 note z, Yutu 2 "still mobile as of January 2023".
 
-**Near-side highlands and mid-latitudes** [38]
-> Rovers have worked here: Lunokhod 1, China's Yutu and India's Pragyan, which reached 69° S in 2023. Our rover test follows NASA's VIPER plan for water ice in permanently shadowed craters, so our zone starts at 75° S.
+**Near-side highlands and mid-latitudes** [44]
+> Rovers have worked here: Lunokhod 1, China's Yutu and India's Pragyan, which reached 69° S in 2023. Our rover test is modelled on NASA's VIPER plan for water ice in permanently shadowed craters, so the team set its zone at 75° S and beyond.
 
-Gloss: Aquí han trabajado rovers: Lunojod 1, el Yutu chino y el Pragyan indio, que llegó a 69° S en 2023. Nuestra prueba sigue el plan VIPER de la NASA para hielo de agua en cráteres en sombra permanente, por eso nuestra zona empieza en 75° S.
+Gloss: Aquí han trabajado rovers: Lunojod 1, el Yutu chino y el Pragyan indio, que llegó a 69° S en 2023. Nuestra prueba se basa en el plan VIPER de la NASA para hielo de agua en cráteres en sombra permanente, por eso el equipo fijó su zona a partir de 75° S.
 
 ### Solar panels (zone: low equatorial plains, within 30° of the equator and 1,200 m or more below the mean radius)
 
 **The nine NASA candidate regions** [44]
 > Near the pole the Sun stays low: flat ground here gets about 0.5 kWh/m² a day in our data, against about 10 in the maria. Some ridges stay lit most of the year, suiting vertical panels, a different test. IM-2 landed here in 2025.
 
-Gloss: Cerca del polo el Sol va bajo: el suelo llano recibe unos 0,5 kWh/m² al día en nuestros datos, frente a unos 10 en los mares. Algunas crestas están iluminadas casi todo el año, lo que conviene a paneles verticales, otra prueba distinta. IM-2 aterrizó aquí en 2025.
+Gloss: Cerca del polo el Sol va bajo: el suelo llano recibe unos 0,5 kWh/m² al día en nuestros datos, frente a unos 10 en los mares. Algunas crestas están iluminadas la mayor parte del año, lo que conviene a paneles verticales, otra prueba distinta. IM-2 aterrizó aquí en 2025.
 
 **South-polar region (outside NASA's nine)** [40]
 > IM-1 landed here in 2024, and spots on Shackleton's rim are jointly lit over 90% of the year. But the Sun stays low: flat ground gets about 1.3 kWh/m² a day in our data, against about 10 in the maria.
@@ -307,15 +320,15 @@ Gloss: IM-1 aterrizó aquí en 2024, y unos puntos del borde de Shackleton está
 
 Gloss: Aquí el Sol se mantiene cerca del horizonte: el suelo llano recibe unos 1,4 kWh/m² al día en nuestros datos, frente a unos 10 en los mares ecuatoriales. Nuestra prueba de paneles está pensada para Sol alto y suelo llano, por eso buscamos en los mares.
 
-**Far side** [42]
-> Sunlight here is close to the maria's (about 9 vs 10 kWh/m² a day in our data), and Chang'e 4 and 6 landed here. The team kept its zone to the lowest, flattest equatorial plains; a few far-side plains are inside it.
+**Far side** [41]
+> Sunlight here is close to the maria's (about 9 vs 10 kWh/m² a day in our data), and Chang'e 4 and 6 landed here. The team kept its zone to the lowest, flattest equatorial plains; some far-side plains are inside it.
 
 Gloss: La luz solar aquí es parecida a la de los mares (unos 9 frente a 10 kWh/m² al día en nuestros datos), y Chang'e 4 y 6 aterrizaron aquí. El equipo limitó su zona a las llanuras ecuatoriales más bajas y llanas; algunas llanuras de la cara oculta quedan dentro.
 
-**Near-side highlands and mid-latitudes** [43]
-> Apollo 14 and 16, SLIM and Chang'e 3 and 5 landed here, so panels work here too. The team chose the low equatorial plains as its design target: more energy (about 10 vs 8 kWh/m² a day) and flatter ground in our data.
+**Near-side highlands and mid-latitudes** [45]
+> Apollo 14 and 16, SLIM and Chang'e 3 and 5 landed here, so this region is not ruled out. The team chose the low equatorial plains as its design target: more sunlight (about 10 vs 8 kWh/m² a day) and flatter ground in our data.
 
-Gloss: Aquí aterrizaron Apolo 14 y 16, SLIM y Chang'e 3 y 5, así que los paneles también funcionan aquí. El equipo eligió las llanuras ecuatoriales bajas como objetivo de diseño: más energía (unos 10 frente a 8 kWh/m² al día) y suelo más llano en nuestros datos.
+Gloss: Aquí aterrizaron Apolo 14 y 16, SLIM y Chang'e 3 y 5, así que esta región no se descarta. El equipo eligió las llanuras ecuatoriales bajas como objetivo de diseño: más luz solar (unos 10 frente a 8 kWh/m² al día) y suelo más llano en nuestros datos.
 
 ### Lunar base (zone: the nine candidate landing regions NASA announced on 28 October 2024)
 
@@ -334,17 +347,17 @@ Gloss: Los planes de alunizaje tripulado de la NASA apuntan al polo sur, no aqu�
 
 Gloss: Apolo 11, 12, 15 y 17 llevaron tripulaciones aquí; los primeros lugares de Apolo se quedaron cerca del ecuador por razones operativas, como una trayectoria de regreso segura. El próximo alunizaje tripulado de la NASA, Artemis IV, apunta al polo sur, donde las zonas en sombra pueden conservar agua. Nosotros seguimos ese plan.
 
-**Far side** [40]
-> Chang'e 4 and 6 landed here, and Chang'e 6 talked to Earth through the Queqiao-2 relay satellite. NASA lists communication with Earth among its criteria for crew landing sites and chose nine south-polar regions; our base test uses those regions.
+**Far side** [39]
+> Chang'e 4 and 6 landed here; Chang'e 6 landed with support from the Queqiao-2 relay satellite. NASA lists communication with Earth among its criteria for crew landing sites and chose nine south-polar regions; our base test uses those regions.
 
-Gloss: Chang'e 4 y 6 aterrizaron aquí, y Chang'e 6 se comunicó con la Tierra a través del satélite repetidor Queqiao-2. La NASA incluye la comunicación con la Tierra entre sus criterios para los lugares de alunizaje tripulado y eligió nueve regiones del polo sur; nuestra prueba de base usa esas regiones.
+Gloss: Chang'e 4 y 6 aterrizaron aquí; Chang'e 6 aterrizó con el apoyo del satélite repetidor Queqiao-2. La NASA incluye la comunicación con la Tierra entre sus criterios para los lugares de alunizaje tripulado y eligió nueve regiones del polo sur; nuestra prueba de base usa esas regiones.
 
 **Near-side highlands and mid-latitudes** [40]
 > Apollo 14 and 16, India's Chandrayaan-3 and Japan's SLIM landed here. NASA's next crew landing targets the south pole, where shadowed areas can preserve water, in nine regions picked for lighting, terrain and Earth communication. Our base test uses them.
 
 Gloss: Aquí aterrizaron Apolo 14 y 16, Chandrayaan-3 de la India y SLIM de Japón. El próximo alunizaje tripulado de la NASA apunta al polo sur, donde las zonas en sombra pueden conservar agua, en nueve regiones elegidas por iluminación, terreno y comunicación con la Tierra. Nuestra prueba de base usa esas regiones.
 
-Checks against sec. 1: every mission named in a string is in tables 1a-1c with its region (Lunokhod 2: D; Yutu-2/Chang'e 4, Chang'e 6: E; Lunokhod 1, Yutu, Pragyan, Apollo 14 and 16, SLIM, Chang'e 3 and 5, Chandrayaan-3: F; IM-1: B; IM-2: A; GRAIL: C; Apollo 11, 12, 15, 17: D). Artemis IV and VIPER are cited as NASA plans only. No string gives a date for a planned mission other than Artemis IV's region, and none names Moon Base I, Griffin-1 or Chang'e 7 sites (not precise enough on official pages).
+Checks against sec. 1: every mission named in a string is in tables 1a-1c with its region (Lunokhod 2: D; Yutu-2/Chang'e 4, Chang'e 6: E; Lunokhod 1, Yutu, Pragyan, Apollo 14 and 16, SLIM, Chang'e 3 and 5, Chandrayaan-3: F; IM-1: B; IM-2: A; GRAIL: C; Apollo 11, 12, 15, 17: D). Artemis IV and VIPER are cited as NASA plans only. No string gives a date for a planned mission, and Artemis IV is named only with its region, and none names Moon Base I, Griffin-1 or Chang'e 7 sites (not precise enough on official pages).
 
 ## 5. How the app can pick the text for a clicked lunar cell
 
@@ -353,3 +366,30 @@ Checks against sec. 1: every mission named in a string is in tables 1a-1c with i
 3. For the mission on screen, if the region is part of that mission's zone (Rover: A, B; Solar panels: D; Lunar base: A), show the normal pair view; otherwise show the string for (mission, region) from sec. 4.
 4. Show the general note once in the Moon view, independent of the click.
 5. Keep the strings in data (one entry per mission and region, 14 entries plus the note), so that a later correction to this document changes text, not logic. If the mission list changes (for example a 2026-2027 landing), update sec. 1 first and re-check the strings that name missions.
+
+## Fact check (independent checker, 2026-11-15)
+
+Scratch files: `/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/zones-check/` (`check.py` places every point independently with pandas from `moon_real_1deg.csv` and `regions.json`; `pts.txt` holds the coordinates as printed in S1 and the IAU extract; `pages/` holds the pages I downloaded).
+
+**What I re-opened (all on 2026-11-15).** All 29 of the draft's sources, plus six more pages: S1 (whole table and notes, parsed line by line), S2, S3, S4, S12, S13, S14 (Draper and BLUEGHOS2), S5, S6, S7, S8, S9, S10, S11 (NASA event page and Firefly), S15 (both pages), S16 (Artemis IV page and RELEASE24-136, full text by curl), S17 (CNSA 2026-08-23, Xinhua 2025-02-04, gov.cn 2026-05-23), S18, S19, S20 (the PIB press release gave HTTP 403 to WebFetch and opened on the second try by curl; the PIB June 2026 PDF; the ISRO TIM page), S21, S22 (PDF), S23, S24 (the whole 226 MB PDF downloaded again, with the same byte size as the writer's copy; quotes found in its text), S25, S26, S27 (PDF), S28 (local extract), S29. Added: S30, S31, S32, S33, S34. Every source was re-opened; none is marked "source not re-opened". Every coordinate in 1a to 1c matches S1's "(N, E positive)" column. Each 0-360 conversion (minus 360 above 180) was checked. The region and zone of all 75 points, and of the 8 feature centres used for planned missions, were recomputed independently and agree with the draft. Three cell elevations differ from the draft by 1 m, because a value ending in .5 can round either way (Surveyor 5 -2,064.5, SLIM -212.5, Luna 25 -714.5); this changes no zone. The regional figures of sec. 2 (cell counts, area shares, 1,029 far-side cells in D, and the area-weighted medians and p10 to p90 ranges) were all reproduced exactly.
+
+**What I corrected.**
+1. Table 1c and the counts per region left out three S1 impacts that have coordinates: the Apollo 16 subsatellite (E), the Chang'e 5-T1 booster (E, "considered most likely") and the Chang'e 5 ascent craft (F). They are now added. Impacts are now 8 in E (was 6) and 5 in F (was 4). Landing counts are unchanged: 28 successful landings, 6 of them crewed, and 12 failed landings.
+2. The Solar panels text for the near-side highlands said "so panels work here too", right after naming Apollo 14 and 16. No official page opened today shows that those landers ran on solar panels, so the claim was unsupported. It now says "so this region is not ruled out", in the web string, in its gloss and in the reason table. The same unsupported "panels do work here" in the reason table for region B was reworded.
+3. The Lunar base far-side text said Chang'e 6 "talked to Earth through" Queqiao-2. S19 says only that the landing was "Supported by the Queqiao-2 relay satellite". The string and the gloss now say that.
+4. The general note said spacecraft "have landed across the Moon". The north-polar region (C) has no landing in S1, so it now says "in many parts of the Moon" (45 words).
+5. "NASA's next crew landing, Artemis IV" had no source in the draft (S16 still carries the old Artemis III panel). It is now cited to S30 (RELEASE26-022) and S31 (the NASA blog of 2026-10-23), and a row was added to the disagreements table.
+6. The rover strings no longer say VIPER "looks for" or "will do": VIPER has not flown, and its delivery is a contract option (S15). They now say "modelled on NASA's VIPER plan" and "as NASA plans with VIPER", which also avoids any hint that NASA endorses the project. "NASA places that ice in permanently shadowed craters" now follows the sources more closely: "NASA says that ice lies at the poles, in permanently shadowed areas" (S15 "we know there is ice at the lunar poles"; RELEASE25-064 "small, permanently shadowed regions").
+7. The Solar panels far-side string said "a few far-side plains" are inside the zone, but they are 1,029 of the zone's 6,686 cells (15 %). It now says "some". In the gloss for the nine NASA regions, "casi todo el año" became "la mayor parte del año", to match "most of the year".
+8. Planned missions added from official pages: ispace Mission 3 (2028, no site, S33); Luna 27 (IKI RAS, tentative 2029 and 2030, near-polar, S34); CS-8 and CX-2 (S5); the PROMISE target "late 2028" and "will land at the Moon's South Pole" (S32, RELEASE26-095, Nov 7, 2026).
+9. Disagreements added: CS-11/CP-12, whose ispace lander is now "Mission 5", launch 2030, "pending approval by NASA" (S33), so NSSDCA's 2026 date is out of date; and Chandrayaan-3, which PIB calls a "lunar south pole landing" at 69.3 S while this document's rule puts it in region F. The web text gives the latitude and does not contradict PIB.
+10. Small fixes: the Apollo S-IVB and ascent-stage impacts are "within about 27 degrees of the equator", not all "near the equator"; the word counts were recomputed after the edits (37 to 45 words each).
+
+**Checked and found correct.** Every web string and gloss was checked against secs. 1 and 2. No string says or implies that a region has had no missions. The north-polar strings name GRAIL, which is the only S1 object there. No string says a mission "cannot" work in a region. Every figure is in sec. 2: 0.5, 1.3, 1.4, about 9, about 8 and about 10 kWh/m2/day match the medians 0.53, 1.32, 1.38, 8.96, 8.25 and 10.02. Every mission named is in its stated region: IM-2 in A (Mons Mouton Plateau footprint); IM-1 in B; GRAIL in C; Apollo 11, 12, 15 and 17 and Lunokhod 2 in D; Chang'e 4/Yutu-2 and Chang'e 6 in E; Apollo 14 and 16, Lunokhod 1, Yutu, Pragyan, SLIM, Chang'e 3 and 5 and Chandrayaan-3 in F. Quotes checked word for word: SP-4214 ("within five degrees of latitude of the lunar equator"; "Operational considerations predominated"); RELEASE24-136 ("communication capabilities with Earth, and lighting conditions"; "permanently shadowed areas that can preserve resources, including water"); PIA13720; the Shackleton "more than 90 percent"; the LRO lithograph (400 K, 140 K, Hermite 25 K, 14 Earth days). No page opened today (NASA pages updated up to Nov 12, 2026, CNSA 2026-08-23, ispace 2026-11-13) reports a lunar landing after 5 June 2025. A broad web search found none either. This means none was found, not that none happened.
+
+**Could not confirm on an official page (kept out of the web text).** Everything in the "Not confirmed" list above, plus:
+- whether the Apollo, Surveyor and Luna landers used solar power (so no string makes a power claim about past landers);
+- IM-1's final attitude;
+- exact sites for Moon Base I, Griffin-1, Chang'e 7, Chang'e 8, Chandrayaan-4 and LUPEX;
+- ESA Argonaut and Korean lander plans (not searched).
+

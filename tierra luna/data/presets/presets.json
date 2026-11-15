@@ -15,6 +15,43 @@
       "water_ice_aridity": "ILUSTRATIVO"
     },
     "tolerances": {
+      "thermal_inertia_class": {
+        "type": "class",
+        "classes": [
+          "dust",
+          "sand",
+          "coarse_or_crust",
+          "rock"
+        ],
+        "matrix": {
+          "dust": {
+            "dust": 1.0,
+            "sand": 0.5,
+            "coarse_or_crust": 0.0,
+            "rock": 0.0
+          },
+          "sand": {
+            "dust": 0.5,
+            "sand": 1.0,
+            "coarse_or_crust": 0.5,
+            "rock": 0.0
+          },
+          "coarse_or_crust": {
+            "dust": 0.0,
+            "sand": 0.5,
+            "coarse_or_crust": 1.0,
+            "rock": 0.5
+          },
+          "rock": {
+            "dust": 0.0,
+            "sand": 0.0,
+            "coarse_or_crust": 0.5,
+            "rock": 1.0
+          }
+        },
+        "unit": "class",
+        "source": "ILUSTRATIVO - matrix values proposed in plan sec. 3; set by Robotics 1"
+      },
       "slope_300m_deg": {
         "scale": 5.0,
         "unit": "deg",
@@ -30,7 +67,8 @@
       "slope_300m_deg": {
         "min": null,
         "max": 15,
-        "source": "rover.max_operational_slope_deg: ESTIMADO - replace from project DB"
+        "source": "rover.max_operational_slope_deg: NASA requirement: 'Slopes up to 15 deg (reqt)', Bluethmann, VIPER Rover Overview and Mobility and Hardware, NTRS 20240013903, p.4 (rover-scale requirement, not a DEM-baseline slope; docs/sources/R1_viper_rover_spec_sources.md)",
+        "applies_to": "median of the cell"
       },
       "rough_300m_m": {
         "min": null,
@@ -38,23 +76,53 @@
         "source": "no gate until Robotics 1 sets one"
       }
     },
-    "frozen_at": "2026-11-14T18:34:24+00:00",
+    "baseline": "300m",
+    "excluded_features": [
+      {
+        "feature": "rock_abundance",
+        "reason": "Diviner rock abundance only reaches 60 S; the Shackleton region (84-90 S) has no comparable rock data, so rock density cannot be compared at the lunar target.",
+        "source": "Phase-1 plan, section 4 (limits found in testing)"
+      },
+      {
+        "feature": "abrasivity",
+        "reason": "Abrasiveness depends on grain shape and hardness; no global orbital layer measures it at 300 m or 5 km. Handled as a level C row of the Test Transfer Card and as a site flag (wear_test_hint), never as a score.",
+        "source": "No dataset in the phase-1 data inventory"
+      }
+    ],
+    "wear_test_flags": {
+      "good_classes": {
+        "py": "pyroclastics",
+        "vb": "basic volcanic",
+        "vi": "intermediate volcanic",
+        "va": "acid volcanic"
+      },
+      "optimistic_classes": {
+        "su": "unconsolidated sediments",
+        "ss": "siliciclastic sedimentary",
+        "sm": "mixed sedimentary",
+        "sc": "carbonate sedimentary",
+        "ev": "evaporites"
+      },
+      "source": "GLiM lithology classes; hint only, not a score"
+    },
+    "frozen_at": "2026-11-15T07:41:06+00:00",
     "author": "Robotics 1 - Mobility Team",
     "unverified": [
+      "baseline not confirmed: pass the earth_cells columns (--columns) so 300m/5km is chosen from real data",
       "rover field cg_height_m is not verified",
       "rover field wheelbase_m is not verified",
       "rover field track_m is not verified",
       "rover field contact_patch_length_m is not verified",
       "rover field contact_patch_width_m is not verified",
-      "rover field max_speed_mps is not verified",
       "weight relief: source missing or illustrative",
       "weight surface_material: source missing or illustrative",
       "weight thermal_regime: source missing or illustrative",
       "weight light_and_sky: source missing or illustrative",
       "weight water_ice_aridity: source missing or illustrative",
+      "tolerance thermal_inertia_class: source missing or illustrative",
       "tolerance slope_300m_deg: source missing or illustrative",
       "tolerance rough_300m_m: source missing or illustrative",
-      "gate slope_300m_deg: rover field max_operational_slope_deg is not verified"
+      "gate slope_300m_deg: slope_300m_p90_deg not available, gate uses the median slope (permissive)"
     ],
     "rover_reference": {
       "name": "VIPER (approximation)",
@@ -161,6 +229,13 @@
         "note": "v_target * sqrt(g_earth / g_target)"
       },
       {
+        "level": "A",
+        "item": "Ground clearance",
+        "value": null,
+        "unit": "m",
+        "note": "rover property, independent of g. Rock density is not scored: no rock data at the lunar south pole (Diviner stops at 60 S)"
+      },
+      {
         "level": "B",
         "item": "Energy per km",
         "value": null,
@@ -180,11 +255,30 @@
         "value": null,
         "unit": null,
         "note": "declared limit, no prediction"
+      },
+      {
+        "level": "C",
+        "item": "Getting stuck or sinking in loose soil",
+        "value": null,
+        "unit": null,
+        "note": "tested on Earth, never predicted. On the Moon the soil itself weighs less and grips less, so Earth sand holds the rover better even with a lightened twin: VIPER twin slipped 42 % at 30 deg on Earth vs 85 % simulated on the Moon (arXiv 2405.11001). Every Earth result is optimistic."
+      },
+      {
+        "level": "C",
+        "item": "Abrasive wear of wheels, seals and bearings",
+        "value": null,
+        "unit": null,
+        "note": "tested on Earth, never predicted. Lunar regolith has angular, glassy grains not rounded by wind or water; Apollo dust wore suits, seals and mechanisms within days. Rounded Earth sand underestimates wear; young volcanic or pyroclastic ground is closer (see wear_test_hint)."
       }
     ],
     "notes": [
       "Gates act on slope averaged over the baseline in the feature name; local slopes inside a cell are steeper. Prefer a p90 slope column for the gate when it exists.",
-      "No slip, sinkage, traction or maximum climbable slope is predicted for the Moon or Mars."
+      "No slip, sinkage, traction or maximum climbable slope is predicted for the Moon or Mars.",
+      "Tolerances and gates are only valid for the baseline in their names; 5 km slopes are much gentler than 300 m slopes.",
+      "thermal_inertia_class has no product at the lunar south pole: it is NaN there and its weight is redistributed. Lunar polar regolith is always fine and loose, so soil class only discriminates for Mars.",
+      "Loose-soil analog sites are wanted, not avoided: getting stuck on Earth is cheap, on the Moon it ends the mission.",
+      "Abrasive wear is not scored. Use wear_test_hint() on each named site: volcanic/pyroclastic sites are better for wear tests, loose sediments give optimistic wear results.",
+      "Before the pitch, check the ranking with validate_rover_ranking(): Bardenas must make sense for rover (BASEPROD rover dataset at Bardenas Reales, Gerdes et al., Scientific Data 11:1054 (2024), doi:10.1038/s41597-024-03881-1)."
     ],
     "workable_days": {
       "rain_mm_max": 1,
@@ -192,6 +286,6 @@
       "tmin_c_min": -10,
       "source": "ILUSTRATIVO - phase-1 plan, model 1 defaults"
     },
-    "refrozen_from": "2026-11-14T18:34:23+00:00"
+    "refrozen_from": "2026-11-15T07:41:05+00:00"
   }
 }
