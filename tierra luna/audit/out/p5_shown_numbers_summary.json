@@ -1,0 +1,2297 @@
+{
+ "per_file": {
+  "bundle/missions.json": {
+   "numbers": 337,
+   "digits": 325,
+   "traced": 325,
+   "not_traced": 0,
+   "words": 12,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "bundle/similarity.json": {
+   "numbers": 472,
+   "digits": 441,
+   "traced": 441,
+   "not_traced": 0,
+   "words": 31,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "bundle/mission_zones.json": {
+   "numbers": 216,
+   "digits": 199,
+   "traced": 179,
+   "not_traced": 20,
+   "words": 17,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "bundle/explain.json": {
+   "numbers": 350,
+   "digits": 300,
+   "traced": 300,
+   "not_traced": 0,
+   "words": 50,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "app/public/media/lunar-base/lunar-base.en.vtt": {
+   "numbers": 81,
+   "digits": 81,
+   "traced": 18,
+   "not_traced": 63,
+   "words": 0,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "app/public/media/lunar-base/lunar-base.es.vtt": {
+   "numbers": 81,
+   "digits": 81,
+   "traced": 18,
+   "not_traced": 63,
+   "words": 0,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "app/public/media/solar/solar.en.vtt": {
+   "numbers": 105,
+   "digits": 104,
+   "traced": 41,
+   "not_traced": 63,
+   "words": 1,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "app/public/media/solar/solar.es.vtt": {
+   "numbers": 104,
+   "digits": 104,
+   "traced": 41,
+   "not_traced": 63,
+   "words": 0,
+   "years": 0,
+   "no_scenario": 0
+  },
+  "app/public/media/rover/rover.en.vtt": {
+   "numbers": 67,
+   "digits": 67,
+   "traced": 0,
+   "not_traced": 0,
+   "words": 0,
+   "years": 0,
+   "no_scenario": 67
+  },
+  "app/public/media/rover/rover.es.vtt": {
+   "numbers": 67,
+   "digits": 67,
+   "traced": 0,
+   "not_traced": 0,
+   "words": 0,
+   "years": 0,
+   "no_scenario": 67
+  },
+  "app/public/audio/transcripts.json": {
+   "numbers": 136,
+   "digits": 98,
+   "traced": 96,
+   "not_traced": 2,
+   "words": 38,
+   "years": 0,
+   "no_scenario": 0
+  }
+ },
+ "not_traced": [
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "texts.zone_why.rover",
+   "token": "9,888",
+   "kind": "digits",
+   "traced": false,
+   "context": " north pole pairs about as many Earth sites (9,888 against 10,192) and more closely (median slo"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "texts.outside.solar.C",
+   "token": "2.45",
+   "kind": "digits",
+   "traced": false,
+   "context": "a no flat ground beyond 75° N gets more than 2.45 kWh/m² a day, below the 3.54 our least sunny"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "texts.outside.solar.E",
+   "token": "18,776",
+   "kind": "digits",
+   "traced": false,
+   "context": "Our data do not rule this region out: 18,776 of our 18,777 Earth sites would find a sunli"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "texts.outside.solar.F",
+   "token": "18,776",
+   "kind": "digits",
+   "traced": false,
+   "context": "Our data do not rule this region out: 18,776 of our 18,777 Earth sites would find a sunli"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[0].value",
+   "token": "9,888",
+   "kind": "digits",
+   "traced": false,
+   "context": "9,888"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[2].how_computed",
+   "token": "9,888",
+   "kind": "digits",
+   "traced": false,
+   "context": "median |slope Earth - slope twin| of the 9,888 north-polar pairs (0.104)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[4].how_computed",
+   "token": "9,888",
+   "kind": "digits",
+   "traced": false,
+   "context": "median similarity of the 9,888 north-polar pairs (99.72)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[6].how_computed",
+   "token": "1.134",
+   "kind": "digits",
+   "traced": false,
+   "context": "al/moon_real_1deg.csv slope_deg in region D (1.134), the lowest of the six regions"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[7].how_computed",
+   "token": "10.108",
+   "kind": "digits",
+   "traced": false,
+   "context": " maria (abs(lat) <= 30, area-weighted median 10.108; the table maximum 10.395 is reached in both"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[7].how_computed",
+   "token": "10.395",
+   "kind": "digits",
+   "traced": false,
+   "context": "ea-weighted median 10.108; the table maximum 10.395 is reached in both), so the strings say 'sun"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[8].how_computed",
+   "token": "8.248",
+   "kind": "digits",
+   "traced": false,
+   "context": "_1deg.csv irradiance_kwh_m2_day in region F (8.248)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[9].how_computed",
+   "token": "8.958",
+   "kind": "digits",
+   "traced": false,
+   "context": "_1deg.csv irradiance_kwh_m2_day in region E (8.958)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[11].value",
+   "token": "2.45",
+   "kind": "digits",
+   "traced": false,
+   "context": "2.45"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[11].how_computed",
+   "token": "2.451",
+   "kind": "digits",
+   "traced": false,
+   "context": " tierra luna/output_real/moon_real_1deg.csv (2.451)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[12].how_computed",
+   "token": "4.137",
+   "kind": "digits",
+   "traced": false,
+   "context": "e among the 18,777 ranked solar Earth sites (4.137, earth_base.bin d.irradiance_toa_kwh_m2_day)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[12].how_computed",
+   "token": "3.537",
+   "kind": "digits",
+   "traced": false,
+   "context": "nce_toa_kwh_m2_day) minus the 0.6 tolerance (3.537): the least a lunar cell needs to pair with "
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[12].how_computed",
+   "token": "4.136",
+   "kind": "digits",
+   "traced": false,
+   "context": "s much (independently re-derived 2026-11-15: 4.1368 at the -89.5 row with an own Kepler-weighte"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[14].value",
+   "token": "18,776",
+   "kind": "digits",
+   "traced": false,
+   "context": "18,776"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[14].how_computed",
+   "token": "18,776",
+   "kind": "digits",
+   "traced": false,
+   "context": "hed in region E alone and in region F alone (18,776 in each)"
+  },
+  {
+   "where": "bundle/mission_zones.json",
+   "path": "figures[18].how_computed",
+   "token": "-69.374",
+   "kind": "digits",
+   "traced": false,
+   "context": "Chandrayaan-3 landing latitude, S1 -69.3741; ISRO S21 '69.3° S'"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 4",
+   "token": "68.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "between the cell's measured Diviner minimum (68.5 K) and maximum (255.56 K); the Sun is comput"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 4",
+   "token": "255.56",
+   "kind": "digits",
+   "traced": false,
+   "context": "asured Diviner minimum (68.5 K) and maximum (255.56 K); the Sun is computed; habitat shapes, siz"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 8",
+   "token": "84.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "real LOLA relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the nort"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 8",
+   "token": "39.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "A relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the north-west s"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 9",
+   "token": "71.0",
+   "kind": "digits",
+   "traced": false,
+   "context": "Lunar night · Surface temperature 71.0 K (-202.2 °C, model) · Sun -3.2° / azimuth 1"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 9",
+   "token": "-202.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "Lunar night · Surface temperature 71.0 K (-202.2 °C, model) · Sun -3.2° / azimuth 150.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 10",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "0.0 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 15",
+   "token": "68.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Lunar night · Surface temperature 68.8 K (-204.4 °C, model) · Sun -0.7° / azimuth 1"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 15",
+   "token": "-204.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "Lunar night · Surface temperature 68.8 K (-204.4 °C, model) · Sun -0.7° / azimuth 114.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 15",
+   "token": "114.0",
+   "kind": "digits",
+   "traced": false,
+   "context": "8 K (-204.4 °C, model) · Sun -0.7° / azimuth 114.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 16",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "3.0 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 21",
+   "token": "215.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "Placing the module · Surface temperature 215.2 K (-57.9 °C, model) · Sun 2.7° / azimuth 78."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 21",
+   "token": "-57.9",
+   "kind": "digits",
+   "traced": false,
+   "context": "ng the module · Surface temperature 215.2 K (-57.9 °C, model) · Sun 2.7° / azimuth 78.2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 21",
+   "token": "2.7",
+   "kind": "digits",
+   "traced": false,
+   "context": " temperature 215.2 K (-57.9 °C, model) · Sun 2.7° / azimuth 78.2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 21",
+   "token": "78.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "5.2 K (-57.9 °C, model) · Sun 2.7° / azimuth 78.2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 22",
+   "token": "5.9",
+   "kind": "digits",
+   "traced": false,
+   "context": "5.9 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 22",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "5.9 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 27",
+   "token": "245.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "able section deploying · Surface temperature 245.3 K (-27.8 °C, model) · Sun 5.6° / azimuth 42."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 27",
+   "token": "-27.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "ion deploying · Surface temperature 245.3 K (-27.8 °C, model) · Sun 5.6° / azimuth 42.2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 27",
+   "token": "42.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "5.3 K (-27.8 °C, model) · Sun 5.6° / azimuth 42.2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 28",
+   "token": "8.9",
+   "kind": "digits",
+   "traced": false,
+   "context": "8.9 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 28",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "8.9 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 33",
+   "token": "255.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "ding the regolith berm · Surface temperature 255.4 K (-17.8 °C, model) · Sun 7.0° / azimuth 6.0"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 33",
+   "token": "-17.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "regolith berm · Surface temperature 255.4 K (-17.8 °C, model) · Sun 7.0° / azimuth 6.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 34",
+   "token": "11.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "11.8 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 34",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "11.8 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 39",
+   "token": "250.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "ding the regolith berm · Surface temperature 250.4 K (-22.7 °C, model) · Sun 6.3° / azimuth 329"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 39",
+   "token": "-22.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "regolith berm · Surface temperature 250.4 K (-22.7 °C, model) · Sun 6.3° / azimuth 329.8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 39",
+   "token": "6.3",
+   "kind": "digits",
+   "traced": false,
+   "context": " temperature 250.4 K (-22.7 °C, model) · Sun 6.3° / azimuth 329.8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 39",
+   "token": "329.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "0.4 K (-22.7 °C, model) · Sun 6.3° / azimuth 329.8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 40",
+   "token": "14.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "14.8 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 40",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "14.8 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 45",
+   "token": "228.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "at assembled, daylight · Surface temperature 228.4 K (-44.7 °C, model) · Sun 3.8° / azimuth 293"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 45",
+   "token": "-44.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "led, daylight · Surface temperature 228.4 K (-44.7 °C, model) · Sun 3.8° / azimuth 293.8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 45",
+   "token": "293.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "8.4 K (-44.7 °C, model) · Sun 3.8° / azimuth 293.8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 46",
+   "token": "17.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "17.7 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 46",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "17.7 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 51",
+   "token": "135.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "Sun blocked by terrain · Surface temperature 135.7 K (-137.5 °C, model) · Sun 0.4° / azimuth 25"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 51",
+   "token": "-137.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "ed by terrain · Surface temperature 135.7 K (-137.5 °C, model) · Sun 0.4° / azimuth 257.9°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 51",
+   "token": "257.9",
+   "kind": "digits",
+   "traced": false,
+   "context": ".7 K (-137.5 °C, model) · Sun 0.4° / azimuth 257.9°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 52",
+   "token": "20.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "20.7 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 52",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "20.7 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 57",
+   "token": "92.9",
+   "kind": "digits",
+   "traced": false,
+   "context": "Night: surface cooling · Surface temperature 92.9 K (-180.2 °C, model) · Sun -2.5° / azimuth 2"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 57",
+   "token": "-180.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "urface cooling · Surface temperature 92.9 K (-180.2 °C, model) · Sun -2.5° / azimuth 222.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 58",
+   "token": "23.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "23.6 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 58",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "23.6 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 62",
+   "token": "68.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "temperature approaches the measured minimum, 68.5 K."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 63",
+   "token": "-196.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "urface cooling · Surface temperature 77.0 K (-196.2 °C, model) · Sun -3.9° / azimuth 186.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 63",
+   "token": "-3.9",
+   "kind": "digits",
+   "traced": false,
+   "context": " temperature 77.0 K (-196.2 °C, model) · Sun -3.9° / azimuth 186.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 63",
+   "token": "186.0",
+   "kind": "digits",
+   "traced": false,
+   "context": "0 K (-196.2 °C, model) · Sun -3.9° / azimuth 186.0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 64",
+   "token": "26.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "26.6 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 64",
+   "token": "63,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "26.6 Earth days elapsed · ×63,800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "27.12",
+   "kind": "digits",
+   "traced": false,
+   "context": "ell M62859 on Mons Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, "
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "187.06",
+   "kind": "digits",
+   "traced": false,
+   "context": "ns Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "−28.68",
+   "kind": "digits",
+   "traced": false,
+   "context": " amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against −204.65 °C (surfa"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "−204.65",
+   "kind": "digits",
+   "traced": false,
+   "context": "K; minimum −28.68 °C (air, modelled) against −204.65 °C (surface); lunar maximum 255.56 K; mean s"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "255.56",
+   "kind": "digits",
+   "traced": false,
+   "context": " against −204.65 °C (surface); lunar maximum 255.56 K; mean surface temperature 271.65 K against"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "271.65",
+   "kind": "digits",
+   "traced": false,
+   "context": "r maximum 255.56 K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "152.45",
+   "kind": "digits",
+   "traced": false,
+   "context": "K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope "
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "492",
+   "kind": "digits",
+   "traced": false,
+   "context": "erature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "605",
+   "kind": "digits",
+   "traced": false,
+   "context": "K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuou"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "2.003",
+   "kind": "digits",
+   "traced": false,
+   "context": " K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Ea"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.en.vtt",
+   "path": "line 68",
+   "token": "9.608",
+   "kind": "digits",
+   "traced": false,
+   "context": "926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Earth (modelled)."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 4",
+   "token": "68,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "a curva de modelo declarada entre el mínimo (68,5 K) y el máximo (255,56 K) medidos por Divine"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 4",
+   "token": "255,56",
+   "kind": "digits",
+   "traced": false,
+   "context": "larada entre el mínimo (68,5 K) y el máximo (255,56 K) medidos por Diviner en la celda; el Sol e"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 8",
+   "token": "84,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "lieve real LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo,"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 8",
+   "token": "39,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "al LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo, al noro"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 9",
+   "token": "71,0",
+   "kind": "digits",
+   "traced": false,
+   "context": "Noche lunar · Temperatura de la superficie 71,0 K (-202,2 °C, modelo) · Sol -3,2° / acimut 1"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 9",
+   "token": "-202,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "lunar · Temperatura de la superficie 71,0 K (-202,2 °C, modelo) · Sol -3,2° / acimut 150,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 10",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "0,0 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 15",
+   "token": "68,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Noche lunar · Temperatura de la superficie 68,8 K (-204,4 °C, modelo) · Sol -0,7° / acimut 1"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 15",
+   "token": "-204,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "lunar · Temperatura de la superficie 68,8 K (-204,4 °C, modelo) · Sol -0,7° / acimut 114,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 15",
+   "token": "114,0",
+   "kind": "digits",
+   "traced": false,
+   "context": "8 K (-204,4 °C, modelo) · Sol -0,7° / acimut 114,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 16",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "3,0 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 21",
+   "token": "215,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "ndo el módulo · Temperatura de la superficie 215,2 K (-57,9 °C, modelo) · Sol 2,7° / acimut 78,"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 21",
+   "token": "-57,9",
+   "kind": "digits",
+   "traced": false,
+   "context": "dulo · Temperatura de la superficie 215,2 K (-57,9 °C, modelo) · Sol 2,7° / acimut 78,2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 21",
+   "token": "2,7",
+   "kind": "digits",
+   "traced": false,
+   "context": " superficie 215,2 K (-57,9 °C, modelo) · Sol 2,7° / acimut 78,2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 21",
+   "token": "78,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "5,2 K (-57,9 °C, modelo) · Sol 2,7° / acimut 78,2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 22",
+   "token": "5,9",
+   "kind": "digits",
+   "traced": false,
+   "context": "5,9 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 22",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "5,9 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 27",
+   "token": "245,3",
+   "kind": "digits",
+   "traced": false,
+   "context": "ción inflable · Temperatura de la superficie 245,3 K (-27,8 °C, modelo) · Sol 5,6° / acimut 42,"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 27",
+   "token": "-27,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "able · Temperatura de la superficie 245,3 K (-27,8 °C, modelo) · Sol 5,6° / acimut 42,2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 27",
+   "token": "42,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "5,3 K (-27,8 °C, modelo) · Sol 5,6° / acimut 42,2°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 28",
+   "token": "8,9",
+   "kind": "digits",
+   "traced": false,
+   "context": "8,9 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 28",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "8,9 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 33",
+   "token": "255,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "o de regolito · Temperatura de la superficie 255,4 K (-17,8 °C, modelo) · Sol 7,0° / acimut 6,0"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 33",
+   "token": "-17,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "lito · Temperatura de la superficie 255,4 K (-17,8 °C, modelo) · Sol 7,0° / acimut 6,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 34",
+   "token": "11,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "11,8 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 34",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "11,8 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 39",
+   "token": "250,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "o de regolito · Temperatura de la superficie 250,4 K (-22,7 °C, modelo) · Sol 6,3° / acimut 329"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 39",
+   "token": "-22,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "lito · Temperatura de la superficie 250,4 K (-22,7 °C, modelo) · Sol 6,3° / acimut 329,8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 39",
+   "token": "6,3",
+   "kind": "digits",
+   "traced": false,
+   "context": " superficie 250,4 K (-22,7 °C, modelo) · Sol 6,3° / acimut 329,8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 39",
+   "token": "329,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "0,4 K (-22,7 °C, modelo) · Sol 6,3° / acimut 329,8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 40",
+   "token": "14,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "14,8 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 40",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "14,8 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 45",
+   "token": "228,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "ntado, de día · Temperatura de la superficie 228,4 K (-44,7 °C, modelo) · Sol 3,8° / acimut 293"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 45",
+   "token": "-44,7",
+   "kind": "digits",
+   "traced": false,
+   "context": " día · Temperatura de la superficie 228,4 K (-44,7 °C, modelo) · Sol 3,8° / acimut 293,8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 45",
+   "token": "293,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "8,4 K (-44,7 °C, modelo) · Sol 3,8° / acimut 293,8°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 46",
+   "token": "17,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "17,7 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 46",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "17,7 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 51",
+   "token": "135,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "or el relieve · Temperatura de la superficie 135,7 K (-137,5 °C, modelo) · Sol 0,4° / acimut 25"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 51",
+   "token": "-137,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "ieve · Temperatura de la superficie 135,7 K (-137,5 °C, modelo) · Sol 0,4° / acimut 257,9°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 51",
+   "token": "257,9",
+   "kind": "digits",
+   "traced": false,
+   "context": ",7 K (-137,5 °C, modelo) · Sol 0,4° / acimut 257,9°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 52",
+   "token": "20,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "20,7 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 52",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "20,7 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 57",
+   "token": "92,9",
+   "kind": "digits",
+   "traced": false,
+   "context": "cie se enfría · Temperatura de la superficie 92,9 K (-180,2 °C, modelo) · Sol -2,5° / acimut 2"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 57",
+   "token": "-180,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "nfría · Temperatura de la superficie 92,9 K (-180,2 °C, modelo) · Sol -2,5° / acimut 222,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 58",
+   "token": "23,6",
+   "kind": "digits",
+   "traced": false,
+   "context": "23,6 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 58",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "23,6 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 62",
+   "token": "68,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "de la superficie se acerca al mínimo medido, 68,5 K."
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 63",
+   "token": "-196,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "nfría · Temperatura de la superficie 77,0 K (-196,2 °C, modelo) · Sol -3,9° / acimut 186,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 63",
+   "token": "-3,9",
+   "kind": "digits",
+   "traced": false,
+   "context": " superficie 77,0 K (-196,2 °C, modelo) · Sol -3,9° / acimut 186,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 63",
+   "token": "186,0",
+   "kind": "digits",
+   "traced": false,
+   "context": "0 K (-196,2 °C, modelo) · Sol -3,9° / acimut 186,0°"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 64",
+   "token": "26,6",
+   "kind": "digits",
+   "traced": false,
+   "context": "26,6 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 64",
+   "token": "63.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "26,6 días terrestres transcurridos · ×63.800"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "27,12",
+   "kind": "digits",
+   "traced": false,
+   "context": "lunar M62859 en Mons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire,"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "187,06",
+   "kind": "digits",
+   "traced": false,
+   "context": "ons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente "
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "−28,68",
+   "kind": "digits",
+   "traced": false,
+   "context": "tud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (sup"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "−204,65",
+   "kind": "digits",
+   "traced": false,
+   "context": "; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (superficie); máxima lunar 255,56 K; temp"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "255,56",
+   "kind": "digits",
+   "traced": false,
+   "context": "ente a −204,65 °C (superficie); máxima lunar 255,56 K; temperatura media de la superficie 271,65"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "271,65",
+   "kind": "digits",
+   "traced": false,
+   "context": "255,56 K; temperatura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "152,45",
+   "kind": "digits",
+   "traced": false,
+   "context": "ura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendien"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "492",
+   "kind": "digits",
+   "traced": false,
+   "context": "perficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frent"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "605",
+   "kind": "digits",
+   "traced": false,
+   "context": "K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; perm"
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "2,003",
+   "kind": "digits",
+   "traced": false,
+   "context": " altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la "
+  },
+  {
+   "where": "app/public/media/lunar-base/lunar-base.es.vtt",
+   "path": "line 68",
+   "token": "9,608",
+   "kind": "digits",
+   "traced": false,
+   "context": "frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la Tierra (modelado"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 9",
+   "token": "86.5",
+   "kind": "digits",
+   "traced": false,
+   "context": " Sun behind the terrain · Sun 2.5° / azimuth 86.5° · terrain horizon 5.3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 9",
+   "token": "5.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "· Sun 2.5° / azimuth 86.5° · terrain horizon 5.3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 10",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "ergy 0.00 kWh/m² · 0.0 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 15",
+   "token": "71.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Dawn: array stowed · Sun 6.2° / azimuth 71.8° · terrain horizon 6.3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 15",
+   "token": "6.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "· Sun 6.2° / azimuth 71.8° · terrain horizon 6.3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 16",
+   "token": "469",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 469 W/m² · energy 0.00 kWh/m² · 1.2 Earth days e"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 16",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "ergy 0.00 kWh/m² · 1.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 21",
+   "token": "56.9",
+   "kind": "digits",
+   "traced": false,
+   "context": "Deploying the array · Sun 9.6° / azimuth 56.9° · terrain horizon 6.6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 21",
+   "token": "6.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "· Sun 9.6° / azimuth 56.9° · terrain horizon 6.6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 22",
+   "token": "1,342",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,342 W/m² · energy 0.00 kWh/m² · 2.5 Earth days e"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 22",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "ergy 0.00 kWh/m² · 2.5 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 27",
+   "token": "12.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Deploying the array · Sun 12.5° / azimuth 41.7° · terrain horizon 6.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 27",
+   "token": "41.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "Deploying the array · Sun 12.5° / azimuth 41.7° · terrain horizon 6.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 27",
+   "token": "6.5",
+   "kind": "digits",
+   "traced": false,
+   "context": " Sun 12.5° / azimuth 41.7° · terrain horizon 6.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 28",
+   "token": "1,329",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,329 W/m² · energy 0.00 kWh/m² · 3.7 Earth days e"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 28",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "ergy 0.00 kWh/m² · 3.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 33",
+   "token": "14.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 14.6° / azimuth 26.2° · terrain horizon 6.0°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 33",
+   "token": "26.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 14.6° / azimuth 26.2° · terrain horizon 6.0°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 34",
+   "token": "1,317",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,317 W/m² · energy 13.13 kWh/m² · 5.0 Earth days "
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 34",
+   "token": "13.13",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,317 W/m² · energy 13.13 kWh/m² · 5.0 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 34",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "rgy 13.13 kWh/m² · 5.0 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 39",
+   "token": "15.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 15.8° / azimuth 10.6° · terrain horizon 4.7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 39",
+   "token": "10.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 15.8° / azimuth 10.6° · terrain horizon 4.7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 39",
+   "token": "4.7",
+   "kind": "digits",
+   "traced": false,
+   "context": " Sun 15.8° / azimuth 10.6° · terrain horizon 4.7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 40",
+   "token": "1,310",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,310 W/m² · energy 52.32 kWh/m² · 6.2 Earth days "
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 40",
+   "token": "52.32",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,310 W/m² · energy 52.32 kWh/m² · 6.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 40",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "rgy 52.32 kWh/m² · 6.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 45",
+   "token": "354.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 16.0° / azimuth 354.8° · terrain horizon 3.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 45",
+   "token": "3.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Sun 16.0° / azimuth 354.8° · terrain horizon 3.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 46",
+   "token": "1,308",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,308 W/m² · energy 91.39 kWh/m² · 7.5 Earth days "
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 46",
+   "token": "91.39",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,308 W/m² · energy 91.39 kWh/m² · 7.5 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 46",
+   "token": "7.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,308 W/m² · energy 91.39 kWh/m² · 7.5 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 46",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "rgy 91.39 kWh/m² · 7.5 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 51",
+   "token": "15.1",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 15.1° / azimuth 339.1° · terrain horizon 2.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 51",
+   "token": "339.1",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 15.1° / azimuth 339.1° · terrain horizon 2.5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 52",
+   "token": "1,314",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,314 W/m² · energy 130.52 kWh/m² · 8.7 Earth days"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 52",
+   "token": "130.52",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,314 W/m² · energy 130.52 kWh/m² · 8.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 52",
+   "token": "8.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,314 W/m² · energy 130.52 kWh/m² · 8.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 52",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "gy 130.52 kWh/m² · 8.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 56",
+   "token": "13.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 13.3° / azimuth 323.6° · terrain horizon 1.8°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 56",
+   "token": "323.6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 13.3° / azimuth 323.6° · terrain horizon 1.8°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 56",
+   "token": "1.8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Sun 13.3° / azimuth 323.6° · terrain horizon 1.8°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 57",
+   "token": "1,324",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,324 W/m² · energy 169.90 kWh/m² · 10.0 Earth day"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 57",
+   "token": "169.90",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,324 W/m² · energy 169.90 kWh/m² · 10.0 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 57",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "y 169.90 kWh/m² · 10.0 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 61",
+   "token": "308.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 10.7° / azimuth 308.3° · terrain horizon 1.4°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 61",
+   "token": "1.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "Sun 10.7° / azimuth 308.3° · terrain horizon 1.4°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 62",
+   "token": "1,337",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,337 W/m² · energy 209.64 kWh/m² · 11.2 Earth day"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 62",
+   "token": "209.64",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,337 W/m² · energy 209.64 kWh/m² · 11.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 62",
+   "token": "11.2",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,337 W/m² · energy 209.64 kWh/m² · 11.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 62",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "y 209.64 kWh/m² · 11.2 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 67",
+   "token": "293.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 7.4° / azimuth 293.3° · terrain horizon 0.9°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 68",
+   "token": "1,350",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,350 W/m² · energy 249.76 kWh/m² · 12.4 Earth day"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 68",
+   "token": "249.76",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,350 W/m² · energy 249.76 kWh/m² · 12.4 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 68",
+   "token": "12.4",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,350 W/m² · energy 249.76 kWh/m² · 12.4 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 68",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "y 249.76 kWh/m² · 12.4 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 73",
+   "token": "278.5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Tracking the Sun · Sun 3.8° / azimuth 278.5° · terrain horizon 0.6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 74",
+   "token": "1,358",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,358 W/m² · energy 290.19 kWh/m² · 13.7 Earth day"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 74",
+   "token": "290.19",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,358 W/m² · energy 290.19 kWh/m² · 13.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 74",
+   "token": "13.7",
+   "kind": "digits",
+   "traced": false,
+   "context": "Power 1,358 W/m² · energy 290.19 kWh/m² · 13.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 74",
+   "token": "35,800",
+   "kind": "digits",
+   "traced": false,
+   "context": "y 290.19 kWh/m² · 13.7 Earth days elapsed · ×35,800"
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 78",
+   "token": "112",
+   "kind": "digits",
+   "traced": false,
+   "context": "ime; slope 2.137° against 10.693°; elevation 1127.1 m against 122.4 m."
+  },
+  {
+   "where": "app/public/media/solar/solar.en.vtt",
+   "path": "line 82",
+   "token": "2.3",
+   "kind": "digits",
+   "traced": false,
+   "context": "The Earth cell gets 2.3 times the horizontal sunlight under a far hi"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 9",
+   "token": "86,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "cer: Sol tras el relieve · Sol 2,5° / acimut 86,5° · horizonte del terreno 5,3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 9",
+   "token": "5,3",
+   "kind": "digits",
+   "traced": false,
+   "context": " 2,5° / acimut 86,5° · horizonte del terreno 5,3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 10",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 0,0 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 15",
+   "token": "71,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "anecer: paneles plegados · Sol 6,2° / acimut 71,8° · horizonte del terreno 6,3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 15",
+   "token": "6,3",
+   "kind": "digits",
+   "traced": false,
+   "context": " 6,2° / acimut 71,8° · horizonte del terreno 6,3°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 16",
+   "token": "469",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 469 W/m² · energía 0,00 kWh/m² · 1,2 días terres"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 16",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 1,2 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 21",
+   "token": "56,9",
+   "kind": "digits",
+   "traced": false,
+   "context": "Desplegando los paneles · Sol 9,6° / acimut 56,9° · horizonte del terreno 6,6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 21",
+   "token": "6,6",
+   "kind": "digits",
+   "traced": false,
+   "context": " 9,6° / acimut 56,9° · horizonte del terreno 6,6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 22",
+   "token": "1.342",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.342 W/m² · energía 0,00 kWh/m² · 2,5 días terres"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 22",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 2,5 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 27",
+   "token": "12,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Desplegando los paneles · Sol 12,5° / acimut 41,7° · horizonte del terreno 6,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 27",
+   "token": "41,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "Desplegando los paneles · Sol 12,5° / acimut 41,7° · horizonte del terreno 6,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 27",
+   "token": "6,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "12,5° / acimut 41,7° · horizonte del terreno 6,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 28",
+   "token": "1.329",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.329 W/m² · energía 0,00 kWh/m² · 3,7 días terres"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 28",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 3,7 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 33",
+   "token": "14,6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 14,6° / acimut 26,2° · horizonte del terreno 6,0°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 33",
+   "token": "26,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 14,6° / acimut 26,2° · horizonte del terreno 6,0°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 34",
+   "token": "1.317",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.317 W/m² · energía 13,13 kWh/m² · 5,0 días terre"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 34",
+   "token": "13,13",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.317 W/m² · energía 13,13 kWh/m² · 5,0 días terrestres transcurridos ·"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 34",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 5,0 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 39",
+   "token": "15,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 15,8° / acimut 10,6° · horizonte del terreno 4,7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 39",
+   "token": "10,6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 15,8° / acimut 10,6° · horizonte del terreno 4,7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 39",
+   "token": "4,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "15,8° / acimut 10,6° · horizonte del terreno 4,7°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 40",
+   "token": "1.310",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.310 W/m² · energía 52,32 kWh/m² · 6,2 días terre"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 40",
+   "token": "52,32",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.310 W/m² · energía 52,32 kWh/m² · 6,2 días terrestres transcurridos ·"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 40",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 6,2 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 45",
+   "token": "354,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 16,0° / acimut 354,8° · horizonte del terreno 3,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 45",
+   "token": "3,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "6,0° / acimut 354,8° · horizonte del terreno 3,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 46",
+   "token": "1.308",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.308 W/m² · energía 91,39 kWh/m² · 7,5 días terre"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 46",
+   "token": "91,39",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.308 W/m² · energía 91,39 kWh/m² · 7,5 días terrestres transcurridos ·"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 46",
+   "token": "7,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.308 W/m² · energía 91,39 kWh/m² · 7,5 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 46",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 7,5 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 51",
+   "token": "15,1",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 15,1° / acimut 339,1° · horizonte del terreno 2,5"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 51",
+   "token": "339,1",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 15,1° / acimut 339,1° · horizonte del terreno 2,5°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 52",
+   "token": "1.314",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.314 W/m² · energía 130,52 kWh/m² · 8,7 días terr"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 52",
+   "token": "130,52",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.314 W/m² · energía 130,52 kWh/m² · 8,7 días terrestres transcurridos ·"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 52",
+   "token": "8,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "otencia 1.314 W/m² · energía 130,52 kWh/m² · 8,7 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 52",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "Wh/m² · 8,7 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 56",
+   "token": "13,3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 13,3° / acimut 323,6° · horizonte del terreno 1,8"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 56",
+   "token": "323,6",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 13,3° / acimut 323,6° · horizonte del terreno 1,8°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 56",
+   "token": "1,8",
+   "kind": "digits",
+   "traced": false,
+   "context": "3,3° / acimut 323,6° · horizonte del terreno 1,8°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 57",
+   "token": "1.324",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.324 W/m² · energía 169,90 kWh/m² · 10,0 días ter"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 57",
+   "token": "169,90",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.324 W/m² · energía 169,90 kWh/m² · 10,0 días terrestres transcurridos "
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 57",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "h/m² · 10,0 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 61",
+   "token": "308,3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 10,7° / acimut 308,3° · horizonte del terreno 1,4°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 61",
+   "token": "1,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "0,7° / acimut 308,3° · horizonte del terreno 1,4°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 62",
+   "token": "1.337",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.337 W/m² · energía 209,64 kWh/m² · 11,2 días ter"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 62",
+   "token": "209,64",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.337 W/m² · energía 209,64 kWh/m² · 11,2 días terrestres transcurridos "
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 62",
+   "token": "11,2",
+   "kind": "digits",
+   "traced": false,
+   "context": "otencia 1.337 W/m² · energía 209,64 kWh/m² · 11,2 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 62",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "h/m² · 11,2 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 67",
+   "token": "293,3",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 7,4° / acimut 293,3° · horizonte del terreno 0,9°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 68",
+   "token": "1.350",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.350 W/m² · energía 249,76 kWh/m² · 12,4 días ter"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 68",
+   "token": "249,76",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.350 W/m² · energía 249,76 kWh/m² · 12,4 días terrestres transcurridos "
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 68",
+   "token": "12,4",
+   "kind": "digits",
+   "traced": false,
+   "context": "otencia 1.350 W/m² · energía 249,76 kWh/m² · 12,4 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 68",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "h/m² · 12,4 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 73",
+   "token": "278,5",
+   "kind": "digits",
+   "traced": false,
+   "context": "Siguiendo al Sol · Sol 3,8° / acimut 278,5° · horizonte del terreno 0,6°"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 74",
+   "token": "1.358",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.358 W/m² · energía 290,19 kWh/m² · 13,7 días ter"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 74",
+   "token": "290,19",
+   "kind": "digits",
+   "traced": false,
+   "context": "Potencia 1.358 W/m² · energía 290,19 kWh/m² · 13,7 días terrestres transcurridos "
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 74",
+   "token": "13,7",
+   "kind": "digits",
+   "traced": false,
+   "context": "otencia 1.358 W/m² · energía 290,19 kWh/m² · 13,7 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 74",
+   "token": "35.800",
+   "kind": "digits",
+   "traced": false,
+   "context": "h/m² · 13,7 días terrestres transcurridos · ×35.800"
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 78",
+   "token": "112",
+   "kind": "digits",
+   "traced": false,
+   "context": "; pendiente 2,137° frente a 10,693°; altitud 1127,1 m frente a 122,4 m."
+  },
+  {
+   "where": "app/public/media/solar/solar.es.vtt",
+   "path": "line 82",
+   "token": "2,3",
+   "kind": "digits",
+   "traced": false,
+   "context": "La celda terrestre recibe 2,3 veces más luz solar horizontal, con un Sol m"
+  },
+  {
+   "where": "app/public/audio/transcripts.json",
+   "path": "m1_rover.mp3",
+   "token": "160",
+   "kind": "digits",
+   "traced": false,
+   "context": " sloping ground at 76.5 degrees south, about 160 kilometers from Casatus crater. Here are the"
+  },
+  {
+   "where": "app/public/audio/transcripts.json",
+   "path": "solar_5.mp3",
+   "token": "220",
+   "kind": "digits",
+   "traced": false,
+   "context": "Solar Panels, analog five. About 220 kilometers northeast of Derby, in Western Au"
+  }
+ ]
+}

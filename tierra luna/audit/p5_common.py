@@ -296,13 +296,24 @@ def run_mission(T, D, m: str, P: Dict, chunk: int = 96, cache: Optional[Dict] = 
             ev[:, q] = percentile(ev[:, q], P["percentile_rule"])
             mv[:, q] = percentile(mv[:, q], P["percentile_rule"])
     n = len(pi)
-    ck = _twin_key(m, passed, sim_cfg, zone, P, dtag) if cache is not None else None
-    if ck is not None and ck in cache:
+    if cache is None:
+        twin_pos = _twin_search(ev, mv, key, tau, bound, w, n, chunk)
+    elif any(sc == "percentile_within_population" for sc in scales):
+        # percentiles depend on the whole passing population: cache by the passing set
+        ck = _twin_key(m, passed, sim_cfg, zone, P, dtag)
+        if ck not in cache:
+            cache[ck] = _twin_search(ev, mv, key, tau, bound, w, n, chunk)
         twin_pos = cache[ck].copy()
     else:
-        twin_pos = _twin_search(ev, mv, key, tau, bound, w, n, chunk)
-        if ck is not None:
-            cache[ck] = twin_pos.copy()
+        # real values: the twin of a point depends only on that point, so cache per Earth cell
+        ck = _twin_key(m, np.zeros(1, bool), sim_cfg, zone, P, dtag)
+        per = cache.setdefault(ck, {})
+        need = np.array([k for k, i in enumerate(pi) if int(i) not in per], dtype=int)
+        if len(need):
+            tp = _twin_search(ev[need], mv, key, tau, bound, w, len(need), chunk)
+            for k, t in zip(need, tp):
+                per[int(pi[k])] = int(t)
+        twin_pos = np.array([per[int(i)] for i in pi], dtype=int)
     has = twin_pos >= 0
     twin_id = np.where(has, M["id"].to_numpy()[zi][np.maximum(twin_pos, 0)], -1)
     return _finish(T, D, m, P, passed, suit, utils, pi, zi, names, w, tau, ev, mv, twin_pos, twin_id, zone)

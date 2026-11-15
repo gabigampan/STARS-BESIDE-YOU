@@ -1835,10 +1835,14 @@
      "elevation_rel_m": 737.4755988109184
     },
     "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 244,
+    "zone_cells_with_slope_within_tolerance": 526,
+    "zone_cells_with_roughness_within_tolerance": 245,
     "zone_cells_passing_with_similarity_ge_99": 1,
     "best3": [
      {
       "moon_id": 59895,
+      "passes_filter": true,
       "similarity": 99.5657,
       "scores": {
        "slope_deg": 0.998489,
@@ -1857,41 +1861,43 @@
       }
      },
      {
-      "moon_id": 59400,
-      "similarity": 0.3059,
+      "moon_id": 59717,
+      "passes_filter": false,
+      "similarity": 79.9913,
       "scores": {
-       "slope_deg": 0.007647,
-       "roughness_m": 1e-06,
+       "slope_deg": 0.99994,
+       "roughness_m": 0.999844,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.244,
-       "roughness_m": 160.32,
-       "elevation_rel_m": 3895.786
+       "slope_deg": 0.022,
+       "roughness_m": 0.53,
+       "elevation_rel_m": 5185.686
       },
       "moon_values": {
-       "slope_deg": 7.282,
-       "roughness_m": 203.85,
-       "elevation_rel_m": -3158.311
+       "slope_deg": 1.016,
+       "roughness_m": 43.0,
+       "elevation_rel_m": -4448.211
       }
      },
      {
-      "moon_id": 59401,
-      "similarity": 0.1412,
+      "moon_id": 63305,
+      "passes_filter": false,
+      "similarity": 79.9733,
       "scores": {
-       "slope_deg": 0.00353,
-       "roughness_m": 0.0,
+       "slope_deg": 0.999422,
+       "roughness_m": 0.999911,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.721,
-       "roughness_m": 197.25,
-       "elevation_rel_m": 4528.086
+       "slope_deg": 0.068,
+       "roughness_m": 0.4,
+       "elevation_rel_m": 3688.986
       },
       "moon_values": {
-       "slope_deg": 7.759,
-       "roughness_m": 240.78,
-       "elevation_rel_m": -3790.611
+       "slope_deg": 0.97,
+       "roughness_m": 43.93,
+       "elevation_rel_m": -2951.511
       }
      }
     ]
@@ -1905,10 +1911,14 @@
      "elevation_rel_m": 761.8755988109183
     },
     "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 244,
+    "zone_cells_with_slope_within_tolerance": 601,
+    "zone_cells_with_roughness_within_tolerance": 245,
     "zone_cells_passing_with_similarity_ge_99": 1,
     "best3": [
      {
       "moon_id": 59895,
+      "passes_filter": true,
       "similarity": 99.7593,
       "scores": {
        "slope_deg": 0.999439,
@@ -1927,41 +1937,43 @@
       }
      },
      {
-      "moon_id": 59400,
-      "similarity": 0.4017,
+      "moon_id": 60062,
+      "passes_filter": false,
+      "similarity": 79.99,
       "scores": {
-       "slope_deg": 0.010041,
-       "roughness_m": 1e-06,
+       "slope_deg": 0.999992,
+       "roughness_m": 0.999758,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.067,
-       "roughness_m": 160.48,
-       "elevation_rel_m": 3920.186
+       "slope_deg": 0.008,
+       "roughness_m": 0.66,
+       "elevation_rel_m": 4581.086
       },
       "moon_values": {
-       "slope_deg": 7.282,
-       "roughness_m": 203.85,
-       "elevation_rel_m": -3158.311
+       "slope_deg": 1.223,
+       "roughness_m": 44.03,
+       "elevation_rel_m": -3819.211
       }
      },
      {
-      "moon_id": 59401,
-      "similarity": 0.1894,
+      "moon_id": 60059,
+      "passes_filter": false,
+      "similarity": 79.96,
       "scores": {
-       "slope_deg": 0.004734,
-       "roughness_m": 0.0,
+       "slope_deg": 0.99994,
+       "roughness_m": 0.999062,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.544,
-       "roughness_m": 197.41,
-       "elevation_rel_m": 4552.486
+       "slope_deg": 0.022,
+       "roughness_m": 1.3,
+       "elevation_rel_m": 4482.586
       },
       "moon_values": {
-       "slope_deg": 7.759,
-       "roughness_m": 240.78,
-       "elevation_rel_m": -3790.611
+       "slope_deg": 1.237,
+       "roughness_m": 44.67,
+       "elevation_rel_m": -3720.711
       }
      }
     ]
@@ -1975,10 +1987,14 @@
      "elevation_rel_m": 747.6755988109182
     },
     "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 219,
+    "zone_cells_with_slope_within_tolerance": 473,
+    "zone_cells_with_roughness_within_tolerance": 219,
     "zone_cells_passing_with_similarity_ge_99": 0,
     "best3": [
      {
       "moon_id": 59895,
+      "passes_filter": true,
       "similarity": 98.7673,
       "scores": {
        "slope_deg": 0.992826,
@@ -1997,41 +2013,43 @@
       }
      },
      {
-      "moon_id": 59400,
-      "similarity": 0.2492,
+      "moon_id": 60064,
+      "passes_filter": false,
+      "similarity": 79.9266,
       "scores": {
-       "slope_deg": 0.006229,
-       "roughness_m": 0.0,
+       "slope_deg": 0.999964,
+       "roughness_m": 0.998202,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.374,
-       "roughness_m": 165.1,
-       "elevation_rel_m": 3905.986
+       "slope_deg": 0.017,
+       "roughness_m": 1.8,
+       "elevation_rel_m": 4591.586
       },
       "moon_values": {
-       "slope_deg": 7.282,
-       "roughness_m": 203.85,
-       "elevation_rel_m": -3158.311
+       "slope_deg": 0.925,
+       "roughness_m": 36.95,
+       "elevation_rel_m": -3843.911
       }
      },
      {
-      "moon_id": 59401,
-      "similarity": 0.1133,
+      "moon_id": 59699,
+      "passes_filter": false,
+      "similarity": 79.9263,
       "scores": {
-       "slope_deg": 0.002831,
-       "roughness_m": 0.0,
+       "slope_deg": 0.999724,
+       "roughness_m": 0.998433,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.851,
-       "roughness_m": 202.03,
-       "elevation_rel_m": 4538.286
+       "slope_deg": 0.047,
+       "roughness_m": 1.68,
+       "elevation_rel_m": 4618.486
       },
       "moon_values": {
-       "slope_deg": 7.759,
-       "roughness_m": 240.78,
-       "elevation_rel_m": -3790.611
+       "slope_deg": 0.955,
+       "roughness_m": 40.43,
+       "elevation_rel_m": -3870.811
       }
      }
     ]
@@ -2045,10 +2063,14 @@
      "elevation_rel_m": 851.4755988109184
     },
     "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 277,
+    "zone_cells_with_slope_within_tolerance": 564,
+    "zone_cells_with_roughness_within_tolerance": 279,
     "zone_cells_passing_with_similarity_ge_99": 1,
     "best3": [
      {
       "moon_id": 59895,
+      "passes_filter": true,
       "similarity": 99.4954,
       "scores": {
        "slope_deg": 0.999964,
@@ -2067,41 +2089,43 @@
       }
      },
      {
-      "moon_id": 59400,
-      "similarity": 0.3534,
+      "moon_id": 60793,
+      "passes_filter": false,
+      "similarity": 79.9938,
       "scores": {
-       "slope_deg": 0.008832,
-       "roughness_m": 2e-06,
+       "slope_deg": 0.999934,
+       "roughness_m": 0.999911,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.151,
-       "roughness_m": 154.94,
-       "elevation_rel_m": 4009.786
+       "slope_deg": 0.023,
+       "roughness_m": 0.4,
+       "elevation_rel_m": 4801.886
       },
       "moon_values": {
-       "slope_deg": 7.282,
-       "roughness_m": 203.85,
-       "elevation_rel_m": -3158.311
+       "slope_deg": 1.154,
+       "roughness_m": 48.51,
+       "elevation_rel_m": -3950.411
       }
      },
      {
-      "moon_id": 59401,
-      "similarity": 0.1649,
+      "moon_id": 63360,
+      "passes_filter": false,
+      "similarity": 79.9758,
       "scores": {
-       "slope_deg": 0.004122,
-       "roughness_m": 0.0,
+       "slope_deg": 0.999535,
+       "roughness_m": 0.999861,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.628,
-       "roughness_m": 191.87,
-       "elevation_rel_m": 4642.086
+       "slope_deg": 0.061,
+       "roughness_m": 0.5,
+       "elevation_rel_m": 3475.186
       },
       "moon_values": {
-       "slope_deg": 7.759,
-       "roughness_m": 240.78,
-       "elevation_rel_m": -3790.611
+       "slope_deg": 1.192,
+       "roughness_m": 49.41,
+       "elevation_rel_m": -2623.711
       }
      }
     ]
@@ -2115,10 +2139,14 @@
      "elevation_rel_m": 962.4755988109184
     },
     "zone_cells_passing_filter": 1,
+    "zone_cells_with_slope_and_roughness_within_tolerance": 232,
+    "zone_cells_with_slope_within_tolerance": 611,
+    "zone_cells_with_roughness_within_tolerance": 232,
     "zone_cells_passing_with_similarity_ge_99": 1,
     "best3": [
      {
       "moon_id": 59895,
+      "passes_filter": true,
       "similarity": 99.1221,
       "scores": {
        "slope_deg": 0.999032,
@@ -2137,41 +2165,43 @@
       }
      },
      {
-      "moon_id": 59400,
-      "similarity": 0.4146,
+      "moon_id": 63455,
+      "passes_filter": false,
+      "similarity": 79.9766,
       "scores": {
-       "slope_deg": 0.010366,
-       "roughness_m": 0.0,
+       "slope_deg": 0.999456,
+       "roughness_m": 0.99996,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.046,
-       "roughness_m": 162.52,
-       "elevation_rel_m": 4120.786
+       "slope_deg": 0.066,
+       "roughness_m": 0.27,
+       "elevation_rel_m": 3172.286
       },
       "moon_values": {
-       "slope_deg": 7.282,
-       "roughness_m": 203.85,
-       "elevation_rel_m": -3158.311
+       "slope_deg": 1.17,
+       "roughness_m": 41.06,
+       "elevation_rel_m": -2209.811
       }
      },
      {
-      "moon_id": 59401,
-      "similarity": 0.196,
+      "moon_id": 60574,
+      "passes_filter": false,
+      "similarity": 79.9564,
       "scores": {
-       "slope_deg": 0.004899,
-       "roughness_m": 0.0,
+       "slope_deg": 0.998919,
+       "roughness_m": 0.999991,
        "elevation_rel_m": 0.0
       },
       "diff": {
-       "slope_deg": 6.523,
-       "roughness_m": 199.45,
-       "elevation_rel_m": 4753.086
+       "slope_deg": 0.093,
+       "roughness_m": 0.13,
+       "elevation_rel_m": 5438.486
       },
       "moon_values": {
-       "slope_deg": 7.759,
-       "roughness_m": 240.78,
-       "elevation_rel_m": -3790.611
+       "slope_deg": 1.143,
+       "roughness_m": 41.46,
+       "elevation_rel_m": -4476.011
       }
      }
     ]

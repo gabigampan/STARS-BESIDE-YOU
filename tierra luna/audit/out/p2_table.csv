@@ -1,0 +1,13 @@
+mission,variable,role,unit,tolerance,bound,median,p90,max
+rover,slope_deg,key,deg,2.0000,2.0000,0.4080,0.8510,1.9710
+rover,roughness_m,key,m,30.0000,30.0000,5.3400,20.5490,29.9700
+rover,elevation_rel_m,secondary,m,500.0000,1000.0000,247.8862,798.8762,999.9862
+solar,irradiance_toa_kwh_m2_day,key,kWh/m2/day,0.6000,0.6000,0.0208,0.3222,0.5696
+solar,slope_deg,secondary,deg,2.0000,4.0000,0.0340,0.1460,1.9410
+solar,roughness_m,secondary,m,30.0000,60.0000,0.5000,2.3600,58.1400
+lunar_base,tmin_k,key,percentile points,10.0000,10.0000,3.1685,7.7152,9.7863
+lunar_base,tmin_k (real),key,K,,,207.8750,210.5530,211.9400
+lunar_base,lst_diurnal_amp_k,key,percentile points,10.0000,10.0000,2.9887,7.6666,9.9530
+lunar_base,lst_diurnal_amp_k (real),key,K,,,153.7650,161.2820,179.4000
+lunar_base,slope_deg,secondary,deg,2.0000,4.0000,1.5065,2.6943,3.9170
+lunar_base,roughness_m,secondary,m,30.0000,60.0000,27.2650,54.4260,59.8100

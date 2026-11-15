@@ -1,0 +1,288 @@
+{
+ "toa_max_abs_diff_vs_bundle": 6.253377490494927e-06,
+ "toa_reference_check": {
+  "0": 9.974306679616243,
+  "30": 8.765054521533642,
+  "45": 7.366689829872887,
+  "60": 5.67171344867457
+ },
+ "toa_reference_config": {
+  "0": 9.97,
+  "30": 8.77,
+  "45": 7.37,
+  "60": 5.67
+ },
+ "lunar_base_zone_cells": 280,
+ "missions": {
+  "rover": {
+   "passing_mine": 10337,
+   "passing_bundle": 10337,
+   "ranked_mine": 10192,
+   "ranked_bundle": 10192,
+   "rank_equal_share": 0.9990188383045526,
+   "twin_equal_share": 1.0,
+   "max_abs_diff_similarity": 0.0049999999999954525,
+   "max_abs_diff_suitability": 0.0049999999999954525,
+   "max_abs_diff_final_pub": 0.009999999999990905,
+   "top5_mine": [
+    {
+     "rank": 1,
+     "id": 17566,
+     "twin": 59895,
+     "similarity": 99.56574,
+     "suitability": 99.22318,
+     "final_pub": 99.39
+    },
+    {
+     "rank": 2,
+     "id": 23945,
+     "twin": 59895,
+     "similarity": 99.75928,
+     "suitability": 98.661985,
+     "final_pub": 99.21
+    },
+    {
+     "rank": 3,
+     "id": 18282,
+     "twin": 59895,
+     "similarity": 98.76733999999999,
+     "suitability": 99.57661,
+     "final_pub": 99.17
+    },
+    {
+     "rank": 4,
+     "id": 18280,
+     "twin": 59895,
+     "similarity": 99.49538,
+     "suitability": 98.66393500000001,
+     "final_pub": 99.08
+    },
+    {
+     "rank": 5,
+     "id": 15395,
+     "twin": 59895,
+     "similarity": 99.12210000000002,
+     "suitability": 98.693215,
+     "final_pub": 98.91
+    }
+   ],
+   "audio_match": [
+    {
+     "audio_rank": 1,
+     "earth": 17566,
+     "rank_mine": 1,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 2,
+     "earth": 23945,
+     "rank_mine": 2,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 3,
+     "earth": 18282,
+     "rank_mine": 3,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 4,
+     "earth": 18280,
+     "rank_mine": 4,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 5,
+     "earth": 15395,
+     "rank_mine": 5,
+     "twin_ok": true,
+     "final_ok": true
+    }
+   ]
+  },
+  "solar": {
+   "passing_mine": 18777,
+   "passing_bundle": 18777,
+   "ranked_mine": 6360,
+   "ranked_bundle": 6360,
+   "rank_equal_share": 0.9987421383647799,
+   "twin_equal_share": 1.0,
+   "max_abs_diff_similarity": 0.005160000000003606,
+   "max_abs_diff_suitability": 0.0049999999999954525,
+   "max_abs_diff_final_pub": 0.010000000000005116,
+   "top5_mine": [
+    {
+     "rank": 1,
+     "id": 38464,
+     "twin": 24296,
+     "similarity": 99.99218,
+     "suitability": 96.899445,
+     "final_pub": 98.45
+    },
+    {
+     "rank": 2,
+     "id": 38105,
+     "twin": 24583,
+     "similarity": 99.88212000000001,
+     "suitability": 96.90131000000001,
+     "final_pub": 98.39
+    },
+    {
+     "rank": 3,
+     "id": 38744,
+     "twin": 40854,
+     "similarity": 99.94806,
+     "suitability": 96.77089,
+     "final_pub": 98.36
+    },
+    {
+     "rank": 4,
+     "id": 37746,
+     "twin": 24761,
+     "similarity": 99.97650000000002,
+     "suitability": 96.61573,
+     "final_pub": 98.3
+    },
+    {
+     "rank": 5,
+     "id": 38465,
+     "twin": 40406,
+     "similarity": 99.99683999999999,
+     "suitability": 96.47625500000001,
+     "final_pub": 98.24
+    }
+   ],
+   "audio_match": [
+    {
+     "audio_rank": 1,
+     "earth": 38464,
+     "rank_mine": 1,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 2,
+     "earth": 38105,
+     "rank_mine": 2,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 3,
+     "earth": 38744,
+     "rank_mine": 3,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 4,
+     "earth": 37746,
+     "rank_mine": 4,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 5,
+     "earth": 38465,
+     "rank_mine": 5,
+     "twin_ok": true,
+     "final_ok": true
+    }
+   ]
+  },
+  "lunar_base": {
+   "passing_mine": 2419,
+   "passing_bundle": 2419,
+   "ranked_mine": 450,
+   "ranked_bundle": 450,
+   "rank_equal_share": 1.0,
+   "twin_equal_share": 1.0,
+   "max_abs_diff_similarity": 0.004999999999981242,
+   "max_abs_diff_suitability": 0.004999999999999005,
+   "max_abs_diff_final_pub": 0.0,
+   "top5_mine": [
+    {
+     "rank": 1,
+     "id": 17538,
+     "twin": 63528,
+     "similarity": 97.31043000000001,
+     "suitability": 47.268935,
+     "final_pub": 72.29
+    },
+    {
+     "rank": 2,
+     "id": 16830,
+     "twin": 63841,
+     "similarity": 96.60771,
+     "suitability": 47.959619999999994,
+     "final_pub": 72.28
+    },
+    {
+     "rank": 3,
+     "id": 15751,
+     "twin": 64018,
+     "similarity": 96.86364,
+     "suitability": 46.599385,
+     "final_pub": 71.73
+    },
+    {
+     "rank": 4,
+     "id": 21054,
+     "twin": 62517,
+     "similarity": 99.35648000000002,
+     "suitability": 43.90945500000001,
+     "final_pub": 71.63
+    },
+    {
+     "rank": 5,
+     "id": 17187,
+     "twin": 62523,
+     "similarity": 95.02611,
+     "suitability": 47.540285,
+     "final_pub": 71.28
+    }
+   ],
+   "audio_match": [
+    {
+     "audio_rank": 1,
+     "earth": 17538,
+     "rank_mine": 1,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 2,
+     "earth": 16830,
+     "rank_mine": 2,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 3,
+     "earth": 15751,
+     "rank_mine": 3,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 4,
+     "earth": 21054,
+     "rank_mine": 4,
+     "twin_ok": true,
+     "final_ok": true
+    },
+    {
+     "audio_rank": 5,
+     "earth": 17187,
+     "rank_mine": 5,
+     "twin_ok": true,
+     "final_ok": true
+    }
+   ]
+  }
+ }
+}
