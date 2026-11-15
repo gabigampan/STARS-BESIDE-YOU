@@ -1,0 +1,944 @@
+{
+ "reproduction": {
+  "bundle_keys": [
+   "ids",
+   "land_index",
+   "suitability",
+   "similarity",
+   "final",
+   "rank",
+   "twin",
+   "confidence",
+   "confidence_score",
+   "s.irradiance_toa_kwh_m2_day",
+   "s.slope_deg",
+   "s.roughness_m"
+  ],
+  "top5_model": [
+   38464,
+   38105,
+   38744,
+   37746,
+   38465
+  ]
+ },
+ "decomposition": [
+  {
+   "criterion": "irradiance_kwh_m2_day",
+   "weight": 0.35,
+   "bad": 2.5,
+   "good": 6.0,
+   "rho_abslat": -0.673,
+   "share_of_spread": 0.554,
+   "removed_top5_sep": [
+    31785,
+    31802,
+    31875,
+    31879,
+    31882
+   ],
+   "removed_top50_overlap": 0
+  },
+  {
+   "criterion": "sun_elev_max_deg",
+   "weight": 0.15,
+   "bad": 10.0,
+   "good": 70.0,
+   "rho_abslat": -0.995,
+   "share_of_spread": 0.218,
+   "removed_top5_sep": [
+    38464,
+    38744,
+    37746,
+    37750,
+    30468
+   ],
+   "removed_top50_overlap": 49
+  },
+  {
+   "criterion": "sun_low_frac_0_5deg",
+   "weight": 0.15,
+   "bad": 0.25,
+   "good": 0.03,
+   "rho_abslat": 0.878,
+   "share_of_spread": 0.18,
+   "removed_top5_sep": [
+    38464,
+    38744,
+    37746,
+    37750,
+    38027
+   ],
+   "removed_top50_overlap": 46
+  },
+  {
+   "criterion": "slope_deg",
+   "weight": 0.15,
+   "bad": 12.0,
+   "good": 1.0,
+   "rho_abslat": -0.289,
+   "share_of_spread": 0.011,
+   "removed_top5_sep": [
+    38105,
+    38744,
+    37750,
+    30468,
+    29749
+   ],
+   "removed_top50_overlap": 50
+  },
+  {
+   "criterion": "lst_diurnal_amp_k",
+   "weight": 0.1,
+   "bad": 35.0,
+   "good": 10.0,
+   "rho_abslat": -0.291,
+   "share_of_spread": 0.129,
+   "removed_top5_sep": [
+    30104,
+    30107,
+    29027,
+    29030,
+    29384
+   ],
+   "removed_top50_overlap": 19
+  },
+  {
+   "criterion": "roughness_m",
+   "weight": 0.1,
+   "bad": 400.0,
+   "good": 30.0,
+   "rho_abslat": -0.351,
+   "share_of_spread": 0.007,
+   "removed_top5_sep": [
+    38105,
+    38744,
+    38109,
+    30468,
+    29749
+   ],
+   "removed_top50_overlap": 47
+  }
+ ],
+ "spearman_matrix": {
+  "irradiance_kwh_m2_day": {
+   "irradiance_kwh_m2_day": 1.0,
+   "sun_elev_max_deg": 0.688,
+   "sun_low_frac_0_5deg": -0.763,
+   "slope_deg": -0.031,
+   "lst_diurnal_amp_k": 0.711,
+   "roughness_m": 0.005,
+   "clear_frac_isccp": 0.35,
+   "kt_worldclim": 0.076,
+   "abs_lat": -0.673
+  },
+  "sun_elev_max_deg": {
+   "irradiance_kwh_m2_day": 0.688,
+   "sun_elev_max_deg": 1.0,
+   "sun_low_frac_0_5deg": -0.872,
+   "slope_deg": 0.286,
+   "lst_diurnal_amp_k": 0.358,
+   "roughness_m": 0.348,
+   "clear_frac_isccp": -0.272,
+   "kt_worldclim": -0.628,
+   "abs_lat": -0.995
+  },
+  "sun_low_frac_0_5deg": {
+   "irradiance_kwh_m2_day": -0.763,
+   "sun_elev_max_deg": -0.872,
+   "sun_low_frac_0_5deg": 1.0,
+   "slope_deg": -0.172,
+   "lst_diurnal_amp_k": -0.291,
+   "roughness_m": -0.23,
+   "clear_frac_isccp": 0.166,
+   "kt_worldclim": 0.468,
+   "abs_lat": 0.878
+  },
+  "slope_deg": {
+   "irradiance_kwh_m2_day": -0.031,
+   "sun_elev_max_deg": 0.286,
+   "sun_low_frac_0_5deg": -0.172,
+   "slope_deg": 1.0,
+   "lst_diurnal_amp_k": -0.097,
+   "roughness_m": 0.989,
+   "clear_frac_isccp": -0.387,
+   "kt_worldclim": -0.441,
+   "abs_lat": -0.289
+  },
+  "lst_diurnal_amp_k": {
+   "irradiance_kwh_m2_day": 0.711,
+   "sun_elev_max_deg": 0.358,
+   "sun_low_frac_0_5deg": -0.291,
+   "slope_deg": -0.097,
+   "lst_diurnal_amp_k": 1.0,
+   "roughness_m": -0.106,
+   "clear_frac_isccp": 0.669,
+   "kt_worldclim": 0.719,
+   "abs_lat": -0.291
+  },
+  "roughness_m": {
+   "irradiance_kwh_m2_day": 0.005,
+   "sun_elev_max_deg": 0.348,
+   "sun_low_frac_0_5deg": -0.23,
+   "slope_deg": 0.989,
+   "lst_diurnal_amp_k": -0.106,
+   "roughness_m": 1.0,
+   "clear_frac_isccp": -0.416,
+   "kt_worldclim": -0.492,
+   "abs_lat": -0.351
+  },
+  "clear_frac_isccp": {
+   "irradiance_kwh_m2_day": 0.35,
+   "sun_elev_max_deg": -0.272,
+   "sun_low_frac_0_5deg": 0.166,
+   "slope_deg": -0.387,
+   "lst_diurnal_amp_k": 0.669,
+   "roughness_m": -0.416,
+   "clear_frac_isccp": 1.0,
+   "kt_worldclim": 0.794,
+   "abs_lat": 0.302
+  },
+  "kt_worldclim": {
+   "irradiance_kwh_m2_day": 0.076,
+   "sun_elev_max_deg": -0.628,
+   "sun_low_frac_0_5deg": 0.468,
+   "slope_deg": -0.441,
+   "lst_diurnal_amp_k": 0.719,
+   "roughness_m": -0.492,
+   "clear_frac_isccp": 0.794,
+   "kt_worldclim": 1.0,
+   "abs_lat": 0.648
+  },
+  "abs_lat": {
+   "irradiance_kwh_m2_day": -0.673,
+   "sun_elev_max_deg": -0.995,
+   "sun_low_frac_0_5deg": 0.878,
+   "slope_deg": -0.289,
+   "lst_diurnal_amp_k": -0.291,
+   "roughness_m": -0.351,
+   "clear_frac_isccp": 0.302,
+   "kt_worldclim": 0.648,
+   "abs_lat": 1.0
+  }
+ },
+ "new_criteria_distribution_passing": {
+  "clear_frac_isccp": {
+   "5": 0.278,
+   "10": 0.308,
+   "25": 0.359,
+   "50": 0.466,
+   "75": 0.603,
+   "90": 0.671,
+   "95": 0.698
+  },
+  "kt_worldclim": {
+   "5": 0.436,
+   "10": 0.459,
+   "25": 0.502,
+   "50": 0.577,
+   "75": 0.764,
+   "90": 0.863,
+   "95": 0.895
+  }
+ },
+ "options": {
+  "A_today": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": -0.857,
+   "top5_sep2deg": [
+    {
+     "earth_id": 38464,
+     "lat": -16.5,
+     "lon": 124.5,
+     "twin": 24296,
+     "twin_lat": 22.5,
+     "twin_lon": -3.5,
+     "similarity": 99.99,
+     "suitability": 96.9,
+     "final": 98.45
+    },
+    {
+     "earth_id": 38744,
+     "lat": -17.5,
+     "lon": 44.5,
+     "twin": 40854,
+     "twin_lat": -23.5,
+     "twin_lon": -5.5,
+     "similarity": 99.95,
+     "suitability": 96.77,
+     "final": 98.36
+    },
+    {
+     "earth_id": 37746,
+     "lat": -14.5,
+     "lon": 126.5,
+     "twin": 24761,
+     "twin_lat": 21.5,
+     "twin_lon": 101.5,
+     "similarity": 99.98,
+     "suitability": 96.62,
+     "final": 98.3
+    },
+    {
+     "earth_id": 37750,
+     "lat": -14.5,
+     "lon": 130.5,
+     "twin": 24688,
+     "twin_lat": 21.5,
+     "twin_lon": 28.5,
+     "similarity": 99.98,
+     "suitability": 96.4,
+     "final": 98.19
+    },
+    {
+     "earth_id": 29749,
+     "lat": 7.5,
+     "lon": 49.5,
+     "twin": 26063,
+     "twin_lat": 17.5,
+     "twin_lon": -36.5,
+     "similarity": 99.97,
+     "suitability": 96.35,
+     "final": 98.16
+    }
+   ],
+   "top50_overlap_with_A": 50,
+   "top100_tropics_share": 1.0,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 4,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 22,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.65,
+   "soft": {
+    "irradiance_kwh_m2_day": {
+     "weight": 0.35,
+     "bad": 2.5,
+     "good": 6.0
+    },
+    "sun_elev_max_deg": {
+     "weight": 0.15,
+     "bad": 10.0,
+     "good": 70.0
+    },
+    "sun_low_frac_0_5deg": {
+     "weight": 0.15,
+     "bad": 0.25,
+     "good": 0.03
+    },
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    }
+   }
+  },
+  "B_drop_geometry": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": -0.688,
+   "top5_sep2deg": [
+    {
+     "earth_id": 38464,
+     "lat": -16.5,
+     "lon": 124.5,
+     "twin": 24296,
+     "twin_lat": 22.5,
+     "twin_lon": -3.5,
+     "similarity": 99.99,
+     "suitability": 98.56,
+     "final": 99.28
+    },
+    {
+     "earth_id": 38744,
+     "lat": -17.5,
+     "lon": 44.5,
+     "twin": 40854,
+     "twin_lat": -23.5,
+     "twin_lon": -5.5,
+     "similarity": 99.95,
+     "suitability": 98.41,
+     "final": 99.18
+    },
+    {
+     "earth_id": 37746,
+     "lat": -14.5,
+     "lon": 126.5,
+     "twin": 24761,
+     "twin_lat": 21.5,
+     "twin_lon": 101.5,
+     "similarity": 99.98,
+     "suitability": 98.1,
+     "final": 99.04
+    },
+    {
+     "earth_id": 38109,
+     "lat": -15.5,
+     "lon": 129.5,
+     "twin": 40186,
+     "twin_lat": -21.5,
+     "twin_lon": 46.5,
+     "similarity": 99.91,
+     "suitability": 97.88,
+     "final": 98.89
+    },
+    {
+     "earth_id": 38027,
+     "lat": -15.5,
+     "lon": 47.5,
+     "twin": 24696,
+     "twin_lat": 21.5,
+     "twin_lon": 36.5,
+     "similarity": 99.91,
+     "suitability": 97.68,
+     "final": 98.8
+    }
+   ],
+   "top50_overlap_with_A": 46,
+   "top100_tropics_share": 0.99,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 4,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 22,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.5,
+   "soft": {
+    "irradiance_kwh_m2_day": {
+     "weight": 0.35,
+     "bad": 2.5,
+     "good": 6.0
+    },
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    }
+   }
+  },
+  "C1_clear_frac_isccp": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": -0.165,
+   "top5_sep2deg": [
+    {
+     "earth_id": 29749,
+     "lat": 7.5,
+     "lon": 49.5,
+     "twin": 26063,
+     "twin_lat": 17.5,
+     "twin_lon": -36.5,
+     "similarity": 99.97,
+     "suitability": 98.29,
+     "final": 99.13
+    },
+    {
+     "earth_id": 29746,
+     "lat": 7.5,
+     "lon": 46.5,
+     "twin": 26056,
+     "twin_lat": 17.5,
+     "twin_lon": -43.5,
+     "similarity": 99.97,
+     "suitability": 97.96,
+     "final": 98.96
+    },
+    {
+     "earth_id": 28670,
+     "lat": 10.5,
+     "lon": 50.5,
+     "twin": 25483,
+     "twin_lat": 19.5,
+     "twin_lon": 103.5,
+     "similarity": 99.94,
+     "suitability": 97.76,
+     "final": 98.85
+    },
+    {
+     "earth_id": 23972,
+     "lat": 23.5,
+     "lon": 32.5,
+     "twin": 22476,
+     "twin_lat": 27.5,
+     "twin_lon": -23.5,
+     "similarity": 100.0,
+     "suitability": 97.32,
+     "final": 98.66
+    },
+    {
+     "earth_id": 25758,
+     "lat": 18.5,
+     "lon": 18.5,
+     "twin": 23951,
+     "twin_lat": 23.5,
+     "twin_lon": 11.5,
+     "similarity": 99.91,
+     "suitability": 97.4,
+     "final": 98.65
+    }
+   ],
+   "top50_overlap_with_A": 9,
+   "top100_tropics_share": 0.78,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 2,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 8,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.35,
+   "soft": {
+    "irradiance_kwh_m2_day": {
+     "weight": 0.35,
+     "bad": 2.5,
+     "good": 6.0
+    },
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    },
+    "clear_frac_isccp": {
+     "weight": 0.3,
+     "bad": 0.308,
+     "good": 0.671
+    }
+   }
+  },
+  "C2_kt_worldclim": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": 0.089,
+   "top5_sep2deg": [
+    {
+     "earth_id": 40260,
+     "lat": -21.5,
+     "lon": 120.5,
+     "twin": 41566,
+     "twin_lat": -25.5,
+     "twin_lon": -13.5,
+     "similarity": 99.82,
+     "suitability": 83.09,
+     "final": 91.46
+    },
+    {
+     "earth_id": 22891,
+     "lat": 26.5,
+     "lon": 31.5,
+     "twin": 21739,
+     "twin_lat": 29.5,
+     "twin_lon": -40.5,
+     "similarity": 99.9,
+     "suitability": 83.01,
+     "final": 91.45
+    },
+    {
+     "earth_id": 23972,
+     "lat": 23.5,
+     "lon": 32.5,
+     "twin": 22476,
+     "twin_lat": 27.5,
+     "twin_lon": -23.5,
+     "similarity": 100.0,
+     "suitability": 82.84,
+     "final": 91.42
+    },
+    {
+     "earth_id": 40976,
+     "lat": -23.5,
+     "lon": 116.5,
+     "twin": 42260,
+     "twin_lat": -27.5,
+     "twin_lon": -39.5,
+     "similarity": 100.0,
+     "suitability": 82.76,
+     "final": 91.38
+    },
+    {
+     "earth_id": 24311,
+     "lat": 22.5,
+     "lon": 11.5,
+     "twin": 22885,
+     "twin_lat": 26.5,
+     "twin_lon": 25.5,
+     "similarity": 99.96,
+     "suitability": 82.75,
+     "final": 91.36
+    }
+   ],
+   "top50_overlap_with_A": 1,
+   "top100_tropics_share": 0.51,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 0,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 5,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.65,
+   "soft": {
+    "irradiance_kwh_m2_day": {
+     "weight": 0.35,
+     "bad": 2.5,
+     "good": 6.0
+    },
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    },
+    "kt_worldclim": {
+     "weight": 0.3,
+     "bad": 0.459,
+     "good": 0.863
+    }
+   }
+  },
+  "E_clear_frac_replaces_irr_and_geometry": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": 0.325,
+   "top5_sep2deg": [
+    {
+     "earth_id": 40184,
+     "lat": -21.5,
+     "lon": 44.5,
+     "twin": 23206,
+     "twin_lat": 25.5,
+     "twin_lon": -13.5,
+     "similarity": 99.83,
+     "suitability": 98.56,
+     "final": 99.19
+    },
+    {
+     "earth_id": 29749,
+     "lat": 7.5,
+     "lon": 49.5,
+     "twin": 26063,
+     "twin_lat": 17.5,
+     "twin_lon": -36.5,
+     "similarity": 99.97,
+     "suitability": 98.29,
+     "final": 99.13
+    },
+    {
+     "earth_id": 29746,
+     "lat": 7.5,
+     "lon": 46.5,
+     "twin": 26056,
+     "twin_lat": 17.5,
+     "twin_lon": -43.5,
+     "similarity": 99.97,
+     "suitability": 97.96,
+     "final": 98.96
+    },
+    {
+     "earth_id": 28670,
+     "lat": 10.5,
+     "lon": 50.5,
+     "twin": 25483,
+     "twin_lat": 19.5,
+     "twin_lon": 103.5,
+     "similarity": 99.94,
+     "suitability": 97.76,
+     "final": 98.85
+    },
+    {
+     "earth_id": 41264,
+     "lat": -24.5,
+     "lon": 44.5,
+     "twin": 22130,
+     "twin_lat": 28.5,
+     "twin_lon": -9.5,
+     "similarity": 99.94,
+     "suitability": 97.63,
+     "final": 98.78
+    }
+   ],
+   "top50_overlap_with_A": 6,
+   "top100_tropics_share": 0.65,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 2,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 15,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.0,
+   "soft": {
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    },
+    "clear_frac_isccp": {
+     "weight": 0.65,
+     "bad": 0.308,
+     "good": 0.671
+    }
+   }
+  },
+  "F_kt_replaces_irr_and_geometry": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "rho_suit_abslat": 0.645,
+   "top5_sep2deg": [
+    {
+     "earth_id": 41959,
+     "lat": -26.5,
+     "lon": 19.5,
+     "twin": 21699,
+     "twin_lat": 29.5,
+     "twin_lon": -80.5,
+     "similarity": 99.93,
+     "suitability": 66.98,
+     "final": 83.45
+    },
+    {
+     "earth_id": 22891,
+     "lat": 26.5,
+     "lon": 31.5,
+     "twin": 21739,
+     "twin_lat": 29.5,
+     "twin_lon": -40.5,
+     "similarity": 99.9,
+     "suitability": 66.36,
+     "final": 83.13
+    },
+    {
+     "earth_id": 24311,
+     "lat": 22.5,
+     "lon": 11.5,
+     "twin": 22885,
+     "twin_lat": 26.5,
+     "twin_lon": 25.5,
+     "similarity": 99.96,
+     "suitability": 66.26,
+     "final": 83.11
+    },
+    {
+     "earth_id": 40260,
+     "lat": -21.5,
+     "lon": 120.5,
+     "twin": 41566,
+     "twin_lat": -25.5,
+     "twin_lon": -13.5,
+     "similarity": 99.82,
+     "suitability": 66.4,
+     "final": 83.11
+    },
+    {
+     "earth_id": 42075,
+     "lat": -26.5,
+     "lon": 135.5,
+     "twin": 21722,
+     "twin_lat": 29.5,
+     "twin_lon": -57.5,
+     "similarity": 99.94,
+     "suitability": 66.18,
+     "final": 83.06
+    }
+   ],
+   "top50_overlap_with_A": 0,
+   "top100_tropics_share": 0.41,
+   "top50_artefacts": {
+    "snow_ice_frac>0": 0,
+    "lc_water_210": 0,
+    "lc_ice_220": 0,
+    "coast_mask_frac<0.999": 3,
+    "coast_mask_frac<0.5": 0
+   },
+   "weight_share_latitude_driven(|rho|>=0.5)": 0.65,
+   "soft": {
+    "slope_deg": {
+     "weight": 0.15,
+     "bad": 12.0,
+     "good": 1.0
+    },
+    "lst_diurnal_amp_k": {
+     "weight": 0.1,
+     "bad": 35.0,
+     "good": 10.0
+    },
+    "roughness_m": {
+     "weight": 0.1,
+     "bad": 400.0,
+     "good": 30.0
+    },
+    "kt_worldclim": {
+     "weight": 0.65,
+     "bad": 0.459,
+     "good": 0.863
+    }
+   }
+  }
+ },
+ "sites": {
+  "Plataforma Solar de Almeria (CIEMAT)": {
+   "cell": "E18897",
+   "ranks": {
+    "A_today": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 76.9
+    },
+    "B_drop_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 71.4
+    },
+    "C1_clear_frac_isccp": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 71.7
+    },
+    "C2_kt_worldclim": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 59.1
+    },
+    "E_clear_frac_replaces_irr_and_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 74.7
+    },
+    "F_kt_replaces_irr_and_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 47.5
+    }
+   }
+  },
+  "NREL Solar Radiation Research Laboratory, Golden": {
+   "cell": "E18074",
+   "ranks": {
+    "A_today": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 73.7
+    },
+    "B_drop_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 67.2
+    },
+    "C1_clear_frac_isccp": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 50.1
+    },
+    "C2_kt_worldclim": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 55.1
+    },
+    "E_clear_frac_replaces_irr_and_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 33.7
+    },
+    "F_kt_replaces_irr_and_geometry": {
+     "rank": 0,
+     "of": 6360,
+     "suit": 44.5
+    }
+   }
+  },
+  "Noor Ouarzazate (MASEN)": {
+   "cell": "E21413",
+   "ranks": {
+    "A_today": {
+     "rank": 5193,
+     "of": 6360,
+     "suit": 85.5
+    },
+    "B_drop_geometry": {
+     "rank": 4662,
+     "of": 6360,
+     "suit": 83.1
+    },
+    "C1_clear_frac_isccp": {
+     "rank": 2788,
+     "of": 6360,
+     "suit": 84.6
+    },
+    "C2_kt_worldclim": {
+     "rank": 3358,
+     "of": 6360,
+     "suit": 70.8
+    },
+    "E_clear_frac_replaces_irr_and_geometry": {
+     "rank": 2112,
+     "of": 6360,
+     "suit": 85.5
+    },
+    "F_kt_replaces_irr_and_geometry": {
+     "rank": 2806,
+     "of": 6360,
+     "suit": 55.7
+    }
+   }
+  }
+ },
+ "corr_clear_vs_kt_spearman": 0.794
+}

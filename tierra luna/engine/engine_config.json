@@ -617,35 +617,27 @@
             {
               "variable": "slope_deg",
               "role": "key",
-              "weight": 0.4,
+              "weight": 0.5,
               "label": "Slope",
               "unit": "deg",
               "tolerance": 2.0,
               "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
-              "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+              "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C).",
+              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)"
             },
             {
               "variable": "roughness_m",
               "role": "key",
-              "weight": 0.4,
+              "weight": 0.5,
               "label": "Roughness",
               "unit": "m",
               "tolerance": 30.0,
               "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
-              "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
-            },
-            {
-              "variable": "elevation_rel_m",
-              "role": "secondary",
-              "weight": 0.2,
-              "label": "Relative elevation",
-              "unit": "m",
-              "tolerance": 500.0,
-              "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
-              "why": "Half the robust Earth scale of elevation (1,007 m, docs/ANALOG_PRINCIPLE.md section C), rounded; set by the delegate on 2026-11-15."
+              "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies).",
+              "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)"
             }
           ],
-          "weights_why": "Key variables carry 80 % of the weight (team decision of 2026-11-15, morning): slope 40 %, roughness 40 %, relative elevation 20 %."
+          "weights_why": "Decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf (decision 1): relative elevation goes to weight zero (it has no physical sense for a rover and clashes with the principle of 04:47, Rover = slope and roughness); its weight is shared among the terrain variables, with no new variable: slope 50 % and roughness 50 %, both key, tolerances unchanged (2 deg and 30 m). The director's reading, told to the team lead: relative elevation also leaves the pair filter (a zero-weight variable must not decide which pairs exist) and stays as an information row with its difference (info_differences.rover). Before (team decision of 2026-11-15, morning): slope 40 %, roughness 40 % (key), relative elevation 20 % (secondary, tolerance 500 m, filter bound 1,000 m)."
         },
         "solar": {
           "zone": {
@@ -792,6 +784,7 @@
       },
       "info_differences": {
         "rover": [
+          "elevation_rel_m",
           "temp_k",
           "lst_diurnal_amp_k",
           "irradiance_kwh_m2_day"
@@ -800,7 +793,7 @@
           "temp_k",
           "lst_diurnal_amp_k"
         ],
-        "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them). lunar_base (2026-11-15 08:55 CET): mean temperature and relative elevation leave the similarity and are shown as differences; irradiance for information.",
+        "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them). lunar_base (2026-11-15 08:55 CET): mean temperature and relative elevation leave the similarity and are shown as differences; irradiance for information. rover (2026-11-15 11:23 CET, decision 1): relative elevation leaves the similarity and the pair filter and is shown as a difference.",
         "lunar_base": [
           "temp_k",
           "elevation_rel_m",

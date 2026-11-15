@@ -214,8 +214,8 @@
   },
   "panel_text": {
     "earth_row": "not drawn (~67° up, mean pos.)",
-    "graph_caption": "Power per m², flat panel, over one whole lunar cycle (0–1,400 W/m²)",
-    "model_tag": "Model, not a measurement: power per m² of a flat panel = S0 1361 W/m² × sin(Sun elevation) × visible part of the solar disc, before any cell efficiency. The lunar day lasts 29.5 Earth days and about half of it is night."
+    "graph_caption": "Power per m², flat panel, one lunar cycle (0–1,400 W/m²)",
+    "model_tag": "Model: power per m² of a flat panel = S0 1361 W/m² × sin(Sun elevation) × visible solar disc, before cell efficiency. The lunar day lasts 29.5 Earth days; about half of it is night."
   },
   "camera": {
     "keys": [
@@ -270,7 +270,13 @@
     "vp9_crf": 34
   },
   "render": {
-    "relief_credit": "LOLA + Kaguya (SLDEM2015)"
+    "relief_credit": "LOLA + Kaguya (SLDEM2015)",
+    "sun_intensity": 3.2,
+    "lighting_note": "Sun: one parallel light of fixed intensity (3.2 in renderer units, chosen so that the high noon Sun does not saturate the light-grey ground); terrain shadows from the real SLDEM2015 horizons; 3.5 % uniform fill (assumption). Display exposure (a camera setting; the light and the power are not changed): min(8, max(1, sin 25° / sin h)), h = Sun elevation; stated on screen whenever it is above 1.25.",
+    "low_sun_exposure": {
+      "ref_deg": 25,
+      "max": 8
+    }
   },
   "card": {
     "title": "Earth analog and lunar twin: solar panels, pair number 1",

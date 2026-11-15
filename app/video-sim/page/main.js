@@ -519,7 +519,16 @@ function solarStatus(t, s) {
 // whole solar disc, render.shadow_exposure (EX) while it sees none of it, and in between the value that
 // keeps the site's light level constant on screen: 1 / (1/EX + (1 - 1/EX) * visible disc fraction).
 // A function of t only (no adaptation lag). Stated on screen whenever it is above 1.25.
+// Solar (render.low_sun_exposure = {ref_deg, max}): display exposure min(max, max(1, sin(ref) / sin(h))),
+// h = the Sun's elevation, so the ground lit by a low Sun stays readable; a function of t only; stated on
+// screen whenever it is above 1.25. The light itself is not changed (power uses the real geometry).
+function lowSunExposure(t) {
+  const L = SC.render?.low_sun_exposure; if (!L) return 1;
+  const h = Math.max(0.3, sunAt(Math.min(t, SIM_END)).elev);
+  return Math.min(L.max, Math.max(1, Math.sin(L.ref_deg * D2R) / Math.sin(h * D2R)));
+}
 function exposureAt(t) {
+  if (isSolar) return lowSunExposure(t);
   const EX = SC.render?.shadow_exposure ?? 1;
   if (EX === 1) return 1;
   const v = sunAt(Math.min(t, SIM_END)).vis;
@@ -527,7 +536,7 @@ function exposureAt(t) {
 }
 window.statusAt = function (t) {
   const s = sunAt(Math.min(t, SIM_END));
-  return { t, status: isSolar ? solarStatus(t, s) : baseStatus(t, s), sunElev: s.elev, sunAz: s.az, horizon: s.hz, visible: s.vis, exposure: isSolar ? 1 : exposureAt(t) };
+  return { t, status: isSolar ? solarStatus(t, s) : baseStatus(t, s), sunElev: s.elev, sunAz: s.az, horizon: s.hz, visible: s.vis, exposure: exposureAt(t) };
 };
 
 // ------------------------------------------------------------------ frame
@@ -592,12 +601,14 @@ window.renderAt = function (t) {
     else status = 'Tracking the Sun';
     if (solar.FLAT) {
       const PL = SC.panel_text;
+      const ex = exposureAt(t); renderer.toneMappingExposure = ex; out.exposure = ex;
       rows = row('Sun elevation', f1(s.elev) + '°') + row('Sun azimuth', f1(s.az) + '°') + row('Terrain horizon', f1(s.hz) + '°') +
         row('Panel', 'flat (horizontal)') + row('Power (model)', thou(se.P) + ' W/m²') + row(deployed ? 'Energy (model)' : 'Energy (after deploy)', se.E.toFixed(2) + ' kWh/m²') +
         row('Elapsed', f1(M.simDays(SC, tc)) + ' Earth days') + row('Time', compStr) + row('Earth', PL.earth_row);
       panel.innerHTML = `<div class="title">Solar panels · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div>` +
         `<div class="site zone">${SC.site.zone.name}</div><div class="status">${status}</div>${rows}` +
-        `<div id="graphwrap"><div class="cap">${PL.graph_caption}</div></div><div class="tag" style="margin-top:6px">${PL.model_tag}</div>`;
+        `<div id="graphwrap"><div class="cap">${PL.graph_caption}</div></div><div class="tag" style="margin-top:6px">${PL.model_tag}` +
+        (ex > 1.25 ? `<br><span style="color:#f2a33a">Exposure ×${f1(ex)} for the low Sun (not to scale).</span>` : '') + `</div>`;
       document.getElementById('graphwrap').appendChild(graph); drawGraph(t);
       out.status = status;
     } else {
