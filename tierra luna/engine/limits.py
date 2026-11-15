@@ -56,6 +56,8 @@ def cell_classes(earth: pd.DataFrame, rules: Dict[str, Any]) -> Dict[str, np.nda
     for name, rule in rules.items():
         m = np.zeros(len(earth), dtype=bool)
         for c in rule["any_of"]:
+            if c["column"] not in earth.columns:   # a table without the column: no cell is counted
+                continue
             s = earth[c["column"]]
             if "equals" in c:
                 if isinstance(c["equals"], str):

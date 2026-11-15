@@ -449,3 +449,53 @@ Frase del número 1 en la web (plantilla rellenada; `explain.json`): "This pair 
 
 **Tests:** `cd "tierra luna" && python -m pytest -q`: **168 passed** tras la verificación independiente (164 antes de ella, 144 antes de Base lunar; la verificación añadió 4 tests; nuevos `tests/test_lunar_base_position.py`, 14, y los de `tests/test_mission_zone_texts.py` del agente de textos; adaptados a la revisión 6 `test_real_value_similarity.py`, `test_real_data.py` y `test_verification_fixes.py`). Paquete `app/public/data/v2` y paquete de comparación `bundle_global_mean` construidos dos veces cada uno, idénticos byte a byte.
 
+
+
+## Resultado tras las decisiones de las 11:23
+
+Decisiones de la persona delegada en nombre del líder del equipo, 2026-11-15 11:23 CET (registro completo en `docs/DECISIONS.md`): Rover compara solo pendiente y rugosidad, 50 % cada una, las dos clave (tolerancias 2° y 30 m); la elevación relativa sale de la similitud y del filtro del par y queda como fila informativa; los cinco mostrados de Rover y Paneles solares se eligen con una separación de 2° de arco (unos 222,4 km); la pendiente mínima de 0,5° de Rover se mantiene (justificada con datos en `DECISIONS.md`). Motor 3.3.0, revisión 7 del contrato. Cifras del motor y del paquete publicado.
+
+### Rover antes y después
+
+| | Antes (mañana, hasta 11:23) | Después (11:23) |
+|---|---|---|
+| pasan el embudo | 10.337 | 10.337 |
+| emparejados | 10.192 | **10.337** (todos) |
+| gemelos distintos | 401 | **1.166** |
+| mayor cuota de un gemelo | M61116: 2.033 puntos (19,9 %) | M63712: 265 puntos (2,6 %) |
+| puntos con final publicado 100,00 | 0 | **74** (empate: el orden entre ellos es por id de celda) |
+
+Top 5 **antes** (puestos 1-5; todos con el gemelo M59895, Casatus; pendiente y rugosidad Tierra / Luna):
+
+| # | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 | E17566 (41,5; 106,5) | Bayinbaolige, China | M59895 Casatus | 99,57 / 99,22 / 99,39 | 1,038 / 1,148 | 43,53 / 44,20 |
+| 2 | E23945 (23,5; 5,5) | Tamanrasset, Argelia | M59895 | 99,76 / 98,66 / 99,21 | 1,215 / 1,148 | 43,37 / 44,20 |
+| 3 | E18282 (39,5; 102,5) | Ehen Hudag, China | M59895 | 98,77 / 99,58 / 99,17 | 0,908 / 1,148 | 38,75 / 44,20 |
+| 4 | E18280 (39,5; 100,5) | Banqiao, China | M59895 | 99,50 / 98,66 / 99,08 | 1,131 / 1,148 | 48,91 / 44,20 |
+| 5 | E15395 (47,5; 95,5) | Buga, Mongolia | M59895 | 99,12 / 98,69 / 98,91 | 1,236 / 1,148 | 41,33 / 44,20 |
+
+Top 5 **después** (los cinco mostrados con la separación de 2°; puesto en el ranking completo entre paréntesis):
+
+| # (puesto) | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 (1) | E3872 (79,5; 92,5) | Dikson, Rusia | M61299 Drygalski | 100,00 / 100,00 / 100,00 | 0,571 / 0,544 | 26,68 / 26,72 |
+| 2 (2) | E4037 (78,5; −102,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,770 / 0,793 | 29,34 / 29,50 |
+| 3 (4) | E4742 (76,5; −117,5) | Kugluktuk, Canadá | M63712 Haynes | 100,00 / 100,00 / 100,00 | 0,557 / 0,582 | 20,82 / 20,64 |
+| 4 (6) | E5111 (75,5; −108,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,783 / 0,793 | 29,44 / 29,50 |
+| 5 (8) | E5318 (75,5; 98,5) | Khatanga, Rusia | M59713 Schrödinger | 99,99 / 100,00 / 100,00 | 0,708 / 0,719 | 26,21 / 25,76 |
+
+**Aviso:** el número 1, **E3872, es una celda cuya clase de cobertura más frecuente es agua** (ESA CCI 210; solo 33,8 % de tierra, clase térmica del equipo "agua"): costa del mar de Kara. Ninguna regla de Rover excluye el agua. Ninguno de los cinco es hielo. Con el puesto 1 a 74 empatados en 100,00, el orden de los cinco lo decide el id de celda, no el dato (`texts.ties_at_top_rover`).
+
+Diferencias reales de los pares (mediana / P90 / máximo, todos los emparejados):
+
+| Variable | Antes | Después |
+|---|---|---|
+| pendiente (°) | 0,41 / 0,85 / 1,97 | 0,03 / 0,09 / 0,60 |
+| rugosidad (m) | 5,34 / 20,55 / 29,97 | 0,53 / 1,38 / 9,43 |
+| elevación relativa (m) | 247,9 / 798,9 / 1.000,0 (comparada) | 3.350 / 5.455 / 10.517 (solo información) |
+| temperatura media (K, información) | 148,7 / 175,6 / 233,0 | 149,4 / 191,3 / 257,2 |
+
+Paneles solares: los cinco mostrados pasan de los puestos 1-5 (E38464 Derby, E38105 Derby, E38744 Maintirano, E37746 Kununurra, E38465 Derby) a los puestos **1, 3, 4, 7 y 9**: E38464 Derby (98,45), E38744 Maintirano (98,36), E37746 Kununurra (98,30), E37750 Katherine (98,19) y E29749 Eyl, Somalia (98,16; su clase de cobertura más frecuente es agua, ESA CCI 210, aunque tiene 66 % de tierra). Coincide con la auditoría (`7_efecto_decisiones_pendientes.md` P2). Los ficheros `.bin` de Paneles solares y Base lunar son **idénticos byte a byte** a los del paquete anterior (`tests/test_decisions_1123.py`).
+
+Lectura: con solo pendiente y rugosidad, el polo sur lunar tiene casi siempre una celda que iguala a cada punto de la Tierra (diferencia mediana 0,03° y 0,5 m), así que **la similitud de Rover también queda saturada**: 74 puntos llegan a un final de 100,00 y la cabeza del ranking la decide la idoneidad (los cinco mostrados tienen idoneidad 100) y, dentro del empate, el id de celda. Los cinco mostrados son ahora altas latitudes del Ártico (Taimyr y el archipiélago canadiense) con gemelos variados (Drygalski, Sverdrup, Haynes, Schrödinger) en lugar de cinco puntos de Asia central y del Sáhara con el mismo gemelo (Casatus). Los análogos conocidos de movilidad caen en el percentil 3,6 a 8,1 % (Ramon 3,6, Qaidam 4,0, Haughton 4,2, Yungay 8,1), frente a 0,2 a 9,2 % antes.

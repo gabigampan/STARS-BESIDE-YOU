@@ -15,10 +15,88 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 - **[SUSTITUIDO el 15-11-2026 por "Decisiones tomadas (15-11-2026, mañana)" (Rover, Paneles solares) y "Decisiones tomadas (15-11-2026, 08:55 CET)" (Base lunar)]** **z (puntuación típica robusta)**: dónde está un valor dentro de su propio cuerpo. `z = (valor − mediana del cuerpo) / escala`, con escala = rango intercuartílico / 1,349, recortado a ±4. z = 0 es "justo en la mediana"; z = +1 es "una desviación típica por encima". La Tierra y la Luna se normalizan **cada una por separado**.
 - **[SUSTITUIDO el 15-11-2026 por las mismas dos secciones]** **Similitud** (0-100, regla anterior): `100 × exp(−0,45 × d)`, donde `d = √(Σ peso × (z Tierra − z Luna)²)`. 100 = misma posición relativa en las cuatro variables.
 - **[SUSTITUIDO el 15-11-2026 por las mismas dos secciones]** **Gemelo** (regla anterior): la celda lunar, dentro de la zona de la misión, con la similitud más alta.
-- **Similitud (regla vigente, las tres misiones)**: para cada variable, puntuación `s = exp(−0,5 × (d / τ)²)`, con `d` = diferencia absoluta entre el punto de la Tierra y la celda lunar y `τ` = su tolerancia; similitud = 100 × media ponderada de las `s` (las variables clave pesan el 80 %). En Rover y Paneles solares `d` se toma en valores reales; en Base lunar las dos claves (temperatura mínima y amplitud térmica diaria) se comparan como **percentil dentro de su población** (Tierra: los 2.419 candidatos del embudo; Luna: las 280 celdas de la zona) y la pendiente y la rugosidad en valores reales.
+- **Similitud (regla vigente, las tres misiones)**: para cada variable, puntuación `s = exp(−0,5 × (d / τ)²)`, con `d` = diferencia absoluta entre el punto de la Tierra y la celda lunar y `τ` = su tolerancia; similitud = 100 × media ponderada de las `s` (las variables clave pesan el 80 %; en Rover, desde las 11:23 CET, el 100 %: pendiente y rugosidad, 50 % cada una). En Rover y Paneles solares `d` se toma en valores reales; en Base lunar las dos claves (temperatura mínima y amplitud térmica diaria) se comparan como **percentil dentro de su población** (Tierra: los 2.419 candidatos del embudo; Luna: las 280 celdas de la zona) y la pendiente y la rugosidad en valores reales.
 - **Gemelo (regla vigente)**: la celda lunar de la zona de la misión que **pasa el filtro del par** (cada clave a menos de `τ`, cada secundaria a menos de `2τ`) con la similitud más alta; empate, el id más bajo. Si ninguna celda pasa el filtro, el punto no tiene gemelo (conserva su idoneidad, sin similitud ni final).
 - **Final** = 0,5 × similitud + 0,5 × idoneidad. El ranking ordena por el final.
 - **Spearman**: correlación de rangos, de −1 (orden inverso) a +1 (mismo orden).
+
+---
+
+## Decisiones tomadas (15-11-2026, 11:23 CET): Rover, top 5, zona de Base lunar, límites y audio
+
+Decisiones tomadas **por la persona delegada en nombre del líder del equipo, 2026-11-15 11:23 CET**, en respuesta a la auditoría estadística (`docs/stats_audit/`, en particular `7_efecto_decisiones_pendientes.md`). Aplicadas en el motor 3.3.0 y en el paquete publicado `app/public/data/v2` (**revisión 7 del contrato**, `docs/DATA_CONTRACT.md`). Todas las cifras de esta sección salen del motor (paquete reconstruido dos veces, idéntico byte a byte) o de las mediciones con el motor `scratchpad/measure_slope_min.py` / `measure_old.py` (salidas `measure_slope_min.json`, `measure_old.json`).
+
+1. **Rover: la elevación relativa pasa a peso cero.** No tiene sentido físico para un rover y choca con el principio de las 04:47 (Rover = pendiente y rugosidad). Su peso se reparte entre las variables de terreno, sin variable nueva: **pendiente 50 % y rugosidad 50 %, las dos clave, tolerancias sin cambio (2° y 30 m)**. **Lectura del director, comunicada al líder:** la elevación relativa sale **también del filtro del par** (una variable de peso cero no debe decidir qué pares existen) y queda como **fila informativa** con sus dos valores y su diferencia (`earth_rover_pairs.bin` `info.elevation_rel_m.earth/.moon/.diff`). En `engine_config.json`: `real_value_similarity.missions.rover` (pesos con `weight_set_by`), `info_differences.rover`, `info_in_pairs_file.rover`.
+2. **Top 5: separación mínima de 2° entre los análogos del top 5 de Rover y de Paneles solares**, para que celdas vecinas de un mismo sitio no llenen la lista. **Lectura del director:** es una regla para **elegir los CINCO** (voraz por puesto: se conserva el mejor y se salta cualquiera cuyo centro de celda esté a menos de 2° de arco, círculo máximo sobre la esfera de 6.371,0 km, unos 222,4 km, de uno ya conservado); **el ranking completo sigue ordenado por el final**. Base lunar conserva los puestos 1 a 5 (la regla hoy no cambiaría nada). `engine_config.json` `top5_selection`; `missions.json` `missions[].top5`.
+3. **Zona de Base lunar: se mantiene** (las 280 celdas que tocan la huella de las nueve regiones candidatas de la NASA). Los textos dicen "at the edge of NASA's ... candidate region" cuando poca parte de la celda del gemelo cae dentro de su región: regla "in" con ≥ 50 % de la celda dentro, "at the edge of" por debajo (`engine_config.json` `twin_zone_regions`; `twins.json` `nasa_region` de cada gemelo). Hoy **69 de los 103 gemelos** de Base lunar tienen menos del 50 % de su celda dentro de una región.
+4. **Mantener y decirlo con honestidad**, en "Data and limits" de la web y en `docs/STATS_AUDIT.md`: las celdas de hielo en el ranking de Rover, la puerta común `elevation_m >= 1` (quita 177 celdas de tierra real por debajo de 1 m, 37 de ellas con al menos 30 % de tierra), la saturación de la similitud de Paneles solares, la fragilidad de cada top 5 con sus porcentajes de estabilidad y los números sin efecto. **`mission_scoring.json` no se edita**: esos números solo se listan. Textos en `similarity.json` `texts` con el campo nuevo `show` (`engine_config.json` `limit_texts`, `top5_stability`, `external_validation`, `limit_facts`).
+5. **Audio:** las tres introducciones de misión dirán "five of the highest-scoring analogs in our model" y que el orden es por el final. El equipo vuelve a grabar una vez, cuando los nuevos top 5 sean definitivos (no lo hace este paso; ningún audio se ha generado, editado ni borrado).
+
+**Queda sustituido:** en "Decisiones tomadas (15-11-2026, mañana)", el reparto de pesos de Rover (pendiente 40 %, rugosidad 40 %, elevación relativa 20 % secundaria con tolerancia 500 m y filtro 1.000 m) y, por tanto, la frase "las variables clave pesan el 80 %" del vocabulario para Rover (en Rover pesan el 100 %); la nota de hielo con cifras escritas a mano de `datasets.json` `mission_notes.rover` (ahora `texts.surface_classes_rover`, calculada en cada build).
+
+### Rover antes y después (motor, tablas reales de 1°)
+
+| | Antes (mañana, hasta 11:23) | Después (11:23) |
+|---|---|---|
+| pasan el embudo | 10.337 | 10.337 |
+| emparejados | 10.192 | **10.337** (todos) |
+| gemelos distintos | 401 | **1.166** |
+| mayor cuota de un gemelo | M61116: 2.033 puntos (19,9 %) | M63712: 265 puntos (2,6 %) |
+| puntos con final publicado 100,00 | 0 | **74** (empate: el orden entre ellos es por id de celda) |
+
+Top 5 **antes** (puestos 1-5; todos con el gemelo M59895, Casatus; pendiente y rugosidad Tierra / Luna):
+
+| # | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 | E17566 (41,5; 106,5) | Bayinbaolige, China | M59895 Casatus | 99,57 / 99,22 / 99,39 | 1,038 / 1,148 | 43,53 / 44,20 |
+| 2 | E23945 (23,5; 5,5) | Tamanrasset, Argelia | M59895 | 99,76 / 98,66 / 99,21 | 1,215 / 1,148 | 43,37 / 44,20 |
+| 3 | E18282 (39,5; 102,5) | Ehen Hudag, China | M59895 | 98,77 / 99,58 / 99,17 | 0,908 / 1,148 | 38,75 / 44,20 |
+| 4 | E18280 (39,5; 100,5) | Banqiao, China | M59895 | 99,50 / 98,66 / 99,08 | 1,131 / 1,148 | 48,91 / 44,20 |
+| 5 | E15395 (47,5; 95,5) | Buga, Mongolia | M59895 | 99,12 / 98,69 / 98,91 | 1,236 / 1,148 | 41,33 / 44,20 |
+
+Top 5 **después** (los cinco mostrados con la separación de 2°; puesto en el ranking completo entre paréntesis):
+
+| # (puesto) | Tierra | Lugar | Gemelo | Sim. / idon. / final | Pendiente (°) | Rugosidad (m) |
+|---|---|---|---|---|---|---|
+| 1 (1) | E3872 (79,5; 92,5) | Dikson, Rusia | M61299 Drygalski | 100,00 / 100,00 / 100,00 | 0,571 / 0,544 | 26,68 / 26,72 |
+| 2 (2) | E4037 (78,5; −102,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,770 / 0,793 | 29,34 / 29,50 |
+| 3 (4) | E4742 (76,5; −117,5) | Kugluktuk, Canadá | M63712 Haynes | 100,00 / 100,00 / 100,00 | 0,557 / 0,582 | 20,82 / 20,64 |
+| 4 (6) | E5111 (75,5; −108,5) | Gjoa Haven, Canadá | M63714 Sverdrup | 100,00 / 100,00 / 100,00 | 0,783 / 0,793 | 29,44 / 29,50 |
+| 5 (8) | E5318 (75,5; 98,5) | Khatanga, Rusia | M59713 Schrödinger | 99,99 / 100,00 / 100,00 | 0,708 / 0,719 | 26,21 / 25,76 |
+
+**Aviso:** el número 1, **E3872, es una celda cuya clase de cobertura más frecuente es agua** (ESA CCI 210; solo 33,8 % de tierra, clase térmica del equipo "agua"): costa del mar de Kara. Ninguna regla de Rover excluye el agua. Ninguno de los cinco es hielo. Con el puesto 1 a 74 empatados en 100,00, el orden de los cinco lo decide el id de celda, no el dato (`texts.ties_at_top_rover`).
+
+Diferencias reales de los pares (mediana / P90 / máximo, todos los emparejados):
+
+| Variable | Antes | Después |
+|---|---|---|
+| pendiente (°) | 0,41 / 0,85 / 1,97 | 0,03 / 0,09 / 0,60 |
+| rugosidad (m) | 5,34 / 20,55 / 29,97 | 0,53 / 1,38 / 9,43 |
+| elevación relativa (m) | 247,9 / 798,9 / 1.000,0 (comparada) | 3.350 / 5.455 / 10.517 (solo información) |
+| temperatura media (K, información) | 148,7 / 175,6 / 233,0 | 149,4 / 191,3 / 257,2 |
+
+Paneles solares: los cinco mostrados pasan de los puestos 1-5 (E38464 Derby, E38105 Derby, E38744 Maintirano, E37746 Kununurra, E38465 Derby) a los puestos **1, 3, 4, 7 y 9**: E38464 Derby (98,45), E38744 Maintirano (98,36), E37746 Kununurra (98,30), E37750 Katherine (98,19) y E29749 Eyl, Somalia (98,16; su clase de cobertura más frecuente es agua, ESA CCI 210, aunque tiene 66 % de tierra). Coincide con la auditoría (`7_efecto_decisiones_pendientes.md` P2). Los ficheros `.bin` de Paneles solares y Base lunar son **idénticos byte a byte** a los del paquete anterior (`tests/test_decisions_1123.py`).
+
+### Pendiente mínima de Rover (0,5°): se mantiene, justificada con datos
+
+Fuente buscada otra vez: `docs/sources/` (R3 línea 17 la clasifica como "pure design choice"; línea 75: "Removes flat terrain, which is unusual for a rover gate; ask why"), `docs/FILTERS.md` (líneas 305 y 349: "n.s.f.", sin fuente), `docs/AUDIT.md` (línea 445: "mark 0.5 deg ... 'no official source'"), `docs/LOCAL_ZIP_COMPARISON.md` (el zip y `rover_preset.py` v3 ponen `min: null`), `rover_preset.py` (línea 214: `"min": None`), comentarios de `mission_scoring.json` (ninguno). **No hay fuente.** Medido con la regla nueva de Rover, con y sin el mínimo:
+
+| | Con mínimo 0,5° | Sin mínimo |
+|---|---|---|
+| pasan el embudo | 10.337 | 18.184 (+7.847) |
+| emparejados | 10.337 | 18.184 |
+| gemelos distintos | 1.166 | 1.181 |
+| mayor cuota de un gemelo | 2,6 % (265, M63712) | **13,9 %** (2.522, M62913) |
+| top 5 del ranking completo | E3872, E4037, E4042, E4742, E4750 | E3675 (pendiente 0,27°), E3872, E4037, E4042, E4044 (0,39°): 2 de 5 nuevos |
+| top 50 | — | 28 de 50 son puntos añadidos (todos con pendiente < 0,5°); coinciden 22 de 50 |
+| celdas de agua (CCI 210 la más frecuente) en el top 50 | 4 | 13 |
+| hielo en el top 50 | 0 | 0 |
+| de los 7.847 añadidos | — | 2.862 hielo o nieve (2.856 de clase CCI 220 "hielo permanente"), 373 de agua, 777 de suelo desnudo (200-202) |
+| Qaidam / Haughton / Ramon / Yungay (percentil del puesto) | 4,0 / 4,2 / 3,6 / 8,1 % | 8,3 / 8,4 / 8,0 / 11,6 % |
+| MDRS / Tabernas / Bardenas | 20,5 / 71,3 / 68,2 % | 22,2 / 83,7 / 81,9 % |
+| Dhofar; discordantes Concordia / El Soplao | no pasa (rugosidad < 5 m); Concordia no pasa; El Soplao 95,4 % | igual (rugosidad); El Soplao 97,4 % |
+
+**Regla del líder:** sin fuente, se quita o se justifica con datos; se quita solo si la cabeza del ranking y los análogos conocidos quedan igual o mejor y no entra ningún artefacto en el top 50. **Sin el mínimo** los cuatro análogos de movilidad pierden puesto (su percentil casi se duplica), entran 28 llanuras sin relieve en el top 50 (9 más de agua) y casi 2.900 celdas de hielo permanente en el ranking, y un solo gemelo acumula el 13,9 % de los pares. **Decisión: la pendiente mínima de 0,5° se mantiene**, tal como la escribió el equipo, porque hace trabajo útil: deja fuera de la cabeza del ranking las llanuras sin relieve (agua costera, hielo y planicies con pendiente < 0,5° a 3,7 km de base). Sigue sin fuente externa y así se dice; no hay ninguna anulación en `engine_config.json` y `mission_scoring.json` no se ha tocado.
 
 ---
 
