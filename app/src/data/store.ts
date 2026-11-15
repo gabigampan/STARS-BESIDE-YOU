@@ -870,7 +870,8 @@ export class DataStore {
       const ni = (this.placeTable.cols['nearest_place'] as Int32Array)[landPos];
       const nk = (this.placeTable.cols['nearest_place_km'] as Float32Array)[landPos];
       if (ni !== missing) out.nearest = this.placeDetail.nearest_places[ni] ?? null;
-      if (!Number.isNaN(nk)) out.nearestKm = nk;
+      // the stored float32 as its shortest decimal, rounded once where it is shown
+      if (!Number.isNaN(nk)) out.nearestKm = f32Decimal(nk);
     }
     // The region comes only from a nearby place in the same country (places.json region_rule);
     // without it the label is the country alone (the nearest place may be far away).

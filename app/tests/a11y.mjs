@@ -340,9 +340,19 @@ async function run(browser, base, variant, size, full) {
       const fh = await focusIsHeading(page);
       const fwhere = await page.evaluate(() => `${document.activeElement?.tagName}.${document.activeElement?.className}`);
       check(mid === offered[i] && fh && live, `${tag}: key ${i + 1} opens ${offered[i]} (${mid}); focus on the step heading (${fwhere}); the live region announces it (${live})`);
-      const top = await page.evaluate(() => [...document.querySelectorAll('.top5-btn')].map((b) => ({ rank: Number(b.dataset.rank), id: Number(b.dataset.id), text: b.innerText, w: b.getBoundingClientRect().width, h: b.getBoundingClientRect().height })));
-      const ranked = await page.evaluate((m) => window.starsFlow.store.ranked(m).filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => a.rank - b.rank).map((p) => p.id), mid);
-      check(top.length === 5 && top.every((b, k) => b.rank === k + 1 && b.id === ranked[k]), `${tag} ${mid}: five numbered buttons, ranks 1 to 5 of the bundle under the team's weights`);
+      const top = await page.evaluate(() => [...document.querySelectorAll('.top5-btn')].map((b) => ({ rank: Number(b.dataset.rank), overall: Number(b.dataset.overall), id: Number(b.dataset.id), text: b.innerText, w: b.getBoundingClientRect().width, h: b.getBoundingClientRect().height })));
+      // the bundle's five (missions.json top5.ids, revision 7), else ranks 1 to 5
+      const spec = await page.evaluate((m) => { const ms = window.starsFlow.store.mission(m); return { ids: ms.top5?.ids ?? window.starsFlow.store.ranked(m).filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => a.rank - b.rank).map((p) => p.id), rule: ms.top5?.rule ?? null }; }, mid);
+      check(top.length === 5 && top.every((b, k) => b.rank === k + 1 && b.id === spec.ids[k]), `${tag} ${mid}: five numbered buttons, the bundle's five in its order (${spec.ids.join(', ')})`);
+      check(top.every((b) => (b.overall !== b.rank ? b.text.includes(`Ranked ${b.overall} overall`) : !/overall/.test(b.text))), `${tag} ${mid}: a button whose pair ranks elsewhere in the full list says "Ranked N overall"`);
+      if (spec.rule) check(await page.evaluate((r) => [...document.querySelectorAll('.top5 [data-text="top5.rule"]')].some((e) => e.textContent === r), spec.rule), `${tag} ${mid}: the rule of the five is shown under them, verbatim`);
+      const notesOk = await page.evaluate((m) => {
+        const st = window.starsFlow.store;
+        const top = st.notesFor('top5', m).every((n) => [...document.querySelectorAll('.top5 .bundle-note')].some((e) => e.textContent === n.text));
+        const card = st.notesFor('mission_card', m).every((n) => [...document.querySelectorAll('#mission-panel .card-notes .bundle-note')].some((e) => e.textContent === n.text));
+        return top && card;
+      }, mid);
+      check(notesOk, `${tag} ${mid}: every bundle note marked for the five and the mission card is shown there, verbatim`);
       check(top.every((b) => b.h >= 44 && /Final score/.test(b.text)), `${tag} ${mid}: each top-five button is at least 44 px high and shows the final score`);
       if (twins) check(top.every((b) => /Lunar twin/.test(b.text)), `${tag} ${mid}: each top-five button names its lunar twin`);
       const firstInPanel = await page.evaluate(() => { const s = document.querySelector('#mission-panel .panel-sec'); return s?.classList.contains('top5'); });
@@ -404,35 +414,65 @@ async function run(browser, base, variant, size, full) {
     check(plays(m.log)[0] === '00_welcome.mp3', `${tag}: guide on: the welcome track starts on the start screen (${plays(m.log).join(', ') || 'none'})`);
     let g = await guide(page);
     check(g.text === transcripts['00_welcome.mp3'] && g.words === 'Playing', `${tag}: the caption shows the welcome transcript exactly, state "Playing"`);
-    await press(page, '1');
-    await waitStep(page, 'pick');
-    m = await media(page);
-    const lastPlays = plays(m.log);
-    check(lastPlays[lastPlays.length - 1] === 'm1_rover.mp3', `${tag}: choosing the first mission starts its introduction (${lastPlays.slice(-1)})`);
-    const idx = m.log.findLastIndex((e) => e.op === 'play');
-    const before = m.log.slice(0, idx);
-    const lastWelcome = before.findLastIndex((e) => e.op === 'play');
-    const between = before.slice(lastWelcome + 1).map((e) => e.op);
-    check(between.includes('pause') && between.includes('reset'), `${tag}: starting a track pauses and resets the previous one first (${between.join(' ')})`);
-    if (twins) {
-      await press(page, '1');
+    // which missions have their five recordings matching the bundle's five (introduction offered only then)
+    const matchInfo = await page.evaluate(async () => {
+      const f = window.starsFlow;
+      const out = [];
+      const ms = f.store.offeredMissions();
+      for (let i = 0; i < ms.length; i++) {
+        await f.store.loadMission(ms[i].id);
+        await f.store.loadTwins().catch(() => undefined);
+        out.push({ key: i + 1, id: ms[i].id, match: f.recordedFiveMatch(ms[i]) });
+      }
+      return out;
+    });
+    note(`${tag}: recordings matching the bundle's five: ${matchInfo.map((x) => `${x.id} ${x.match ? 'yes' : 'no'}`).join(', ')}`);
+    const introFile = (id) => tracks.tracks.find((t) => t.step === 'mission' && t.mission === id)?.file;
+    const mm = matchInfo.find((x) => x.match);
+    const nomatch = matchInfo.find((x) => !x.match);
+    if (nomatch) {
+      await press(page, String(nomatch.key));
+      await waitStep(page, 'pick');
+      const gg = await guide(page);
+      check(gg.file === null && gg.source === 'screen' && !plays((await media(page)).log).includes(introFile(nomatch.id)), `${tag}: ${nomatch.id}: its recordings do not match the bundle's five, so no introduction plays; the caption is built from the screen`);
+      await press(page, 'Escape');
+      await waitStep(page, 'choose');
+    }
+    if (mm) {
+      await press(page, String(mm.key));
+      await waitStep(page, 'pick');
+      m = await media(page);
+      const lastPlays = plays(m.log);
+      check(lastPlays[lastPlays.length - 1] === introFile(mm.id), `${tag}: choosing ${mm.id} starts its introduction (${lastPlays.slice(-1)})`);
+      const idx = m.log.findLastIndex((e) => e.op === 'play');
+      const before = m.log.slice(0, idx);
+      const lastWelcome = before.findLastIndex((e) => e.op === 'play');
+      const between = before.slice(lastWelcome + 1).map((e) => e.op);
+      check(between.includes('pause') && between.includes('reset'), `${tag}: starting a track pauses and resets the previous one first (${between.join(' ')})`);
+      const pairFile = tracks.tracks.find((t) => t.step === 'pair' && t.mission === mm.id && t.rank === 1)?.file;
+      await page.keyboard.press('1');
+      // at once: the introduction stops and the pair's track starts, before the panel has its data
+      await page.waitForTimeout(300);
+      const quick = await page.evaluate(() => ({ title: window.starsA11y.guide.current()?.title, last: window.__media.log.filter((e) => e.op === 'play').map((e) => (e.src ?? '').replace(/^.*\//, '')).pop() }));
+      check(quick.title === 'Analog 1' && quick.last === pairFile, `${tag}: within 300 ms of key 1 the guide is on analog 1 and its track has started (${quick.title}, ${quick.last})`);
       await waitStep(page, 'compare');
-      await page.waitForFunction(() => window.starsA11y.guide.current()?.title?.startsWith('Analog'), null, { timeout: 60000 }).catch(() => undefined);
       g = await guide(page);
-      const file = g.file;
-      check(file === 'rover_1.mp3' && g.text === transcripts['rover_1.mp3'], `${tag}: analog 1 plays the track recorded for that pair, with its transcript (${file})`);
-      const n0 = plays((await media(page)).log).filter((f) => f === 'rover_1.mp3').length;
+      check(g.file === pairFile && g.text === transcripts[pairFile], `${tag}: analog 1 plays the track recorded for that pair, with its transcript (${g.file})`);
+      const n0 = plays((await media(page)).log).filter((f) => f === pairFile).length;
       await press(page, 'r');
-      const n1 = plays((await media(page)).log).filter((f) => f === 'rover_1.mp3').length;
+      const n1 = plays((await media(page)).log).filter((f) => f === pairFile).length;
       check(n1 === n0 + 1, `${tag}: R repeats the current track from the start`);
       await page.evaluate(() => window.__media.endCurrent());
       await page.waitForTimeout(50);
       check((await guide(page)).words === 'Finished', `${tag}: at the end of a track the caption says "Finished"`);
+      // the whole caption is shown while the guide is on (unfolded, reachable)
+      const cap = await page.evaluate(() => { const c = document.getElementById('guide-caption'); const t = c.querySelector('.caption-text'); const cs = getComputedStyle(t); return { exp: c.dataset.expanded, fits: t.scrollHeight <= t.clientHeight + 1 || (cs.overflowY === 'auto' && t.tabIndex === 0), btn: c.querySelector('.caption-more')?.getAttribute('aria-expanded') }; });
+      check(cap.exp === 'true' && cap.fits && cap.btn === 'true', `${tag}: with the guide on, the whole caption is shown (unfolded; a long one scrolls in a focusable box)`);
       // a pair that is not the recorded one plays nothing and shows a caption from the screen
       const sixth = await page.evaluate(() => window.starsFlow.ranking().find((r) => r.rank === 6)?.id);
       const c0 = plays((await media(page)).log).length;
       await page.evaluate((id) => window.starsFlow.select(id), sixth);
-      await page.waitForFunction(() => window.starsA11y.guide.current()?.title === 'Analog 6', null, { timeout: 60000 }).catch(() => undefined);
+      await page.waitForFunction(() => window.starsA11y.guide.current()?.title === 'Rank 6', null, { timeout: 60000 }).catch(() => undefined);
       g = await guide(page);
       const c1 = plays((await media(page)).log).length;
       check(c1 === c0 && g.file === null && g.source === 'screen' && /Rank 6/.test(g.text ?? ''), `${tag}: a pair without a recording plays nothing; its caption is built from the data on screen`);
@@ -466,15 +506,50 @@ async function run(browser, base, variant, size, full) {
     await ctx.close();
   }
 
+  // ---- pending.json: a track awaiting a new recording is text only, no request
+  if (full) {
+    const { page, ctx, errors } = await openPage(browser, base, { size, storage: { 'starsBesideYou.audioGuide': 'on' } });
+    const intro = tracks.tracks.find((t) => t.step === 'mission' && t.mission === 'lunar_base')?.file;
+    await page.route('**/audio/pending.json', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ pending_rerecord: [intro], note: 'test' }) }));
+    await page.reload({ timeout: T });
+    await page.waitForFunction(() => window.starsFlow?.hasData() && window.starsA11y, null, { timeout: T });
+    await page.evaluate(() => window.starsA11y.guide.ready);
+    const k = await page.evaluate(() => window.starsFlow.store.offeredMissions().findIndex((m) => m.id === 'lunar_base') + 1);
+    await press(page, String(k));
+    await waitStep(page, 'pick');
+    await press(page, 'r');
+    const g = await guide(page);
+    const asked = plays((await media(page)).log).includes(intro);
+    check(g.words === 'Text only: new recording pending' && g.text === transcripts[intro] && !asked, `${tag}: a track listed in pending.json shows its caption, "${g.words}", and is never requested (even with R)`);
+    check(errors.length === 0, `${tag}: no error with pending.json`);
+    await ctx.close();
+  }
+
+  // ---- first screen and header layout
+  {
+    const { page, ctx } = await openPage(browser, base, { size });
+    await page.evaluate(() => (document.getElementById('loading').hidden = true));
+    const r = await page.evaluate(() => ({ choices: [...document.querySelectorAll('#intro .choice')].map((c) => c.getBoundingClientRect().bottom), h: window.innerHeight, header: document.querySelector('header').getBoundingClientRect().height }));
+    check(r.choices.length > 0 && r.choices.every((b) => b <= r.h), `${tag}: the purpose and all mission choices are in the first screen without scrolling (lowest ${Math.round(Math.max(...r.choices))} of ${r.h} px)`);
+    if (size.width >= 1280) check(r.header < 100, `${tag}: the header stays on one row (${Math.round(r.header)} px)`);
+    const fold = await page.evaluate(() => { const c = document.getElementById('guide-caption'); return [c.dataset.expanded, c.querySelector('.caption-more')?.textContent]; });
+    check(fold[0] === 'false' && fold[1] === 'Full text', `${tag}: with the guide off the caption is folded, with a "Full text" control`);
+    await page.evaluate(() => document.querySelector('#guide-caption .caption-more').click());
+    const unf = await page.evaluate(() => { const t = document.querySelector('#guide-caption .caption-text'); return [document.getElementById('guide-caption').dataset.expanded, t.textContent.length, t.scrollHeight <= t.clientHeight + 1 || getComputedStyle(t).overflowY === 'auto']; });
+    check(unf[0] === 'true' && unf[2], `${tag}: "Full text" unfolds the whole caption`);
+    await ctx.close();
+  }
+
   // ---- files unavailable: 404 on the MP3 files (real player), and separately on transcripts.json
   if (full) {
     const { page, ctx, errors } = await openPage(browser, base, { size, standIn: false, storage: { 'starsBesideYou.audioGuide': 'on' }, block: ['**/audio/*.mp3'] });
-    await press(page, '1');
+    const kb = await page.evaluate(() => window.starsFlow.store.offeredMissions().findIndex((m) => m.id === 'lunar_base') + 1);
+    await press(page, String(kb));
     await waitStep(page, 'pick');
     await page.waitForFunction(() => ['unavailable', 'press-r'].includes(document.getElementById('guide-caption').dataset.state), null, { timeout: 20000 }).catch(() => undefined);
     const g = await guide(page);
     const visibleError = await page.evaluate(() => [...document.querySelectorAll('[role="alert"], .alert')].filter((e) => e.getClientRects().length).length);
-    check(g.words === 'Audio not available: text shown' && g.text === transcripts['m1_rover.mp3'] && visibleError === 0, `${tag}: with the MP3 files missing (404) the caption shows the transcript and "${g.words}", no error on screen`);
+    check(g.words === 'Audio not available: text shown' && g.text === transcripts['m3_base.mp3'] && visibleError === 0, `${tag}: with the MP3 files missing (404) the caption shows the transcript and "${g.words}", no error on screen`);
     check(errors.length === 0, `${tag}: missing MP3 files leave no application error in the console${errors.length ? `: ${errors.join(' | ')}` : ''}`);
     await ctx.close();
   }
@@ -496,7 +571,8 @@ async function run(browser, base, variant, size, full) {
     await page.addInitScript(() => localStorage.setItem('starsBesideYou.audioGuide', 'on'));
     await page.goto(base, { timeout: T });
     await page.waitForFunction(() => window.starsFlow?.hasData() && window.starsA11y, null, { timeout: T });
-    await page.keyboard.press('1');
+    const kr = await page.evaluate(() => window.starsFlow.store.offeredMissions().findIndex((m) => m.id === 'lunar_base') + 1);
+    await page.keyboard.press(String(kr));
     const playing = await page
       .waitForFunction(() => { const a = document.getElementById('guide-audio'); return a && !a.paused && a.currentTime > 0.2 && a.duration > 20; }, null, { timeout: 30000 })
       .then(() => true, () => false);
