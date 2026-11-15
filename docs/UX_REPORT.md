@@ -156,3 +156,39 @@ here says anything about 60 fps on a computer or 30 fps on a phone; not measured
 - The standard palette is not colour-blind-safe by distance (numbers above); it relies on text and
   icons, and the switch provides the safe palette.
 - review.mjs and a solo re-run of smoke and test:flow are pending.
+
+---
+
+# Round 2: reviewer findings, engine corrections, team decisions (web-accessibility, after 47474f8)
+
+Merged `origin/final-integration` (contract revision 7: Rover on slope and roughness, the bundle's
+five with 2-degree separation, notes with `show`). The web needed no per-mission change for it.
+
+## Fixed
+
+| Finding | Fix | Test |
+|---|---|---|
+| UX major 1: caption cut at three lines | caption unfolded (whole transcript) while the guide is on; folded to one or two lines with a "Full text" control (aria-expanded) when off; a very long one scrolls in a focusable box, never cut | test:a11y "whole caption is shown", "Full text unfolds" |
+| UX major 2: phone first screen | compact header (switches on one row), caption folded, compact mission cards: at 375x812 the purpose and all three choices are on screen (lowest choice 711 of 812 px); at 812x375 the start screen scrolls and every choice can be brought into view | test:a11y "first screen without scrolling" |
+| UX minor: header wraps at 1440 | brand line hidden below 1800 px: header 87 px, one row | test:a11y "header stays on one row" |
+| UX minor + figures 2: pair track late | the guide changes as soon as a pair is chosen (introduction stopped and reset, pair track started) before the panel data arrive; a second request for a starting track is ignored | test:a11y "within 300 ms of key 1" |
+| UX minor: technical leftovers | "Share of similarity in the final score (alpha)"; data error says "The mission data could not be loaded" (file name only in a short note for the team); imagery error without tile coordinates (they go to the console). The zone label "PSR" comes from the bundle (engine owner) | test:flow scans |
+| UX minor: label over bright imagery | wider dark halo on the selected label, offset above the beam | visual |
+| UX minor: focus on BODY at load | focus moves to the first screen's heading when the loading screen closes | - |
+| Figures 1 (round 3): "Lunar twin" sentence typed per rule | the twin section only says where the twin lies; how it is chosen is the bundle's meaning text of the mission's rule | test:a11y Lunar base block |
+| Figures 3: introductions for any bundle | an introduction (which names the five) plays only when all five pair tracks match the bundle's five place by place; otherwise a caption from the screen. With the current bundle: Lunar base yes, Rover and Solar panels no (their five changed) | test:a11y "no introduction plays" |
+| Figures 4: rule ids in Data and limits | a sentence that names a rule identifier is left out (reported to the director) | test:a11y "no rule identifier" |
+| Engine B1: Solar saturation note | shown through `show` (mission card, every Solar pair, Data and limits) | test:a11y notes |
+| Engine B2: Lunar base sentence | toFixed on the stored float32 for templates without display_rule; equals explain.json on all 25 Lunar base items (and Solar 25) | test:data |
+| Engine B3: level UNDOCUMENTED | only levels some variable has are listed | - |
+| Engine B5: distances | the nearest-place distance is the stored float32's shortest decimal, rounded once | - |
+| Decision 1: the bundle's five | `missions.json` `top5.ids` in order (fallback ranks 1 to 5); "Ranked N overall"; the rule under the five; keys 1 to 5 and pair tracks by position and cell ids | test:a11y |
+| Decision 2: pending.json | listed tracks: caption with "Text only: new recording pending", never requested (even with R) | test:a11y pending block |
+| Decision 3: notes with `show` | rendered in every place named, for the missions named, with no per-key code; mission-card notes behind "Limits of this list (N)" | test:a11y notes |
+
+Three bundle notes carry file and column names; the web passes them through its plain-words
+filter until the engine owner rephrases them (reported).
+
+## Results of the final round
+
+Filled below when the runs finish.
