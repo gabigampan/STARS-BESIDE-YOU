@@ -1,6 +1,6 @@
 {
  "format": "stars-beside-you audio tracks, version 1",
- "source_of_pairs": "docs/AUDIO_TOP5.json (rank n of each mission is track <mission>_n)",
+ "source_of_pairs": "docs/AUDIO_TOP5.json (entry n of each mission's pairs, in order, is track <mission>_n; rank = the place among the five shown, overall_rank = the place in the full ranking)",
  "captions": "transcripts.json (file name -> exact spoken text); this file holds no caption text",
  "tracks": [
   {
@@ -31,135 +31,150 @@
    "step": "pair",
    "mission": "rover",
    "rank": 1,
+   "overall_rank": 3,
    "file": "rover_1.mp3",
-   "earth_cell_id": "E17566",
-   "moon_cell_id": "M59895"
+   "earth_cell_id": "E4037",
+   "moon_cell_id": "M63714"
   },
   {
    "id": "rover_2",
    "step": "pair",
    "mission": "rover",
    "rank": 2,
+   "overall_rank": 254,
    "file": "rover_2.mp3",
-   "earth_cell_id": "E23945",
-   "moon_cell_id": "M59895"
+   "earth_cell_id": "E50510",
+   "moon_cell_id": "M59438"
   },
   {
    "id": "rover_3",
    "step": "pair",
    "mission": "rover",
    "rank": 3,
+   "overall_rank": 251,
    "file": "rover_3.mp3",
-   "earth_cell_id": "E18282",
-   "moon_cell_id": "M59895"
+   "earth_cell_id": "E44239",
+   "moon_cell_id": "M59712"
   },
   {
    "id": "rover_4",
    "step": "pair",
    "mission": "rover",
    "rank": 4,
+   "overall_rank": 241,
    "file": "rover_4.mp3",
-   "earth_cell_id": "E18280",
-   "moon_cell_id": "M59895"
+   "earth_cell_id": "E26510",
+   "moon_cell_id": "M63711"
   },
   {
    "id": "rover_5",
    "step": "pair",
    "mission": "rover",
    "rank": 5,
+   "overall_rank": 236,
    "file": "rover_5.mp3",
-   "earth_cell_id": "E15395",
-   "moon_cell_id": "M59895"
+   "earth_cell_id": "E26087",
+   "moon_cell_id": "M61294"
   },
   {
    "id": "solar_1",
    "step": "pair",
    "mission": "solar",
    "rank": 1,
+   "overall_rank": 1,
    "file": "solar_1.mp3",
-   "earth_cell_id": "E38464",
-   "moon_cell_id": "M24296"
+   "earth_cell_id": "E40184",
+   "moon_cell_id": "M23206"
   },
   {
    "id": "solar_2",
    "step": "pair",
    "mission": "solar",
    "rank": 2,
+   "overall_rank": 2,
    "file": "solar_2.mp3",
-   "earth_cell_id": "E38105",
-   "moon_cell_id": "M24583"
+   "earth_cell_id": "E29749",
+   "moon_cell_id": "M26063"
   },
   {
    "id": "solar_3",
    "step": "pair",
    "mission": "solar",
    "rank": 3,
+   "overall_rank": 5,
    "file": "solar_3.mp3",
-   "earth_cell_id": "E38744",
-   "moon_cell_id": "M40854"
+   "earth_cell_id": "E23648",
+   "moon_cell_id": "M22156"
   },
   {
    "id": "solar_4",
    "step": "pair",
    "mission": "solar",
    "rank": 4,
+   "overall_rank": 7,
    "file": "solar_4.mp3",
-   "earth_cell_id": "E37746",
-   "moon_cell_id": "M24761"
+   "earth_cell_id": "E29746",
+   "moon_cell_id": "M26056"
   },
   {
    "id": "solar_5",
    "step": "pair",
    "mission": "solar",
    "rank": 5,
+   "overall_rank": 9,
    "file": "solar_5.mp3",
-   "earth_cell_id": "E38465",
-   "moon_cell_id": "M40406"
+   "earth_cell_id": "E28670",
+   "moon_cell_id": "M25483"
   },
   {
    "id": "lunar_base_1",
    "step": "pair",
    "mission": "lunar_base",
    "rank": 1,
+   "overall_rank": 1,
    "file": "base_1.mp3",
-   "earth_cell_id": "E17538",
-   "moon_cell_id": "M63528"
+   "earth_cell_id": "E21054",
+   "moon_cell_id": "M62517"
   },
   {
    "id": "lunar_base_2",
    "step": "pair",
    "mission": "lunar_base",
    "rank": 2,
+   "overall_rank": 3,
    "file": "base_2.mp3",
-   "earth_cell_id": "E16830",
-   "moon_cell_id": "M63841"
+   "earth_cell_id": "E17538",
+   "moon_cell_id": "M63528"
   },
   {
    "id": "lunar_base_3",
    "step": "pair",
    "mission": "lunar_base",
    "rank": 3,
+   "overall_rank": 5,
    "file": "base_3.mp3",
-   "earth_cell_id": "E15751",
-   "moon_cell_id": "M64018"
+   "earth_cell_id": "E21833",
+   "moon_cell_id": "M62515"
   },
   {
    "id": "lunar_base_4",
    "step": "pair",
    "mission": "lunar_base",
    "rank": 4,
+   "overall_rank": 6,
    "file": "base_4.mp3",
-   "earth_cell_id": "E21054",
-   "moon_cell_id": "M62517"
+   "earth_cell_id": "E18627",
+   "moon_cell_id": "M62479"
   },
   {
    "id": "lunar_base_5",
    "step": "pair",
    "mission": "lunar_base",
    "rank": 5,
+   "overall_rank": 7,
    "file": "base_5.mp3",
-   "earth_cell_id": "E17187",
-   "moon_cell_id": "M62523"
+   "earth_cell_id": "E19672",
+   "moon_cell_id": "M63657"
   }
  ]
 }

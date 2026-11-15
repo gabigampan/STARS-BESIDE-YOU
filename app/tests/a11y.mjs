@@ -70,12 +70,13 @@ const sums = Object.fromEntries(
   const pref = { rover: 'rover', solar: 'solar', lunar_base: 'base' };
   let agree = true;
   for (const [m, v] of Object.entries(top5.missions)) {
-    for (const p of v.pairs) {
-      const t = tracks.tracks.find((x) => x.step === 'pair' && x.mission === m && x.rank === p.rank);
-      if (!t || t.file !== `${pref[m]}_${p.rank}.mp3` || t.earth_cell_id !== p.earth_cell_id || t.moon_cell_id !== p.moon_cell_id) agree = false;
-    }
+    v.pairs.forEach((p, i) => {
+      // entry n of the file (in order) is track <mission>_n; its "rank" field is the place in the full ranking
+      const t = tracks.tracks.find((x) => x.step === 'pair' && x.mission === m && x.rank === i + 1);
+      if (!t || t.file !== `${pref[m]}_${i + 1}.mp3` || t.earth_cell_id !== p.earth_cell_id || t.moon_cell_id !== p.moon_cell_id) agree = false;
+    });
   }
-  check(agree, 'tracks.json pair tracks agree with docs/AUDIO_TOP5.json (rank n of each mission = track <mission>_n, same cell ids)');
+  check(agree, 'tracks.json pair tracks agree with docs/AUDIO_TOP5.json (entry n of each mission = track <mission>_n, same cell ids)');
 }
 
 // ---------------------------------------------------------------- colours (no browser)

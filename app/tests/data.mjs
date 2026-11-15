@@ -201,9 +201,11 @@ for (const dir of bundles) {
         // and the top 5 carry the same percentage as the team's recorded audio (transcripts.json)
         const tr = existsSync(join(APP, 'public/audio/transcripts.json')) ? JSON.parse(await readFile(join(APP, 'public/audio/transcripts.json'), 'utf8')) : null;
         if (tr && dir === join(APP, 'public/data/v2')) {
-          const top5 = ranked0.filter((r) => r.rank != null && r.rank <= 5).sort((a, b) => a.rank - b.rank);
+          // the bundle's five (missions.json top5.ids, revision 7), else ranks 1 to 5
+          const ids5 = m.top5?.ids;
+          const top5 = ids5?.length ? ids5.map((id) => ranked0.find((r) => r.id === id)).filter(Boolean) : ranked0.filter((r) => r.rank != null && r.rank <= 5).sort((a, b) => a.rank - b.rank);
           const got = top5.map((r) => /\((\d+) % is lost/.exec(store.pairSentencesAt(m.id, r.passPos).find((x) => x.key === 'solar_limitation')?.text ?? '')?.[1] ?? '?');
-          const heard = top5.map((r) => /(\d+) percent less/.exec(tr[`solar_${r.rank}.mp3`] ?? '')?.[1] ?? '?');
+          const heard = top5.map((r, i) => /(\d+) percent (?:less|is lost)/.exec(tr[`solar_${i + 1}.mp3`] ?? '')?.[1] ?? '?');
           check(got.length === 5 && got.join() === heard.join(), `${m.id}: the top 5 sentences carry the same share lost as the recorded audio (${got.join(', ')} / audio ${heard.join(', ')})`);
         }
       }
