@@ -192,7 +192,7 @@ for (const dir of bundles) {
         for (let k = 0; k < pairedPos.length && n500 < 500; k += stepK) {
           n500++;
           const t = store.pairSentencesAt(m.id, pairedPos[k]).find((x) => x.key === 'solar_limitation')?.text ?? '';
-          const mm = /only ([0-9.]+) of those ([0-9.]+) kWh.*?\((\d+) % is lost/.exec(t);
+          const mm = /only ([0-9.]+) of those ([0-9.]+) reach the ground: the air takes (\d+) %/.exec(t);
           if (!mm) { bad500++; continue; }
           const G = Math.round(Number(mm[1]) * 10), A = Math.round(Number(mm[2]) * 10);
           if (Math.floor((200 * (A - G) + A) / (2 * A)) !== Number(mm[3])) bad500++;
@@ -204,7 +204,7 @@ for (const dir of bundles) {
           // the bundle's five (missions.json top5.ids, revision 7), else ranks 1 to 5
           const ids5 = m.top5?.ids;
           const top5 = ids5?.length ? ids5.map((id) => ranked0.find((r) => r.id === id)).filter(Boolean) : ranked0.filter((r) => r.rank != null && r.rank <= 5).sort((a, b) => a.rank - b.rank);
-          const got = top5.map((r) => /\((\d+) % is lost/.exec(store.pairSentencesAt(m.id, r.passPos).find((x) => x.key === 'solar_limitation')?.text ?? '')?.[1] ?? '?');
+          const got = top5.map((r) => /the air takes (\d+) %/.exec(store.pairSentencesAt(m.id, r.passPos).find((x) => x.key === 'solar_limitation')?.text ?? '')?.[1] ?? '?');
           const heard = top5.map((r, i) => /(\d+) percent (?:less|is lost)/.exec(tr[`solar_${i + 1}.mp3`] ?? '')?.[1] ?? '?');
           check(got.length === 5 && got.join() === heard.join(), `${m.id}: the top 5 sentences carry the same share lost as the recorded audio (${got.join(', ')} / audio ${heard.join(', ')})`);
         }

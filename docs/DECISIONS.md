@@ -1159,3 +1159,32 @@ Coinciden en duración, volumen medio y pico; "sin silencios largos" coincide si
 **Estado.** `app/public/audio/pending.json` tiene la lista vacía (la web reproduce cada pista con la guía activada; una pista en la lista solo mostraría su texto). Nada pendiente de grabar (`docs/AUDIO_RERECORD.md`).
 
 **Despliegue (14:30 CET).** El primer intento, a las 14:09 CET, lo bloqueó Vercel (`TEAM_ACCESS_REQUIRED`: en un repositorio privado de un equipo Hobby el autor del commit desplegado tiene que ser el titular del equipo). El líder añadió su propio commit `0d87802` encima de `e41af38` (una línea en blanco en `app/README.md`) y `scripts/deploy_vercel.sh`, sin cambios, desplegó producción a las 14:30 CET: https://stars-beside-you.vercel.app. Cualquier despliegue posterior necesita que el último commit vuelva a ser del titular de la cuenta. Comprobación independiente de la integración: `docs/stats_audit/15_audios_integrados.md`.
+
+
+## Frases del par en lenguaje llano (15-11-2026, 19:50 CET, el delegado en nombre del líder)
+
+**Orden.** El líder, a través de su delegado (opción (a); su punto 18: sin jerga), manda reescribir en lenguaje llano las dos frases del par que salen en la tarjeta del par de la web: la de Placas solares (`approved_texts.solar_limitation`) tal como se propuso, y la de Base lunar con sus propias palabras, sin «kelvin»: una diferencia en kelvin es la misma en grados Celsius, así que las dos cifras que antes se escribían «K colder» y «K larger» se escriben ahora en °C. Mismas cifras; nada más cambia.
+
+**Placas solares (`solar_limitation`), plantilla por par.** Antes:
+
+> "This pair is matched on sunlight above the atmosphere: {toa_earth} kWh/m²/day at the top of Earth's atmosphere here and {toa_moon} kWh/m²/day on the lunar surface. At the Earth site only {ground_earth} of those {toa_earth} kWh/m²/day reach the ground ({loss_pct} % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts {lunar_day} Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+
+Después:
+
+> "Both places get about the same sunlight before it passes through any air: {toa_earth} here and {toa_moon} on the Moon, in kilowatt-hours per square metre each day. Here only {ground_earth} of those {toa_earth} reach the ground: the air takes {loss_pct} %. The Moon has no air, but its day lasts {lunar_day} Earth days, about half of them dark. How sloped and rough the ground is counts less."
+
+Mismos marcadores y misma regla de presentación: `{toa_earth}`, `{toa_moon}` y `{ground_earth}` con 1 decimal; `{loss_pct}` calculado de los dos números impresos (regla `share_lost_of_displayed_tenths`); `{lunar_day}` = 29.5 al construir. La plantilla no tiene variantes. Primera analogía de la web (E40184): "Both places get about the same sunlight before it passes through any air: 9.3 here and 9.4 on the Moon, in kilowatt-hours per square metre each day. Here only 5.7 of those 9.3 reach the ground: the air takes 39 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less." «About the same» es cierto en los 6.360 pares: la diferencia guardada es como mucho 0,57 kWh/m²/día (tolerancia de la misión: 0,6) y la impresa como mucho 0,5.
+
+**Base lunar (`lunar_base_pair_sentence`), plantilla por par.** Antes:
+
+> "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is {temp_diff_k} K colder on average (minimum {tmin_moon_c} °C at the surface against {tmin_earth_c} °C air temperature here) and its day-night swing is {amp_diff_k} K larger; slope differs by {slope_diff}° and roughness by {rough_diff} m."
+
+Después:
+
+> "These two places are not equally cold. They match because each holds a similar place in its own world's ranking, from mildest to coldest and from steadiest to most changeable. The twin is {temp_diff_k} °C colder, and its temperature swings {amp_diff_k} °C more between day and night."
+
+`{temp_diff_k}` y `{amp_diff_k}` son las mismas columnas (`info.temp_k.diff`, `lst_diurnal_amp_k.diff`) con el mismo redondeo (0 decimales, `toFixed` del float32 guardado). Las demás cifras de la frase anterior (mínimo de la gemela y del punto, diferencias de pendiente y de rugosidad) ya no se imprimen en la frase: siguen en las líneas clave de la tarjeta y en «More details»; sus marcadores siguen declarados en la plantilla, sin usarse en el texto, para no tocar ningún número del paquete. La plantilla no tiene variantes. «Colder» y «more» son ciertos en los 450 pares: en todos la gemela es más fría (diferencia mínima 143 K) y su oscilación diaria es mayor (diferencia mínima 107 K). Primera analogía de la web (E21054): "These two places are not equally cold. They match because each holds a similar place in its own world's ranking, from mildest to coldest and from steadiest to most changeable. The twin is 163 °C colder, and its temperature swings 158 °C more between day and night."
+
+**Qué no cambia.** Ningún número del modelo: los 30 `.bin` del paquete tienen el mismo sha256 que en `d3a4862`; en `explain.json` solo cambian las 50 frases `pair_sentence` (25 por misión), en `similarity.json` solo esos dos textos y en `manifest.json` solo los sha256 y tamaños de esos dos ficheros, los totales de tamaño y el sha256 de `engine_config.json`. Las cifras de las cinco primeras analogías de cada misión son las mismas que en la frase anterior (en Base lunar, las dos que siguen impresas).
+
+**Consecuencia.** Las tarjetas finales de los VÍDEOS de Placas solares y de Base lunar citan la redacción anterior de la frase del par: los vídeos se renderizaron antes de este cambio y no se vuelven a renderizar. Sus cifras son las mismas.

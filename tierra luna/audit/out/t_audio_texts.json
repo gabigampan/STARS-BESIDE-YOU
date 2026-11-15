@@ -347,7 +347,7 @@
      "loss_pct": 39,
      "clear": "0.675",
      "clear_raw": 0.6748999953269958,
-     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.3 kWh/m²/day at the top of Earth's atmosphere here and 9.4 kWh/m²/day on the lunar surface. At the Earth site only 5.7 of those 9.3 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+     "pair_sentence": "Both places get about the same sunlight before it passes through any air: 9.3 here and 9.4 on the Moon, in kilowatt-hours per square metre each day. Here only 5.7 of those 9.3 reach the ground: the air takes 39 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
     },
     {
      "number": 2,
@@ -389,7 +389,7 @@
      "loss_pct": 37,
      "clear": "0.705",
      "clear_raw": 0.705299973487854,
-     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.2 of those 9.9 kWh/m²/day reach the ground (37 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+     "pair_sentence": "Both places get about the same sunlight before it passes through any air: 9.9 here and 9.9 on the Moon, in kilowatt-hours per square metre each day. Here only 6.2 of those 9.9 reach the ground: the air takes 37 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
     },
     {
      "number": 3,
@@ -431,7 +431,7 @@
      "loss_pct": 39,
      "clear": "0.662",
      "clear_raw": 0.6622999906539917,
-     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.2 kWh/m²/day at the top of Earth's atmosphere here and 9.1 kWh/m²/day on the lunar surface. At the Earth site only 5.6 of those 9.2 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+     "pair_sentence": "Both places get about the same sunlight before it passes through any air: 9.2 here and 9.1 on the Moon, in kilowatt-hours per square metre each day. Here only 5.6 of those 9.2 reach the ground: the air takes 39 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
     },
     {
      "number": 4,
@@ -473,7 +473,7 @@
      "loss_pct": 38,
      "clear": "0.677",
      "clear_raw": 0.6771000027656555,
-     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.1 of those 9.9 kWh/m²/day reach the ground (38 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+     "pair_sentence": "Both places get about the same sunlight before it passes through any air: 9.9 here and 9.9 on the Moon, in kilowatt-hours per square metre each day. Here only 6.1 of those 9.9 reach the ground: the air takes 38 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
     },
     {
      "number": 5,
@@ -515,7 +515,7 @@
      "loss_pct": 36,
      "clear": "0.792",
      "clear_raw": 0.7922000288963318,
-     "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.8 kWh/m²/day at the top of Earth's atmosphere here and 9.8 kWh/m²/day on the lunar surface. At the Earth site only 6.3 of those 9.8 kWh/m²/day reach the ground (36 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+     "pair_sentence": "Both places get about the same sunlight before it passes through any air: 9.8 here and 9.8 on the Moon, in kilowatt-hours per square metre each day. Here only 6.3 of those 9.8 reach the ground: the air takes 36 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
     }
    ]
   },
@@ -1143,7 +1143,7 @@
   {
    "ok": true,
    "check": "solar #1: my figures appear in the bundle's pair sentence",
-   "detail": "This pair is matched on sunlight above the atmosphere: 9.3 kWh/m²/day at the top of Earth's atmosphere here and 9.4 kWh/m²/day on the lunar surface. At the Earth site only 5.7 of those 9.3 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+   "detail": "Both places get about the same sunlight before it passes through any air: 9.3 here and 9.4 on the Moon, in kilowatt-hours per square metre each day. Here only 5.7 of those 9.3 reach the ground: the air takes 39 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
   },
   {
    "ok": true,
@@ -1193,7 +1193,7 @@
   {
    "ok": true,
    "check": "solar #2: my figures appear in the bundle's pair sentence",
-   "detail": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.2 of those 9.9 kWh/m²/day reach the ground (37 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+   "detail": "Both places get about the same sunlight before it passes through any air: 9.9 here and 9.9 on the Moon, in kilowatt-hours per square metre each day. Here only 6.2 of those 9.9 reach the ground: the air takes 37 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
   },
   {
    "ok": true,
@@ -1243,7 +1243,7 @@
   {
    "ok": true,
    "check": "solar #3: my figures appear in the bundle's pair sentence",
-   "detail": "This pair is matched on sunlight above the atmosphere: 9.2 kWh/m²/day at the top of Earth's atmosphere here and 9.1 kWh/m²/day on the lunar surface. At the Earth site only 5.6 of those 9.2 kWh/m²/day reach the ground (39 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+   "detail": "Both places get about the same sunlight before it passes through any air: 9.2 here and 9.1 on the Moon, in kilowatt-hours per square metre each day. Here only 5.6 of those 9.2 reach the ground: the air takes 39 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
   },
   {
    "ok": true,
@@ -1293,7 +1293,7 @@
   {
    "ok": true,
    "check": "solar #4: my figures appear in the bundle's pair sentence",
-   "detail": "This pair is matched on sunlight above the atmosphere: 9.9 kWh/m²/day at the top of Earth's atmosphere here and 9.9 kWh/m²/day on the lunar surface. At the Earth site only 6.1 of those 9.9 kWh/m²/day reach the ground (38 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+   "detail": "Both places get about the same sunlight before it passes through any air: 9.9 here and 9.9 on the Moon, in kilowatt-hours per square metre each day. Here only 6.1 of those 9.9 reach the ground: the air takes 38 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
   },
   {
    "ok": true,
@@ -1343,7 +1343,7 @@
   {
    "ok": true,
    "check": "solar #5: my figures appear in the bundle's pair sentence",
-   "detail": "This pair is matched on sunlight above the atmosphere: 9.8 kWh/m²/day at the top of Earth's atmosphere here and 9.8 kWh/m²/day on the lunar surface. At the Earth site only 6.3 of those 9.8 kWh/m²/day reach the ground (36 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion."
+   "detail": "Both places get about the same sunlight before it passes through any air: 9.8 here and 9.8 on the Moon, in kilowatt-hours per square metre each day. Here only 6.3 of those 9.8 reach the ground: the air takes 36 %. The Moon has no air, but its day lasts 29.5 Earth days, about half of them dark. How sloped and rough the ground is counts less."
   },
   {
    "ok": true,
