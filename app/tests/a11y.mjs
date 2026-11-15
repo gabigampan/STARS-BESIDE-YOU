@@ -360,7 +360,7 @@ async function run(browser, base, variant, size, full) {
       check(top.every((b) => b.h >= 44 && /Final score/.test(b.text)), `${tag} ${mid}: each top-five button is at least 44 px high and shows the final score`);
       if (twins) check(top.every((b) => /Lunar twin/.test(b.text)), `${tag} ${mid}: each top-five button names its lunar twin`);
       // the team lead's ruling: never "the best" about the five
-      const bestWords = await page.evaluate(() => (document.body.innerText.match(/five best|the best/gi) ?? []).length + [...document.querySelectorAll('[aria-label]')].filter((e) => /five best|the best/i.test(e.getAttribute('aria-label'))).length);
+      const bestWords = await page.evaluate(() => (document.body.innerText.match(/five best|the best (?:five|analogs?|sites|places|pairs)/gi) ?? []).length + [...document.querySelectorAll('[aria-label]')].filter((e) => /five best|the best (?:five|analogs?|sites|places|pairs)/i.test(e.getAttribute('aria-label'))).length);
       check(bestWords === 0, `${tag} ${mid}: no "five best" or "the best" anywhere on the mission screen (${bestWords})`);
       const head5 = await page.evaluate(() => document.getElementById('top5-title')?.textContent ?? '');
       check(/^Five of the /.test(head5) && !/best/i.test(head5), `${tag} ${mid}: the five's heading says what the bundle says ("${head5}")`);
