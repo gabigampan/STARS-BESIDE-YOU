@@ -52,12 +52,16 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
       // the engine's record, in plain words (file, code and column references left out)
       // an entry that describes the z-score similarity is left out for a mission that no longer uses it
       h('ul', { 'data-record': m.id }, m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => h('li', null, plainText(store, l, m)))),
+      // the bundle's notes for this place ("show" includes data_and_limits), verbatim
+      ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, n.text)),
     );
   }
+  const general = store.notesFor('data_and_limits', null).filter((n) => !n.missions);
+  if (general.length) add(wrap, h('h3', { class: 'dlg-h' }, 'Notes on every mission'), ...general.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, n.text)));
 
   add(wrap, 
     h('h3', { class: 'dlg-h' }, 'Data levels'),
-    h('ul', { class: 'legend-list wide' }, Object.entries(store.variables.levels).map(([k, t]) => h('li', null, levelTag(k as never), h('span', null, t)))),
+    h('ul', { class: 'legend-list wide' }, Object.entries(store.variables.levels).filter(([k]) => usedLevels(store).has(k)).map(([k, t]) => h('li', null, levelTag(k as never), h('span', null, t)))),
   );
 
   // sources: one entry per product, with its licence and credit
@@ -138,4 +142,13 @@ export function renderZoneSources(store: DataStore): void {
   const before = Array.from(wrap.querySelectorAll('h3.dlg-h')).find((x) => x.textContent === 'Data sources');
   if (before) wrap.insertBefore(sec, before);
   else wrap.append(sec);
+}
+
+/** The data levels some variable of the bundle actually has (a level no variable has is not offered). */
+function usedLevels(store: DataStore): Set<string> {
+  const used = new Set<string>();
+  const vars = (store.variables as unknown as { variables: Record<string, { bodies?: Record<string, { level?: string } | null> }> | { bodies?: Record<string, { level?: string } | null> }[] }).variables;
+  for (const v of Array.isArray(vars) ? vars : Object.values(vars ?? {})) for (const b of Object.values(v?.bodies ?? {})) if (b?.level) used.add(b.level);
+  if (!used.size) for (const k of Object.keys(store.variables.levels)) used.add(k);
+  return used;
 }

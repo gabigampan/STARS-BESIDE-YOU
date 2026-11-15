@@ -106,7 +106,7 @@ export function setupKeys(app: FlowApp, a11y: A11y): void {
     } else if (step === 'pick') {
       const m = app.mission();
       if (!m) return;
-      const it = app.missionPanel.topFiveItems(m).find((x) => x.rank === n);
+      const it = app.missionPanel.topFiveItems(m).find((x) => x.pos === n);
       if (!it) return;
       void app.select(it.id);
       e.preventDefault();

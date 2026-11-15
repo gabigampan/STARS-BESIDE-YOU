@@ -433,9 +433,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       h(
         'p',
         { class: 'muted' },
-        o.valueRule
-          ? `The twin is the lunar cell inside ${app.zoneName(m) ?? "the mission's target zone"} whose real values are closest within the tolerances. It is marked on the Moon globe and joined to this point by the beam.`
-          : `The twin is the most similar lunar cell inside ${app.zoneName(m) ?? "the mission's target zone"}. It is marked on the Moon globe and joined to this point by the beam.`,
+        // how the twin is chosen is said by the bundle's meaning text of this mission's rule (shown with the similarity)
+        `The twin lies inside ${app.zoneName(m) ?? "the mission's target zone"}. It is marked on the Moon globe and joined to this point by the beam.`,
       ),
     );
   } else if (unpaired) {
@@ -532,7 +531,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       sec(
         'Similarity to the Moon',
         ...(o.pass && o.final != null && o.pairRows.length
-          ? pairSimilarity(app, o)
+          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, n.text)))]
           : [
               h(
                 'p',

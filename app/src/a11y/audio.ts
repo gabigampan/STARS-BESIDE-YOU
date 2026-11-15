@@ -31,7 +31,7 @@ export interface TracksManifest {
   tracks: TrackEntry[];
 }
 
-export type CaptionState = 'playing' | 'paused' | 'finished' | 'text-only' | 'unavailable' | 'press-r' | 'loading';
+export type CaptionState = 'playing' | 'paused' | 'finished' | 'text-only' | 'unavailable' | 'press-r' | 'loading' | 'pending';
 
 const STATE_WORDS: Record<CaptionState, string> = {
   playing: 'Playing',
@@ -41,6 +41,7 @@ const STATE_WORDS: Record<CaptionState, string> = {
   unavailable: 'Audio not available: text shown',
   'press-r': 'Press R to play',
   loading: 'Starting',
+  pending: 'Text only: new recording pending',
 };
 
 export interface GuideStep {
@@ -61,6 +62,10 @@ export class AudioGuide {
   private enabled = readFlag(PREF_AUDIO);
   private manifest: TracksManifest | null = null;
   private transcripts: Record<string, string> | null = null;
+  /** audio/pending.json: tracks whose new text is in transcripts.json while the MP3 is still the old one. */
+  private pending = new Set<string>();
+  private expanded = false;
+  private readonly moreBtn: HTMLButtonElement;
   private step: GuideStep | null = null;
   private state: CaptionState = 'text-only';
   private requestSeq = 0;
@@ -95,13 +100,20 @@ export class AudioGuide {
     this.repeatBtn.setAttribute('aria-keyshortcuts', 'R');
     this.repeatBtn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg><span>Repeat</span><kbd class="key" aria-hidden="true">R</kbd>';
     this.repeatBtn.addEventListener('click', () => this.repeat());
-    head.append(this.titleEl, this.stateEl, this.repeatBtn);
+    this.moreBtn = document.createElement('button');
+    this.moreBtn.type = 'button';
+    this.moreBtn.className = 'btn btn-small caption-more';
+    this.moreBtn.setAttribute('aria-controls', 'caption-text');
+    this.moreBtn.addEventListener('click', () => this.setExpanded(!this.expanded));
+    head.append(this.titleEl, this.stateEl, this.moreBtn, this.repeatBtn);
     this.textEl = document.createElement('p');
     this.textEl.className = 'caption-text';
     this.textEl.id = 'caption-text';
     this.textEl.tabIndex = 0;
     root.setAttribute('aria-labelledby', 'caption-title');
     root.append(head, this.textEl);
+    // the whole text is shown while the guide speaks; with the guide off it starts folded (one control unfolds it)
+    this.setExpanded(this.enabled);
 
     this.el.addEventListener('playing', () => this.setState('playing'));
     this.el.addEventListener('pause', () => {
@@ -125,7 +137,8 @@ export class AudioGuide {
         return null;
       }
     };
-    const [m, t] = await Promise.all([get<TracksManifest>('tracks.json'), get<Record<string, string>>('transcripts.json')]);
+    const [m, t, p] = await Promise.all([get<TracksManifest>('tracks.json'), get<Record<string, string>>('transcripts.json'), get<{ pending_rerecord?: string[] }>('pending.json')]);
+    this.pending = new Set(Array.isArray(p?.pending_rerecord) ? p.pending_rerecord.filter((x) => typeof x === 'string') : []);
     this.manifest = m && Array.isArray(m.tracks) ? m : null;
     this.transcripts = t && typeof t === 'object' ? t : null;
     if (this.step) this.render();
@@ -171,12 +184,23 @@ export class AudioGuide {
     }
     this.stop();
     this.render();
-    if (this.enabled && step.track) void this.play();
+    if (step.track && this.pending.has(step.track.file)) this.setState('pending');
+    else if (this.enabled && step.track) void this.play();
     else this.setState('text-only');
+  }
+
+  /** Show the whole caption (unfolded) or one or two lines of it (folded). */
+  setExpanded(on: boolean): void {
+    this.expanded = on;
+    this.root.dataset.expanded = String(on);
+    this.moreBtn.setAttribute('aria-expanded', String(on));
+    this.moreBtn.textContent = on ? 'Show less' : 'Full text';
+    this.moreBtn.setAttribute('aria-label', on ? 'Show less of the guide text' : 'Full text of the guide');
   }
 
   setEnabled(on: boolean): void {
     this.enabled = on;
+    this.setExpanded(on);
     if (!on) {
       this.stop();
       this.setState('text-only');
@@ -209,6 +233,12 @@ export class AudioGuide {
   private async play(): Promise<void> {
     const track = this.step?.track;
     if (!track) return;
+    if (this.pending.has(track.file)) {
+      this.setState('pending');
+      return;
+    }
+    // a second request for the track that is starting right now is the same request
+    if (this.state === 'loading' && this.el.getAttribute('src')?.endsWith(`/${track.file}`)) return;
     this.stop();
     const seq = this.requestSeq;
     const el = this.el;

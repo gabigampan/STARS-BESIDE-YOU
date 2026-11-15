@@ -742,6 +742,22 @@ export class DataStore {
     return b !== this.manifest.encoding.int32_missing && ((b >>> k) & 1) === 1;
   }
 
+  /**
+   * The bundle's notes that must be visible in one place (similarity.json texts with "show"), for one
+   * mission (texts without "missions" apply to all), verbatim, in the bundle's order.
+   */
+  notesFor(place: 'mission_card' | 'top5' | 'pair_panel' | 'data_and_limits', missionId: string | null): { key: string; text: string; missions: string[] | null }[] {
+    const out: { key: string; text: string; missions: string[] | null }[] = [];
+    for (const [key, t] of Object.entries(this.similarity.texts ?? {})) {
+      const show = (t as { show?: unknown }).show;
+      if (!Array.isArray(show) || !show.includes(place) || typeof t.text !== 'string' || /\{[a-z_]+\}/.test(t.text)) continue;
+      const ms = Array.isArray(t.missions) ? (t.missions as string[]) : null;
+      if (missionId != null && ms && !ms.includes(missionId)) continue;
+      out.push({ key, text: t.text, missions: ms });
+    }
+    return out;
+  }
+
   /** An approved web text of the bundle (similarity.json texts.<key>.text), verbatim; null when absent. */
   text(key: string): string | null {
     const t = this.similarity.texts?.[key];

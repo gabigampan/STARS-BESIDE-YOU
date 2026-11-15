@@ -1574,3 +1574,48 @@ body.view-open .topbar {
 .keys-table td:first-child {
   white-space: nowrap;
 }
+
+/* phones: what this is and the three choices fit in the first screen */
+@media (max-width: 520px) {
+  .intro {
+    padding: 8px;
+    place-items: start center;
+    overflow-y: auto;
+  }
+  .intro-card {
+    padding: 12px;
+  }
+  .intro-title {
+    font-size: 1.15rem;
+  }
+  .intro-audience {
+    margin-top: 4px;
+  }
+  .intro-cta {
+    margin-top: 8px;
+  }
+  .choices {
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .choice {
+    min-height: 0;
+    padding: 8px 12px;
+    gap: 2px;
+  }
+  .choice-key {
+    position: absolute;
+    right: 44px;
+    top: 10px;
+  }
+  .choice {
+    position: relative;
+  }
+  .choice-meta {
+    display: none;
+  }
+  .intro-foot,
+  .intro-keys {
+    font-size: var(--step--1);
+  }
+}

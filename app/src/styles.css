@@ -814,8 +814,10 @@ a:hover {
   background: var(--sodium);
   border-color: var(--sodium);
 }
-.caption-repeat {
+.caption-more {
   margin-left: auto;
+}
+.caption-repeat {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -824,9 +826,24 @@ a:hover {
 .caption-text {
   margin-top: 2px;
   font-size: var(--step--1);
-  max-height: 4.4em;
-  overflow-y: auto;
   max-width: 110ch;
+}
+/* unfolded (the guide is on, or "Show the full text"): the whole transcript; a very long one scrolls
+   inside a box that is reachable with Tab and has a visible scroll bar, never cut */
+.caption[data-expanded='true'] .caption-text {
+  max-height: 40vh;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+/* folded: two lines and a fade, with "Show the full text" beside the title */
+.caption[data-expanded='false'] .caption-text {
+  max-height: 2.9em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+.caption-more {
+  min-height: 44px;
 }
 kbd.key {
   display: inline-block;
@@ -896,8 +913,11 @@ kbd.key {
     flex: none;
     padding: 0 10px;
   }
-  .caption-text {
-    max-height: 2.9em;
+  .caption[data-expanded='false'] .caption-text {
+    max-height: 1.45em;
+  }
+  .caption-title {
+    display: none;
   }
 }
 @media (max-height: 500px) and (max-width: 950px) {
@@ -906,8 +926,11 @@ kbd.key {
     order: 0;
     flex: 0 1 auto;
   }
-  .caption-text {
+  .caption[data-expanded='false'] .caption-text {
     max-height: 1.45em;
+  }
+  .caption[data-expanded='true'] .caption-text {
+    max-height: 30vh;
   }
 }
 @media (max-width: 520px) {
@@ -936,5 +959,17 @@ kbd.key {
   }
   .switch-state {
     min-width: 1.7em;
+  }
+}
+/* laptops: the header stays on one row with both switches and Keys */
+@media (min-width: 900px) and (max-width: 1799px) {
+  .brand-line {
+    display: none;
+  }
+  .topbar {
+    gap: 12px;
+  }
+  .switch {
+    padding: 0 10px;
   }
 }

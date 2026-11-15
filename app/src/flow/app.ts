@@ -354,7 +354,8 @@ export class FlowApp {
     }
     if (step === 'pick') {
       g.setStep({
-        track: g.track('mission', m.id),
+        // the introduction names the five analogs: offered only when the five pair tracks match the bundle's five
+        track: this.recordedFiveMatch(m) ? g.track('mission', m.id) : null,
         title: `${missionName(m)} mission`,
         fallback: `${missionName(m)}. ${missionLine(m)} Its five best analogs are listed first: press a number from 1 to 5 to open one, or Escape to go back.`,
       });
@@ -365,16 +366,28 @@ export class FlowApp {
     const item = this.ranking().find((r) => r.id === id);
     const twin = item?.twinId != null ? this.store.twin(m.id, item.twinId) : null;
     // a pair track plays only for the pair it was recorded for (tracks.json ids against the pair on screen)
-    const track =
-      twin && !this.usingCustom()
-        ? (a11y().guide.pairTrack(m.id, `E${id}`, `M${twin.id}`) ?? null)
-        : null;
+    // ... and it holds the same place among the five (its narration says "analog n")
+    const pos = this.missionPanel.topFiveItems(m).find((x) => x.id === id)?.pos;
+    const rec = twin && !this.usingCustom() ? a11y().guide.pairTrack(m.id, `E${id}`, `M${twin.id}`) : null;
+    const track = rec && pos != null && rec.rank === pos ? rec : null;
     const parts = [`${this.placeText(id)} on Earth.`];
     if (item?.rank != null) parts.push(`Rank ${item.rank} for the ${missionName(m)} mission${this.usingCustom() ? ' under your own weights' : ''}, final score ${item.final}.`);
     if (twin) parts.push(`Its lunar twin is ${twin.feature ? `near ${twin.feature.name}` : 'a cell of the lunar zone'}, at ${Math.abs(twin.lat).toFixed(1)}° ${twin.lat >= 0 ? 'N' : 'S'}.`);
     else parts.push('It has no lunar twin.');
     parts.push('Press Escape to go back to the list.');
-    g.setStep({ track, title: item?.rank != null ? `Analog ${item.rank}` : 'Selected place', fallback: parts.join(' ') });
+    g.setStep({ track, title: pos != null ? `Analog ${pos}` : item?.rank != null ? `Rank ${item.rank}` : 'Selected place', fallback: parts.join(' ') });
+  }
+
+  /** True when the recorded pair tracks of a mission are exactly the bundle's five, place by place. */
+  recordedFiveMatch(m: Mission): boolean {
+    const g = a11y().guide;
+    if (!this.store.hasTwins(m.id)) return false;
+    const five = this.missionPanel.topFiveItems(m);
+    if (five.length !== 5) return false;
+    return five.every((it) => {
+      const t = g.track('pair', m.id, it.pos);
+      return !!t && it.twinId != null && t.earth_cell_id === `E${it.id}` && t.moon_cell_id === `M${it.twinId}`;
+    });
   }
 
   // ---------- markers ----------
@@ -524,6 +537,8 @@ export class FlowApp {
     const seq = ++this.detailSeq;
     this.state.selectedId = id;
     this.setStep('compare');
+    // the guide changes at once (the introduction stops, the pair's caption and track start); the panel follows
+    this.updateGuide();
     const ranked = this.rankOf(id) != null;
     globesApi.markers.setSelected('earth', ranked ? id : null);
     this.zones?.closePanel();
@@ -619,7 +634,12 @@ export class FlowApp {
 
   /** Why there is no twin, verbatim from the bundle (the mission's similarity.no_twin_reason, else similarity.json's). */
   noTwinText(m: Mission | null = this.mission()): string {
-    return m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
+    const raw = m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
+    // never a rule's identifier on screen: a sentence that names one (snake_case) is left out
+    return raw
+      .split(/(?<=\.)\s+/)
+      .filter((s) => !/\b[a-z]+_[a-z_]+\b/.test(s))
+      .join(' ');
   }
 
   /** The mission's search zone name on the Moon (missions.json similarity.zone, else similarity.json target.zones). */

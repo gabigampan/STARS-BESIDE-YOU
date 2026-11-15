@@ -72,6 +72,7 @@ export class MissionPanel {
         h('button', { type: 'button', class: 'linklike', onclick: () => this.app.openLimits(m.id) }, 'Known limitations'),
       ),
       this.limitationNote(m),
+      this.cardNotes(m),
     );
 
     // the counts sit under the list heading, one line, so the list starts in the first view (checklist 06/03)
@@ -178,7 +179,7 @@ export class MissionPanel {
       h(
         'div',
         { class: 'slider slider-alpha' },
-        h('label', { for: 'w-alpha' }, 'Alpha: share of similarity in the final score'),
+        h('label', { for: 'w-alpha' }, 'Share of similarity in the final score (alpha)'),
         aOut,
         aIn,
         h('p', { class: 'slider-team', id: 'w-alpha-team' }, `Team value ${num(m.alpha, 2)}. Final = alpha x similarity + (1 - alpha) x suitability.`),
@@ -338,12 +339,26 @@ export class MissionPanel {
    * The five best analogs of the mission under the TEAM's weights (read from the bundle at run time):
    * five large numbered buttons, keys 1 to 5; each opens the comparison of that pair.
    */
-  topFiveItems(m: Mission): RankItem[] {
-    return this.app.store
-      .ranked(m.id)
-      .filter((p) => p.rank != null && p.rank <= 5)
-      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
-      .map((p) => ({ ...p, place: this.app.placeText(p.id) }));
+  topFiveItems(m: Mission): (RankItem & { pos: number })[] {
+    const all = this.app.store.ranked(m.id);
+    // revision 7: the bundle names the five (missions.json top5.ids, in order); else ranks 1 to 5
+    const ids = m.top5?.ids;
+    const picked = ids?.length
+      ? ids.map((id) => all.find((p) => p.id === id)).filter((p): p is (typeof all)[number] => !!p)
+      : all.filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+    return picked.slice(0, 5).map((p, i) => ({ ...p, pos: i + 1, place: this.app.placeText(p.id) }));
+  }
+
+  /** The bundle's notes for the mission card (texts with "show": mission_card), behind one labelled disclosure. */
+  private cardNotes(m: Mission): HTMLElement | null {
+    const notes = this.app.store.notesFor('mission_card', m.id);
+    if (!notes.length) return null;
+    return h(
+      'details',
+      { class: 'panel-sec card-notes', 'data-notes': 'mission_card' },
+      h('summary', null, `Limits of this list (${notes.length})`),
+      ...notes.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, n.text)),
+    );
   }
 
   private topFive(m: Mission): HTMLElement {
@@ -357,7 +372,7 @@ export class MissionPanel {
         { class: 'muted top5-note' },
         this.app.usingCustom()
           ? "These are the team's top five, ranked with the team's weights. Your own weights are in use in the full ranking below, so its order differs."
-          : `Ranked with the team's weights. Press a number from 1 to ${items.length} to open one.`,
+          : `Chosen with the team's weights. Press a number from 1 to ${items.length} to open one.`,
       ),
     );
     const ol = h('ol', { class: 'top5-list' });
@@ -365,13 +380,14 @@ export class MissionPanel {
       const tw = this.twinWords(it);
       const b = h(
         'button',
-        { type: 'button', class: 'top5-btn', 'data-id': String(it.id), 'data-rank': String(it.rank), 'aria-keyshortcuts': String(it.rank) },
-        h('kbd', { class: 'key top5-key', 'aria-hidden': 'true' }, String(it.rank)),
+        { type: 'button', class: 'top5-btn', 'data-id': String(it.id), 'data-rank': String(it.pos), 'data-overall': String(it.rank ?? ''), 'aria-keyshortcuts': String(it.pos) },
+        h('kbd', { class: 'key top5-key', 'aria-hidden': 'true' }, String(it.pos)),
         h(
           'span',
           { class: 'top5-text' },
-          h('span', { class: 'top5-place' }, h('span', { class: 'sr-only' }, `Analog ${it.rank}: `), it.place),
+          h('span', { class: 'top5-place' }, h('span', { class: 'sr-only' }, `Analog ${it.pos}: `), it.place),
           tw ? h('span', { class: 'top5-twin' }, tw.replace(/^Moon: /, 'Lunar twin: ')) : null,
+          it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `Ranked ${int(it.rank)} overall`) : null,
         ),
         h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),
       );
@@ -379,6 +395,9 @@ export class MissionPanel {
       ol.append(h('li', null, b));
     }
     sec.append(ol);
+    // the rule of the five and the bundle's notes for this list (texts with "show": top5), verbatim
+    if (m.top5?.rule) sec.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
+    for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, n.text));
     return sec;
   }
 

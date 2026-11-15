@@ -203,7 +203,17 @@ export interface IceComponent {
   pass_counts: Record<string, number>;
 }
 
+export interface Top5Spec {
+  rule?: string;
+  min_separation_deg?: number | null;
+  min_separation_km?: number | null;
+  ids: number[];
+  overall_ranks?: number[];
+}
+
 export interface Mission {
+  /** Revision 7: the five shown (ids in order) and the rule, in plain English. */
+  top5?: Top5Spec;
   id: string;
   title: string;
   description: string;

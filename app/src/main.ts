@@ -72,7 +72,13 @@ function main(): void {
 
   globes.earth.onStatus((s) => loading.update('earth', s));
   globes.moon.onStatus((s) => loading.update('moon', s));
-  void loading.finished.then((error) => settleImagery(error));
+  void loading.finished.then((error) => {
+    settleImagery(error);
+    // the loading screen has closed: keyboard focus goes to the heading of the first screen
+    if (!error && window.starsFlow?.state.step === 'choose' && (document.activeElement === document.body || !document.activeElement)) {
+      (document.getElementById('intro-title') as HTMLElement | null)?.focus({ preventScroll: true });
+    }
+  });
 
   globes.moonLabels.load().catch((err: unknown) => {
     // Names are secondary: the Moon stays usable, and the reason is shown in the caption.
