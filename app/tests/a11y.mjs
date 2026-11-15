@@ -476,6 +476,30 @@ async function run(browser, base, variant, size, full) {
       await press(page, 'r');
       const n1 = plays((await media(page)).log).filter((f) => f === pairFile).length;
       check(n1 === n0 + 1, `${tag}: R repeats the current track from the start`);
+      // a mission video opened while a track plays: the guide falls silent, keeps its caption, and does
+      // not restart by itself (not while the video is open, not after it closes) until R
+      {
+        const audioNow = () => page.evaluate(() => [...document.querySelectorAll('audio')].filter((a) => !a.paused).length);
+        const before = await audioNow();
+        const viaButton = await page.evaluate(() => { const b = document.getElementById('start-mission'); if (b) b.click(); return !!b; });
+        if (!viaButton) await page.evaluate(() => { void window.starsBesideYou.video.openVideo({ title: 'test video', sources: [{ src: 'media/none.mp4', type: '' }] }); });
+        await page.waitForFunction(() => window.starsBesideYou.video.isOpen(), null, { timeout: 5000 }).catch(() => undefined);
+        const open = await page.evaluate(() => window.starsBesideYou.video.isOpen());
+        const during = await audioNow();
+        const gv = await guide(page);
+        await page.waitForTimeout(1000);
+        const later = await audioNow();
+        check(before === 1 && open && during === 0 && later === 0, `${tag}: with the guide on and a track playing (${before}), opening the mission video (${viaButton ? 'Start the mission' : 'video API'}) leaves zero playing audio elements (${during} at once, ${later} after 1 s)`);
+        check(gv.file === pairFile && gv.text === transcripts[pairFile] && gv.words === 'Paused', `${tag}: the guide's caption stays visible under the video, state "${gv.words}"`);
+        await page.evaluate(() => window.starsBesideYou.video.closeVideo());
+        await page.waitForTimeout(500);
+        const closed = await audioNow();
+        const n2 = plays((await media(page)).log).filter((f) => f === pairFile).length;
+        check(closed === 0 && n2 === n1, `${tag}: after the video closes the guide stays silent until R (${closed} playing, ${n2 - n1} new starts)`);
+        await press(page, 'r');
+        const n3 = plays((await media(page)).log).filter((f) => f === pairFile).length;
+        check(n3 === n2 + 1 && (await audioNow()) === 1, `${tag}: after the video, R plays the track again from the start`);
+      }
       await page.evaluate(() => window.__media.endCurrent());
       await page.waitForTimeout(50);
       check((await guide(page)).words === 'Finished', `${tag}: at the end of a track the caption says "Finished"`);

@@ -158,7 +158,7 @@ try {
           const exp = { solar: 44, lunar_base: 46 }[mid];
           if (vv && exp && Math.round(vv.d) !== exp) fault(`${mid} video duration ${vv.d} (expected ${exp} s)`);
           const aud = (await media(p)).filter((m) => m.tag === 'AUDIO' && !m.paused);
-          if (aud.length) out.notes.push(`${mid}: guide audio still playing under the video (${aud[0].src.split('/').pop()})`);
+          if (aud.length) fault(`${mid}: opening the video left ${aud.length} audio element(s) playing (expected 0): ${aud.map((x) => x.src.split('/').pop()).join(', ')}`);
           await p.keyboard.press('Escape');
           await sleep(800);
         } else fault(`${mid}: no "Start the mission" button`);

@@ -15,6 +15,7 @@
 // the screen reader never read the same long text at the same time, and nothing is read twice.
 
 import { readFlag, PREF_AUDIO } from './prefs';
+import { VIDEO_START_EVENT } from '../modules/video';
 
 export interface TrackEntry {
   id: string;
@@ -129,6 +130,8 @@ export class AudioGuide {
       // only an error of the source we asked for counts (a reset clears the source)
       if (this.el.getAttribute('src')) this.setState('unavailable');
     });
+    // a mission video opening or starting to play silences the guide (see interrupt)
+    document.addEventListener(VIDEO_START_EVENT, () => this.interrupt());
     this.ready = this.load();
   }
 
@@ -222,6 +225,17 @@ export class AudioGuide {
     if (!this.step) return;
     if (this.enabled && this.step.track) void this.play();
     else this.textEl.focus?.();
+  }
+
+  /**
+   * Something else needs the sound (a mission video): the track that plays or is starting stops, the
+   * caption stays as it is, and nothing restarts by itself. As after the end of a track, the guide stays
+   * silent until R (the track from the start) or a new step.
+   */
+  interrupt(): void {
+    if (this.state !== 'playing' && this.state !== 'loading' && this.el.paused) return;
+    this.stop();
+    this.setState('paused');
   }
 
   /** Pause and rewind, and drop the source so that nothing more is requested. */

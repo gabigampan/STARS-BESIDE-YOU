@@ -36,6 +36,12 @@ export interface VideoApi {
   isOpen(): boolean;
 }
 
+/** Dispatched on document when a mission video's dialog opens and each time its film starts playing
+ * (the audio guide listens and falls silent: one sound at a time). */
+export const VIDEO_START_EVENT = 'stars:video-start';
+
+const announceStart = () => document.dispatchEvent(new Event(VIDEO_START_EVENT));
+
 const FOCUSABLE = 'button, [href], input, select, textarea, video[controls], [tabindex]:not([tabindex="-1"])';
 
 export class VideoDialog implements VideoApi {
@@ -58,6 +64,7 @@ export class VideoDialog implements VideoApi {
     this.spec = spec;
     this.fill(spec);
     dialog.showModal();
+    announceStart();
     this.startPlayback(dialog);
     return new Promise((resolve) => (this.resolveClose = resolve));
   }
@@ -174,6 +181,7 @@ export class VideoDialog implements VideoApi {
     video.preload = 'metadata';
     video.playsInline = true;
     video.crossOrigin = 'anonymous';
+    video.addEventListener('play', announceStart);
     if (spec.poster) video.poster = spec.poster;
     const names = spec.sources.map((s) => s.src.split('/').pop() || s.src).join(', ');
     const fail = (why: string) => {

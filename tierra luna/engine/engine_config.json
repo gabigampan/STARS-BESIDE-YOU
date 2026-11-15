@@ -1575,9 +1575,9 @@
         "text": "The list is ordered by the final score: {alpha_pct} % similarity to the lunar twin and {rest_pct} % suitability for the mission. {five_sentence}",
         "five_sentences": {
           "spread_within_top_tie": "These are five of the {tied_n} sites tied at the top of our model, chosen to be spread across the world, not a proven best.",
-          "rank_with_skips": "These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a cell half or more snow and ice, a cell less than half land and a point within {deg} degrees of one already chosen are skipped (numbers {ranks} of the full ranking).",
+          "rank_with_skips": "These are five of the highest-scoring analogs in our model, not a proven best: the five highest final scores once a cell half or more snow and ice, a cell less than half land and a point within {deg} degrees of one already chosen are skipped (numbers {ranks} of the full ranking).",
           "by_rank": "These are five of the highest-scoring analogs in our model (numbers 1 to 5 of the full ranking), not a proven best.",
-          "min_separation": "These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a point within {deg} degrees of one already chosen is skipped (numbers {ranks} of the full ranking)."
+          "min_separation": "These are five of the highest-scoring analogs in our model, not a proven best: the five highest final scores once a point within {deg} degrees of one already chosen is skipped (numbers {ranks} of the full ranking)."
         }
       },
       "surface_classes": {
