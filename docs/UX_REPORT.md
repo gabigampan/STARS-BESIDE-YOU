@@ -189,6 +189,30 @@ five with 2-degree separation, notes with `show`). The web needed no per-mission
 Three bundle notes carry file and column names; the web passes them through its plain-words
 filter until the engine owner rephrases them (reported).
 
+## Round 3: the phone blockers and revision 8
+
+The team lead's five phone items, each measured by test:a11y (shipped bundle, revision 8):
+
+| Item | Measured |
+|---|---|
+| 1 No zero-height globes, landscape 812x375 | Earth 255x150, Moon 255x150 px in pick and compare (globes left, the panel scrolls on the right) |
+| 2 Globes stacked, portrait 375x812 | Earth above Moon, each 375x154 px in pick and compare (the panel scrolls beneath) |
+| 3 Credits out of the gesture area | the centre of both globes is the canvas (elementFromPoint) in every step at both sizes; the credit line sits at the bottom edge and lets touches through; pinch 9,000 to 5,622 km and drag 92.5° to 38.9° on the Earth globe at 375x812 |
+| 4 Caption never clipped | scrollHeight <= clientHeight at start, pick and compare at 375x812, 812x375 and 1440x900. Trade-off: in landscape the welcome caption alone starts folded (one line and "Full text"), so the mission cards fit; it unfolds on every later step and whenever the guide speaks |
+| 5 First mission card on the first phone screen | bottom 678 of 812 px (portrait), 366 of 375 px (landscape); at 1440 all three in view and the header on one row (87 px) |
+
+Revision 8 absorbed with no per-mission code: no confidence is shown anywhere; the five follow
+`top5.ids` with `top5.rule` verbatim (and the tie count when the rule does not give it); the
+criteria set and its departures table are in Data and limits; the notes come from `show`; Rover
+scores are the published per-variable columns (the browser never rebuilds them from differences).
+`public/audio/tracks.json` follows the new `docs/AUDIO_TOP5.json` (entry n is track n); with the
+director's `pending.json` all 19 tracks are text only until the new recordings arrive.
+
+Still open: after Escape from a pair, focus returns to the pair's row in the list (kept for the
+existing flow test); one bundle note still lists Spanish domain names ("relieve, material, termico,
+luz, agua"), an engine text due in the next text-only rebuild. Frame rate: not measurable on this
+machine (software WebGL, 1 to 2 fps).
+
 ## Results of the final round
 
-Filled below when the runs finish.
+See the WEB FIXED message for the last numbers.
