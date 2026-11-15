@@ -1,0 +1,39 @@
+criteria_set,site_id,role,name,cell,passes,land_share,clear_frac_isccp,irradiance_kwh_m2_day,rank,rank_pct,suitability,twin,row_passing,rank_pct_within_row,suit_pct_within_row
+corrected,SP01,positive,Tamanrasset (BSRN TAM),E24305,True,1.0,0.642,6.288,880,4.7,89.44,M22885,129,44.2,44.2
+corrected,SP02,positive,Gobabeb (BSRN GOB),E40875,True,1.0,0.779,5.64,587,3.1,91.98,M42472,87,4.6,5.7
+corrected,SP03,positive,De Aar (BSRN DAA),E43403,True,0.999,0.577,5.706,2858,15.2,81.42,M21728,72,19.4,19.4
+corrected,SP04,positive,Sede Boqer (BSRN SBO),E21454,True,1.0,0.641,5.509,1956,10.4,90.44,M42998,162,33.3,33.3
+corrected,SP05,positive,Solar Village (BSRN SOV),E23626,True,1.0,0.67,5.274,57,0.3,95.22,M42741,130,1.5,1.5
+corrected,SP06,positive,Gandhinagar (BSRN GAN),E24012,True,0.999,0.663,5.591,36,0.2,95.45,M22651,131,1.5,1.5
+corrected,SP07,positive,Gurgaon (BSRN GUR),E22217,True,0.998,0.625,5.224,879,4.7,92.47,M21759,148,33.1,33.1
+corrected,SP08,positive,Alice Springs (BSRN ASP),E40993,True,1.0,0.59,6.146,1551,8.3,84.0,M22419,87,57.5,57.5
+corrected,SP09,positive,Desert Rock (BSRN DRA),E19143,True,1.0,0.54,5.423,11949,63.6,68.66,,153,28.8,28.8
+corrected,SP10,positive,Boulder Table Mountain (BSRN BOS),E17714,True,0.987,0.35,4.391,17997,95.8,45.93,,168,94.0,94.0
+corrected,SP11,positive,Petrolina (BSRN PTR),E35779,True,0.965,0.52,4.807,2073,11.0,78.58,M25792,72,4.2,4.2
+corrected,SP12,positive,Izana (BSRN IZA),E22123,False,0.184,0.447,5.366,,,,,148,,
+corrected,SP13,positive,Lampedusa (BSRN LMP),E19632,False,0.002,0.553,4.956,,,,,151,,
+corrected,SN01,negative,Lerwick (Met Office climate station),E10618,False,0.185,0.21,2.21,,,,,187,,
+corrected,SN02,negative,Eskdalemuir (Met Office climate station),E12416,False,0.985,0.284,2.403,,,,,188,,
+corrected,SN03,negative,Stornoway (Met Office climate station),E11333,False,0.23,0.214,2.298,,,,,185,,
+corrected,SN04,negative,Braemar (Met Office climate station),E11696,False,0.679,0.265,2.337,,,,,183,,
+corrected,SN05,negative,Dunstaffnage (Met Office climate station),E12054,False,0.72,0.234,2.344,,,,,189,,
+corrected,SN06,negative,Tiree (Met Office climate station),E12053,False,0.132,0.234,2.42,,,,,189,,
+audited_morning,SP01,positive,Tamanrasset (BSRN TAM),E24305,True,1.0,0.642,6.288,1008,5.4,93.1,M22885,129,27.9,27.9
+audited_morning,SP02,positive,Gobabeb (BSRN GOB),E40875,True,1.0,0.779,5.64,2105,11.2,88.48,M42472,87,60.9,60.9
+audited_morning,SP03,positive,De Aar (BSRN DAA),E43403,True,0.999,0.577,5.706,4280,22.8,90.49,M21728,72,18.1,18.1
+audited_morning,SP04,positive,Sede Boqer (BSRN SBO),E21454,True,1.0,0.641,5.509,4705,25.1,88.65,M42998,162,25.9,25.9
+audited_morning,SP05,positive,Solar Village (BSRN SOV),E23626,True,1.0,0.67,5.274,2460,13.1,87.19,M42741,130,66.2,66.2
+audited_morning,SP06,positive,Gandhinagar (BSRN GAN),E24012,True,0.999,0.663,5.591,1558,8.3,91.17,M22651,131,45.0,45.0
+audited_morning,SP07,positive,Gurgaon (BSRN GUR),E22217,True,0.998,0.625,5.224,2793,14.9,88.9,M21759,148,33.1,33.1
+audited_morning,SP08,positive,Alice Springs (BSRN ASP),E40993,True,1.0,0.59,6.146,326,1.7,94.33,M22419,87,6.9,6.9
+audited_morning,SP09,positive,Desert Rock (BSRN DRA),E19143,True,1.0,0.54,5.423,6490,34.6,81.92,,153,8.5,8.5
+audited_morning,SP10,positive,Boulder Table Mountain (BSRN BOS),E17714,True,0.987,0.35,4.391,7709,41.1,73.62,,168,69.6,69.6
+audited_morning,SP11,positive,Petrolina (BSRN PTR),E35779,True,0.965,0.52,4.807,2850,15.2,85.64,M25792,72,15.3,15.3
+audited_morning,SP12,positive,Izana (BSRN IZA),E22123,False,0.184,0.447,5.366,,,,,148,,
+audited_morning,SP13,positive,Lampedusa (BSRN LMP),E19632,False,0.002,0.553,4.956,,,,,151,,
+audited_morning,SN01,negative,Lerwick (Met Office climate station),E10618,False,0.185,0.21,2.21,,,,,187,,
+audited_morning,SN02,negative,Eskdalemuir (Met Office climate station),E12416,False,0.985,0.284,2.403,,,,,188,,
+audited_morning,SN03,negative,Stornoway (Met Office climate station),E11333,False,0.23,0.214,2.298,,,,,185,,
+audited_morning,SN04,negative,Braemar (Met Office climate station),E11696,False,0.679,0.265,2.337,,,,,183,,
+audited_morning,SN05,negative,Dunstaffnage (Met Office climate station),E12054,False,0.72,0.234,2.344,,,,,189,,
+audited_morning,SN06,negative,Tiree (Met Office climate station),E12053,False,0.132,0.234,2.42,,,,,189,,

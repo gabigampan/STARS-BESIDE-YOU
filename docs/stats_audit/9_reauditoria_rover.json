@@ -53,13 +53,13 @@
   {
    "item": 9,
    "name": "texts",
-   "verdict": "NOT YET (provisional, re-read after the text pass)",
-   "figure": "T1 old Gaussian score in missions.json similarity.score; T2 tie cause omits suitability saturation; T6 stability pending"
+   "verdict": "NOT YET",
+   "figure": "after the text pass (read up to 4c0abc3, engine build to scratch, rover bins byte-identical): T1 published score formula is the old Gaussian; T7 rover_slope_minimum quotes 3 figures of the 11:23 rule (28 of top 50, water 4->13, 13.9 %; shipped rule: 26, 12->25, 16.4 %); T6 stability pending. T2, T3 resolved"
   }
  ],
  "overall": {
   "recommendation": "publish the corrected Rover",
-  "condition": "fix texts T1, T2, T6 (no number changes)",
+  "condition": "fix texts T1, T6, T7 before publishing (no number changes; rover bins byte-identical after the text pass)",
   "figures": [
    "0 mismatches in 10,337 points; fallback exact",
    "largest twin share 19.9 % -> 2.6 %",
@@ -1021,16 +1021,10 @@
    "what": "publishes the Gaussian score exp(-0.5(d/tol)^2) of the earlier rule; the shipped score is the dead band exp(-0.5 max(0,d/sigma-1)^2)"
   },
   {
-   "id": "T2",
+   "id": "T7",
    "kind": "text",
-   "where": "texts.rover_tie, missions.json top5.rule",
-   "what": "attributes the 254-way tie to measurement error alone; 10,335 pairs are within sigma, the 254 are those whose three suitability utilities are also saturated (slope <= 1 deg, bare >= 0.7, roughness <= 30 m on 250)"
-  },
-  {
-   "id": "T3",
-   "kind": "text",
-   "where": "missions.json top5.rule",
-   "what": "'241 sites ... tie' beside '254 share the top score': two counts for one tie; wording"
+   "where": "similarity.json texts.rover_slope_minimum (engine_config limit_texts)",
+   "what": "'28 of the top 50', 'water-dominated cells in the top 50 go from 4 to 13', 'one lunar twin takes 13.9 %' are the 11:23 tolerance-rule figures; under the shipped dead-band rule: 26 of 50, 12 -> 25, 16.4 % (M62913, 2,984 points)"
   },
   {
    "id": "T4",
@@ -1064,6 +1058,12 @@
    "id": "W3",
    "kind": "decided criterion",
    "what": "which five are shown is unstable (exact repeat 10.5 %, twins kept 17.5-38 %); slope min 0.5 deg makes E26087 (0.523 deg) leave the funnel in 17 % of runs"
+  },
+  {
+   "id": "T8",
+   "kind": "text (minor)",
+   "where": "texts.rover_tie",
+   "what": "the measurement-uncertainty sentence appears twice because {rule} repeats it; the saturation note uses E3872 (the excluded water cell) as reference"
   }
  ],
  "scripts": [
@@ -1075,5 +1075,6 @@
   "ra_rover_mc.py",
   "ra_rover_texts.py",
   "ra_rover_summary.py"
- ]
+ ],
+ "texts_reread_up_to": "4c0abc3"
 }

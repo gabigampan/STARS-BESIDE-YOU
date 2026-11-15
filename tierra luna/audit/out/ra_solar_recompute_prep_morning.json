@@ -1,0 +1,331 @@
+{
+ "criteria_set": "audited_morning",
+ "bundle": "/tmp/claude-0/-home-user-stars-beside-you/b192719a-e328-5d31-9eea-75c43981ec49/scratchpad/bundle_morning/app/public/data/v2",
+ "soft": {
+  "irradiance_kwh_m2_day": {
+   "weight": 0.35,
+   "bad": 2.5,
+   "good": 6.0
+  },
+  "sun_elev_max_deg": {
+   "weight": 0.15,
+   "bad": 10.0,
+   "good": 70.0
+  },
+  "sun_low_frac_0_5deg": {
+   "weight": 0.15,
+   "bad": 0.25,
+   "good": 0.03
+  },
+  "slope_deg": {
+   "weight": 0.15,
+   "bad": 12.0,
+   "good": 1.0
+  },
+  "lst_diurnal_amp_k": {
+   "weight": 0.1,
+   "bad": 35.0,
+   "good": 10.0
+  },
+  "roughness_m": {
+   "weight": 0.1,
+   "bad": 400.0,
+   "good": 30.0
+  }
+ },
+ "similarity_variables": [
+  {
+   "variable": "irradiance_toa_kwh_m2_day",
+   "role": "key",
+   "weight": 0.8,
+   "label": "Sunlight without atmosphere",
+   "unit": "kWh/m2/day",
+   "tolerance": 0.6,
+   "tolerance_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 (morning)",
+   "why": "Set by the delegate on 2026-11-15 (from half the robust Earth scale of ground irradiance, 1.22 kWh/m2/day; docs/ANALOG_PRINCIPLE.md section C)."
+  },
+  {
+   "variable": "slope_deg",
+   "role": "secondary",
+   "weight": 0.1,
+   "label": "Slope",
+   "unit": "deg",
+   "tolerance": 2.0,
+   "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+   "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C)."
+  },
+  {
+   "variable": "roughness_m",
+   "role": "secondary",
+   "weight": 0.1,
+   "label": "Roughness",
+   "unit": "m",
+   "tolerance": 30.0,
+   "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+   "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies)."
+  }
+ ],
+ "zone": {
+  "kind": "abs_lat_max_elevation_max",
+  "abs_lat_max": 30.0,
+  "elevation_max_m": -1200.0,
+  "elevation_column": "elevation_m",
+  "name": "Mare Tranquillitatis & Equatorial Maria",
+  "source": "analog_finder.build_lunar_reference_zones: '\"Mare Tranquillitatis & Equatorial Maria\": ((np.abs(lat) <= 30.0) & (moon_norm_df[\"elevation_m\"] <= -1200.0))'",
+  "why": "Team decision of 2026-11-15 (morning): the equatorial maria as analog_finder defines them (absolute latitude <= 30 degrees and elevation <= -1,200 m), applied to the real lunar table."
+ },
+ "top5_rule": {
+  "rule": "by_rank"
+ },
+ "checks": {
+  "funnel_passing": {
+   "own": 18777,
+   "bundle": 18777,
+   "mismatch_cells": 0,
+   "own_total_incl_nonland": 18777
+  },
+  "reasons": [
+   {
+    "code": "elevation_m:below_min",
+    "bit": 0,
+    "bundle_cells": 177,
+    "own_cells": 177,
+    "mismatch": 0
+   },
+   {
+    "code": "elevation_m:missing",
+    "bit": 1,
+    "bundle_cells": 252,
+    "own_cells": 252,
+    "mismatch": 0
+   },
+   {
+    "code": "irradiance_kwh_m2_day:below_min",
+    "bit": 2,
+    "bundle_cells": 3462,
+    "own_cells": 3462,
+    "mismatch": 0
+   },
+   {
+    "code": "irradiance_kwh_m2_day:missing",
+    "bit": 3,
+    "bundle_cells": 49,
+    "own_cells": 49,
+    "mismatch": 0
+   },
+   {
+    "code": "mask_fraction:below_min",
+    "bit": 4,
+    "bundle_cells": 3275,
+    "own_cells": 3275,
+    "mismatch": 0
+   },
+   {
+    "code": "slope_deg:above_max",
+    "bit": 5,
+    "bundle_cells": 1,
+    "own_cells": 1,
+    "mismatch": 0
+   },
+   {
+    "code": "slope_deg:missing",
+    "bit": 6,
+    "bundle_cells": 714,
+    "own_cells": 714,
+    "mismatch": 0
+   },
+   {
+    "code": "sun_elev_max_deg:below_min",
+    "bit": 7,
+    "bundle_cells": 0,
+    "own_cells": 0,
+    "mismatch": 0
+   },
+   {
+    "code": "sun_low_frac_0_5deg:above_max",
+    "bit": 8,
+    "bundle_cells": 0,
+    "own_cells": 0,
+    "mismatch": 0
+   },
+   {
+    "code": "thermal_inertia_class:excluded",
+    "bit": 9,
+    "bundle_cells": 4421,
+    "own_cells": 4421,
+    "mismatch": 0
+   }
+  ],
+  "passing_ids_equal": true,
+  "suitability": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "similarity": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "final": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "rank": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "twin": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "score_irradiance_toa_kwh_m2_day": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "score_slope_deg": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "score_roughness_m": {
+   "n": 18777,
+   "mismatch": 0,
+   "max_abs_diff": 0.0,
+   "first_bad": []
+  },
+  "paired": 6360,
+  "distinct_twins": 1704,
+  "bounds_all_pairs_ok": true,
+  "five_equal": {
+   "own": [
+    38464,
+    38105,
+    38744,
+    37746,
+    38465
+   ],
+   "bundle_ranks_1_5": [
+    38464,
+    38105,
+    38744,
+    37746,
+    38465
+   ],
+   "note": "bundle has no missions.json top5: five = ranks 1-5",
+   "equal": true
+  }
+ },
+ "difference_table": [
+  {
+   "variable": "irradiance_toa_kwh_m2_day",
+   "role": "key",
+   "weight": 0.8,
+   "tolerance": 0.6,
+   "bound": 0.6,
+   "median": 0.0208,
+   "p90": 0.3222,
+   "max": 0.5696,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.0208,
+    "p90": 0.3222,
+    "max": 0.5696,
+    "n_finite": 6360
+   }
+  },
+  {
+   "variable": "slope_deg",
+   "role": "secondary",
+   "weight": 0.1,
+   "tolerance": 2.0,
+   "bound": 4.0,
+   "median": 0.034,
+   "p90": 0.146,
+   "max": 1.941,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.034,
+    "p90": 0.146,
+    "max": 1.941,
+    "n_finite": 6360
+   }
+  },
+  {
+   "variable": "roughness_m",
+   "role": "secondary",
+   "weight": 0.1,
+   "tolerance": 30.0,
+   "bound": 60.0,
+   "median": 0.5,
+   "p90": 2.36,
+   "max": 58.14,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.5,
+    "p90": 2.36,
+    "max": 58.14,
+    "n_finite": 6360
+   }
+  }
+ ],
+ "five_own": [
+  {
+   "earth_id": 38464,
+   "rank": 1,
+   "twin": 24296,
+   "similarity": 99.99,
+   "suitability": 96.9,
+   "final": 98.45
+  },
+  {
+   "earth_id": 38105,
+   "rank": 2,
+   "twin": 24583,
+   "similarity": 99.88,
+   "suitability": 96.9,
+   "final": 98.39
+  },
+  {
+   "earth_id": 38744,
+   "rank": 3,
+   "twin": 40854,
+   "similarity": 99.95,
+   "suitability": 96.77,
+   "final": 98.36
+  },
+  {
+   "earth_id": 37746,
+   "rank": 4,
+   "twin": 24761,
+   "similarity": 99.98,
+   "suitability": 96.62,
+   "final": 98.3
+  },
+  {
+   "earth_id": 38465,
+   "rank": 5,
+   "twin": 40406,
+   "similarity": 100.0,
+   "suitability": 96.48,
+   "final": 98.24
+  }
+ ],
+ "five_skipped_before_fifth": [],
+ "mismatches": [],
+ "status": "PASS"
+}

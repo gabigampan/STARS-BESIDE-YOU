@@ -1,0 +1,645 @@
+{
+ "criteria_set": "corrected",
+ "baseline_five": [
+  {
+   "earth": "E40184",
+   "twin": "M23206"
+  },
+  {
+   "earth": "E29749",
+   "twin": "M26063"
+  },
+  {
+   "earth": "E23648",
+   "twin": "M22156"
+  },
+  {
+   "earth": "E29746",
+   "twin": "M26056"
+  },
+  {
+   "earth": "E28670",
+   "twin": "M25483"
+  }
+ ],
+ "perturbations": 14,
+ "per_analog": {
+  "E40184": {
+   "twin": "M23206",
+   "in_five": 14,
+   "keeps_twin": 14,
+   "in_five_with_same_twin": 14,
+   "worst_rank": 1,
+   "of": 14
+  },
+  "E29749": {
+   "twin": "M26063",
+   "in_five": 14,
+   "keeps_twin": 14,
+   "in_five_with_same_twin": 14,
+   "worst_rank": 2,
+   "of": 14
+  },
+  "E23648": {
+   "twin": "M22156",
+   "in_five": 14,
+   "keeps_twin": 14,
+   "in_five_with_same_twin": 14,
+   "worst_rank": 7,
+   "of": 14
+  },
+  "E29746": {
+   "twin": "M26056",
+   "in_five": 14,
+   "keeps_twin": 14,
+   "in_five_with_same_twin": 14,
+   "worst_rank": 7,
+   "of": 14
+  },
+  "E28670": {
+   "twin": "M25483",
+   "in_five": 14,
+   "keeps_twin": 14,
+   "in_five_with_same_twin": 14,
+   "worst_rank": 9,
+   "of": 14
+  }
+ },
+ "five_identical": 12,
+ "runs": [
+  {
+   "block": "suitability",
+   "weight": "slope_deg",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "slope_deg",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "lst_diurnal_amp_k",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "lst_diurnal_amp_k",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 7,
+    "E29746": 6,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "roughness_m",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "roughness_m",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "clear_frac_isccp",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 7,
+    "E29746": 6,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "suitability",
+   "weight": "clear_frac_isccp",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 6,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "irradiance_toa_kwh_m2_day",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "irradiance_toa_kwh_m2_day",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "slope_deg",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "slope_deg",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "roughness_m",
+   "factor": 1.1,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  },
+  {
+   "block": "similarity",
+   "weight": "roughness_m",
+   "factor": 0.9,
+   "five": [
+    [
+     40184,
+     23206
+    ],
+    [
+     29749,
+     26063
+    ],
+    [
+     23648,
+     22156
+    ],
+    [
+     29746,
+     26056
+    ],
+    [
+     28670,
+     25483
+    ]
+   ],
+   "base_ranks": {
+    "E40184": 1,
+    "E29749": 2,
+    "E23648": 5,
+    "E29746": 7,
+    "E28670": 9
+   },
+   "base_keeps_twin": {
+    "E40184": true,
+    "E29749": true,
+    "E23648": true,
+    "E29746": true,
+    "E28670": true
+   }
+  }
+ ]
+}

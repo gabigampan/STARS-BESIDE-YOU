@@ -1,6 +1,6 @@
 # 9. Re-auditoría independiente de Rover (modelo corregido)
 
-Auditor independiente (sesión propia, no escribió el código auditado). Commit auditado: **d24ebb3** (final-integration, "Engine, second step after the audit (contract revision 8)"), fusionado en `audit-rover`. Inicio: mensaje "AUDIT START d24ebb3" del director, 11:51:48 UTC. Ningún fichero del motor, configuración, tablas, paquete, web ni audio se ha tocado.
+Auditor independiente (sesión propia, no escribió el código auditado). Commit auditado: **d24ebb3** (modelo y paquete; textos releídos hasta 4c0abc3) (final-integration, "Engine, second step after the audit (contract revision 8)"), fusionado en `audit-rover`. Inicio: mensaje "AUDIT START d24ebb3" del director, 11:51:48 UTC. Ningún fichero del motor, configuración, tablas, paquete, web ni audio se ha tocado.
 
 **Camino de código propio.** `tierra luna/audit/ra_rover_common.py`, construido sobre la reimplementación independiente de la primera auditoría (`audit/p5_common.py`: tablas, columnas, embudo, idoneidad) y adaptado a las reglas corregidas (puntuación con banda muerta σ, filtro del par, desempate del gemelo, regla de los cinco). No importa nada de `tierra luna/engine`. Antes de usarlo lo comprobé contra el paquete de esta mañana (a493514): igualdad celda a celda (punto 3). Scripts: `ra_rover_config.py` (1), `ra_rover_audit.py` (2, 3, 7, 8, saturación, pendiente mínima), `ra_rover_fallback.py` (3), `ra_rover_weights.py` (5), `ra_rover_mc.py` (6), `ra_rover_texts.py` (9), `ra_rover_summary.py` (JSON). Salidas en `tierra luna/audit/out/ra_rover_*`. Entorno: Python 3.13, numpy, pandas, scipy, geopandas, reverse_geocoder (solo su fichero GeoNames cities1000).
 
@@ -14,7 +14,7 @@ Auditor independiente (sesión propia, no escribió el código auditado). Commit
 | 6 Monte Carlo | **GO** (debilidad de criterio) | entre los cinco 43-87,5 %; lista exacta 10,5 %; grupo empatado conserva 89 % (mediana); gemelo 17,5-38 %; 502 puntos a ≤ 1 del quinto. Menos estable que esta mañana en orden y gemelo |
 | 7 Validación | **GO** (debilidad de criterio) | verificados: mediana 8,1 frente a 9,2, cuartil 5/8 = 5/8, separación 0,906 = 0,906 (igual); todos: 0,855 frente a 0,927 (peor); Bardenas 68,2 (44,5) y Tabernas 71,5 (24,7) peor por la idoneidad del equipo |
 | 8 Los cinco | **GO** | tierra ≥ 69,7 %, hielo 0, gemelos en zona, nombres = GeoNames más cercano, separación mínima 60,0°; ningún análogo reconocido saltado |
-| 9 Textos | **NOT YET** | T1 fórmula de puntuación antigua en `missions.json`; T2 la causa del empate omite la saturación de la idoneidad; T6 estabilidad "pending" (provisional: se relee tras la pasada de textos) |
+| 9 Textos | **NOT YET** | tras la pasada de textos: T1 la fórmula de puntuación publicada es la antigua; T7 la nota de la pendiente mínima da 3 cifras de la regla de las 11:23 (28 de 50, agua 4 → 13, 13,9 %; con la regla publicada 26, 12 → 25, 16,4 %); T6 estabilidad "pending". T2 y T3 resueltos |
 
 ---
 
@@ -150,10 +150,10 @@ Sitios de `rover_preset.py` (positivos de movilidad y discordantes), en su celda
 
 | Celda | Pendiente (bueno 1°, malo 15°; peso 0,45) | Rugosidad (bueno 30 m, malo 650 m; 0,30) | Suelo desnudo o vegetación rala (bueno 0,7; 0,25) | Idoneidad | Similitud | Final | Puesto |
 |---|---|---|---|---|---|---|---|
-| Bardenas E17098 | 1,911° → 0,935 (−2,93) | 77,0 m → 0,924 (−2,27) | **0,018 → 0,025 (−24,37)** | 70,43 | 100 | 85,21 | 7.043 de 10.337 (68,2 %) |
-| Tabernas E18897 | 3,165° → 0,845 (−6,96) | 110,7 m → 0,870 (−3,91) | **0,146 → 0,209 (−19,78)** | 69,36 | 100 | 84,68 | 7.385 (71,5 %) |
+| Bardenas E17098 | 1,911° → 0,935 (−2,93) | 77,0 m → 0,924 (−2,27) | **0,018 → 0,025 (−24,37)** | 70,43 | 100 | 85,21 | 7.046 de 10.337 (68,2 %; 7.042 estrictamente mejores) |
+| Tabernas E18897 | 3,165° → 0,845 (−6,96) | 110,7 m → 0,870 (−3,91) | **0,146 → 0,209 (−19,78)** | 69,36 | 100 | 84,68 | 7.390 (71,5 %) |
 
-Su terreno empareja perfectamente (gemelos: 1,90° / 74,1 m y 3,15° / 110,6 m; similitud 100). Pierden idoneidad en dos frentes a la vez: (a) el criterio de suelo, que solo da utilidad 1 desde 0,7 de fracción desnuda o rala, les quita 24,4 y 19,8 puntos (a 1°, ESA CCI clasifica sus celdas sobre todo como cultivo y matorral: 1,8 % y 14,6 %); (b) son más empinados y rugosos que las llanuras (utilidades 0,93-0,85). La mediana del embudo emparejado es tierra llana y vegetada (fracción desnuda o rala: mediana 0,008, P75 0,196; idoneidad mediana 74,16) que, con pendiente ≈ 1° y rugosidad ≈ 30 m, saca unos 75 puntos sin suelo desnudo: 7.042 puntos así quedan por delante de Bardenas. Esta mañana la similitud variaba (mediana 93) y los subía; ahora vale 100 para casi todos y no ordena. Es una debilidad de un **criterio decidido** (`rock_or_bare_frac` del equipo, sin cambiar, a 1°), no un fallo de implementación.
+Su terreno empareja perfectamente (gemelos: 1,90° / 74,1 m y 3,15° / 110,6 m; similitud 100). Pierden idoneidad en dos frentes a la vez: (a) el criterio de suelo, que solo da utilidad 1 desde 0,7 de fracción desnuda o rala, les quita 24,4 y 19,8 puntos (a 1°, ESA CCI clasifica sus celdas sobre todo como cultivo y matorral: 1,8 % y 14,6 %); (b) son más empinados y rugosos que las llanuras (utilidades 0,93-0,85). La mediana del embudo emparejado es tierra llana y vegetada (fracción desnuda o rala: mediana 0,008, P75 0,196; idoneidad mediana 74,16) que, con pendiente ≈ 1° y rugosidad ≈ 30 m, saca unos 75 puntos sin suelo desnudo: 7.042 puntos tienen un final estrictamente mayor que Bardenas. Esta mañana la similitud variaba (mediana 93) y los subía; ahora vale 100 para casi todos y no ordena. Es una debilidad de un **criterio decidido** (`rock_or_bare_frac` del equipo, sin cambiar, a 1°), no un fallo de implementación.
 
 Otras filas utilizables del benchmark (coordenadas verificadas; informativas): Askja 6,2 %, Dallol 5,0 %, Holuhraun 21,0 %, Tírez 22,1 %, Ries 32,4 %, Black Point 58,9 %, Craters of the Moon 62,3 %, Etna 81,3 %, Mauna Kea/Kilauea 83,7 %, McMurdo 98,4 %; Timanfaya, La Corona, Teide y Makgadikgadi no pasan. Ningún sitio reconocido está en el grupo empatado de 254.
 
@@ -217,11 +217,21 @@ Problemas (todos de texto; ninguno cambia un par o una puntuación):
 * **T5 — lugares lejanos.** El número 1 mostrado (E4037) se nombra por Gjoa Haven, a 1.116 km. Correcto por la regla, pero el texto del par debería decir la distancia (si la web no la muestra ya) para no sugerir que el sitio está en Gjoa Haven.
 * **T6 —** `top5_stability_rover` sigue en "pending": rellenar con las cifras del punto 6 (en el JSON, `stability`).
 
-**Pendiente:** el director avisa de que en final-integration corre una pasada solo de textos; vuelvo a fusionar al final y releo estas notas en el veredicto final.
+**Relectura tras la pasada de textos (veredicto final).** Fusioné otra vez origin/final-integration (hasta 4c0abc3: `engine_config.json`, `limits.py`, `export_v2.py`, `datasets.json`; el paquete publicado aún no está reconstruido). Construí el paquete con el motor en una carpeta temporal (`python -m engine build`, 45 s, "validity: OK") **solo para leer las notas**: `earth_rover.bin` y `earth_rover_pairs.bin` salen **idénticos byte a byte** a los auditados (la pasada no cambia ningún número de Rover). Estado de cada problema:
 
+| | Estado tras la pasada |
+|---|---|
+| T1 fórmula antigua (`missions.json` `similarity.score`, `similarity_meaning_real_values`) | **sigue** (`real_value_similarity.score` sin cambiar) |
+| T2 causa del empate | **resuelto**: nota nueva `rover_suitability_saturation` (mission_card + data_and_limits). Todas sus cifras coinciden con las mías: 250 de 254 con las tres utilidades al máximo, 253 con idoneidad 100,00, 3.291 / 2.144 / 930 / 250, rangos 0,500-0,961°, 14,61-30,19 m, 0,707-1,000; Bardenas n.º 7.046 (−2,9 / −2,3 / −24,4) y Tabernas n.º 7.390 (−7,0 / −3,9 / −19,8). Matiz: el ejemplo de referencia es E3872, el n.º 1 del ranking, que es la celda de agua (33,8 % de tierra) que la regla de los cinco excluye; mejor usar el primero de los cinco (E4037) |
+| T3 "241 sites tie" | **resuelto** ("five of the 254 sites tied ... 241 tied sites remain") |
+| T4 nota "TO BE CONFIRMED" | **sigue** en `criteria_sets` (solo configuración, no se publica) |
+| T5 E4037 a 1.116 km de Gjoa Haven | sin cambio (menor) |
+| T6 estabilidad "pending" | **sigue**; cifras listas en el JSON (`stability`) |
+| **T7 nuevo — `rover_slope_minimum` con cifras de una regla anterior** | "28 of the top 50", "water-dominated cells in the top 50 go from 4 to 13" y "one lunar twin takes 13.9 % ... instead of 2.6 %" son las cifras medidas a las 11:23 con la puntuación de tolerancia (regla A). Con la regla publicada (banda σ): **26** de 50, agua **12 → 25**, un gemelo con el **16,4 %** (M62913, 2.984) frente al 2,6 %; los 7.847 / 2.862 y los cuatro percentiles (8,3 / 8,4 / 8,0 / 11,6) sí son los de la regla publicada. Hay que actualizar las tres cifras o decir que se midieron con la regla de las 11:23 |
+| T8 nuevo, menor — `rover_tie` repite dos veces la frase de la incertidumbre (0,27° y 17,4 m) porque `{rule}` la trae otra vez | redacción |
 ## Veredicto
 
-**Recomendación: publicar el Rover corregido** (con las correcciones de texto T1, T2 y T6 antes de publicar, que no cambian ningún número).
+**Recomendación: publicar el Rover corregido**, con las correcciones de texto T1, T6 y T7 antes de publicar (ninguna cambia un número; comprobado: el paquete reconstruido tras la pasada de textos tiene `earth_rover.bin` y `earth_rover_pairs.bin` idénticos byte a byte).
 
 Por qué, en cuatro cifras:
 1. La implementación es exacta: 0 diferencias en 10.337 puntos, y la vuelta atrás reproduce esta mañana sin una diferencia.
@@ -231,4 +241,4 @@ Por qué, en cuatro cifras:
 
 Debilidades que hay que publicar, y de quién son:
 * **De criterios decididos (no de implementación):** similitud saturada (10.335 de 10.337 pares en 100) e idoneidad saturada en la cabeza (254 con las tres utilidades a 1 o casi): el orden de Rover es el de la idoneidad del equipo (Spearman 1,000); Bardenas y Tabernas caen al 68 y 71 % por el criterio de suelo desnudo a 1° (pierden 24,4 y 19,8 puntos) y por ser más empinados que las llanuras; los cinco concretos son poco estables (lista exacta 10,5 %, gemelo 17,5-38 %); la pendiente mínima de 0,5° sigue sin fuente, justificada por su efecto (sin ella: 1.321 empatados, un gemelo con el 16,4 %, los cuatro análogos 4-5 puntos de percentil peor) y deja a E26087 (0,523°) fuera del embudo en el 17 % de las simulaciones.
-* **De implementación / textos:** T1-T6 del punto 9.
+* **De implementación / textos:** T1, T6 y T7 (necesarias), T4, T5 y T8 (menores) del punto 9.

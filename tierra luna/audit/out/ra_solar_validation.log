@@ -1,0 +1,29 @@
+corrected passing 18777
+   overall {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 8.3, 'median_pct_eliminated_as_100': 10.4, 'in_top_quartile': 9}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+   within_row_rank {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 28.8, 'median_pct_eliminated_as_100': 33.1, 'in_top_quartile': 5}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+   within_row_suitability {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 28.8, 'median_pct_eliminated_as_100': 33.1, 'in_top_quartile': 5}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+audited_morning passing 18777
+   overall {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 14.9, 'median_pct_eliminated_as_100': 15.2, 'in_top_quartile': 8}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+   within_row_rank {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 27.9, 'median_pct_eliminated_as_100': 33.1, 'in_top_quartile': 4}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+   within_row_suitability {'positives': {'n': 13, 'passing': 11, 'median_pct_passing': 27.9, 'median_pct_eliminated_as_100': 33.1, 'in_top_quartile': 4}, 'negatives': {'n': 6, 'passing': 0, 'median_pct_passing': None, 'median_pct_eliminated_as_100': 100.0, 'in_top_quartile': 0}, 'separation': 0.923}
+site  rol name                               cell    |   corrected: pct row suitrow | morning: pct row suitrow
+SP01  pos Tamanrasset (BSRN TAM)             E24305  |    4.7   44.2   44.2 |    5.4   27.9   27.9  clear=0.642
+SP02  pos Gobabeb (BSRN GOB)                 E40875  |    3.1    4.6    5.7 |   11.2   60.9   60.9  clear=0.779
+SP03  pos De Aar (BSRN DAA)                  E43403  |   15.2   19.4   19.4 |   22.8   18.1   18.1  clear=0.577
+SP04  pos Sede Boqer (BSRN SBO)              E21454  |   10.4   33.3   33.3 |   25.1   25.9   25.9  clear=0.641
+SP05  pos Solar Village (BSRN SOV)           E23626  |    0.3    1.5    1.5 |   13.1   66.2   66.2  clear=0.67
+SP06  pos Gandhinagar (BSRN GAN)             E24012  |    0.2    1.5    1.5 |    8.3   45.0   45.0  clear=0.663
+SP07  pos Gurgaon (BSRN GUR)                 E22217  |    4.7   33.1   33.1 |   14.9   33.1   33.1  clear=0.625
+SP08  pos Alice Springs (BSRN ASP)           E40993  |    8.3   57.5   57.5 |    1.7    6.9    6.9  clear=0.59
+SP09  pos Desert Rock (BSRN DRA)             E19143  |   63.6   28.8   28.8 |   34.6    8.5    8.5  clear=0.54
+SP10  pos Boulder Table Mountain (BSRN BOS)  E17714  |   95.8   94.0   94.0 |   41.1   69.6   69.6  clear=0.35
+SP11  pos Petrolina (BSRN PTR)               E35779  |   11.0    4.2    4.2 |   15.2   15.3   15.3  clear=0.52
+SP12  pos Izana (BSRN IZA)                   E22123  |   None   None   None |   None   None   None  clear=0.447
+SP13  pos Lampedusa (BSRN LMP)               E19632  |   None   None   None |   None   None   None  clear=0.553
+SN01  neg Lerwick (Met Office climate statio E10618  |   None   None   None |   None   None   None  clear=0.21
+SN02  neg Eskdalemuir (Met Office climate st E12416  |   None   None   None |   None   None   None  clear=0.284
+SN03  neg Stornoway (Met Office climate stat E11333  |   None   None   None |   None   None   None  clear=0.214
+SN04  neg Braemar (Met Office climate statio E11696  |   None   None   None |   None   None   None  clear=0.265
+SN05  neg Dunstaffnage (Met Office climate s E12054  |   None   None   None |   None   None   None  clear=0.234
+SN06  neg Tiree (Met Office climate station) E12053  |   None   None   None |   None   None   None  clear=0.234
+wrote /home/user/stars-beside-you/tierra luna/audit/out/ra_solar_validation.json

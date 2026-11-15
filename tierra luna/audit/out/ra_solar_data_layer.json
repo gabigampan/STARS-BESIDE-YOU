@@ -1,0 +1,264 @@
+{
+ "own_reduction": {
+  "files": 60,
+  "meta": {
+   "units": "percent",
+   "long_name": "Mean cloud amount",
+   "shape": [
+    180,
+    360
+   ],
+   "license": "No constraints on data access or use.",
+   "title": "International Satellite Cloud Climatology Project Gridded Monthly Mean data -- ISCCP HGM Basic",
+   "lat_first_last": [
+    -89.5,
+    89.5
+   ],
+   "lon_first_last": [
+    0.5,
+    359.5
+   ],
+   "valid_range": [
+    NaN,
+    NaN
+   ],
+   "scale_factor": 0.10000000149011612,
+   "time_coverage_start": "2012-01-01"
+  },
+  "cells_both": 64778,
+  "cells_own_only": 0,
+  "cells_supp_only": 0,
+  "max_abs_diff_cloud_frac": 4.999999999999449e-05,
+  "p99_abs_diff": 4.9999682108559096e-05,
+  "n_months_equal": 64800
+ },
+ "range_all_cells": [
+  0.0586,
+  0.8304
+ ],
+ "missing_all_cells": 22,
+ "passing_n": 18777,
+ "passing_missing": [
+  11565,
+  34142,
+  35577
+ ],
+ "passing_pcts": {
+  "0": 0.1189,
+  "5": 0.2784,
+  "10": 0.3079,
+  "25": 0.3589,
+  "50": 0.466,
+  "75": 0.6032,
+  "90": 0.6711,
+  "95": 0.6976,
+  "100": 0.8304
+ },
+ "configured_bad_good": [
+  0.308,
+  0.671
+ ],
+ "recomputed_P10_P90_3dp": [
+  0.308,
+  0.671
+ ],
+ "bad_good_match": true,
+ "orientation": {
+  "Sahara, Libya (24.5N 25.5E) expected clear": {
+   "cell": "E23605",
+   "clear_frac": 0.724,
+   "ok": true
+  },
+  "Atacama (23.5S 69.5W) expected clear": {
+   "cell": "E40790",
+   "clear_frac": 0.798,
+   "ok": true
+  },
+  "Rub al Khali (19.5N 50.5E) expected clear": {
+   "cell": "E25430",
+   "clear_frac": 0.784,
+   "ok": true
+  },
+  "Western Australia desert (25.5S 125.5E) expected clear": {
+   "cell": "E41705",
+   "clear_frac": 0.591,
+   "ok": true
+  },
+  "Congo basin (0.5S 20.5E) expected cloudy": {
+   "cell": "E32600",
+   "clear_frac": 0.289,
+   "ok": true
+  },
+  "Amazon (3.5S 59.5W) expected cloudy": {
+   "cell": "E33600",
+   "clear_frac": 0.323,
+   "ok": true
+  },
+  "Southern Ocean (58.5S 0.5E) expected cloudy": {
+   "cell": "E53460",
+   "clear_frac": 0.142,
+   "ok": true
+  },
+  "Scotland (56.5N 4.5W) expected cloudy": {
+   "cell": "E12055",
+   "clear_frac": 0.256,
+   "ok": true
+  },
+  "Borneo (0.5N 113.5E) expected cloudy": {
+   "cell": "E32333",
+   "clear_frac": 0.191,
+   "ok": true
+  },
+  "Mojave (35.5N 115.5W) expected clear": {
+   "cell": "E19504",
+   "clear_frac": 0.651,
+   "ok": true
+  }
+ },
+ "by_surface_land_cells": {
+  "bare >= 0.8 (bright desert)": {
+   "n": 1555,
+   "median": 0.652,
+   "p10": 0.419,
+   "p90": 0.764
+  },
+  "bare >= 0.8 and |lat| <= 35": {
+   "n": 1222,
+   "median": 0.677,
+   "p10": 0.563,
+   "p90": 0.771
+  },
+  "snow_ice >= 0.5": {
+   "n": 7331,
+   "median": 0.588,
+   "p10": 0.312,
+   "p90": 0.684
+  },
+  "snow_ice >= 0.5, Greenland/Antarctica lat |>=60|": {
+   "n": 7315,
+   "median": 0.588,
+   "p10": 0.316,
+   "p90": 0.684
+  },
+  "coast 0.3 <= land < 0.9": {
+   "n": 3866,
+   "median": 0.345,
+   "p10": 0.249,
+   "p90": 0.499
+  },
+  "inland land >= 0.999": {
+   "n": 10198,
+   "median": 0.587,
+   "p10": 0.375,
+   "p90": 0.69
+  },
+  "passing points": {
+   "n": 18774,
+   "median": 0.466,
+   "p10": 0.308,
+   "p90": 0.671
+  }
+ },
+ "passing_coast_vs_inland_same_lat": {
+  "0-15": {
+   "coast(<0.9 land)": {
+    "n": 257,
+    "median": 0.335,
+    "p10": 0.213,
+    "p90": 0.545
+   },
+   "inland(>=0.999)": {
+    "n": 931,
+    "median": 0.432,
+    "p10": 0.278,
+    "p90": 0.554
+   }
+  },
+  "15-30": {
+   "coast(<0.9 land)": {
+    "n": 198,
+    "median": 0.508,
+    "p10": 0.336,
+    "p90": 0.697
+   },
+   "inland(>=0.999)": {
+    "n": 1846,
+    "median": 0.615,
+    "p10": 0.436,
+    "p90": 0.749
+   }
+  },
+  "30-45": {
+   "coast(<0.9 land)": {
+    "n": 284,
+    "median": 0.398,
+    "p10": 0.284,
+    "p90": 0.528
+   },
+   "inland(>=0.999)": {
+    "n": 1052,
+    "median": 0.475,
+    "p10": 0.333,
+    "p90": 0.662
+   }
+  }
+ },
+ "spearman_passing": {
+  "abs_lat": 0.302,
+  "clear_frac_isccp": 1.0,
+  "irradiance_worldclim": 0.35,
+  "irradiance_toa": -0.302,
+  "slope_deg": -0.387,
+  "roughness_m": -0.416,
+  "lst_diurnal_amp_k": 0.669,
+  "sun_elev_max_deg": -0.272,
+  "sun_low_frac_0_5deg": 0.166,
+  "rain_mm_day": -0.699,
+  "suitability": 0.965
+ },
+ "spearman_suitability_passing": {
+  "abs_lat": 0.337,
+  "clear_frac_isccp": 0.965,
+  "irradiance_worldclim": 0.277,
+  "irradiance_toa": -0.337,
+  "slope_deg": -0.511,
+  "roughness_m": -0.538,
+  "lst_diurnal_amp_k": 0.541,
+  "sun_elev_max_deg": -0.314,
+  "sun_low_frac_0_5deg": 0.202,
+  "rain_mm_day": -0.666,
+  "suitability": 1.0
+ },
+ "spearman_paired": {
+  "abs_lat": 0.47,
+  "clear_frac_isccp": 1.0,
+  "irradiance_worldclim": 0.8,
+  "irradiance_toa": -0.469,
+  "slope_deg": -0.275,
+  "roughness_m": -0.288,
+  "lst_diurnal_amp_k": 0.787,
+  "sun_elev_max_deg": -0.242,
+  "sun_low_frac_0_5deg": 0.47,
+  "rain_mm_day": -0.833,
+  "suitability": 0.97
+ },
+ "spearman_suitability_paired": {
+  "abs_lat": 0.382,
+  "clear_frac_isccp": 0.97,
+  "irradiance_worldclim": 0.778,
+  "irradiance_toa": -0.381,
+  "slope_deg": -0.406,
+  "roughness_m": -0.418,
+  "lst_diurnal_amp_k": 0.684,
+  "sun_elev_max_deg": -0.172,
+  "sun_low_frac_0_5deg": 0.382,
+  "rain_mm_day": -0.759,
+  "suitability": 1.0
+ },
+ "share_of_spread": {
+  "slope_deg": 0.063,
+  "lst_diurnal_amp_k": -0.206,
+  "roughness_m": 0.049,
+  "clear_frac_isccp": 0.895
+ }
+}

@@ -94,7 +94,7 @@
      "mission_card"
     ],
     "decision": "2026-11-15 11:23 CET, points 4 and 5",
-    "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best."
+    "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world, not a proven best."
    }
   },
   {
@@ -140,7 +140,7 @@
     ],
     "decision": "2026-11-15 11:23 CET, point 4 (state honestly what was checked)",
     "source": "computed at build from tierra luna/data/benchmark/analog_benchmark.csv and rover_preset.py MOBILITY_POSITIVES / MOBILITY_MISMATCHES, with the auditor's rule for unverified coordinates (docs/stats_audit/3_robustez_validacion_ranking.md section 6.1)",
-    "text": "What was checked against known places (Rover only): the mobility analog sites named in rover_preset.py, with coordinates checked in our benchmark, are placed in the full ranking of 10,337 points as follows: Bardenas (top 68.2 %), Tabernas (top 71.5 %), MDRS (top 20.5 %), Yungay (top 8.1 %), Dhofar (does not pass the funnel: slope_300m_deg outside [0.5, 15.0], rough_300m_m outside [5.0, 650.0]), Ramon (top 3.6 %), Haughton (top 4.2 %) and Qaidam (top 4.0 %). Sites named there as mismatches: Concordia (does not pass the funnel: slope_300m_deg outside [0.5, 15.0], rough_300m_m outside [5.0, 650.0]) and El Soplao (top 95.4 %). Not checked because their benchmark coordinates are marked as written from memory: Dumont Dunes, Erfoud, Death Valley, NEEMO, HI-SEAS and Rio Tinto. A low percentage is a high place in the list; the check describes the ranking, it does not prove it."
+    "text": "What was checked against known places (Rover only): the mobility analog sites named in the team's rover file, with coordinates checked in our benchmark, are placed in the full ranking of 10,337 points as follows: Bardenas (top 68.2 %), Tabernas (top 71.5 %), MDRS (top 20.5 %), Yungay (top 8.1 %), Dhofar (does not pass the funnel: slope (degrees) outside 0.5 to 15, roughness (m) outside 5 to 650), Ramon (top 3.6 %), Haughton (top 4.2 %) and Qaidam (top 4.0 %). Sites named there as mismatches: Concordia (does not pass the funnel: slope (degrees) outside 0.5 to 15, roughness (m) outside 5 to 650) and El Soplao (top 95.4 %). Not checked because their benchmark coordinates are marked as written from memory: Dumont Dunes, Erfoud, Death Valley, NEEMO, HI-SEAS and Rio Tinto. A low percentage is a high place in the list; the check describes the ranking, it does not prove it."
    }
   },
   {
@@ -220,10 +220,10 @@
     ],
     "decision": "2026-11-15 11:23 CET, point 4 (the numbers that have no effect)",
     "source": "inert gates: computed at build (Earth land cells that fail only that gate bound: none); values no code reads: docs/stats_audit/5_inventario_sentido_fisico.md section A.5 (i)",
-    "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3. Values of the team's file mission_scoring.json that no code reads: Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua). The team's file is quoted as it is: these numbers are listed here, not removed.",
+    "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: Rover: slope (degrees) at most 15, roughness (m) at least 5, roughness (m) at most 650; Solar panels: land share of the cell at least 0.3, slope (degrees) at most 15, maximum sun elevation (degrees) at least 10, share of time with the sun below 5 degrees at most 0.25; Lunar base: land share of the cell at least 0.3. Values of the team's scoring file that no code reads: Rover: its block of tolerances, its block of workable days, its weights of five domains (relief, material, thermal, light, water); Solar panels: its weights of five domains (relief, material, thermal, light, water); Lunar base: its weights of five domains (relief, material, thermal, light, water). The team's file is quoted as it is: these numbers are listed here, not removed.",
     "figures": {
-     "inert_gates": "Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3",
-     "unread_values": "Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua)"
+     "inert_gates": "Rover: slope (degrees) at most 15, roughness (m) at least 5, roughness (m) at most 650; Solar panels: land share of the cell at least 0.3, slope (degrees) at most 15, maximum sun elevation (degrees) at least 10, share of time with the sun below 5 degrees at most 0.25; Lunar base: land share of the cell at least 0.3",
+     "unread_values": "Rover: its block of tolerances, its block of workable days, its weights of five domains (relief, material, thermal, light, water); Solar panels: its weights of five domains (relief, material, thermal, light, water); Lunar base: its weights of five domains (relief, material, thermal, light, water)"
     }
    }
   },
@@ -273,13 +273,13 @@
     ],
     "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
     "source": "docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
-    "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after skipping cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. How the five were chosen: 241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+    "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after leaving out cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
     "figures": {
      "tied_n": "254",
      "tied_kept_n": "241",
      "score": "100.00",
      "ranked_n": "10,337",
-     "rule": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
+     "rule": "These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged."
     }
    }
   },
@@ -330,6 +330,88 @@
      "rows": "Solar panels | irradiance_kwh_m2_day | weight 0.35, bad 2.5, good 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). | docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET || Solar panels | sun_elev_max_deg | weight 0.15, bad 10, good 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | sun_low_frac_0_5deg | weight 0.15, bad 0.25, good 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | clear_frac_isccp | not used (weight 0) | weight 0.35, bad 0.308, good 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised. | ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET || Lunar base | thermal_inertia_class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'. | docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET || Lunar base | rock_or_bare_frac | weight 0.1, bad 0.1, good 0.7 | weight 0.25, bad 0.1, good 0.7 | Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out. | research_3 option R, approved 11:51 CET || Lunar base | permafrost_class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. | research_3 option R, approved 11:51 CET",
      "n": "7",
      "sets": "Rover: corrected; Solar panels: corrected; Lunar base: corrected"
+    }
+   }
+  },
+  {
+   "key": "rover_suitability_saturation",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+    "source": "computed at build from the Earth table and the team's Rover suitability criteria (mission_scoring.json rover.soft, unchanged); worked example: Bardenas Reales and Tabernas Desert, benchmark coordinates (data/benchmark/analog_benchmark.csv)",
+    "text": "The Rover suitability is saturated too. 250 of the 254 sites tied at the top score the maximum on every one of the team's Rover criteria (slope (degrees) 45 %, full marks at 1 or less; roughness (m) 30 %, full marks at 30 or less; bare-ground share 25 %, full marks at 0.7 or more), so the team's criteria do not tell them apart either (253 of the 10,337 ranked points show a suitability of 100.00). Points that reach the maximum of each criterion, among the 10,337 ranked: slope (degrees) 3,291; roughness (m) 2,144; bare-ground share 930; all three: 250. Among the 254 tied sites: slope 0.500 to 0.961 degrees, roughness 14.61 to 30.19 m, bare-ground share 0.707 to 1.000. Worked example: Bardenas Reales (cell E17098, number 7,046, similarity 100.00, suitability 70.43): slope (degrees) 1.91, utility 0.93, 2.9 points lost; roughness (m) 77, utility 0.92, 2.3 points lost; bare-ground share 0.0176, utility 0.03, 24.4 points lost; Tabernas Desert (cell E18897, number 7,390, similarity 100.00, suitability 69.36): slope (degrees) 3.17, utility 0.85, 7.0 points lost; roughness (m) 111, utility 0.87, 3.9 points lost; bare-ground share 0.146, utility 0.21, 19.8 points lost; against the tied site number 1 (cell E3872, number 1, similarity 100.00, suitability 100.00): slope (degrees) 0.571, utility 1.00, 0.0 points lost; roughness (m) 26.7, utility 1.00, 0.0 points lost; bare-ground share 0.824, utility 1.00, 0.0 points lost. The criteria as the team wrote them reward the gentlest, barest ground and say nothing else about mobility (a recognised badlands analog with some vegetation cover loses about a quarter of its score on the bare-ground share alone); this is a weakness of the suitability criteria, left as written and to be examined by the re-audit.",
+    "figures": {
+     "tied_n": "254",
+     "ranked_n": "10,337",
+     "sat_all_n": "250",
+     "sat_all_ranked_n": "250",
+     "suit100_n": "253",
+     "criteria": "slope (degrees) 45 %, full marks at 1 or less; roughness (m) 30 %, full marks at 30 or less; bare-ground share 25 %, full marks at 0.7 or more",
+     "per_criterion": "slope (degrees) 3,291; roughness (m) 2,144; bare-ground share 930",
+     "slope_range": "0.500 to 0.961",
+     "rough_range": "14.61 to 30.19",
+     "bare_range": "0.707 to 1.000",
+     "examples": "Bardenas Reales (cell E17098, number 7,046, similarity 100.00, suitability 70.43): slope (degrees) 1.91, utility 0.93, 2.9 points lost; roughness (m) 77, utility 0.92, 2.3 points lost; bare-ground share 0.0176, utility 0.03, 24.4 points lost; Tabernas Desert (cell E18897, number 7,390, similarity 100.00, suitability 69.36): slope (degrees) 3.17, utility 0.85, 7.0 points lost; roughness (m) 111, utility 0.87, 3.9 points lost; bare-ground share 0.146, utility 0.21, 19.8 points lost; against the tied site number 1 (cell E3872, number 1, similarity 100.00, suitability 100.00): slope (degrees) 0.571, utility 1.00, 0.0 points lost; roughness (m) 26.7, utility 1.00, 0.0 points lost; bare-ground share 0.824, utility 1.00, 0.0 points lost"
+    }
+   }
+  },
+  {
+   "key": "rover_slope_minimum",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+    "source": "docs/DECISIONS.md, section of 11:23 CET 'Pendiente mínima de Rover (0,5°)': measured with the engine with and without the minimum",
+    "text": "The Rover minimum slope of 0.5 degrees is a criterion of the team with no official source. It is kept because of its measured effect: without it 7,847 more points pass (2,862 of them ice or snow cells), 28 of the top 50 become flats with a slope below 0.5 degrees (water-dominated cells in the top 50 go from 4 to 13), one lunar twin takes 13.9 % of the pairs instead of 2.6 %, and the known mobility analogs rank worse (Qaidam from the top 4.0 % to 8.3 %, Haughton 4.2 % to 8.4 %, Ramon 3.6 % to 8.0 %, Yungay 8.1 % to 11.6 %).",
+    "figures": {}
+   }
+  },
+  {
+   "key": "top5_rule_parts",
+   "show": [
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": null,
+   "content": {
+    "show": [
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+    "source": "computed at build from the five-selection rule (engine_config top5_selection) and the Earth table",
+    "text": "What each part of the rule for the five does. Ice (a cell half or more snow and ice is skipped): Rover 0 of the 254 sites tied at the top and 1,485 of the 10,337 ranked points; Solar panels 0 of the 6,360 ranked points; Lunar base 0 of the 450 ranked points. Land (a cell less than half land is skipped, because slope and roughness only mean something on solid ground; a separate, separately switchable part of the rule): Rover 13 of the 254 sites tied at the top and 671 of the 10,337 ranked points; Solar panels 0 of the 6,360 ranked points; Lunar base 0 of the 450 ranked points. Distance (a point within 2 degrees of one already chosen is skipped): Rover none (the five are chosen as far apart as possible among the tied sites; the closest two are 60.0 degrees apart); Solar panels 4 points above the fifth one shown; Lunar base 2 points above the fifth one shown. The full rankings are unchanged.",
+    "figures": {
+     "ice": "Rover 0 of the 254 sites tied at the top and 1,485 of the 10,337 ranked points; Solar panels 0 of the 6,360 ranked points; Lunar base 0 of the 450 ranked points",
+     "land": "Rover 13 of the 254 sites tied at the top and 671 of the 10,337 ranked points; Solar panels 0 of the 6,360 ranked points; Lunar base 0 of the 450 ranked points",
+     "sep": "Rover none (the five are chosen as far apart as possible among the tied sites; the closest two are 60.0 degrees apart); Solar panels 4 points above the fifth one shown; Lunar base 2 points above the fifth one shown",
+     "deg": "2"
     }
    }
   }
@@ -698,7 +780,7 @@
   },
   {
    "path": "missions/rover/known_limitations/0",
-   "text": "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
+   "text": "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
    "numbers": [
     "0.5",
     "15 ",
@@ -714,7 +796,7 @@
   },
   {
    "path": "missions/rover/known_limitations/1",
-   "text": "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
+   "text": "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative values of the team's rover file for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score.",
    "numbers": [
     "50 %",
     "2026",
@@ -738,10 +820,11 @@
   },
   {
    "path": "missions/rover/known_limitations/3",
-   "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best.",
+   "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world, not a proven best.",
    "numbers": [
     "50 %",
-    "50 %"
+    "50 %",
+    "254 "
    ]
   },
   {
@@ -777,7 +860,7 @@
   },
   {
    "path": "missions/rover/known_limitations/7",
-   "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after skipping cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. How the five were chosen: 241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+   "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after leaving out cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
    "numbers": [
     "2022 ",
     "0.27 ",
@@ -786,7 +869,12 @@
     "10,337 ",
     "100.00",
     "241 ",
-    "241 "
+    "254 ",
+    "0.27 ",
+    "17.4 ",
+    "241 ",
+    "2 ",
+    "60.0 "
    ]
   },
   {
@@ -800,10 +888,106 @@
    ]
   },
   {
-   "path": "missions/rover/top5/rule",
-   "text": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+   "path": "missions/rover/known_limitations/9",
+   "text": "The Rover suitability is saturated too. 250 of the 254 sites tied at the top score the maximum on every one of the team's Rover criteria (slope (degrees) 45 %, full marks at 1 or less; roughness (m) 30 %, full marks at 30 or less; bare-ground share 25 %, full marks at 0.7 or more), so the team's criteria do not tell them apart either (253 of the 10,337 ranked points show a suitability of 100.00). Points that reach the maximum of each criterion, among the 10,337 ranked: slope (degrees) 3,291; roughness (m) 2,144; bare-ground share 930; all three: 250. Among the 254 tied sites: slope 0.500 to 0.961 degrees, roughness 14.61 to 30.19 m, bare-ground share 0.707 to 1.000. Worked example: Bardenas Reales (cell E17098, number 7,046, similarity 100.00, suitability 70.43): slope (degrees) 1.91, utility 0.93, 2.9 points lost; roughness (m) 77, utility 0.92, 2.3 points lost; bare-ground share 0.0176, utility 0.03, 24.4 points lost; Tabernas Desert (cell E18897, number 7,390, similarity 100.00, suitability 69.36): slope (degrees) 3.17, utility 0.85, 7.0 points lost; roughness (m) 111, utility 0.87, 3.9 points lost; bare-ground share 0.146, utility 0.21, 19.8 points lost; against the tied site number 1 (cell E3872, number 1, similarity 100.00, suitability 100.00): slope (degrees) 0.571, utility 1.00, 0.0 points lost; roughness (m) 26.7, utility 1.00, 0.0 points lost; bare-ground share 0.824, utility 1.00, 0.0 points lost. The criteria as the team wrote them reward the gentlest, barest ground and say nothing else about mobility (a recognised badlands analog with some vegetation cover loses about a quarter of its score on the bare-ground share alone); this is a weakness of the suitability criteria, left as written and to be examined by the re-audit.",
    "numbers": [
-    "241 "
+    "250 ",
+    "254 ",
+    "45 %",
+    "1 ",
+    "30 %",
+    "30 ",
+    "25 %",
+    "0.7 ",
+    "253 ",
+    "10,337 ",
+    "100.00",
+    "10,337 ",
+    "3,291",
+    "2,144",
+    "930",
+    "250",
+    "254 ",
+    "0.500 ",
+    "0.961 ",
+    "14.61 ",
+    "30.19 ",
+    "0.707 ",
+    "1.000",
+    "7,046, ",
+    "100.00",
+    "70.43",
+    "1.91",
+    "0.93",
+    "2.9 ",
+    "77, ",
+    "0.92",
+    "2.3 ",
+    "0.0176",
+    "0.03",
+    "24.4 ",
+    "7,390, ",
+    "100.00",
+    "69.36",
+    "3.17",
+    "0.85",
+    "7.0 ",
+    "111, ",
+    "0.87",
+    "3.9 ",
+    "0.146",
+    "0.21",
+    "19.8 ",
+    "1 ",
+    "1, ",
+    "100.00",
+    "100.00",
+    "0.571",
+    "1.00",
+    "0.0 ",
+    "26.7",
+    "1.00",
+    "0.0 ",
+    "0.824",
+    "1.00",
+    "0.0 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/10",
+   "text": "The Rover minimum slope of 0.5 degrees is a criterion of the team with no official source. It is kept because of its measured effect: without it 7,847 more points pass (2,862 of them ice or snow cells), 28 of the top 50 become flats with a slope below 0.5 degrees (water-dominated cells in the top 50 go from 4 to 13), one lunar twin takes 13.9 % of the pairs instead of 2.6 %, and the known mobility analogs rank worse (Qaidam from the top 4.0 % to 8.3 %, Haughton 4.2 % to 8.4 %, Ramon 3.6 % to 8.0 %, Yungay 8.1 % to 11.6 %).",
+   "numbers": [
+    "0.5 ",
+    "7,847 ",
+    "2,862 ",
+    "28 ",
+    "50 ",
+    "0.5 ",
+    "50 ",
+    "4 ",
+    "13",
+    "13.9 %",
+    "2.6 %",
+    "4.0 %",
+    "8.3 %",
+    "4.2 %",
+    "8.4 %",
+    "3.6 %",
+    "8.0 %",
+    "8.1 %",
+    "11.6 %"
+   ]
+  },
+  {
+   "path": "missions/rover/top5/rule",
+   "text": "These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
+   "numbers": [
+    "254 ",
+    "0.27 ",
+    "17.4 ",
+    "241 ",
+    "2 ",
+    "60.0 "
    ]
   },
   {
@@ -897,7 +1081,7 @@
   }
  ],
  "missions_rover_top5": {
-  "rule": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+  "rule": "These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
   "min_separation_deg": 2.0,
   "min_separation_km": 222.4,
   "ids": [

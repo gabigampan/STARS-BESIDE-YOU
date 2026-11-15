@@ -1,0 +1,970 @@
+{
+ "mission": "solar",
+ "commit_audited": "d24ebb3 (model); texts re-read at final-integration c5f1f6c",
+ "verdicts": [
+  {
+   "item": 1,
+   "name": "configuration against decisions",
+   "verdict": "GO",
+   "figure": "4 soft deviations from mission_scoring.json, all listed with reason and source; gates, require_present, zone, similarity variables and tolerances identical to audited_morning; bad/good 0.308/0.671 = recomputed P10/P90 0.3079/0.6711; soft weights sum 0.70 (effective clear-sky weight 0.50), as decided in research_2 E2"
+  },
+  {
+   "item": 2,
+   "name": "recomputation",
+   "verdict": "GO",
+   "figure": "0 differences on 18,777 passing points (funnel, 10 reason codes, suitability, similarity, final, rank, twin, s.*); 6,360 pairs, 1,704 twins; 0 pairs over a bound; five equal"
+  },
+  {
+   "item": 3,
+   "name": "fallback audited_morning",
+   "verdict": "GO",
+   "figure": "engine build with selected.solar=audited_morning: earth_solar_pairs.bin and moon_solar.bin byte-identical to a493514, earth_solar.bin columns identical except confidence/confidence_score emptied (decision 6); five = ranks 1-5"
+  },
+  {
+   "item": 4,
+   "name": "new data clear_frac_isccp",
+   "verdict": "GO",
+   "figure": "own reduction of the 60 NCEI ISCCP-H HGM files: max diff 5e-5 on 64,778 cells; orientation 10/10; limits: E34142 without value at rank 16 (suitability 96.23) via renormalisation; snow/ice median clear 0.588 (no paired cell); coasts cloudier than inland"
+  },
+  {
+   "item": 5,
+   "name": "weights +/-10 %",
+   "verdict": "GO",
+   "figure": "each of the five in the five with its twin in 14/14 (morning: E38465 10/18)"
+  },
+  {
+   "item": 6,
+   "name": "Monte Carlo",
+   "verdict": "GO",
+   "figure": "corrected more stable than morning: share in five 9.5/7.0/13.0/1.5/0.5 % vs 0.0/0.0/2.0/0.5/0.0 %; top 20 40/37.5/31.5/14.5/12.5 % vs 16.5/15.0/19.5/7.5/6.5 %; five repeat exactly 0/200 in both; points within 0.5 of the fifth 26 vs 76"
+  },
+  {
+   "item": 7,
+   "name": "external validation",
+   "verdict": "GO",
+   "figure": "BSRN positives median within own latitude row 28.8 % vs 27.9 % morning (same); overall 8.3 % vs 14.9 % (better); top quartile 9/11 vs 8/11"
+  },
+  {
+   "item": 8,
+   "name": "the five places",
+   "verdict": "GO",
+   "figure": "5/5 land >= 0.66 and ice 0; names = great-circle nearest 5/5; twins in zone 5/5; min separation 2.97 deg; no recognised site skipped; E29749 Eyl dominant class water (66 % land)"
+  },
+  {
+   "item": 9,
+   "name": "texts",
+   "verdict": "NOT YET",
+   "figure": "F1 (35 % published, effective 50 %) and F4 (stale known_limitations[2]) remain; top5_stability_solar pending; F3 fixed in c5f1f6c and its nine ranks match"
+  }
+ ],
+ "overall": "publish the corrected Solar panels, after fixing texts F1 and F4 and filling top5_stability_solar with stability.corrected; figures: 0 differences on 18,777 cells and exact fallback; Spearman suitability-|lat| +0.337 (morning -0.857); five more stable (in five 0.5-13 % vs 0-2 %, top 20 12.5-40 % vs 6.5-19.5 %, weights +/-10 % 14/14); BSRN within-row median 28.8 % vs 27.9 % (same), overall 8.3 % vs 14.9 % (better)",
+ "stability": {
+  "corrected": {
+   "runs": 200,
+   "five_exact_same_order": 0.0,
+   "five_same_set": 0.0,
+   "points_within_of_fifth_baseline": {
+    "0.1": 2,
+    "0.5": 26,
+    "1.0": 116
+   },
+   "points_within_of_fifth_runs_median": {
+    "0.1": 2.0,
+    "0.5": 17.0,
+    "1.0": 51.0
+   },
+   "per_analog": {
+    "E40184": {
+     "baseline_twin": "M23206",
+     "share_in_five": 0.095,
+     "share_top20": 0.4,
+     "share_top50": 0.575,
+     "share_keeps_twin": 0.035,
+     "share_in_five_and_keeps_twin": 0.005,
+     "median_rank": 30.0,
+     "weights_pm10_in_five": 14,
+     "weights_pm10_in_five_same_twin": 14,
+     "weights_pm10_of": 14
+    },
+    "E29749": {
+     "baseline_twin": "M26063",
+     "share_in_five": 0.07,
+     "share_top20": 0.375,
+     "share_top50": 0.74,
+     "share_keeps_twin": 0.005,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 25.5,
+     "weights_pm10_in_five": 14,
+     "weights_pm10_in_five_same_twin": 14,
+     "weights_pm10_of": 14
+    },
+    "E23648": {
+     "baseline_twin": "M22156",
+     "share_in_five": 0.13,
+     "share_top20": 0.315,
+     "share_top50": 0.38,
+     "share_keeps_twin": 0.08,
+     "share_in_five_and_keeps_twin": 0.005,
+     "median_rank": 540.5,
+     "weights_pm10_in_five": 14,
+     "weights_pm10_in_five_same_twin": 14,
+     "weights_pm10_of": 14
+    },
+    "E29746": {
+     "baseline_twin": "M26056",
+     "share_in_five": 0.015,
+     "share_top20": 0.145,
+     "share_top50": 0.45,
+     "share_keeps_twin": 0.015,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 62.5,
+     "weights_pm10_in_five": 14,
+     "weights_pm10_in_five_same_twin": 14,
+     "weights_pm10_of": 14
+    },
+    "E28670": {
+     "baseline_twin": "M25483",
+     "share_in_five": 0.005,
+     "share_top20": 0.125,
+     "share_top50": 0.515,
+     "share_keeps_twin": 0.025,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 49.5,
+     "weights_pm10_in_five": 14,
+     "weights_pm10_in_five_same_twin": 14,
+     "weights_pm10_of": 14
+    }
+   },
+   "sigma": {
+    "EARTH:elevation_m": [
+     "abs",
+     7.17,
+     "doc: ETOPO 2022 global RMSE vs ICESat-2 (first audit p3_montecarlo)"
+    ],
+    "EARTH:slope_deg": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "EARTH:roughness_m": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "EARTH:irradiance_kwh_m2_day": [
+     "abs",
+     0.40277777777777773,
+     "doc: WorldClim 2 CV RMSE 1.45 MJ/m2/day (Fick & Hijmans 2017)"
+    ],
+    "EARTH:lst_diurnal_amp_k": [
+     "abs",
+     1.4142135623730951,
+     "doc-derived: MOD11 <= 1 K per overpass, day-night -> sqrt(2) K"
+    ],
+    "EARTH:clear_frac_isccp": [
+     "abs",
+     0.05,
+     "ILLUSTRATIVE (this re-audit): no documented per-cell uncertainty of the 2012-2016 mean found"
+    ],
+    "MOON:elevation_m": [
+     "abs",
+     10.0,
+     "doc: LOLA ~10 m radial (Smith et al. 2010)"
+    ],
+    "MOON:slope_deg": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "MOON:roughness_m": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "MOON:irradiance_kwh_m2_day": [
+     "rel",
+     0.02,
+     "illustrative 2 % (first audit)"
+    ],
+    "MOON:lst_diurnal_amp_k": [
+     "abs",
+     1.4142135623730951,
+     "doc-derived (first audit)"
+    ]
+   },
+   "sigma_isccp_illustrative": 0.05
+  },
+  "audited_morning": {
+   "runs": 200,
+   "five_exact_same_order": 0.0,
+   "five_same_set": 0.0,
+   "points_within_of_fifth_baseline": {
+    "0.1": 7,
+    "0.5": 76,
+    "1.0": 271
+   },
+   "points_within_of_fifth_runs_median": {
+    "0.1": 8.0,
+    "0.5": 32.0,
+    "1.0": 112.0
+   },
+   "per_analog": {
+    "E38464": {
+     "baseline_twin": "M24296",
+     "share_in_five": 0.0,
+     "share_top20": 0.165,
+     "share_top50": 0.535,
+     "share_keeps_twin": 0.005,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 46.5,
+     "weights_pm10_in_five": 18,
+     "weights_pm10_in_five_same_twin": 18,
+     "weights_pm10_of": 18
+    },
+    "E38105": {
+     "baseline_twin": "M24583",
+     "share_in_five": 0.0,
+     "share_top20": 0.15,
+     "share_top50": 0.445,
+     "share_keeps_twin": 0.005,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 57.0,
+     "weights_pm10_in_five": 18,
+     "weights_pm10_in_five_same_twin": 18,
+     "weights_pm10_of": 18
+    },
+    "E38744": {
+     "baseline_twin": "M40854",
+     "share_in_five": 0.02,
+     "share_top20": 0.195,
+     "share_top50": 0.44,
+     "share_keeps_twin": 0.04,
+     "share_in_five_and_keeps_twin": 0.005,
+     "median_rank": 65.5,
+     "weights_pm10_in_five": 18,
+     "weights_pm10_in_five_same_twin": 18,
+     "weights_pm10_of": 18
+    },
+    "E37746": {
+     "baseline_twin": "M24761",
+     "share_in_five": 0.005,
+     "share_top20": 0.075,
+     "share_top50": 0.34,
+     "share_keeps_twin": 0.05,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 91.0,
+     "weights_pm10_in_five": 18,
+     "weights_pm10_in_five_same_twin": 16,
+     "weights_pm10_of": 18
+    },
+    "E38465": {
+     "baseline_twin": "M40406",
+     "share_in_five": 0.0,
+     "share_top20": 0.065,
+     "share_top50": 0.27,
+     "share_keeps_twin": 0.045,
+     "share_in_five_and_keeps_twin": 0.0,
+     "median_rank": 81.0,
+     "weights_pm10_in_five": 10,
+     "weights_pm10_in_five_same_twin": 10,
+     "weights_pm10_of": 18
+    }
+   },
+   "sigma": {
+    "EARTH:elevation_m": [
+     "abs",
+     7.17,
+     "doc: ETOPO 2022 global RMSE vs ICESat-2 (first audit p3_montecarlo)"
+    ],
+    "EARTH:slope_deg": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "EARTH:roughness_m": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "EARTH:irradiance_kwh_m2_day": [
+     "abs",
+     0.40277777777777773,
+     "doc: WorldClim 2 CV RMSE 1.45 MJ/m2/day (Fick & Hijmans 2017)"
+    ],
+    "EARTH:lst_diurnal_amp_k": [
+     "abs",
+     1.4142135623730951,
+     "doc-derived: MOD11 <= 1 K per overpass, day-night -> sqrt(2) K"
+    ],
+    "EARTH:clear_frac_isccp": [
+     "abs",
+     0.05,
+     "ILLUSTRATIVE (this re-audit): no documented per-cell uncertainty of the 2012-2016 mean found"
+    ],
+    "MOON:elevation_m": [
+     "abs",
+     10.0,
+     "doc: LOLA ~10 m radial (Smith et al. 2010)"
+    ],
+    "MOON:slope_deg": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "MOON:roughness_m": [
+     "rel",
+     0.05,
+     "illustrative 5 % (first audit)"
+    ],
+    "MOON:irradiance_kwh_m2_day": [
+     "rel",
+     0.02,
+     "illustrative 2 % (first audit)"
+    ],
+    "MOON:lst_diurnal_amp_k": [
+     "abs",
+     1.4142135623730951,
+     "doc-derived (first audit)"
+    ]
+   },
+   "sigma_isccp_illustrative": 0.05
+  }
+ },
+ "validation": [
+  {
+   "criteria_set": "corrected",
+   "passing": 18777,
+   "overall": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 8.3,
+     "median_pct_eliminated_as_100": 10.4,
+     "in_top_quartile": 9
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "within_row_rank": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 28.8,
+     "median_pct_eliminated_as_100": 33.1,
+     "in_top_quartile": 5
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "within_row_suitability": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 28.8,
+     "median_pct_eliminated_as_100": 33.1,
+     "in_top_quartile": 5
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "sites": [
+    {
+     "site_id": "SP01",
+     "role": "positive",
+     "name": "Tamanrasset (BSRN TAM)",
+     "cell": "E24305",
+     "passes": true,
+     "rank_pct": 4.7,
+     "rank_pct_within_row": 44.2,
+     "suit_pct_within_row": 44.2,
+     "twin": "M22885"
+    },
+    {
+     "site_id": "SP02",
+     "role": "positive",
+     "name": "Gobabeb (BSRN GOB)",
+     "cell": "E40875",
+     "passes": true,
+     "rank_pct": 3.1,
+     "rank_pct_within_row": 4.6,
+     "suit_pct_within_row": 5.7,
+     "twin": "M42472"
+    },
+    {
+     "site_id": "SP03",
+     "role": "positive",
+     "name": "De Aar (BSRN DAA)",
+     "cell": "E43403",
+     "passes": true,
+     "rank_pct": 15.2,
+     "rank_pct_within_row": 19.4,
+     "suit_pct_within_row": 19.4,
+     "twin": "M21728"
+    },
+    {
+     "site_id": "SP04",
+     "role": "positive",
+     "name": "Sede Boqer (BSRN SBO)",
+     "cell": "E21454",
+     "passes": true,
+     "rank_pct": 10.4,
+     "rank_pct_within_row": 33.3,
+     "suit_pct_within_row": 33.3,
+     "twin": "M42998"
+    },
+    {
+     "site_id": "SP05",
+     "role": "positive",
+     "name": "Solar Village (BSRN SOV)",
+     "cell": "E23626",
+     "passes": true,
+     "rank_pct": 0.3,
+     "rank_pct_within_row": 1.5,
+     "suit_pct_within_row": 1.5,
+     "twin": "M42741"
+    },
+    {
+     "site_id": "SP06",
+     "role": "positive",
+     "name": "Gandhinagar (BSRN GAN)",
+     "cell": "E24012",
+     "passes": true,
+     "rank_pct": 0.2,
+     "rank_pct_within_row": 1.5,
+     "suit_pct_within_row": 1.5,
+     "twin": "M22651"
+    },
+    {
+     "site_id": "SP07",
+     "role": "positive",
+     "name": "Gurgaon (BSRN GUR)",
+     "cell": "E22217",
+     "passes": true,
+     "rank_pct": 4.7,
+     "rank_pct_within_row": 33.1,
+     "suit_pct_within_row": 33.1,
+     "twin": "M21759"
+    },
+    {
+     "site_id": "SP08",
+     "role": "positive",
+     "name": "Alice Springs (BSRN ASP)",
+     "cell": "E40993",
+     "passes": true,
+     "rank_pct": 8.3,
+     "rank_pct_within_row": 57.5,
+     "suit_pct_within_row": 57.5,
+     "twin": "M22419"
+    },
+    {
+     "site_id": "SP09",
+     "role": "positive",
+     "name": "Desert Rock (BSRN DRA)",
+     "cell": "E19143",
+     "passes": true,
+     "rank_pct": 63.6,
+     "rank_pct_within_row": 28.8,
+     "suit_pct_within_row": 28.8,
+     "twin": null
+    },
+    {
+     "site_id": "SP10",
+     "role": "positive",
+     "name": "Boulder Table Mountain (BSRN BOS)",
+     "cell": "E17714",
+     "passes": true,
+     "rank_pct": 95.8,
+     "rank_pct_within_row": 94.0,
+     "suit_pct_within_row": 94.0,
+     "twin": null
+    },
+    {
+     "site_id": "SP11",
+     "role": "positive",
+     "name": "Petrolina (BSRN PTR)",
+     "cell": "E35779",
+     "passes": true,
+     "rank_pct": 11.0,
+     "rank_pct_within_row": 4.2,
+     "suit_pct_within_row": 4.2,
+     "twin": "M25792"
+    },
+    {
+     "site_id": "SP12",
+     "role": "positive",
+     "name": "Izana (BSRN IZA)",
+     "cell": "E22123",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SP13",
+     "role": "positive",
+     "name": "Lampedusa (BSRN LMP)",
+     "cell": "E19632",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN01",
+     "role": "negative",
+     "name": "Lerwick (Met Office climate station)",
+     "cell": "E10618",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN02",
+     "role": "negative",
+     "name": "Eskdalemuir (Met Office climate station)",
+     "cell": "E12416",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN03",
+     "role": "negative",
+     "name": "Stornoway (Met Office climate station)",
+     "cell": "E11333",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN04",
+     "role": "negative",
+     "name": "Braemar (Met Office climate station)",
+     "cell": "E11696",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN05",
+     "role": "negative",
+     "name": "Dunstaffnage (Met Office climate station)",
+     "cell": "E12054",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN06",
+     "role": "negative",
+     "name": "Tiree (Met Office climate station)",
+     "cell": "E12053",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    }
+   ]
+  },
+  {
+   "criteria_set": "audited_morning",
+   "passing": 18777,
+   "overall": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 14.9,
+     "median_pct_eliminated_as_100": 15.2,
+     "in_top_quartile": 8
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "within_row_rank": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 27.9,
+     "median_pct_eliminated_as_100": 33.1,
+     "in_top_quartile": 4
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "within_row_suitability": {
+    "positives": {
+     "n": 13,
+     "passing": 11,
+     "median_pct_passing": 27.9,
+     "median_pct_eliminated_as_100": 33.1,
+     "in_top_quartile": 4
+    },
+    "negatives": {
+     "n": 6,
+     "passing": 0,
+     "median_pct_passing": null,
+     "median_pct_eliminated_as_100": 100.0,
+     "in_top_quartile": 0
+    },
+    "separation": 0.923
+   },
+   "sites": [
+    {
+     "site_id": "SP01",
+     "role": "positive",
+     "name": "Tamanrasset (BSRN TAM)",
+     "cell": "E24305",
+     "passes": true,
+     "rank_pct": 5.4,
+     "rank_pct_within_row": 27.9,
+     "suit_pct_within_row": 27.9,
+     "twin": "M22885"
+    },
+    {
+     "site_id": "SP02",
+     "role": "positive",
+     "name": "Gobabeb (BSRN GOB)",
+     "cell": "E40875",
+     "passes": true,
+     "rank_pct": 11.2,
+     "rank_pct_within_row": 60.9,
+     "suit_pct_within_row": 60.9,
+     "twin": "M42472"
+    },
+    {
+     "site_id": "SP03",
+     "role": "positive",
+     "name": "De Aar (BSRN DAA)",
+     "cell": "E43403",
+     "passes": true,
+     "rank_pct": 22.8,
+     "rank_pct_within_row": 18.1,
+     "suit_pct_within_row": 18.1,
+     "twin": "M21728"
+    },
+    {
+     "site_id": "SP04",
+     "role": "positive",
+     "name": "Sede Boqer (BSRN SBO)",
+     "cell": "E21454",
+     "passes": true,
+     "rank_pct": 25.1,
+     "rank_pct_within_row": 25.9,
+     "suit_pct_within_row": 25.9,
+     "twin": "M42998"
+    },
+    {
+     "site_id": "SP05",
+     "role": "positive",
+     "name": "Solar Village (BSRN SOV)",
+     "cell": "E23626",
+     "passes": true,
+     "rank_pct": 13.1,
+     "rank_pct_within_row": 66.2,
+     "suit_pct_within_row": 66.2,
+     "twin": "M42741"
+    },
+    {
+     "site_id": "SP06",
+     "role": "positive",
+     "name": "Gandhinagar (BSRN GAN)",
+     "cell": "E24012",
+     "passes": true,
+     "rank_pct": 8.3,
+     "rank_pct_within_row": 45.0,
+     "suit_pct_within_row": 45.0,
+     "twin": "M22651"
+    },
+    {
+     "site_id": "SP07",
+     "role": "positive",
+     "name": "Gurgaon (BSRN GUR)",
+     "cell": "E22217",
+     "passes": true,
+     "rank_pct": 14.9,
+     "rank_pct_within_row": 33.1,
+     "suit_pct_within_row": 33.1,
+     "twin": "M21759"
+    },
+    {
+     "site_id": "SP08",
+     "role": "positive",
+     "name": "Alice Springs (BSRN ASP)",
+     "cell": "E40993",
+     "passes": true,
+     "rank_pct": 1.7,
+     "rank_pct_within_row": 6.9,
+     "suit_pct_within_row": 6.9,
+     "twin": "M22419"
+    },
+    {
+     "site_id": "SP09",
+     "role": "positive",
+     "name": "Desert Rock (BSRN DRA)",
+     "cell": "E19143",
+     "passes": true,
+     "rank_pct": 34.6,
+     "rank_pct_within_row": 8.5,
+     "suit_pct_within_row": 8.5,
+     "twin": null
+    },
+    {
+     "site_id": "SP10",
+     "role": "positive",
+     "name": "Boulder Table Mountain (BSRN BOS)",
+     "cell": "E17714",
+     "passes": true,
+     "rank_pct": 41.1,
+     "rank_pct_within_row": 69.6,
+     "suit_pct_within_row": 69.6,
+     "twin": null
+    },
+    {
+     "site_id": "SP11",
+     "role": "positive",
+     "name": "Petrolina (BSRN PTR)",
+     "cell": "E35779",
+     "passes": true,
+     "rank_pct": 15.2,
+     "rank_pct_within_row": 15.3,
+     "suit_pct_within_row": 15.3,
+     "twin": "M25792"
+    },
+    {
+     "site_id": "SP12",
+     "role": "positive",
+     "name": "Izana (BSRN IZA)",
+     "cell": "E22123",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SP13",
+     "role": "positive",
+     "name": "Lampedusa (BSRN LMP)",
+     "cell": "E19632",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN01",
+     "role": "negative",
+     "name": "Lerwick (Met Office climate station)",
+     "cell": "E10618",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN02",
+     "role": "negative",
+     "name": "Eskdalemuir (Met Office climate station)",
+     "cell": "E12416",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN03",
+     "role": "negative",
+     "name": "Stornoway (Met Office climate station)",
+     "cell": "E11333",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN04",
+     "role": "negative",
+     "name": "Braemar (Met Office climate station)",
+     "cell": "E11696",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN05",
+     "role": "negative",
+     "name": "Dunstaffnage (Met Office climate station)",
+     "cell": "E12054",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    },
+    {
+     "site_id": "SN06",
+     "role": "negative",
+     "name": "Tiree (Met Office climate station)",
+     "cell": "E12053",
+     "passes": false,
+     "rank_pct": null,
+     "rank_pct_within_row": null,
+     "suit_pct_within_row": null,
+     "twin": null
+    }
+   ]
+  }
+ ],
+ "difference_table": [
+  {
+   "variable": "irradiance_toa_kwh_m2_day",
+   "role": "key",
+   "weight": 0.8,
+   "tolerance": 0.6,
+   "bound": 0.6,
+   "median": 0.0208,
+   "p90": 0.3222,
+   "max": 0.5696,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.0208,
+    "p90": 0.3222,
+    "max": 0.5696,
+    "n_finite": 6360
+   }
+  },
+  {
+   "variable": "slope_deg",
+   "role": "secondary",
+   "weight": 0.1,
+   "tolerance": 2.0,
+   "bound": 4.0,
+   "median": 0.034,
+   "p90": 0.146,
+   "max": 1.941,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.034,
+    "p90": 0.146,
+    "max": 1.941,
+    "n_finite": 6360
+   }
+  },
+  {
+   "variable": "roughness_m",
+   "role": "secondary",
+   "weight": 0.1,
+   "tolerance": 30.0,
+   "bound": 60.0,
+   "median": 0.5,
+   "p90": 2.36,
+   "max": 58.14,
+   "pairs_over_bound": 0,
+   "pairs_with_value": 6360,
+   "bundle_pairs_file": {
+    "median": 0.5,
+    "p90": 2.36,
+    "max": 58.14,
+    "n_finite": 6360
+   }
+  }
+ ],
+ "faults": [
+  {
+   "id": "F1",
+   "kind": "text (implementation)",
+   "where": "similarity.json texts.solar_suitability_clouds; missions.json solar known_limitations[6]",
+   "text": "35 % of the suitability is the clear-sky fraction",
+   "fact": "soft weights sum 0.70; effective weight 50 % (explain.json 50.0 points)",
+   "status": "open"
+  },
+  {
+   "id": "F2",
+   "kind": "weakness of a decided criterion",
+   "where": "missing clear_frac_isccp renormalised",
+   "fact": "E34142 (-4.5, 122.5, Sulawesi) no ISCCP value, suitability 96.23, rank 16; E35577 rank 1693; E11565 no twin",
+   "status": "reported"
+  },
+  {
+   "id": "F3",
+   "kind": "text (left over)",
+   "where": "similarity.json texts.external_validation_solar",
+   "text": "No external validation exists for Solar panels",
+   "fact": "data/benchmark/validation_sites_solar.csv: 13 BSRN positives, 6 Met Office negatives, ranked (section 7)",
+   "status": "fixed in c5f1f6c (ranks verified)"
+  },
+  {
+   "id": "F4",
+   "kind": "text (left over)",
+   "where": "missions.json solar known_limitations[2]",
+   "text": "Earth irradiance at the ground, sun geometry and the diurnal amplitude are suitability criteria",
+   "fact": "irradiance and sun geometry carry no suitability weight in the corrected set",
+   "status": "open"
+  },
+  {
+   "id": "F5",
+   "kind": "weakness of a decided criterion",
+   "where": "validation",
+   "fact": "within-row median of BSRN positives 28.8 % vs 27.9 % morning: the corrected suitability is not shown to say more than latitude on these stations",
+   "status": "reported"
+  },
+  {
+   "id": "F6",
+   "kind": "weakness of a decided criterion",
+   "where": "clear_frac_isccp vs lst_diurnal_amp_k",
+   "fact": "Spearman +0.67 (passing): clear sky raises the swing, which the swing criterion penalises (share of spread -0.206)",
+   "status": "reported"
+  }
+ ]
+}

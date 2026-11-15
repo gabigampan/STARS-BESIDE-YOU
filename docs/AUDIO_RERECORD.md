@@ -9,65 +9,65 @@ Las cifras se dicen como las imprime la web (`app/src/flow/dom.ts` `valueText`, 
 ### 00_welcome.mp3
 
 - **Antes:** Welcome to Stars Beside You, a planetary twin finder. Before a rover, a solar panel or a lunar base ever reaches the Moon, it can be tested here on Earth, if we find the right place. We compare lunar data from NASA missions with data from all over the Earth, and look for the places that match on what matters most for each mission. There are three missions. Press one for the Rover, where slope and roughness decide everything. Press two for Solar Panels, where sunlight is the key. Press three for the Lunar Base, where temperature and its daily swing matter most.
-- **Ahora:** Welcome to Stars Beside You, a planetary twin finder. Before a rover, a solar panel or a lunar base ever reaches the Moon, it can be tested here on Earth, if we find the right place. We compare lunar data from NASA missions with data from all over the Earth, and pair each Earth site with a lunar twin. There are three missions. Press one for the Rover, matched on slope and roughness. Press two for Solar panels, matched on sunlight. Press three for the Lunar base, matched on the cold and its daily swing.
+- **Ahora:** Welcome to Stars Beside You, a planetary twin finder. Before a rover, a solar panel or a lunar base ever reaches the Moon, it can be tested here on Earth, if we find the right place. We compare lunar data from NASA missions with data from all over the Earth, and look for a lunar twin for each Earth site. There are three missions. Press one for the Rover, matched on slope and roughness. Press two for Solar panels, matched mainly on sunlight. Press three for the Lunar base, matched mainly on the coldest temperature and the daily swing.
 - **Motivo:** Base lunar se emparejaba por 'temperature'; ahora se dice lo que se compara: el frío y su oscilación diaria (posición térmica); cada misión con su criterio.
-- Palabras: 95.
+- Palabras: 99.
 
 ### m1_rover.mp3
 
 - **Antes:** Rover. A rover's journey depends on the ground beneath its wheels, so we match places by slope and surface roughness. On the Moon, we search near the south pole, where NASA plans to look for water ice. All five analogs share the same lunar twin: gently sloping ground at 76.5 degrees south, about 160 kilometers from Casatus crater. Here are the five best analogs on Earth. Press a number from one to five to hear about each one, or press Escape to go back.
-- **Ahora:** Rover. We match places on slope and roughness only: the ground a rover drives on. On the Moon we search near the south pole, where NASA plans to look for water ice. Many sites differ from their lunar twin by less than the elevation data can measure, so they tie at the top score. Here are five of the 254 sites tied at the top of our model, chosen to be spread across the world. All five share the same final score, half likeness and half suitability. Press one to five to hear each one, or Escape to go back.
+- **Ahora:** Rover. We match places on slope and roughness only. On the Moon we search the south polar region, from 75 degrees south to the pole, where NASA plans to look for water ice. Almost every site differs from its lunar twin by less than the elevation data can measure, so the likeness cannot tell them apart; 254 of them also get full marks, or nearly, on our Rover criteria. Here are five of the 254 sites tied at the top of our model, chosen to be spread across the world. Press one to five to hear each one, or Escape to go back.
 - **Motivo:** Rover ya no comparte un único gemelo (Casatus) y decía 'the five best'; ahora: solo pendiente y rugosidad, empate de 254 sitios en lo más alto (los cinco, repartidos por el mundo, entre los 241 sin hielo ni agua).
-- Palabras: 100.
+- Palabras: 103.
 
 ### m2_solar.mp3
 
 - **Antes:** Solar Panels. A solar panel lives on sunlight, so we match places by how much solar energy arrives each day at the top of the atmosphere, before the air absorbs any of it. On the Moon, we search the low, flat plains near the equator, called the maria, where the Sun climbs high. Here are the five best analogs on Earth. Press a number from one to five to hear about each one, or press Escape to go back.
-- **Ahora:** Solar panels. A solar panel lives on sunlight, so we match places on the sunlight that arrives each day above the atmosphere. On the Moon we search the low, flat maria near the equator, where the Sun stands high. Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. Almost every top site matches its twin's sunlight almost exactly, so the likeness is nearly the same for all of them, and suitability, led by clear skies, decides the order. Press one to five to hear each one, or Escape to go back.
+- **Ahora:** Solar panels. A solar panel lives on sunlight, so we match mainly on the sunlight that arrives each day above the atmosphere. On the Moon we search the low, flat maria within 30 degrees of the equator, where the Sun stands high. Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. Almost every top site matches its twin's sunlight almost exactly, so the likeness is nearly the same for all of them, and suitability, led by clear skies, decides the order. Press one to five to hear each one, or Escape to go back.
 - **Motivo:** Decía 'the five best'; ahora 'five of the highest-scoring analogs in our model', el orden por el final y la nota honesta: la similitud casi igual, decide la idoneidad (cielo despejado).
-- Palabras: 102.
+- Palabras: 105.
 
 ### m3_base.mp3
 
 - **Antes:** Lunar Base. A base has to survive the cold, and the swing between day and night, so we match places by temperature and daily temperature range. Nowhere on Earth is as cold as the Moon, so we compare how each place ranks within its own world: the coldest, steadiest sites on Earth, against the coldest cells in NASA's nine candidate regions near the lunar south pole. Here are the five best analogs. Press a number from one to five to hear about each one, or press Escape to go back.
-- **Ahora:** Lunar base. A base must endure the cold, so we match on the coldest temperature and its daily swing. On the Moon we search NASA's nine candidate landing regions near the south pole, where NASA plans crewed landings. The Moon is far colder than Earth, so we compare position, not temperature: how each site ranks among Earth's 2,419 candidates, and its twin among the 280 lunar cells of those regions. Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. Press one to five to hear each one, or Escape to go back.
+- **Ahora:** Lunar base. A base must endure the cold, so we match mainly on the coldest temperature and the daily swing. On the Moon we search NASA's nine candidate landing regions in the south polar region, where NASA plans crewed landings. The Moon is far colder than Earth, so we compare position, not temperature: how each site ranks among Earth's 2,419 candidates, and its twin among the 280 lunar cells of those regions. Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. Press one to five to hear each one, or Escape to go back.
 - **Motivo:** Decía 'the five best' y comparaba 'temperature'; ahora posición, no temperatura, poblaciones de 2.419 y 280, y el orden por el final.
-- Palabras: 103.
+- Palabras: 105.
 
 ### rover_1.mp3
 
 - **Antes:** Rover, analog one. About 66 kilometers northwest of Bayinbaolige, in Inner Mongolia, China. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 1.04 degrees on Earth and 1.15 degrees on the Moon, and the surface roughness is about 44 meters in both. Their height above each world's average level differs by 96 meters. Similarity: 99.57 percent.
-- **Ahora:** Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west, about 1,116 kilometers north of Gjoa Haven. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: within what the elevation data can measure, they all match their twins equally well.
+- **Ahora:** Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west, about 1,116 kilometers north of Gjoa Haven. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 87.
+- Palabras: 93.
 
 ### rover_2.mp3
 
 - **Antes:** Rover, analog two. About 80 kilometers north of Tamanrasset, in Algeria. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 1.22 degrees on Earth and 1.15 degrees on the Moon, and the surface roughness is about 43 meters on Earth and 44 on the Moon. Their height above each world's average level differs by 71 meters. Similarity: 99.76 percent.
-- **Ahora:** Rover, analog two. A site in Santa Cruz, Argentina, about 71 kilometers southwest of Comandante Luis Piedra Buena. Its lunar twin lies about 51 kilometers from the crater Zeeman. The slope is 0.722 degrees on Earth and 0.739 on the Moon; the roughness is 29.16 meters on Earth and 30.62 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: within what the elevation data can measure, they all match their twins equally well.
+- **Ahora:** Rover, analog two. A site in Santa Cruz, Argentina, about 71 kilometers southwest of Comandante Luis Piedra Buena. Its lunar twin lies about 51 kilometers from the crater Zeeman. The slope is 0.722 degrees on Earth and 0.739 on the Moon; the roughness is 29.16 meters on Earth and 30.62 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 83.
+- Palabras: 89.
 
 ### rover_3.mp3
 
 - **Antes:** Rover, analog three. About 78 kilometers northeast of Ehen Hudag, in Inner Mongolia, China. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 0.91 degrees on Earth and 1.15 degrees on the Moon, and the surface roughness is 39 meters on Earth and 44 on the Moon. Their height above each world's average level differs by 86 meters. Similarity: 98.77 percent.
-- **Ahora:** Rover, analog three. A site in South Australia, Australia, about 81 kilometers northeast of Peterborough. Its lunar twin lies about 24 kilometers from the crater Schrodinger. The slope is 0.547 degrees on Earth and 0.547 on the Moon; the roughness is 18.18 meters on Earth and 15.66 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: within what the elevation data can measure, they all match their twins equally well.
+- **Ahora:** Rover, analog three. A site in South Australia, Australia, about 81 kilometers northeast of Peterborough. Its lunar twin lies about 24 kilometers from the crater Schrodinger. The slope is 0.547 degrees on Earth and 0.547 on the Moon; the roughness is 18.18 meters on Earth and 15.66 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 80.
+- Palabras: 86.
 
 ### rover_4.mp3
 
 - **Antes:** Rover, analog four. About 28 kilometers northeast of Banqiao, in Gansu, China. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 1.13 degrees on Earth and 1.15 degrees on the Moon, almost the same, and the surface roughness is 49 meters on Earth and 44 on the Moon. Their height above each world's average level differs by only 18 meters. Similarity: 99.5 percent.
-- **Ahora:** Rover, analog four. A site in Al Mahrah, Yemen, about 90 kilometers north of Dahasuways. Its lunar twin lies about 68 kilometers from the crater Haynes. The slope is 0.643 degrees on Earth and 0.677 on the Moon; the roughness is 21.87 meters on Earth and 19.22 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: within what the elevation data can measure, they all match their twins equally well.
+- **Ahora:** Rover, analog four. A site in Al Mahrah, Yemen, about 90 kilometers north of Dahasuways. Its lunar twin lies about 68 kilometers from the crater Haynes. The slope is 0.643 degrees on Earth and 0.677 on the Moon; the roughness is 21.87 meters on Earth and 19.22 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 80.
+- Palabras: 86.
 
 ### rover_5.mp3
 
 - **Antes:** Rover, analog five. About 41 kilometers southeast of Buga, in Govi-Altay, Mongolia. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 1.24 degrees on Earth and 1.15 degrees on the Moon, and the surface roughness is 41 meters on Earth and 44 on the Moon. Their height above each world's average level differs by 129 meters. Similarity: 99.12 percent.
-- **Ahora:** Rover, analog five. A site in Assaba, Mauritania, about 96 kilometers north of Barkewol. Its lunar twin lies about 29 kilometers from the crater Drygalski. The slope is 0.523 degrees on Earth and 0.51 on the Moon; the roughness is 26.42 meters on Earth and 26.8 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: within what the elevation data can measure, they all match their twins equally well.
+- **Ahora:** Rover, analog five. A site in Assaba, Mauritania, about 96 kilometers north of Barkewol. Its lunar twin lies about 29 kilometers from the crater Drygalski. The slope is 0.523 degrees on Earth and 0.51 on the Moon; the roughness is 26.42 meters on Earth and 26.8 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 79.
+- Palabras: 85.
 
 ### solar_1.mp3
 
@@ -107,37 +107,37 @@ Las cifras se dicen como las imprime la web (`app/src/flow/dom.ts` `valueText`, 
 ### base_1.mp3
 
 - **Antes:** Lunar Base, analog one. About 62 kilometers north of Aheqi, in Xinjiang, China. Its lunar twin lies 25 kilometers from Mons Malapert, in NASA's Haworth candidate region. They are not equally cold: the Moon's minimum is about 207 kelvin lower. What matches is their place in their own worlds: both rank near the 8th percentile for minimum temperature, their daily temperature swings rank close too, and the terrain is alike, with slopes of about 7 degrees. Similarity: 97.31 percent.
-- **Ahora:** Lunar base, analog one. A site in Souss-Massa-Draa, Morocco, about 4 kilometers southeast of Tinghir. Its lunar twin lies about 18 kilometers from the crater Wapowski, at the edge of NASA's Nobile Rim 2 candidate region. The likeness is of position, not temperature: the Moon's coldest temperature is 208.6 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 62.7 on Earth and 62.7 on the Moon, and the daily swings rank close, at 41.9 and 43.4. The slope is alike: 3.257 degrees on Earth and 3.481 on the Moon. Similarity: 99.36 out of 100.
+- **Ahora:** Lunar base, analog one. A site in Souss-Massa-Draa, Morocco, about 4 kilometers southeast of Tinghir. Its lunar twin lies about 18 kilometers from the crater Wapowski, at the edge of NASA's Nobile Rim 2 candidate region. The likeness is of position, not temperature: its twin's coldest temperature is 208.6 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 62.7 on Earth and 62.7 on the Moon, and the daily swings rank close, at 41.9 and 43.4. The slopes are close enough for our model: 3.257 degrees on Earth and 3.481 on the Moon. Similarity: 99.36 out of 100.
 - **Motivo:** Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.
-- Palabras: 99.
+- Palabras: 103.
 
 ### base_2.mp3
 
 - **Antes:** Lunar Base, analog two. About 44 kilometers southeast of Mori, in Xinjiang, China. Its lunar twin lies 16 kilometers from Cartwright crater, in NASA's de Gerlache Rim 2 candidate region. They are not equally cold: the Moon's minimum is about 208 kelvin lower. What matches is their place in their own worlds: for minimum temperature, they rank at the 21st and 19th percentile, and their daily temperature swings rank almost the same. Similarity: 96.61 percent.
-- **Ahora:** Lunar base, analog two. A site in Xinjiang Uygur Zizhiqu, China, about 62 kilometers north of Aheqi. Its lunar twin lies about 25 kilometers from Mons Malapert, at the edge of NASA's Haworth candidate region. The likeness is of position, not temperature: the Moon's coldest temperature is 207.4 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 8.4 on Earth and 8.0 on the Moon, and the daily swings rank close, at 6.7 and 10.2. The slope is alike: 6.652 degrees on Earth and 7.179 on the Moon. Similarity: 97.31 out of 100.
+- **Ahora:** Lunar base, analog two. A site in Xinjiang Uygur Zizhiqu, China, about 62 kilometers north of Aheqi. Its lunar twin lies about 25 kilometers from Mons Malapert, at the edge of NASA's Haworth candidate region. The likeness is of position, not temperature: its twin's coldest temperature is 207.4 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 8.4 on Earth and 8.0 on the Moon, and the daily swings rank close, at 6.7 and 10.2. The slopes are close enough for our model: 6.652 degrees on Earth and 7.179 on the Moon. Similarity: 97.31 out of 100.
 - **Motivo:** Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.
-- Palabras: 98.
+- Palabras: 102.
 
 ### base_3.mp3
 
 - **Antes:** Lunar Base, analog three. About 46 kilometers north of Burenhayrhan, in Hovd, Mongolia. Its lunar twin lies 19 kilometers from Slater crater, in NASA's Slater Plain candidate region. They are not equally cold: the Moon's minimum is about 207 kelvin lower. What matches is their place in their own worlds: both rank near the 6th and 7th percentile for minimum temperature, and their daily temperature swings rank close too. Similarity: 96.86 percent.
-- **Ahora:** Lunar base, analog three. A site in Fars, Iran, about 18 kilometers east of Kherameh. Its lunar twin lies about 14 kilometers from the crater Wapowski, at the edge of NASA's Nobile Rim 2 candidate region. The likeness is of position, not temperature: the Moon's coldest temperature is 208.2 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 62.9 on Earth and 64.1 on the Moon, and the daily swings rank close, at 59.5 and 54.8. The slope is alike: 3.738 degrees on Earth and 5.053 on the Moon. Similarity: 92.50 out of 100.
+- **Ahora:** Lunar base, analog three. A site in Fars, Iran, about 18 kilometers east of Kherameh. Its lunar twin lies about 14 kilometers from the crater Wapowski, at the edge of NASA's Nobile Rim 2 candidate region. The likeness is of position, not temperature: its twin's coldest temperature is 208.2 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 62.9 on Earth and 64.1 on the Moon, and the daily swings rank close, at 59.5 and 54.8. The slopes are close enough for our model: 3.738 degrees on Earth and 5.053 on the Moon. Similarity: 92.50 out of 100.
 - **Motivo:** Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.
-- Palabras: 99.
+- Palabras: 103.
 
 ### base_4.mp3
 
 - **Antes:** Lunar Base, analog four. About 4 kilometers southeast of Tinghir, in Morocco. Its lunar twin lies 18 kilometers from Wapowski crater, in NASA's Nobile Rim 2 candidate region. They are not equally cold: the Moon's minimum is about 209 kelvin lower. What matches is their place in their own worlds: both rank at the 63rd percentile for minimum temperature, and their daily temperature swings rank close too. Similarity: 99.36 percent.
-- **Ahora:** Lunar base, analog four. A site in Xinjiang Uygur Zizhiqu, China, about 27 kilometers southeast of Waxxari. Its lunar twin lies about 49 kilometers from Mons Mouton, at the edge of NASA's Mons Mouton Plateau candidate region. The likeness is of position, not temperature: the Moon's coldest temperature is 202.9 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 27.8 on Earth and 34.1 on the Moon, and the daily swings rank close, at 80.1 and 77.7. Similarity: 83.98 out of 100.
+- **Ahora:** Lunar base, analog four. A site in Xinjiang Uygur Zizhiqu, China, about 27 kilometers southeast of Waxxari. Its lunar twin lies about 49 kilometers from Mons Mouton, at the edge of NASA's Mons Mouton Plateau candidate region. The likeness is of position, not temperature: its twin's coldest temperature is 202.9 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 27.8 on Earth and 34.1 on the Moon, and the daily swings rank close, at 80.1 and 77.7. Similarity: 83.98 out of 100.
 - **Motivo:** Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.
 - Palabras: 87.
 
 ### base_5.mp3
 
 - **Antes:** Lunar Base, analog five. About 53 kilometers south of Ewirgol, in Xinjiang, China. Its lunar twin lies 16 kilometers from Oberbeck crater, in NASA's Nobile Rim 2 candidate region. They are not equally cold: the Moon's minimum is about 208 kelvin lower. What matches is their place in their own worlds: for minimum temperature, they rank at the 23rd and 22nd percentile, and their daily temperature swings rank close too. Similarity: 95.03 percent.
-- **Ahora:** Lunar base, analog five. A site in Semnan, Iran, about 28 kilometers north of Aradan. Its lunar twin lies about 49 kilometers from the crater Slater, at the edge of NASA's Slater Plain candidate region. The likeness is of position, not temperature: the Moon's coldest temperature is 207.4 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 53.0 on Earth and 54.8 on the Moon, and the daily swings rank close, at 55.1 and 51.3. The slope is alike: 4.198 degrees on Earth and 5.547 on the Moon. Similarity: 93.33 out of 100.
+- **Ahora:** Lunar base, analog five. A site in Semnan, Iran, about 28 kilometers north of Aradan. Its lunar twin lies about 49 kilometers from the crater Slater, at the edge of NASA's Slater Plain candidate region. The likeness is of position, not temperature: its twin's coldest temperature is 207.4 kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile 53.0 on Earth and 54.8 on the Moon, and the daily swings rank close, at 55.1 and 51.3. The slopes are close enough for our model: 4.198 degrees on Earth and 5.547 on the Moon. Similarity: 93.33 out of 100.
 - **Motivo:** Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.
-- Palabras: 98.
+- Palabras: 102.
 
 ## Los cinco de cada misión
 

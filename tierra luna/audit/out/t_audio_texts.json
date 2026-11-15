@@ -1607,7 +1607,7 @@
   },
   {
    "ok": true,
-   "check": "00_welcome.mp3: 95 words",
+   "check": "00_welcome.mp3: 99 words",
    "detail": ""
   },
   {
@@ -1652,7 +1652,7 @@
   },
   {
    "ok": true,
-   "check": "m1_rover.mp3: 100 words",
+   "check": "m1_rover.mp3: 103 words",
    "detail": ""
   },
   {
@@ -1696,13 +1696,8 @@
    "detail": ""
   },
   {
-   "ok": false,
-   "check": "m1_rover.mp3: 'near the south pole' (rule 2: check the distance)",
-   "detail": ""
-  },
-  {
    "ok": true,
-   "check": "m2_solar.mp3: 102 words",
+   "check": "m2_solar.mp3: 105 words",
    "detail": ""
   },
   {
@@ -1746,13 +1741,8 @@
    "detail": ""
   },
   {
-   "ok": false,
-   "check": "m2_solar.mp3: 'near the equator' (rule 2: check the distance)",
-   "detail": ""
-  },
-  {
    "ok": true,
-   "check": "m3_base.mp3: 103 words",
+   "check": "m3_base.mp3: 105 words",
    "detail": ""
   },
   {
@@ -1796,13 +1786,8 @@
    "detail": ""
   },
   {
-   "ok": false,
-   "check": "m3_base.mp3: 'near the south pole' (rule 2: check the distance)",
-   "detail": ""
-  },
-  {
    "ok": true,
-   "check": "rover_1.mp3: 87 words",
+   "check": "rover_1.mp3: 93 words",
    "detail": ""
   },
   {
@@ -1847,7 +1832,7 @@
   },
   {
    "ok": true,
-   "check": "rover_2.mp3: 83 words",
+   "check": "rover_2.mp3: 89 words",
    "detail": ""
   },
   {
@@ -1892,7 +1877,7 @@
   },
   {
    "ok": true,
-   "check": "rover_3.mp3: 80 words",
+   "check": "rover_3.mp3: 86 words",
    "detail": ""
   },
   {
@@ -1937,7 +1922,7 @@
   },
   {
    "ok": true,
-   "check": "rover_4.mp3: 80 words",
+   "check": "rover_4.mp3: 86 words",
    "detail": ""
   },
   {
@@ -1982,7 +1967,7 @@
   },
   {
    "ok": true,
-   "check": "rover_5.mp3: 79 words",
+   "check": "rover_5.mp3: 85 words",
    "detail": ""
   },
   {
@@ -2252,7 +2237,7 @@
   },
   {
    "ok": true,
-   "check": "base_1.mp3: 99 words",
+   "check": "base_1.mp3: 103 words",
    "detail": ""
   },
   {
@@ -2297,7 +2282,7 @@
   },
   {
    "ok": true,
-   "check": "base_2.mp3: 98 words",
+   "check": "base_2.mp3: 102 words",
    "detail": ""
   },
   {
@@ -2342,7 +2327,7 @@
   },
   {
    "ok": true,
-   "check": "base_3.mp3: 99 words",
+   "check": "base_3.mp3: 103 words",
    "detail": ""
   },
   {
@@ -2432,7 +2417,7 @@
   },
   {
    "ok": true,
-   "check": "base_5.mp3: 98 words",
+   "check": "base_5.mp3: 102 words",
    "detail": ""
   },
   {

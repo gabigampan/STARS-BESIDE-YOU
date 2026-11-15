@@ -1,0 +1,205 @@
+{
+ "criteria_set": "corrected",
+ "runs": 200,
+ "seed0": 20261115,
+ "sigma_isccp_illustrative": 0.05,
+ "sigma": {
+  "EARTH:elevation_m": [
+   "abs",
+   7.17,
+   "doc: ETOPO 2022 global RMSE vs ICESat-2 (first audit p3_montecarlo)"
+  ],
+  "EARTH:slope_deg": [
+   "rel",
+   0.05,
+   "illustrative 5 % (first audit)"
+  ],
+  "EARTH:roughness_m": [
+   "rel",
+   0.05,
+   "illustrative 5 % (first audit)"
+  ],
+  "EARTH:irradiance_kwh_m2_day": [
+   "abs",
+   0.40277777777777773,
+   "doc: WorldClim 2 CV RMSE 1.45 MJ/m2/day (Fick & Hijmans 2017)"
+  ],
+  "EARTH:lst_diurnal_amp_k": [
+   "abs",
+   1.4142135623730951,
+   "doc-derived: MOD11 <= 1 K per overpass, day-night -> sqrt(2) K"
+  ],
+  "EARTH:clear_frac_isccp": [
+   "abs",
+   0.05,
+   "ILLUSTRATIVE (this re-audit): no documented per-cell uncertainty of the 2012-2016 mean found"
+  ],
+  "MOON:elevation_m": [
+   "abs",
+   10.0,
+   "doc: LOLA ~10 m radial (Smith et al. 2010)"
+  ],
+  "MOON:slope_deg": [
+   "rel",
+   0.05,
+   "illustrative 5 % (first audit)"
+  ],
+  "MOON:roughness_m": [
+   "rel",
+   0.05,
+   "illustrative 5 % (first audit)"
+  ],
+  "MOON:irradiance_kwh_m2_day": [
+   "rel",
+   0.02,
+   "illustrative 2 % (first audit)"
+  ],
+  "MOON:lst_diurnal_amp_k": [
+   "abs",
+   1.4142135623730951,
+   "doc-derived (first audit)"
+  ]
+ },
+ "not_perturbed": {
+  "Earth irradiance_toa": "exact formula",
+  "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude",
+  "snow_ice_frac, mask_fraction, thermal_inertia_class": "classes / land share (also the skip columns of the five)"
+ },
+ "baseline_five": [
+  "E40184",
+  "E29749",
+  "E23648",
+  "E29746",
+  "E28670"
+ ],
+ "baseline_points_within_of_fifth": {
+  "0.1": 2,
+  "0.5": 26,
+  "1.0": 116
+ },
+ "per_analog": {
+  "E40184": {
+   "baseline_twin": "M23206",
+   "share_in_five": 0.095,
+   "share_top20": 0.4,
+   "share_top50": 0.575,
+   "share_keeps_twin": 0.035,
+   "share_in_five_and_keeps_twin": 0.005,
+   "median_rank": 30.0
+  },
+  "E29749": {
+   "baseline_twin": "M26063",
+   "share_in_five": 0.07,
+   "share_top20": 0.375,
+   "share_top50": 0.74,
+   "share_keeps_twin": 0.005,
+   "share_in_five_and_keeps_twin": 0.0,
+   "median_rank": 25.5
+  },
+  "E23648": {
+   "baseline_twin": "M22156",
+   "share_in_five": 0.13,
+   "share_top20": 0.315,
+   "share_top50": 0.38,
+   "share_keeps_twin": 0.08,
+   "share_in_five_and_keeps_twin": 0.005,
+   "median_rank": 540.5
+  },
+  "E29746": {
+   "baseline_twin": "M26056",
+   "share_in_five": 0.015,
+   "share_top20": 0.145,
+   "share_top50": 0.45,
+   "share_keeps_twin": 0.015,
+   "share_in_five_and_keeps_twin": 0.0,
+   "median_rank": 62.5
+  },
+  "E28670": {
+   "baseline_twin": "M25483",
+   "share_in_five": 0.005,
+   "share_top20": 0.125,
+   "share_top50": 0.515,
+   "share_keeps_twin": 0.025,
+   "share_in_five_and_keeps_twin": 0.0,
+   "median_rank": 49.5
+  }
+ },
+ "five_exact_same_order": 0.0,
+ "five_same_set": 0.0,
+ "points_within_of_fifth_runs": {
+  "0.1": {
+   "median": 2.0,
+   "p10": 1.0,
+   "p90": 5.0
+  },
+  "0.5": {
+   "median": 17.0,
+   "p10": 10.900000000000002,
+   "p90": 23.099999999999994
+  },
+  "1.0": {
+   "median": 51.0,
+   "p10": 31.0,
+   "p90": 70.1
+  }
+ },
+ "most_frequent_in_five": [
+  [
+   "E21492",
+   0.175
+  ],
+  [
+   "E22217",
+   0.15
+  ],
+  [
+   "E39464",
+   0.15
+  ],
+  [
+   "E23648",
+   0.13
+  ],
+  [
+   "E39824",
+   0.12
+  ],
+  [
+   "E31176",
+   0.12
+  ],
+  [
+   "E21493",
+   0.12
+  ],
+  [
+   "E22940",
+   0.105
+  ],
+  [
+   "E22580",
+   0.105
+  ],
+  [
+   "E22218",
+   0.1
+  ],
+  [
+   "E21133",
+   0.1
+  ],
+  [
+   "E40184",
+   0.095
+  ]
+ ],
+ "n_pass_range": [
+  18494,
+  18664
+ ],
+ "n_paired_range": [
+  7021,
+  7561
+ ],
+ "seconds": 1170
+}

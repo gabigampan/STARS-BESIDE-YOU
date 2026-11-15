@@ -1,0 +1,201 @@
+{
+ "criteria_set": "audited_morning",
+ "five": [
+  {
+   "earth": "E38464",
+   "lat": -16.5,
+   "lon": 124.5,
+   "rank": 1,
+   "final": 98.45,
+   "land_share": 0.8222,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 122,
+   "bare_frac": 0.0,
+   "clear_frac_isccp": 0.581,
+   "dist_to_all_sea_cell_centre_km_1deg": 241.0,
+   "nearest_place_own": "Derby (AU)",
+   "nearest_km_own": 128.7,
+   "nearest_place_bundle": "Derby",
+   "nearest_km_bundle": 128.7,
+   "country_bundle": 11,
+   "twin": "M24296",
+   "twin_lat": 22.5,
+   "twin_lon": -3.5,
+   "twin_elev_m": -1842.7,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E38105",
+   "lat": -15.5,
+   "lon": 125.5,
+   "rank": 2,
+   "final": 98.39,
+   "land_share": 0.9475,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 122,
+   "bare_frac": 0.0,
+   "clear_frac_isccp": 0.576,
+   "dist_to_all_sea_cell_centre_km_1deg": 242.0,
+   "nearest_place_own": "Derby (AU)",
+   "nearest_km_own": 282.9,
+   "nearest_place_bundle": "Derby",
+   "nearest_km_bundle": 282.9,
+   "country_bundle": 11,
+   "twin": "M24583",
+   "twin_lat": 21.5,
+   "twin_lon": -76.5,
+   "twin_elev_m": -1251.1,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E38744",
+   "lat": -17.5,
+   "lon": 44.5,
+   "rank": 3,
+   "final": 98.36,
+   "land_share": 0.952,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 110,
+   "bare_frac": 0.008,
+   "clear_frac_isccp": 0.563,
+   "dist_to_all_sea_cell_centre_km_1deg": 154.0,
+   "nearest_place_own": "Maintirano (MG)",
+   "nearest_km_own": 80.1,
+   "nearest_place_bundle": "Maintirano",
+   "nearest_km_bundle": 80.1,
+   "country_bundle": 129,
+   "twin": "M40854",
+   "twin_lat": -23.5,
+   "twin_lon": -5.5,
+   "twin_elev_m": -1532.5,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E37746",
+   "lat": -14.5,
+   "lon": 126.5,
+   "rank": 4,
+   "final": 98.3,
+   "land_share": 0.8952,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 122,
+   "bare_frac": 0.0,
+   "clear_frac_isccp": 0.573,
+   "dist_to_all_sea_cell_centre_km_1deg": 222.0,
+   "nearest_place_own": "Kununurra (AU)",
+   "nearest_km_own": 279.7,
+   "nearest_place_bundle": "Kununurra",
+   "nearest_km_bundle": 279.7,
+   "country_bundle": 11,
+   "twin": "M24761",
+   "twin_lat": 21.5,
+   "twin_lon": 101.5,
+   "twin_elev_m": -1300.7,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E38465",
+   "lat": -16.5,
+   "lon": 125.5,
+   "rank": 5,
+   "final": 98.24,
+   "land_share": 1.0,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 122,
+   "bare_frac": 0.0,
+   "clear_frac_isccp": 0.563,
+   "dist_to_all_sea_cell_centre_km_1deg": 309.0,
+   "nearest_place_own": "Derby (AU)",
+   "nearest_km_own": 218.2,
+   "nearest_place_bundle": "Derby",
+   "nearest_km_bundle": 218.2,
+   "country_bundle": 11,
+   "twin": "M40406",
+   "twin_lat": -22.5,
+   "twin_lon": -93.5,
+   "twin_elev_m": -2829.0,
+   "twin_in_zone": true,
+   "place_match": true
+  }
+ ],
+ "separations_deg": [
+  {
+   "pair": [
+    "E38464",
+    "E38105"
+   ],
+   "deg": 1.39
+  },
+  {
+   "pair": [
+    "E38464",
+    "E38744"
+   ],
+   "deg": 75.87
+  },
+  {
+   "pair": [
+    "E38464",
+    "E37746"
+   ],
+   "deg": 2.78
+  },
+  {
+   "pair": [
+    "E38464",
+    "E38465"
+   ],
+   "deg": 0.96
+  },
+  {
+   "pair": [
+    "E38105",
+    "E38744"
+   ],
+   "deg": 77.05
+  },
+  {
+   "pair": [
+    "E38105",
+    "E37746"
+   ],
+   "deg": 1.39
+  },
+  {
+   "pair": [
+    "E38105",
+    "E38465"
+   ],
+   "deg": 1.0
+  },
+  {
+   "pair": [
+    "E38744",
+    "E37746"
+   ],
+   "deg": 78.24
+  },
+  {
+   "pair": [
+    "E38744",
+    "E38465"
+   ],
+   "deg": 76.79
+  },
+  {
+   "pair": [
+    "E37746",
+    "E38465"
+   ],
+   "deg": 2.22
+  }
+ ],
+ "min_separation_deg": 0.96,
+ "skipped_before_fifth": [],
+ "recognised_site_skipped": [],
+ "dist_note": "distance to the centre of the nearest 1-degree cell with land share 0: an own approximation at grid resolution, not a coastline distance"
+}

@@ -1,0 +1,234 @@
+{
+ "criteria_set": "corrected",
+ "five": [
+  {
+   "earth": "E40184",
+   "lat": -21.5,
+   "lon": 44.5,
+   "rank": 1,
+   "final": 98.88,
+   "land_share": 0.9932,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 110,
+   "bare_frac": 0.005,
+   "clear_frac_isccp": 0.675,
+   "dist_to_all_sea_cell_centre_km_1deg": 207.0,
+   "nearest_place_own": "Manja (MG)",
+   "nearest_km_own": 18.8,
+   "nearest_place_bundle": "Manja",
+   "nearest_km_bundle": 18.8,
+   "country_bundle": 129,
+   "twin": "M23206",
+   "twin_lat": 25.5,
+   "twin_lon": -13.5,
+   "twin_elev_m": -2187.3,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E29749",
+   "lat": 7.5,
+   "lon": 49.5,
+   "rank": 2,
+   "final": 98.76,
+   "land_share": 0.6641,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 210,
+   "bare_frac": 0.02,
+   "clear_frac_isccp": 0.705,
+   "dist_to_all_sea_cell_centre_km_1deg": 110.0,
+   "nearest_place_own": "Eyl (SO)",
+   "nearest_km_own": 63.8,
+   "nearest_place_bundle": "Eyl",
+   "nearest_km_bundle": 63.8,
+   "country_bundle": 190,
+   "twin": "M26063",
+   "twin_lat": 17.5,
+   "twin_lon": -36.5,
+   "twin_elev_m": -1360.2,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E23648",
+   "lat": 24.5,
+   "lon": 68.5,
+   "rank": 5,
+   "final": 98.56,
+   "land_share": 0.926,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 20,
+   "bare_frac": 0.001,
+   "clear_frac_isccp": 0.662,
+   "dist_to_all_sea_cell_centre_km_1deg": 232.0,
+   "nearest_place_own": "Jati (PK)",
+   "nearest_km_own": 28.6,
+   "nearest_place_bundle": "Jati",
+   "nearest_km_bundle": 28.6,
+   "country_bundle": 164,
+   "twin": "M22156",
+   "twin_lat": 28.5,
+   "twin_lon": 16.5,
+   "twin_elev_m": -2557.1,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E29746",
+   "lat": 7.5,
+   "lon": 46.5,
+   "rank": 7,
+   "final": 98.52,
+   "land_share": 1.0,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 120,
+   "bare_frac": 0.0,
+   "clear_frac_isccp": 0.677,
+   "dist_to_all_sea_cell_centre_km_1deg": 399.0,
+   "nearest_place_own": "Gaalkacyo (SO)",
+   "nearest_km_own": 130.9,
+   "nearest_place_bundle": "Gaalkacyo",
+   "nearest_km_bundle": 130.9,
+   "country_bundle": 64,
+   "twin": "M26056",
+   "twin_lat": 17.5,
+   "twin_lon": -43.5,
+   "twin_elev_m": -1556.4,
+   "twin_in_zone": true,
+   "place_match": true
+  },
+  {
+   "earth": "E28670",
+   "lat": 10.5,
+   "lon": 50.5,
+   "rank": 9,
+   "final": 98.37,
+   "land_share": 0.9638,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci_code": 120,
+   "bare_frac": 0.203,
+   "clear_frac_isccp": 0.792,
+   "dist_to_all_sea_cell_centre_km_1deg": 156.0,
+   "nearest_place_own": "Iskushuban (SO)",
+   "nearest_km_own": 38.1,
+   "nearest_place_bundle": "Iskushuban",
+   "nearest_km_bundle": 38.1,
+   "country_bundle": 190,
+   "twin": "M25483",
+   "twin_lat": 19.5,
+   "twin_lon": 103.5,
+   "twin_elev_m": -1319.7,
+   "twin_in_zone": true,
+   "place_match": true
+  }
+ ],
+ "separations_deg": [
+  {
+   "pair": [
+    "E40184",
+    "E29749"
+   ],
+   "deg": 29.41
+  },
+  {
+   "pair": [
+    "E40184",
+    "E23648"
+   ],
+   "deg": 51.58
+  },
+  {
+   "pair": [
+    "E40184",
+    "E29746"
+   ],
+   "deg": 29.07
+  },
+  {
+   "pair": [
+    "E40184",
+    "E28670"
+   ],
+   "deg": 32.54
+  },
+  {
+   "pair": [
+    "E29749",
+    "E23648"
+   ],
+   "deg": 24.89
+  },
+  {
+   "pair": [
+    "E29749",
+    "E29746"
+   ],
+   "deg": 2.97
+  },
+  {
+   "pair": [
+    "E29749",
+    "E28670"
+   ],
+   "deg": 3.16
+  },
+  {
+   "pair": [
+    "E23648",
+    "E29746"
+   ],
+   "deg": 27.05
+  },
+  {
+   "pair": [
+    "E23648",
+    "E28670"
+   ],
+   "deg": 22.1
+  },
+  {
+   "pair": [
+    "E29746",
+    "E28670"
+   ],
+   "deg": 4.96
+  }
+ ],
+ "min_separation_deg": 2.97,
+ "skipped_before_fifth": [
+  {
+   "earth": "E40543",
+   "rank": 3,
+   "why": [
+    "within 2.0 deg of E40184"
+   ],
+   "recognised_site_3x3": null
+  },
+  {
+   "earth": "E40904",
+   "rank": 4,
+   "why": [
+    "within 2.0 deg of E40184"
+   ],
+   "recognised_site_3x3": null
+  },
+  {
+   "earth": "E29747",
+   "rank": 6,
+   "why": [
+    "within 2.0 deg of E29749"
+   ],
+   "recognised_site_3x3": null
+  },
+  {
+   "earth": "E30105",
+   "rank": 8,
+   "why": [
+    "within 2.0 deg of E29746"
+   ],
+   "recognised_site_3x3": null
+  }
+ ],
+ "recognised_site_skipped": [],
+ "dist_note": "distance to the centre of the nearest 1-degree cell with land share 0: an own approximation at grid resolution, not a coastline distance"
+}
