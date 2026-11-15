@@ -170,12 +170,15 @@ def main():
         E = np.array([ev[v][eid] for v in sp["vars"]])
         d, ok, sim, s = p2_model.pair_matrix(E, M, sp)
         sv = np.where(ok, sim, -np.inf)
-        o = np.lexsort((zi, -sv))[:3]
+        o = np.lexsort((zi, -sim))[:3]          # best three zone cells by similarity, filter or not
         why["per_point"].append({
             "rank": k + 1, "earth_id": eid, "earth_values": {v: float(E[q]) for q, v in enumerate(sp["vars"])},
             "zone_cells_passing_filter": int(ok.sum()),
+            "zone_cells_with_slope_and_roughness_within_tolerance": int(np.sum((d[:, 0] <= sp["bound"][0]) & (d[:, 1] <= sp["bound"][1]))),
+            "zone_cells_with_slope_within_tolerance": int(np.sum(d[:, 0] <= sp["bound"][0])),
+            "zone_cells_with_roughness_within_tolerance": int(np.sum(d[:, 1] <= sp["bound"][1])),
             "zone_cells_passing_with_similarity_ge_99": int(np.sum(ok & (sim >= 99))),
-            "best3": [{"moon_id": int(zi[t]), "similarity": round(float(sim[t]), 4),
+            "best3": [{"moon_id": int(zi[t]), "passes_filter": bool(ok[t]), "similarity": round(float(sim[t]), 4),
                        "scores": {v: round(float(s[t, q]), 6) for q, v in enumerate(sp["vars"])},
                        "diff": {v: round(float(d[t, q]), 3) for q, v in enumerate(sp["vars"])},
                        "moon_values": {v: round(float(M[t, q]), 3) for q, v in enumerate(sp["vars"])}} for t in o]})
