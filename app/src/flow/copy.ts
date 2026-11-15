@@ -66,6 +66,16 @@ export function classWord(c: string): string {
   return CLASS_WORDS[c] ?? c;
 }
 
+/** A bundle sentence with the team's quoted class names ('regolito') shown in English ('regolith'). */
+export function classWordsIn(text: string): string {
+  return text.replace(/'([a-z]+)'/g, (all, w: string) => (CLASS_WORDS[w] ? `'${CLASS_WORDS[w]}'` : all));
+}
+
+/** The first sentence of a bundle text (the plain part of a caveat; the full text stays in the sources). */
+export function firstSentence(text: string): string {
+  return /^.*?\.(?=\s|$)/.exec(text)?.[0] ?? text;
+}
+
 /** The region label rule in plain words (ASSUMPTIONS 0.9 item 6). */
 export const REGION_CAVEAT = 'The region name is taken from the nearest populated place (GeoNames) and can be wrong.';
 export const AUDIENCE = 'For teams that test lunar rovers, solar arrays and base equipment on Earth before they fly.';

@@ -7,7 +7,7 @@
 import type { GateRow, MissionOutcome, RequiredRow } from '../data/store.ts';
 import type { Level, Mission, ReasonCode } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { REGION_CAVEAT, missionName, statusWords } from './copy';
+import { REGION_CAVEAT, classWordsIn, firstSentence, missionName, statusWords } from './copy';
 import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, limitWords, num, valueText, verdict } from './dom';
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
@@ -64,7 +64,7 @@ function reliefSection(app: FlowApp, variables: string[]): HTMLElement | null {
     const label = app.store.variable(v)?.label ?? v;
     if (!n || seen.has(label)) continue;
     seen.add(label);
-    items.push(h('li', { 'data-variable': v }, h('strong', null, `${label}: `), `true baseline ${n.baseline}. ${capitalise(n.caveat)}`));
+    items.push(h('li', { 'data-variable': v }, h('strong', null, `${label}: `), `true baseline ${n.baseline}. ${capitalise(firstSentence(n.caveat))}`));
   }
   if (!items.length) return null;
   return h(
@@ -283,7 +283,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       'section',
       { class: 'panel-sec lunar', 'data-twin': 'none' },
       h('h3', null, 'Lunar side'),
-      h('p', { class: 'lead no-twin' }, app.noTwinText(m)),
+      h('p', { class: 'lead no-twin', 'data-verbatim': 'no_twin_reason' }, app.noTwinText(m)),
       h('p', { class: 'muted' }, `The lunar reference is "${(store.similarity.target as { name?: string }).name ?? 'the whole-Moon average'}": the values in the similarity table below. There is no lunar marker, beam or paired view under this rule.`),
     );
   }
@@ -382,7 +382,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
                 null,
                 h('strong', null, `${store.similarityLabel(v.variable).label}: `),
                 v.status === 'excluded' ? 'excluded on these data. ' : 'not active on these data. ',
-                v.variable === 'rock_or_bare_frac' && store.text('rock_note') ? 'Shown below for information.' : capitalise(v.status_reason ?? ''),
+                v.variable === 'rock_or_bare_frac' && store.text('rock_note') ? 'Shown below for information.' : `${capitalise((v.status_reason ?? '').replace(/\s*\([^)]*\)\s*$/, ''))}.`,
               ),
             ),
           )
@@ -453,8 +453,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         'div',
         { class: 'src' },
         h('h4', null, info.label),
-        e ? h('p', null, h('span', { class: 'side' }, 'Earth: '), levelTag(e.level as Level), ` ${e.product || 'no product'}${e.true_baseline ? `; true baseline ${e.true_baseline}` : ''}. ${e.caveat ?? ''}`) : null,
-        mo ? h('p', null, h('span', { class: 'side' }, 'Moon: '), levelTag(mo.level as Level), ` ${mo.product || 'no product'}. ${mo.caveat ?? ''}`) : null,
+        e ? h('p', null, h('span', { class: 'side' }, 'Earth: '), levelTag(e.level as Level), ` ${e.product || 'no product'}${e.true_baseline ? `; true baseline ${e.true_baseline}` : ''}. ${classWordsIn(e.caveat ?? '')}`) : null,
+        mo ? h('p', null, h('span', { class: 'side' }, 'Moon: '), levelTag(mo.level as Level), ` ${mo.product || 'no product'}. ${classWordsIn(mo.caveat ?? '')}`) : null,
       ),
     );
   }

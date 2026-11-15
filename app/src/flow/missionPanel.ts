@@ -9,7 +9,8 @@ import { missionLine, missionName, statusWords } from './copy';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
 import { levelLegend } from './legend';
-import { tempMark } from './detailPanel';
+import { meaningText, tempMark } from './detailPanel';
+import { gateWords, plainFunnel } from './funnel';
 
 const PAGE = 50;
 
@@ -51,7 +52,7 @@ export class MissionPanel {
     const reasons = m.top_failure_reasons.EARTH_LAND.map((r) => {
       const code = m.reason_codes.find((c) => c.code === r.reason);
       const gate = code ? m.gates.find((g) => g.variable === code.variable) : undefined;
-      const text = code ? `${capitalise(code.label)}${gate && code.kind !== 'missing' ? ` (limit ${gate.limit})` : ''}` : r.reason;
+      const text = code ? (gate && code.kind !== 'missing' ? `${gateWords(store, m, gate)} not met` : capitalise(code.label)) : r.reason;
       return h('li', null, h('span', null, text), h('span', { class: 'count' }, `${int(r.cells)} cells`));
     });
 
@@ -60,7 +61,6 @@ export class MissionPanel {
       { class: 'panel-head' },
       button('Change mission', () => void this.app.changeMission(), { kind: 'quiet', icon: 'back', cls: 'btn-small' }),
       h('h2', { class: 'panel-title', tabindex: '-1' }, `${missionName(m)} mission`),
-      h('p', { class: 'panel-sub' }, missionLine(m)),
       h(
         'p',
         { class: 'status-line' },
@@ -70,16 +70,19 @@ export class MissionPanel {
       this.limitationNote(m),
     );
 
+    // the counts sit under the list heading, one line, so the list starts in the first view (checklist 06/03)
     const counts = h(
-      'section',
-      { class: 'panel-sec counts', 'aria-label': 'How many places pass' },
-      h('p', { class: 'lead' }, `Of ${int(land)} land cells on Earth, `, h('strong', null, `${int(pass)} pass`), ` the ${missionName(m).toLowerCase()} filters and are ranked; ${int(land - pass)} are eliminated.`),
+      'p',
+      { class: 'counts', 'aria-label': 'How many places pass' },
+      h('strong', null, `${int(pass)} pass`),
+      ` the ${missionName(m).toLowerCase()} filters and are ranked, of ${int(land)} land cells on Earth; ${int(land - pass)} are eliminated.`,
     );
     // the rule and the true cell size, right under the list (so the list starts in the first view)
     const about = h(
       'section',
       { class: 'panel-sec about', 'aria-label': 'How to read the ranking' },
-      h('p', { class: 'muted', 'data-note': 'rule' }, this.app.ruleText()),
+      h('p', { class: 'muted', 'data-note': 'mission-line' }, `${missionName(m)} mission: ${missionLine(m).replace(/^./, (c) => c.toLowerCase())}`),
+      h('p', { class: 'muted', 'data-note': 'rule', 'data-verbatim': this.app.store.hasTwins() ? null : 'no_twin_reason' }, this.app.ruleText()),
       h('p', { class: 'muted', 'data-note': 'cell-size' }, this.app.cellSizeText()),
     );
     const funnel = h(
@@ -89,7 +92,7 @@ export class MissionPanel {
       h(
         'ol',
         { class: 'funnel' },
-        store.missionsJson.funnel.map((f) => h('li', null, h('strong', null, `${capitalise(f.name)}. `), f.text)),
+        plainFunnel(store, m, meaningText(this.app), m.alpha).map((f) => h('li', null, h('strong', null, `${f.name}. `), f.text)),
       ),
       h('p', { class: 'muted' }, `Alpha for this mission: ${num(m.alpha, 2)} (the team's value); it can be changed under "Adjust the weights".`),
     );
@@ -162,7 +165,7 @@ export class MissionPanel {
       type: 'search',
       id: 'rank-search',
       class: 'search-input',
-      placeholder: this.app.store.hasTwins() ? 'Country, region or lunar feature' : 'Country or region',
+      placeholder: this.app.store.hasTwins() ? 'Find a country, region or lunar feature' : 'Find a country or region',
       autocomplete: 'off',
       spellcheck: 'false',
     }) as HTMLInputElement;
@@ -180,21 +183,26 @@ export class MissionPanel {
     const searchBox = h(
       'div',
       { class: 'search', role: 'search' },
-      h('label', { for: 'rank-search', class: 'search-label' }, 'Find a ranked place'),
+      h('label', { for: 'rank-search', class: 'search-label sr-only' }, 'Find a ranked place'),
       h('div', { class: 'search-field' }, icon('search'), search),
     );
     const ranking = h(
       'section',
       { class: 'panel-sec ranking', 'aria-labelledby': 'ranking-title' },
       h('h3', { id: 'ranking-title' }, 'Ranked places'),
-      h('p', { class: 'muted' }, 'Pick a place in the list or a marker on the Earth globe to compare it with the Moon. Up and Down move through the list; Enter opens the comparison.'),
+      counts,
+      h(
+        'p',
+        { class: 'muted pick-hint' },
+        `Pick a ${this.app.store.hasTwins() ? 'pair' : 'place'} or a marker on the globe to compare it.`,
+        h('span', { class: 'sr-only' }, ` Each row: rank, ${this.app.store.hasTwins() ? 'Earth place and its lunar twin' : 'place'}, final score. Up and Down move through the list; Enter opens the comparison.`),
+      ),
       searchBox,
-      h('div', { class: 'rank-head', 'aria-hidden': 'true' }, h('span', null, 'Rank'), h('span', null, this.app.store.hasTwins() ? 'Earth place and its lunar twin' : 'Place'), h('span', null, 'Final score')),
       this.listEl,
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, counts, details, ranking, about, elim, funnel, levelLegend()));
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, details, ranking, about, elim, funnel, levelLegend()));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
@@ -244,7 +252,7 @@ export class MissionPanel {
         { type: 'button', class: 'rank-row', 'data-id': String(it.id) },
         h('span', { class: 'rank-n' }, int(it.rank)),
         h('span', { class: 'rank-place' }, h('span', { class: 'rank-name' }, it.place), h('span', { class: 'rank-where' }, where), it.missingTemp ? tempMark(this.app) : null),
-        h('span', { class: 'rank-score' }, h('span', { class: 'score-bar', style: `--v:${Math.max(0, Math.min(100, it.final))}%`, 'aria-hidden': 'true' }), fixed(it.final, 2)),
+        h('span', { class: 'rank-score' }, h('span', { class: 'rank-final' }, fixed(it.final, 2)), h('span', { class: 'rank-final-k' }, 'final')),
       );
       b.setAttribute('aria-label', `Rank ${int(it.rank)}: ${it.place}, ${where}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`);
       if (it.missingTemp) b.dataset.missingTemp = 'true';

@@ -251,8 +251,12 @@ async function run(name, viewport, { touch = false } = {}) {
   await waitTiles(page, 'earth');
   await waitTiles(page, 'moon');
   const lightStats = {};
+  // Narrow screens: Sunlight sits behind the header's "View" button.
+  const viewMenu = await page.evaluate(() => document.getElementById('view-toggle')?.checkVisibility() ?? false);
   for (const choice of ['now', 'even', 'full-moon']) {
+    if (viewMenu && (await page.evaluate(() => !document.body.classList.contains('view-open')))) await page.click('#view-toggle');
     await page.locator(`.seg:has(input[value="${choice}"])`).click();
+    if (viewMenu) await page.keyboard.press('Escape'); // close the menu so it does not cover the globes
     await page.waitForTimeout(400);
     const st = await page.evaluate(() => ({
       mode: window.starsBesideYou.sunlight.mode(),

@@ -21,6 +21,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DataStore } from '../src/data/store.ts';
+import { classWord, classWordsIn } from '../src/flow/copy.ts';
 import { serve } from './lib/serve.mjs';
 
 const require = createRequire(import.meta.url);
@@ -302,11 +303,15 @@ async function run(browser, srv, variant, exp, size) {
   await page.waitForFunction(() => document.getElementById('credits-dialog').open);
   const dlg = await flow(() => ({
     text: document.getElementById('credits-body').innerText,
+    all: document.getElementById('credits-body').textContent,
     meaning: document.querySelector('#credits-body [data-note="meaning"]')?.textContent ?? '',
     sources: document.querySelectorAll('#credits-body .data-sections .credits-list dt').length,
     imagery: /Blue Marble/.test(document.getElementById('credits-body').innerText),
   }));
-  const lims = store.offeredMissions().every((x) => x.known_limitations.every((l) => dlg.text.includes(l)));
+  // the solar limitation describes the twin: without twins it is left out, as on the card
+  const solarLim = store.similarity.texts?.solar_limitation?.text;
+  // the technical record sits in a closed disclosure: read its text content; the approved solar limitation is shown open
+  const lims = store.offeredMissions().every((x) => x.known_limitations.every((l) => (!store.hasTwins() && l === solarLim ? !dlg.all.includes(l) : dlg.all.includes(classWordsIn(l)))) && (!store.hasTwins() || !solarLim || dlg.text.includes(solarLim)));
   check(/111 km/.test(dlg.text) && /30 km/.test(dlg.text), `${tag}: "Data and limits" states the cell size`);
   check(dlg.meaning.length > 40 && /RELATIVE|relative position/.test(dlg.meaning), `${tag}: "Data and limits" says what similarity means`);
   check(lims, `${tag}: "Data and limits" lists every known limitation of the three missions, verbatim`);
@@ -344,7 +349,7 @@ async function run(browser, srv, variant, exp, size) {
     // counts in plain words
     const panel = await flow(() => document.getElementById('mission-panel').innerText);
     const land = store.manifest.counts.EARTH.land_cells, pass = m.pass_counts.EARTH;
-    check(panel.includes(`Of ${int(land)} land cells`) && panel.includes(`${int(pass)} pass`) && panel.includes(`${int(land - pass)} are eliminated`), `${tag} ${m.id}: counts ${int(land)} land, ${int(pass)} pass, ${int(land - pass)} eliminated`);
+    check(panel.includes(`of ${int(land)} land cells`) && panel.includes(`${int(pass)} pass`) && panel.includes(`${int(land - pass)} are eliminated`), `${tag} ${m.id}: counts ${int(land)} land, ${int(pass)} pass, ${int(land - pass)} eliminated`);
     const reasons = await flow(() => [...document.querySelectorAll('#mission-panel .reasons li .count')].map((e) => e.textContent));
     check(reasons.join('|') === m.top_failure_reasons.EARTH_LAND.map((r) => `${int(r.cells)} cells`).join('|'), `${tag} ${m.id}: commonest elimination reasons as the bundle counts them`);
     check(panel.includes(m.threshold_status.status === 'provisional' ? 'Provisional thresholds' : 'Team design values') && panel.includes('Known limitations'), `${tag} ${m.id}: status label and link to known limitations`);
@@ -382,7 +387,7 @@ async function run(browser, srv, variant, exp, size) {
     else {
       check(markerCounts[1] === 0, `${tag} ${m.id}: no lunar markers without twins`);
       const note = await flow(() => document.getElementById('moon-rule').innerText);
-      check(/compared with the average of the whole Moon/.test(note) && /no single lunar place is designated/.test(note), `${tag} ${m.id}: the Moon side says plainly that no lunar place is designated`);
+      check(note.includes(m.similarity.no_twin_reason ?? store.similarity.no_twin_reason), `${tag} ${m.id}: the Moon side gives the bundle's own reason why there is no lunar twin`);
     }
     const more = await page.$('#show-more');
     if (more && size.key === 'desktop' && mi === 0) {
@@ -405,7 +410,7 @@ async function run(browser, srv, variant, exp, size) {
         w: [...document.querySelectorAll('#mission-panel .sliders input[type=range]:not(#w-alpha)')].map((i) => Number(i.value)),
         alpha: Number(document.getElementById('w-alpha').value),
         ids: [...document.querySelectorAll('#mission-panel .rank-row')].slice(0, 50).map((r) => Number(r.dataset.id)),
-        finals: [...document.querySelectorAll('#mission-panel .rank-row .rank-score')].slice(0, 50).map((r) => r.textContent.trim()),
+        finals: [...document.querySelectorAll('#mission-panel .rank-row .rank-final')].slice(0, 50).map((r) => r.textContent.trim()),
         status: document.querySelector('#mission-panel .recompute-status').textContent,
         log: window.starsFlow.recomputeLog(),
         markers: window.starsBesideYou.markers.count('earth'),
@@ -530,7 +535,8 @@ async function run(browser, srv, variant, exp, size) {
         mark: document.querySelector('#detail-panel .result [data-mark="missing-temperature"]')?.textContent ?? null,
         note: document.querySelector('#detail-panel [data-note="missing-temperature"] p')?.textContent ?? null,
       }));
-      check(t.mark === store.text('missing_temperature_mark') && t.note === store.text('missing_temperature_note'), `${tag} ${m.id}: cell ${antarctic.id} (${antarctic.lat} lat) marked "${t.mark}" in the panel, with the note`);
+      // the approved note describes a twin chosen on relief: only under a twin rule
+      check(t.mark === store.text('missing_temperature_mark') && t.note === (twins ? store.text('missing_temperature_note') : null), `${tag} ${m.id}: cell ${antarctic.id} (${antarctic.lat} lat) marked "${t.mark}" in the panel, with the note`);
       await checkPanel(page, `${tag} ${m.id} antarctic`, store, m, antarctic.id, twins);
       await shot(`${m.id}-compare-missing-temperature`);
       await page.click('#detail-panel .panel-foot .back-btn');
@@ -582,7 +588,7 @@ async function run(browser, srv, variant, exp, size) {
 async function panelData(page) {
   return page.evaluate(() => {
     const d = document.getElementById('detail-panel');
-    const rows = (sel) => [...d.querySelectorAll(sel)].map((r) => ({ v: r.dataset.variable, pass: r.dataset.pass, cells: [...r.children].map((c) => c.innerText) }));
+    const rows = (sel) => [...d.querySelectorAll(sel)].map((r) => ({ v: r.dataset.variable, pass: r.dataset.pass, limit: r.querySelector('[data-limit]')?.dataset.limit ?? null, cells: [...r.children].map((c) => c.innerText) }));
     return {
       title: d.querySelector('.panel-title')?.textContent ?? '',
       coords: d.querySelector('.panel-head .coords')?.textContent ?? '',
@@ -621,20 +627,21 @@ async function checkPanel(page, label, store, m, id, twins) {
   if (p.title !== place) bad.push(`place "${p.title}" vs "${place}"`);
   const [la, lo] = nums(p.coords);
   if (!near(la, Math.abs(lat), 1) || !near(lo, Math.abs(lon), 1)) bad.push(`coords ${p.coords}`);
-  if (!/111 km north-south x \d+ km east-west/.test(p.head)) bad.push('cell size');
+  if (!/111 km north-south x \d+(\.\d)? km east-west/.test(p.head)) bad.push('cell size');
   // result line
   if (o.pass) {
-    if (Number(p.rank) !== o.rank || !p.result.includes(`Rank ${o.rank} of ${int(m.ranked_count)}`) || !p.result.includes(f2(o.final))) bad.push(`result "${p.result}"`);
+    if (Number(p.rank) !== o.rank || !p.result.includes(`Rank ${int(o.rank)} of ${int(m.ranked_count)}`) || !p.result.includes(f2(o.final))) bad.push(`result "${p.result}"`);
   } else if (!p.result.includes(o.line)) bad.push('elimination line');
   // hard filters: limit, value, pass/fail with the word
   const gates = [...o.common, ...o.gates];
   if (p.gates.length !== gates.length) bad.push(`gate rows ${p.gates.length} vs ${gates.length}`);
   gates.forEach((g, i) => {
     const r = p.gates[i];
-    if (!r || r.v !== g.gate.variable || r.cells[1] !== g.gate.limit || r.pass !== String(g.pass) || !r.cells[3].includes(g.pass ? 'Pass' : 'Fail')) bad.push(`gate ${g.gate.variable}`);
+    // the limit is shown in words (no engine interval notation); the engine's interval stays in data-limit
+    if (!r || r.v !== g.gate.variable || r.limit !== g.gate.limit || /\binf\b|\[/.test(r.cells[1]) || r.pass !== String(g.pass) || !r.cells[3].includes(g.pass ? 'Pass' : 'Fail')) bad.push(`gate ${g.gate.variable}`);
     else if (typeof g.value.value === 'number' && !near(nums(r.cells[2])[0], g.value.value, 0) && Math.abs(nums(r.cells[2])[0] - g.value.value) > 0.06 * Math.abs(g.value.value) + 0.002) bad.push(`gate value ${g.gate.variable} ${r.cells[2]} vs ${g.value.value}`);
-    else if (typeof g.value.value === 'string' && r.cells[2] !== g.value.value) bad.push(`gate class ${g.gate.variable}`);
-    else if (g.value.value == null && r.cells[2] !== 'no data') bad.push(`gate missing ${g.gate.variable}`);
+    else if (typeof g.value.value === 'string' && !r.cells[2].startsWith(classWord(g.value.value))) bad.push(`gate class ${g.gate.variable}`);
+    else if (g.value.value == null && !r.cells[2].startsWith('no data')) bad.push(`gate missing ${g.gate.variable}`);
   });
   if (p.required.length !== o.required.length || o.required.some((r, i) => !p.required[i].includes(r.present ? 'Has data' : 'No data'))) bad.push('required rows');
   if (o.pass) {
@@ -686,7 +693,7 @@ async function checkPanel(page, label, store, m, id, twins) {
     const oo = store.outcome(id, x.id);
     const li = p.others[i];
     if (!li || li.m !== x.id) return void bad.push(`other ${x.id}`);
-    if (oo.pass ? !(li.t.includes('Passes') && li.t.includes(`rank ${oo.rank} of`) && li.t.includes(f2(oo.final))) : !(li.t.includes('Eliminated') && li.t.includes(oo.line))) bad.push(`other ${x.id} "${li.t}"`);
+    if (oo.pass ? !(li.t.includes('Passes') && li.t.includes(`rank ${int(oo.rank)} of`) && li.t.includes(f2(oo.final))) : !(li.t.includes('Eliminated') && li.t.includes(oo.reasons.map((r) => r.label[0].toUpperCase() + r.label.slice(1)).join('; ')))) bad.push(`other ${x.id} "${li.t}"`);
   });
   // lunar side
   if (twins && o.pass) {
@@ -694,7 +701,8 @@ async function checkPanel(page, label, store, m, id, twins) {
     if (p.twin !== String(t.id) || !p.lunar.includes(`Near ${t.feature.name}`) || !p.lunar.includes(`${Number(t.feature.distance_km.toFixed(1))} km`) || p.link !== t.feature.url) bad.push('twin');
     if (p.share !== store.twinSharingText(m.id, t.earth_cells)) bad.push(`share "${p.share}"`);
   }
-  if (!twins && (p.twin !== 'none' || !/compared with the average of the whole Moon/.test(p.lunar) || !/no single lunar place is designated/.test(p.lunar))) bad.push('no-twin statement');
+  const noTwin = m.similarity.no_twin_reason ?? store.similarity.no_twin_reason;
+  if (!twins && (p.twin !== 'none' || !noTwin || !p.lunar.includes(noTwin))) bad.push('no-twin statement (the bundle\'s sentence)');
   if (m.id === 'lunar_base' && o.ice) {
     if (!p.ice || !p.ice.includes(o.ice.pass ? 'Passes the ice filters' : 'Does not pass the ice filters') || (o.ice.pass && !p.ice.includes(f2(o.ice.suitability)))) bad.push('ice component');
   }
@@ -763,7 +771,7 @@ async function checkPair(page, tag, store, m, top, twins, size) {
     check(!!s.moonPt && !inside(s.moonPt, s.panel), `${tag} ${m.id}: the panel does not cover the lunar twin`);
   } else {
     check(s.moonSel == null && s.beams === 0 && !s.focused, `${tag} ${m.id}: no lunar marker, no beam, no paired view without twins`);
-    check(/no single lunar place is designated/.test(s.note), `${tag} ${m.id}: the Moon side states the rule in plain words`);
+    check(s.note.includes(m.similarity.no_twin_reason ?? store.similarity.no_twin_reason), `${tag} ${m.id}: the Moon side states the bundle's no-twin reason`);
   }
 }
 

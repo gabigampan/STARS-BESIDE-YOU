@@ -309,7 +309,7 @@ body.flow[data-step='compare'] .stage > .panel {
   }
   body.flow[data-step='pick'] .stage {
     grid-template-areas: 'side earth moon';
-    grid-template-columns: clamp(340px, 28vw, 520px) 1fr 1fr;
+    grid-template-columns: clamp(360px, 30vw, 560px) 1fr 1fr;
     grid-template-rows: 1fr;
   }
   body.flow[data-step='compare'] .stage {
@@ -1266,4 +1266,34 @@ table.rows .sub.note {
   body.flow[data-step='compare'] .stage {
     grid-template-columns: 1fr 1fr clamp(380px, 30vw, 1150px);
   }
+}
+
+/* the list heading carries the counts and the hint; tight so three rows show at 1440x900 (checklist 06 / 01) */
+.ranking > h3 + .counts {
+  margin: 4px 0 2px;
+}
+.ranking .pick-hint {
+  margin: 0 0 8px;
+}
+/* the score of a row: the number, with the word under it (no bar: two lines per row) */
+.rank-row .rank-score {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+.rank-final-k {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+  font-weight: 400;
+}
+.rank-row {
+  grid-template-columns: 2.6em 1fr auto;
+}
+#mission-panel .panel-sec {
+  margin-top: 12px;
+  padding-top: 10px;
+}
+/* the open "View" menu drops over the stage and the first-screen overlay (z-index 6) */
+body.view-open .topbar {
+  z-index: 7;
 }

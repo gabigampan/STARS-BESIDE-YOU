@@ -54,7 +54,7 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
         'p',
         { class: 'intro-foot' },
         `${app.cellSizeText()} `,
-        app.ruleText(),
+        h('span', { 'data-verbatim': app.hasData() && !app.store.hasTwins() ? 'no_twin_reason' : null }, app.ruleText()),
       ),
     );
   }

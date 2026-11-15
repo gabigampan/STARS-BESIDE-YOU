@@ -545,7 +545,7 @@ export class FlowApp {
       const t = this.store.twinsOf(m.id).length;
       this.moonNote.append(h('p', null, `Markers: the ${t} lunar twins of the ranked Earth points, inside ${m.similarity.zone?.name ?? "the mission's target zone"}.`));
     } else {
-      this.moonNote.append(h('p', null, this.noTwinText()));
+      this.moonNote.append(h('p', { 'data-verbatim': 'no_twin_reason' }, this.noTwinText()));
     }
     this.updateEarthNote();
   }
