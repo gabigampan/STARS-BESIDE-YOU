@@ -565,7 +565,7 @@
               "kind": "celsius_to_kelvin",
               "column": "tmin_c",
               "offset_k": 273.15,
-              "level": "from the column (variables.json tmin_c: MEASURED)",
+              "level": "MEASURED (real_data/provenance_moon.csv tmin_k: Diviner GCP surface temperature; the lunar table's tmin_c is tmin_k - 273.15, which variables.json lists as DERIVED because of that unit conversion only; the engine converts it back to K)",
               "text": "coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature"
             }
           },

@@ -39,7 +39,7 @@ Regla actual (`zone_twin`, pesos 20 / 33,3 / 26,7 / 20 %, z por cuerpo). Diferen
 | elevación relativa (m) | 505 / 1.241 | — | 380 / 907 | — |
 | temperatura media (K) | 118,5 / 137,3 | 1,73 | 103,6 / 108,0 | 1,66 |
 | amplitud térmica diaria (K) | 206,3 / 220,4 | 0,041 | 206,7 / 220,7 | 0,027 |
-| temperatura mínima (°C) | 186,6 / 214,0 | — | 168,7 / 188,4 | — |
+| temperatura mínima (K) | 186,6 / 214,0 | — | 168,7 / 188,4 | — |
 | irradiancia (kWh/m²/día) | 1,94 / 3,38 | 2,00 | 0,97 / 2,82 | 1,53 |
 | altura máxima del Sol (°) | 50,9 / 74,0 | — | 30,9 / 40,9 | — |
 | fracción de Sol rasante | 0,16 / 0,60 | — | 0,10 / 0,79 | — |
@@ -54,7 +54,7 @@ Regla actual (`zone_twin`, pesos 20 / 33,3 / 26,7 / 20 %, z por cuerpo). Diferen
 | elevación relativa (m) | 753 / 1.488 | — | 988 / 2.165 | — |
 | temperatura media (K) | 126,3 / 141,2 | 1,78 | 104,7 / 108,4 | 1,66 |
 | amplitud (K) | 195,8 / 216,1 | 0,054 | 202,2 / 217,6 | 0,033 |
-| temperatura mínima (°C) | 182,7 / 214,7 | — | 159,5 / 176,5 | — |
+| temperatura mínima (K) | 182,7 / 214,7 | — | 159,5 / 176,5 | — |
 | irradiancia (kWh/m²/día) | 2,10 / 3,52 | 2,14 | 1,98 / 2,99 | 2,16 |
 | altura máxima del Sol (°) | 47,9 / 74,0 | — | 24,9 / 36,9 | — |
 | fracción de Sol rasante | 0,16 / 0,58 | — | 0,15 / 0,60 | — |
@@ -69,7 +69,7 @@ Regla actual (`zone_twin`, pesos 20 / 33,3 / 26,7 / 20 %, z por cuerpo). Diferen
 | elevación relativa (m) | 845 / 1.759 | — | 2.031 / 2.291 | — |
 | temperatura media (K) | 142,3 / 160,8 | 2,00 | 106,1 / 106,6 | 1,63 |
 | amplitud (K) | 164,5 / 191,1 | 0,10 | 183,8 / 196,2 | 0,08 |
-| temperatura mínima (°C) | 198,7 / 213,3 | — | 179,4 / 182,2 | — |
+| temperatura mínima (K) | 198,7 / 213,3 | — | 179,4 / 182,2 | — |
 | irradiancia (kWh/m²/día) | 4,03 / 5,05 | 6,52 | 3,53 / 3,53 | 6,60 |
 | altura máxima del Sol (°) | 70,9 / 79,9 | — | 67,9 / 69,5 | — |
 | fracción de Sol rasante | 0,67 / 0,93 | — | 0,79 / 0,79 | — |
@@ -100,7 +100,7 @@ Población: Tierra, las 25.095 celdas de tierra firme del motor (`elevation_m > 
 | elevación relativa (m) | sí (altura sobre la media del cuerpo) | −665 / −225 / 2.542 | −3.486 / −528 / 3.694 | −696 a 4.724: 100 % T, 51,9 % L | 0,51 | 1.007 / 1.769 |
 | temperatura media (K) | casi (T: LST MODIS de cielo despejado, media 10:30/22:30; L: temperatura bolométrica, media del ciclo) | 255,2 / 284,3 / 302,6 (238,1-309,7) | 114,8 / 197,7 / 217,3 (41,1-223,9) | **ninguno: hueco de 14,3 K** | 0 | 21,5 / 32,3 |
 | amplitud diaria (K) | no del todo (T: 10:30 − 22:30, la subestima; L: máx − mín) | 2,4 / 8,6 / 21,1 (−4,6-35,7) | 168,3 / 265,6 / 297,9 (30,7-311,8) | 30,7-35,7: 0,1 % T (21 celdas), 11 celdas L | 0 | 6,6 / 47,8 |
-| temperatura mínima (°C) | no (T: aire, mes más frío; L: superficie) | −62,2 / −19,9 / 20,0 | −219,9 / −185,3 / −178,5 (máx −159,1) | **ninguno: hueco de 86,8 °C** | 0 | 32,1 / 11,1 |
+| temperatura mínima (°C) | no (T: aire, mes más frío; L: superficie) | −62,2 / −19,9 / 20,0 | −219,9 / −185,3 / −178,5 (máx −159,1) | **ninguno: hueco de 86,8 K** | 0 | 32,1 / 11,1 |
 | irradiancia en el suelo (kWh/m²/día) | misma unidad y definición (energía diaria sobre horizontal), con atmósfera en la Tierra y sin ella en la Luna | 2,20 / 3,68 / 5,86 (1,41-6,44) | 0,39 / 7,35 / 10,36 (0-10,40) | 1,41-6,44: 100 % T, 30,0 % L | 0,27 | 1,22 / 4,56 |
 | irradiancia sin atmósfera (Tierra: tope de la atmósfera, media anual) | sí: la misma geometría, constante solar 1.361 W/m² | 4,15 / 6,19 / 9,93 (4,14-9,97) | igual que arriba | 4,14-9,97: 100 % T, 54,5 % L | 0,50 | 3,32 / 4,56 |
 | altura máxima del Sol (°) | sí (fórmula de la latitud) | 26,9 / 57,9 / 90 | 6,0 / 46,5 / 87,0 | 23,9-90: 100 % T, 75,6 % L | 0,66 | — |
@@ -111,7 +111,7 @@ Población: Tierra, las 25.095 celdas de tierra firme del motor (`elevation_m > 
 
 **Irradiancia (P3, P8).** La Luna en el suelo recibe `1.361 × 24 / π × cos(lat)` = 10,40 kWh/m²/día en el ecuador (la tabla lo cumple con un error máximo de 0,002 por debajo de 60°). La Tierra en el tope de la atmósfera recibe casi lo mismo en la misma latitud (media anual, igual en los dos hemisferios: 9,97 en el ecuador, 8,77 a 30°, 7,37 a 45°, 5,67 a 60°; la Luna, 10,40 / 9,00 / 7,35 / 5,20). La diferencia de magnitud es **la atmósfera**: el suelo de la Tierra recibe una mediana del 54,0 % de su tope de atmósfera (percentiles 5-95: 42,4-88,5 %; en los candidatos solares, 57,7 %). Por eso, en el suelo, la energía de un candidato solar (2,5-6,44) solo se repite en la Luna entre 52,5° y 74,5° de latitud (14.975 celdas, **ninguna en los mares ecuatoriales**, cuyo suelo recibe 9,05-10,40); y en el polo sur (≤ 75 S) nunca (máximo 2,475). **Comparación honesta propuesta:** emparejar con la energía sin atmósfera (la misma magnitud en los dos cuerpos: geometría + constante solar) y decir aparte la pérdida atmosférica en kWh/m²/día. En el par número 1 propuesto (E38464 y M24296): 9,60 sobre la atmósfera en los dos; 6,18 en el suelo de la Tierra frente a 9,60 en el de la Luna (la Tierra recibe el 64 %; la mediana de los candidatos solares es el 58 %). La otra diferencia física que no desaparece: en la Luna el día dura 14,75 días terrestres y la noche otros tantos.
 
-**Temperatura (P8).** Las distribuciones no se tocan: la celda de la Tierra más fría con dato (E6261, 72,5 N 38,5 O, Groenlandia) está a 238,1 K y la lunar más cálida (M29262, 8,5 N 77,5 O) a 223,9 K. Máximo por zona lunar: polo sur 172,2 K, regiones de Artemis 167,5 K, mares 223,9 K. La amplitud diaria de la Tierra no pasa de 35,7 K (E40430, 22,5 S 69,5 O, Atacama; 44,7 K si se toma el mes de mayor amplitud) y la lunar no baja de 30,7 K; las 11 celdas lunares por debajo de 35,7 K están todas a 87,5 S, a 41-43 K, en sombra permanente (ninguna en las regiones de Artemis). La temperatura mínima tampoco se solapa (hueco de 86,8 °C). **Comparación honesta propuesta:** no llamar "parecida" a ninguna temperatura; enseñar los dos valores y la diferencia en K, y si se quiere un número relativo, decir "la celda de la Tierra es la n-ésima más fría de su mundo" sin convertirlo en similitud.
+**Temperatura (P8).** Las distribuciones no se tocan: la celda de la Tierra más fría con dato (E6261, 72,5 N 38,5 O, Groenlandia) está a 238,1 K y la lunar más cálida (M29262, 8,5 N 77,5 O) a 223,9 K. Máximo por zona lunar: polo sur 172,2 K, regiones de Artemis 167,5 K, mares 223,9 K. La amplitud diaria de la Tierra no pasa de 35,7 K (E40430, 22,5 S 69,5 O, Atacama; 44,7 K si se toma el mes de mayor amplitud) y la lunar no baja de 30,7 K; las 11 celdas lunares por debajo de 35,7 K están todas a 87,5 S, a 41-43 K, en sombra permanente (ninguna en las regiones de Artemis). La temperatura mínima tampoco se solapa (hueco de 86,8 K). **Comparación honesta propuesta:** no llamar "parecida" a ninguna temperatura; enseñar los dos valores y la diferencia en K, y si se quiere un número relativo, decir "la celda de la Tierra es la n-ésima más fría de su mundo" sin convertirlo en similitud.
 
 ## C. Una similitud que funciona con valores reales
 
@@ -248,7 +248,7 @@ Kimberley (Australia), Madagascar y Somalia. Con los mares el top 10 son los mis
 
 - **Temperatura media**: imposible de igualar; el hueco más pequeño entre un candidato y cualquier celda de la Luna es 40,2 K (mediana 64,9 K); en las regiones de Artemis, 96,6 K.
 - **Amplitud diaria**: 126 candidatos (5,2 %) tienen alguna celda lunar a menos de 5 K de amplitud; con el filtro de las secundarias (pendiente ≤ 4°, rugosidad ≤ 60 m) quedan **74 pares (3,1 %)**: 37 en los Andes centrales (Puna, Altiplano y Atacama, 17,5-27,5 S) y 37 en Asia (Tíbet y Qaidam, 28,5-38,5 N 80-97,5 E, e Irán, 29,5-31,5 N 53-59 E), con amplitudes de 25,7-35,3 K. Tienen 7 gemelos, todos junto a Haworth (87,5 S, fuera de las regiones de Artemis), celdas en sombra permanente a 41-43 K; el más compartido (M63895) reúne 54 puntos (73 %). El número 1 sería E40432 (22,5 S 67,5 O): amplitud 33,36 K frente a 33,69 K, pero temperatura media 282,7 K frente a 41,5 K (diferencia de 241 K). Es una coincidencia numérica en un régimen físico distinto (un cráter que nunca ve el Sol), no un análogo.
-- **Temperatura mínima**: hueco de 86,8 °C entre la mínima más fría de la Tierra (aire) y la más cálida de la Luna (superficie).
+- **Temperatura mínima**: hueco de 86,8 K entre la mínima más fría de la Tierra (aire) y la más cálida de la Luna (superficie).
 
 **Opciones para el equipo (sin elegir):**
 
@@ -304,7 +304,7 @@ Segundo agente, 15-11-2026, con código propio en `scratchpad/stars/principle-ch
 **Recalculado y correcto tal como estaba:**
 
 - Sección A completa (medianas, percentiles 90, razones y porcentajes dentro de tolerancia, también con similitud ≥ 90), en las tres misiones; P5: 0 % de pares de Rover con pendiente y rugosidad a la vez dentro de 2° y 30 m. El número 1 de hoy (E5128 con M60952: 0,88° / 34,5 m frente a 6,19° / 198,7 m). Nota: con la similitud redondeada a 0,01 del paquete salen 7.480 pares de Paneles con similitud ≥ 90; los 7.474 del texto son con la similitud sin redondear (11 pares están entre 89,99 y 90,01).
-- Sección B: pendiente, rugosidad, elevación relativa, temperatura media (hueco de 14,3 K; E6261 a 238,1 K y M29262 a 223,9 K; máximos por zona), amplitud (solape 30,7-35,7 K; 21 celdas de la Tierra, 11 lunares, todas a 87,5 S y 41-43 K, ninguna en Artemis), temperatura mínima (hueco de 86,8 °C), irradiancia en el suelo (rango, OVL, banda lunar de 52,5-74,5° con 14.975 celdas, ninguna en los mares ni en el polo sur; mares 9,05-10,40; polo sur máximo 2,475), la fórmula lunar (error máximo 0,0023 por debajo de 60°) y la geometría solar.
+- Sección B: pendiente, rugosidad, elevación relativa, temperatura media (hueco de 14,3 K; E6261 a 238,1 K y M29262 a 223,9 K; máximos por zona), amplitud (solape 30,7-35,7 K; 21 celdas de la Tierra, 11 lunares, todas a 87,5 S y 41-43 K, ninguna en Artemis), temperatura mínima (hueco de 86,8 K), irradiancia en el suelo (rango, OVL, banda lunar de 52,5-74,5° con 14.975 celdas, ninguna en los mares ni en el polo sur; mares 9,05-10,40; polo sur máximo 2,475), la fórmula lunar (error máximo 0,0023 por debajo de 60°) y la geometría solar.
 - Las equivalencias en z de todas las tolerancias (escalas robustas: pendiente 1,041 / 3,248; rugosidad 42,28 / 92,01; elevación 1.007 / 1.769; temperatura 21,49 / 32,29; amplitud 6,60 / 47,84; irradiancia en el suelo 1,22 / 4,56), salvo la del tope de la atmósfera (corregida abajo).
 - Las líneas citadas: `analog_finder.py` 285-286 (texto idéntico) y `rover_preset.py` (versión 3) 196-205, `tolerances_by_baseline` con 5° / 10 m a 300 m y 2° / 30 m a 5 km, marcadas "ILUSTRATIVO".
 - Las cifras de "dominante" (82,7; 68,5; 0,875 → |Δ| ≤ 0,517 τ; alternativa 71,2 / 73,8 / 0,85).
