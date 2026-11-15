@@ -707,9 +707,13 @@ export class DataStore {
         } else {
           const raw = read(spec.column);
           if (raw != null) {
-            const v = (f32Decimal(raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
+            const halfUp = !!t.display_rule;
+            const v = ((halfUp ? f32Decimal(raw) : raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
             const d = spec.decimals ?? 1;
-            shown = new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+            // a template with a display_rule (half up, as the browser displays a float32) is filled with
+            // Intl; the others as the contract says: toFixed(decimals) of the stored value, like the
+            // engine's f"{x:.{d}f}" (DATA_CONTRACT, per-pair sentence)
+            shown = halfUp ? new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v) : v.toFixed(d);
           }
         }
         if (shown == null) {
