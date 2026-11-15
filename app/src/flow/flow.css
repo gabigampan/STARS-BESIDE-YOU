@@ -1800,3 +1800,111 @@ body.view-open .topbar {
 .markers-slot p {
   margin-top: 4px;
 }
+/* the short pair card and the folded parts of both panels */
+.more-details,
+.ranking-box,
+.method-box {
+  margin-top: 10px;
+  border-top: 1px solid var(--edge);
+}
+.more-details > summary,
+.ranking-box > summary,
+.method-box > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.short-reasons {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: var(--step--1);
+}
+.pair-region {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5-btn {
+  min-height: 48px;
+  padding: 4px 10px;
+  gap: 10px;
+}
+.top5-list {
+  gap: 6px;
+}
+.top5-twin,
+.top5-overall {
+  font-size: var(--step--1);
+}
+.top5-overall {
+  color: var(--text-dim);
+}
+.top5-about > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--text-dim);
+}
+.top5-text {
+  grid-template-columns: 1fr;
+}
+#mission-panel .card-notes > summary {
+  min-height: 44px;
+}
+#mission-panel .panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#mission-panel .panel-head .panel-title {
+  margin: 0;
+}
+.top5 h3 {
+  margin: 4px 0 2px;
+}
+.top5-note {
+  margin-bottom: 6px;
+}
+@media (max-height: 820px) and (min-width: 900px) {
+  .pair-strip .figs dd {
+    font-size: 1.6rem;
+  }
+  .steps {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+.top5-btn {
+  min-height: 52px;
+  padding: 3px 10px;
+}
+#mission-panel .panel-body {
+  padding-top: 8px;
+}
+#mission-panel .weights > summary,
+#mission-panel .ranking-box > summary,
+#mission-panel .method-box > summary {
+  min-height: 44px;
+  padding: 0;
+}
+#mission-panel .panel-sec.weights,
+#mission-panel .ranking-box,
+#mission-panel .method-box {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.top5-twin {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.top5-note:empty {
+  display: none;
+}

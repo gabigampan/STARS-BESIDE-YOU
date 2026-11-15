@@ -21,6 +21,8 @@ export class MissionPanel {
   private moreEl: HTMLElement | null = null;
   private statusEl: HTMLElement | null = null;
   private weightsOpen = false;
+  private rankingOpen = false;
+  private about5: HTMLElement | null = null;
   private query = '';
   /** Which points the list shows: all, only those with a lunar twin, only those without. */
   private show: 'all' | 'paired' | 'unpaired' = 'all';
@@ -65,15 +67,15 @@ export class MissionPanel {
       { class: 'panel-head' },
       button('Change mission', () => void this.app.changeMission(), { kind: 'quiet', icon: 'back', cls: 'btn-small' }),
       h('h2', { class: 'panel-title', tabindex: '-1' }, `${missionName(m)} mission`),
-      h(
-        'p',
-        { class: 'status-line' },
-        h('span', { class: `tag tag-status` }, icon('info'), statusWords(m)),
-        h('button', { type: 'button', class: 'linklike', onclick: () => this.app.openLimits(m.id) }, 'Known limitations'),
-      ),
-      this.limitationNote(m),
-      this.cardNotes(m),
     );
+    // the threshold status, the limitations and the bundle's card notes go with the method (folded)
+    const statusLine = h(
+      'p',
+      { class: 'status-line' },
+      h('span', { class: `tag tag-status` }, icon('info'), statusWords(m)),
+      h('button', { type: 'button', class: 'linklike', onclick: () => this.app.openLimits(m.id) }, 'Known limitations'),
+    );
+    const cardBits = [statusLine, this.limitationNote(m), this.cardNotes(m)];
 
     // the counts sit under the list heading, one line, so the list starts in the first view (checklist 06/03)
     const pc = store.pairCounts(m.id);
@@ -276,7 +278,14 @@ export class MissionPanel {
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, this.topFive(m), details, ranking, about, elim, funnel, levelLegend()));
+    // one screen (team lead): the five first; the full ranking, the weights and the method folded below
+    const rankingBox = h('details', { class: 'panel-sec ranking-box', 'data-more': 'ranking' }, h('summary', null, `Full ranking (${int(pc.paired + pc.unpaired)} places)`), ranking) as HTMLDetailsElement;
+    rankingBox.open = this.rankingOpen;
+    rankingBox.addEventListener('toggle', () => (this.rankingOpen = rankingBox.open));
+    const five = this.topFive(m);
+    // "How these five were chosen" opens the method box at its top
+    const method = h('details', { class: 'panel-sec method-box', 'data-more': 'method' }, h('summary', null, 'How these five and this list were chosen'), ...(this.about5 ? [...this.about5.childNodes].slice(1) : []), ...cardBits, about, elim, funnel, levelLegend());
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, five, rankingBox, details, method));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
@@ -389,8 +398,8 @@ export class MissionPanel {
         'p',
         { class: 'muted top5-note' },
         this.app.usingCustom()
-          ? "These are the team's top five, ranked with the team's weights. Your own weights are in use in the full ranking below, so its order differs."
-          : `Chosen with the team's weights. Press a number from 1 to ${items.length} to open one.`,
+          ? "These five are chosen with the team's weights. Your own weights are in use in the full ranking below, so its order differs."
+          : '',
       ),
     );
     const ol = h('ol', { class: 'top5-list' });
@@ -404,8 +413,12 @@ export class MissionPanel {
           'span',
           { class: 'top5-text' },
           h('span', { class: 'top5-place' }, h('span', { class: 'sr-only' }, `Analog ${it.pos}: `), it.place),
-          tw ? h('span', { class: 'top5-twin' }, tw.replace(/^Moon: /, 'Lunar twin: ')) : null,
-          it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `Ranked ${int(it.rank)} overall`) : null,
+          h(
+            'span',
+            { class: 'top5-twin', title: tw ?? '' },
+            tw ? tw.replace(/^Moon: /, 'Lunar twin: ') : '',
+            it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `${tw ? ' · ' : ''}Ranked ${int(it.rank)} overall`) : null,
+          ),
         ),
         h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),
       );
@@ -413,11 +426,21 @@ export class MissionPanel {
       ol.append(h('li', null, b));
     }
     sec.append(ol);
-    // the rule of the five and the bundle's notes for this list (texts with "show": top5), verbatim
-    if (m.top5?.rule) sec.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
+    // the rule of the five and the bundle's notes for this list (texts with "show": top5), folded under the five
+    const about5 = h('details', { class: 'top5-about', 'data-more': 'top5' }, h('summary', null, 'How these five were chosen'));
+    if (m.top5?.rule) about5.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
     const tie = (m.top5 as { top_tie_n?: number } | undefined)?.top_tie_n;
-    if (tie != null && tie > 5 && !(m.top5?.rule ?? '').includes(int(tie))) sec.append(h('p', { class: 'muted', 'data-text': 'top5.top_tie_n' }, `${int(tie)} points are tied at the top score.`));
-    for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, noteText(this.app.store, n.text, m)));
+    if (tie != null && tie > 5 && !(m.top5?.rule ?? '').includes(int(tie))) about5.append(h('p', { class: 'muted', 'data-text': 'top5.top_tie_n' }, `${int(tie)} points are tied at the top score.`));
+    const seen5: string[] = m.top5?.rule ? [m.top5.rule] : [];
+    for (const n of this.app.store.notesFor('top5', m.id)) {
+      const t = noteText(this.app.store, n.text, m);
+      const first = /^.*?\.(?=\s|$)/.exec(t)?.[0] ?? t;
+      if (seen5.some((x) => x.includes(t) || x.includes(first))) continue;
+      seen5.push(t);
+      about5.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, t));
+    }
+    if (about5.children.length > 1) this.about5 = about5;
+    else this.about5 = null;
     return sec;
   }
 
@@ -538,8 +561,12 @@ export class MissionPanel {
       this.limit = Math.ceil((k + 1) / PAGE) * PAGE;
       this.renderList();
     }
+    // back where the pair was opened: its button among the five, else its row (when the ranking is open), else the heading
+    const five = this.root.querySelector<HTMLElement>(`.top5-btn[data-id="${id}"]`);
     const row = this.listEl?.querySelector<HTMLElement>(`.rank-row[data-id="${id}"]`);
-    if (row) row.focus();
+    const rowVisible = !!row && !!row.closest('details')?.open;
+    if (five) five.focus();
+    else if (row && rowVisible) row.focus();
     else (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus();
   }
 

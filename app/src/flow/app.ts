@@ -19,6 +19,9 @@ import { a11y } from '../a11y';
 import { onPalette } from '../a11y/palette';
 import { missionLine, purposeText } from './copy';
 
+/** Camera height over a chosen point (team lead: smooth and moderate, the region stays visible). */
+const PAIR_VIEW_KM = { earth: 550, moon: 350 } as const;
+
 export interface RankItem extends RankedPoint {
   place: string;
 }
@@ -565,10 +568,10 @@ export class FlowApp {
     if (twin) {
       globesApi.markers.setSelected('moon', twin.id);
       globesApi.beams.setBeams([{ earth: { lat, lon }, moon: { lat: twin.lat, lon: twin.lon }, strength: 1 }]);
-      await globesApi.focus.focusPair({
-        earth: { lat, lon, cell: this.store.cellFootprint(id) },
-        moon: { lat: twin.lat, lon: twin.lon, cell: this.store.cellFootprint(twin.id) },
-      });
+      // a smooth, moderate zoom on both globes: the region around each cell stays in view (a few hundred km up)
+      globesApi.focus.outline('earth', this.store.cellFootprint(id));
+      globesApi.focus.outline('moon', this.store.cellFootprint(twin.id));
+      await Promise.all([globesApi.flyTo('earth', lat, lon, PAIR_VIEW_KM.earth, 1.5), globesApi.flyTo('moon', twin.lat, twin.lon, PAIR_VIEW_KM.moon, 1.5)]);
     } else {
       globesApi.markers.setSelected('moon', null);
       globesApi.beams.clearBeams();
@@ -576,7 +579,7 @@ export class FlowApp {
       // No paired view: the Earth cell alone is outlined at its true 1-degree footprint.
       globesApi.focus.outline('earth', this.store.cellFootprint(id));
       this.settleLayout();
-      await globesApi.flyTo('earth', lat, lon, 2600, 1.2);
+      await globesApi.flyTo('earth', lat, lon, PAIR_VIEW_KM.earth, 1.5);
     }
   }
 
@@ -591,6 +594,7 @@ export class FlowApp {
   private async leaveCompare(): Promise<void> {
     globesApi.beams.clearBeams();
     globesApi.focus.outline('earth', null);
+    globesApi.focus.outline('moon', null);
     globesApi.markers.setSelected('earth', null);
     globesApi.markers.setSelected('moon', null);
     if (globesApi.focus.isFocused()) await globesApi.focus.exitFocus({ durationMs: 0 });
@@ -598,10 +602,11 @@ export class FlowApp {
 
   async backToRanking(): Promise<void> {
     const id = this.state.selectedId;
-    const wasTwin = globesApi.focus.isFocused();
+    void globesApi.focus.isFocused();
     await this.leaveCompare();
+    globesApi.focus.outline('moon', null);
     this.setStep('pick');
-    if (!wasTwin) {
+    if (true) {
       globesApi.resetView();
       void this.viewTwinZone();
       this.viewTopEarth();

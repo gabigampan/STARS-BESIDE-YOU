@@ -215,6 +215,28 @@ function pairSentenceBoxes(o: MissionOutcome): HTMLElement[] {
 }
 
 /** Headline of the pair (checklist 06 extra, legible from 2 m): the lunar match and the three scores. */
+/**
+ * Up to two lines with the main reason, from the bundle's own fields: the mission's key similarity
+ * variables (missions.json similarity.variables, role "key") with the value here and on the twin,
+ * in the real unit when the comparison is by position. The pair sentence of the mission (if any) is
+ * the third line, shown with the pair strip.
+ */
+function shortReasons(_app: FlowApp, o: MissionOutcome): HTMLElement | null {
+  if (!o.pass || o.final == null || !o.pairRows.length) return null;
+  const keys = o.pairRows.filter((r) => r.def.role === 'key').slice(0, o.pairSentences.length ? 2 : 3);
+  if (!keys.length) return null;
+  return h(
+    'ul',
+    { class: 'short-reasons', 'data-short': 'reasons' },
+    keys.map((r) => {
+      const real = r.real;
+      const here = real ? valueText(real.earth, real.unit) : shownValue(r.earth, r.def.unit);
+      const there = real ? valueText(real.moon, real.unit) : shownValue(r.moon, r.def.unit);
+      return h('li', { 'data-variable': r.def.variable }, h('strong', null, `${r.def.label}: `), `${here} here, ${there} at its twin.`);
+    }),
+  );
+}
+
 function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
   if (!o.pass) return null;
   const st = app.store;
@@ -233,7 +255,7 @@ function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
   return h(
     'div',
     { class: 'pair-strip', 'data-pair': o.twin ? String(o.twin.id) : 'mean' },
-    h('p', { class: 'pair-line' }, h('span', { class: 'pair-k' }, twins ? 'Paired on the Moon with' : 'Compared on the Moon with'), h('strong', null, moon)),
+    h('p', { class: 'pair-line' }, h('span', { class: 'pair-k' }, twins ? 'Its twin on the Moon:' : 'Compared on the Moon with'), h('strong', null, moon), o.twin?.nasa_region?.text ? h('span', { class: 'pair-region', 'data-text': 'nasa_region' }, `, ${o.twin.nasa_region.text}`) : null),
     h('dl', { class: 'figs' }, fig('Final', fixed(o.final, 2), 'final'), fig('Similarity', fixed(o.similarity, 2), 'similarity'), fig('Suitability', fixed(o.suitability, 2), 'suitability')),
     ...pairSentenceBoxes(o),
   );
@@ -372,16 +394,23 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
   const alpha = app.alpha();
 
   // 1. place
+  // the short card (team lead): the site, its lunar twin, the score and at most three reason lines;
+  // everything else under a folded "More details"
   const head = h(
     'header',
     { class: 'panel-head' },
     h('p', { class: 'eyebrow' }, `${missionName(m)} mission · Earth point`),
     h('h2', { class: 'panel-title', tabindex: '-1' }, place.text ?? 'Unnamed land cell'),
+    pairStrip(app, o),
+    shortReasons(app, o),
+  );
+  const placeMore = h(
+    'div',
+    { class: 'place-more' },
     h('p', { class: 'coords' }, `${latLonText(lat, lon)} · cell ${id}`),
     h('p', { class: 'muted' }, `A 1° cell of about ${cellSize(app, lat, 'EARTH')}: every value below is an average over the whole cell, not a site.`),
     place.nearest && place.nearestKm != null && place.nearestKm <= NEAREST_PLACE_MAX_KM ? h('p', { class: 'muted' }, `Nearest populated place: ${place.nearest}, ${num(place.nearestKm, 0)} km from the cell centre.`) : null,
     place.region ? h('p', { class: 'muted', 'data-note': 'region' }, REGION_CAVEAT) : null,
-    pairStrip(app, o),
   );
 
   // 2. result
@@ -467,7 +496,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     gateTable('Step 3. Mission filters', o.gates, app, o),
   );
 
-  const sections: (HTMLElement | null)[] = [head, result, lunar, filters];
+  const sections: (HTMLElement | null)[] = [placeMore, result, lunar, filters];
 
   if (o.pass) {
     // 5. suitability
@@ -708,7 +737,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
   if (hasVideo(m) && o.pass) {
     foot.append(button(`Start the ${missionName(m).toLowerCase()} mission`, () => void app.startMission(), { kind: 'primary', icon: 'play', id: 'start-mission' }));
   }
-  const body = h('div', { class: 'panel-body' }, ...sections.filter(Boolean));
+  const more = h('details', { class: 'more-details', 'data-more': 'pair' }, h('summary', null, 'More details'), ...sections.filter(Boolean));
+  const body = h('div', { class: 'panel-body' }, head, more);
   const scrollTop = root.querySelector('.panel-scroll')?.scrollTop ?? 0;
   const sameCell = root.dataset.cell === String(id) && root.dataset.mission === m.id;
   root.dataset.cell = String(id);
