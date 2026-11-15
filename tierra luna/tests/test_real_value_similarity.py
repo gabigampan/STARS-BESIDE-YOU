@@ -331,3 +331,91 @@ def test_slider_on_similarity_weights_recomputes_exactly(real, real_dir):
     assert np.array_equal(np.isnan(got), np.isnan(want)) and np.array_equal(got[np.isfinite(got)], want[np.isfinite(want)])
     assert np.array_equal(rep["recomputed"]["rover"]["rank"] > 0, np.isfinite(want))
     assert validate_bundle_v2(real_dir)["ok"]
+
+
+# ----------------------------------------------------------------------------- verifier's additions (2026-11-15)
+# Digests of the previous shipped bundle (contract revision 4, scratchpad ref/v2_before,
+# same inputs) for the Lunar base parts the first test does not cover.
+LUNAR_BASE_BEFORE_MORE = {
+    "detail tiles: id, z.*, lunar_base.*": "98270f91dbba2400ca8b8705a14c3358733360c23dcb931389abf9290a7e2e58",
+    "similarity.json z-score keys": "3aa20dec00fdae82c09b0da9f644ddc07879689d96bd4f5906a438b328cb3fb5",
+    "similarity.json/target/zones/lunar_base": "df773ede4822d97c39ac8273afcda59214fca4e789b5f27c35dbc6614b5087ff",
+    "lunar_named_sites.json lunar_base": "0a1315eaf06e60f1ade10406aea7f53ea103ea0dcca0a462a447231ec654dcc0",
+    "manifest counts lunar_base": "cb4a11b998e4a23114eda071ac7e06809087533d18feb7f876d7be95bd327d97",
+}
+Z_RULE_KEYS = ["function", "features_and_weights", "formula", "meaning", "earth_population", "moon_population",
+               "variables", "active_variables", "variation_threshold", "variation_findings",
+               "not_part_of_similarity", "not_part_of_similarity_note", "z_decimals"]
+
+
+def _lunar_base_more_digests(path):
+    with open(os.path.join(path, "manifest.json"), encoding="utf-8") as fh:
+        man = json.load(fh)
+    h = hashlib.sha256()
+    for t in man["detail_tiles"]["files"]:
+        f = next(x for x in man["files"] if x["name"] == t["name"])
+        with open(os.path.join(path, t["name"]), "rb") as fh:
+            raw = fh.read()
+        for c in f["columns"]:
+            if c["name"] == "id" or c["name"].startswith("lunar_base.") or c["name"].startswith("z."):
+                h.update(c["name"].encode())
+                h.update(raw[c["offset"]:c["offset"] + 4 * c["length"]])
+    with open(os.path.join(path, "similarity.json"), encoding="utf-8") as fh:
+        sj = json.load(fh)
+    with open(os.path.join(path, "lunar_named_sites.json"), encoding="utf-8") as fh:
+        sites = json.load(fh)["sites"]
+    counts = {k: v for k, v in man["counts"]["missions"]["lunar_base"].items() if k != "unpaired_EARTH"}
+    return {"detail tiles: id, z.*, lunar_base.*": h.hexdigest(),
+            "similarity.json z-score keys": _digest({k: sj.get(k) for k in Z_RULE_KEYS}),
+            "similarity.json/target/zones/lunar_base": _digest(sj["target"]["zones"]["lunar_base"]),
+            "lunar_named_sites.json lunar_base": _digest([[s["cell_id"], (s["missions"] or {}).get("lunar_base")]
+                                                          for s in sites]),
+            "manifest counts lunar_base": _digest(counts)}
+
+
+def test_lunar_base_tiles_z_rule_named_sites_and_counts_are_unchanged(real_dir):
+    """Verifier: the Lunar base utilities and ice columns, the z-scores its similarity reads,
+    the z-score description in similarity.json, its zone, its named-site outcomes and its
+    counts are byte for byte those of the previous bundle (2,419 ranked, 48 twins)."""
+    assert _lunar_base_more_digests(real_dir) == LUNAR_BASE_BEFORE_MORE
+
+
+@pytest.mark.parametrize("mission", ["rover", "solar"])
+def test_no_twin_gap_never_displays_at_its_bound(real_dir, mission):
+    """Verifier: the reason of a point without a twin shows its smallest gap; displayed with
+    the bound's own decimals a gap of 30.02 m read '30.0 m away, bound 30.0 m'. The
+    placeholder now says 2 decimals rounded up, which is always above the bound."""
+    b = load_bundle(real_dir)
+    m = next(x for x in b.json("missions.json")["missions"] if x["id"] == mission)
+    sim = m["similarity"]
+    pf = sim["pairs_file"]
+    kind = b.int_column(pf, "nopair_kind")
+    var = b.int_column(pf, "nopair_var")
+    gap = b.column(pf, "nopair_gap")
+    sent = b.manifest["encoding"]["int32_missing"]
+    un = np.flatnonzero(kind != sent)
+    assert un.size == sim["unpaired_count"]
+    for i in un:
+        if NOPAIR_KINDS[kind[i]] == "key_value_missing_on_earth":
+            continue
+        bound = sim["variables"][var[i]]["bound"]
+        assert gap[i] > bound
+        assert np.ceil(gap[i] * 100.0) / 100.0 > bound
+    ph = b.json("similarity.json")["texts"]["no_twin_note"]["placeholders"]["gap"]
+    assert "2 decimals rounded UP" in ph and "same decimals as the bound" not in ph
+
+
+def test_no_text_calls_a_modelled_or_derived_value_measured(real_dir):
+    """Verifier: variables.json said the Earth irradiance (level MODELLED, WorldClim) 'is
+    measured under the atmosphere'. A variable with no MEASURED level must not say that its
+    value is or was measured (negations, other columns and external field measurements such
+    as 'measured there' are allowed)."""
+    b = load_bundle(real_dir)
+    for v in b.json("variables.json")["variables"]:
+        if any(x.get("level") == "MEASURED" for x in v["bodies"].values()):
+            continue
+        text = json.dumps(v, ensure_ascii=False)
+        for mt in re.finditer(r"\b(?:is|are|was|were|been)\s+measured\b|\bmeasured\s+(?:under|from|by|at the)\b",
+                              text, flags=re.I):
+            before = text[max(0, mt.start() - 30):mt.start()].lower()
+            assert "not" in before or "never" in before, (v["name"], text[max(0, mt.start() - 80):mt.end() + 40])

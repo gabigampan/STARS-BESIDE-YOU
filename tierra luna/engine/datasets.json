@@ -355,7 +355,7 @@
       },
       "irradiance_kwh_m2_day": {
        "status": "comparable_with_caveat",
-       "reason": "Daily energy on a horizontal surface on both bodies, but the Earth value is measured under the atmosphere and clouds (interpolated climatology) while the Moon has none, and the lunar value is a 24-hour mean over a 29.5-day lunar day."
+       "reason": "Daily energy on a horizontal surface on both bodies, but the Earth value is a MODELLED climatology of the solar radiation reaching the ground under the atmosphere and clouds (WorldClim interpolation, not a measurement) while the Moon has no atmosphere, and the lunar value is a 24-hour mean over a 29.5-day lunar day."
       },
       "sun_elev_max_deg": {
        "status": "comparable",

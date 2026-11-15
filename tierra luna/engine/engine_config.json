@@ -347,7 +347,7 @@
           "variable": "label of missions.json similarity.variables[k] where k = earth_<mission>_pairs.bin nopair_var",
           "bound": "that variable's bound (missions.json similarity.variables[k].bound)",
           "unit": "its unit",
-          "gap": "earth_<mission>_pairs.bin nopair_gap (the smallest gap found), same decimals as the bound"
+          "gap": "earth_<mission>_pairs.bin nopair_gap (the smallest gap found), with 2 decimals rounded UP (ceil), so a gap just above the bound never displays as equal to the bound (rover: 30.02 m against a 30 m bound)"
         },
         "variant_no_joint_match": "No lunar analog: every variable alone has a close lunar cell, but no single cell of the zone is within the bounds for all of them at once (closest: {variable} {gap} {unit} away, bound {bound} {unit}). The point keeps its suitability; it has no similarity and no final score.",
         "variant_note": "use variant_no_joint_match when nopair_kind is 'no_joint_match' (missions.json similarity.nopair_kinds)"
