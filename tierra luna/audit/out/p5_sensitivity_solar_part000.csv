@@ -37,3 +37,21 @@ solar,soft.sun_elev_max_deg.weight0,soft_weight,suitability weight of sun_elev_m
 solar,soft.sun_elev_max_deg.weight x0.9,soft_weight,suitability weight of sun_elev_max_deg x0.9,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
 solar,soft.sun_elev_max_deg.weight x1.1,soft_weight,suitability weight of sun_elev_max_deg x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
 solar,soft.sun_elev_max_deg.badx0.9,soft_utility,bad of sun_elev_max_deg (10.0) x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.badx1.1,soft_utility,bad of sun_elev_max_deg (10.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.goodx0.9,soft_utility,good of sun_elev_max_deg (70.0) x0.9,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_elev_max_deg.goodx1.1,soft_utility,good of sun_elev_max_deg (70.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,True,
+solar,soft.sun_low_frac_0_5deg.weight0,soft_weight,suitability weight of sun_low_frac_0_5deg (0.15) -> 0,18777,0,0,6360,0,0,0,5,True,46,False,
+solar,soft.sun_low_frac_0_5deg.weight x0.9,soft_weight,suitability weight of sun_low_frac_0_5deg x0.9,18777,0,0,6360,0,0,0,5,True,49,False,
+solar,soft.sun_low_frac_0_5deg.weight x1.1,soft_weight,suitability weight of sun_low_frac_0_5deg x1.1,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.badx0.9,soft_utility,bad of sun_low_frac_0_5deg (0.25) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.badx1.1,soft_utility,bad of sun_low_frac_0_5deg (0.25) x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.goodx0.9,soft_utility,good of sun_low_frac_0_5deg (0.03) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.sun_low_frac_0_5deg.goodx1.1,soft_utility,good of sun_low_frac_0_5deg (0.03) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.slope_deg.weight0,soft_weight,suitability weight of slope_deg (0.15) -> 0,18777,0,0,6360,0,0,0,5,False,50,False,
+solar,soft.slope_deg.weight x0.9,soft_weight,suitability weight of slope_deg x0.9,18777,0,0,6360,0,0,0,4,False,50,False,38385-24227
+solar,soft.slope_deg.weight x1.1,soft_weight,suitability weight of slope_deg x1.1,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.slope_deg.badx0.9,soft_utility,bad of slope_deg (12.0) x0.9,18777,0,0,6360,0,0,0,5,True,49,False,
+solar,soft.slope_deg.badx1.1,soft_utility,bad of slope_deg (12.0) x1.1,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,soft.slope_deg.goodx0.9,soft_utility,good of slope_deg (1.0) x0.9,18777,0,0,6360,0,0,0,4,False,49,False,38385-24227
+solar,soft.slope_deg.goodx1.1,soft_utility,good of slope_deg (1.0) x1.1,18777,0,0,6360,0,0,0,5,False,50,False,
+solar,soft.lst_diurnal_amp_k.weight0,soft_weight,suitability weight of lst_diurnal_amp_k (0.1) -> 0,18777,0,0,6360,0,0,0,0,False,19,False,30104-26120;30105-26056;30106-26040;30107-26155;30108-26159

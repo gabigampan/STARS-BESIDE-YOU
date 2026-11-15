@@ -6,3 +6,4 @@ solar,alpha=1.0,alpha,alpha 0.5 -> 1.0,18777,0,0,6360,0,0,0,0,False,0,False,2383
 solar,utility_decimals=None,rounding,utilities not rounded to 6 decimals,18777,0,0,6360,0,0,0,5,True,50,True,
 solar,score_decimals=12,rounding,per-variable scores rounded to 12 instead of 6 decimals,18777,0,0,6360,0,0,0,5,True,50,True,
 solar,final_decimals=12,rounding,rank on the final score at 12 decimals instead of 2,18777,0,0,6360,0,0,0,5,True,50,False,
+solar,toa.solar_constant_w_m2x1.01,constant,TOA constant solar_constant_w_m2 (1361.0) x1.01,18777,0,0,6546,186,0,4815,0,False,0,False,38105-39760;38464-40045;38744-24688;37746-39378;38109-25011
