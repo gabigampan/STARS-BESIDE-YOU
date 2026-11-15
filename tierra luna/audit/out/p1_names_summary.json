@@ -1,0 +1,86 @@
+{
+ "seed": 20261115,
+ "radii_km": {
+  "EARTH": 6371.0,
+  "MOON": 1737.4
+ },
+ "geonames_file": {
+  "path": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/venv/lib/python3.13/site-packages/reverse_geocoder/rg_cities1000.csv",
+  "rows": 144563,
+  "sha256": "1de56dc32b0308c6094d5d833441c8ca25827f24e9a6a4cc144223ab5f9b65bf",
+  "package": "reverse_geocoder 1.5.1 (PyPI; licence field 'lgpl'); data GeoNames cities1000 (CC BY 4.0 per GeoNames); snapshot date of the GeoNames extract: not stated in the package"
+ },
+ "iau_extract": {
+  "path": "/home/user/stars-beside-you/tierra luna/engine/data/iau_moon_nomenclature.csv",
+  "rows": 9087,
+  "non_satellite": 2023,
+  "sha256": "4c650af98b3a4f95ba115a3aa8fae505f181d03547deda7845d90649002d6dce"
+ },
+ "iau_vs_raw_zip": {
+  "zip": "/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/realdata/moon/MOON_nomenclature_center_pts.zip",
+  "zip_sha256": "bcb1a37a195babb159ee1f720a6c64d03842de87d10a7ba7d754f8873477606b",
+  "raw_rows": 9087,
+  "raw_columns": [
+   "name",
+   "clean_name",
+   "approvaldt",
+   "origin",
+   "diameter",
+   "center_lon",
+   "center_lat",
+   "type",
+   "code",
+   "approval",
+   "min_lon",
+   "max_lon",
+   "min_lat",
+   "max_lat",
+   "ethnicity",
+   "continent",
+   "quad_name",
+   "quad_code",
+   "link"
+  ],
+  "features_non_satellite_extract": 2023,
+  "features_non_satellite_raw": 2023,
+  "max_abs_dlat": 0.0,
+  "max_abs_dlon360": 0.0,
+  "unmatched": 0,
+  "latest_approvaldt": "2026/07/15 00:00:00"
+ },
+ "earth_place_rule_all_land_cells": {
+  "land_cells": 25497,
+  "bundle_place_is_gc_nearest": 17213,
+  "not_nearest": 8284,
+  "extra_km_when_not_nearest_median": 1002.2198638894547,
+  "extra_km_max": 5837.760204189726
+ },
+ "earth_place_rule_ranked": {
+  "rover": {
+   "ranked": 10192,
+   "place_not_gc_nearest": 2242,
+   "median_extra_km_when_wrong": 108.17426038872456,
+   "max_extra_km": 5614.947645502272
+  },
+  "solar": {
+   "ranked": 6360,
+   "place_not_gc_nearest": 191,
+   "median_extra_km_when_wrong": 1.2619242483609376,
+   "max_extra_km": 43.9654569935052
+  },
+  "lunar_base": {
+   "ranked": 450,
+   "place_not_gc_nearest": 50,
+   "median_extra_km_when_wrong": 2.158597672676784,
+   "max_extra_km": 16.06926906286401
+  }
+ },
+ "lunar_feature_rule_all_cells": {
+  "cells": 64800,
+  "bundle_feature_is_gc_nearest": 64800
+ },
+ "pairs_place_not_nearest": 0,
+ "sample_place_not_nearest": 7,
+ "sample_feature_not_nearest": 0,
+ "mismatches": 4
+}

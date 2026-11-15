@@ -1,0 +1,5 @@
+mission,rank,where,said,recomputed,note
+solar,1,transcript distance (rounding),about 130 km,128.7 km (AUDIO_TOP5 speakable: about 129 km),rounded to tens in the recording; still 'about'
+solar,2,transcript distance (rounding),about 280 km,282.9 km (AUDIO_TOP5 speakable: about 283 km),rounded to tens in the recording; still 'about'
+solar,5,transcript distance (rounding),about 220 km,218.2 km (AUDIO_TOP5 speakable: about 218 km),rounded to tens in the recording; still 'about'
+lunar_base,2,transcript feature distance,16.0,15.5,

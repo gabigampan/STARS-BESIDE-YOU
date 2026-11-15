@@ -1,0 +1,1603 @@
+{
+ "lunar_base": [
+  {
+   "closest_three_full_gazetteer": [
+    [
+     25.1,
+     "Mons Malapert",
+     "Mons, montes"
+    ],
+    [
+     26.4,
+     "Lhamu",
+     "Crater, craters"
+    ],
+    [
+     30.5,
+     "Haworth",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 17538,
+   "earth_latlon": [
+    41.5,
+    78.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 62.27783966064453,
+    "name": "Aheqi",
+    "region": "Xinjiang Uygur Zizhiqu"
+   },
+   "earth_place_own": {
+    "admin1": "Xinjiang Uygur Zizhiqu",
+    "bearing_deg": 4.3,
+    "cc": "CN",
+    "compass8": "north",
+    "km": 62.3,
+    "name": "Aheqi"
+   },
+   "final": 72.29,
+   "moon_elev_pct_all_moon": 73.5,
+   "moon_elevation_m": 432.3,
+   "moon_feature_bundle": {
+    "km": 25.059415817260742,
+    "name": "Mons Malapert"
+   },
+   "moon_feature_own": {
+    "km": 25.1,
+    "name": "Mons Malapert",
+    "type": "Mons, montes"
+   },
+   "moon_id": 63528,
+   "moon_latlon": [
+    -86.5,
+    -11.5
+   ],
+   "moon_region_code": "A",
+   "nasa_regions_own": [
+    "Haworth"
+   ],
+   "own_rank": 1,
+   "own_twin": 63528,
+   "rank": 1,
+   "similarity_bundle": 97.31,
+   "similarity_own": 97.3105,
+   "suitability": 47.27,
+   "values": {
+    "amp_earth": 15.6,
+    "amp_moon": 153.27,
+    "amp_pct_earth_all_land": 77.4,
+    "amp_pct_earth_passing": 6.72,
+    "amp_pct_moon_zone": 10.18,
+    "bundle_pct": {
+     "lst_diurnal_amp_k.earth_pct": 6.717651844024658,
+     "lst_diurnal_amp_k.moon_pct": 10.178571701049805,
+     "tmin_k.diff": 207.3800048828125,
+     "tmin_k.earth_pct": 8.371228218078613,
+     "tmin_k.moon_pct": 8.035714149475098
+    },
+    "pairs_bin": {
+     "info.elevation_rel_m.diff": 2126.2861,
+     "info.elevation_rel_m.earth": 2806.9756,
+     "info.elevation_rel_m.moon": 680.6894,
+     "info.irradiance_kwh_m2_day.diff": 3.99,
+     "info.irradiance_kwh_m2_day.earth": 4.093,
+     "info.irradiance_kwh_m2_day.moon": 0.103,
+     "info.temp_k.diff": 194.57,
+     "info.temp_k.earth": 272.06,
+     "info.temp_k.moon": 77.49,
+     "lst_diurnal_amp_k.diff": 137.67,
+     "lst_diurnal_amp_k.diff_pct": 3.4609,
+     "lst_diurnal_amp_k.earth": 15.6,
+     "lst_diurnal_amp_k.earth_pct": 6.7177,
+     "lst_diurnal_amp_k.moon": 153.27,
+     "lst_diurnal_amp_k.moon_pct": 10.1786,
+     "roughness_m.diff": 0.32,
+     "roughness_m.earth": 238.81,
+     "roughness_m.moon": 238.49,
+     "slope_deg.diff": 0.527,
+     "slope_deg.earth": 6.652,
+     "slope_deg.moon": 7.179,
+     "tmin_k.diff": 207.38,
+     "tmin_k.diff_pct": 0.3355,
+     "tmin_k.earth": 248.61,
+     "tmin_k.earth_pct": 8.3712,
+     "tmin_k.moon": 41.23,
+     "tmin_k.moon_pct": 8.0357
+    },
+    "rough_earth": 238.81,
+    "rough_moon": 238.49,
+    "rough_pct_earth_land": 98.3,
+    "rough_pct_moon_all": 80.9,
+    "slope_earth": 6.652,
+    "slope_moon": 7.179,
+    "slope_pct_earth_land": 98.4,
+    "slope_pct_moon_all": 75.8,
+    "tmin_diff_k": 207.38,
+    "tmin_k_earth": 248.60999999999999,
+    "tmin_k_moon": 41.22999999999999,
+    "tmin_pct_earth_all_land": 43.6,
+    "tmin_pct_earth_passing": 8.37,
+    "tmin_pct_moon_all": 1.1,
+    "tmin_pct_moon_zone": 8.04
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     15.5,
+     "Cartwright",
+     "Crater, craters"
+    ],
+    [
+     42.6,
+     "de Gerlache",
+     "Crater, craters"
+    ],
+    [
+     43.1,
+     "Bay",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 16830,
+   "earth_latlon": [
+    43.5,
+    90.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 43.63719940185547,
+    "name": "Mori",
+    "region": "Xinjiang Uygur Zizhiqu"
+   },
+   "earth_place_own": {
+    "admin1": "Xinjiang Uygur Zizhiqu",
+    "bearing_deg": 145.7,
+    "cc": "CN",
+    "compass8": "southeast",
+    "km": 43.6,
+    "name": "Mori"
+   },
+   "final": 72.28,
+   "moon_elev_pct_all_moon": 31.6,
+   "moon_elevation_m": -1503.1,
+   "moon_feature_bundle": {
+    "km": 15.470643043518066,
+    "name": "Cartwright"
+   },
+   "moon_feature_own": {
+    "km": 15.5,
+    "name": "Cartwright",
+    "type": "Crater, craters"
+   },
+   "moon_id": 63841,
+   "moon_latlon": [
+    -87.5,
+    -58.5
+   ],
+   "moon_region_code": "A",
+   "nasa_regions_own": [
+    "de Gerlache Rim 2"
+   ],
+   "own_rank": 2,
+   "own_twin": 63841,
+   "rank": 2,
+   "similarity_bundle": 96.61,
+   "similarity_own": 96.6077,
+   "suitability": 47.96,
+   "values": {
+    "amp_earth": 18.01,
+    "amp_moon": 172.62,
+    "amp_pct_earth_all_land": 84.5,
+    "amp_pct_earth_passing": 33.09,
+    "amp_pct_moon_zone": 32.5,
+    "bundle_pct": {
+     "lst_diurnal_amp_k.earth_pct": 33.092185974121094,
+     "lst_diurnal_amp_k.moon_pct": 32.5,
+     "tmin_k.diff": 208.17999267578125,
+     "tmin_k.earth_pct": 21.47581672668457,
+     "tmin_k.moon_pct": 18.75
+    },
+    "pairs_bin": {
+     "info.elevation_rel_m.diff": 2142.9861,
+     "info.elevation_rel_m.earth": 888.2756,
+     "info.elevation_rel_m.moon": -1254.7106,
+     "info.irradiance_kwh_m2_day.diff": 4.194,
+     "info.irradiance_kwh_m2_day.earth": 4.368,
+     "info.irradiance_kwh_m2_day.moon": 0.174,
+     "info.temp_k.diff": 183.7,
+     "info.temp_k.earth": 282.43,
+     "info.temp_k.moon": 98.73,
+     "lst_diurnal_amp_k.diff": 154.61,
+     "lst_diurnal_amp_k.diff_pct": 0.5922,
+     "lst_diurnal_amp_k.earth": 18.01,
+     "lst_diurnal_amp_k.earth_pct": 33.0922,
+     "lst_diurnal_amp_k.moon": 172.62,
+     "lst_diurnal_amp_k.moon_pct": 32.5,
+     "roughness_m.diff": 9.56,
+     "roughness_m.earth": 118.63,
+     "roughness_m.moon": 128.19,
+     "slope_deg.diff": 1.085,
+     "slope_deg.earth": 3.066,
+     "slope_deg.moon": 4.151,
+     "tmin_k.diff": 208.18,
+     "tmin_k.diff_pct": 2.7258,
+     "tmin_k.earth": 254.29,
+     "tmin_k.earth_pct": 21.4758,
+     "tmin_k.moon": 46.11,
+     "tmin_k.moon_pct": 18.75
+    },
+    "rough_earth": 118.63,
+    "rough_moon": 128.19,
+    "rough_pct_earth_land": 88.2,
+    "rough_pct_moon_all": 36.3,
+    "slope_earth": 3.066,
+    "slope_moon": 4.151,
+    "slope_pct_earth_land": 88.0,
+    "slope_pct_moon_all": 40.7,
+    "tmin_diff_k": 208.17999999999998,
+    "tmin_k_earth": 254.28999999999996,
+    "tmin_k_moon": 46.109999999999985,
+    "tmin_pct_earth_all_land": 50.5,
+    "tmin_pct_earth_passing": 21.48,
+    "tmin_pct_moon_all": 2.5,
+    "tmin_pct_moon_zone": 18.75
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     19.4,
+     "Slater",
+     "Crater, craters"
+    ],
+    [
+     48.3,
+     "Faustini",
+     "Crater, craters"
+    ],
+    [
+     58.3,
+     "Haynes",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Mongolia"
+   ],
+   "earth_id": 15751,
+   "earth_latlon": [
+    46.5,
+    91.5
+   ],
+   "earth_place_bundle": {
+    "country": "Mongolia",
+    "km": 45.47590637207031,
+    "name": "Burenhayrhan",
+    "region": "Hovd"
+   },
+   "earth_place_own": {
+    "admin1": "Hovd",
+    "bearing_deg": 355.4,
+    "cc": "MN",
+    "compass8": "north",
+    "km": 45.5,
+    "name": "Burenhayrhan"
+   },
+   "final": 71.73,
+   "moon_elev_pct_all_moon": 48.9,
+   "moon_elevation_m": -820.2,
+   "moon_feature_bundle": {
+    "km": 19.449926376342773,
+    "name": "Slater"
+   },
+   "moon_feature_own": {
+    "km": 19.4,
+    "name": "Slater",
+    "type": "Crater, craters"
+   },
+   "moon_id": 64018,
+   "moon_latlon": [
+    -87.5,
+    118.5
+   ],
+   "moon_region_code": "A",
+   "nasa_regions_own": [
+    "Slater Plain"
+   ],
+   "own_rank": 3,
+   "own_twin": 64018,
+   "rank": 3,
+   "similarity_bundle": 96.86,
+   "similarity_own": 96.8636,
+   "suitability": 46.6,
+   "values": {
+    "amp_earth": 16.04,
+    "amp_moon": 153.31,
+    "amp_pct_earth_all_land": 78.5,
+    "amp_pct_earth_passing": 11.64,
+    "amp_pct_moon_zone": 10.54,
+    "bundle_pct": {
+     "lst_diurnal_amp_k.earth_pct": 11.637040138244629,
+     "lst_diurnal_amp_k.moon_pct": 10.535714149475098,
+     "tmin_k.diff": 206.64999389648438,
+     "tmin_k.earth_pct": 5.84952449798584,
+     "tmin_k.moon_pct": 6.607142925262451
+    },
+    "pairs_bin": {
+     "info.elevation_rel_m.diff": 2136.8862,
+     "info.elevation_rel_m.earth": 1565.0756,
+     "info.elevation_rel_m.moon": -571.8106,
+     "info.irradiance_kwh_m2_day.diff": 3.928,
+     "info.irradiance_kwh_m2_day.earth": 4.015,
+     "info.irradiance_kwh_m2_day.moon": 0.087,
+     "info.temp_k.diff": 194.12,
+     "info.temp_k.earth": 273.78,
+     "info.temp_k.moon": 79.66,
+     "lst_diurnal_amp_k.diff": 137.27,
+     "lst_diurnal_amp_k.diff_pct": 1.1013,
+     "lst_diurnal_amp_k.earth": 16.04,
+     "lst_diurnal_amp_k.earth_pct": 11.637,
+     "lst_diurnal_amp_k.moon": 153.31,
+     "lst_diurnal_amp_k.moon_pct": 10.5357,
+     "roughness_m.diff": 3.78,
+     "roughness_m.earth": 164.12,
+     "roughness_m.moon": 167.9,
+     "slope_deg.diff": 1.587,
+     "slope_deg.earth": 4.673,
+     "slope_deg.moon": 6.26,
+     "tmin_k.diff": 206.65,
+     "tmin_k.diff_pct": 0.7576,
+     "tmin_k.earth": 247.3,
+     "tmin_k.earth_pct": 5.8495,
+     "tmin_k.moon": 40.65,
+     "tmin_k.moon_pct": 6.6071
+    },
+    "rough_earth": 164.12,
+    "rough_moon": 167.9,
+    "rough_pct_earth_land": 94.1,
+    "rough_pct_moon_all": 53.5,
+    "slope_earth": 4.673,
+    "slope_moon": 6.26,
+    "slope_pct_earth_land": 94.9,
+    "slope_pct_moon_all": 66.3,
+    "tmin_diff_k": 206.65,
+    "tmin_k_earth": 247.29999999999998,
+    "tmin_k_moon": 40.64999999999998,
+    "tmin_pct_earth_all_land": 42.0,
+    "tmin_pct_earth_passing": 5.85,
+    "tmin_pct_moon_all": 0.9,
+    "tmin_pct_moon_zone": 6.61
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     18.3,
+     "Wapowski",
+     "Crater, craters"
+    ],
+    [
+     36.4,
+     "Oberbeck",
+     "Crater, craters"
+    ],
+    [
+     48.2,
+     "Scott",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Morocco"
+   ],
+   "earth_id": 21054,
+   "earth_latlon": [
+    31.5,
+    -5.5
+   ],
+   "earth_place_bundle": {
+    "country": "Morocco",
+    "km": 3.512303352355957,
+    "name": "Tinghir",
+    "region": "Souss-Massa-Draa"
+   },
+   "earth_place_own": {
+    "admin1": "Souss-Massa-Draa",
+    "bearing_deg": 117.8,
+    "cc": "MA",
+    "compass8": "southeast",
+    "km": 3.5,
+    "name": "Tinghir"
+   },
+   "final": 71.63,
+   "moon_elev_pct_all_moon": 75.9,
+   "moon_elevation_m": 638.0,
+   "moon_feature_bundle": {
+    "km": 18.348438262939453,
+    "name": "Wapowski"
+   },
+   "moon_feature_own": {
+    "km": 18.3,
+    "name": "Wapowski",
+    "type": "Crater, craters"
+   },
+   "moon_id": 62517,
+   "moon_latlon": [
+    -83.5,
+    57.5
+   ],
+   "moon_region_code": "A",
+   "nasa_regions_own": [
+    "Nobile Rim 2"
+   ],
+   "own_rank": 4,
+   "own_twin": 62517,
+   "rank": 4,
+   "similarity_bundle": 99.36,
+   "similarity_own": 99.3565,
+   "suitability": 43.91,
+   "values": {
+    "amp_earth": 18.71,
+    "amp_moon": 176.89,
+    "amp_pct_earth_all_land": 87.1,
+    "amp_pct_earth_passing": 41.86,
+    "amp_pct_moon_zone": 43.39,
+    "bundle_pct": {
+     "lst_diurnal_amp_k.earth_pct": 41.85614013671875,
+     "lst_diurnal_amp_k.moon_pct": 43.39285659790039,
+     "tmin_k.diff": 208.60000610351562,
+     "tmin_k.earth_pct": 62.7325325012207,
+     "tmin_k.moon_pct": 62.67856979370117
+    },
+    "pairs_bin": {
+     "info.elevation_rel_m.diff": 150.7862,
+     "info.elevation_rel_m.earth": 1037.1757,
+     "info.elevation_rel_m.moon": 886.3894,
+     "info.irradiance_kwh_m2_day.diff": 4.542,
+     "info.irradiance_kwh_m2_day.earth": 5.386,
+     "info.irradiance_kwh_m2_day.moon": 0.844,
+     "info.temp_k.diff": 162.79,
+     "info.temp_k.earth": 293.19,
+     "info.temp_k.moon": 130.4,
+     "lst_diurnal_amp_k.diff": 158.18,
+     "lst_diurnal_amp_k.diff_pct": 1.5367,
+     "lst_diurnal_amp_k.earth": 18.71,
+     "lst_diurnal_amp_k.earth_pct": 41.8561,
+     "lst_diurnal_amp_k.moon": 176.89,
+     "lst_diurnal_amp_k.moon_pct": 43.3929,
+     "roughness_m.diff": 4.48,
+     "roughness_m.earth": 119.49,
+     "roughness_m.moon": 115.01,
+     "slope_deg.diff": 0.224,
+     "slope_deg.earth": 3.257,
+     "slope_deg.moon": 3.481,
+     "tmin_k.diff": 208.6,
+     "tmin_k.diff_pct": 0.054,
+     "tmin_k.earth": 271.63,
+     "tmin_k.earth_pct": 62.7325,
+     "tmin_k.moon": 63.03,
+     "tmin_k.moon_pct": 62.6786
+    },
+    "rough_earth": 119.49,
+    "rough_moon": 115.01,
+    "rough_pct_earth_land": 88.4,
+    "rough_pct_moon_all": 31.2,
+    "slope_earth": 3.257,
+    "slope_moon": 3.481,
+    "slope_pct_earth_land": 89.0,
+    "slope_pct_moon_all": 32.9,
+    "tmin_diff_k": 208.60000000000002,
+    "tmin_k_earth": 271.63,
+    "tmin_k_moon": 63.02999999999997,
+    "tmin_pct_earth_all_land": 65.3,
+    "tmin_pct_earth_passing": 62.73,
+    "tmin_pct_moon_all": 10.2,
+    "tmin_pct_moon_zone": 62.68
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     15.9,
+     "Oberbeck",
+     "Crater, craters"
+    ],
+    [
+     36.7,
+     "Wapowski",
+     "Crater, craters"
+    ],
+    [
+     51.9,
+     "von Baeyer",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 17187,
+   "earth_latlon": [
+    42.5,
+    87.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 53.29343795776367,
+    "name": "Ewirgol",
+    "region": "Xinjiang Uygur Zizhiqu"
+   },
+   "earth_place_own": {
+    "admin1": "Xinjiang Uygur Zizhiqu",
+    "bearing_deg": 194.3,
+    "cc": "CN",
+    "compass8": "south",
+    "km": 53.3,
+    "name": "Ewirgol"
+   },
+   "final": 71.28,
+   "moon_elev_pct_all_moon": 37.8,
+   "moon_elevation_m": -1243.8,
+   "moon_feature_bundle": {
+    "km": 15.934629440307617,
+    "name": "Oberbeck"
+   },
+   "moon_feature_own": {
+    "km": 15.9,
+    "name": "Oberbeck",
+    "type": "Crater, craters"
+   },
+   "moon_id": 62523,
+   "moon_latlon": [
+    -83.5,
+    63.5
+   ],
+   "moon_region_code": "A",
+   "nasa_regions_own": [
+    "Nobile Rim 2"
+   ],
+   "own_rank": 5,
+   "own_twin": 62523,
+   "rank": 5,
+   "similarity_bundle": 95.03,
+   "similarity_own": 95.0261,
+   "suitability": 47.54,
+   "values": {
+    "amp_earth": 18.16,
+    "amp_moon": 174.6,
+    "amp_pct_earth_all_land": 85.0,
+    "amp_pct_earth_passing": 34.93,
+    "amp_pct_moon_zone": 37.68,
+    "bundle_pct": {
+     "lst_diurnal_amp_k.earth_pct": 34.93178939819336,
+     "lst_diurnal_amp_k.moon_pct": 37.67856979370117,
+     "tmin_k.diff": 207.8000030517578,
+     "tmin_k.earth_pct": 23.170732498168945,
+     "tmin_k.moon_pct": 22.321428298950195
+    },
+    "pairs_bin": {
+     "info.elevation_rel_m.diff": 2306.6863,
+     "info.elevation_rel_m.earth": 1311.2756,
+     "info.elevation_rel_m.moon": -995.4106,
+     "info.irradiance_kwh_m2_day.diff": 3.94,
+     "info.irradiance_kwh_m2_day.earth": 4.252,
+     "info.irradiance_kwh_m2_day.moon": 0.312,
+     "info.temp_k.diff": 192.3,
+     "info.temp_k.earth": 281.89,
+     "info.temp_k.moon": 89.59,
+     "lst_diurnal_amp_k.diff": 156.44,
+     "lst_diurnal_amp_k.diff_pct": 2.7468,
+     "lst_diurnal_amp_k.earth": 18.16,
+     "lst_diurnal_amp_k.earth_pct": 34.9318,
+     "lst_diurnal_amp_k.moon": 174.6,
+     "lst_diurnal_amp_k.moon_pct": 37.6786,
+     "roughness_m.diff": 11.91,
+     "roughness_m.earth": 173.53,
+     "roughness_m.moon": 161.62,
+     "slope_deg.diff": 1.549,
+     "slope_deg.earth": 4.665,
+     "slope_deg.moon": 6.214,
+     "tmin_k.diff": 207.8,
+     "tmin_k.diff_pct": 0.8493,
+     "tmin_k.earth": 254.8,
+     "tmin_k.earth_pct": 23.1707,
+     "tmin_k.moon": 47.0,
+     "tmin_k.moon_pct": 22.3214
+    },
+    "rough_earth": 173.53,
+    "rough_moon": 161.62,
+    "rough_pct_earth_land": 94.9,
+    "rough_pct_moon_all": 50.8,
+    "slope_earth": 4.665,
+    "slope_moon": 6.214,
+    "slope_pct_earth_land": 94.9,
+    "slope_pct_moon_all": 65.8,
+    "tmin_diff_k": 207.8,
+    "tmin_k_earth": 254.79999999999998,
+    "tmin_k_moon": 46.99999999999997,
+    "tmin_pct_earth_all_land": 51.1,
+    "tmin_pct_earth_passing": 23.17,
+    "tmin_pct_moon_all": 2.8,
+    "tmin_pct_moon_zone": 22.32
+   }
+  }
+ ],
+ "rover": [
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Casatus D",
+     "Satellite Feature"
+    ],
+    [
+     58.8,
+     "Casatus K",
+     "Satellite Feature"
+    ],
+    [
+     69.0,
+     "Casatus E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 17566,
+   "earth_latlon": [
+    41.5,
+    106.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 65.59938049316406,
+    "name": "Bayinbaolige",
+    "region": "Inner Mongolia"
+   },
+   "earth_place_own": {
+    "admin1": "Inner Mongolia",
+    "bearing_deg": 314.0,
+    "cc": "CN",
+    "compass8": "northwest",
+    "km": 65.6,
+    "name": "Bayinbaolige"
+   },
+   "final": 99.39,
+   "moon_elev_pct_all_moon": 75.4,
+   "moon_elevation_m": 584.9,
+   "moon_feature_bundle": {
+    "km": 159.1629180908203,
+    "name": "Casatus"
+   },
+   "moon_feature_own": {
+    "km": 159.2,
+    "name": "Casatus",
+    "type": "Crater, craters"
+   },
+   "moon_id": 59895,
+   "moon_latlon": [
+    -76.5,
+    -44.5
+   ],
+   "moon_region_code": "B",
+   "own_rank": 1,
+   "own_twin": 59895,
+   "rank": 1,
+   "similarity_bundle": 99.57,
+   "similarity_own": 99.5657,
+   "suitability": 99.22,
+   "values": {
+    "erel_diff": 95.81380321745371,
+    "erel_earth": 737.4755988109184,
+    "erel_moon": 833.2894020283721,
+    "pairs_bin": {
+     "elevation_rel_m.diff": 95.8138,
+     "elevation_rel_m.earth": 737.4756,
+     "elevation_rel_m.moon": 833.2894,
+     "roughness_m.diff": 0.67,
+     "roughness_m.earth": 43.53,
+     "roughness_m.moon": 44.2,
+     "slope_deg.diff": 0.11,
+     "slope_deg.earth": 1.038,
+     "slope_deg.moon": 1.148
+    },
+    "rough_earth": 43.53,
+    "rough_moon": 44.2,
+    "rough_pct_earth_land": 67.4,
+    "rough_pct_moon_all": 11.8,
+    "slope_earth": 1.038,
+    "slope_moon": 1.148,
+    "slope_pct_earth_land": 66.4,
+    "slope_pct_earth_passing": 33.3,
+    "slope_pct_moon_all": 12.2,
+    "slope_pct_moon_zone": 1.8
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Casatus D",
+     "Satellite Feature"
+    ],
+    [
+     58.8,
+     "Casatus K",
+     "Satellite Feature"
+    ],
+    [
+     69.0,
+     "Casatus E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Algeria"
+   ],
+   "earth_id": 23945,
+   "earth_latlon": [
+    23.5,
+    5.5
+   ],
+   "earth_place_bundle": {
+    "country": "Algeria",
+    "km": 79.53848266601562,
+    "name": "Tamanrasset",
+    "region": "Tamanghasset"
+   },
+   "earth_place_own": {
+    "admin1": "Tamanghasset",
+    "bearing_deg": 358.3,
+    "cc": "DZ",
+    "compass8": "north",
+    "km": 79.5,
+    "name": "Tamanrasset"
+   },
+   "final": 99.21,
+   "moon_elev_pct_all_moon": 75.4,
+   "moon_elevation_m": 584.9,
+   "moon_feature_bundle": {
+    "km": 159.1629180908203,
+    "name": "Casatus"
+   },
+   "moon_feature_own": {
+    "km": 159.2,
+    "name": "Casatus",
+    "type": "Crater, craters"
+   },
+   "moon_id": 59895,
+   "moon_latlon": [
+    -76.5,
+    -44.5
+   ],
+   "moon_region_code": "B",
+   "own_rank": 2,
+   "own_twin": 59895,
+   "rank": 2,
+   "similarity_bundle": 99.76,
+   "similarity_own": 99.7593,
+   "suitability": 98.66,
+   "values": {
+    "erel_diff": 71.41380321745385,
+    "erel_earth": 761.8755988109183,
+    "erel_moon": 833.2894020283721,
+    "pairs_bin": {
+     "elevation_rel_m.diff": 71.4138,
+     "elevation_rel_m.earth": 761.8756,
+     "elevation_rel_m.moon": 833.2894,
+     "roughness_m.diff": 0.83,
+     "roughness_m.earth": 43.37,
+     "roughness_m.moon": 44.2,
+     "slope_deg.diff": 0.067,
+     "slope_deg.earth": 1.215,
+     "slope_deg.moon": 1.148
+    },
+    "rough_earth": 43.37,
+    "rough_moon": 44.2,
+    "rough_pct_earth_land": 67.3,
+    "rough_pct_moon_all": 11.8,
+    "slope_earth": 1.215,
+    "slope_moon": 1.148,
+    "slope_pct_earth_land": 69.6,
+    "slope_pct_earth_passing": 39.8,
+    "slope_pct_moon_all": 12.2,
+    "slope_pct_moon_zone": 1.8
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Casatus D",
+     "Satellite Feature"
+    ],
+    [
+     58.8,
+     "Casatus K",
+     "Satellite Feature"
+    ],
+    [
+     69.0,
+     "Casatus E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 18282,
+   "earth_latlon": [
+    39.5,
+    102.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 78.35567474365234,
+    "name": "Ehen Hudag",
+    "region": "Inner Mongolia"
+   },
+   "earth_place_own": {
+    "admin1": "Inner Mongolia",
+    "bearing_deg": 65.5,
+    "cc": "CN",
+    "compass8": "northeast",
+    "km": 78.4,
+    "name": "Ehen Hudag"
+   },
+   "final": 99.17,
+   "moon_elev_pct_all_moon": 75.4,
+   "moon_elevation_m": 584.9,
+   "moon_feature_bundle": {
+    "km": 159.1629180908203,
+    "name": "Casatus"
+   },
+   "moon_feature_own": {
+    "km": 159.2,
+    "name": "Casatus",
+    "type": "Crater, craters"
+   },
+   "moon_id": 59895,
+   "moon_latlon": [
+    -76.5,
+    -44.5
+   ],
+   "moon_region_code": "B",
+   "own_rank": 3,
+   "own_twin": 59895,
+   "rank": 3,
+   "similarity_bundle": 98.77,
+   "similarity_own": 98.7673,
+   "suitability": 99.58,
+   "values": {
+    "erel_diff": 85.61380321745389,
+    "erel_earth": 747.6755988109182,
+    "erel_moon": 833.2894020283721,
+    "pairs_bin": {
+     "elevation_rel_m.diff": 85.6138,
+     "elevation_rel_m.earth": 747.6756,
+     "elevation_rel_m.moon": 833.2894,
+     "roughness_m.diff": 5.45,
+     "roughness_m.earth": 38.75,
+     "roughness_m.moon": 44.2,
+     "slope_deg.diff": 0.24,
+     "slope_deg.earth": 0.908,
+     "slope_deg.moon": 1.148
+    },
+    "rough_earth": 38.75,
+    "rough_moon": 44.2,
+    "rough_pct_earth_land": 65.2,
+    "rough_pct_moon_all": 11.8,
+    "slope_earth": 0.908,
+    "slope_moon": 1.148,
+    "slope_pct_earth_land": 63.7,
+    "slope_pct_earth_passing": 27.6,
+    "slope_pct_moon_all": 12.2,
+    "slope_pct_moon_zone": 1.8
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Casatus D",
+     "Satellite Feature"
+    ],
+    [
+     58.8,
+     "Casatus K",
+     "Satellite Feature"
+    ],
+    [
+     69.0,
+     "Casatus E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "China"
+   ],
+   "earth_id": 18280,
+   "earth_latlon": [
+    39.5,
+    100.5
+   ],
+   "earth_place_bundle": {
+    "country": "China",
+    "km": 27.801816940307617,
+    "name": "Banqiao",
+    "region": "Gansu Sheng"
+   },
+   "earth_place_own": {
+    "admin1": "Gansu Sheng",
+    "bearing_deg": 34.8,
+    "cc": "CN",
+    "compass8": "northeast",
+    "km": 27.8,
+    "name": "Banqiao"
+   },
+   "final": 99.08,
+   "moon_elev_pct_all_moon": 75.4,
+   "moon_elevation_m": 584.9,
+   "moon_feature_bundle": {
+    "km": 159.1629180908203,
+    "name": "Casatus"
+   },
+   "moon_feature_own": {
+    "km": 159.2,
+    "name": "Casatus",
+    "type": "Crater, craters"
+   },
+   "moon_id": 59895,
+   "moon_latlon": [
+    -76.5,
+    -44.5
+   ],
+   "moon_region_code": "B",
+   "own_rank": 4,
+   "own_twin": 59895,
+   "rank": 4,
+   "similarity_bundle": 99.5,
+   "similarity_own": 99.4954,
+   "suitability": 98.66,
+   "values": {
+    "erel_diff": 18.18619678254629,
+    "erel_earth": 851.4755988109184,
+    "erel_moon": 833.2894020283721,
+    "pairs_bin": {
+     "elevation_rel_m.diff": 18.1862,
+     "elevation_rel_m.earth": 851.4756,
+     "elevation_rel_m.moon": 833.2894,
+     "roughness_m.diff": 4.71,
+     "roughness_m.earth": 48.91,
+     "roughness_m.moon": 44.2,
+     "slope_deg.diff": 0.017,
+     "slope_deg.earth": 1.131,
+     "slope_deg.moon": 1.148
+    },
+    "rough_earth": 48.91,
+    "rough_moon": 44.2,
+    "rough_pct_earth_land": 69.7,
+    "rough_pct_moon_all": 11.8,
+    "slope_earth": 1.131,
+    "slope_moon": 1.148,
+    "slope_pct_earth_land": 68.2,
+    "slope_pct_earth_passing": 37.0,
+    "slope_pct_moon_all": 12.2,
+    "slope_pct_moon_zone": 1.8
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Casatus D",
+     "Satellite Feature"
+    ],
+    [
+     58.8,
+     "Casatus K",
+     "Satellite Feature"
+    ],
+    [
+     69.0,
+     "Casatus E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Mongolia"
+   ],
+   "earth_id": 15395,
+   "earth_latlon": [
+    47.5,
+    95.5
+   ],
+   "earth_place_bundle": {
+    "country": "Mongolia",
+    "km": 41.0202522277832,
+    "name": "Buga",
+    "region": "Govi-Altay"
+   },
+   "earth_place_own": {
+    "admin1": "Govi-Altay",
+    "bearing_deg": 113.8,
+    "cc": "MN",
+    "compass8": "southeast",
+    "km": 41.0,
+    "name": "Buga"
+   },
+   "final": 98.91,
+   "moon_elev_pct_all_moon": 75.4,
+   "moon_elevation_m": 584.9,
+   "moon_feature_bundle": {
+    "km": 159.1629180908203,
+    "name": "Casatus"
+   },
+   "moon_feature_own": {
+    "km": 159.2,
+    "name": "Casatus",
+    "type": "Crater, craters"
+   },
+   "moon_id": 59895,
+   "moon_latlon": [
+    -76.5,
+    -44.5
+   ],
+   "moon_region_code": "B",
+   "own_rank": 5,
+   "own_twin": 59895,
+   "rank": 5,
+   "similarity_bundle": 99.12,
+   "similarity_own": 99.1221,
+   "suitability": 98.69,
+   "values": {
+    "erel_diff": 129.1861967825463,
+    "erel_earth": 962.4755988109184,
+    "erel_moon": 833.2894020283721,
+    "pairs_bin": {
+     "elevation_rel_m.diff": 129.1862,
+     "elevation_rel_m.earth": 962.4756,
+     "elevation_rel_m.moon": 833.2894,
+     "roughness_m.diff": 2.87,
+     "roughness_m.earth": 41.33,
+     "roughness_m.moon": 44.2,
+     "slope_deg.diff": 0.088,
+     "slope_deg.earth": 1.236,
+     "slope_deg.moon": 1.148
+    },
+    "rough_earth": 41.33,
+    "rough_moon": 44.2,
+    "rough_pct_earth_land": 66.4,
+    "rough_pct_moon_all": 11.8,
+    "slope_earth": 1.236,
+    "slope_moon": 1.148,
+    "slope_pct_earth_land": 69.9,
+    "slope_pct_earth_passing": 40.5,
+    "slope_pct_moon_all": 12.2,
+    "slope_pct_moon_zone": 1.8
+   }
+  }
+ ],
+ "solar": [
+  {
+   "closest_three_full_gazetteer": [
+    [
+     50.7,
+     "Wallace T",
+     "Satellite Feature"
+    ],
+    [
+     51.3,
+     "Archimedes N",
+     "Satellite Feature"
+    ],
+    [
+     75.8,
+     "Huxley",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Australia"
+   ],
+   "earth_id": 38464,
+   "earth_latlon": [
+    -16.5,
+    124.5
+   ],
+   "earth_place_bundle": {
+    "country": "Australia",
+    "km": 128.7081298828125,
+    "name": "Derby",
+    "region": null
+   },
+   "earth_place_own": {
+    "admin1": "Western Australia",
+    "bearing_deg": 46.2,
+    "cc": "AU",
+    "compass8": "northeast",
+    "km": 128.7,
+    "name": "Derby"
+   },
+   "final": 98.45,
+   "moon_elev_pct_all_moon": 24.8,
+   "moon_elevation_m": -1842.7,
+   "moon_feature_bundle": {
+    "km": 75.79480743408203,
+    "name": "Huxley"
+   },
+   "moon_feature_own": {
+    "km": 75.8,
+    "name": "Huxley",
+    "type": "Crater, craters"
+   },
+   "moon_id": 24296,
+   "moon_latlon": [
+    22.5,
+    -3.5
+   ],
+   "moon_region_code": "D",
+   "own_rank": 1,
+   "own_twin": 24296,
+   "rank": 1,
+   "similarity_bundle": 99.99,
+   "similarity_own": 99.9921,
+   "suitability": 96.9,
+   "values": {
+    "displayed_ground": "6.2",
+    "displayed_toa_earth": "9.6",
+    "displayed_toa_moon": "9.6",
+    "ground_earth": 6.177,
+    "loss_pct_display_rule": 35,
+    "lost_share_unrounded": 0.3565933375233543,
+    "pairs_bin": {
+     "atm.ground_kwh_m2_day": 6.177,
+     "atm.lost_share": 0.3566,
+     "atm.toa_kwh_m2_day": 9.6005,
+     "irradiance_toa_kwh_m2_day.diff": 0.0035,
+     "irradiance_toa_kwh_m2_day.earth": 9.6005,
+     "irradiance_toa_kwh_m2_day.moon": 9.604,
+     "roughness_m.diff": 0.17,
+     "roughness_m.earth": 39.2,
+     "roughness_m.moon": 39.03,
+     "slope_deg.diff": 0.071,
+     "slope_deg.earth": 0.976,
+     "slope_deg.moon": 1.047
+    },
+    "rough_earth": 39.2,
+    "rough_moon": 39.03,
+    "rough_pct_earth_land": 65.4,
+    "rough_pct_moon_all": 10.7,
+    "s_irr": 0.9999825962695418,
+    "s_rough": 0.9999839445733342,
+    "s_slope": 0.9993700734870651,
+    "slope_earth": 0.976,
+    "slope_moon": 1.047,
+    "slope_pct_earth_land": 65.2,
+    "slope_pct_moon_all": 11.3,
+    "slope_pct_moon_zone": 48.2,
+    "toa_earth_bundle": 9.600460052490234,
+    "toa_earth_own": 9.60046011370641,
+    "toa_moon": 9.604
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     26.7,
+     "Struve L",
+     "Satellite Feature"
+    ],
+    [
+     51.6,
+     "Struve C",
+     "Satellite Feature"
+    ],
+    [
+     58.2,
+     "Struve",
+     "Crater, craters"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Australia"
+   ],
+   "earth_id": 38105,
+   "earth_latlon": [
+    -15.5,
+    125.5
+   ],
+   "earth_place_bundle": {
+    "country": "Australia",
+    "km": 282.9040832519531,
+    "name": "Derby",
+    "region": null
+   },
+   "earth_place_own": {
+    "admin1": "Western Australia",
+    "bearing_deg": 45.1,
+    "cc": "AU",
+    "compass8": "northeast",
+    "km": 282.9,
+    "name": "Derby"
+   },
+   "final": 98.39,
+   "moon_elev_pct_all_moon": 37.7,
+   "moon_elevation_m": -1251.1,
+   "moon_feature_bundle": {
+    "km": 58.1713981628418,
+    "name": "Struve"
+   },
+   "moon_feature_own": {
+    "km": 58.2,
+    "name": "Struve",
+    "type": "Crater, craters"
+   },
+   "moon_id": 24583,
+   "moon_latlon": [
+    21.5,
+    -76.5
+   ],
+   "moon_region_code": "D",
+   "own_rank": 2,
+   "own_twin": 24583,
+   "rank": 2,
+   "similarity_bundle": 99.88,
+   "similarity_own": 99.8821,
+   "suitability": 96.9,
+   "values": {
+    "displayed_ground": "6.1",
+    "displayed_toa_earth": "9.6",
+    "displayed_toa_moon": "9.7",
+    "ground_earth": 6.11,
+    "loss_pct_display_rule": 36,
+    "lost_share_unrounded": 0.3664482393962888,
+    "pairs_bin": {
+     "atm.ground_kwh_m2_day": 6.11,
+     "atm.lost_share": 0.3664,
+     "atm.toa_kwh_m2_day": 9.644,
+     "irradiance_toa_kwh_m2_day.diff": 0.028,
+     "irradiance_toa_kwh_m2_day.earth": 9.644,
+     "irradiance_toa_kwh_m2_day.moon": 9.672,
+     "roughness_m.diff": 1.9,
+     "roughness_m.earth": 42.53,
+     "roughness_m.moon": 44.43,
+     "slope_deg.diff": 0.094,
+     "slope_deg.earth": 1.132,
+     "slope_deg.moon": 1.038
+    },
+    "rough_earth": 42.53,
+    "rough_moon": 44.43,
+    "rough_pct_earth_land": 66.9,
+    "rough_pct_moon_all": 11.8,
+    "s_irr": 0.9989149903103681,
+    "s_rough": 0.9979964542271862,
+    "s_slope": 0.99889610973562,
+    "slope_earth": 1.132,
+    "slope_moon": 1.038,
+    "slope_pct_earth_land": 68.2,
+    "slope_pct_moon_all": 11.2,
+    "slope_pct_moon_zone": 47.9,
+    "toa_earth_bundle": 9.644042015075684,
+    "toa_earth_own": 9.644042333933038,
+    "toa_moon": 9.672
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     14.4,
+     "Thebit F",
+     "Satellite Feature"
+    ],
+    [
+     17.4,
+     "Thebit P",
+     "Satellite Feature"
+    ],
+    [
+     26.3,
+     "Thebit E",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Madagascar"
+   ],
+   "earth_id": 38744,
+   "earth_latlon": [
+    -17.5,
+    44.5
+   ],
+   "earth_place_bundle": {
+    "country": "Madagascar",
+    "km": 80.05191802978516,
+    "name": "Maintirano",
+    "region": "Melaky"
+   },
+   "earth_place_own": {
+    "admin1": "Melaky",
+    "bearing_deg": 38.6,
+    "cc": "MG",
+    "compass8": "northeast",
+    "km": 80.1,
+    "name": "Maintirano"
+   },
+   "final": 98.36,
+   "moon_elev_pct_all_moon": 30.9,
+   "moon_elevation_m": -1532.5,
+   "moon_feature_bundle": {
+    "km": 61.32645797729492,
+    "name": "Thebit"
+   },
+   "moon_feature_own": {
+    "km": 61.3,
+    "name": "Thebit",
+    "type": "Crater, craters"
+   },
+   "moon_id": 40854,
+   "moon_latlon": [
+    -23.5,
+    -5.5
+   ],
+   "moon_region_code": "D",
+   "own_rank": 3,
+   "own_twin": 40854,
+   "rank": 3,
+   "similarity_bundle": 99.95,
+   "similarity_own": 99.9481,
+   "suitability": 96.77,
+   "values": {
+    "displayed_ground": "6.0",
+    "displayed_toa_earth": "9.6",
+    "displayed_toa_moon": "9.5",
+    "ground_earth": 5.967,
+    "loss_pct_display_rule": 38,
+    "lost_share_unrounded": 0.37546173470063393,
+    "pairs_bin": {
+     "atm.ground_kwh_m2_day": 5.967,
+     "atm.lost_share": 0.3755,
+     "atm.toa_kwh_m2_day": 9.5543,
+     "irradiance_toa_kwh_m2_day.diff": 0.0203,
+     "irradiance_toa_kwh_m2_day.earth": 9.5543,
+     "irradiance_toa_kwh_m2_day.moon": 9.534,
+     "roughness_m.diff": 0.64,
+     "roughness_m.earth": 29.64,
+     "roughness_m.moon": 29.0,
+     "slope_deg.diff": 0.057,
+     "slope_deg.earth": 0.706,
+     "slope_deg.moon": 0.649
+    },
+    "rough_earth": 29.64,
+    "rough_moon": 29.0,
+    "rough_pct_earth_land": 60.1,
+    "rough_pct_moon_all": 8.5,
+    "s_irr": 0.9994301556338232,
+    "s_rough": 0.9997724703332461,
+    "s_slope": 0.9995939574575947,
+    "slope_earth": 0.706,
+    "slope_moon": 0.649,
+    "slope_pct_earth_land": 58.6,
+    "slope_pct_moon_all": 7.6,
+    "slope_pct_moon_zone": 36.0,
+    "toa_earth_bundle": 9.554258346557617,
+    "toa_earth_own": 9.554258452265977,
+    "toa_moon": 9.534
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     71.9,
+     "Dziewulski",
+     "Crater, craters"
+    ],
+    [
+     89.7,
+     "Catena Dziewulski",
+     "Catena, catenae"
+    ],
+    [
+     90.9,
+     "Dziewulski Q",
+     "Satellite Feature"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Australia"
+   ],
+   "earth_id": 37746,
+   "earth_latlon": [
+    -14.5,
+    126.5
+   ],
+   "earth_place_bundle": {
+    "country": "Australia",
+    "km": 279.6725158691406,
+    "name": "Kununurra",
+    "region": null
+   },
+   "earth_place_own": {
+    "admin1": "Western Australia",
+    "bearing_deg": 300.2,
+    "cc": "AU",
+    "compass8": "northwest",
+    "km": 279.7,
+    "name": "Kununurra"
+   },
+   "final": 98.3,
+   "moon_elev_pct_all_moon": 36.5,
+   "moon_elevation_m": -1300.7,
+   "moon_feature_bundle": {
+    "km": 71.94508361816406,
+    "name": "Dziewulski"
+   },
+   "moon_feature_own": {
+    "km": 71.9,
+    "name": "Dziewulski",
+    "type": "Crater, craters"
+   },
+   "moon_id": 24761,
+   "moon_latlon": [
+    21.5,
+    101.5
+   ],
+   "moon_region_code": "D",
+   "own_rank": 4,
+   "own_twin": 24761,
+   "rank": 4,
+   "similarity_bundle": 99.98,
+   "similarity_own": 99.9765,
+   "suitability": 96.62,
+   "values": {
+    "displayed_ground": "6.1",
+    "displayed_toa_earth": "9.7",
+    "displayed_toa_moon": "9.7",
+    "ground_earth": 6.071,
+    "loss_pct_display_rule": 37,
+    "lost_share_unrounded": 0.3731535251783944,
+    "pairs_bin": {
+     "atm.ground_kwh_m2_day": 6.071,
+     "atm.lost_share": 0.3732,
+     "atm.toa_kwh_m2_day": 9.685,
+     "irradiance_toa_kwh_m2_day.diff": 0.013,
+     "irradiance_toa_kwh_m2_day.earth": 9.685,
+     "irradiance_toa_kwh_m2_day.moon": 9.672,
+     "roughness_m.diff": 0.62,
+     "roughness_m.earth": 26.93,
+     "roughness_m.moon": 27.55,
+     "slope_deg.diff": 0.046,
+     "slope_deg.earth": 0.757,
+     "slope_deg.moon": 0.711
+    },
+    "rough_earth": 26.93,
+    "rough_moon": 27.55,
+    "rough_pct_earth_land": 58.2,
+    "rough_pct_moon_all": 8.1,
+    "s_irr": 0.9997657721005929,
+    "s_rough": 0.999786467245809,
+    "s_slope": 0.9997355349770412,
+    "slope_earth": 0.757,
+    "slope_moon": 0.711,
+    "slope_pct_earth_land": 60.2,
+    "slope_pct_moon_all": 8.3,
+    "slope_pct_moon_zone": 38.8,
+    "toa_earth_bundle": 9.68498706817627,
+    "toa_earth_own": 9.684987064380872,
+    "toa_moon": 9.672
+   }
+  },
+  {
+   "closest_three_full_gazetteer": [
+    [
+     82.5,
+     "Rimae Pettit",
+     "Rima, rimae"
+    ],
+    [
+     86.5,
+     "Mare Orientale",
+     "Mare, maria"
+    ],
+    [
+     100.1,
+     "Montes Rook",
+     "Mons, montes"
+    ]
+   ],
+   "country_ne110m_own": [
+    "Australia"
+   ],
+   "earth_id": 38465,
+   "earth_latlon": [
+    -16.5,
+    125.5
+   ],
+   "earth_place_bundle": {
+    "country": "Australia",
+    "km": 218.19805908203125,
+    "name": "Derby",
+    "region": null
+   },
+   "earth_place_own": {
+    "admin1": "Western Australia",
+    "bearing_deg": 66.1,
+    "cc": "AU",
+    "compass8": "northeast",
+    "km": 218.2,
+    "name": "Derby"
+   },
+   "final": 98.24,
+   "moon_elev_pct_all_moon": 9.6,
+   "moon_elevation_m": -2829.0,
+   "moon_feature_bundle": {
+    "km": 82.5244369506836,
+    "name": "Rimae Pettit"
+   },
+   "moon_feature_own": {
+    "km": 82.5,
+    "name": "Rimae Pettit",
+    "type": "Rima, rimae"
+   },
+   "moon_id": 40406,
+   "moon_latlon": [
+    -22.5,
+    -93.5
+   ],
+   "moon_region_code": "D",
+   "own_rank": 5,
+   "own_twin": 40406,
+   "rank": 5,
+   "similarity_bundle": 100.0,
+   "similarity_own": 99.9968,
+   "suitability": 96.48,
+   "values": {
+    "displayed_ground": "6.1",
+    "displayed_toa_earth": "9.6",
+    "displayed_toa_moon": "9.6",
+    "ground_earth": 6.14,
+    "loss_pct_display_rule": 36,
+    "lost_share_unrounded": 0.36044731947440434,
+    "pairs_bin": {
+     "atm.ground_kwh_m2_day": 6.14,
+     "atm.lost_share": 0.3604,
+     "atm.toa_kwh_m2_day": 9.6005,
+     "irradiance_toa_kwh_m2_day.diff": 0.0035,
+     "irradiance_toa_kwh_m2_day.earth": 9.6005,
+     "irradiance_toa_kwh_m2_day.moon": 9.604,
+     "roughness_m.diff": 0.33,
+     "roughness_m.earth": 33.25,
+     "roughness_m.moon": 32.92,
+     "slope_deg.diff": 0.031,
+     "slope_deg.earth": 0.92,
+     "slope_deg.moon": 0.951
+    },
+    "rough_earth": 33.25,
+    "rough_moon": 32.92,
+    "rough_pct_earth_land": 62.3,
+    "rough_pct_moon_all": 9.3,
+    "s_irr": 0.9999825962695418,
+    "s_rough": 0.9999395018300881,
+    "s_slope": 0.9998798822147189,
+    "slope_earth": 0.92,
+    "slope_moon": 0.951,
+    "slope_pct_earth_land": 64.0,
+    "slope_pct_moon_all": 10.5,
+    "slope_pct_moon_zone": 45.8,
+    "toa_earth_bundle": 9.600460052490234,
+    "toa_earth_own": 9.60046011370641,
+    "toa_moon": 9.604
+   }
+  }
+ ]
+}

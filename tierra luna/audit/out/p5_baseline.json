@@ -1,0 +1,115 @@
+{
+ "body_means_m": {
+  "EARTH": 695.9244011890817,
+  "MOON": -248.3894020283722
+ },
+ "rover": {
+  "earth_pass_mine": 10337,
+  "earth_pass_bundle": 10337,
+  "same_pass_set": true,
+  "zone_cells": 5400,
+  "moon_pass_mine": 60988,
+  "paired_mine": 10192,
+  "paired_bundle": 10192,
+  "twin_mismatch": 0,
+  "rank_mismatch": 0,
+  "max_abs_diff_suitability_vs_published2dec": 0.0,
+  "max_abs_diff_similarity_vs_published2dec": 0.0,
+  "max_abs_diff_final_pub": 0.0,
+  "top5_mine": [
+   [
+    17566,
+    59895
+   ],
+   [
+    23945,
+    59895
+   ],
+   [
+    18282,
+    59895
+   ],
+   [
+    18280,
+    59895
+   ],
+   [
+    15395,
+    59895
+   ]
+  ]
+ },
+ "solar": {
+  "earth_pass_mine": 18777,
+  "earth_pass_bundle": 18777,
+  "same_pass_set": true,
+  "zone_cells": 6686,
+  "moon_pass_mine": 52400,
+  "paired_mine": 6360,
+  "paired_bundle": 6360,
+  "twin_mismatch": 0,
+  "rank_mismatch": 0,
+  "max_abs_diff_suitability_vs_published2dec": 0.0,
+  "max_abs_diff_similarity_vs_published2dec": 0.0,
+  "max_abs_diff_final_pub": 0.0,
+  "top5_mine": [
+   [
+    38464,
+    24296
+   ],
+   [
+    38105,
+    24583
+   ],
+   [
+    38744,
+    40854
+   ],
+   [
+    37746,
+    24761
+   ],
+   [
+    38465,
+    40406
+   ]
+  ]
+ },
+ "lunar_base": {
+  "earth_pass_mine": 2419,
+  "earth_pass_bundle": 2419,
+  "same_pass_set": true,
+  "zone_cells": 280,
+  "moon_pass_mine": 64800,
+  "paired_mine": 450,
+  "paired_bundle": 450,
+  "twin_mismatch": 0,
+  "rank_mismatch": 0,
+  "max_abs_diff_suitability_vs_published2dec": 0.0,
+  "max_abs_diff_similarity_vs_published2dec": 0.0,
+  "max_abs_diff_final_pub": 0.0,
+  "top5_mine": [
+   [
+    17538,
+    63528
+   ],
+   [
+    16830,
+    63841
+   ],
+   [
+    15751,
+    64018
+   ],
+   [
+    21054,
+    62517
+   ],
+   [
+    17187,
+    62523
+   ]
+  ]
+ },
+ "seconds": 53.2
+}

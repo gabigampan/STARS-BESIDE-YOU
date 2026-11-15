@@ -1,0 +1,167 @@
+{
+ "audio_sha256_ok": {
+  "00_welcome.mp3": true,
+  "base_1.mp3": true,
+  "base_2.mp3": true,
+  "base_3.mp3": true,
+  "base_4.mp3": true,
+  "base_5.mp3": true,
+  "m1_rover.mp3": true,
+  "m2_solar.mp3": true,
+  "m3_base.mp3": true,
+  "rover_1.mp3": true,
+  "rover_2.mp3": true,
+  "rover_3.mp3": true,
+  "rover_4.mp3": true,
+  "rover_5.mp3": true,
+  "solar_1.mp3": true,
+  "solar_2.mp3": true,
+  "solar_3.mp3": true,
+  "solar_4.mp3": true,
+  "solar_5.mp3": true
+ },
+ "body_means": {
+  "EARTH": [
+   695.9244,
+   25245
+  ],
+  "MOON": [
+   -248.3894,
+   64800
+  ]
+ },
+ "lunar_base": {
+  "bundle_passing": 2419,
+  "distinct_twins_own": 103,
+  "final_own_vs_bundle_max_abs_diff": 0.006803157562060846,
+  "own_passing": 2419,
+  "own_rank_max_shift": 2,
+  "paired_bundle": 450,
+  "paired_own": 450,
+  "pairs_where_own_final_2dp_differs": 61,
+  "passing_sets_equal": true,
+  "rank_from_published_final_equal": 450,
+  "ranks_compared": 450,
+  "ranks_equal": 423,
+  "similarity_max_abs_diff": 0.010000000000005116,
+  "top5_bundle": [
+   17538,
+   16830,
+   15751,
+   21054,
+   17187
+  ],
+  "top5_own": [
+   17538,
+   16830,
+   15751,
+   21054,
+   17187
+  ],
+  "twins_equal_all": 2419,
+  "unpaired_own": 1969
+ },
+ "lunar_base_population": {
+  "earth_land_amp_median": 8.54,
+  "earth_land_tmin_c_median": -19.34,
+  "earth_passing_amp_median": 19.33,
+  "earth_passing_amp_pct_in_land_median": 89.6,
+  "earth_passing_tmin_c_median": -6.6,
+  "earth_passing_tmin_pct_in_land_median": 60.9,
+  "moon_zone_tmin_pct_in_moon_median": 7.6,
+  "paired_tmin_pct_earth": [
+   0.1,
+   13.5,
+   25.7,
+   35.7,
+   40.3,
+   44.7,
+   50.3,
+   55.4,
+   60.1,
+   68.6
+  ]
+ },
+ "lunar_base_zone_equals_bundle_region_A": true,
+ "lunar_base_zone_own_cells": 280,
+ "rover": {
+  "bundle_passing": 10337,
+  "distinct_twins_own": 401,
+  "final_own_vs_bundle_max_abs_diff": 0.007393744237703004,
+  "own_passing": 10337,
+  "own_rank_max_shift": 28,
+  "paired_bundle": 10192,
+  "paired_own": 10192,
+  "pairs_where_own_final_2dp_differs": 1146,
+  "passing_sets_equal": true,
+  "rank_from_published_final_equal": 10192,
+  "ranks_compared": 10192,
+  "ranks_equal": 5425,
+  "similarity_max_abs_diff": 0.010000000000005116,
+  "top5_bundle": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395
+  ],
+  "top5_own": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395
+  ],
+  "twins_equal_all": 10337,
+  "unpaired_own": 145
+ },
+ "rover_top5_twins": [
+  59895
+ ],
+ "rover_zone": {
+  "median_slope_zone": 6.415
+ },
+ "rover_zone_cells": 5400,
+ "solar": {
+  "bundle_passing": 18777,
+  "distinct_twins_own": 1704,
+  "final_own_vs_bundle_max_abs_diff": 0.007426087124173364,
+  "own_passing": 18777,
+  "own_rank_max_shift": 15,
+  "paired_bundle": 6360,
+  "paired_own": 6360,
+  "pairs_where_own_final_2dp_differs": 805,
+  "passing_sets_equal": true,
+  "rank_from_published_final_equal": 6360,
+  "ranks_compared": 6360,
+  "ranks_equal": 3552,
+  "similarity_max_abs_diff": 0.010000000000005116,
+  "top5_bundle": [
+   38464,
+   38105,
+   38744,
+   37746,
+   38465
+  ],
+  "top5_own": [
+   38464,
+   38105,
+   38744,
+   37746,
+   38465
+  ],
+  "twins_equal_all": 18777,
+  "unpaired_own": 12417
+ },
+ "solar_zone": {
+  "median_elev_zone": -1859.15,
+  "median_slope_moon": 4.91,
+  "median_slope_zone": 1.1284999999999998,
+  "zone_elev_max_pct_in_moon": 38.9,
+  "zone_irr_range": [
+   9.048,
+   10.395
+  ]
+ },
+ "solar_zone_cells": 6686
+}
