@@ -4,7 +4,9 @@
 // B on a phone, Escape with the Options sheet open folds the sheet and stays on the mission step;
 // C on a phone, the centre of each globe pane receives the touch (not the loading line);
 // D the Cesium credit logo link has a hit area of at least 44x44;
-// E the five analog buttons are at least 8 px apart and fit without page scroll at 1366x768 and 1440x900.
+// E for every mission at 1366x768, 1440x900 and 1920x1080: the heading, the five analog buttons and the three folded rows
+//   fit (last row bottom <= viewport - 8) with no page or inner scroll; buttons >= 44 px high, >= 8 px apart; text >= 14 px;
+//   no element showing a digit is cut (scrollWidth > clientWidth), except the twin's words, which may end in an ellipsis.
 // Exit code 1 when anything fails.
 
 import { existsSync } from 'node:fs';
@@ -116,7 +118,7 @@ await checkDialog(browser, 'WebGL');
 }
 
 // ---------- D, E desktop ----------
-for (const [w, h] of [[1366, 768], [1440, 900]]) {
+for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h } });
   const page = await ctx.newPage();
   await page.goto(srv.base);
@@ -142,10 +144,25 @@ for (const [w, h] of [[1366, 768], [1440, 900]]) {
         return { w: Math.round(b.width), h: Math.round(b.height), imgH: img ? Math.round(img.height) : 0 };
       });
       const lastBtn = btns.length ? btns[btns.length - 1].getBoundingClientRect().bottom : 1e9;
-      return { n: btns.length, gaps, last: Math.round(last), lastBtn: Math.round(lastBtn), vh: innerHeight, pageScroll: document.documentElement.scrollHeight > innerHeight + 1, logo };
+      const mp = document.getElementById('mission-panel');
+      const R = (e) => e.getBoundingClientRect();
+      const rows = [...mp.querySelectorAll('.ranking-box > summary, .weights > summary, .method-box > summary')];
+      const lastRow = rows.length === 3 ? Math.round(Math.max(...rows.map((s) => R(s).bottom))) : 1e9;
+      const title = mp.querySelector('.panel-title');
+      const scrollers = [document.scrollingElement, mp, ...mp.querySelectorAll('*')].filter((e) => e.scrollHeight > e.clientHeight + 1 && (e === document.scrollingElement || getComputedStyle(e).overflowY !== 'visible') && !e.classList.contains('sr-only') && !e.classList.contains('top5-region'));
+      const texts = [...mp.querySelectorAll('.top5 *, .panel-title, summary')].filter((e) => R(e).height > 2 && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && !e.closest('.sr-only'));
+      const minFont = Math.min(...texts.map((e) => parseFloat(getComputedStyle(e).fontSize)));
+      const cut = [...mp.querySelectorAll('*')].filter((e) => R(e).height > 2 && e.scrollWidth > e.clientWidth + 1 && /\d/.test(e.textContent) && !e.classList.contains('sr-only') && !e.classList.contains('top5-region') && !(e.classList.contains('top5-twin-name') && !/\d/.test([...e.childNodes].filter((n) => !(n.classList && n.classList.contains('top5-region'))).map((n) => n.textContent).join('')))).map((e) => e.className);
+      const heights = btns.map((b) => Math.round(R(b).height));
+      const twinCut = btns.map((b, i) => [i + 1, b.querySelector('.top5-twin-name')]).filter(([, e]) => e && e.scrollWidth > e.clientWidth).map(([i, e]) => `${i}:${e.firstChild?.textContent}`);
+      const placeCut = btns.map((b, i) => [i + 1, b.querySelector('.top5-place')]).filter(([, e]) => e && e.scrollWidth > e.clientWidth).map(([i]) => i);
+      return { twinCut, placeCut, lastRow, titleTop: title ? Math.round(R(title).top) : -1, scrollers: scrollers.map((e) => e.id || e.className || e.tagName), minFont, cut, heights, n: btns.length, gaps, last: Math.round(last), lastBtn: Math.round(lastBtn), vh: innerHeight, pageScroll: document.documentElement.scrollHeight > innerHeight + 1, logo };
     });
     check(r.n === 5 && r.gaps.every((g) => g >= 8), `E ${w}x${h} ${m}: ${r.n} analogs, gaps ${r.gaps.join(',')} px (want >= 8)`);
     check(r.lastBtn <= r.vh && !r.pageScroll, `E ${w}x${h} ${m}: fifth analog bottom ${r.lastBtn} <= ${r.vh}, no page scroll (${!r.pageScroll}); panel's last element bottom ${r.last}`);
+    check(r.titleTop >= 0 && r.lastRow <= r.vh - 8 && r.scrollers.length === 0, `E ${w}x${h} ${m}: heading top ${r.titleTop}, last folded row bottom ${r.lastRow} <= ${r.vh - 8}, scrolling boxes [${r.scrollers.join(',')}]`);
+    check(r.heights.every((x) => x >= 44) && r.minFont >= 14 && r.cut.length === 0, `E ${w}x${h} ${m}: button heights ${r.heights.join(',')} (>= 44), smallest text ${r.minFont} px (>= 14), cut numbers [${r.cut.join(',')}]`);
+    check(r.twinCut.length === 0, `E ${w}x${h} ${m}: visible twin line of the five not truncated (cut: [${r.twinCut.join('; ')}]); places cut [${r.placeCut.join(',')}]`);
     check(r.logo.length > 0 && r.logo.every((l) => l.w >= 44 && l.h >= 44), `D ${w}x${h} ${m}: credit logo links ${r.logo.map((l) => `${l.w}x${l.h} (logo ${l.imgH} px)`).join('; ')}`);
   }
   await ctx.close();
