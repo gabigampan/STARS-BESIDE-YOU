@@ -67,15 +67,33 @@ def check_pair_values(sc):
     if pv.get("mission") == "solar":
         return check_pair_values_solar(sc, pv)
     ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
-    it = [x for x in ex["missions"]["lunar_base"] if x["rank"] == pv["rank"]][0]
+    its = [x for x in ex["missions"]["lunar_base"] if x["id"] == pv["earth_id"]]
+    if not its:
+        raise SystemExit("PAIR MISMATCH: E%d is not in explain.json missions.lunar_base" % pv["earth_id"])
+    it = its[0]
     sim = it["similarity"]
     out = []
 
     def eq(name, a, b):
-        ok = (a == b) if isinstance(a, str) else abs(float(a) - float(b)) < 1e-9
+        ok = (a == b) if (isinstance(a, str) or a is None or b is None) else abs(float(a) - float(b)) < 1e-9
         out.append(dict(item=name, scenario=a, bundle=b, ok=ok))
         if not ok:
             raise SystemExit("PAIR MISMATCH %s: scenario %s bundle %s" % (name, a, b))
+    # the pair's true place: overall rank (explain.json) and position among the five shown (missions.json top5)
+    eq("rank (overall)", pv["rank"], it["rank"])
+    t5 = ([m for m in json.load(open(os.path.join(BUNDLE, "missions.json")))["missions"] if m.get("id") == "lunar_base"][0].get("top5") or {})
+    ids = t5.get("ids") or []
+    pos = ids.index(pv["earth_id"]) + 1 if pv["earth_id"] in ids else None
+    eq("position among the five shown (missions.json top5.ids)", pv.get("top5_position"), pos)
+    if pos is not None:
+        eq("top5 overall rank", it["rank"], t5["overall_ranks"][pos - 1])
+        want = "Earth analog and lunar twin: lunar base, analog %d of the five shown" % pos
+    else:
+        want = "Earth analog and lunar twin: one of the Lunar base analog pairs (overall rank %d)" % it["rank"]
+    eq("card title", sc["card"]["title"], want)
+    for k in ("suitability", "similarity", "final"):
+        if ("%s" % pv[k]) not in sc["card"]["subtitle"]:
+            raise SystemExit("PAIR MISMATCH card subtitle does not show %s %s" % (k, pv[k]))
     eq("earth_id", pv["earth_id"], it["id"]); eq("moon_id", pv["moon_id"], sim["twin"]["id"])
     eq("earth cell", sc["earth_site"]["cell_id"], "E%d" % it["id"]); eq("moon cell", sc["site"]["cell_id"], "M%d" % sim["twin"]["id"])
     for k in ("suitability", "final"):

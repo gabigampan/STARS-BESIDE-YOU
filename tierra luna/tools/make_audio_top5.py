@@ -372,7 +372,8 @@ def recompute_five(mid: str, top5: Dict, rank: np.ndarray, final: np.ndarray, id
         res["finding"] = (f"{len(tied)} ranked sites share the top published final score {screen_score(best_final)}; "
                           f"{len(tied_kept)} remain after the ice and water skips. The five are a farthest-point spread "
                           f"among those {len(tied_kept)} (they all have the top score, so 'five of the highest-scoring' is "
-                          f"not the wording: 'five of the {len(tied_kept)} sites tied at the top of our model').")
+                          f"not the wording: 'five of the {len(tied)} sites tied at the top of our model', as the bundle's "
+                          f"list_order_rover text says; all five are also among the {len(tied_kept)} left after the skips).")
     check(res["chosen_ids"] == list(top5["ids"]), f"{mid}: rule of the five recomputed {res['chosen_ids']} != bundle {top5['ids']}")
     return res
 
@@ -547,10 +548,23 @@ def build(bundle_path: str) -> Dict[str, Any]:
             direction = compass(bearing_deg(float(prow["lat"]), float(prow["lon"]), elat, elon))
             place_cc = prow["cc"]
             check(place_cc in country_by_code, f"{nname}: country code {place_cc} not in places.json")
+            # one code can carry two names in places.json (SO: Somalia and Somaliland): take the name
+            # of the land cell that holds the named place itself (earth_base.bin country)
+            cc_names = [c["name"] for c in places["countries"] if c["code"] == place_cc]
+            place_country = cc_names[0]
+            if len(cc_names) > 1:
+                plat, plon = float(prow["lat"]), float(prow["lon"])
+                pcell = int(90 - plat) * cols + int(plon + 180)
+                check(pcell in land_pos, f"{nname}: its own cell E{pcell} is not a land cell")
+                place_country = country_names[int(e_country[land_pos[pcell]])]
+                check(place_country in cc_names, f"{nname}: cell country {place_country} not among {cc_names}")
             earth_place = {
                 "nearest_named_place": nname,
-                "nearest_named_place_country": country_by_code[place_cc],
-                "nearest_named_place_same_country": place_cc == pl["country_code"],
+                "nearest_named_place_country": place_country,
+                "nearest_named_place_country_rule": ("the country of the GeoNames code" if len(cc_names) == 1 else
+                                                     f"code {place_cc} names {' and '.join(cc_names)} in places.json: the country of "
+                                                     f"the land cell that holds the place (earth_base.bin)"),
+                "nearest_named_place_same_country": place_country == pl["country"],
                 "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder "
                                               "package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / "
                                               "earth_place_detail.bin",
@@ -558,7 +572,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 "distance_km_spoken": spoken_km(np_km[k]),
                 "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
                 "distance_km_recomputed": round(dkm, 1),
-                "distance_shown_on_screen": np_km[k] <= NEAREST_PLACE_MAX_KM_ON_SCREEN,
+                "distance_shown_on_screen": bool(np_km[k] <= NEAREST_PLACE_MAX_KM_ON_SCREEN),
                 "direction_from_place": direction,
                 "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
                 "region": pl["region"], "country": pl["country"], "country_code": pl["country_code"],
@@ -917,7 +931,7 @@ def moon_phrase(mp: Dict[str, Any]) -> str:
 def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[str, Any]]:
     rv = M["rover"]["rule_of_the_five"]
     n_tie, n_kept = rv["top_tie_n"], rv["top_tie_n_after_skips"]
-    keys = "Press a number from one to five to hear about each one, or press Escape to go back."
+    keys = "Press one to five to hear each one, or Escape to go back."
     t: Dict[str, str] = {}
     t["00_welcome"] = (
         "Welcome to Stars Beside You, a planetary twin finder. Before a rover, a solar panel or a lunar base ever reaches the Moon, "
@@ -925,26 +939,24 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
         "the Earth, and pair each Earth site with a lunar twin. There are three missions. Press one for the Rover, matched on slope and "
         "roughness. Press two for Solar panels, matched on sunlight. Press three for the Lunar base, matched on the cold and its daily swing.")
     t["m1_rover"] = (
-        "Rover. A rover's journey depends on the ground beneath its wheels, so we match places on slope and roughness only. On the Moon "
-        "we search near the south pole, where NASA plans to look for water ice. Many Earth sites differ from their lunar twin by less than "
-        f"the elevation data can measure, so {with_commas(n_tie)} sites tie at the top score, and {with_commas(n_kept)} once cells that are "
-        f"mostly ice or water are left out. Here are five of the {with_commas(n_kept)} sites tied at the top of our model, chosen to be "
-        "spread across the world. The final score, half likeness and half suitability, is the same for all five, so their order follows "
-        f"the spread, not the score. {keys}")
-    solar_slope = re.search(r"median slope (\d+(?:\.\d+)?)°", zones["texts"]["zone_why"]["solar"]).group(1)
+        "Rover. A rover needs ground it can drive on, so we match places on slope and roughness only. On the Moon we search near the "
+        "south pole, where NASA plans to look for water ice. Many sites differ from their lunar twin by less than the elevation data can "
+        f"measure, so they all tie at the top score. Here are five of the {with_commas(n_tie)} sites tied at the top of our model, chosen "
+        f"to be spread across the world, leaving out cells that are mostly ice or water. All five share the same final score, half "
+        f"likeness and half suitability. {keys}")
     t["m2_solar"] = (
         "Solar panels. A solar panel lives on sunlight, so we match places on the sunlight that arrives each day above the atmosphere. "
-        f"On the Moon we search the low maria near the equator, with a median slope of {solar_slope} degrees, where the Sun stands high. "
+        "On the Moon we search the low, flat maria near the equator, where the Sun stands high. "
         "Here are five of the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. "
         "Almost every top site matches its twin's sunlight almost exactly, so the likeness is nearly the same for all of them, and "
         f"suitability, led by clear skies, decides the order. {keys}")
     pe, pm = M["lunar_base"]["populations"]["EARTH"], M["lunar_base"]["populations"]["MOON"]
     t["m3_base"] = (
-        "Lunar base. A base has to survive the cold and the swing between day and night, so we match places on their coldest "
-        "temperature and its daily swing. On the Moon we search NASA's nine candidate landing regions near the south pole, where NASA "
-        "plans to land its crews. Nowhere on Earth is as cold as the Moon, so we compare position, not temperature: how each site ranks "
-        f"among Earth's {with_commas(pe)} candidates, and how its twin ranks among the {pm} lunar cells of those regions. Here are five of "
-        f"the highest-scoring analogs in our model, ordered by the final score: half likeness and half suitability. {keys}")
+        "Lunar base. A base must endure the cold, so we match places on their coldest temperature and its daily swing. On the Moon we "
+        "search NASA's nine candidate landing regions near the south pole, where NASA plans to land its crews. The Moon is far colder "
+        "than Earth, so we compare position, not temperature: how each site ranks among Earth's "
+        f"{with_commas(pe)} candidates, and its twin among the {pm} lunar cells of those regions. Here are five of the highest-scoring "
+        f"analogs in our model, ordered by the final score: half likeness and half suitability. {keys}")
     for pr in M["rover"]["pairs"]:
         V = {v["variable"]: v["on_screen"] for v in pr["variables"]}
         s, r = V["slope_deg"], V["roughness_m"]
@@ -952,7 +964,7 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
             f"Rover, analog {NUM_WORD[pr['number']]}. {earth_phrase(pr['earth_place'])} {moon_phrase(pr['moon_place'])}. "
             f"The slope is {s['earth']} degrees on Earth and {s['moon']} on the Moon; the roughness is {r['earth']} meters on Earth and "
             f"{r['moon']} on the Moon. Similarity: {strip0(pr['on_screen_scores']['similarity'])} out of 100. It is one of the "
-            f"{with_commas(n_kept)} tied sites: within what the elevation data can measure, they all match their twins equally well.")
+            f"{with_commas(n_tie)} sites tied at the top: within what the elevation data can measure, they all match their twins equally well.")
     for pr in M["solar"]["pairs"]:
         a = pr["earth_atmosphere"]["display"]
         c = pr["clear_sky"]
@@ -963,9 +975,9 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
         simil = "over 99.99" if simil == "100.00" else simil
         t[f"solar_{pr['number']}"] = (
             f"Solar panels, analog {NUM_WORD[pr['number']]}. {earth_phrase(pr['earth_place'])} {moon_phrase(pr['moon_place'])}. "
-            f"Above the atmosphere, {sunlight}. But only {a['ground_kwh_m2_day']} reach the ground here: {a['lost_percent']} percent is "
-            f"lost in the air, and the Moon has no air. Satellites see a clear sky over the site about {c['plain_words']} of the time, a "
-            f"clear-sky fraction of {c['on_screen']}. Similarity: {simil} out of 100.")
+            f"Above the atmosphere, {sunlight}. But only {a['ground_kwh_m2_day']} of them reach the ground here: {a['lost_percent']} percent "
+            f"is lost in the air, and the Moon has no air. On average, satellites see about {c['plain_words']} of the sky over the site "
+            f"clear of clouds, a clear-sky fraction of {c['on_screen']}. Similarity: {simil} out of 100.")
     for pr in M["lunar_base"]["pairs"]:
         V = {v["variable"]: v for v in pr["variables"]}
         tm, am, sl = V["tmin_k"], V["lst_diurnal_amp_k"], V["slope_deg"]
@@ -974,7 +986,7 @@ def make_tracks(M: Dict[str, Any], texts: Dict, zones: Dict) -> Dict[str, Dict[s
         t[f"base_{pr['number']}"] = (
             f"Lunar base, analog {NUM_WORD[pr['number']]}. {earth_phrase(pr['earth_place'])} {moon_phrase(pr['moon_place'])}, "
             f"{pr['moon_place']['nasa_region_phrase']}. The likeness is of position, not temperature: the Moon's coldest temperature is "
-            f"{tm['on_screen_real']['diff']} kelvin lower. Within its own world, the coldest temperature ranks at percentile "
+            f"{tm['on_screen_real']['diff']} kelvin lower. Among the candidates of each world, the coldest temperature ranks at percentile "
             f"{tm['on_screen_percentile']['earth']} on Earth and {tm['on_screen_percentile']['moon']} on the Moon, and the daily swings "
             f"rank close, at {am['on_screen_percentile']['earth']} and {am['on_screen_percentile']['moon']}.{slope_txt} "
             f"Similarity: {pr['on_screen_scores']['similarity']} out of 100.")
@@ -1064,7 +1076,7 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
             check(f"about {with_commas(ep['distance_km_spoken'])} kilometers {ep['direction_from_place']} of" in text, f"{key}: Earth distance")
             check(f"about {mp['distance_km_spoken']} kilometers from" in text, f"{key}: Moon distance")
             if mid == "rover":
-                check(f"one of the {with_commas(rv['top_tie_n_after_skips'])} tied sites" in text, f"{key}: tie statement")
+                check(f"one of the {with_commas(rv['top_tie_n'])} sites tied at the top" in text, f"{key}: tie statement")
             if mid == "solar":
                 check("charge" not in text.lower(), f"{key}: charge")
                 check(f"{pr['earth_atmosphere']['display']['lost_percent']} percent is lost" in text, f"{key}: share lost")
@@ -1075,7 +1087,7 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
     for k in ("m2_solar", "m3_base"):
         check("five of the highest-scoring analogs in our model" in tracks[k]["text"] and "final score" in tracks[k]["text"]
               and "half likeness and half suitability" in tracks[k]["text"], f"{k}: list order statement")
-    check(f"five of the {with_commas(rv['top_tie_n_after_skips'])} sites tied at the top of our model, chosen to be spread across the world"
+    check(f"five of the {with_commas(rv['top_tie_n'])} sites tied at the top of our model, chosen to be spread across the world"
           in tracks["m1_rover"]["text"], "m1_rover: tie statement")
     for mid in ("solar", "lunar_base"):
         check(M[mid]["rule_of_the_five"]["recomputed"]["highest_scoring_the_rule_allows"] is True,
@@ -1092,10 +1104,10 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
 # ----------------------------------------------------------------------------- app files and the Spanish note
 REASONS = {
     "00_welcome": "Base lunar se emparejaba por 'temperature'; ahora se dice lo que se compara: el frío y su oscilación diaria (posición térmica); cada misión con su criterio.",
-    "m1_rover": "Rover ya no comparte un único gemelo (Casatus) y decía 'the five best'; ahora: solo pendiente y rugosidad, empate de {n_tie} sitios ({n_kept} sin hielo ni agua) y cinco repartidos por el mundo.",
+    "m1_rover": "Rover ya no comparte un único gemelo (Casatus) y decía 'the five best'; ahora: solo pendiente y rugosidad, empate de {n_tie} sitios en lo más alto (los cinco, repartidos por el mundo, entre los {n_kept} sin hielo ni agua).",
     "m2_solar": "Decía 'the five best'; ahora 'five of the highest-scoring analogs in our model', el orden por el final y la nota honesta: la similitud casi igual, decide la idoneidad (cielo despejado).",
     "m3_base": "Decía 'the five best' y comparaba 'temperature'; ahora posición, no temperatura, poblaciones de {pe} y {pm}, y el orden por el final.",
-    "rover": "Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los {n_kept} empatados.",
+    "rover": "Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los {n_tie} empatados en lo más alto.",
     "solar": "Los cinco de Paneles solares son nuevos (idoneidad con cielo despejado ISCCP y regla de los cinco): lugar, gemelo, luz, suelo, parte perdida, cielo despejado y similitud nuevos.",
     "base": "Los cinco de Base lunar son nuevos (idoneidad corregida y regla de los cinco): lugar, gemelo, frase de región de la NASA ('at the edge of'), kelvin, percentiles y similitud nuevos.",
 }
