@@ -261,7 +261,7 @@ for (const [w, h] of runs('F') ? [[1440, 900], [1366, 768], [375, 812], [812, 37
   await waitStep(page, 'pick');
   await page.waitForTimeout(600);
   await folds('mission');
-  // FAULT 2: "Full ranking" unfolded, "Show 50 more" against the next folded row ("Adjust the weights")
+  // FAULT 2: "Full ranking" unfolded, "Show 50 more" against the next folded row ("Set what matters most")
   const opened = await page.evaluate(() => {
     const d = document.querySelector('#mission-panel .ranking-box');
     if (!d) return false;
@@ -273,7 +273,7 @@ for (const [w, h] of runs('F') ? [[1440, 900], [1366, 768], [375, 812], [812, 37
     await page.evaluate(() => document.getElementById('show-more')?.scrollIntoView({ block: 'center' }));
     await page.waitForTimeout(200);
     const g = await gapOf(page, '#show-more', '#mission-panel .weights > summary');
-    check(g != null && g >= 8, `F ${w}x${h} mission, full ranking open: "Show more" to "Adjust the weights" ${g} px (want >= 8)`);
+    check(g != null && g >= 8, `F ${w}x${h} mission, full ranking open: "Show more" to "Set what matters most" ${g} px (want >= 8)`);
     await sweep('mission, full ranking open');
     await page.evaluate(() => { document.querySelector('#mission-panel .ranking-box').open = false; });
     await page.waitForTimeout(300);

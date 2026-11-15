@@ -351,9 +351,6 @@ body.flow[data-step='choose'] .pane-rule {
   body.flow .pane-rule {
     display: none;
   }
-  body.flow:not([data-step='choose']) .pane-reset {
-    display: none;
-  }
 }
 
 /* ---------- first screen ---------- */
@@ -824,6 +821,7 @@ table.rows td {
   border-bottom: 1px solid var(--edge);
   font-weight: 400;
   font-size: var(--step--1);
+  overflow-wrap: anywhere; /* long tokens wrap: the table fits the panel column, no sideways scroll (point 12) */
 }
 table.rows thead th {
   color: var(--text-dim);

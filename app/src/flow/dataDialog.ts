@@ -30,7 +30,7 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
         h('li', { 'data-mission': m.id }, h('strong', null, `${missionName(m)}. `), h('span', { 'data-verbatim': store.hasTwins(m.id) ? null : 'no_twin_reason' }, ruleText(m).replace(/^Similarity rule: /, '')), ' ', h('span', { 'data-note': 'meaning' }, meaning(m))),
       ),
     ),
-    h('p', null, 'Final score = alpha x similarity + (1 - alpha) x suitability; ', `alpha = ${store.missionsJson.alpha} for every mission (the team's value; it can be changed under "Adjust the weights").`),
+    h('p', null, 'Final score = alpha x similarity + (1 - alpha) x suitability; ', `alpha = ${store.missionsJson.alpha} for every mission (the team's value; it can be changed under "Set what matters most").`),
   );
 
   add(wrap, h('h3', { class: 'dlg-h' }, 'The filter funnel (the same for every mission)'), h('ol', { class: 'funnel' }, plainFunnel(store, null, '', store.missionsJson.alpha).map((f) => h('li', null, h('strong', null, `${f.name}. `), f.text))));

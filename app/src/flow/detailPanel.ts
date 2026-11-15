@@ -244,7 +244,7 @@ function shortReasons(_app: FlowApp, o: MissionOutcome): HTMLElement | null {
  * similarity.json similarity_meaning_lunar_base), and kWh/m²/day is spelt out once.
  */
 function plainLabel(label: string, unit: string, ranked: boolean): string {
-  let t = label.replace(/\s*\(position\)\s*$/, ranked ? ', compared by rank' : '');
+  let t = label.replace(/\s*\(position\)\s*$/, ranked ? ", by its place in each world's own ranking" : '');
   if (unit === 'kWh/m2/day') t += ', in kilowatt-hours per square metre each day (kWh/m²/day)';
   return t;
 }

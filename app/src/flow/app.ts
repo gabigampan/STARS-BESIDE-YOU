@@ -296,7 +296,7 @@ export class FlowApp {
     const c = this.store.pairCounts(id);
     if (!opts.keepSelection) this.updateGuide();
     this.announce(
-      `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth pass its filters` +
+      `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth meet its requirements` +
         (c.unpaired > 0 && this.missionHasTwins(m) ? `; ${c.paired.toLocaleString('en-GB')} of them have a lunar twin.` : '.'),
     );
     // Start fetching the utilities for the weight sliders in the background.
