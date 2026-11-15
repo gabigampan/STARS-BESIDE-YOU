@@ -175,6 +175,21 @@ def side_level(sim_var: Dict, body: str, levels: Dict) -> Dict[str, Optional[str
     return {"level": side["level"], "from": f"missions.json similarity.variables[{name}].sides.{body}.level"}
 
 
+def moon_tmin_level(sim_var: Dict) -> Dict[str, Any]:
+    """Lunar coldest temperature: MEASURED (Diviner tmin_k, real_data/provenance_moon.csv);
+    the table's tmin_c is that value in degrees C, listed DERIVED in variables.json for the
+    conversion only. Wording of the note from missions.json."""
+    prov = os.path.join(REPO, "tierra luna", "real_data", "provenance_moon.csv")
+    with open(prov, encoding="utf-8") as fh:
+        row = next(r for r in csv.reader(fh) if r[:2] == ["tmin_k", "MOON"])
+    check(row[2] == "MEASURED", f"provenance_moon.csv tmin_k MOON is {row[2]}")
+    side_text = sim_var["sides"]["MOON"]["text"]
+    check("MEASURED" in sim_var["sides"]["MOON"]["level"], "missions.json lunar tmin_k side level")
+    return {"level": "MEASURED", "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+            "note": f"missions.json: {side_text}. variables.json lists the table column tmin_c as DERIVED only "
+                    f"because it is this measured value converted to degrees C."}
+
+
 # ----------------------------------------------------------------------------- main build
 def build(bundle_path: str) -> Dict[str, Any]:
     b = Bundle(bundle_path)
@@ -383,6 +398,8 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 name = v["variable"]
                 ev = next(x for x in st["variables"] if x["variable"] == name)
                 le, lm = side_level(v, "EARTH", levels), side_level(v, "MOON", levels)
+                if mid == "lunar_base" and name == "tmin_k":
+                    lm = moon_tmin_level(v)
                 if mid == "lunar_base":
                     pc = v["pairs_columns"]
                     same(ev["earth_real"], b.col(pfile, pc["earth"])[p], f"{mid} r{r} {name} earth")
@@ -483,7 +500,7 @@ def build(bundle_path: str) -> Dict[str, Any]:
             "similarity_variables": [{k2: v[k2] for k2 in ("variable", "role", "weight", "tolerance", "bound", "unit")}
                                      for v in sim["variables"]],
             "pair_filter": sim["filter"],
-            "status": "verified" if mid in ("rover", "solar") else "built, independent verification in progress",
+            "status": "verified",
             "pairs": pairs,
         }
         note = shared_twin_note(mid, pairs)

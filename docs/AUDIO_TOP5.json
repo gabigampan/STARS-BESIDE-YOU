@@ -21,7 +21,7 @@
  "status": {
   "rover": "verified",
   "solar": "verified",
-  "lunar_base": "built, independent verification in progress"
+  "lunar_base": "verified"
  },
  "caveats": [
   "Each place is a 1-degree cell, about 111 km north-south on Earth (about 30 km on the Moon); values are cell averages.",
@@ -2065,7 +2065,7 @@
     "missing_key": "a key variable without a value on either side fails the filter (no pair); a cell without a value has no percentile",
     "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised"
    },
-   "status": "built, independent verification in progress",
+   "status": "verified",
    "pairs": [
     {
      "mission": {
@@ -2131,9 +2131,9 @@
         "note": null
        },
        "moon_level": {
-        "level": "DERIVED",
-        "from": "variables.json tmin_c MOON",
-        "note": null
+        "level": "MEASURED",
+        "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+        "note": "missions.json: coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature. variables.json lists the table column tmin_c as DERIVED only because it is this measured value converted to degrees C."
        },
        "score": 0.999437,
        "compared_unit": "percentile points",
@@ -2397,9 +2397,9 @@
         "note": null
        },
        "moon_level": {
-        "level": "DERIVED",
-        "from": "variables.json tmin_c MOON",
-        "note": null
+        "level": "MEASURED",
+        "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+        "note": "missions.json: coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature. variables.json lists the table column tmin_c as DERIVED only because it is this measured value converted to degrees C."
        },
        "score": 0.963531,
        "compared_unit": "percentile points",
@@ -2663,9 +2663,9 @@
         "note": null
        },
        "moon_level": {
-        "level": "DERIVED",
-        "from": "variables.json tmin_c MOON",
-        "note": null
+        "level": "MEASURED",
+        "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+        "note": "missions.json: coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature. variables.json lists the table column tmin_c as DERIVED only because it is this measured value converted to degrees C."
        },
        "score": 0.997134,
        "compared_unit": "percentile points",
@@ -2929,9 +2929,9 @@
         "note": null
        },
        "moon_level": {
-        "level": "DERIVED",
-        "from": "variables.json tmin_c MOON",
-        "note": null
+        "level": "MEASURED",
+        "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+        "note": "missions.json: coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature. variables.json lists the table column tmin_c as DERIVED only because it is this measured value converted to degrees C."
        },
        "score": 0.999985,
        "compared_unit": "percentile points",
@@ -3195,9 +3195,9 @@
         "note": null
        },
        "moon_level": {
-        "level": "DERIVED",
-        "from": "variables.json tmin_c MOON",
-        "note": null
+        "level": "MEASURED",
+        "from": "tierra luna/real_data/provenance_moon.csv tmin_k MOON (Diviner GCP, tbol)",
+        "note": "missions.json: coldest temperature: Diviner SURFACE temperature (night minimum of the diurnal cycle), stored in the lunar table in degrees C (tmin_k - 273.15) and converted back to K; a surface measurement, not an air temperature. variables.json lists the table column tmin_c as DERIVED only because it is this measured value converted to degrees C."
        },
        "score": 0.9964,
        "compared_unit": "percentile points",
