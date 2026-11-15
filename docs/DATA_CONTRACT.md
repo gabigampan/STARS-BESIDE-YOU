@@ -120,7 +120,7 @@ Every `.bin` file is a plain concatenation of columns, without a header; the col
 
 A value column constant along every grid row on the whole body (detected from the data: the sun-geometry formulas and the lunar values set by definition) is stored once per grid row (`per_grid_row = true`); the value of a cell is `column[floor(id / 360)]`.
 
-Quantised columns store exactly the published value: `q / divisor` in double precision is the same double as the engine's number (utilities and similarities 6 decimals... see `engine_config.json` `binary_encoding`: utilities 6, z-scores 4, scores 2, confidence scores 3). Always divide; `q * scale` can differ in the last bit.
+Quantised columns store exactly the published value: `q / divisor` in double precision is the same double as the engine's number (utilities 6 decimals, z-scores 4, scores 2, confidence scores 3; `engine_config.json` `binary_encoding` and `repo_similarity`). Always divide; `q * scale` can differ in the last bit.
 
 ### Reading a column in TypeScript
 

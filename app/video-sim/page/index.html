@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mission video renderer</title>
+<style>
+  :root { --panel-bg: rgba(14, 17, 24, 0.86); --label: #b9c0cc; --value: #f2f4f7; --status: #f2a33a; --muted: #9aa3b1; }
+  html, body { margin: 0; padding: 0; background: #000; width: 1920px; height: 1080px; overflow: hidden; }
+  canvas#gl { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #panel { position: absolute; left: 28px; top: 28px; width: 560px; padding: 22px 26px 18px; box-sizing: border-box;
+    background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
+    font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace; font-size: 23px; line-height: 34px; color: var(--value); }
+  #panel .title { font-family: "Inter", sans-serif; font-weight: 600; font-size: 29px; line-height: 38px; margin-bottom: 4px; letter-spacing: 0.2px; }
+  #panel .site { font-family: "Inter", sans-serif; font-weight: 400; font-size: 22px; line-height: 30px; color: var(--muted); margin-bottom: 4px; }
+  #panel .status { color: var(--status); font-size: 23px; margin-bottom: 8px; }
+  #panel .row { display: flex; justify-content: space-between; }
+  #panel .row .l { color: var(--label); }
+  #panel .row .v { text-align: right; white-space: pre; }
+  #panel .tag { color: var(--muted); font-size: 22px; }
+  #graphwrap { margin-top: 12px; }
+  #graphwrap .cap { font-size: 22px; color: var(--muted); line-height: 30px; }
+  #inset { position: absolute; right: 28px; top: 28px; width: 300px; padding: 16px 18px; box-sizing: border-box; background: var(--panel-bg);
+    border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; font-family: "JetBrains Mono", monospace; font-size: 22px; line-height: 30px; color: var(--label); display: none; }
+  #inset canvas { display: block; width: 264px; height: 264px; border-radius: 6px; margin: 8px 0 6px; }
+  #foot { position: absolute; left: 28px; bottom: 26px; right: 28px; font-family: "Inter", sans-serif; font-size: 22px; line-height: 30px; color: #d4d8de;
+    text-shadow: 0 0 6px #000, 0 0 3px #000; }
+  #card { position: absolute; inset: 0; background: rgba(4, 6, 10, 0.93); opacity: 0; color: #f2f4f7; font-family: "Inter", sans-serif; }
+  #card .inner { position: absolute; left: 120px; right: 120px; top: 92px; }
+  #card h1 { font-weight: 600; font-size: 46px; line-height: 56px; margin: 0 0 6px; }
+  #card .sub { font-size: 26px; color: #aab2bf; margin-bottom: 30px; line-height: 34px; }
+  #card table { width: 100%; border-collapse: collapse; font-size: 27px; line-height: 38px; }
+  #card th { text-align: left; font-weight: 600; color: #f2f4f7; font-size: 27px; padding: 0 0 10px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  #card td { padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.07); vertical-align: top; }
+  #card td.var { color: #b9c0cc; width: 34%; }
+  #card td.num { font-family: "JetBrains Mono", monospace; font-size: 25px; width: 33%; }
+  #card .lv { font-family: "Inter", sans-serif; font-size: 22px; color: #9aa3b1; margin-left: 10px; }
+  #card .sentence { margin-top: 28px; font-size: 28px; line-height: 40px; color: #e6e9ee; max-width: 1640px; }
+  #card .legend { margin-top: 18px; font-size: 22px; line-height: 30px; color: #9aa3b1; }
+  #card .disclaimer { position: absolute; left: 120px; bottom: 60px; font-size: 26px; color: #f2a33a; font-weight: 500; }
+</style>
+<script type="importmap">{ "imports": { "three": "/three/build/three.module.js" } }</script>
+</head>
+<body>
+<canvas id="gl" width="1920" height="1080"></canvas>
+<div id="panel"></div>
+<div id="inset"><div id="insetTitle">Thermal tint (model)</div><canvas id="insetCanvas" width="264" height="264"></canvas><div id="insetScale"></div></div>
+<div id="foot"></div>
+<div id="card"><div class="inner" id="cardInner"></div><div class="disclaimer">3D simulation driven by table data. Not real footage.</div></div>
+<script type="module" src="/page/main.js"></script>
+</body>
+</html>
