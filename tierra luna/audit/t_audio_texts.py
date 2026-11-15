@@ -25,6 +25,14 @@ REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 B = os.path.join(REPO, "app", "public", "data", "v2")
 OUT = os.path.join(HERE, "out", "t_audio_texts.json")
 R_E, R_M = 6371.0, 1737.4
+# The web names the nearest populated place only within this distance (read from the web, not from the generator);
+# beyond it a track says the country (and region) and the coordinates, and does not mention the place.
+_DP = os.path.join(REPO, "app", "src", "flow", "detailPanel.ts")
+with open(_DP, encoding="utf-8") as _fh:
+    _m = __import__("re").search(r"const NEAREST_PLACE_MAX_KM = (\d+(?:\.\d+)?);", _fh.read())
+if not _m:
+    raise SystemExit(f"NEAREST_PLACE_MAX_KM not found in {_DP}")
+NEAREST_PLACE_MAX_KM = float(_m.group(1))
 
 RESULTS = []
 
@@ -275,7 +283,7 @@ for mid in ("rover", "solar", "lunar_base"):
         dd = np.degrees(np.arccos(np.clip(np.sin(np.radians(lat)) * np.sin(np.radians(allg["latf"])) + np.cos(np.radians(lat)) * np.cos(np.radians(allg["latf"])) * np.cos(np.radians(allg["lonf"] - lon)), -1, 1))) * math.pi / 180 * R_E
         gi = int(np.argmin(dd.values))
         P["earth"] = {"country": cname, "region": rname, "place": pname, "place_cc": g["cc"], "place_admin1": g["admin1"],
-                      "km_stored": km, "km_spoken": int(half_up(km, 0)), "km_on_screen": num(km, 0) if km <= 300 else None,
+                      "km_stored": km, "km_spoken": int(half_up(km, 0)), "km_on_screen": num(km, 0) if km <= NEAREST_PLACE_MAX_KM else None,
                       "km_recomputed": round(float(g["d"]), 2), "direction": compass8(bearing(g["latf"], g["lonf"], lat, lon)),
                       "bearing": round(bearing(g["latf"], g["lonf"], lat, lon), 1),
                       "nearest_cities1000": allg.iloc[gi]["name"], "nearest_cities1000_km": round(float(dd.values[gi]), 2)}
@@ -392,8 +400,18 @@ for mid in ("rover", "solar", "lunar_base"):
         ok(t.startswith(f"{TITLE[mid]}, analog {NUMW[P['number']]}."), f"{key}: opening")
         where = ", ".join(x for x in (e["region"], e["country"]) if x)
         ok(f"A site in {where}" in t, f"{key}: region/country '{where}'")
-        ok(f"about {say_int(e['km_spoken'])} kilometers {e['direction']} of {e['place']}" in t,
-           f"{key}: Earth place '{say_int(e['km_spoken'])} km {e['direction']} of {e['place']}'", e)
+        if e["km_stored"] <= NEAREST_PLACE_MAX_KM:
+            ok(f"about {say_int(e['km_spoken'])} kilometers {e['direction']} of {e['place']}" in t,
+               f"{key}: Earth place '{say_int(e['km_spoken'])} km {e['direction']} of {e['place']}'", e)
+        else:
+            # farther than the screen names a place: country (and region), coordinates, and no place
+            coords = (f"{num(abs(P['lat']), 1)} degrees {'north' if P['lat'] >= 0 else 'south'} and "
+                      f"{num(abs(P['lon']), 1)} degrees {'east' if P['lon'] >= 0 else 'west'}")
+            ok(t.split(". Its lunar twin")[0].endswith(f"A site in {where}, at {coords}"),
+               f"{key}: place {e['km_stored']:.1f} km > {NEAREST_PLACE_MAX_KM:g} km: country/region and coordinates '{coords}' only", e)
+            ok(not re.search(r"\b" + re.escape(e["place"]) + r"\b", t), f"{key}: the far place '{e['place']}' is not named", e)
+            ok(not re.search(r"kilometers (north|south|east|west|northeast|northwest|southeast|southwest) of", t),
+               f"{key}: no Earth distance to a place", e)
         ftw = TYPEW.get(mo["type"].split(",")[0], "{}").format(mo["feature"])
         ok(f"about {mo['km_spoken']} kilometers from {ftw}" in t, f"{key}: lunar feature '{mo['km_spoken']} km from {ftw}'", mo)
         if mid == "rover":

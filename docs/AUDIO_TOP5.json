@@ -41,11 +41,11 @@
     "title": "Corrected (11:23, 11:28, 11:36 and 11:51 CET)",
     "deviations": []
    },
-   "zone": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+   "zone": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
    "zone_definition": {
     "kind": "lat_max",
     "lat_max": -75.0,
-    "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+    "name": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)",
     "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
     "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15).",
     "cells": 5400
@@ -246,6 +246,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 1115.8,
       "distance_shown_on_screen": false,
+      "nearest_named_place_spoken": false,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": null,
@@ -257,7 +259,7 @@
       "cell_centre_lon": -102.5,
       "coordinates_on_screen": "78.5° N, 102.5° W",
       "region_note": "the bundle gives no first-level region for this cell",
-      "screen_note": "the web prints the nearest populated place only within 300 km (app/src/flow/detailPanel.ts); this one is 1115.8 km away"
+      "screen_note": "the web prints the nearest populated place only within 300 km (app/src/flow/detailPanel.ts); this one is 1115.8 km away, so the track does not mention it (kept here as data only)"
      },
      "moon_place": {
       "nearest_named_feature": "Sverdrup",
@@ -416,7 +418,7 @@
        }
       }
      ],
-     "say": "Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west, about 1,116 kilometers north of Gjoa Haven. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria."
+     "say": "Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria."
     },
     {
      "mission": {
@@ -441,6 +443,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 70.8,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "southwest",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Santa Cruz",
@@ -634,6 +638,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 81.0,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "northeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "South Australia",
@@ -827,6 +833,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 89.7,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Al Mahrah",
@@ -1020,6 +1028,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 95.6,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Assaba",
@@ -1197,7 +1207,7 @@
     "five_suitability_and_similarity": "100.00 and 100.00 each (full marks on every criterion)",
     "tied_suitability_min": 99.99
    },
-   "tie_text_on_screen": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after leaving out cells that are half or more ice or less than half land. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
+   "tie_text_on_screen": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA), and such differences are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00. These are five of the 254 sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land (241 tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least 2 degrees apart (the closest two are 60.0 degrees apart). The full ranking itself is unchanged.",
    "tie_figures": {
     "tied_n": "254",
     "tied_kept_n": "241",
@@ -1411,6 +1421,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 18.8,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "southeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Menabe",
@@ -1670,6 +1682,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 63.8,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "southwest",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Nugaal",
@@ -1929,6 +1943,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 28.6,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "northeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Sindh",
@@ -2188,6 +2204,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 130.9,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "northwest",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": null,
@@ -2448,6 +2466,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 38.1,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "northeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Bari",
@@ -2697,7 +2717,7 @@
     "period": "2012-01 to 2016-12",
     "formula": "1 - cloud_frac_isccp",
     "caveat": "ISCCP-H HGM v01r00 (NOAA NCEI) mean clear-sky fraction 2012-2016, 1 - cloud amount; DERIVED; least reliable over snow, ice and polar night; cloud amount is not irradiance",
-    "text_on_screen": "The Solar panels suitability no longer uses criteria driven by latitude. The maximum sun elevation and the share of time with a low sun (pure geometry of latitude) and the modelled ground irradiance (WorldClim, which repeats what the similarity already compares) carry no weight now; their gates still apply, and the ground irradiance, the sunlight above the atmosphere and the share lost stay in every pair's sentence. In their place, 35 % of the suitability is the clear-sky fraction measured by satellite: 1 minus the mean ISCCP-H cloud amount (NOAA NCEI, monthly means 2012 to 2016), scored from 0 at 0.308 to 1 at 0.671, the 10th and 90th percentiles over the 18,777 points that pass the funnel. 3 of those points have no cloud value and that weight is shared among the other criteria."
+    "text_on_screen": "The Solar panels suitability no longer uses criteria driven by latitude. The maximum sun elevation and the share of time with a low sun (pure geometry of latitude) and the modelled ground irradiance (WorldClim, which repeats what the similarity already compares) carry no weight now; their gates still apply, and the ground irradiance, the sunlight above the atmosphere and the share lost stay in every pair's sentence. In their place, the clear-sky fraction measured by satellite makes up half of the suitability (50 %: its weight 0.35 out of the 0.70 that the four weights add up to; the suitability is divided by that sum): 1 minus the mean ISCCP-H cloud amount (NOAA NCEI, monthly means 2012 to 2016), scored from 0 at 0.308 to 1 at 0.671, the 10th and 90th percentiles over the 18,777 points that pass the funnel. 3 of those points have no cloud value and that weight is shared among the other criteria. One of them, the cell at 4.5 S 122.5 E (in Sulawesi, Indonesia, number 16 in the full ranking, suitability 96.23), ranks that high only because its clear-sky weight is shared among the other criteria; it is not among the five shown."
    },
    "saturation_text_on_screen": "The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.00 to 100.00, so their order follows suitability."
   },
@@ -2904,6 +2924,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 3.5,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "southeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Souss-Massa-Draa",
@@ -3224,6 +3246,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 62.3,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Xinjiang Uygur Zizhiqu",
@@ -3544,6 +3568,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 18.2,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Fars",
@@ -3864,6 +3890,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 27.4,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "southeast",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Xinjiang Uygur Zizhiqu",
@@ -4184,6 +4212,8 @@
       "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
       "distance_km_recomputed": 27.9,
       "distance_shown_on_screen": true,
+      "nearest_named_place_spoken": true,
+      "nearest_named_place_spoken_rule": "spoken only within 300 km, the distance beyond which the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); farther, the track gives the country (and region) and the coordinates",
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
       "region": "Semnan",
@@ -4543,8 +4573,8 @@
   },
   "rover_1": {
    "file": "rover_1.mp3",
-   "text": "Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west, about 1,116 kilometers north of Gjoa Haven. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.",
-   "words": 93,
+   "text": "Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.",
+   "words": 86,
    "numbers": [
     {
      "number": "78.5",
@@ -4553,10 +4583,6 @@
     {
      "number": "102.5",
      "source": "cell centre longitude (on screen)"
-    },
-    {
-     "number": "1,116",
-     "source": "nearest_place_km rounded once from the stored float32"
     },
     {
      "number": "69",
@@ -5232,13 +5258,14 @@
   }
  },
  "checks": [
+  "place rule: NEAREST_PLACE_MAX_KM = 300 in app/src/flow/detailPanel.ts = the generator's limit; a farther place is kept as data and not spoken",
   "rover: rule of the five 'spread_within_top_tie' re-run from the binary columns and the Earth table gives the bundle's five (E4037, E50510, E44239, E26510, E26087)",
   "rover: the five found once each, all paired, list_order = rank; ids, scores, variables, places, features equal across explain.json, twins.json, missions.json and the binary files (and the extra tables named above)",
   "solar: rule of the five 'rank_with_skips' re-run from the binary columns and the Earth table gives the bundle's five (E40184, E29749, E23648, E29746, E28670)",
   "solar: the five found once each, all paired, list_order = rank; ids, scores, variables, places, features, clear-sky fractions equal across explain.json, twins.json, missions.json and the binary files (and the extra tables named above)",
   "lunar_base: rule of the five 'rank_with_skips' re-run from the binary columns and the Earth table gives the bundle's five (E21054, E17538, E21833, E18627, E19672)",
   "lunar_base: the five found once each, all paired, list_order = rank; ids, scores, variables, places, features, region phrases equal across explain.json, twins.json, missions.json and the binary files (and the extra tables named above)",
-  "tracks: 19 texts, word counts 00_welcome 99, m1_rover 103, m2_solar 105, m3_base 105, rover_1 93, rover_2 89, rover_3 86, rover_4 86, rover_5 85, solar_1 92, solar_2 87, solar_3 92, solar_4 98, solar_5 90, base_1 103, base_2 102, base_3 103, base_4 87, base_5 102 (all within 55-105); no forbidden phrase (official NASA region names exempt from 'plain'); 'near' only for 'near the south pole' / 'near the equator'; every number in every text is a value the screen prints for that track, a distance rounded once from the stored value, or a count from the bundle's texts; every place and feature name as the gazetteers write it",
-  "app files: transcripts.json (19 keys, text only), pending.json (19 tracks), docs/AUDIO_RERECORD.md"
+  "tracks: 19 texts, word counts 00_welcome 99, m1_rover 103, m2_solar 105, m3_base 105, rover_1 86, rover_2 89, rover_3 86, rover_4 86, rover_5 85, solar_1 92, solar_2 87, solar_3 92, solar_4 98, solar_5 90, base_1 103, base_2 102, base_3 103, base_4 87, base_5 102 (all within 55-105); no forbidden phrase (official NASA region names exempt from 'plain'); 'near' only for 'near the south pole' / 'near the equator'; every number in every text is a value the screen prints for that track, a distance rounded once from the stored value, or a count from the bundle's texts; every place and feature name as the gazetteers write it",
+  "app files: transcripts.json (19 keys, text only), MP3 checksums = 6650a13 (19), pending.json (0 tracks), docs/AUDIO_RERECORD.md"
  ]
 }

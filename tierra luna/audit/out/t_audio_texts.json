@@ -1787,7 +1787,7 @@
   },
   {
    "ok": true,
-   "check": "rover_1.mp3: 93 words",
+   "check": "rover_1.mp3: 86 words",
    "detail": ""
   },
   {
@@ -2472,7 +2472,17 @@
   },
   {
    "ok": true,
-   "check": "rover_1.mp3: Earth place '1,116 km north of Gjoa Haven'",
+   "check": "rover_1.mp3: place 1115.8 km > 300 km: country/region and coordinates '78.5 degrees north and 102.5 degrees west' only",
+   "detail": "{'country': 'Canada', 'region': None, 'place': 'Gjoa Haven', 'place_cc': 'CA', 'place_admin1': 'Nunavut', 'km_stored': 1115.8004150390625, 'km_spoken': 1116, 'km_on_screen': None, 'km_recomputed': 1115.8, 'direction': 'north', 'bearing': 352.4, 'nearest_cities1000': 'Gjoa Haven', 'nearest_cities1000_km': 1115.8}"
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: the far place 'Gjoa Haven' is not named",
+   "detail": "{'country': 'Canada', 'region': None, 'place': 'Gjoa Haven', 'place_cc': 'CA', 'place_admin1': 'Nunavut', 'km_stored': 1115.8004150390625, 'km_spoken': 1116, 'km_on_screen': None, 'km_recomputed': 1115.8, 'direction': 'north', 'bearing': 352.4, 'nearest_cities1000': 'Gjoa Haven', 'nearest_cities1000_km': 1115.8}"
+  },
+  {
+   "ok": true,
+   "check": "rover_1.mp3: no Earth distance to a place",
    "detail": "{'country': 'Canada', 'region': None, 'place': 'Gjoa Haven', 'place_cc': 'CA', 'place_admin1': 'Nunavut', 'km_stored': 1115.8004150390625, 'km_spoken': 1116, 'km_on_screen': None, 'km_recomputed': 1115.8, 'direction': 'north', 'bearing': 352.4, 'nearest_cities1000': 'Gjoa Haven', 'nearest_cities1000_km': 1115.8}"
   },
   {

@@ -11,9 +11,18 @@ and writes:
   audio tracks with the check of every figure in it;
 * app/public/audio/transcripts.json: the TEXT of the 19 tracks (same keys; the audio
   files themselves are never touched);
-* app/public/audio/pending.json: the tracks whose text changed (the team re-records them);
-* docs/AUDIO_RERECORD.md: for the team (Spanish): old text, new text and reason per track,
-  the table of the five of each mission, the list of files to record.
+* app/public/audio/pending.json: the tracks whose text differs from the text the team
+  recorded (RECORDED_COMMIT); empty when every MP3 says its current text;
+* docs/AUDIO_RERECORD.md: for the team (Spanish): the state of the recordings, old text,
+  new text and reason per track, the table of the five of each mission, the files still
+  to record (none when pending.json is empty).
+
+Earth place rule (general, every Earth cell): the nearest populated place is spoken only
+when it is within NEAREST_PLACE_MAX_KM_ON_SCREEN, the distance beyond which the web does
+not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM, read and checked here).
+Farther than that, the track gives the country (and the region when the cell has one) and
+the coordinates of the cell centre, and does not mention the place; docs/AUDIO_TOP5.json
+keeps the place and its distance as data, flagged "nearest_named_place_spoken": false.
 
 Deterministic: no clock, no network, no randomness. Run from anywhere:
 
@@ -40,8 +49,10 @@ Sources outside the bundle (read only):
   the five; not in the bundle);
 * tierra luna/real_data/supplement/earth_cloud_isccp_1deg.csv and its provenance file:
   second path for the clear-sky fraction;
-* git: the text of the tracks as recorded (commit OLD_TEXTS_COMMIT), for
-  docs/AUDIO_RERECORD.md and pending.json.
+* git: the text of the earlier recording (commit OLD_TEXTS_COMMIT), for the "before" of
+  docs/AUDIO_RERECORD.md; and the text and checksums the team recorded the current MP3s
+  from (commit RECORDED_COMMIT, branch audio-assets), for pending.json: the MP3 files on
+  disk must have that commit's checksums.
 """
 from __future__ import annotations
 
@@ -75,10 +86,19 @@ from engine.display import SHARE_LOST_PYTHON, displayed, share_lost_percent, ten
 SCRIPT_REL = "tierra luna/tools/make_audio_top5.py"
 GENERATED_ON = "2026-11-15"
 CONTRACT_REVISION = 8
-OLD_TEXTS_COMMIT = "d24ebb3"   # the commit whose transcripts.json is the text of the recorded MP3s
+OLD_TEXTS_COMMIT = "d24ebb3"   # the commit whose transcripts.json is the text of the earlier recording (the "before")
+RECORDED_COMMIT = "6650a13"    # branch audio-assets: the 19 MP3 the team recorded on 15-11-2026 (~14:20 CET), their
+                               # transcripts.json (the text each MP3 says) and SHA256SUMS.txt, uploaded unmodified
+RECORDED_NOTE = ("los 19 audios los volvió a grabar el equipo el 15-11-2026 hacia las 14:20 CET (voz Matilda, modelo "
+                 "eleven_multilingual_v2, según el equipo) con los textos de `0486ad9` y un único cambio decidido por el "
+                 "delegado del líder: rover_1 ya no nombra Gjoa Haven, a 1.116 km (regla general: más allá de 300 km no se "
+                 "nombra el lugar). ZIP SHA256 `cc9699eb9742cedc95f4161b60a0bf2aab9ad2013e25830392311e1922330c35`; subidos sin "
+                 "modificar a la rama `audio-assets` (commit `6650a13`)")
 MISSIONS = ["rover", "solar", "lunar_base"]
 TOP = 5
-NEAREST_PLACE_MAX_KM_ON_SCREEN = 300   # app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM
+NEAREST_PLACE_MAX_KM_ON_SCREEN = 300   # source: app/src/flow/detailPanel.ts `const NEAREST_PLACE_MAX_KM = 300;` (checked at run time):
+                                       # beyond it the screen does not name the place, and neither does a track
+DETAIL_PANEL_TS = os.path.join(REPO, "app", "src", "flow", "detailPanel.ts")
 NEAR_MAX_KM = 50                       # team lead's rule 2: "near" only under 50 km
 WORDS_MIN, WORDS_MAX = 55, 105         # team lead's rule 8
 TRACK_ORDER = ["00_welcome", "m1_rover", "m2_solar", "m3_base"] + [f"rover_{i}" for i in range(1, 6)] + \
@@ -401,7 +421,18 @@ def clear_words(f: float) -> str:
 
 
 # ----------------------------------------------------------------------------- main build
+def check_place_limit() -> None:
+    with open(DETAIL_PANEL_TS, encoding="utf-8") as fh:
+        m = re.search(r"const NEAREST_PLACE_MAX_KM = (\d+(?:\.\d+)?);", fh.read())
+    check(m is not None, f"NEAREST_PLACE_MAX_KM not found in {DETAIL_PANEL_TS}")
+    check(float(m.group(1)) == NEAREST_PLACE_MAX_KM_ON_SCREEN,
+          f"NEAREST_PLACE_MAX_KM is {m.group(1)} in detailPanel.ts, {NEAREST_PLACE_MAX_KM_ON_SCREEN} here")
+    CHECKS.append(f"place rule: NEAREST_PLACE_MAX_KM = {m.group(1)} in app/src/flow/detailPanel.ts = the generator's limit; "
+                  "a farther place is kept as data and not spoken")
+
+
 def build(bundle_path: str) -> Dict[str, Any]:
+    check_place_limit()
     b = Bundle(bundle_path)
     man = b.manifest
     check(man["contract_revision"] == CONTRACT_REVISION, f"expected contract revision {CONTRACT_REVISION}")
@@ -573,6 +604,10 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 "distance_rounding": "rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km)",
                 "distance_km_recomputed": round(dkm, 1),
                 "distance_shown_on_screen": bool(np_km[k] <= NEAREST_PLACE_MAX_KM_ON_SCREEN),
+                "nearest_named_place_spoken": bool(np_km[k] <= NEAREST_PLACE_MAX_KM_ON_SCREEN),
+                "nearest_named_place_spoken_rule": (f"spoken only within {NEAREST_PLACE_MAX_KM_ON_SCREEN} km, the distance beyond which "
+                                                    "the screen does not name it (app/src/flow/detailPanel.ts NEAREST_PLACE_MAX_KM); "
+                                                    "farther, the track gives the country (and region) and the coordinates"),
                 "direction_from_place": direction,
                 "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
                 "region": pl["region"], "country": pl["country"], "country_code": pl["country_code"],
@@ -586,7 +621,8 @@ def build(bundle_path: str) -> Dict[str, Any]:
                 earth_place["region_note"] = "the bundle gives no first-level region for this cell"
             if not earth_place["distance_shown_on_screen"]:
                 earth_place["screen_note"] = (f"the web prints the nearest populated place only within {NEAREST_PLACE_MAX_KM_ON_SCREEN} km "
-                                              f"(app/src/flow/detailPanel.ts); this one is {pl['nearest_place_km']} km away")
+                                              f"(app/src/flow/detailPanel.ts); this one is {pl['nearest_place_km']} km away, so the "
+                                              "track does not mention it (kept here as data only)")
 
             # ---- Moon place
             mlat, mlon = cell_latlon(mcell, cols)
@@ -927,10 +963,13 @@ def earth_phrase(ep: Dict[str, Any]) -> str:
     of = ep["nearest_named_place"] if ep["nearest_named_place_same_country"] else \
         f"{ep['nearest_named_place']} in {ep['nearest_named_place_country']}"
     coords = ""
-    if not ep["distance_shown_on_screen"] or ep["region"] is None:
+    if not ep["nearest_named_place_spoken"] or ep["region"] is None:
         la, lo = ep["cell_centre_lat"], ep["cell_centre_lon"]
         coords = (f", at {screen_num(abs(la), 1)} degrees {'north' if la >= 0 else 'south'} and "
                   f"{screen_num(abs(lo), 1)} degrees {'east' if lo >= 0 else 'west'}")
+    if not ep["nearest_named_place_spoken"]:
+        # farther than the screen names a place: country (and region) and coordinates, no place
+        return f"A site in {where}{coords}."
     return (f"A site in {where}{coords}, about {with_commas(ep['distance_km_spoken'])} kilometers "
             f"{ep['direction_from_place']} of {of}.")
 
@@ -1037,7 +1076,8 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
             key = f"{TRACK_PREFIX[mid]}_{pr['number']}"
             al = allowed_by_track[key]
             ep, mp = pr["earth_place"], pr["moon_place"]
-            al[str(ep["distance_km_spoken"])] = "nearest_place_km rounded once from the stored float32"
+            if ep["nearest_named_place_spoken"]:
+                al[str(ep["distance_km_spoken"])] = "nearest_place_km rounded once from the stored float32"
             al[str(mp["distance_km_spoken"])] = "feature_km rounded once from the stored float32"
             if mid == "lunar_base":
                 for tok in NUM_RE.findall(mp["nasa_region_phrase"]):
@@ -1095,9 +1135,17 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
             key = f"{TRACK_PREFIX[mid]}_{pr['number']}"
             text = tracks[key]["text"]
             ep, mp = pr["earth_place"], pr["moon_place"]
-            for nm in (ep["nearest_named_place"], ep["country"], mp["nearest_named_feature"]) + ((ep["region"],) if ep["region"] else ()):
+            spoken = ((ep["nearest_named_place"],) if ep["nearest_named_place_spoken"] else ()) + (ep["country"], mp["nearest_named_feature"]) \
+                + ((ep["region"],) if ep["region"] else ())
+            for nm in spoken:
                 check(nm in text, f"{key}: name '{nm}' missing")
-            check(f"about {with_commas(ep['distance_km_spoken'])} kilometers {ep['direction_from_place']} of" in text, f"{key}: Earth distance")
+            if ep["nearest_named_place_spoken"]:
+                check(f"about {with_commas(ep['distance_km_spoken'])} kilometers {ep['direction_from_place']} of" in text, f"{key}: Earth distance")
+            else:
+                check(not re.search(r"\b" + re.escape(ep["nearest_named_place"]) + r"\b", text),
+                      f"{key}: '{ep['nearest_named_place']}' is {ep['distance_km']} km away (> {NEAREST_PLACE_MAX_KM_ON_SCREEN}) and must not be spoken")
+                check(f"degrees {'north' if ep['cell_centre_lat'] >= 0 else 'south'} and" in text, f"{key}: coordinates for a far place")
+                check(" kilometers " + ep["direction_from_place"] + " of" not in text, f"{key}: no Earth distance for a far place")
             check(f"about {mp['distance_km_spoken']} kilometers from" in text, f"{key}: Moon distance")
             if mid == "rover":
                 check(f"one of the {with_commas(rv['top_tie_n'])} sites tied at the top" in text, f"{key}: tie statement")
@@ -1146,38 +1194,72 @@ def old_texts() -> Dict[str, str]:
         raise AssertionError(f"cannot read the recorded texts from git commit {OLD_TEXTS_COMMIT}: {exc}")
 
 
+def git_show(commit: str, path: str) -> str:
+    try:
+        return subprocess.run(["git", "-C", REPO, "show", f"{commit}:{path}"], check=True, capture_output=True, text=True).stdout
+    except Exception as exc:  # noqa
+        raise AssertionError(f"cannot read {path} from git commit {commit} (fetch branch audio-assets): {exc}")
+
+
+def recorded() -> Tuple[Dict[str, str], Dict[str, str]]:
+    """The text each MP3 on disk says (RECORDED_COMMIT transcripts.json), after checking that every MP3
+    on disk has that commit's checksum (the audio is read, never written)."""
+    import hashlib
+    texts = json.loads(git_show(RECORDED_COMMIT, "app/public/audio/transcripts.json"))
+    sums = {}
+    for line in git_show(RECORDED_COMMIT, "app/public/audio/SHA256SUMS.txt").splitlines():
+        if line.strip():
+            h, name = line.split(None, 1)
+            sums[name.lstrip("*").strip()] = h
+    check(set(sums) == set(texts), f"{RECORDED_COMMIT}: SHA256SUMS.txt and transcripts.json list different files")
+    for name, h in sums.items():
+        with open(os.path.join(AUDIO_DIR, name), "rb") as fh:
+            check(hashlib.sha256(fh.read()).hexdigest() == h, f"{name}: the MP3 on disk is not the one recorded in {RECORDED_COMMIT}")
+    return texts, sums
+
+
 def write_app_files(data: Dict[str, Any]) -> None:
     path = os.path.join(AUDIO_DIR, "transcripts.json")
     with open(path, encoding="utf-8") as fh:
         current = json.load(fh)
     old = old_texts()
+    rec, sums = recorded()
     keys = list(current.keys())
-    check(keys == [f"{k}.mp3" for k in TRACK_ORDER] and set(old) == set(keys), "transcripts.json keys changed")
+    check(keys == [f"{k}.mp3" for k in TRACK_ORDER] and set(old) == set(keys) and set(rec) == set(keys), "transcripts.json keys changed")
     for k in keys:
         check(os.path.exists(os.path.join(AUDIO_DIR, k)), f"{k}: audio file missing (never created here)")
     new = {f"{k}.mp3": data["tracks"][k]["text"] for k in TRACK_ORDER}
     with open(path, "w", encoding="utf-8") as fh:
-        json.dump(new, fh, ensure_ascii=False, indent=1)
-    changed = [k for k in keys if new[k] != old[k]]
+        json.dump(new, fh, ensure_ascii=False, indent=2)   # the team's file format (2 spaces, no final newline)
+    changed = [k for k in keys if new[k] != old[k]]           # since the earlier recording (the "before")
+    pending = [k for k in keys if new[k] != rec[k]]           # text the current MP3 does not say
+    note = ("No track is awaiting a recording: the team re-recorded all 19 tracks on 15 November 2026. With the audio guide on, "
+            "the web plays each track when its step or pair is on screen; a file listed here would show its text only and never "
+            "be requested.") if not pending else \
+        "The team re-records these tracks; until the new recordings arrive the web shows their text only."
     with open(os.path.join(AUDIO_DIR, "pending.json"), "w", encoding="utf-8") as fh:
-        json.dump({"pending_rerecord": changed,
-                   "note": "The team re-records these tracks; until the new recordings arrive the web shows their text only."},
-                  fh, ensure_ascii=False, indent=1)
+        json.dump({"pending_rerecord": pending, "note": note}, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
-    write_rerecord_md(data, old, new, changed)
-    CHECKS.append(f"app files: transcripts.json (19 keys, text only), pending.json ({len(changed)} tracks), docs/AUDIO_RERECORD.md")
+    write_rerecord_md(data, old, new, changed, pending, rec)
+    CHECKS.append(f"app files: transcripts.json (19 keys, text only), MP3 checksums = {RECORDED_COMMIT} ({len(sums)}), "
+                  f"pending.json ({len(pending)} tracks), docs/AUDIO_RERECORD.md")
 
 
-def write_rerecord_md(data: Dict[str, Any], old: Dict[str, str], new: Dict[str, str], changed: List[str]) -> None:
+def write_rerecord_md(data: Dict[str, Any], old: Dict[str, str], new: Dict[str, str], changed: List[str],
+                      pending: List[str], rec: Dict[str, str]) -> None:
     M = data["missions"]
     rv = M["rover"]["rule_of_the_five"]
     fmt = dict(n_tie=f"{rv['top_tie_n']:,}".replace(",", "."), n_kept=rv["top_tie_n_after_skips"],
                pe=f"{M['lunar_base']['populations']['EARTH']:,}".replace(",", "."), pm=M["lunar_base"]["populations"]["MOON"])
-    L = ["# Audio: textos para volver a grabar (cinco de cada misión, contrato revisión 8)", "",
+    state = (f"**Estado:** {RECORDED_NOTE}. Nada pendiente: `app/public/audio/pending.json` está vacío y cada MP3 dice el texto "
+             "«Ahora» de abajo (los hashes de los 19 coinciden con `SHA256SUMS.txt` del commit grabado).") if not pending else \
+        (f"**Estado:** {RECORDED_NOTE}. Pendientes de grabar: {len(pending)} ({', '.join(pending)}).")
+    L = ["# Audio: textos de las 19 pistas (cinco de cada misión, contrato revisión 8)", "", state, "",
          f"Generado por `{SCRIPT_REL}` desde el paquete `app/public/data/v2` (revisión {data['contract_revision']}, motor "
          f"{data['engine_version']}); hechos y comprobaciones en `docs/AUDIO_TOP5.json`. Texto antiguo = `transcripts.json` del commit "
-         f"`{OLD_TEXTS_COMMIT}` (lo que dicen los MP3 grabados). Ningún audio se ha generado, editado, renombrado ni borrado; "
-         "`SHA256SUMS.txt` no se ha tocado. El equipo graba **una vez** con estos textos.", "",
+         f"`{OLD_TEXTS_COMMIT}` (lo que decía la grabación anterior); texto grabado ahora = `transcripts.json` del commit "
+         f"`{RECORDED_COMMIT}` (rama `audio-assets`). Ningún audio se ha generado, editado, renombrado ni borrado aquí; "
+         "los MP3 y `SHA256SUMS.txt` son los del equipo, copiados byte a byte.", "",
          "Las cifras se dicen como las imprime la web (`app/src/flow/dom.ts` `valueText`, `fixed`; números de la frase de cada pareja "
          "con `engine/display.py`); las distancias se redondean una sola vez desde el valor guardado. El script comprueba cada número de "
          "cada texto contra la pantalla, el número de palabras (55 a 105) y las frases prohibidas.", "",
@@ -1205,6 +1287,8 @@ def write_rerecord_md(data: Dict[str, Any], old: Dict[str, str], new: Dict[str, 
             other = "" if ep["nearest_named_place_same_country"] else f", {ep['nearest_named_place_country']}"
             place = (f"{', '.join(x for x in (ep['region'], ep['country']) if x)}: {with_commas(ep['distance_km_spoken'])} km "
                      f"{ep['direction_from_place']} de {ep['nearest_named_place']}{other}")
+            if not ep["nearest_named_place_spoken"]:
+                place += f" (dato; el audio no lo dice: más de {NEAREST_PLACE_MAX_KM_ON_SCREEN} km, da país y coordenadas)"
             twin = f"{mp['nearest_named_feature']}, {mp['distance_km_spoken']} km"
             sc = pr["on_screen_scores"]
             V = {v["variable"]: v for v in pr["variables"]}
@@ -1223,9 +1307,13 @@ def write_rerecord_md(data: Dict[str, Any], old: Dict[str, str], new: Dict[str, 
             L.append("| " + " | ".join([str(pr["number"]), place, ep["coordinates_on_screen"], str(pr["overall_rank"]), twin] + row
                                        + [sc["similarity"], sc["final"]]) + " |")
         L.append("")
-    L += ["## Ficheros que hay que grabar", "", f"{len(changed)} de 19 (también en `app/public/audio/pending.json`):", ""]
-    L += [f"- `{f}`" for f in changed]
-    L += ["", "Hasta que lleguen las nuevas grabaciones, la web muestra solo el texto de estas pistas.", ""]
+    L += ["## Ficheros que hay que grabar", ""]
+    if pending:
+        L += [f"{len(pending)} de 19 (también en `app/public/audio/pending.json`):", ""]
+        L += [f"- `{f}`" for f in pending]
+        L += ["", "Hasta que lleguen las nuevas grabaciones, la web muestra solo el texto de estas pistas.", ""]
+    else:
+        L += ["Ninguno (0 de 19): `app/public/audio/pending.json` tiene la lista vacía y la web reproduce cada pista.", ""]
     with open(RERECORD_MD, "w", encoding="utf-8") as fh:
         fh.write("\n".join(L))
 

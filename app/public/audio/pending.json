@@ -1,24 +1,4 @@
 {
- "pending_rerecord": [
-  "00_welcome.mp3",
-  "m1_rover.mp3",
-  "m2_solar.mp3",
-  "m3_base.mp3",
-  "rover_1.mp3",
-  "rover_2.mp3",
-  "rover_3.mp3",
-  "rover_4.mp3",
-  "rover_5.mp3",
-  "solar_1.mp3",
-  "solar_2.mp3",
-  "solar_3.mp3",
-  "solar_4.mp3",
-  "solar_5.mp3",
-  "base_1.mp3",
-  "base_2.mp3",
-  "base_3.mp3",
-  "base_4.mp3",
-  "base_5.mp3"
- ],
- "note": "The team re-records these tracks; until the new recordings arrive the web shows their text only."
+ "pending_rerecord": [],
+ "note": "No track is awaiting a recording: the team re-recorded all 19 tracks on 15 November 2026. With the audio guide on, the web plays each track when its step or pair is on screen; a file listed here would show its text only and never be requested."
 }

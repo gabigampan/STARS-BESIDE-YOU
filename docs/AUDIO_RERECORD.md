@@ -1,6 +1,8 @@
-# Audio: textos para volver a grabar (cinco de cada misión, contrato revisión 8)
+# Audio: textos de las 19 pistas (cinco de cada misión, contrato revisión 8)
 
-Generado por `tierra luna/tools/make_audio_top5.py` desde el paquete `app/public/data/v2` (revisión 8, motor 3.4.0); hechos y comprobaciones en `docs/AUDIO_TOP5.json`. Texto antiguo = `transcripts.json` del commit `d24ebb3` (lo que dicen los MP3 grabados). Ningún audio se ha generado, editado, renombrado ni borrado; `SHA256SUMS.txt` no se ha tocado. El equipo graba **una vez** con estos textos.
+**Estado:** los 19 audios los volvió a grabar el equipo el 15-11-2026 hacia las 14:20 CET (voz Matilda, modelo eleven_multilingual_v2, según el equipo) con los textos de `0486ad9` y un único cambio decidido por el delegado del líder: rover_1 ya no nombra Gjoa Haven, a 1.116 km (regla general: más allá de 300 km no se nombra el lugar). ZIP SHA256 `cc9699eb9742cedc95f4161b60a0bf2aab9ad2013e25830392311e1922330c35`; subidos sin modificar a la rama `audio-assets` (commit `6650a13`). Nada pendiente: `app/public/audio/pending.json` está vacío y cada MP3 dice el texto «Ahora» de abajo (los hashes de los 19 coinciden con `SHA256SUMS.txt` del commit grabado).
+
+Generado por `tierra luna/tools/make_audio_top5.py` desde el paquete `app/public/data/v2` (revisión 8, motor 3.4.0); hechos y comprobaciones en `docs/AUDIO_TOP5.json`. Texto antiguo = `transcripts.json` del commit `d24ebb3` (lo que decía la grabación anterior); texto grabado ahora = `transcripts.json` del commit `6650a13` (rama `audio-assets`). Ningún audio se ha generado, editado, renombrado ni borrado aquí; los MP3 y `SHA256SUMS.txt` son los del equipo, copiados byte a byte.
 
 Las cifras se dicen como las imprime la web (`app/src/flow/dom.ts` `valueText`, `fixed`; números de la frase de cada pareja con `engine/display.py`); las distancias se redondean una sola vez desde el valor guardado. El script comprueba cada número de cada texto contra la pantalla, el número de palabras (55 a 105) y las frases prohibidas.
 
@@ -37,9 +39,9 @@ Las cifras se dicen como las imprime la web (`app/src/flow/dom.ts` `valueText`, 
 ### rover_1.mp3
 
 - **Antes:** Rover, analog one. About 66 kilometers northwest of Bayinbaolige, in Inner Mongolia, China. Like its lunar twin near Casatus crater, the ground slopes gently, by about one degree. The slope is 1.04 degrees on Earth and 1.15 degrees on the Moon, and the surface roughness is about 44 meters in both. Their height above each world's average level differs by 96 meters. Similarity: 99.57 percent.
-- **Ahora:** Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west, about 1,116 kilometers north of Gjoa Haven. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
+- **Ahora:** Rover, analog one. A site in Canada, at 78.5 degrees north and 102.5 degrees west. Its lunar twin lies about 69 kilometers from the crater Sverdrup. The slope is 0.77 degrees on Earth and 0.793 on the Moon; the roughness is 29.34 meters on Earth and 29.5 on the Moon. Similarity: 100 out of 100. It is one of the 254 sites tied at the top: it matches its twin within what the elevation data can measure, and it gets full marks on our Rover criteria.
 - **Motivo:** Los cinco de Rover son nuevos (regla de dispersión entre los empatados): lugar, gemelo, pendiente y rugosidad nuevos; sin elevación; dice que es uno de los 254 empatados en lo más alto.
-- Palabras: 93.
+- Palabras: 86.
 
 ### rover_2.mp3
 
@@ -149,7 +151,7 @@ Regla de los cinco (`spread_within_top_tie`): 254 ranked sites share the top pub
 
 | # | Lugar | Coordenadas | Puesto | Gemelo (rasgo, km) | Pendiente T / L (°) | Rugosidad T / L (m) | Sim. | Final |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Canada: 1,116 km north de Gjoa Haven | 78.5° N, 102.5° W | 3 | Sverdrup, 69 km | 0.77 / 0.793 | 29.34 / 29.5 | 100.00 | 100.00 |
+| 1 | Canada: 1,116 km north de Gjoa Haven (dato; el audio no lo dice: más de 300 km, da país y coordenadas) | 78.5° N, 102.5° W | 3 | Sverdrup, 69 km | 0.77 / 0.793 | 29.34 / 29.5 | 100.00 | 100.00 |
 | 2 | Santa Cruz, Argentina: 71 km southwest de Comandante Luis Piedra Buena | 50.5° S, 69.5° W | 254 | Zeeman, 51 km | 0.722 / 0.739 | 29.16 / 30.62 | 100.00 | 100.00 |
 | 3 | South Australia, Australia: 81 km northeast de Peterborough | 32.5° S, 139.5° E | 251 | Schrodinger, 24 km | 0.547 / 0.547 | 18.18 / 15.66 | 100.00 | 100.00 |
 | 4 | Al Mahrah, Yemen: 90 km north de Dahasuways | 16.5° N, 50.5° E | 241 | Haynes, 68 km | 0.643 / 0.677 | 21.87 / 19.22 | 100.00 | 100.00 |
@@ -181,26 +183,4 @@ Regla de los cinco (`rank_with_skips`): The five are ranks 1, 3, 5, 6, 7 of the 
 
 ## Ficheros que hay que grabar
 
-19 de 19 (también en `app/public/audio/pending.json`):
-
-- `00_welcome.mp3`
-- `m1_rover.mp3`
-- `m2_solar.mp3`
-- `m3_base.mp3`
-- `rover_1.mp3`
-- `rover_2.mp3`
-- `rover_3.mp3`
-- `rover_4.mp3`
-- `rover_5.mp3`
-- `solar_1.mp3`
-- `solar_2.mp3`
-- `solar_3.mp3`
-- `solar_4.mp3`
-- `solar_5.mp3`
-- `base_1.mp3`
-- `base_2.mp3`
-- `base_3.mp3`
-- `base_4.mp3`
-- `base_5.mp3`
-
-Hasta que lleguen las nuevas grabaciones, la web muestra solo el texto de estas pistas.
+Ninguno (0 de 19): `app/public/audio/pending.json` tiene la lista vacía y la web reproduce cada pista.
