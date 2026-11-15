@@ -584,7 +584,9 @@ def test_country_by_polygon_and_region_only_when_near(bundle):
 
 def test_mission_notes_and_facts_exported(bundle, ecfg):
     notes = ecfg.v("mission_notes")
+    approved = ecfg.v("approved_texts")
     for m in bundle["objects"]["missions.json"]["missions"]:
-        assert m["known_limitations"] == notes.get(m["id"], [])
+        first = [t["text"] for t in approved.values() if t.get("mission") == m["id"]]
+        assert m["known_limitations"] == first + notes.get(m["id"], [])
         f = m["facts"]
-        assert f["distinct_twins"] == 0 and isinstance(f["confidence_constant"], bool)   # repo_global_mean: no twin
+        assert f["distinct_twins"] > 0 and isinstance(f["confidence_constant"], bool)   # zone_twin (default since 2026-11-15)

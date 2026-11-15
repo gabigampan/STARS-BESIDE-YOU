@@ -215,13 +215,13 @@
     "why": "Team lead decision 1: rover is shown as provisional (its JSON block says so) and the solar and thermal thresholds are team design values with no external source (the JSON note says so). Both labels are carried into missions.json so the app shows them next to every number of the mission."
   },
   "similarity_rule": {
-    "value": "repo_global_mean",
-    "why": "Team lead decision 4: two similarity rules behind one setting, DEFAULT repo_global_mean until the team lead approves zone_twin. Switching this value and rebuilding ('python -m engine build') is all it takes to ship twins. Pending team confirmation."
+    "value": "zone_twin",
+    "why": "Team decision of 2026-11-15 (the team lead's delegate, answer 1 to docs/DECISIONS.md): zone_twin is the active rule, with the repository's fixed DEFAULT_WEIGHTS without radar or rock (on the real tables slope 33.3 %, roughness 26.7 %, relative elevation 20 %, temperature 20 %), not the mission domain weights. Earlier (team lead decision 4, 2026-11-14) the default was repo_global_mean pending this approval; repo_global_mean stays available ('--similarity-rule repo_global_mean') and tested."
   },
   "similarity_rule_options": {
     "value": {
-      "repo_global_mean": "What the repository does today (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin.",
-      "zone_twin": "Approved in principle by the team lead, to be switched on only after the team lead has seen docs/SIMILARITY_PROPOSAL.md: the same formula against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id) and its similarity is the one used in the final score. Lunar cells are not passed through the mission filters.",
+      "repo_global_mean": "What the repository does by default (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin. Kept available for comparison; not the shipped rule since 2026-11-15.",
+      "zone_twin": "Active since the team decision of 2026-11-15 (approved after docs/SIMILARITY_PROPOSAL.md and docs/DECISIONS.md): the same formula against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id) and its similarity is the one used in the final score. Lunar cells are not passed through the mission filters.",
       "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default."
     },
     "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers."
@@ -271,7 +271,7 @@
         }
       }
     },
-    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS data release (DOI 10.5066/P1MEQ6UK; the exact outlines are not published, so each footprint is the union of the region's 1 km navigational grid squares, an upper bound), if a verified region file is present in the repository (engine/data/artemis_iii_regions.geojson: GeoJSON in planetocentric degrees, longitude -180..180 east-positive, top-level 'verified': true, copied from the proposal agent's verified outlines); otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Pending team confirmation."
+    "why": "Team lead decision 4 (zone_twin only): rover and solar target the south-pole zone exactly as the code defines it (centre latitude at or below -75). lunar_base targets the lunar cells that intersect NASA's nine Artemis III candidate landing regions (announced 2024-10-28) from the USGS data release (DOI 10.5066/P1MEQ6UK; the exact outlines are not published, so each footprint is the union of the region's 1 km navigational grid squares, an upper bound), if a verified region file is present in the repository (engine/data/artemis_iii_regions.geojson: GeoJSON in planetocentric degrees, longitude -180..180 east-positive, top-level 'verified': true, copied from the proposal agent's verified outlines); otherwise the south-pole zone (never the global mean). The zone used and the reason are written to similarity.json. Lunar cells are not passed through the mission filters. Confirmed by the team on 2026-11-15 (rover and solar stay on the south-pole zone, the branch's version from analog_finder.py commit ff6f1ae, not Tycho; lunar_base on the nine NASA regions)."
   },
   "twin_tie_rule": {
     "value": "lowest_lunar_id",
@@ -280,5 +280,45 @@
   "detail_tile_rows": {
     "value": 10,
     "why": "Per-cell funnel detail (utilities, z-scores, the ice component) is split into files of this many grid rows (18 files on the 180-row grid), so the app loads about one eighteenth of the detail to show any land cell instead of every mission file. Layout only; no effect on results."
+  },
+  "approved_texts": {
+    "value": {
+      "similarity_meaning": {
+        "decision": 1,
+        "text": "Each Earth point is paired with its lunar twin: the single 1-degree lunar cell, inside the mission's target zone, that holds the most similar relative position on the Moon as the Earth point holds on Earth (slope, roughness, relative elevation and surface temperature, each compared within its own world). A high similarity means 'same place in each world's range', not 'same values': both sets of values are shown side by side.",
+        "where": "wherever a similarity is shown, next to the absolute values of every similarity variable on Earth (earth_base.bin v.<column>) and on the Moon (twins.json values)"
+      },
+      "rock_note": {
+        "decision": 2,
+        "text": "Bare-ground fraction is shown for information only. It is not part of the similarity: on the Moon it is 1 everywhere by definition, so it cannot tell lunar places apart.",
+        "where": "next to the bare-ground fraction (rock_or_bare_frac) of both points"
+      },
+      "missing_temperature_mark": {
+        "decision": 3,
+        "text": "no temperature data: similarity computed with 3 variables",
+        "where": "on every pair whose similarity used fewer variables because temperature is missing (earth_<mission>.bin sim_missing_bits has the temp_k bit), in the panel and in the ranking list"
+      },
+      "missing_temperature_note": {
+        "decision": 3,
+        "text": "No surface temperature here: the satellite climatology we use does not cover Antarctica. This twin was chosen on relief only (slope, roughness, relative elevation), so its similarity is not comparable with points that include temperature.",
+        "where": "in the panel of those points"
+      },
+      "twin_sharing_note": {
+        "decision": 4,
+        "text": "This lunar twin is shared by N Earth points (X % of the ranked points for this mission). The lunar base zone is small (280 cells), cold and rugged, so a few gentle cells are the best match for most places on Earth.",
+        "where": "next to the twin; N = twins.json earth_cells (or moon_<mission>.bin twin_count), X = 100 * N / missions.json ranked_count. The second sentence is about lunar_base; for rover and solar show the first sentence only",
+        "placeholders": {
+          "N": "Earth points sharing the twin",
+          "X": "their share of the mission's ranked points, in percent"
+        }
+      },
+      "solar_limitation": {
+        "decision": 5,
+        "mission": "solar",
+        "text": "Limitation: for solar arrays, the lunar twin is chosen by terrain shape and surface temperature, not by sunlight. The twin lies in the lunar south-polar zone, where Artemis plans to land; it is the best match in relief, but it is about 126 K colder than the Earth point and receives far less energy. Read the pair as 'similar terrain', not 'similar sunlight'.",
+        "where": "the Solar panels mission card (missions.json known_limitations, first item)"
+      }
+    },
+    "why": "The English web texts approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; missing_temperature_mark is the short mark the team asked for in answer 3. Exported in similarity.json 'texts'; a text with a 'mission' is also the first item of that mission's missions.json 'known_limitations'."
   }
 }

@@ -273,7 +273,9 @@ def test_binary_round_trip_equals_the_frames(real, real_dir):
         for v in r.soft_vars:
             u = tile_column(b, f"{mid}.u.{v}")
             assert _nan_equal(u, np.where(r.earth_gates.passed[li], r.earth_suit.utilities[v][li], np.nan))
-        assert "twin" not in b.columns(ef) and "twin_count" not in b.columns(f"moon_{mid}.bin")  # repo_global_mean
+        assert "twin" in b.columns(ef) and "twin_count" in b.columns(f"moon_{mid}.bin")  # zone_twin (default since 2026-11-15)
+        assert np.array_equal(b.int_column(ef, "twin"), np.where(r.twin_id[r.earth_gates.passed] >= 0,
+                                                                   r.twin_id[r.earth_gates.passed], -2147483648))
         codes = [e["code"] for e in next(m for m in b.json("missions.json")["missions"] if m["id"] == mid)["reason_codes"]]
         mb = b.int_column(f"moon_{mid}.bin", "fail_bits")
         for i in range(0, len(mb), 997):
@@ -287,9 +289,9 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
     ids_all = b.int_column("earth_base.bin", "id")
     sent = b.manifest["encoding"]["int32_missing"]
     sj = b.json("similarity.json")
-    assert sj["rule"] == "repo_global_mean"
+    assert sj["rule"] == "zone_twin"
     norm_w = {v["variable"]: v["norm_weight"] for v in sj["variables"] if v["status"] == "active"}
-    tz = {v["variable"]: v["target_global_mean"]["z"] for v in sj["variables"] if v["status"] == "active"}
+    twins = b.json("twins.json")["missions"]
     total = 0
     r2 = np.vectorize(lambda x: round(float(x), 2) if np.isfinite(x) else np.nan)
     for m in b.json("missions.json")["missions"]:
@@ -298,6 +300,9 @@ def test_recompute_from_bundle_reproduces_every_passing_cell(real, real_dir):
         order = [w["variable"] for w in m["weighted_variables"]]
         w = {x["variable"]: x["weight"] for x in m["weighted_variables"]}
         suit = browser_suitability({v: tile_column(b, f"{m['id']}.u.{v}")[li] for v in order}, w, order)
+        tw = b.int_column(ef, "twin")
+        tzid = {t["id"]: t["z"] for t in twins[m["id"]]["twins"]}
+        tz = {f: np.array([np.nan if t == sent or tzid[int(t)][f] is None else tzid[int(t)][f] for t in tw]) for f in norm_w}
         sim = browser_similarity({f: tile_column(b, f"z.{f}")[li] for f in norm_w}, tz, norm_w, sj["formula"]["decay"])
         fin = m["alpha"] * sim + (1 - m["alpha"]) * suit
         for mine, stored in ((suit, "suitability"), (sim, "similarity"), (fin, "final")):
@@ -436,3 +441,53 @@ def test_benchmark_lookup_matches_the_results(real, tmp_path):
         res = benchmark_lookup(sites, real["results"], earth["id"].to_numpy(), real["dataset"].grid,
                                real["land"], real["earth_places"])
         assert len(res) == len(sites) and all(x["cell"]["id"] >= 0 for x in res)
+
+
+# ----------------------------------------------------------------------------- team decisions of 2026-11-15
+def test_similarity_variables_used_and_missing_per_pair(real_dir):
+    """Decision 3: every ranked pair carries, in the per-mission file the ranking reads, how
+    many similarity variables were used and which are missing. An Antarctic cell without
+    temperature shows 3 used and temp_k missing; a cell with every value shows 4 and none."""
+    b = load_bundle(real_dir)
+    active = b.json("similarity.json")["active_variables"]
+    assert active == ["elevation_rel_m", "slope_deg", "roughness_m", "temp_k"]
+    t_bit = 1 << active.index("temp_k")
+    ids = b.int_column("earth_base.bin", "id")
+    lat_row = b.column("earth_base.bin", "lat")
+    temp = b.column("earth_base.bin", "v.temp_k")
+    no_temp = {}
+    for mid in ("rover", "solar", "lunar_base"):
+        ef = f"earth_{mid}.bin"
+        li = b.int_column(ef, "land_index")
+        used, bits = b.int_column(ef, "sim_vars_used"), b.int_column(ef, "sim_missing_bits")
+        lat = lat_row[ids[li] // 360]
+        antarctic = (lat <= -60) & np.isnan(temp[li])
+        assert np.all(used[antarctic] == 3) and np.all(bits[antarctic] == t_bit)
+        full = np.isfinite(temp[li]) & np.isfinite(tile_column(b, "z.slope_deg")[li]) \
+            & np.isfinite(tile_column(b, "z.roughness_m")[li]) & np.isfinite(tile_column(b, "z.elevation_rel_m")[li])
+        assert full.any() and np.all(used[full] == 4) and np.all(bits[full] == 0)
+        assert np.array_equal(used, 4 - np.array([bin(int(x)).count("1") for x in bits]))
+        no_temp[mid] = int(((bits & t_bit) != 0).sum())
+    assert no_temp["rover"] > 0 and no_temp["solar"] > 0 and no_temp["lunar_base"] == 0
+
+
+def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
+    """Decisions 1-5 (2026-11-15): the approved English web texts are copied verbatim from
+    section 8 of docs/DECISIONS.md into similarity.json 'texts'; the solar limitation is the
+    first known limitation of the solar mission."""
+    decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
+    assert ecfg.v("similarity_rule") == "zone_twin" and real["manifest"]["similarity_rule"] == "zone_twin"
+    assert real["manifest"]["contract_revision"] == 4
+    approved = ecfg.v("approved_texts")
+    assert set(approved) == {"similarity_meaning", "rock_note", "missing_temperature_mark", "missing_temperature_note",
+                             "twin_sharing_note", "solar_limitation"}
+    for key, t in approved.items():
+        if key != "missing_temperature_mark":  # the short mark comes from the team's answer 3, not section 8
+            assert f'> "{t["text"]}"' in decisions, key
+    assert approved["missing_temperature_mark"]["text"] == "no temperature data: similarity computed with 3 variables"
+    sj = real["objects"]["similarity.json"]
+    assert {k: v["text"] for k, v in sj["texts"].items()} == {k: v["text"] for k, v in approved.items()}
+    solar = next(m for m in real["objects"]["missions.json"]["missions"] if m["id"] == "solar")
+    assert solar["known_limitations"][0] == approved["solar_limitation"]["text"]
+    assert "rock_or_bare_frac" in sj["not_part_of_similarity"]
+    assert next(v for v in sj["variables"] if v["variable"] == "rock_or_bare_frac")["status"] == "excluded"

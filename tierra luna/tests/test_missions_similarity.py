@@ -350,6 +350,8 @@ def test_recompute_from_bundle_for_both_rules(ds, rule, tmp_path):
     write_bundle(b["files"], str(tmp_path))
     rep = validate_bundle_v2(str(tmp_path))
     assert rep["ok"] and rep["rule"] == rule
+    for mid in OFFERED:  # contract revision 4: variables used / missing per pair, under both rules (checked by the validator)
+        assert {"sim_vars_used", "sim_missing_bits"} <= set(load_bundle(str(tmp_path)).columns(f"earth_{mid}.bin"))
     assert rep["cells_checked"] == sum(int(r.earth_gates.passed.sum()) for r in b["results"].values())
     bun = load_bundle(str(tmp_path))
     sj = bun.json("similarity.json")

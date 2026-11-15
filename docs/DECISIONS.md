@@ -18,6 +18,18 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 
 ---
 
+## Decisiones tomadas (15-11-2026)
+
+Respuestas del equipo dadas el 15-11-2026 por la persona en quien el líder del equipo delegó el seguimiento esa noche, en el orden 1, 5, 3, 2, 4:
+
+1. **Regla del gemelo: sí.** Se activa `zone_twin` (A1) con los `DEFAULT_WEIGHTS` del repositorio sin radar ni roca (pendiente 33,3 %, rugosidad 26,7 %, elevación relativa 20 %, temperatura 20 %), no los pesos por dominio. Zonas: Rover y Paneles solares en el polo sur (latitud ≤ −75°, versión de la rama, commit `ff6f1ae`; no Tycho); Base lunar en las nueve regiones de la NASA. Junto al parecido se enseñan siempre los valores absolutos de cada variable en la Tierra y en la Luna, con una frase que dice que el parecido es posición relativa dentro de cada cuerpo.
+5. **Paneles solares: se quedan en el polo sur**, sin cambio de zona esta noche. Se publica el texto de limitación tal cual en la ficha de la misión y el párrafo en `ASSUMPTIONS.md` §0.7, antes de grabar vídeo o capturas. Los mares ecuatoriales no se implementan: quedan como alternativa para que el líder del equipo la valore por la mañana (ver la nota al final de la decisión 5).
+3. **Antártida sin temperatura: ignorar y renormalizar**, como ya hace el motor. La web marca los pares a los que les falta la temperatura ("sin dato de temperatura: parecido calculado con 3 variables") y la marca se ve también en el ranking. No se usa NASA POWER ni ninguna otra fuente nueva.
+2. **Roca: retirada definitiva del parecido** con reparto proporcional. La web la enseña como dato informativo marcado "no entra en el parecido".
+4. **Concentración en Base lunar: se acepta** y el panel enseña cuántos puntos comparten cada gemelo, con el texto de la sección 8. Sin límites por gemelo.
+
+---
+
 ## Decisión 1. La regla del gemelo
 
 ### 1. Qué pasa ahora
@@ -726,6 +738,8 @@ Si se deja como está: 0 cambios; el top 10 es el A1 de la decisión 1 y solo se
 > "Limitation: for solar arrays, the lunar twin is chosen by terrain shape and surface temperature, not by sunlight. The twin lies in the lunar south-polar zone, where Artemis plans to land; it is the best match in relief, but it is about 126 K colder than the Earth point and receives far less energy. Read the pair as 'similar terrain', not 'similar sunlight'."
 
 *Traducción:* "Limitación: para los paneles solares, el gemelo lunar se elige por la forma del terreno y la temperatura de superficie, no por la luz del Sol. El gemelo está en la zona del polo sur lunar, donde Artemis prevé aterrizar; es el más parecido en relieve, pero está unos 126 K más frío que el punto de la Tierra y recibe mucha menos energía. Lee el par como 'terreno parecido', no como 'luz parecida'."
+
+**Nota (15-11-2026).** Decidido: Paneles solares se queda en el polo sur y se publica la limitación. Los mares ecuatoriales (opción de la sección 4, la de mejor resultado) quedan como **alternativa no implementada**, para que el líder del equipo la valore por la mañana; no se ha tocado el motor para ello.
 
 ---
 

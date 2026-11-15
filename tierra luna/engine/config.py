@@ -96,6 +96,7 @@ class EngineConfig(BaseModel):
     similarity_zones: Setting
     twin_tie_rule: Setting
     detail_tile_rows: Setting
+    approved_texts: Optional[Setting] = None
     # filled from the dataset descriptor (engine/datasets.json)
     dataset: Optional[Setting] = None
     inputs: Optional[Setting] = None

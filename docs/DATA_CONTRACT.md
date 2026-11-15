@@ -1,4 +1,4 @@
-# Data contract: static bundle v2 (contract revision 3, engine 3.0.0)
+# Data contract: static bundle v2 (contract revision 4, engine 3.0.0)
 
 The engine (`tierra luna/engine`) writes a static, versioned bundle that the browser app reads with plain `fetch()`; no server is needed.
 
@@ -6,9 +6,15 @@ The engine (`tierra luna/engine`) writes a static, versioned bundle that the bro
 |---|---|---|---|
 | `python -m engine build` (same as `--dataset real_1deg`) | real 1-degree tables (`output_real/*.csv`) | `app/public/data/v2/` (this contract) | yes |
 | `python -m engine build --dataset legacy_2deg` | legacy 2-degree table | `build/legacy_2deg/` (same v2 format) | no |
-| `python -m engine build --similarity-rule zone_twin --out DIR` | any | `DIR` (preview of the zone_twin rule) | no |
+| `python -m engine build --similarity-rule repo_global_mean --out DIR` | any | `DIR` (the earlier rule, no twins, same contract revision) | no |
 
 Datasets are described in `tierra luna/engine/datasets.json`, engine settings in `engine_config.json`. The machine check of this contract is `engine/bundle_v2.py` (`validate_bundle_v2`), run by the tests; it also shows, in Python, every decoding and recompute step below.
+
+**What changed in revision 4** (team decisions of 2026-11-15, answers to `docs/DECISIONS.md`):
+
+- the shipped rule is `zone_twin` (`manifest.similarity_rule`, `similarity.json` `rule`): every ranked Earth cell has a lunar twin (`earth_<mission>.bin` `twin`, `moon_<mission>.bin` `twin_count`, `twins.json`); `repo_global_mean` stays available with `--similarity-rule repo_global_mean` and writes the same revision without twins;
+- two new int32 columns in every `earth_<mission>.bin` (rows `passing`), so the ranking list can mark the pairs whose similarity used fewer variables without loading a detail tile: `sim_vars_used` (how many of `similarity.json` `active_variables` have a value on both sides of the pair) and `sim_missing_bits` (bit k set when `active_variables[k]` was left out; on the real tables only `temp_k`, bit 3, for Antarctic cells); `validate_bundle_v2` checks both against the z-scores on every passing cell;
+- `similarity.json` `texts`: the approved English web texts (decisions 1 to 5), and the solar limitation as the first item of the solar mission's `missions.json` `known_limitations`.
 
 **What changed in revision 3** (engine 3.0.0, team lead decisions of 2026-11-14):
 
@@ -21,7 +27,7 @@ Datasets are described in `tierra luna/engine/datasets.json`, engine settings in
 ## General rules
 
 - **Files.** JSON (UTF-8, compact, keys in a fixed order) for metadata and small tables; little-endian binary typed arrays (`.bin`) for per-cell numbers. Two builds from the same inputs are byte-identical. The build removes `.json` / `.bin` files of an earlier bundle that are not in the new one.
-- **Version.** `bundle_version` is `"v2"` in every JSON file and the folder name; `manifest.contract_revision` is `3`.
+- **Version.** `bundle_version` is `"v2"` in every JSON file and the folder name; `manifest.contract_revision` is `4`.
 - **Missing values.** A missing value is never `0` and never a default:
   - JSON: `null`;
   - Float32 column: `NaN`;
@@ -36,7 +42,7 @@ Datasets are described in `tierra luna/engine/datasets.json`, engine settings in
 
 ## Files
 
-Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
+Sizes from the build of 2026-11-15, revision 3 with `repo_global_mean` (`manifest.files[].bytes` is authoritative; the revision 4 `zone_twin` sizes are in the bullet under the table).
 
 | file | format | loaded | rows | content | bytes |
 |---|---|---|---|---|---|
@@ -51,7 +57,7 @@ Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
 | `earth_detail_00.bin` .. `earth_detail_17.bin` | bin | on demand (one per selected cell) | land cells of 10 grid rows | z-scores, utilities of every mission, the ice component | 7,392 - 332,160 each, 2,447,712 in all |
 | `moon_base.bin` | bin | on demand | all 64,800 lunar cells | values, information column, nearest IAU feature | 2,598,480 |
 | `moon_<mission>.bin` (3) | bin | on demand | all lunar cells | fail bits (and twin counts when the rule has twins) | 259,200 each |
-| `twins.json` | JSON | on demand | - | only with a twin rule: every distinct twin per mission | absent today |
+| `twins.json` | JSON | on demand | - | only with a twin rule: every distinct twin per mission | 831,574 (zone_twin) |
 | `earth_place_detail.bin` | bin | on demand | Earth land cells | label rule, nearest populated place and its distance | 305,964 |
 | `place_detail.json` | JSON | on demand | - | label rules, nearest-place names | 113,175 |
 | `explain.json` | JSON | on demand | - | top 25 ranked Earth cells per mission with the whole funnel | 103,232 |
@@ -59,16 +65,16 @@ Sizes from the build of 2026-11-15 (`manifest.files[].bytes` is authoritative).
 | `lunar_named_sites.json` | JSON | on demand | - | named lunar sites, their cell and per-mission outcome | 13,951 |
 | `validity.json` | JSON | on demand | - | schema validation report of the input tables | 251 |
 
-- **First view** (`manifest.load.first_view` plus the manifest): 2,128,621 bytes, under the 2,500,000-byte target. **Total**: 9,392,187 bytes, under 14,000,000. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. The unshipped zone_twin preview (with `twins.json`, 831,574 bytes) totals 11,135,488 bytes and its first view 2,173,337.
+- **First view** (`manifest.load.first_view` plus the manifest), revision 4 with `zone_twin`: 2,261,764 bytes, under the 2,500,000-byte target. **Total**: 11,393,483 bytes, under 14,000,000 (`twins.json` 831,574; `earth_rover.bin` 515,468, `earth_solar.bin` 853,068, `earth_lunar_base.bin` 198,748; `moon_<mission>.bin` 518,400 each). Revision 3 with `repo_global_mean`: 2,128,621 and 9,392,187. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. The unshipped zone_twin preview (with `twins.json`, 831,574 bytes) totals 11,135,488 bytes and its first view 2,173,337.
 - **Showing the funnel of one land cell** needs the first view (values, gates, reason tables, scores of the default mission), the mission file of each mission shown (fail bits and scores; 0.17-0.63 MB) and **one** detail tile (at most 332,160 bytes): never the whole set of tiles.
 - Earth files hold only **land cells**: cells with any land (`mask_fraction > 0`, datasets.json `earth_land_cells`). Pure-ocean cells are absent; they fail every mission on the land gates.
 
 ## manifest.json
 
 ```json
-{"bundle_version":"v2","contract_revision":3,"engine_version":"3.0.0",
+{"bundle_version":"v2","contract_revision":4,"engine_version":"3.0.0",
  "dataset":{"id":"real_1deg","why":"..."},
- "build_time":"inputs-sha256:...","similarity_rule":"repo_global_mean",
+ "build_time":"inputs-sha256:...","similarity_rule":"zone_twin",
  "inputs":[{"key":"EARTH","file":"earth_real_1deg.csv","sha256":"...","rows":64800},{"key":"MOON",...}],
  "config_sha256":{"mission_scoring.json":"...","engine_config.json":"...","datasets.json":"...","provenance_earth.csv":"...",
                   "provenance_moon.csv":"...","column_aliases.json":"...","iau_moon_nomenclature.csv":"...",
@@ -219,6 +225,8 @@ Stored columns (real column, mission variables read from it): `elevation_m`, `ma
 | `twin` | int32 | passing | **only when the rule has twins**: lunar twin id (= `moon_base.bin` position) |
 | `confidence` | int32 | passing | index into `missions.json` `confidence_codes` (`low`, `medium`, `high`); sentinel = no confidence |
 | `confidence_score` | int32 q, /1000 | passing | 0-1 |
+| `sim_vars_used` | int32 | passing | revision 4: number of `similarity.json` `active_variables` with a value on both sides of the pair (the set P of the recompute formulas); 4 on the real tables, 3 where temperature is missing, 0 when the cell has no similarity |
+| `sim_missing_bits` | int32 | passing | revision 4: bit k set when `active_variables[k]` has no value on the Earth cell or on its lunar side and was left out of the distance (weights renormalised); `0` = every variable used. Show the mark `similarity.json` `texts.missing_temperature_mark` in the ranking and the panel when the `temp_k` bit is set |
 
 ## earth_detail_NN.bin (on demand, one tile per 10 grid rows)
 
@@ -322,6 +330,7 @@ With `zone_twin`, `target` is `{"kind":"zone_twin","tie_rule":"lowest_lunar_id",
 - **`columns`**: the real column each similarity variable is read from, after `column_overrides` (e.g. `slope_deg` is read from `slope_iso_deg`); it is always a stored `v.<column>` of `earth_base.bin` / `moon_base.bin` (`test_similarity_columns_are_stored_columns`).
 - **`status`**: `active` (in the distance, `norm_weight` = weight / sum of active weights), `excluded` (a dataset decision; reason given), `inactive` (no values on a body: the repository's own rule drops it).
 - **`variation`** per body: `ok`, `near_zero` (at least half the cells share one value), `zero` (every value equal: the repository would give every cell z = 0 and still count the variable), `no_data`.
+- **`texts`** (revision 4): the English web texts approved by the team on 2026-11-15, verbatim from section 8 of each decision in `docs/DECISIONS.md` (`missing_temperature_mark` is the short mark of the team's answer 3). Each entry is `{decision, text, where}` (`twin_sharing_note` also `placeholders`; `solar_limitation` also `mission`): `similarity_meaning` (decision 1: wherever a similarity is shown, next to the absolute values of both sides), `rock_note` (decision 2), `missing_temperature_mark` and `missing_temperature_note` (decision 3: pairs with the `temp_k` bit of `sim_missing_bits`), `twin_sharing_note` (decision 4: N = `twins.json` `earth_cells`, X = 100 N / `ranked_count`; the second sentence is about lunar_base), `solar_limitation` (decision 5; also the first item of the solar mission's `known_limitations`).
 - **Not part of the similarity**: the variables in `not_part_of_similarity` are shown for both points with the mark "not part of the similarity": Earth from `earth_base.bin`, the Moon from `target.info_not_in_similarity` (whole-Moon mean or commonest class) or from the twin (`twins.json` `not_part_of_similarity`).
 
 ## twins.json (on demand; only with a twin rule)

@@ -181,6 +181,7 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
             tz = {f: np.float64(next(x for x in sim_json["variables"] if x["variable"] == f)["target_global_mean"]["z"])
                   for f in norm_w}
             sim = browser_similarity({f: ez[f][li] for f in norm_w}, tz, norm_w, decay)
+            mz = {f: np.full(len(li), tz[f]) for f in norm_w}
             if "twin" in b.columns(ef):
                 raise ValueError(f"{mid}: repo_global_mean must not carry twins")
         elif rule == "zone_twin":
@@ -199,6 +200,13 @@ def validate_bundle_v2(path: str, weights: Optional[Dict[str, Dict[str, float]]]
                     raise ValueError(f"{mid}: a twin lies outside its zone")
         else:
             raise ValueError(f"validate_bundle_v2 does not check rule {rule!r}")
+        if "sim_missing_bits" in b.columns(ef):  # contract revision 4: variables used per pair
+            ok = {f: np.isfinite(ez[f][li]) & np.isfinite(mz[f]) for f in norm_w}
+            want_bits = sum(np.where(ok[f], 0, 1 << k) for k, f in enumerate(sim_json["active_variables"]))
+            want_n = sum(ok[f].astype(np.int64) for f in sim_json["active_variables"])
+            if not (np.array_equal(b.int_column(ef, "sim_missing_bits"), want_bits)
+                    and np.array_equal(b.int_column(ef, "sim_vars_used"), want_n)):
+                raise ValueError(f"{mid}: similarity variables used / missing disagree with the z-scores")
         alpha = m["alpha"]
         fin = alpha * sim + (1.0 - alpha) * suit
         st_suit, st_sim = b.column(ef, "suitability"), b.column(ef, "similarity")

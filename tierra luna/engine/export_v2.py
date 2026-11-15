@@ -416,7 +416,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             sim_block.update(twin_summary(res.twin_id[ranked], moon_ids))
         else:
             sim_block["twins"] = None
-            sim_block["no_twin_reason"] = "repo_global_mean compares every Earth cell with the mean profile of the whole Moon (the repository's default target), so there is no lunar twin; twins ship when the team lead approves zone_twin (engine_config similarity_rule)."
+            sim_block["no_twin_reason"] = "repo_global_mean compares every Earth cell with the mean profile of the whole Moon (the repository's default target), so there is no lunar twin; the shipped rule since the team decision of 2026-11-15 is zone_twin (engine_config similarity_rule)."
         out.append({
             "id": mid, "title": titles.get(mid, mid), "description": m.get("description"), "author": m.get("author"),
             "threshold_status": status[mid], "provisional": bool(prov), "provisional_note": prov if prov else None,
@@ -442,7 +442,8 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
                 "confidence_score": quantiles(res.confidence_score[ranked], cd),
             },
             "component_results": comp_out,
-            "known_limitations": list(notes.get(mid, [])),
+            "known_limitations": [t["text"] for t in (engine_cfg.v("approved_texts") or {}).values()
+                                  if t.get("mission") == mid] + list(notes.get(mid, [])),
             "facts": mission_facts(res, ds.cells, moon_feat, earth_places, engine_cfg),
             "not_used_by_engine": {"tolerances": m.get("tolerances"), "workable_days": m.get("workable_days"),
                                    "domain_weights": m.get("weights"), "why": engine_cfg.v("not_used_by_engine_why")},
@@ -484,6 +485,27 @@ def similarity_levels(reg: Dict, columns: Dict[str, Dict[str, Optional[str]]], v
                     break
         out[b] = lvl
     return out
+
+
+def similarity_variables_used(ctx, rule: str, earth_rows: np.ndarray,
+                               twin: Optional[np.ndarray]) -> Tuple[np.ndarray, np.ndarray]:
+    """Per Earth row: how many active similarity variables have a z on both sides (the set
+    P of DATA_CONTRACT) and a bit mask of the missing ones (bit k = active_variables[k])."""
+    n = len(earth_rows)
+    used = np.zeros(n, dtype=np.int64)
+    bits = np.zeros(n, dtype=np.int64)
+    for k, f in enumerate(ctx.active):
+        ez = np.asarray(ctx.earth.z[f], dtype=np.float64)[earth_rows]
+        if rule == "zone_twin":
+            mz_all = np.asarray(ctx.moon.z[f], dtype=np.float64)
+            mz = np.where(twin >= 0, mz_all[np.where(twin >= 0, twin, 0)], np.nan)
+        else:
+            t = ctx.target[f]["z"]
+            mz = np.full(n, np.nan if t is None else float(t))
+        ok = np.isfinite(ez) & np.isfinite(mz)
+        used += ok
+        bits |= np.where(ok, 0, 1 << k)
+    return used, bits
 
 
 def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine_cfg: EngineConfig) -> Dict[str, Any]:
@@ -550,13 +572,14 @@ def build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engine
                                   + [f for f in ctx.excluded if f in ds.reg["variables"]],
         "not_part_of_similarity_note": "Exported for both points and marked 'not part of the similarity': they are mission criteria or information, never in the distance.",
         "z_decimals": rs["z_decimals"],
+        "texts": {k: dict(t) for k, t in (engine_cfg.v("approved_texts") or {}).items()},
     })
     if rule == "repo_global_mean":
         base["target"] = {"kind": "global_mean", "name": "Global Lunar Surface Mean (-90° to +90°)",
                           "profile": {f: ctx.target[f] for f in ctx.active},
                           "info_not_in_similarity": lunar_info_summary(ds, engine_cfg)}
         base["twins"] = None
-        base["no_twin_reason"] = "repo_global_mean has no twin: the target is the mean profile of the whole Moon (the repository's default). Twins ship when similarity_rule is switched to zone_twin after the team lead approves docs/SIMILARITY_PROPOSAL.md."
+        base["no_twin_reason"] = "repo_global_mean has no twin: the target is the mean profile of the whole Moon (the repository's default). The shipped rule since the team decision of 2026-11-15 is zone_twin, which has twins."
     else:
         base["target"] = {"kind": "zone_twin", "tie_rule": engine_cfg.v("twin_tie_rule"),
                           "lunar_cells_filtered": False,
@@ -901,6 +924,12 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
         ef.i32("confidence", ccode, "passing", missing=np.array([c is None for c in conf]),
                codes="missions.json confidence_codes")
         ef.quantised("confidence_score", _round_array(res.confidence_score[idx], cd), cd, "passing")
+        if ctx is not None and rule in ("repo_global_mean", "zone_twin"):
+            used, bits_sim = similarity_variables_used(ctx, rule, idx, res.twin_id[idx] if has_twins else None)
+            ef.i32("sim_vars_used", used, "passing",
+                   description="number of similarity variables (similarity.json active_variables) with a value on both sides of the pair, i.e. used in this cell's similarity")
+            ef.i32("sim_missing_bits", bits_sim, "passing",
+                   description="bit k set when similarity.json active_variables[k] has no value on the Earth cell or on its lunar side and was left out of the distance (weights renormalised); 0 = every variable used")
         add_bin(ef, "on_demand" if mid != missions[0] else "start",
                 f"{mid}: fail bits for every Earth land cell; suitability, similarity, final, rank and confidence of the passing cells",
                 body="EARTH", mission=mid)
@@ -986,7 +1015,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     data_credits = sorted({reg["variables"][v]["bodies"][b].get("licence_credit") or "" for v in eng_vars for b in BODIES} - {""})
     manifest = {
         "bundle_version": engine_cfg.v("bundle_version"),
-        "contract_revision": 3,
+        "contract_revision": 4,
         "engine_version": engine_cfg.v("engine_version"),
         "dataset": {"id": ds.id, "why": engine_cfg.dataset.why},
         "build_time": build_time,
