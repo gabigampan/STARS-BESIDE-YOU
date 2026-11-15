@@ -15,6 +15,8 @@ import { MissionPanel } from './missionPanel';
 import { renderSteps, type Step } from './steps';
 import { h } from './dom';
 import { ZoneView } from './zones';
+import { a11y } from '../a11y';
+import { missionLine, purposeText } from './copy';
 
 export interface RankItem extends RankedPoint {
   place: string;
@@ -58,6 +60,7 @@ export class FlowApp {
     this.setStep('choose');
     this.missionPanel = new MissionPanel(this, document.getElementById('mission-panel') as HTMLElement);
     this.renderIntro();
+    this.updateGuide();
     this.ready = this.start();
   }
 
@@ -74,6 +77,7 @@ export class FlowApp {
     if (this.dataReady) document.body.classList.toggle('has-twins', this.store.hasTwins());
     this.renderIntro();
     this.renderSteps();
+    this.updateGuide();
     if (this.dataReady) {
       renderDataDialog(this.store, (m) => this.ruleText(m), (m) => meaningText(this, m));
       // Place names for the list come next; they are small and needed as soon as a mission is open.
@@ -274,6 +278,7 @@ export class FlowApp {
     }
     const m = this.store.mission(id);
     const c = this.store.pairCounts(id);
+    if (!opts.keepSelection) this.updateGuide();
     this.announce(
       `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth pass its filters` +
         (c.unpaired > 0 && this.missionHasTwins(m) ? `; ${c.paired.toLocaleString('en-GB')} of them have a lunar twin.` : '.'),
@@ -317,7 +322,46 @@ export class FlowApp {
     this.setStep('choose');
     globesApi.resetView();
     this.renderIntro();
-    (this.intro.querySelector('.choice[aria-pressed="true"], .choice') as HTMLElement | null)?.focus();
+    (this.intro.querySelector('h2') as HTMLElement | null)?.focus();
+    this.updateGuide();
+    this.announce('Start screen: choose a mission with the keys 1, 2 or 3.');
+  }
+
+  // ---------- audio guide ----------
+
+  /** The caption (and, with the guide on, the recording) of the current step. */
+  updateGuide(): void {
+    const g = a11y().guide;
+    const m = this.mission();
+    const step = this.state.step;
+    if (step === 'choose' || !m) {
+      const lines = this.dataReady ? this.store.offeredMissions().map((x, i) => `Press ${i + 1} for ${missionName(x)}: ${missionLine(x)}`) : [];
+      g.setStep({ track: g.track('start'), title: 'Welcome', fallback: [purposeText(this.dataReady && this.store.hasTwins()), ...lines].join(' ') });
+      return;
+    }
+    if (step === 'pick') {
+      g.setStep({
+        track: g.track('mission', m.id),
+        title: `${missionName(m)} mission`,
+        fallback: `${missionName(m)}. ${missionLine(m)} Its five best analogs are listed first: press a number from 1 to 5 to open one, or Escape to go back.`,
+      });
+      return;
+    }
+    const id = this.state.selectedId;
+    if (id == null) return;
+    const item = this.ranking().find((r) => r.id === id);
+    const twin = item?.twinId != null ? this.store.twin(m.id, item.twinId) : null;
+    // a pair track plays only for the pair it was recorded for (tracks.json ids against the pair on screen)
+    const track =
+      twin && !this.usingCustom()
+        ? (a11y().guide.pairTrack(m.id, `E${id}`, `M${twin.id}`) ?? null)
+        : null;
+    const parts = [`${this.placeText(id)} on Earth.`];
+    if (item?.rank != null) parts.push(`Rank ${item.rank} for the ${missionName(m)} mission${this.usingCustom() ? ' under your own weights' : ''}, final score ${item.final}.`);
+    if (twin) parts.push(`Its lunar twin is ${twin.feature ? `near ${twin.feature.name}` : 'a cell of the lunar zone'}, at ${Math.abs(twin.lat).toFixed(1)}° ${twin.lat >= 0 ? 'N' : 'S'}.`);
+    else parts.push('It has no lunar twin.');
+    parts.push('Press Escape to go back to the list.');
+    g.setStep({ track, title: item?.rank != null ? `Analog ${item.rank}` : 'Selected place', fallback: parts.join(' ') });
   }
 
   // ---------- markers ----------
@@ -483,6 +527,7 @@ export class FlowApp {
     if (seq !== this.detailSeq) return;
     const o = this.renderDetailNow(id);
     (this.detail.querySelector('h2') as HTMLElement | null)?.focus({ preventScroll: true });
+    this.updateGuide();
     const r = this.rankOf(id);
     this.announce(`${this.placeText(id)}: ${o.pass ? (r != null ? `rank ${r.toLocaleString('en-GB')}` : 'passes, no lunar twin') : 'eliminated for this mission'}.`);
     // the pair on the globes
@@ -535,6 +580,9 @@ export class FlowApp {
     }
     this.missionPanel.render();
     if (id != null) this.missionPanel.focusRow(id);
+    this.updateGuide();
+    const m = this.mission();
+    if (m) this.announce(`Back to the ${missionName(m)} mission: its five best analogs and the full ranking.`);
   }
 
   async startMission(): Promise<void> {

@@ -17,6 +17,7 @@ import { Sunlight, bindSunlightControl } from './modules/sunlight';
 import { VideoDialog } from './modules/video';
 import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupViewMenu } from './ui/shell';
 import { FlowApp } from './flow/app';
+import { a11y, type A11y } from './a11y';
 
 declare global {
   interface Window {
@@ -24,10 +25,14 @@ declare global {
     starsBesideYou?: typeof globesApi;
     /** The product flow (state, data store, actions), for the console and automated tests. */
     starsFlow?: FlowApp;
+    /** The accessibility layer (switches, audio guide, palette), for the console and tests. */
+    starsA11y?: A11y;
   }
 }
 
 function main(): void {
+  // the switches, caption and palette first: they are on every screen, even when the 3D view fails
+  window.starsA11y = a11y();
   const loading = new LoadingScreen(IMAGERY_TIMEOUT_MS);
   let globes;
   try {

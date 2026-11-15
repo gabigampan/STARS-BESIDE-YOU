@@ -36,11 +36,11 @@
 .btn-primary {
   background: var(--sodium);
   border-color: var(--sodium);
-  color: #17130b;
+  color: var(--on-accent);
   font-weight: 600;
 }
 .btn-primary:hover {
-  background: #e2c18c;
+  background: var(--accent-hover);
 }
 .btn-icon {
   padding: 0;
@@ -155,7 +155,7 @@
   border: 1px solid var(--danger);
   border-left-width: 4px;
   border-radius: 3px;
-  background: rgba(229, 154, 140, 0.08);
+  background: var(--danger-wash);
 }
 .alert p {
   margin: 0 0 12px;
@@ -238,7 +238,7 @@ button.step-btn:hover {
 .step.is-current .step-num {
   background: var(--sodium);
   border-color: var(--sodium);
-  color: #17130b;
+  color: var(--on-accent);
 }
 .step.is-current .step-label {
   text-decoration: underline;
@@ -1426,8 +1426,8 @@ body.view-open .topbar {
   display: inline-block;
   width: 16px;
   height: 12px;
-  border: 1px solid rgba(240, 226, 196, 0.95);
-  background: rgba(232, 214, 176, 0.16);
+  border: 1px solid var(--zone-line);
+  background: var(--zone-fill);
   flex: none;
 }
 .zone-caption .btn {
