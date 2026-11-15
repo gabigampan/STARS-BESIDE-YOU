@@ -192,6 +192,10 @@ class BodyMarkers {
       verticalOrigin: VerticalOrigin.CENTER,
       pixelOffset: new Cartesian2(16, 0),
       disableDepthTestDistance: NO_DEPTH,
+      // a dark plate keeps the name readable over bright ground (deserts, ice)
+      showBackground: true,
+      backgroundColor: Color.fromBytes(0, 0, 0, 190),
+      backgroundPadding: new Cartesian2(6, 4),
     };
     this.selLabel = this.overlayLabels.add(labelOpts);
     this.hoverLabel = this.overlayLabels.add(labelOpts);
@@ -408,7 +412,7 @@ class BodyMarkers {
       if (text) {
         this.selLabel.text = text;
         this.selLabel.position = sel.point.position;
-        this.selLabel.pixelOffset = new Cartesian2((sel.point.pixelSize + 14) / 2 + 6, 0);
+        this.selLabel.pixelOffset = new Cartesian2((sel.point.pixelSize + 14) / 2 + 10, -14);
         this.selLabel.fillColor = Color.fromAlpha(TEXT, sel.fade, new Color());
       }
     } else {

@@ -49,8 +49,9 @@ export class DataError extends Error {
   constructor(file: string, detail: string) {
     // The technical detail (HTTP status, network error) goes to the console, not on screen.
     super(
-      `The mission data file "${file}" could not be loaded. ` +
-        'Check the network connection and reload the page; if it keeps failing, the site was published without its data folder.',
+      'The mission data could not be loaded. ' +
+        'Check the network connection and reload the page; if it keeps failing, the site was published without its data folder. ' +
+        `(For the team: the missing file is ${file}.)`,
     );
     if (typeof console !== 'undefined') console.warn(`[data] ${file}: ${detail}`);
     this.name = 'DataError';

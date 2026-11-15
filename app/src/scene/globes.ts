@@ -121,8 +121,8 @@ function trackImagery(view: BodyView, layer: ImageryLayer, sourceName: string, h
     failed++;
     if (!view.status.ready && failed >= 2 && ok === 0) {
       view.status.error =
-        `${sourceName} did not load: ${host} refused or failed ${failed} tile requests ` +
-        `(last: level ${err.level}, column ${err.x}, row ${err.y}). Check the network connection and reload.`;
+        `${sourceName} did not load: the imagery service (${host}) did not answer. Check the network connection and reload.`;
+      console.warn(`[imagery] ${host}: ${failed} tile requests failed (last: level ${err.level}, column ${err.x}, row ${err.y})`);
       emit();
     }
   });
