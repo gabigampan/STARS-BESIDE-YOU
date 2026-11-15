@@ -768,7 +768,7 @@ async function checkPanel(page, label, store, m, id, twins) {
       if (!b) return;
       const pct = r.def.unit === 'percentile points';
       const close = (txt, v, p1 = pct) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= (p1 ? 0.051 : 0.006 * Math.abs(v) + 0.006);
-      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
+      if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.def.unit === 'percentile points' && r.earth != null && r.moon != null ? Math.abs(Math.round(b.vals.earth * 10) - Math.round(b.vals.moon * 10)) / 10 : r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
       if (r.real && (!close(b.vals['earth-real'], r.real.earth, false) || !close(b.vals['moon-real'], r.real.moon, false) || !close(b.vals['diff-real'], r.real.diff, false) || !/\bK\b/.test(b.vals['diff-real'] ?? '') === (r.real.unit === 'K'))) bad.push(`real values ${r.def.variable}: ${b.vals['earth-real']} / ${b.vals['moon-real']} / ${b.vals['diff-real']}`);
       if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${setByWords(r.def.tolerance_set_by)}`)) bad.push(`tolerance ${r.def.variable}`);
       if (!b.vals.within.includes(r.within ? 'Within' : 'Outside') || b.within !== String(r.within)) bad.push(`within ${r.def.variable}`);
@@ -805,7 +805,8 @@ async function checkPanel(page, label, store, m, id, twins) {
     const rock = p.info.find((r) => r.v === 'rock_or_bare_frac');
     if (store.text('rock_note') && (!rock || !rock.cells[0].includes(store.text('rock_note')))) bad.push('bare-ground note');
   }
-  const wantMeaning = o.valueRule ? store.text('similarity_meaning_real_values') : twins ? store.text('similarity_meaning') : store.similarity.meaning.split(/(?<=\.)\s/)[0];
+  // the meaning of the mission's own rule (similarity_meaning_<x> naming the mission), from the bundle
+  const wantMeaning = o.valueRule ? (store.textFor('similarity_meaning', m.id)?.text ?? store.text('similarity_meaning_real_values')) : twins ? store.text('similarity_meaning') : store.similarity.meaning.split(/(?<=\.)\s/)[0];
   if (p.meaning !== wantMeaning) bad.push('meaning sentence');
   // other missions
   const others = store.offeredMissions().filter((x) => x.id !== m.id);

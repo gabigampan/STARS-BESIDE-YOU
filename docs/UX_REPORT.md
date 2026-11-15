@@ -127,4 +127,32 @@ Within/Outside with tick or cross and the word, key caps with numbers).
 
 ## Test results
 
-See the final runs below (filled at the end of the session).
+Last runs on this machine (4 shared CPUs, software WebGL; four suites ran in parallel at the end,
+so the timeouts below are suspected starvation and must be re-run alone):
+
+| Script | Bundle / size | Result |
+|---|---|---|
+| typecheck, build | - | pass |
+| test:data | shipped, no-twin fixture | all passed (incl. Solar sentence = explain.json on 25 pairs, share lost agrees with the printed numbers on 500 pairs, top 5 = audio 35, 36, 38, 37, 36; Lunar base sentence = explain.json on 25 pairs) |
+| test:a11y | shipped 375x812 and 812x375 (+ 768, 3840 widths) | 212 ok, 0 failed (incl. touch: pinch 9,000 km to 3,704 km, drag rotates 106.5° to 97.3°; axe clean on every screen, both palettes) |
+| test:a11y | no-twin fixture 1440x900 and 375x812 | 154 ok, 0 failed |
+| test:a11y | shipped 1440x900 | 91 ok and 0 failed when this report was written (still running); the earlier full run had 1 real track playing in Chromium (m1_rover.mp3, 33.0 s) |
+| test:flow | shipped + fixture, desktop and phone | 522 ok; 4 Lunar base panel checks failed because the test still expected the old meaning sentence and the unrounded difference (the reviewer's findings 1 and 2): the test is updated in the last commit, not re-run; 1 "page.click timeout" in the desktop run (suspected starvation) |
+| smoke | shipped | 32 ok; 1 failed: imagery did not finish within 90 s while three other browser suites ran (starvation); re-run alone |
+| review.mjs | - | not run in this session |
+
+Frame rate: this machine renders WebGL in software (SwiftShader), so no frame-rate figure measured
+here says anything about 60 fps on a computer or 30 fps on a phone; not measured.
+
+## Not done / to check
+
+- Phone landscape (812x375): the switches, caption, top five and shortcut list fit and work (tested),
+  but on the mission and pair screens the panel leaves the globes almost no height; the globes are
+  shown on the start screen and when the panel is scrolled. A layout change for landscape phones is
+  not done.
+- After Escape from a pair, focus returns to that pair's row in the list (kept from the existing
+  flow test and its checklist item) rather than to the step heading; every forward step focuses its
+  heading.
+- The standard palette is not colour-blind-safe by distance (numbers above); it relies on text and
+  icons, and the switch provides the safe palette.
+- review.mjs and a solo re-run of smoke and test:flow are pending.
