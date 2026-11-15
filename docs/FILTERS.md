@@ -128,7 +128,7 @@ The rover entry also keeps `tolerances` and `workable_days`, identical to the ol
 **The rover block is not empty.** The team lead's brief said it was. The repository wins: `mission_scoring.json:10-31` holds a provisional rover block with gates (`slope_300m_deg` 0.5 to 15, `rough_300m_m` 5 to 650) and soft weights 0.45, 0.30, 0.25. It also holds a provisional ice block (lines 74-88). Two other texts disagree with the JSON:
 
 - the module docstring calls rover `'external': true` (`mission_scoring.py:11-12`), but the JSON has no `external` key;
-- the author's note says rover is "pendiente por definir / Hueco para tu compañero" (`Instruciones filtros solar y temp:17`).
+- the author's note says rover is "pendiente por definir / Hueco para tu compañero" (`archive/Instruciones filtros solar y temp:17`).
 
 ### Behaviour on missing data
 
@@ -136,7 +136,7 @@ The rover entry also keeps `tolerances` and `workable_days`, identical to the ol
 |---|---|
 | Code default | `cfg.get("on_missing_gate", "drop")` (`mission_scoring.py:147`): a gate with a missing value **drops** the cell |
 | Shipped configuration | `"on_missing_gate": "keep"` (`mission_scoring.json:4`): a gate with a missing value **keeps** the cell (`mission_scoring.py:70`) |
-| Author's note | "En un filtro duro la celda se descarta" (`Instruciones filtros solar y temp:9`). Module docstring lines 18-19 describe both options. |
+| Author's note | "En un filtro duro la celda se descarta" (`archive/Instruciones filtros solar y temp:9`). Module docstring lines 18-19 describe both options. |
 | require_present | Always fails a missing value (NaN, "", "nan", "none"), whatever `on_missing_gate` says (`mission_scoring.py:81-89`) |
 | Effect today | None on the committed data: every column has 0 missing values. Most mission gate columns are also in `require_present`, so a missing value fails there regardless. Three gate columns are not: the two common gates (`elevation_m`, `mask_fraction`, in no `require_present`) and the solar gate `thermal_inertia_class` (solar `require_present` lists only irradiance, sun elevation, grazing fraction and `slope_deg`, `mission_scoring.json:34`). With "keep", a missing elevation, mask or (for solar) thermal-inertia class would **keep** the cell. |
 | Soft criteria | A missing value is ignored and the remaining weights are renormalised. `coverage_<m>` = weight with data / total weight (`mission_scoring.py:117-135`). |
@@ -193,7 +193,7 @@ The old counts equal `mission_stats` in the committed `output_py/analog_web_data
 
 ## (d) Reproduction of the author's counts, and the same gates on the Moon
 
-**Command** (author's note, `Instruciones filtros solar y temp:27`), run in the scratch copy:
+**Command** (author's note, `archive/Instruciones filtros solar y temp:27`), run in the scratch copy:
 
 ```
 python mission_scoring.py run --cells output_py/earth_moon_harmonized_clean.csv --missions solar,thermal --out <scratch>/ms_st.csv
@@ -215,7 +215,7 @@ pasan todas: 1986
 
 **Top cells:**
 
-- **Solar:** Senegal, Chad, Somalia, Burkina Faso, Central African Republic, Benin and DR Congo, with scores 95.08-95.62 (top 10; countries from `reverse_geocoder`). The top 100 lies between -27 and 23 deg latitude. The note says "los mejores sitios están en el Sahel y el Sahara" (`Instruciones filtros solar y temp:21`); that is only partly true: several top-10 cells lie outside both, in Somalia (1 S), DR Congo (3 S) and the Central African Republic (5 N).
+- **Solar:** Senegal, Chad, Somalia, Burkina Faso, Central African Republic, Benin and DR Congo, with scores 95.08-95.62 (top 10; countries from `reverse_geocoder`). The top 100 lies between -27 and 23 deg latitude. The note says "los mejores sitios están en el Sahel y el Sahara" (`archive/Instruciones filtros solar y temp:21`); that is only partly true: several top-10 cells lie outside both, in Somalia (1 S), DR Congo (3 S) and the Central African Republic (5 N).
 - **Thermal:** Tibet and Xinjiang (scores 80.2-84.1), then East Antarctica near -80 deg (about 79.4).
 
 ### The same gates on lunar cells

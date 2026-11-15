@@ -7,7 +7,7 @@
 - Repository `/home/user/stars-beside-you`, HEAD `5a9d749` (final-integration), with uncommitted edits to README.md and docs/AI_USE.md.
 - **History:** every object reachable from `git rev-list --all`. That is 188 commits across HEAD, main and 10 origin/* branches, and 2,514 unique objects. Text blobs were scanned once each. 172 binary blobs were skipped for the text patterns. Commit messages were scanned too.
 - **Working tree:** the 667 files tracked at HEAD.
-- **Zip:** `STARS-BESIDE-YOU-main (2).zip` has 60 entries. Its 50 files were extracted to `scratchpad/order/zipx` and scanned. Nothing was executed.
+- **Zip:** `archive/STARS-BESIDE-YOU-main (2).zip` has 60 entries. Its 50 files were extracted to `scratchpad/order/zipx` and scanned. Nothing was executed.
 - **Local files outside git:**
   - `app/.env.local`
   - the Vercel token file under `/root/.config`
@@ -75,7 +75,7 @@ These are not secrets, but they matter for a public repository.
 
 | Bytes | Path |
 |---|---|
-| 14,031,467 | `STARS-BESIDE-YOU-main (2).zip` |
+| 14,031,467 | `archive/STARS-BESIDE-YOU-main (2).zip` |
 | 12,182,950 | `tierra luna/output_real/moon_real_1deg.csv` |
 | 11,824,940 | `app/public/media/lunar-base/lunar-base.webm` |
 | 11,168,347 | `app/public/media/lunar-base/lunar-base.mp4` |
@@ -89,7 +89,7 @@ History also keeps 7 older versions of the videos and of `moon_real_1deg.csv`, 7
 
 ## Tracked archives, caches and `__pycache__`
 
-- **Archive:** `STARS-BESIDE-YOU-main (2).zip` is an old snapshot of the original main. It holds its own `__pycache__` and `data/cache` and contains no secrets. It goes to archive/ or is deleted from the tree.
+- **Archive:** `archive/STARS-BESIDE-YOU-main (2).zip` is an old snapshot of the original main. It holds its own `__pycache__` and `data/cache` and contains no secrets. It goes to archive/ or is deleted from the tree.
 - **`__pycache__`:** 8 files under `tierra luna/__pycache__/*.cpython-312.pyc`, plus `tierra luna/tests/__pycache__/test_pipeline.cpython-312-pytest-9.2.0.pyc`. They are already in .gitignore but still tracked, so they need `git rm --cached`. None of them contain personal home paths.
 - **Cache:** `tierra luna/data/cache/` holds 13 files, 12.8 MB in total: PDS `.lbl` and `.img` files, row-slice `.bin` files, `earth_global_real.npz` and `moon_global_pds.npz`.
 - **Other binaries:**

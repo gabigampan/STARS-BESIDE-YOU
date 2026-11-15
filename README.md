@@ -1,5 +1,7 @@
 # Stars Beside You
 
+**Live web app: [stars-beside-you.vercel.app](https://stars-beside-you.vercel.app)**
+
 Team "Stars Beside You", NASA Space Apps Challenge 2026 (Málaga), challenge "Earth analogs for Permanent
 Moon Base and Mars".
 
@@ -10,10 +12,29 @@ that pairs each Earth point with its lunar "twin" and explains every number. It 
 planners, students and the public, and for the jury: every value shown carries its source and its data level
 (measured, derived or modelled).
 
+## For the jury: start here
+
+- **Live app:** https://stars-beside-you.vercel.app (desktop or phone; press 1, 2 or 3 to pick a mission).
+- **What it does:** for three Moon missions (Rover, Solar panels, Lunar base) it shows places on Earth where the mission can be tested and the place on the Moon each one matches, with the reasons and the data source of every number.
+- **Mission videos:** `app/public/media/` (rover, solar, lunar-base), also playable inside the app.
+- **Economic analysis:** [economics/](economics/README.md): why testing at Earth analogs pays off (testing in space costs 3 to 40 times more), with a 4-page PDF, a 17-sheet workbook and every source URL.
+- **How the pairs are chosen and their limits:** [docs/ANALOG_PRINCIPLE.md](docs/ANALOG_PRINCIPLE.md), [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md), [ASSUMPTIONS.md](ASSUMPTIONS.md).
+
+### In this repository
+
+| folder | what it holds |
+|---|---|
+| `app/` | the web app (static site deployed on Vercel), its data bundle, audio guide and mission videos |
+| `tierra luna/` | the team's Earth-Moon data pipeline and the analog engine (`tierra luna/engine/`) |
+| `economics/` | the economic analysis (English) |
+| `docs/` | method, data dictionary, decisions, audits and validation |
+| `scripts/` | build and deployment helpers |
+| `archive/` | the team's early notes and a snapshot zip of the first version, kept for the record |
+
 > **What is new here and what the team wrote.** The repository had no root README; the team's own
 > documentation is `tierra luna/README.md` (the original Earth-Moon extraction, harmonisation and cleaning
 > pipeline, `main.py`, `analog_finder.py`, `web/index.html`), and it is kept unchanged. Everything below
-> describes the work added on the branch `final-integration`: the real-data tables, the analog engine
+> describes the work added for the final version (prepared on the branch `final-integration`): the real-data tables, the analog engine
 > (`tierra luna/engine/`), the web app (`app/`), the mission videos and the documents in `docs/`.
 > On this branch three of the team's files were edited (`tierra luna/analog_finder.py`, `rover_preset.py`,
 > `data/presets/presets.json`; see [docs/PR_DESCRIPTION.md](docs/PR_DESCRIPTION.md)); the team's

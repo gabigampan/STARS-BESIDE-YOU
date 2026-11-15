@@ -30,6 +30,10 @@ This folder holds the economic part of the project: how much it costs to test ha
 4. **Theory.** Cost-effectiveness analysis, expected value of information (Raiffa and Schlaifer, 1961; Howard, 1966), real options (Dixit and Pindyck, 1994), economies of scope, learning curves (Wright, 1936) and error-cost escalation (Stecklein et al., 2004). Full derivation in `theoretical_framework.md`.
 5. **Dashboard model.** A separate scenario model (`dashboard/`) compares one lunar delivery with one field campaign at nine Earth analog sites at official rates, with a 20,000-draw Monte Carlo (seed 42), a tornado analysis and an independent verification.
 
+## In this repository
+
+This folder is part of the Stars Beside You repository; the main [README](../README.md) explains the web app and the analog pairs. The economics answer the question the app raises: is it worth finding better Earth analogs? Errata fixed in the text of the original materials are listed in [ERRATA.md](ERRATA.md), and [SHA256SUMS.txt](SHA256SUMS.txt) holds the checksum of every delivered file.
+
 ## Files
 
 | File | Content |
