@@ -407,7 +407,7 @@ a:hover {
   bottom: calc(var(--pad) + 40px); /* above Cesium's credit line */
   width: fit-content;
   margin-inline: auto;
-  z-index: 7; /* above the start screen's shade (.intro, z-index 6) */
+  z-index: 3; /* under the start screen's shade (.intro, z-index 6) and the panels: never over a card */
   display: flex;
   align-items: center;
   gap: 4px 10px;

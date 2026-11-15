@@ -1843,6 +1843,7 @@ body.view-open .topbar {
   font-size: var(--step--1);
 }
 .pair-region {
+  flex-basis: 100%; /* its own line under the twin's name, never a line starting with a comma */
   font-size: var(--step--1);
   color: var(--text-dim);
 }
@@ -1923,7 +1924,12 @@ body.view-open .topbar {
   white-space: normal;
 }
 .top5-overall {
+  display: inline-block; /* moves to the next line whole instead of running under the score */
   white-space: nowrap;
+}
+.top5-place,
+.top5-twin {
+  overflow-wrap: anywhere;
 }
 .top5-note:empty {
   display: none;

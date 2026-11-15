@@ -255,7 +255,7 @@ function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
   return h(
     'div',
     { class: 'pair-strip', 'data-pair': o.twin ? String(o.twin.id) : 'mean' },
-    h('p', { class: 'pair-line' }, h('span', { class: 'pair-k' }, twins ? 'Its twin on the Moon:' : 'Compared on the Moon with'), h('strong', null, moon), o.twin?.nasa_region?.text ? h('span', { class: 'pair-region', 'data-text': 'nasa_region' }, `, ${o.twin.nasa_region.text}`) : null),
+    h('p', { class: 'pair-line' }, h('span', { class: 'pair-k' }, twins ? 'Its twin on the Moon:' : 'Compared on the Moon with'), h('strong', null, moon), o.twin?.nasa_region?.text ? h('span', { class: 'pair-region', 'data-text': 'nasa_region' }, capitalise(o.twin.nasa_region.text)) : null),
     h('dl', { class: 'figs' }, fig('Final', fixed(o.final, 2), 'final'), fig('Similarity', fixed(o.similarity, 2), 'similarity'), fig('Suitability', fixed(o.suitability, 2), 'suitability')),
     ...pairSentenceBoxes(o),
   );

@@ -26,9 +26,13 @@ if (!existsSync(join(DIST, 'index.html'))) {
   process.exit(2);
 }
 
-const SIZES = [
-  [320, 568], [360, 640], [375, 812], [414, 896], [812, 375], [667, 375], [1366, 768],
-];
+// OVERLAP_SIZES="320x568,375x812" and OVERLAP_STATES="start,mission,pair,more,options,audio" narrow the run;
+// OVERLAP_WAIT (ms, default 700) is the fixed pause per state (no tile is waited for).
+const SIZES = process.env.OVERLAP_SIZES
+  ? process.env.OVERLAP_SIZES.split(',').map((x) => x.trim().split('x').map(Number))
+  : [[320, 568], [360, 640], [375, 812], [414, 896], [812, 375], [667, 375], [1366, 768]];
+const STATES = new Set((process.env.OVERLAP_STATES ?? 'start,mission,pair,more,options,audio').split(',').map((x) => x.trim()));
+const WAIT = Number(process.env.OVERLAP_WAIT ?? 700);
 const srv = await serve(DIST);
 const browser = await chromium.launch();
 
@@ -138,7 +142,7 @@ function scan() {
 }
 
 const waitStep = (page, s) => page.waitForFunction((x) => window.starsFlow?.state.step === x, s, { timeout: 20_000 }).then(() => true, () => false);
-const settle = (page) => page.waitForTimeout(700);
+const settle = (page) => page.waitForTimeout(WAIT);
 const unfold = async (page) => {
   await page.evaluate(() => {
     if (document.body.classList.contains('mf-folded')) document.getElementById('mf-handle')?.click();
@@ -164,6 +168,8 @@ for (const [w, hgt] of SIZES) {
   await settle(page);
   const states = [];
   const record = async (label) => {
+    const kind = label === 'start' ? 'start' : label.endsWith('more') ? 'more' : label.endsWith('pair') ? 'pair' : label.startsWith('mission') ? 'mission' : label.startsWith('options') ? 'options' : 'audio';
+    if (!STATES.has(kind)) return;
     const r = await page.evaluate(scan);
     const n = r.overlaps.length + r.outside.length + r.cut.length;
     total[key].overlaps += r.overlaps.length;
@@ -213,11 +219,11 @@ for (const [w, hgt] of SIZES) {
     await record('options open');
     await page.click('#mf-options');
   }
-  await page.evaluate(() => {
+  if (STATES.has('audio')) await page.evaluate(() => {
     const s = document.getElementById('switch-audio');
     if (s && s.getAttribute('aria-checked') !== 'true') s.click();
   });
-  await page.waitForTimeout(1200);
+  if (STATES.has('audio')) await page.waitForTimeout(1200);
   await record('audio guide on');
   await ctx.close();
 }
