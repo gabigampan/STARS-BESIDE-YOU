@@ -133,6 +133,8 @@ export function plainText(store: DataStore, text: string, mission?: Mission): st
   t = t.replace(/\|lat\|\s*<=\s*([\d.]+)(?:°| deg)?/g, 'latitude within $1° of the equator').replace(/\s<=\s/g, ' at most ').replace(/\s>=\s/g, ' at least ');
   t = t.replace(/(\d) deg\b/g, '$1°').replace(/\bkWh\/m2\/day\b/g, 'kWh/m²/day');
   t = classWordsIn(t);
+  // any other code-like name (product ids such as LDEM_16): underscores read as spaces
+  t = t.replace(/([A-Za-z0-9])_(?=[A-Za-z0-9])/g, '$1 ');
   t = t.replace(/\s{2,}/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
   return t.replace(/(^|[.!?]\s+)([a-z])/g, (_all, p: string, c: string) => p + c.toUpperCase());
 }
@@ -153,5 +155,14 @@ export function noPairKindWords(kind: string): string {
 
 /** A known limitation that describes the z-score similarity, for a mission whose rule no longer uses z-scores. */
 export function staleForRule(store: DataStore, m: Mission, text: string): boolean {
-  return store.isValueRule(m.id) && /\bz-scores?\b/i.test(text);
+  if (!store.isValueRule(m.id)) return false;
+  if (/\bz-scores?\b/i.test(text)) return true;
+  // "<variable> ... is a suitability criterion only" for a variable the similarity now compares
+  const used = store.pairVariables(m.id).flatMap((d) => [d.variable, d.sides?.EARTH?.column ?? '']).filter(Boolean);
+  return /suitability criterion only/i.test(text) && used.some((c) => new RegExp(`\\b${c}\\b`).test(text));
+}
+
+/** A product or file name for display: underscores read as spaces ("LOLA LDEM_16" -> "LOLA LDEM 16"). */
+export function plainName(name: string): string {
+  return name.replace(/_/g, ' ');
 }

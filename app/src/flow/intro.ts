@@ -35,7 +35,16 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
         { type: 'button', class: 'choice', 'data-mission': m.id, 'aria-pressed': cur === m.id ? 'true' : 'false', 'aria-busy': loading ? 'true' : null },
         h('span', { class: 'choice-name' }, missionName(m), icon('next')),
         h('span', { class: 'choice-line' }, missionLine(m)),
-        h('span', { class: 'choice-meta' }, loading ? h('span', { class: 'spinner', 'aria-hidden': 'true' }) : null, loading ? 'Loading' : `${int(m.pass_counts.EARTH)} places pass · ${statusWords(m).toLowerCase()}`),
+        h(
+          'span',
+          { class: 'choice-meta' },
+          loading ? h('span', { class: 'spinner', 'aria-hidden': 'true' }) : null,
+          loading
+            ? 'Loading'
+            : app.store.hasTwins(m.id) && m.ranked_count < m.pass_counts.EARTH
+              ? `${int(m.ranked_count)} with a lunar twin, of ${int(m.pass_counts.EARTH)} places that pass · ${statusWords(m).toLowerCase()}`
+              : `${int(m.pass_counts.EARTH)} places pass · ${statusWords(m).toLowerCase()}`,
+        ),
       );
       b.addEventListener('click', () => void app.chooseMission(m.id));
       b.addEventListener('keydown', (e) => {

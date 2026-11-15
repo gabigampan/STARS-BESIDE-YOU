@@ -7,7 +7,7 @@
 import type { GateRow, MissionOutcome, PairRow, RequiredRow } from '../data/store.ts';
 import type { Level, Mission, ReasonCode } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { REGION_CAVEAT, classWordsIn, firstSentence, missionName, roleWord, setByWords, statusWords } from './copy';
+import { REGION_CAVEAT, firstSentence, missionName, plainName, plainText, roleWord, setByWords, statusWords } from './copy';
 import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, limitWords, num, valueText, verdict } from './dom';
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
@@ -53,7 +53,7 @@ export function reliefNote(app: FlowApp, variable: string): { baseline: string; 
 
 function reliefSub(app: FlowApp, variable: string): HTMLElement | null {
   const n = reliefNote(app, variable);
-  return n ? h('span', { class: 'sub note', 'data-note': 'baseline' }, `True baseline: ${n.baseline} (see "Slope and roughness" below)`) : null;
+  return n ? h('span', { class: 'sub note', 'data-note': 'baseline' }, `True baseline: ${plainText(app.store, n.baseline)} (see "Slope and roughness" below)`) : null;
 }
 
 /** The caveat of every relief variable shown in the panel, once each (ASSUMPTIONS 0.9 item 3). */
@@ -65,7 +65,7 @@ function reliefSection(app: FlowApp, variables: string[]): HTMLElement | null {
     const label = app.store.variable(v)?.label ?? v;
     if (!n || seen.has(label)) continue;
     seen.add(label);
-    items.push(h('li', { 'data-variable': v }, h('strong', null, `${label}: `), `true baseline ${n.baseline}. ${capitalise(firstSentence(n.caveat))}`));
+    items.push(h('li', { 'data-variable': v }, h('strong', null, `${label}: `), `true baseline ${plainText(app.store, n.baseline)}. ${capitalise(firstSentence(plainText(app.store, n.caveat)))}`));
   }
   if (!items.length) return null;
   return h(
@@ -618,8 +618,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         'div',
         { class: 'src' },
         h('h4', null, info.label),
-        e ? h('p', null, h('span', { class: 'side' }, 'Earth: '), levelTag(e.level as Level), ` ${e.product || 'no product'}${e.true_baseline ? `; true baseline ${e.true_baseline}` : ''}. ${classWordsIn(e.caveat ?? '')}`) : null,
-        mo ? h('p', null, h('span', { class: 'side' }, 'Moon: '), levelTag(mo.level as Level), ` ${mo.product || 'no product'}. ${classWordsIn(mo.caveat ?? '')}`) : null,
+        e ? h('p', null, h('span', { class: 'side' }, 'Earth: '), levelTag(e.level as Level), ` ${plainName(e.product || 'no product')}${e.true_baseline ? `; true baseline ${e.true_baseline}` : ''}. ${plainText(store, e.caveat ?? '')}`) : null,
+        mo ? h('p', null, h('span', { class: 'side' }, 'Moon: '), levelTag(mo.level as Level), ` ${plainName(mo.product || 'no product')}. ${plainText(store, mo.caveat ?? '')}`) : null,
       ),
     );
   }

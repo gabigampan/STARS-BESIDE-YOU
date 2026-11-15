@@ -347,7 +347,7 @@ async function run(browser, srv, variant, exp, size) {
   check(/111 km/.test(dlg.text) && /30 km/.test(dlg.text), `${tag}: "Data and limits" states the cell size`);
   check(dlg.meaning.length > 40 && store.offeredMissions().every((x) => dlg.meaning.includes(x.id === 'lunar_base' || !store.isValueRule(x.id) ? '' : store.text('similarity_meaning_real_values') ?? '')), `${tag}: "Data and limits" says what similarity means for each mission's rule`);
   check(lims, `${tag}: "Data and limits" lists every known limitation of the three missions, in plain words`);
-  check(dlg.sources >= 5 && dlg.imagery && store.manifest.credits.every((c) => dlg.text.includes(c)), `${tag}: sources with licences (${dlg.sources}), the bundle's credits and the imagery credits are together`);
+  check(dlg.sources >= 5 && dlg.imagery && store.manifest.credits.every((c) => dlg.text.includes(plainText(store, c))), `${tag}: sources with licences (${dlg.sources}), the bundle's credits and the imagery credits are together`);
   await shot('data-and-limits');
   await audit('data and limits');
   await page.click('#credits-close');
@@ -746,7 +746,7 @@ async function checkPanel(page, label, store, m, id, twins) {
     });
     if (!near(Number(p.suitability), o.suitability, 2)) bad.push(`suitability ${p.suitability} vs ${o.suitability}`);
     if (!near(nums(p.coverage ?? '')[0], 100 * o.coverage, 1)) bad.push('coverage');
-    if (!p.confidence?.toLowerCase().startsWith(o.confidence) || !near(nums(p.confidence)[0], o.confidenceScore, 3)) bad.push(`confidence "${p.confidence}"`);
+    if (o.confidence == null ? p.confidence != null : !p.confidence?.toLowerCase().startsWith(o.confidence) || !near(nums(p.confidence)[0], o.confidenceScore, 3)) bad.push(`confidence "${p.confidence}"`);
   }
   if (o.pass && !unpaired) {
     if (!near(Number(p.similarity), o.similarity, 2)) bad.push('similarity');

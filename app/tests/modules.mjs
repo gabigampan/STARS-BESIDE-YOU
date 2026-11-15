@@ -31,6 +31,22 @@ const fail = (msg) => {
 const ok = (msg) => console.log(`ok   ${msg}`);
 const check = (cond, msg) => (cond ? ok(msg) : fail(msg));
 
+// The modules are tested on the bare globes. The product flow (src/flow) opens on its first screen,
+// an overlay over both globes with the panes inert, so pointer events never reach the canvases and the
+// globes are hidden from the pixel checks: put it aside, as when a mission is open.
+const bareGlobes = (page) =>
+  page.evaluate(() => {
+    const intro = document.getElementById('intro');
+    if (intro) intro.hidden = true;
+    for (const id of ['earth-pane', 'moon-pane']) document.getElementById(id)?.removeAttribute('inert');
+    if (document.body.classList.contains('flow')) document.body.dataset.step = 'modules-test';
+    for (const b of ['earth', 'moon']) {
+      window.starsBesideYou.viewer(b).resize();
+      window.starsBesideYou.scene(b).requestRender();
+    }
+  });
+
+
 if (!process.argv.includes('--no-build')) {
   const r = spawnSync('npm', ['run', 'build'], { cwd: APP, env: { ...process.env, VITE_USE_ION: '' }, encoding: 'utf8' });
   if (r.status !== 0) {
@@ -215,6 +231,7 @@ async function run(name, viewport, { touch = false } = {}) {
 
   await page.goto(BASE, { waitUntil: 'load' });
   await page.waitForSelector('#loading', { state: 'hidden', timeout: 300_000 });
+  await bareGlobes(page);
   await waitTiles(page, 'earth');
   await waitTiles(page, 'moon');
   const P = (body) => (body === 'earth' ? 'Earth' : 'Moon');
@@ -887,6 +904,7 @@ async function runReduced() {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(BASE, { waitUntil: 'load' });
   await page.waitForSelector('#loading', { state: 'hidden', timeout: 300_000 });
+  await bareGlobes(page);
   const r = await page.evaluate(async () => {
     const api = window.starsBesideYou;
     const okk = await api.focus.focusPair({ earth: { lat: 23.5, lon: 12.5 }, moon: { lat: -43.5, lon: -11.5 } });

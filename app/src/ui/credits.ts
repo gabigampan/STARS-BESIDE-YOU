@@ -11,7 +11,7 @@ export interface CreditEntry {
 export const CREDITS: CreditEntry[] = [
   {
     source: 'NASA Global Imagery Browse Services (GIBS)',
-    used: 'Earth base imagery (Blue Marble Next Generation, layer BlueMarble_NextGeneration), night lights (Black Marble 2016, layer VIIRS_Black_Marble) and place-name overlay (Reference_Labels_15m).',
+    used: 'Earth base imagery (Blue Marble Next Generation), night lights (VIIRS Black Marble 2016) and the place-name overlay (reference labels, 15 m).',
     credit:
       "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).",
     licence: 'NASA Earth science data, openly available without a key or fee; the credit line above is requested by GIBS.',
@@ -27,7 +27,7 @@ export const CREDITS: CreditEntry[] = [
   },
   {
     source: 'NASA Moon Trek (Solar System Treks, NASA/JPL)',
-    used: 'Moon imagery: LRO Wide Angle Camera global mosaic, layer LRO_WAC_Mosaic_Global_303ppd_v02.',
+    used: 'Moon imagery: LRO Wide Angle Camera global mosaic (303 pixels per degree, version 2).',
     credit: 'NASA Moon Trek; LRO LROC Wide Angle Camera mosaic, NASA/GSFC/Arizona State University.',
     licence: 'NASA mission data. The Moon Trek service publishes no separate licence text; NASA/GSFC/ASU are credited as the image source.',
     link: 'https://trek.nasa.gov/moon/',

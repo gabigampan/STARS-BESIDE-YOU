@@ -444,7 +444,7 @@ export class FlowApp {
   }
 
   async resetWeights(): Promise<void> {
-    await this.setWeights(null, null);
+    await this.setWeights(null, null, null);
     this.missionPanel.render();
     this.announce("Weights reset to the team's values.");
   }

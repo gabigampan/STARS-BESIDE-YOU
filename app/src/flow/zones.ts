@@ -207,6 +207,8 @@ export class ZoneView {
     if (this.dialog) return this.dialog;
     const d = h('dialog', { class: 'credits zone-dialog', id: 'zone-dialog', 'aria-labelledby': 'zone-title' }) as HTMLDialogElement;
     d.addEventListener('click', (e) => {
+      // only a pointer click on the backdrop closes it (a keyboard click has no position)
+      if (e.target !== d || e.detail === 0) return;
       const r = d.getBoundingClientRect();
       if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) d.close();
     });

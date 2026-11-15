@@ -1334,7 +1334,7 @@ body.view-open .topbar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 6px 0 4px;
+  margin: 10px 0 4px;
   padding: 0;
   border: 0;
   min-width: 0;

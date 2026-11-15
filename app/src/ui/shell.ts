@@ -20,7 +20,9 @@ export function setupCredits(extra: CreditEntry[] = []): void {
   });
   close.addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', (e) => {
-    // A click on the backdrop (outside the dialog box) closes it.
+    // A pointer click on the backdrop (outside the dialog box) closes it; a keyboard click (Enter on a
+    // summary or a link inside) has no position and must not.
+    if (e.target !== dialog || e.detail === 0) return;
     const r = dialog.getBoundingClientRect();
     const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
     if (!inside) dialog.close();

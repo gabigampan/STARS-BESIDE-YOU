@@ -4,7 +4,7 @@
 
 import type { DataStore } from '../data/store.ts';
 import type { Mission } from '../data/types.ts';
-import { missionName, plainText, roleWord, setByWords, staleForRule, statusWords } from './copy';
+import { missionName, plainName, plainText, roleWord, setByWords, staleForRule, statusWords } from './copy';
 import { gateWords, plainFunnel } from './funnel';
 import { append, h, int, levelTag, valueText } from './dom';
 
@@ -78,13 +78,13 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
   for (const [product, e] of products) {
     const firstUrl = e.url.split(/\s;\s|\s/).find((u) => /^https?:/.test(u));
     add(dl, 
-      h('dt', null, firstUrl ? h('a', { href: firstUrl, target: '_blank', rel: 'noopener' }, product) : product),
+      h('dt', null, firstUrl ? h('a', { href: firstUrl, target: '_blank', rel: 'noopener' }, plainName(product)) : plainName(product)),
       h('dd', null, `Used for: ${e.vars.join(', ')}.`),
-      e.licence ? h('dd', { class: 'credit-line' }, e.licence) : null,
+      e.licence ? h('dd', { class: 'credit-line' }, plainText(store, e.licence)) : null,
     );
   }
   add(wrap, h('h3', { class: 'dlg-h' }, 'Data sources'), dl);
-  add(wrap, h('h3', { class: 'dlg-h' }, 'Place names and other credits'), h('ul', null, store.manifest.credits.map((c) => h('li', null, c))));
+  add(wrap, h('h3', { class: 'dlg-h' }, 'Place names and other credits'), h('ul', null, store.manifest.credits.map((c) => h('li', null, plainText(store, c)))));
   add(wrap, h('h3', { class: 'dlg-h' }, 'Imagery and software'));
   body.prepend(wrap);
 }
