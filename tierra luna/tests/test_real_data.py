@@ -58,7 +58,10 @@ def ecfg():
 
 @pytest.fixture(scope="module")
 def mcfg(ecfg):
-    return load_mission_config(engine_cfg=ecfg)
+    # revision 8: the mission config the build uses = the team's file with the selected
+    # criteria set applied (engine/criteria.py; the team's file itself is unchanged)
+    from engine.criteria import apply_criteria_sets
+    return apply_criteria_sets(ecfg, load_mission_config(engine_cfg=ecfg))[1]
 
 
 def _nan_equal(a, b):
@@ -111,8 +114,12 @@ def test_mission_variables_read_the_aliased_real_columns(real):
     ds = real["dataset"]
     aliases = json.load(open(resolve_path(real["engine_cfg"].v("column_aliases")), encoding="utf-8"))
     overrides = real["engine_cfg"].v("column_overrides")
+    supp = {c for sp in real["engine_cfg"].v("supplements") for c in sp["columns"]}
     for v, per in ds.reg["columns"].items():
         for b in ("EARTH", "MOON"):
+            if v in supp:  # supplementary column (datasets.json supplements): identity, its own provenance
+                assert per[b]["column"] == v
+                continue
             want = aliases[b][v]["column"]
             want = overrides.get(want, want)
             assert per[b]["column"] == want, (v, b)
@@ -168,6 +175,8 @@ def test_levels_come_from_the_provenance_files(real):
     reg = real["dataset"].reg
     for b in ("EARTH", "MOON"):
         rows = read_provenance_csv(resolve_path(ecfg_.v("provenance")[b]), b)
+        from engine.dataset import supplement_provenance_rows
+        rows.update(supplement_provenance_rows(ecfg_)[b])
         for v, e in reg["variables"].items():
             col = reg["columns"][v][b]["column"]
             assert e["bodies"][b]["level"] == normalise_level(rows[col]["level"])[0], (v, b)
@@ -468,7 +477,7 @@ def test_approved_texts_are_in_the_bundle_verbatim(real, ecfg):
     card text."""
     decisions = open(os.path.join(os.path.dirname(ROOT), "docs", "DECISIONS.md"), encoding="utf-8").read()
     assert ecfg.v("similarity_rule")["lunar_base"] == "percentile_and_real_tolerance"
-    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 7
+    assert real["manifest"]["similarity_rule"] == "per_mission" and real["manifest"]["contract_revision"] == 8
     approved = ecfg.v("approved_texts")
     assert set(approved) == {"similarity_meaning", "similarity_meaning_real_values", "similarity_meaning_lunar_base",
                              "rock_note", "missing_temperature_mark", "missing_temperature_note", "twin_sharing_note",

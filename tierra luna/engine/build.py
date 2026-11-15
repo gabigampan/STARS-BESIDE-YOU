@@ -38,7 +38,7 @@ def earth_land(ds: Dataset, mission_cfg: Dict, engine_cfg) -> np.ndarray:
 
 def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]] = None,
             engine_config_path: Optional[str] = None, mission_config_path: Optional[str] = None,
-            similarity_rule: Optional[str] = None) -> Dict:
+            similarity_rule: Optional[str] = None, criteria_sets: Optional[Dict[str, str]] = None) -> Dict:
     """Load a dataset and run every mission. Returns the pieces both formats need.
 
     ``similarity_rule`` overrides engine_config similarity_rule for this run only (used
@@ -49,6 +49,8 @@ def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]]
                                        why=f"command-line override of engine_config similarity_rule ({ecfg.similarity_rule.value!r}) for this build only")
     mpath = mission_config_path or resolve_path(ecfg.v("mission_config"))
     mcfg = load_mission_config(mpath)
+    from engine.criteria import apply_criteria_sets
+    ecfg, mcfg, criteria_info = apply_criteria_sets(ecfg, mcfg, criteria_sets)
     ds = load_dataset(ecfg, input_paths)
     if ecfg.v("on_invalid_value") != "report":
         raise ValueError("only on_invalid_value = 'report' is implemented (never fix silently)")
@@ -73,6 +75,9 @@ def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]]
         "iau_moon_nomenclature.csv": sha256_file(resolve_path(ecfg.v("lunar_gazetteer_csv"))),
         "ne_110m_admin_0_countries.geojson": sha256_file(resolve_path(ecfg.v("earth_country_polygons"))),
     }
+    for sp in ds.supplements:
+        cfg_hashes[sp["file"]] = sp["sha256"]
+        cfg_hashes[os.path.basename(sp["provenance"])] = sha256_file(resolve_path(sp["provenance"]))
     if ecfg.v("lunar_regions"):
         texts = resolve_path(ecfg.v("lunar_regions")["texts_file"])
         if os.path.exists(texts):
@@ -82,7 +87,8 @@ def compute(dataset: Optional[str] = None, input_paths: Optional[Dict[str, str]]
         cfg_hashes[os.path.basename(regions)] = sha256_file(regions)
     return {"engine_cfg": ecfg, "mission_cfg": mcfg, "dataset": ds, "cells": ds.cells, "registry": ds.reg,
             "validity": validity, "land": land, "earth_places": e_places, "features": feats, "moon_features": m_feat,
-            "results": results, "iau_source": iau_source, "config_sha256": cfg_hashes}
+            "results": results, "iau_source": iau_source, "config_sha256": cfg_hashes,
+            "criteria_info": criteria_info}
 
 
 def _build_v1(c: Dict, build_time: Optional[str]) -> Dict:
@@ -138,7 +144,7 @@ def _build_v2(c: Dict, build_time: Optional[str]) -> Dict:
 def build_bundle(dataset: Optional[str] = None, input_csv: Optional[str] = None, build_time: Optional[str] = None,
                  engine_config_path: Optional[str] = None, mission_config_path: Optional[str] = None,
                  input_paths: Optional[Dict[str, str]] = None, bundle_format: Optional[str] = None,
-                 similarity_rule: Optional[str] = None) -> Dict:
+                 similarity_rule: Optional[str] = None, criteria_sets: Optional[Dict[str, str]] = None) -> Dict:
     """Compute the bundle of a dataset (default: datasets.json default_dataset).
 
     ``input_csv`` replaces a one-file dataset's input; ``input_paths`` ({"ALL" | body: path})
@@ -147,7 +153,7 @@ def build_bundle(dataset: Optional[str] = None, input_csv: Optional[str] = None,
     """
     if input_csv is not None:
         input_paths = {"ALL": input_csv}
-    c = compute(dataset, input_paths, engine_config_path, mission_config_path, similarity_rule)
+    c = compute(dataset, input_paths, engine_config_path, mission_config_path, similarity_rule, criteria_sets)
     fmt = bundle_format or c["engine_cfg"].v("bundle_format")
     if fmt == "v1":
         out = _build_v1(c, build_time)

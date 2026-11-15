@@ -20,7 +20,7 @@
       "iau_lon_e": -1.67,
       "diameter_km": 67.0,
       "distance_km": 25.1,
-      "source": "Nearest primary IAU feature of the cell and its distance: bundle app/public/data/v2/explain.json (lunar_base rank 1, similarity.twin.feature / feature_km) and moon_base.bin feature / feature_km; feature data from lunar_named_sites.json (IAU/USGS Gazetteer of Planetary Nomenclature, http://planetarynames.wr.usgs.gov/Feature/16338)."
+      "source": "Nearest primary IAU feature of the cell and its distance: bundle app/public/data/v2/explain.json (lunar_base item of E17538, similarity.twin.feature / feature_km) and moon_base.bin feature / feature_km; feature data from lunar_named_sites.json (IAU/USGS Gazetteer of Planetary Nomenclature, http://planetarynames.wr.usgs.gov/Feature/16338)."
     },
     "zone": {
       "name": "NASA's nine candidate landing regions near the lunar south pole",
@@ -38,7 +38,7 @@
     "name": "Xinjiang Uygur Zizhiqu, China",
     "nearest_place": "Aheqi",
     "nearest_place_km": 62.3,
-    "source": "explain.json lunar_base rank 1 'place' (Natural Earth admin-1 region; nearest GeoNames populated place)"
+    "source": "explain.json lunar_base item of E17538 'place' (Natural Earth admin-1 region; nearest GeoNames populated place)"
   },
   "table_values": {
     "moon": {
@@ -306,8 +306,8 @@
     "vp9_crf": 34
   },
   "card": {
-    "title": "Earth analog and lunar twin: lunar base, pair number 1",
-    "subtitle": "Suitability 47.27, similarity 97.31, final 72.29. The lunar cell lies in NASA's nine candidate landing regions near the lunar south pole. Values from the project tables (1-degree cells); each carries its level.",
+    "title": "Earth analog and lunar twin: lunar base, analog 2 of the five shown",
+    "subtitle": "Analog 2 of the five shown (overall rank 3). Suitability 43.15, similarity 97.31, final 70.23. The lunar cell lies in NASA's nine candidate landing regions near the lunar south pole. Values from the project tables (1-degree cells); each carries its level.",
     "rows": [
       {
         "label": "Coldest temperature",
@@ -465,7 +465,7 @@
         "The Sun starts to go behind the western terrain.",
         "The Sun is behind the western terrain while still above the flat horizon: the site is in shadow and its surface cools. Exposure raised to show the ground (not to scale).",
         "The site stays in shadow. At its mean position the Earth is hidden behind the terrain from here, so there is no earthshine.",
-        "Closing card: the Earth analog in Xinjiang Uygur Zizhiqu, China (cell E17538, 41.5° N 78.5° E) and its lunar twin, cell M63528 near Mons Malapert, paired by relative thermal position, not by equal temperatures. Coldest temperature 248.61 K (−24.54 °C, modelled air) against 41.23 K (−231.92 °C, measured surface), percentiles 8.37 and 8.04; daily swing 15.60 K against 153.27 K, percentiles 6.72 and 10.18; slope 6.652° against 7.179°; roughness 238.81 m against 238.49 m; mean temperature 272.06 K against 77.49 K (not part of the similarity).",
+        "Closing card: analog 2 of the five Lunar base analogs shown (overall rank 3; suitability 43.15, similarity 97.31, final 70.23). The Earth analog in Xinjiang Uygur Zizhiqu, China (cell E17538, 41.5° N 78.5° E) and its lunar twin, cell M63528 near Mons Malapert, paired by relative thermal position, not by equal temperatures. Coldest temperature 248.61 K (−24.54 °C, modelled air) against 41.23 K (−231.92 °C, measured surface), percentiles 8.37 and 8.04; daily swing 15.60 K against 153.27 K, percentiles 6.72 and 10.18; slope 6.652° against 7.179°; roughness 238.81 m against 238.49 m; mean temperature 272.06 K against 77.49 K (not part of the similarity).",
         "This pair matches by relative thermal position, not by equal temperatures. In real values the twin is 195 K colder on average (minimum −232 °C at the surface against −24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m. 3D simulation driven by table data. Not real footage."
       ]
     },
@@ -508,20 +508,20 @@
         "El Sol empieza a ocultarse tras el relieve del oeste.",
         "El Sol está tras el relieve del oeste aunque sigue sobre el horizonte plano: el punto queda en sombra y su superficie se enfría. Exposición aumentada para mostrar el suelo (no a escala).",
         "El punto sigue en sombra. En su posición media, la Tierra queda oculta tras el relieve desde aquí, así que no hay luz cenicienta.",
-        "Tarjeta final: el análogo terrestre en Xinjiang Uygur Zizhiqu, China (celda E17538, 41,5° N 78,5° E) y su gemela lunar, la celda M63528 cerca de Mons Malapert, emparejadas por posición térmica relativa, no por temperaturas iguales. Temperatura más fría 248,61 K (−24,54 °C, aire, modelada) frente a 41,23 K (−231,92 °C, superficie, medida), percentiles 8,37 y 8,04; oscilación diaria 15,60 K frente a 153,27 K, percentiles 6,72 y 10,18; pendiente 6,652° frente a 7,179°; rugosidad 238,81 m frente a 238,49 m; temperatura media 272,06 K frente a 77,49 K (no forma parte de la similitud).",
+        "Tarjeta final: análogo 2 de los cinco análogos de la base lunar mostrados (puesto 3 de la clasificación completa; idoneidad 43,15, similitud 97,31, final 70,23). El análogo terrestre en Xinjiang Uygur Zizhiqu, China (celda E17538, 41,5° N 78,5° E) y su gemela lunar, la celda M63528 cerca de Mons Malapert, emparejadas por posición térmica relativa, no por temperaturas iguales. Temperatura más fría 248,61 K (−24,54 °C, aire, modelada) frente a 41,23 K (−231,92 °C, superficie, medida), percentiles 8,37 y 8,04; oscilación diaria 15,60 K frente a 153,27 K, percentiles 6,72 y 10,18; pendiente 6,652° frente a 7,179°; rugosidad 238,81 m frente a 238,49 m; temperatura media 272,06 K frente a 77,49 K (no forma parte de la similitud).",
         "Este par se parece por posición térmica relativa, no por temperaturas iguales. En valores reales la gemela es 195 K más fría de media (mínima −232 °C en la superficie frente a −24,5 °C de temperatura del aire aquí) y su oscilación entre el día y la noche es 138 K mayor; la pendiente difiere en 0,5° y la rugosidad en 0,3 m. Simulación 3D basada en datos de las tablas. No son imágenes reales."
       ]
     },
     "cue_rule": "Cue boundaries are the frames where the panel status changes (render.js --timeline), plus 34.5 s and the closing card; render.js refuses to write captions if the status changes inside a cue."
   },
   "pair_values": {
-    "source": "app/public/data/v2/explain.json, missions.lunar_base item with rank 1 (the same values as earth_lunar_base_pairs.bin and twins.json); prepare.py checks every number here against that file",
+    "source": "app/public/data/v2/explain.json, missions.lunar_base item of Earth point 17538, overall rank 3 and position 2 of missions.json top5.ids (the same values as earth_lunar_base_pairs.bin and twins.json); prepare.py checks every number here against that file",
     "earth_id": 17538,
     "moon_id": 63528,
-    "rank": 1,
-    "suitability": 47.27,
+    "rank": 3,
+    "suitability": 43.15,
     "similarity": 97.31,
-    "final": 72.29,
+    "final": 70.23,
     "variables": {
       "tmin_k": {
         "earth": 248.61,
@@ -572,7 +572,8 @@
       "earth_points": 2419,
       "moon_cells": 280,
       "source": "missions.json missions[lunar_base].similarity.populations"
-    }
+    },
+    "top5_position": 2
   },
   "sun_status": {
     "before_sunrise": "Sun up, behind the northern terrain",

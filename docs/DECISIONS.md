@@ -22,6 +22,53 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 
 ---
 
+## Decisiones de las 11:28 y 11:36 (15-11-2026)
+
+Órdenes del líder del equipo (11:23, 11:28 y 11:36 CET, a través de su delegado; opciones E2 y R y escala de Rover aprobadas a las 11:51 CET). Motor 3.4.0, **revisión 8 del contrato**. Especificación: `docs/stats_audit/research_2_solar_idoneidad.md` (E2), `research_3_base_lunar.md` (R), `research_5_rover_escala.md` ("Para implementar"), `research_1_rover_terreno.md`, `research_4_validacion_externa.md`. Todas las cifras salen del paquete reconstruido (dos veces, idéntico byte a byte) o de `engine/limits.py` en cada construcción. **Esta sección sustituye, para los criterios listados en la tabla de desviaciones, la regla de ayer "los filtros del repositorio exactamente como están escritos"**: `tierra luna/mission_scoring.json` no se edita; cada desviación es una entrada de `engine_config.json` `criteria_sets` con el valor del equipo citado, el nuestro, la razón y la fuente (el motor comprueba al construir que el valor citado sigue siendo el del fichero del equipo).
+
+### 1. Conjuntos de criterios por misión (orden de las 11:28)
+- Encontrado: había que poder volver al estado auditado por la mañana (commit 42d8bba) misión a misión sin deshacer código.
+- Aplicado: `engine_config.json` `criteria_sets`: por misión `audited_morning` (regla, pesos, puertas, filtro y elección de los cinco de 42d8bba; en Rover la elevación relativa al 20 % con su cota de 500 m y los rangos 1 a 5) y `corrected`; interruptor `selected` (publicado: `corrected` en las tres). Código: `engine/criteria.py`. El paquete lo declara en `missions.json` `missions[].criteria_set`.
+- Comprobado: `tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle` construye las tres misiones con `audited_morning` y obtiene columnas `suitability`, `similarity`, `final`, `rank`, `twin` y las del fichero de parejas idénticas byte a byte a las del paquete de 42d8bba, y los cinco = rangos 1 a 5.
+
+### 2. Idoneidad de Paneles solares (opción E2, aprobada 11:51)
+- Fuera de la suma ponderada: `sun_elev_max_deg` (0,15) y `sun_low_frac_0_5deg` (0,15), geometría de la latitud; `irradiance_kwh_m2_day` (0,35), MODELADA (WorldClim) y repite lo que ya compara la similitud. Sus puertas siguen (incluida irradiancia en suelo ≥ 2,5). La irradiancia en suelo, la luz sobre la atmósfera y la parte perdida siguen en la frase de cada pareja.
+- Dentro: `clear_frac_isccp`, peso 0,35, malo 0,308 y bueno 0,671 = percentiles 10 y 90 entre los 18.777 puntos que pasan el embudo (recalculados: 0,3079 y 0,6711; 3 puntos sin valor, con su peso renormalizado). Fuente: ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016, DERIVADO; Rossow y Schiffer 1999. Leída de `real_data/supplement/earth_cloud_isccp_1deg.csv` por el nuevo mecanismo de columnas suplementarias (`datasets.json` `supplements`, `engine/dataset.py` `load_supplements`).
+- Antes / después: pasan 18.777 / 18.777; emparejados 6.360 / 6.360; gemelos distintos 1.704 / 1.704; Spearman idoneidad-|latitud| entre los que pasan +0,337 (investigación: ~+0,34); 7 de los 50 primeros coinciden con la mañana (investigación: 7). Cinco antes (11:23): E38464, E38744, E37746, E37750, E29749; después: E40184, E29749, E23648, E29746, E28670.
+
+### 3. Idoneidad de Base lunar (opción R, aprobada 11:51)
+- `thermal_inertia_class` 0,15 → 0 (sigue requerida y sigue excluyendo "agua"); `rock_or_bare_frac` 0,10 → 0,25 (malo 0,1 y bueno 0,7 sin cambio); `permafrost_class` 0,05 → 0. La puerta "amplitud térmica diaria ≥ 15 K" se mantiene: sin ella, celdas con ~1 K (p. ej. isla de Ellesmere) se parecerían a la Luna con similitud ~99 y la variable clave quedaría vacía. Estaciones polares (recalculado de la tabla): Haughton 2,5 K, Svalbard 1,2 K, Kangerlussuaq 6,6 K; McMurdo y Concordia sin temperatura de superficie. Son análogos de frío y aislamiento, no de ciclado térmico.
+- Antes / después: pasan 2.419 / 2.419; emparejados 450 / 450; gemelos 103 / 103; 38 de los 50 primeros coinciden con la mañana (investigación: 38); cinco antes de la separación: E21054, E21412, E17538, E20695, E21833 (= investigación). Cinco publicados (con la regla del punto 5): E21054, E17538, E21833, E18627, E19672 (antes: E17538, E16830, E15751, E21054, E17187).
+
+### 4. Rover
+- (i) Sin variable nueva: ninguna se mide en los dos cuerpos, se define igual, tiene sentido para la movilidad y es independiente (la abundancia de rocas de Diviner tiene valor en 0 de las 5.400 celdas de la zona; no hay equivalente en la Tierra). Texto `rover_no_new_variable`.
+- (ii) Escala: aplicado exactamente "Para implementar" de `research_5_rover_escala.md`: σ pendiente 0,265093°, σ rugosidad 17,401661 m (ETOPO 2022 RMSE 7,17 m, MacFerrin et al. 2025; LOLA ~10 m, Smith et al. 2010); `s = exp(−0,5·max(0, |d|/σ − 1)²)`; filtro sin cambio (2° y 30 m); gemelo: máxima puntuación, empate por menor Σ(d/σ)², luego menor id. Empatados con final 100,00: **254** (= investigación), 241 tras quitar hielo y agua. Validación (percentil de rango, menor = mejor; = columna C-S1 de la investigación): Ramon 3,6; Qaidam 4,1; Haughton 4,2; Yungay 8,1; Bardenas 68,2; Tabernas 71,5.
+- Cinco: regla publicada `spread_within_top_tie` (dispersión geográfica entre los empatados). Con el salto de agua activado (publicado): E4037, E50510, E44239, E26510, E26087. **Diferencia con la investigación**: la investigación solo salta el hielo y da E3872, E50509, E44239, E26087, E26151 (reproducido exactamente con `skips.water.enabled = false`); E3872 tiene 33,8 % de tierra y el salto de agua (pendiente de confirmar por el líder) lo excluye. Regla alternativa (`rank_with_skips`): E4037, E4742, E4751, E4962, E5125.
+- (iii) En la idoneidad, pendiente (45 %) y rugosidad (30 %) son casi un criterio (Spearman calculado en cada construcción, texto `rover_suitability_one_criterion`); pesos sin cambio.
+
+### 5. Regla de los cinco (las tres misiones)
+`top5_selection.missions.<m>`: `rank_with_skips` (bajando por la clasificación completa: salto `ice` = `snow_ice_frac` ≥ 0,5; salto `water` = `mask_fraction` < 0,5, interruptor propio; separación de 2° de arco, 222,4 km) para Paneles solares y Base lunar; `spread_within_top_tie` (con `rank_with_skips` como alternativa publicada en `top5.alternative`) para Rover. La clasificación completa no cambia. Ninguno de los análogos conocidos de Rover (Haughton: hielo 0, tierra 0,76; Qaidam 0 / 0,98; Ramon 0 / 1,00; Yungay 0 / 1,00) sería saltado por el hielo o el agua; la separación solo los saltaría si estuvieran a menos de 222,4 km de uno ya elegido.
+
+### 6. Números sin efecto y confianza
+- Confianza por pareja eliminada del paquete (era uniforme: Rover y Paneles "media", Base lunar "baja"): columnas `confidence` y `confidence_score` presentes pero todas ausentes (lectura compatible), campos de `explain.json` y `missions.json` `confidence_counts` / `distributions.confidence_score` eliminados. En su lugar `top5_stability_<m>` (`show`: tarjeta de misión y "Datos y límites"), con marcadores y tabla en `engine_config.json` `top5_stability`; hasta que la re-auditoría rellene las cifras se publica "Stability figures pending the independent re-audit." (probado en los dos estados).
+- Constantes con dos valores: radio 6.371,0 km (motor) frente a 6.371,0088 km (constructor de la tabla): arco de 2° 222,390 km en ambos (0,3 m); oblicuidad 23,44° (motor) frente a 23,4393° (constructor): luz sobre la atmósfera cambia como máximo 0,00012 kWh/m²/día (mueve el 4.º decimal publicado en 68 de 180 latitudes, nunca el 3.º). No se ha cambiado ningún número que entre en un resultado. Texto `constants_two_values`.
+- Números del fichero del equipo sin efecto: texto `numbers_without_effect` (ya existente, recalculado).
+- **No hecho**: mover a `legacy_rules` los bloques muertos de `engine_config.json` / `datasets.json` (entrada Solar obsoleta de `similarity_zones`, tolerancias de referencia no usadas, escala combinada): siguen en su sitio.
+
+### 7. Tabla de desviaciones respecto de mission_scoring.json
+
+| Misión | Criterio | Equipo | Nuestro | Razón | Fuente |
+|---|---|---|---|---|---|
+| Paneles solares | irradiance_kwh_m2_day | peso 0,35 (2,5–6,0) | 0 | MODELADA, duplica la similitud | research_2 E2, 11:51 |
+| Paneles solares | sun_elev_max_deg | peso 0,15 (10–70) | 0 | geometría de la latitud | research_2 E2, 11:51 |
+| Paneles solares | sun_low_frac_0_5deg | peso 0,15 (0,25–0,03) | 0 | geometría de la latitud | research_2 E2, 11:51 |
+| Paneles solares | clear_frac_isccp | — | peso 0,35 (0,308–0,671) | nubes medidas por satélite | ISCCP-H, Rossow y Schiffer 1999 |
+| Base lunar | thermal_inertia_class | peso 0,15 | 0 (sigue requerida, puerta "agua") | mismas clases que rock_or_bare_frac | research_3 R, 11:51 |
+| Base lunar | rock_or_bare_frac | peso 0,10 (0,1–0,7) | peso 0,25 (0,1–0,7) | un criterio para el suelo | research_3 R, 11:51 |
+| Base lunar | permafrost_class | peso 0,05 | 0 | sin vínculo, 607 de 2.419 sin valor, MODELADA | research_3 R, 11:51 |
+
+La misma tabla se publica como texto `deviations_from_team` ("Datos y límites").
+
 ## Decisiones tomadas (15-11-2026, 11:23 CET): Rover, top 5, zona de Base lunar, límites y audio
 
 Decisiones tomadas **por la persona delegada en nombre del líder del equipo, 2026-11-15 11:23 CET**, en respuesta a la auditoría estadística (`docs/stats_audit/`, en particular `7_efecto_decisiones_pendientes.md`). Aplicadas en el motor 3.3.0 y en el paquete publicado `app/public/data/v2` (**revisión 7 del contrato**, `docs/DATA_CONTRACT.md`). Todas las cifras de esta sección salen del motor (paquete reconstruido dos veces, idéntico byte a byte) o de las mediciones con el motor `scratchpad/measure_slope_min.py` / `measure_old.py` (salidas `measure_slope_min.json`, `measure_old.json`).

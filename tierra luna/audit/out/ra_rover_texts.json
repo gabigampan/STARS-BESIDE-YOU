@@ -1,0 +1,1162 @@
+{
+ "similarity_texts": [
+  {
+   "key": "similarity_meaning_real_values",
+   "show": null,
+   "status": null,
+   "missions": [
+    "rover",
+    "solar"
+   ],
+   "content": {
+    "decision": "2026-11-15 morning",
+    "missions": [
+     "rover",
+     "solar"
+    ],
+    "text": "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Both values and their difference are shown side by side.",
+    "where": "rover and solar (real_value_tolerance rule): wherever a similarity is shown, next to each similarity variable's Earth value, lunar value, difference and tolerance (earth_<mission>_pairs.bin '<variable>.earth', '<variable>.moon', '<variable>.diff'; tolerances in missions.json similarity.variables)"
+   }
+  },
+  {
+   "key": "no_twin_note",
+   "show": null,
+   "status": null,
+   "missions": [
+    "rover",
+    "solar"
+   ],
+   "content": {
+    "decision": "2026-11-15 morning",
+    "missions": [
+     "rover",
+     "solar"
+    ],
+    "text": "No lunar analog: no cell of the mission's lunar zone has {variable} within {bound} {unit} of this point (closest: {gap} {unit} away). The point keeps its suitability; it has no similarity and no final score.",
+    "where": "rover and solar: on every passing point without a twin (earth_<mission>.bin twin missing), in the panel and the ranking list (listed after the paired points by suitability)",
+    "placeholders": {
+     "variable": "label of missions.json similarity.variables[k] where k = earth_<mission>_pairs.bin nopair_var",
+     "bound": "that variable's bound (missions.json similarity.variables[k].bound)",
+     "unit": "its unit",
+     "gap": "earth_<mission>_pairs.bin nopair_gap (the smallest gap found), with 2 decimals rounded UP (ceil), so a gap just above the bound never displays as equal to the bound (rover: 30.02 m against a 30 m bound)"
+    },
+    "variant_no_joint_match": "No lunar analog: every variable alone has a close lunar cell, but no single cell of the zone is within the bounds for all of them at once (closest: {variable} {gap} {unit} away, bound {bound} {unit}). The point keeps its suitability; it has no similarity and no final score.",
+    "variant_note": "use variant_no_joint_match when nopair_kind is 'no_joint_match' (missions.json similarity.nopair_kinds)"
+   }
+  },
+  {
+   "key": "no_twin_note_lunar_base",
+   "show": null,
+   "status": null,
+   "missions": [
+    "lunar_base"
+   ],
+   "content": {
+    "decision": "2026-11-15 08:55 CET (a point without a twin is treated exactly as in Rover and Solar panels, with the reason)",
+    "missions": [
+     "lunar_base"
+    ],
+    "variants": {
+     "no_cell_meets_thermal_position": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole ranks within 10 percentile points of this point in both coldest temperature and daily temperature swing (closest: {variable} {gap} points away). The point keeps its suitability; it has no similarity and no final score.",
+     "no_cell_meets_terrain": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole has a terrain close enough to this point's (slope within 4 degrees and roughness within 60 m; closest: {variable} {gap} {unit} away). The point keeps its suitability; it has no similarity and no final score.",
+     "no_cell_meets_either": "No lunar twin: no cell of NASA's nine candidate landing regions near the lunar south pole matches this point's thermal position (closest: {variable} {gap} points away) or its terrain (closest: {variable2} {gap2} {unit2} away). The point keeps its suitability; it has no similarity and no final score.",
+     "no_single_cell_meets_both": "No lunar twin: some cells of NASA's nine candidate landing regions near the lunar south pole match this point's thermal position and others its terrain, but no single cell matches both (closest: {variable} {gap} {unit} away, bound {bound} {unit}). The point keeps its suitability; it has no similarity and no final score.",
+     "key_value_missing_on_earth": "No lunar twin: this point has no value of {variable}, so it has no position to compare. The point keeps its suitability; it has no similarity and no final score."
+    },
+    "where": "lunar_base: on every passing point without a twin (earth_lunar_base.bin twin missing), in the panel and the ranking list (after the paired points, by suitability); pick the variant by earth_lunar_base_pairs.bin nopair_kind (missions.json similarity.nopair_kinds)",
+    "placeholders": {
+     "variable": "label of missions.json similarity.variables[nopair_var]",
+     "unit": "that variable's unit (percentile points for the two thermal variables)",
+     "bound": "that variable's bound",
+     "gap": "nopair_gap with 2 decimals rounded UP (ceil)",
+     "variable2": "label of similarity.variables[nopair_var2] (no_cell_meets_either only)",
+     "unit2": "its unit",
+     "gap2": "nopair_gap2 with 2 decimals rounded UP (ceil)"
+    }
+   }
+  },
+  {
+   "key": "list_order_rover",
+   "show": [
+    "top5",
+    "mission_card"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "top5",
+     "mission_card"
+    ],
+    "decision": "2026-11-15 11:23 CET, points 4 and 5",
+    "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best."
+   }
+  },
+  {
+   "key": "top5_stability_rover",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": "pending",
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:23 CET, point 4 (state the fragility of each top 5 with its stability percentages)",
+    "text": "Stability figures pending the independent re-audit.",
+    "status": "pending",
+    "status_reason": "figures not filled",
+    "source": null
+   }
+  },
+  {
+   "key": "external_validation_rover",
+   "show": [
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:23 CET, point 4 (state honestly what was checked)",
+    "source": "computed at build from tierra luna/data/benchmark/analog_benchmark.csv and rover_preset.py MOBILITY_POSITIVES / MOBILITY_MISMATCHES, with the auditor's rule for unverified coordinates (docs/stats_audit/3_robustez_validacion_ranking.md section 6.1)",
+    "text": "What was checked against known places (Rover only): the mobility analog sites named in rover_preset.py, with coordinates checked in our benchmark, are placed in the full ranking of 10,337 points as follows: Bardenas (top 68.2 %), Tabernas (top 71.5 %), MDRS (top 20.5 %), Yungay (top 8.1 %), Dhofar (does not pass the funnel: slope_300m_deg outside [0.5, 15.0], rough_300m_m outside [5.0, 650.0]), Ramon (top 3.6 %), Haughton (top 4.2 %) and Qaidam (top 4.0 %). Sites named there as mismatches: Concordia (does not pass the funnel: slope_300m_deg outside [0.5, 15.0], rough_300m_m outside [5.0, 650.0]) and El Soplao (top 95.4 %). Not checked because their benchmark coordinates are marked as written from memory: Dumont Dunes, Erfoud, Death Valley, NEEMO, HI-SEAS and Rio Tinto. A low percentage is a high place in the list; the check describes the ranking, it does not prove it."
+   }
+  },
+  {
+   "key": "surface_classes_rover",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:23 CET, point 4 (ice cells in the Rover ranking)",
+    "source": "computed at build from the Earth table columns snow_ice_frac, thermal_inertia_class and lc_dominant_cci_code (engine_config limit_facts)",
+    "text": "Ice sheets are not excluded: the funnel has no surface-type gate and the soft criteria have no surface-type term. 1,506 of the 10,337 ranked points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'); the best of them is number 1,089, 0 are in the top 50 and 0 among the five shown. Water is not excluded either: 1,145 ranked points are cells whose single commonest land-cover class is water (ESA CCI class 210, sea along a coast or lakes); the best is number 1, 12 are in the top 50 and 0 among the five shown (none).",
+    "figures": {
+     "ranked_n": "10,337",
+     "top_n": 50,
+     "ice_n": "1,506",
+     "ice_best": "1,089",
+     "ice_top": "0",
+     "ice_shown": "0",
+     "ice_shown_ids": "none",
+     "water_n": "1,145",
+     "water_best": "1",
+     "water_top": "12",
+     "water_shown": "0",
+     "water_shown_ids": "none"
+    }
+   }
+  },
+  {
+   "key": "ties_at_top_rover",
+   "show": [
+    "top5",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "top5",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:23 CET, point 4 (the fragility of each top 5)",
+    "source": "computed at build from the published final scores (2 decimals) and the rank rule (ties by Earth cell id)",
+    "text": "254 points share the published final score of number 1 (100.00). Among tied points the order is by Earth cell id, so the five shown are not better than the other tied points.",
+    "figures": {
+     "tied_n": "254",
+     "score": "100.00"
+    }
+   }
+  },
+  {
+   "key": "numbers_without_effect",
+   "show": [
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": null,
+   "content": {
+    "show": [
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:23 CET, point 4 (the numbers that have no effect)",
+    "source": "inert gates: computed at build (Earth land cells that fail only that gate bound: none); values no code reads: docs/stats_audit/5_inventario_sentido_fisico.md section A.5 (i)",
+    "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3. Values of the team's file mission_scoring.json that no code reads: Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua). The team's file is quoted as it is: these numbers are listed here, not removed.",
+    "figures": {
+     "inert_gates": "Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3",
+     "unread_values": "Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua)"
+    }
+   }
+  },
+  {
+   "key": "rover_no_new_variable",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
+    "source": "docs/stats_audit/research_1_rover_terreno.md",
+    "text": "Rover compares slope and roughness only. No further terrain variable is measured on both bodies, defined alike, meaningful for mobility and independent of these two: Diviner rock abundance, the obvious candidate, has a value in 0 of the 5,400 cells of the Rover lunar zone, and nothing equivalent exists for Earth.",
+    "figures": {}
+   }
+  },
+  {
+   "key": "rover_tie",
+   "show": [
+    "mission_card",
+    "top5",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "top5",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
+    "source": "docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
+    "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after skipping cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. How the five were chosen: 241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+    "figures": {
+     "tied_n": "254",
+     "tied_kept_n": "241",
+     "score": "100.00",
+     "ranked_n": "10,337",
+     "rule": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
+    }
+   }
+  },
+  {
+   "key": "rover_suitability_one_criterion",
+   "show": [
+    "mission_card",
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": [
+    "rover"
+   ],
+   "content": {
+    "missions": [
+     "rover"
+    ],
+    "show": [
+     "mission_card",
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
+    "source": "docs/stats_audit/research_1_rover_terreno.md; recomputed at build over the passing points",
+    "text": "In the Rover suitability, slope (45 %) and roughness (30 %) are nearly one criterion: over the 10,337 passing points their utilities have a Spearman correlation of 0.97. The team's weights are kept unchanged.",
+    "figures": {
+     "rho": "0.97",
+     "w1_pct": "45",
+     "w2_pct": "30",
+     "passing_n": "10,337"
+    }
+   }
+  },
+  {
+   "key": "deviations_from_team",
+   "show": [
+    "data_and_limits"
+   ],
+   "status": null,
+   "missions": null,
+   "content": {
+    "show": [
+     "data_and_limits"
+    ],
+    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
+    "source": "engine_config.json criteria_sets (the team's tierra luna/mission_scoring.json is quoted and unchanged)",
+    "text": "Where we depart from the team's mission_scoring.json (7 criteria; criteria set per mission: Rover: corrected; Solar panels: corrected; Lunar base: corrected). Columns: mission | criterion | the team's value | ours | reason | source. Solar panels | irradiance_kwh_m2_day | weight 0.35, bad 2.5, good 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). | docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET || Solar panels | sun_elev_max_deg | weight 0.15, bad 10, good 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | sun_low_frac_0_5deg | weight 0.15, bad 0.25, good 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | clear_frac_isccp | not used (weight 0) | weight 0.35, bad 0.308, good 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised. | ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET || Lunar base | thermal_inertia_class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'. | docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET || Lunar base | rock_or_bare_frac | weight 0.1, bad 0.1, good 0.7 | weight 0.25, bad 0.1, good 0.7 | Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out. | research_3 option R, approved 11:51 CET || Lunar base | permafrost_class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. | research_3 option R, approved 11:51 CET",
+    "figures": {
+     "rows": "Solar panels | irradiance_kwh_m2_day | weight 0.35, bad 2.5, good 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). | docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET || Solar panels | sun_elev_max_deg | weight 0.15, bad 10, good 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | sun_low_frac_0_5deg | weight 0.15, bad 0.25, good 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | clear_frac_isccp | not used (weight 0) | weight 0.35, bad 0.308, good 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised. | ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET || Lunar base | thermal_inertia_class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'. | docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET || Lunar base | rock_or_bare_frac | weight 0.1, bad 0.1, good 0.7 | weight 0.25, bad 0.1, good 0.7 | Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out. | research_3 option R, approved 11:51 CET || Lunar base | permafrost_class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. | research_3 option R, approved 11:51 CET",
+     "n": "7",
+     "sets": "Rover: corrected; Solar panels: corrected; Lunar base: corrected"
+    }
+   }
+  }
+ ],
+ "missions_rover_strings": [
+  {
+   "path": "missions/rover/title",
+   "text": "Rover mobility and trafficability",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/description",
+   "text": "Rover Mobility & Surface Trafficability (Robotics 1 - VIPER Reference)",
+   "numbers": [
+    "1 "
+   ]
+  },
+  {
+   "path": "missions/rover/author",
+   "text": "Robotics 1 - Mobility Team",
+   "numbers": [
+    "1 "
+   ]
+  },
+  {
+   "path": "missions/rover/threshold_status/text",
+   "text": "Provisional: the rover block of mission_scoring.json says its gates and tolerances were migrated as they were and its soft criteria approximate the old formula until Robotics 1 provides the final one (the block's 'provisional' text is exported verbatim).",
+   "numbers": [
+    "1 "
+   ]
+  },
+  {
+   "path": "missions/rover/provisional_note",
+   "text": "Gates y tolerancias migrados tal cual del mission_filters.json anterior. 'soft' es una aproximacion lineal de la formula antigua: sustituir por la definitiva del equipo de Robotica 1.",
+   "numbers": [
+    "1"
+   ]
+  },
+  {
+   "path": "missions/rover/gates/0/source",
+   "text": "solo tierra firme (descarta oceano, que el modelo fija en -250 m)",
+   "numbers": [
+    "-250 "
+   ]
+  },
+  {
+   "path": "missions/rover/gates/2/source",
+   "text": "rover.max_operational_slope_deg: NASA VIPER operational slope limit (15 deg < 47.29 deg static tip-over, rover_preset.py)",
+   "numbers": [
+    "15 ",
+    "47.29 "
+   ]
+  },
+  {
+   "path": "missions/rover/gates/3/source",
+   "text": "LRO LOLA & CNSA Yutu/VIPER topographic hazard envelope (5-650 m)",
+   "numbers": [
+    "5",
+    "650 "
+   ]
+  },
+  {
+   "path": "missions/rover/weighted_variables/0/why",
+   "text": "menos pendiente = mas traficable",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/weighted_variables/1/why",
+   "text": "menos rugosidad = menos obstaculos",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/weighted_variables/2/label",
+   "text": "Bare or sparsely vegetated fraction",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/weighted_variables/2/why",
+   "text": "suelo expuesto firme frente a vegetacion",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/reason_codes/0/text",
+   "text": "elevation_m outside [1.0, inf]",
+   "numbers": [
+    "1.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/0/team_text",
+   "text": "elevation_m fuera de [1.0, inf]",
+   "numbers": [
+    "1.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/2/text",
+   "text": "mask_fraction outside [0.3, inf]",
+   "numbers": [
+    "0.3"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/2/team_text",
+   "text": "mask_fraction fuera de [0.3, inf]",
+   "numbers": [
+    "0.3"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/3/label",
+   "text": "below minimum: Roughness (rover)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/reason_codes/3/text",
+   "text": "rough_300m_m outside [5.0, 650.0]",
+   "numbers": [
+    "5.0",
+    "650.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/3/team_text",
+   "text": "rough_300m_m fuera de [5.0, 650.0]",
+   "numbers": [
+    "5.0",
+    "650.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/4/label",
+   "text": "no data: Roughness (rover)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/reason_codes/5/label",
+   "text": "above maximum: Slope (rover)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/reason_codes/5/text",
+   "text": "slope_300m_deg outside [0.5, 15.0]",
+   "numbers": [
+    "0.5",
+    "15.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/5/team_text",
+   "text": "slope_300m_deg fuera de [0.5, 15.0]",
+   "numbers": [
+    "0.5",
+    "15.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/6/label",
+   "text": "below minimum: Slope (rover)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/reason_codes/6/text",
+   "text": "slope_300m_deg outside [0.5, 15.0]",
+   "numbers": [
+    "0.5",
+    "15.0"
+   ]
+  },
+  {
+   "path": "missions/rover/reason_codes/6/team_text",
+   "text": "slope_300m_deg fuera de [0.5, 15.0]",
+   "numbers": [
+    "0.5",
+    "15.0"
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/0/tolerance_set_by",
+   "text": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+   "numbers": [
+    "3, ",
+    "5",
+    "196",
+    "205",
+    "1",
+    "2026",
+    "11",
+    "15 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/0/why",
+   "text": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C).",
+   "numbers": [
+    "5 ",
+    "3.7",
+    "3.8 ",
+    "5 ",
+    "300 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/0/sides/EARTH/text",
+   "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/variables/0/sides/MOON/text",
+   "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/variables/1/tolerance_set_by",
+   "text": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+   "numbers": [
+    "3, ",
+    "5",
+    "196",
+    "205",
+    "1",
+    "2026",
+    "11",
+    "15 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/1/why",
+   "text": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies).",
+   "numbers": [
+    "5 ",
+    "1.9 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/1/sides/EARTH/text",
+   "text": "deviogram roughness at a ~1.9 km lag",
+   "numbers": [
+    "1.9 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/variables/1/sides/MOON/text",
+   "text": "deviogram roughness at a ~1.9 km lag",
+   "numbers": [
+    "1.9 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/weights_why",
+   "text": "Decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf (decision 1): relative elevation goes to weight zero (it has no physical sense for a rover and clashes with the principle of 04:47, Rover = slope and roughness); its weight is shared among the terrain variables, with no new variable: slope 50 % and roughness 50 %, both key, tolerances unchanged (2 deg and 30 m). The director's reading, told to the team lead: relative elevation also leaves the pair filter (a zero-weight variable must not decide which pairs exist) and stays as an information row with its difference (info_differences.rover). Before (team decision of 2026-11-15, morning): slope 40 %, roughness 40 % (key), relative elevation 20 % (secondary, tolerance 500 m, filter bound 1,000 m).",
+   "numbers": [
+    "2026",
+    "11",
+    "15 ",
+    "11",
+    "23 ",
+    "1",
+    "04",
+    "47, ",
+    "50 %",
+    "50 %",
+    "2 ",
+    "30 ",
+    "2026",
+    "11",
+    "15, ",
+    "40 %",
+    "40 %",
+    "20 %",
+    "500 ",
+    "1,000 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/score",
+   "text": "s = exp(-0.5 * (|earth value - moon value| / tolerance)^2)",
+   "numbers": [
+    "-0.5 ",
+    "2"
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/similarity_formula",
+   "text": "100 * sum(weight * s) / sum(weight) over the variables with a value on both sides, in the listed order",
+   "numbers": [
+    "100 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/filter/key",
+   "text": "|difference| <= 1 x tolerance",
+   "numbers": [
+    "1 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/filter/secondary",
+   "text": "|difference| <= 2 x tolerance",
+   "numbers": [
+    "2 "
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/filter/missing_key",
+   "text": "a key variable without a value on either side fails the filter (no pair)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/filter/missing_secondary",
+   "text": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/zone/name",
+   "text": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+   "numbers": [
+    "75",
+    "90"
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/zone/source",
+   "text": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+   "numbers": [
+    "-75.0"
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/zone/why",
+   "text": "Unchanged from the zone_twin rule (team decision of 2026-11-15).",
+   "numbers": [
+    "2026",
+    "11",
+    "15"
+   ]
+  },
+  {
+   "path": "missions/rover/similarity/nopair_kinds/0",
+   "text": "key_value_missing_on_earth",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/list_rule",
+   "text": "paired points by rank, then the points without a twin by published suitability descending, ties by Earth cell id (earth_<mission>_pairs.bin list_order)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/similarity/info_columns/0/columns/earth",
+   "text": "info.elevation_rel_m.earth",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/criteria_set/title",
+   "text": "Corrected (11:23, 11:28, 11:36 and 11:51 CET)",
+   "numbers": [
+    "11",
+    "23, ",
+    "11",
+    "28, ",
+    "11",
+    "36 ",
+    "11",
+    "51 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/0",
+   "text": "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
+   "numbers": [
+    "0.5",
+    "15 ",
+    "5",
+    "650 ",
+    "300 ",
+    "3.7",
+    "3.8 ",
+    "1.9 ",
+    "300 ",
+    "1"
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/1",
+   "text": "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
+   "numbers": [
+    "50 %",
+    "2026",
+    "11",
+    "15 ",
+    "11",
+    "23 ",
+    "75",
+    "90 ",
+    "2 ",
+    "30 ",
+    "5 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/2",
+   "text": "Relative elevation, temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K).",
+   "numbers": [
+    "150 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/3",
+   "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best.",
+   "numbers": [
+    "50 %",
+    "50 %"
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/4",
+   "text": "Stability figures pending the independent re-audit.",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/known_limitations/5",
+   "text": "Ice sheets are not excluded: the funnel has no surface-type gate and the soft criteria have no surface-type term. 1,506 of the 10,337 ranked points are ice-sheet or snow-and-ice cells (snow and ice cover at least half of the cell, or the thermal class is 'hielo'); the best of them is number 1,089, 0 are in the top 50 and 0 among the five shown. Water is not excluded either: 1,145 ranked points are cells whose single commonest land-cover class is water (ESA CCI class 210, sea along a coast or lakes); the best is number 1, 12 are in the top 50 and 0 among the five shown (none).",
+   "numbers": [
+    "1,506 ",
+    "10,337 ",
+    "1,089, ",
+    "0 ",
+    "50 ",
+    "0 ",
+    "1,145 ",
+    "210, ",
+    "1, ",
+    "12 ",
+    "50 ",
+    "0 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/6",
+   "text": "Rover compares slope and roughness only. No further terrain variable is measured on both bodies, defined alike, meaningful for mobility and independent of these two: Diviner rock abundance, the obvious candidate, has a value in 0 of the 5,400 cells of the Rover lunar zone, and nothing equivalent exists for Earth.",
+   "numbers": [
+    "0 ",
+    "5,400 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/7",
+   "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so 254 of the 10,337 paired sites share the top final score of 100.00; 241 remain after skipping cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. How the five were chosen: 241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+   "numbers": [
+    "2022 ",
+    "0.27 ",
+    "17.4 ",
+    "254 ",
+    "10,337 ",
+    "100.00",
+    "241 ",
+    "241 "
+   ]
+  },
+  {
+   "path": "missions/rover/known_limitations/8",
+   "text": "In the Rover suitability, slope (45 %) and roughness (30 %) are nearly one criterion: over the 10,337 passing points their utilities have a Spearman correlation of 0.97. The team's weights are kept unchanged.",
+   "numbers": [
+    "45 %",
+    "30 %",
+    "10,337 ",
+    "0.97"
+   ]
+  },
+  {
+   "path": "missions/rover/top5/rule",
+   "text": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+   "numbers": [
+    "241 "
+   ]
+  },
+  {
+   "path": "missions/rover/top5/alternative/rule",
+   "text": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within 2 degrees of arc (about 222.4 km) of one already kept. The full ranking itself is unchanged.",
+   "numbers": [
+    "2 ",
+    "222.4 "
+   ]
+  },
+  {
+   "path": "missions/rover/external_validation/positives/3/benchmark_name",
+   "text": "Mars Desert Research Station (MDRS) (Hanksville, Utah)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/positives/4/benchmark_name",
+   "text": "Atacama Desert - Yungay core",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/positives/6/benchmark_name",
+   "text": "Dhofar - Marmul area (AMADEE-18)",
+   "numbers": [
+    "18"
+   ]
+  },
+  {
+   "path": "missions/rover/external_validation/positives/7/benchmark_name",
+   "text": "Negev - Makhtesh Ramon (D-MARS)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/positives/8/benchmark_name",
+   "text": "Haughton impact crater (Devon Island, Nunavut)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/positives/10/benchmark_name",
+   "text": "Qaidam Basin - Lenghu yardang/evaporite area",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/mismatches/0/benchmark_name",
+   "text": "Concordia Station (Dome C)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/external_validation/mismatches/4/benchmark_name",
+   "text": "El Soplao cave (Cantabria)",
+   "numbers": []
+  },
+  {
+   "path": "missions/rover/not_used_by_engine/tolerances/slope_300m_deg/source",
+   "text": "Robotics 1 rover_preset.py tolerance scale (5.0 deg)",
+   "numbers": [
+    "1 ",
+    "5.0 "
+   ]
+  },
+  {
+   "path": "missions/rover/not_used_by_engine/tolerances/rough_300m_m/source",
+   "text": "Robotics 1 rover_preset.py tolerance scale (10.0 m)",
+   "numbers": [
+    "1 ",
+    "10.0 "
+   ]
+  },
+  {
+   "path": "missions/rover/not_used_by_engine/workable_days/source",
+   "text": "Phase-1 plan model 1 defaults (rover_preset.py)",
+   "numbers": [
+    "1 ",
+    "1 "
+   ]
+  },
+  {
+   "path": "missions/rover/not_used_by_engine/why",
+   "text": "tolerances: defined for 300 m baselines, and no table has 300 m values: on the real 1-degree tables the *_300m_* variables are read from km-baseline columns (slope_iso_deg, a slope over about 3.7-3.8 km, and roughness_m, at a lag of about 1.9 km; true_baseline in variables.json), and on the legacy 2-degree table they were copies of 2-degree-cell values. workable_days: not read by mission_scoring.py. domain weights (relieve/material/termico/luz/agua): the team note in mission_scoring.json says they are used only by the web 'Use Weights' button of the similarity; the engine instead weights the similarity with the mission's soft weights, because no mapping from these domains to the new variables exists. This departure is pending team confirmation (ASSUMPTIONS.md section 3).",
+   "numbers": [
+    "300 ",
+    "300 ",
+    "1",
+    "3.7",
+    "3.8 ",
+    "1.9 ",
+    "2",
+    "2",
+    "3"
+   ]
+  }
+ ],
+ "missions_rover_top5": {
+  "rule": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+  "min_separation_deg": 2.0,
+  "min_separation_km": 222.4,
+  "ids": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ],
+  "overall_ranks": [
+   3,
+   254,
+   251,
+   241,
+   236
+  ],
+  "rule_id": "spread_within_top_tie",
+  "skips": {
+   "ice": {
+    "enabled": true,
+    "column": "snow_ice_frac",
+    "op": ">=",
+    "value": 0.5
+   },
+   "water": {
+    "enabled": true,
+    "column": "mask_fraction",
+    "op": "<",
+    "value": 0.5
+   }
+  },
+  "top_tie_n": 254,
+  "top_tie_n_after_skips": 241,
+  "alternative_rule": "rank_with_skips",
+  "alternative": {
+   "rule_id": "rank_with_skips",
+   "ids": [
+    4037,
+    4742,
+    4751,
+    4962,
+    5125
+   ],
+   "overall_ranks": [
+    3,
+    6,
+    9,
+    10,
+    15
+   ],
+   "rule": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within 2 degrees of arc (about 222.4 km) of one already kept. The full ranking itself is unchanged."
+  }
+ },
+ "missions_rover_similarity": {
+  "rule": "real_value_tolerance",
+  "variables": [
+   {
+    "variable": "slope_deg",
+    "label": "Slope",
+    "unit": "deg",
+    "role": "key",
+    "weight": 0.5,
+    "tolerance": 2.0,
+    "bound": 2.0,
+    "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+    "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C).",
+    "sides": {
+     "EARTH": {
+      "kind": "column",
+      "column": "slope_deg",
+      "level": "DERIVED",
+      "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)",
+      "body_mean": null,
+      "cells_in_mean": null
+     },
+     "MOON": {
+      "kind": "column",
+      "column": "slope_deg",
+      "level": "DERIVED",
+      "text": "mission-view slope_deg, read from slope_iso_deg (column_overrides)",
+      "body_mean": null,
+      "cells_in_mean": null
+     }
+    },
+    "pairs_columns": {
+     "earth": "slope_deg.earth",
+     "moon": "slope_deg.moon",
+     "diff": "slope_deg.diff"
+    },
+    "score_column": "s.slope_deg"
+   },
+   {
+    "variable": "roughness_m",
+    "label": "Roughness",
+    "unit": "m",
+    "role": "key",
+    "weight": 0.5,
+    "tolerance": 30.0,
+    "bound": 30.0,
+    "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+    "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies).",
+    "sides": {
+     "EARTH": {
+      "kind": "column",
+      "column": "roughness_m",
+      "level": "DERIVED",
+      "text": "deviogram roughness at a ~1.9 km lag",
+      "body_mean": null,
+      "cells_in_mean": null
+     },
+     "MOON": {
+      "kind": "column",
+      "column": "roughness_m",
+      "level": "DERIVED",
+      "text": "deviogram roughness at a ~1.9 km lag",
+      "body_mean": null,
+      "cells_in_mean": null
+     }
+    },
+    "pairs_columns": {
+     "earth": "roughness_m.earth",
+     "moon": "roughness_m.moon",
+     "diff": "roughness_m.diff"
+    },
+    "score_column": "s.roughness_m"
+   }
+  ],
+  "weights_why": "Decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf (decision 1): relative elevation goes to weight zero (it has no physical sense for a rover and clashes with the principle of 04:47, Rover = slope and roughness); its weight is shared among the terrain variables, with no new variable: slope 50 % and roughness 50 %, both key, tolerances unchanged (2 deg and 30 m). The director's reading, told to the team lead: relative elevation also leaves the pair filter (a zero-weight variable must not decide which pairs exist) and stays as an information row with its difference (info_differences.rover). Before (team decision of 2026-11-15, morning): slope 40 %, roughness 40 % (key), relative elevation 20 % (secondary, tolerance 500 m, filter bound 1,000 m).",
+  "score": "s = exp(-0.5 * (|earth value - moon value| / tolerance)^2)",
+  "similarity_formula": "100 * sum(weight * s) / sum(weight) over the variables with a value on both sides, in the listed order",
+  "filter": {
+   "key": "|difference| <= 1 x tolerance",
+   "secondary": "|difference| <= 2 x tolerance",
+   "missing_key": "a key variable without a value on either side fails the filter (no pair)",
+   "missing_secondary": "a secondary variable without a value on either side is left out of the filter and of the similarity; the remaining weights are renormalised"
+  },
+  "score_decimals": 6,
+  "zone": {
+   "kind": "lat_max",
+   "lat_max": -75.0,
+   "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+   "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+   "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15).",
+   "cells": 5400
+  },
+  "passing_count": 10337,
+  "paired_count": 10337,
+  "unpaired_count": 0,
+  "nopair_kinds": [
+   "key_value_missing_on_earth",
+   "no_zone_cell_within_bound",
+   "no_joint_match"
+  ],
+  "unpaired_reasons": [],
+  "pairs_file": "earth_rover_pairs.bin",
+  "list_rule": "paired points by rank, then the points without a twin by published suitability descending, ties by Earth cell id (earth_<mission>_pairs.bin list_order)",
+  "info_columns": [
+   {
+    "variable": "elevation_rel_m",
+    "columns": {
+     "earth": "info.elevation_rel_m.earth",
+     "moon": "info.elevation_rel_m.moon",
+     "diff": "info.elevation_rel_m.diff"
+    },
+    "part_of_similarity": false
+   }
+  ],
+  "info_in_explain_only": [
+   "temp_k",
+   "lst_diurnal_amp_k",
+   "irradiance_kwh_m2_day"
+  ],
+  "distinct_twins": 1144,
+  "earth_cells_with_twin": 10337,
+  "largest_share": {
+   "twin_id": 59712,
+   "earth_cells": 271,
+   "share": 0.0262
+  }
+ },
+ "explain_rover_strings": [
+  {
+   "path": "explain/rover/28/place/nearest_place",
+   "text": "Comandante Luis Piedra Buena",
+   "numbers": []
+  }
+ ],
+ "variables_rover_strings": [
+  {
+   "path": "variables/variables/2/description",
+   "text": "The rover's slope variable. No global product has a 300 m baseline: it is read from the isotropic km-baseline slope (see true_baseline).",
+   "numbers": [
+    "300 "
+   ]
+  },
+  {
+   "path": "variables/variables/2/bodies/EARTH/column_override_why",
+   "text": "Every slope variable the missions name (rover slope_300m_deg and solar slope_deg, both aliased to slope_deg) is read from the isotropic-baseline column instead, on both bodies. The literal slope_deg uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this (provenance rows of slope_deg, slope_p90_deg and slope_iso_deg). slope_iso_deg keeps the same baseline in both directions at every latitude (true baseline read from the provenance row). Equal to slope_deg at low latitudes.",
+   "numbers": []
+  },
+  {
+   "path": "variables/variables/2/bodies/MOON/column_override_why",
+   "text": "Every slope variable the missions name (rover slope_300m_deg and solar slope_deg, both aliased to slope_deg) is read from the isotropic-baseline column instead, on both bodies. The literal slope_deg uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this (provenance rows of slope_deg, slope_p90_deg and slope_iso_deg). slope_iso_deg keeps the same baseline in both directions at every latitude (true baseline read from the provenance row). Equal to slope_deg at low latitudes.",
+   "numbers": []
+  },
+  {
+   "path": "variables/variables/2/bodies/MOON/caveat",
+   "text": "Not a 300 m slope. km-baseline slopes are much gentler than rover-scale slopes; a 15 deg gate means something different here. slope_p90_deg is the steeper tail. Poleward of ~85 deg the literal 1-pixel east-west spacing shrinks to metres and inflates slope_deg/slope_p90_deg; slope_iso_deg/slope_iso_p90_deg (3.79 km baseline in both directions) are the reliable values there.",
+   "numbers": [
+    "300 ",
+    "15 ",
+    "85 ",
+    "1",
+    "3.79 "
+   ]
+  },
+  {
+   "path": "variables/variables/3/description",
+   "text": "The rover's roughness variable. RMS height difference (deviogram) at a lag of about 1.9 km, not 300 m (see true_baseline).",
+   "numbers": [
+    "1.9 ",
+    "300 "
+   ]
+  },
+  {
+   "path": "variables/variables/4/bodies/EARTH/column_override_why",
+   "text": "Every slope variable the missions name (rover slope_300m_deg and solar slope_deg, both aliased to slope_deg) is read from the isotropic-baseline column instead, on both bodies. The literal slope_deg uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this (provenance rows of slope_deg, slope_p90_deg and slope_iso_deg). slope_iso_deg keeps the same baseline in both directions at every latitude (true baseline read from the provenance row). Equal to slope_deg at low latitudes.",
+   "numbers": []
+  },
+  {
+   "path": "variables/variables/4/bodies/MOON/column_override_why",
+   "text": "Every slope variable the missions name (rover slope_300m_deg and solar slope_deg, both aliased to slope_deg) is read from the isotropic-baseline column instead, on both bodies. The literal slope_deg uses a one-pixel east-west spacing that shrinks as cos(latitude), so near the poles the east-west baseline falls to tens of metres and inflates the slope; both builders documented this (provenance rows of slope_deg, slope_p90_deg and slope_iso_deg). slope_iso_deg keeps the same baseline in both directions at every latitude (true baseline read from the provenance row). Equal to slope_deg at low latitudes.",
+   "numbers": []
+  },
+  {
+   "path": "variables/variables/9/used_by/rover/0",
+   "text": "workable_days (not read by mission_scoring.py)",
+   "numbers": []
+  },
+  {
+   "path": "variables/variables/15/description",
+   "text": "Earth: WorldClim 2.1 annual precipitation / 365.25. Moon: not applicable. Not used by the engine (only by rover workable_days, which mission_scoring.py does not read).",
+   "numbers": [
+    "2.1 ",
+    "365.25"
+   ]
+  },
+  {
+   "path": "variables/variables/16/description",
+   "text": "Earth: WorldClim 2.1 windiest-month mean 10 m wind. Moon: not applicable. Not used by the engine (only by rover workable_days).",
+   "numbers": [
+    "2.1 ",
+    "10 "
+   ]
+  },
+  {
+   "path": "variables/variables/16/used_by/rover/0",
+   "text": "workable_days (not read by mission_scoring.py)",
+   "numbers": []
+  }
+ ]
+}

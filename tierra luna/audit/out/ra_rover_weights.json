@@ -1,0 +1,1460 @@
+{
+ "corrected": {
+  "base_five": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ],
+  "base_twins": [
+   63714,
+   59438,
+   59712,
+   63711,
+   61294
+  ],
+  "n_perturbations": 10,
+  "runs": [
+   {
+    "kind": "suitability",
+    "variable": "slope_300m_deg",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.473684,
+     "rough_300m_m": 0.287081,
+     "rock_or_bare_frac": 0.239234
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "slope_300m_deg",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.424084,
+     "rough_300m_m": 0.314136,
+     "rock_or_bare_frac": 0.26178
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rough_300m_m",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.436893,
+     "rough_300m_m": 0.320388,
+     "rock_or_bare_frac": 0.242718
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rough_300m_m",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.463918,
+     "rough_300m_m": 0.278351,
+     "rock_or_bare_frac": 0.257732
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rock_or_bare_frac",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.439024,
+     "rough_300m_m": 0.292683,
+     "rock_or_bare_frac": 0.268293
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rock_or_bare_frac",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.461538,
+     "rough_300m_m": 0.307692,
+     "rock_or_bare_frac": 0.230769
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "slope_deg",
+    "factor": 1.1,
+    "weights": {
+     "slope_deg": 0.52381,
+     "roughness_m": 0.47619
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "slope_deg",
+    "factor": 0.9,
+    "weights": {
+     "slope_deg": 0.473684,
+     "roughness_m": 0.526316
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "roughness_m",
+    "factor": 1.1,
+    "weights": {
+     "slope_deg": 0.47619,
+     "roughness_m": 0.52381
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "roughness_m",
+    "factor": 0.9,
+    "weights": {
+     "slope_deg": 0.526316,
+     "roughness_m": 0.473684
+    },
+    "five": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ],
+    "same_five": true,
+    "n_tied_top": 254,
+    "info": {
+     "rule": "spread_within_top_tie",
+     "top": 100.0,
+     "tied_all": 254,
+     "tied_eligible": 241,
+     "min_sep_deg": 59.96338524940772
+    },
+    "per_analog": [
+     {
+      "id": 4037,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": true
+     },
+     {
+      "id": 50510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 254,
+      "tied_top": true
+     },
+     {
+      "id": 44239,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 251,
+      "tied_top": true
+     },
+     {
+      "id": 26510,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 241,
+      "tied_top": true
+     },
+     {
+      "id": 26087,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 236,
+      "tied_top": true
+     }
+    ]
+   }
+  ],
+  "per_analog": [
+   {
+    "id": 4037,
+    "stays_in_five": 10,
+    "keeps_twin": 10,
+    "stays_in_five_and_keeps_twin": 10,
+    "stays_tied_top": 10,
+    "of": 10
+   },
+   {
+    "id": 50510,
+    "stays_in_five": 10,
+    "keeps_twin": 10,
+    "stays_in_five_and_keeps_twin": 10,
+    "stays_tied_top": 10,
+    "of": 10
+   },
+   {
+    "id": 44239,
+    "stays_in_five": 10,
+    "keeps_twin": 10,
+    "stays_in_five_and_keeps_twin": 10,
+    "stays_tied_top": 10,
+    "of": 10
+   },
+   {
+    "id": 26510,
+    "stays_in_five": 10,
+    "keeps_twin": 10,
+    "stays_in_five_and_keeps_twin": 10,
+    "stays_tied_top": 10,
+    "of": 10
+   },
+   {
+    "id": 26087,
+    "stays_in_five": 10,
+    "keeps_twin": 10,
+    "stays_in_five_and_keeps_twin": 10,
+    "stays_tied_top": 10,
+    "of": 10
+   }
+  ],
+  "same_five_count": 10
+ },
+ "audited_morning": {
+  "base_five": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395
+  ],
+  "base_twins": [
+   59895,
+   59895,
+   59895,
+   59895,
+   59895
+  ],
+  "n_perturbations": 12,
+  "runs": [
+   {
+    "kind": "suitability",
+    "variable": "slope_300m_deg",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.473684,
+     "rough_300m_m": 0.287081,
+     "rock_or_bare_frac": 0.239234
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "slope_300m_deg",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.424084,
+     "rough_300m_m": 0.314136,
+     "rock_or_bare_frac": 0.26178
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rough_300m_m",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.436893,
+     "rough_300m_m": 0.320388,
+     "rock_or_bare_frac": 0.242718
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rough_300m_m",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.463918,
+     "rough_300m_m": 0.278351,
+     "rock_or_bare_frac": 0.257732
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rock_or_bare_frac",
+    "factor": 1.1,
+    "weights": {
+     "slope_300m_deg": 0.439024,
+     "rough_300m_m": 0.292683,
+     "rock_or_bare_frac": 0.268293
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "suitability",
+    "variable": "rock_or_bare_frac",
+    "factor": 0.9,
+    "weights": {
+     "slope_300m_deg": 0.461538,
+     "rough_300m_m": 0.307692,
+     "rock_or_bare_frac": 0.230769
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "slope_deg",
+    "factor": 1.1,
+    "weights": {
+     "slope_deg": 0.423077,
+     "roughness_m": 0.384615,
+     "elevation_rel_m": 0.192308
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "slope_deg",
+    "factor": 0.9,
+    "weights": {
+     "slope_deg": 0.375,
+     "roughness_m": 0.416667,
+     "elevation_rel_m": 0.208333
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "roughness_m",
+    "factor": 1.1,
+    "weights": {
+     "slope_deg": 0.384615,
+     "roughness_m": 0.423077,
+     "elevation_rel_m": 0.192308
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "roughness_m",
+    "factor": 0.9,
+    "weights": {
+     "slope_deg": 0.416667,
+     "roughness_m": 0.375,
+     "elevation_rel_m": 0.208333
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "elevation_rel_m",
+    "factor": 1.1,
+    "weights": {
+     "slope_deg": 0.392157,
+     "roughness_m": 0.392157,
+     "elevation_rel_m": 0.215686
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   },
+   {
+    "kind": "similarity",
+    "variable": "elevation_rel_m",
+    "factor": 0.9,
+    "weights": {
+     "slope_deg": 0.408163,
+     "roughness_m": 0.408163,
+     "elevation_rel_m": 0.183673
+    },
+    "five": [
+     17566,
+     23945,
+     18282,
+     18280,
+     15395
+    ],
+    "same_five": true,
+    "n_tied_top": 1,
+    "info": {
+     "rule": "by_rank"
+    },
+    "per_analog": [
+     {
+      "id": 17566,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 1,
+      "tied_top": true
+     },
+     {
+      "id": 23945,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 2,
+      "tied_top": false
+     },
+     {
+      "id": 18282,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 3,
+      "tied_top": false
+     },
+     {
+      "id": 18280,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 4,
+      "tied_top": false
+     },
+     {
+      "id": 15395,
+      "in_five": true,
+      "twin_kept": true,
+      "rank": 5,
+      "tied_top": false
+     }
+    ]
+   }
+  ],
+  "per_analog": [
+   {
+    "id": 17566,
+    "stays_in_five": 12,
+    "keeps_twin": 12,
+    "stays_in_five_and_keeps_twin": 12,
+    "stays_tied_top": 12,
+    "of": 12
+   },
+   {
+    "id": 23945,
+    "stays_in_five": 12,
+    "keeps_twin": 12,
+    "stays_in_five_and_keeps_twin": 12,
+    "stays_tied_top": 0,
+    "of": 12
+   },
+   {
+    "id": 18282,
+    "stays_in_five": 12,
+    "keeps_twin": 12,
+    "stays_in_five_and_keeps_twin": 12,
+    "stays_tied_top": 0,
+    "of": 12
+   },
+   {
+    "id": 18280,
+    "stays_in_five": 12,
+    "keeps_twin": 12,
+    "stays_in_five_and_keeps_twin": 12,
+    "stays_tied_top": 0,
+    "of": 12
+   },
+   {
+    "id": 15395,
+    "stays_in_five": 12,
+    "keeps_twin": 12,
+    "stays_in_five_and_keeps_twin": 12,
+    "stays_tied_top": 0,
+    "of": 12
+   }
+  ],
+  "same_five_count": 12
+ }
+}

@@ -1,4 +1,4 @@
-# Data contract: static bundle v2 (contract revision 7, engine 3.3.0)
+# Data contract: static bundle v2 (contract revision 8, engine 3.4.0)
 
 The engine (`tierra luna/engine`) writes a static, versioned bundle that the browser app reads with plain `fetch()`; no server is needed.
 
@@ -10,6 +10,16 @@ The engine (`tierra luna/engine`) writes a static, versioned bundle that the bro
 | `python -m engine build --similarity-rule zone_twin --out DIR` | any | `DIR` (last night's z-score twin rule for every mission) | no |
 
 Datasets are described in `tierra luna/engine/datasets.json`, engine settings in `engine_config.json`. The machine check of this contract is `engine/bundle_v2.py` (`validate_bundle_v2`), run by the tests; it also shows, in Python, every decoding and recompute step below.
+
+**What changed in revision 8** (decisions of 2026-11-15 11:28, 11:36 and 11:51 CET; engine 3.4.0; `manifest.contract_revision` = 8). For the web developer:
+
+1. **New variable** `clear_frac_isccp` (variables.json: label "Clear-sky fraction (ISCCP satellite clouds)", unit fraction 0-1, Earth level DERIVED, product ISCCP-H HGM v01r00 NOAA NCEI 2012-2016, licence "no constraints", cite Rossow and Schiffer 1999; Moon NO_DATA). It is a Solar panels soft criterion (weight 0.35, bad 0.308, good 0.671): `earth_solar.bin` carries `u.clear_frac_isccp`; `u.irradiance_kwh_m2_day`, `u.sun_elev_max_deg`, `u.sun_low_frac_0_5deg` are gone (weight 0). Lunar base: `u.thermal_inertia_class` and `u.permafrost_class` are gone, `rock_or_bare_frac` weighs 0.25. The browser suitability formula is unchanged (weights from `missions.json`).
+2. **Supplementary data**: `manifest.json` config hashes list `earth_cloud_isccp_1deg.csv` and its provenance file (joined by cell id at build; `datasets.json` `supplements`).
+3. **Criteria set per mission**: `missions.json missions[].criteria_set` = {"set": "corrected" or "audited_morning", "title", "deviations": [{criterion, team, ours, reason, source}]}.
+4. **Rover similarity scores**: per variable `s = exp(-0.5 * max(0, |d| / sigma - 1)^2)` with `sigma` = `similarity.variables[].uncertainty_scale.sigma` (slope 0.265093 deg, roughness 17.401661 m); the pair filter (`bound`) is unchanged (2 deg, 30 m). A web build that recomputes Rover scores from the differences with the old Gaussian must use this formula; the published `s.<variable>` are authoritative.
+5. **Top-5 fields** (`missions.json missions[].top5`): new `rule_id` (`rank_with_skips` | `spread_within_top_tie` | `by_rank` | `min_separation`), `skips` ({ice: {enabled, column "snow_ice_frac", op ">=", value 0.5}, water: {enabled, column "mask_fraction", op "<", value 0.5}}), `top_tie_n`, `top_tie_n_after_skips`, `alternative_rule` and, for Rover, `alternative` = {rule_id, ids, overall_ranks, rule} (the other list; the team lead is choosing between the two). `ids`, `overall_ranks`, `rule`, `min_separation_deg`, `min_separation_km` keep their meaning.
+6. **Per-pair confidence removed**: `earth_<mission>.bin` columns `confidence` and `confidence_score` are still present (so older builds read the file) but every value is missing; `explain.json` pairs no longer have `confidence` / `confidence_score`; `missions.json` has no `confidence_counts` and no `distributions.confidence_score`. **The web must not show a confidence label.**
+7. **New and changed limits texts** (`missions.json` honest-limits texts, each with `show`): `solar_suitability_clouds` [mission_card, data_and_limits]; `lunar_base_swing_gate` [mission_card, data_and_limits]; `lunar_base_criteria` [mission_card, data_and_limits]; `rover_no_new_variable` [mission_card, data_and_limits]; `rover_tie` [mission_card, top5, data_and_limits]; `rover_suitability_one_criterion` [mission_card, data_and_limits]; `deviations_from_team` [data_and_limits] (rows separated by " || ", columns by " | "); `constants_two_values` [data_and_limits]; `top5_stability_<mission>` now [mission_card, data_and_limits] and pending for the three missions.
 
 **What changed in revision 7** (decisions of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf; engine 3.3.0; `manifest.contract_revision` = 7). Solar panels and Lunar base pairing unchanged: `earth_solar.bin`, `earth_solar_pairs.bin`, `moon_solar.bin`, `earth_lunar_base.bin`, `earth_lunar_base_pairs.bin`, `moon_lunar_base.bin` and every other `.bin` except the three Rover files are byte-identical to revision 6. For the web developer:
 

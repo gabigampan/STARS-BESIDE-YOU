@@ -1,0 +1,1079 @@
+{
+ "mission": "rover",
+ "commit_audited": "d24ebb3",
+ "verdicts": [
+  {
+   "item": 1,
+   "name": "configuration against decisions",
+   "verdict": "GO",
+   "figure": "22/22 checks; sigma 0.265093 deg and 17.401661 m recomputed; no deviation from mission_scoring.json"
+  },
+  {
+   "item": 2,
+   "name": "recomputation",
+   "verdict": "GO",
+   "figure": "0 mismatches in 10,337 points (suitability, similarity, final, rank, twin, scores, pair values); filter bounds hold on all 10,337 pairs"
+  },
+  {
+   "item": 3,
+   "name": "fallback audited_morning",
+   "verdict": "GO",
+   "figure": "identical to bundle a493514 cell by cell; five E17566 E23945 E18282 E18280 E15395"
+  },
+  {
+   "item": 4,
+   "name": "new data",
+   "verdict": "GO",
+   "figure": "not applicable: no supplementary column; snow_ice_frac and mask_fraction from the main table (ESA CCI LC 2020), orientation checked"
+  },
+  {
+   "item": 5,
+   "name": "weights +-10 %",
+   "verdict": "GO",
+   "figure": "each of the five 10/10 in the five with its twin (saturation, not order robustness)"
+  },
+  {
+   "item": 6,
+   "name": "Monte Carlo",
+   "verdict": "GO (weakness of decided criteria)",
+   "figure": "in five 43-87.5 %; exact five 10.5 % (morning 0 %); tied group keeps 89 % of members (median); twin kept 17.5-38 % (morning 100 %); 502 points within 1 of the fifth (morning 20.5)"
+  },
+  {
+   "item": 7,
+   "name": "external validation",
+   "verdict": "GO (weakness of decided criteria)",
+   "figure": "verified list: median 8.1 vs 9.2, top quartile 5/8 vs 5/8, separation 0.906 vs 0.906 (same); full list separation 0.855 vs 0.927 (worse); Bardenas 68.2 (44.5), Tabernas 71.5 (24.7)"
+  },
+  {
+   "item": 8,
+   "name": "the five places",
+   "verdict": "GO",
+   "figure": "land >= 0.697, ice 0, twins in zone, names = GeoNames nearest, min separation 60.0 deg, no recognised analog skipped"
+  },
+  {
+   "item": 9,
+   "name": "texts",
+   "verdict": "NOT YET (provisional, re-read after the text pass)",
+   "figure": "T1 old Gaussian score in missions.json similarity.score; T2 tie cause omits suitability saturation; T6 stability pending"
+  }
+ ],
+ "overall": {
+  "recommendation": "publish the corrected Rover",
+  "condition": "fix texts T1, T2, T6 (no number changes)",
+  "figures": [
+   "0 mismatches in 10,337 points; fallback exact",
+   "largest twin share 19.9 % -> 2.6 %",
+   "verified validation same (median 8.1 vs 9.2; separation 0.906 both)",
+   "tied group keeps 89 % of members over 200 runs"
+  ]
+ },
+ "stability": {
+  "simulations": 200,
+  "seed": 20261115,
+  "sigma_set": "first audit (audit/p3_montecarlo.py; docs/stats_audit/3 F.3)",
+  "corrected": {
+   "five": [
+    "E4037",
+    "E50510",
+    "E44239",
+    "E26510",
+    "E26087"
+   ],
+   "per_analog": [
+    {
+     "id": "E4037",
+     "twin": "M63714",
+     "in_five_share_pct": 52.5,
+     "in_top20_share_pct_published_rank": 72.5,
+     "in_top20_share_pct_tie_aware": 72.5,
+     "in_top50_share_pct_published_rank": 72.5,
+     "in_top50_share_pct_tie_aware": 72.5,
+     "in_tied_top_group_share_pct": 72.5,
+     "twin_kept_share_pct": 29.5,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "10/10",
+     "weights_pm10_stays_in_five_and_keeps_twin": "10/10"
+    },
+    {
+     "id": "E50510",
+     "twin": "M59438",
+     "in_five_share_pct": 43.0,
+     "in_top20_share_pct_published_rank": 0.0,
+     "in_top20_share_pct_tie_aware": 43.0,
+     "in_top50_share_pct_published_rank": 0.0,
+     "in_top50_share_pct_tie_aware": 43.0,
+     "in_tied_top_group_share_pct": 43.0,
+     "twin_kept_share_pct": 30.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "10/10",
+     "weights_pm10_stays_in_five_and_keeps_twin": "10/10"
+    },
+    {
+     "id": "E44239",
+     "twin": "M59712",
+     "in_five_share_pct": 65.0,
+     "in_top20_share_pct_published_rank": 0.0,
+     "in_top20_share_pct_tie_aware": 88.5,
+     "in_top50_share_pct_published_rank": 0.0,
+     "in_top50_share_pct_tie_aware": 88.5,
+     "in_tied_top_group_share_pct": 88.5,
+     "twin_kept_share_pct": 38.0,
+     "passes_funnel_share_pct": 96.0,
+     "weights_pm10_stays_in_five": "10/10",
+     "weights_pm10_stays_in_five_and_keeps_twin": "10/10"
+    },
+    {
+     "id": "E26510",
+     "twin": "M63711",
+     "in_five_share_pct": 87.5,
+     "in_top20_share_pct_published_rank": 0.0,
+     "in_top20_share_pct_tie_aware": 100.0,
+     "in_top50_share_pct_published_rank": 0.0,
+     "in_top50_share_pct_tie_aware": 100.0,
+     "in_tied_top_group_share_pct": 100.0,
+     "twin_kept_share_pct": 17.5,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "10/10",
+     "weights_pm10_stays_in_five_and_keeps_twin": "10/10"
+    },
+    {
+     "id": "E26087",
+     "twin": "M61294",
+     "in_five_share_pct": 67.0,
+     "in_top20_share_pct_published_rank": 0.0,
+     "in_top20_share_pct_tie_aware": 74.0,
+     "in_top50_share_pct_published_rank": 0.0,
+     "in_top50_share_pct_tie_aware": 74.0,
+     "in_tied_top_group_share_pct": 74.0,
+     "twin_kept_share_pct": 25.0,
+     "passes_funnel_share_pct": 83.0,
+     "weights_pm10_stays_in_five": "10/10",
+     "weights_pm10_stays_in_five_and_keeps_twin": "10/10"
+    }
+   ],
+   "five_repeat_exact_pct": 10.5,
+   "five_repeat_as_set_pct": 10.5,
+   "distinct_fives": 60,
+   "tied_group": {
+    "base_tied_n": 254,
+    "base_eligible_n": 241,
+    "tied_n_median_p5_p95": [
+     256.0,
+     245.95,
+     265.0
+    ],
+    "tied_eligible_n_median_p5_p95": [
+     242.0,
+     232.0,
+     252.0
+    ],
+    "base_tied_still_tied_share_median_p5_p95": [
+     0.8898,
+     0.8583,
+     0.9213
+    ],
+    "tied_jaccard_median_p5_p95": [
+     0.801,
+     0.7624,
+     0.8304
+    ],
+    "base_eligible_still_eligible_tied_share_median_p5_p95": [
+     0.8859,
+     0.8548,
+     0.917
+    ],
+    "eligible_jaccard_median_p5_p95": [
+     0.7933,
+     0.7554,
+     0.8251
+    ]
+   },
+   "within_of_fifth_median": {
+    "within_0_1": 311.0,
+    "within_0_5": 422.0,
+    "within_1": 502.0
+   },
+   "within_of_fifth_p5_p95": {
+    "within_0_1": [
+     300.95,
+     322.0
+    ],
+    "within_0_5": [
+     411.0,
+     432.04999999999995
+    ],
+    "within_1": [
+     490.95,
+     513.05
+    ]
+   },
+   "weights_pm10_same_five": "10/10"
+  },
+  "morning": {
+   "five": [
+    "E17566",
+    "E23945",
+    "E18282",
+    "E18280",
+    "E15395"
+   ],
+   "per_analog": [
+    {
+     "id": "E17566",
+     "twin": "M59895",
+     "in_five_share_pct": 92.0,
+     "in_top20_share_pct_published_rank": 100.0,
+     "in_top20_share_pct_tie_aware": 100.0,
+     "in_top50_share_pct_published_rank": 100.0,
+     "in_top50_share_pct_tie_aware": 100.0,
+     "in_tied_top_group_share_pct": 55.5,
+     "twin_kept_share_pct": 100.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "12/12",
+     "weights_pm10_stays_in_five_and_keeps_twin": "12/12"
+    },
+    {
+     "id": "E23945",
+     "twin": "M59895",
+     "in_five_share_pct": 80.5,
+     "in_top20_share_pct_published_rank": 100.0,
+     "in_top20_share_pct_tie_aware": 100.0,
+     "in_top50_share_pct_published_rank": 100.0,
+     "in_top50_share_pct_tie_aware": 100.0,
+     "in_tied_top_group_share_pct": 7.0,
+     "twin_kept_share_pct": 100.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "12/12",
+     "weights_pm10_stays_in_five_and_keeps_twin": "12/12"
+    },
+    {
+     "id": "E18282",
+     "twin": "M59895",
+     "in_five_share_pct": 75.5,
+     "in_top20_share_pct_published_rank": 99.5,
+     "in_top20_share_pct_tie_aware": 99.5,
+     "in_top50_share_pct_published_rank": 100.0,
+     "in_top50_share_pct_tie_aware": 100.0,
+     "in_tied_top_group_share_pct": 20.5,
+     "twin_kept_share_pct": 100.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "12/12",
+     "weights_pm10_stays_in_five_and_keeps_twin": "12/12"
+    },
+    {
+     "id": "E18280",
+     "twin": "M59895",
+     "in_five_share_pct": 43.0,
+     "in_top20_share_pct_published_rank": 84.0,
+     "in_top20_share_pct_tie_aware": 85.0,
+     "in_top50_share_pct_published_rank": 97.5,
+     "in_top50_share_pct_tie_aware": 97.5,
+     "in_tied_top_group_share_pct": 12.5,
+     "twin_kept_share_pct": 100.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "12/12",
+     "weights_pm10_stays_in_five_and_keeps_twin": "12/12"
+    },
+    {
+     "id": "E15395",
+     "twin": "M59895",
+     "in_five_share_pct": 22.5,
+     "in_top20_share_pct_published_rank": 95.0,
+     "in_top20_share_pct_tie_aware": 95.0,
+     "in_top50_share_pct_published_rank": 99.5,
+     "in_top50_share_pct_tie_aware": 99.5,
+     "in_tied_top_group_share_pct": 0.0,
+     "twin_kept_share_pct": 100.0,
+     "passes_funnel_share_pct": 100.0,
+     "weights_pm10_stays_in_five": "12/12",
+     "weights_pm10_stays_in_five_and_keeps_twin": "12/12"
+    }
+   ],
+   "five_repeat_exact_pct": 0.0,
+   "five_repeat_as_set_pct": 2.5,
+   "distinct_fives": 191,
+   "within_of_fifth_median": {
+    "within_0_1": 6.0,
+    "within_0_5": 13.0,
+    "within_1": 20.5
+   },
+   "within_of_fifth_p5_p95": {
+    "within_0_1": [
+     5.0,
+     9.0
+    ],
+    "within_0_5": [
+     9.0,
+     17.0
+    ],
+    "within_1": [
+     16.950000000000003,
+     25.0
+    ]
+   },
+   "weights_pm10_same_five": "12/12"
+  }
+ },
+ "validation": [
+  {
+   "site": "Bardenas",
+   "role": "positive",
+   "cell": "E17098",
+   "unverified_coords": false,
+   "corrected_pct": 68.16,
+   "corrected_tie_aware_pct": 68.16,
+   "morning_pct": 44.47
+  },
+  {
+   "site": "Tabernas",
+   "role": "positive",
+   "cell": "E18897",
+   "unverified_coords": false,
+   "corrected_pct": 71.49,
+   "corrected_tie_aware_pct": 71.48,
+   "morning_pct": 24.69
+  },
+  {
+   "site": "Dumont Dunes",
+   "role": "positive",
+   "cell": "E19503",
+   "unverified_coords": true,
+   "corrected_pct": 68.95,
+   "corrected_tie_aware_pct": 68.95,
+   "morning_pct": 22.85
+  },
+  {
+   "site": "MDRS",
+   "role": "positive",
+   "cell": "E18429",
+   "unverified_coords": false,
+   "corrected_pct": 20.53,
+   "corrected_tie_aware_pct": 20.52,
+   "morning_pct": 28.93
+  },
+  {
+   "site": "Yungay",
+   "role": "positive",
+   "cell": "E41150",
+   "unverified_coords": false,
+   "corrected_pct": 8.13,
+   "corrected_tie_aware_pct": 8.13,
+   "morning_pct": 9.21
+  },
+  {
+   "site": "Erfoud",
+   "role": "positive",
+   "cell": "E21055",
+   "unverified_coords": true,
+   "corrected_pct": 3.73,
+   "corrected_tie_aware_pct": 3.73,
+   "morning_pct": 2.55
+  },
+  {
+   "site": "Dhofar",
+   "role": "positive",
+   "cell": "E25795",
+   "unverified_coords": false,
+   "corrected_pct": null,
+   "corrected_tie_aware_pct": null,
+   "morning_pct": null
+  },
+  {
+   "site": "Ramon",
+   "role": "positive",
+   "cell": "E21454",
+   "unverified_coords": false,
+   "corrected_pct": 3.57,
+   "corrected_tie_aware_pct": 3.56,
+   "morning_pct": 6.17
+  },
+  {
+   "site": "Haughton",
+   "role": "positive",
+   "cell": "E5130",
+   "unverified_coords": false,
+   "corrected_pct": 4.16,
+   "corrected_tie_aware_pct": 4.17,
+   "morning_pct": 1.69
+  },
+  {
+   "site": "Death Valley",
+   "role": "positive",
+   "cell": "E19143",
+   "unverified_coords": true,
+   "corrected_pct": 80.14,
+   "corrected_tie_aware_pct": 80.14,
+   "morning_pct": 37.35
+  },
+  {
+   "site": "Qaidam",
+   "role": "positive",
+   "cell": "E18633",
+   "unverified_coords": false,
+   "corrected_pct": 4.05,
+   "corrected_tie_aware_pct": 4.05,
+   "morning_pct": 0.25
+  },
+  {
+   "site": "Concordia",
+   "role": "negative",
+   "cell": "E59703",
+   "unverified_coords": false,
+   "corrected_pct": null,
+   "corrected_tie_aware_pct": null,
+   "morning_pct": null
+  },
+  {
+   "site": "NEEMO",
+   "role": "negative",
+   "cell": "E23499",
+   "unverified_coords": true,
+   "corrected_pct": null,
+   "corrected_tie_aware_pct": null,
+   "morning_pct": null
+  },
+  {
+   "site": "HI-SEAS",
+   "role": "negative",
+   "cell": "E25224",
+   "unverified_coords": true,
+   "corrected_pct": 83.69,
+   "corrected_tie_aware_pct": 83.67,
+   "morning_pct": 51.86
+  },
+  {
+   "site": "Rio Tinto",
+   "role": "negative",
+   "cell": "E18893",
+   "unverified_coords": true,
+   "corrected_pct": 42.38,
+   "corrected_tie_aware_pct": 42.45,
+   "morning_pct": 44.62
+  },
+  {
+   "site": "El Soplao",
+   "role": "negative",
+   "cell": "E16735",
+   "unverified_coords": false,
+   "corrected_pct": 95.42,
+   "corrected_tie_aware_pct": 95.43,
+   "morning_pct": 89.54
+  }
+ ],
+ "validation_summary": {
+  "corrected_verified": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 8.13,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "morning_verified": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 9.21,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "corrected_all": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 14.33,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "morning_all": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 16.03,
+   "positives_in_top_quartile": 7,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.927
+  }
+ },
+ "difference_table": [
+  {
+   "variable": "slope_deg",
+   "role": "key",
+   "weight": 0.5,
+   "tolerance": 2.0,
+   "filter_bound": 2.0,
+   "sigma": 0.265093,
+   "n_pairs": 10337,
+   "median": 0.016,
+   "p90": 0.044,
+   "max": 0.28,
+   "all_within_bound": true,
+   "share_within_sigma": 0.99981
+  },
+  {
+   "variable": "roughness_m",
+   "role": "key",
+   "weight": 0.5,
+   "tolerance": 30.0,
+   "filter_bound": 30.0,
+   "sigma": 17.401661,
+   "n_pairs": 10337,
+   "median": 1.09,
+   "p90": 2.84,
+   "max": 16.89,
+   "all_within_bound": true,
+   "share_within_sigma": 1.0
+  }
+ ],
+ "difference_table_morning": [
+  {
+   "variable": "slope_deg",
+   "role": "key",
+   "weight": 0.4,
+   "tolerance": 2.0,
+   "filter_bound": 2.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 0.408,
+   "p90": 0.851,
+   "max": 1.971,
+   "all_within_bound": true
+  },
+  {
+   "variable": "roughness_m",
+   "role": "key",
+   "weight": 0.4,
+   "tolerance": 30.0,
+   "filter_bound": 30.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 5.34,
+   "p90": 20.549,
+   "max": 29.97,
+   "all_within_bound": true
+  },
+  {
+   "variable": "elevation_rel_m",
+   "role": "secondary",
+   "weight": 0.2,
+   "tolerance": 500.0,
+   "filter_bound": 1000.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 247.8862,
+   "p90": 798.8762,
+   "max": 999.9862,
+   "all_within_bound": true
+  }
+ ],
+ "suitability_saturation": {
+  "n_suit_100": 253,
+  "n_suit_100_full": 250,
+  "per_criterion": {
+   "slope_300m_deg": {
+    "weight": 0.45,
+    "bad": 15.0,
+    "good": 1.0,
+    "share_passing_at_utility_1": 0.3184,
+    "n_passing_at_1": 3291,
+    "tied_group_all_at_1": true,
+    "tied_group_n_at_1": 254,
+    "tied_group_value_range": [
+     0.5,
+     0.961
+    ]
+   },
+   "rough_300m_m": {
+    "weight": 0.3,
+    "bad": 650.0,
+    "good": 30.0,
+    "share_passing_at_utility_1": 0.2074,
+    "n_passing_at_1": 2144,
+    "tied_group_all_at_1": false,
+    "tied_group_n_at_1": 250,
+    "tied_group_value_range": [
+     14.61,
+     30.19
+    ]
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.25,
+    "bad": 0.0,
+    "good": 0.7,
+    "share_passing_at_utility_1": 0.09,
+    "n_passing_at_1": 930,
+    "tied_group_all_at_1": true,
+    "tied_group_n_at_1": 254,
+    "tied_group_value_range": [
+     0.707,
+     1.0
+    ]
+   }
+  },
+  "n_all_three_utilities_1": 250,
+  "tied_group_equals_all_utilities_1_and_sim_100": false,
+  "n_all_utilities_1_but_sim_lt_100": 0,
+  "share_of_suitability_eq_100_among_sim_100": null
+ },
+ "five_rule_exclusions": {
+  "tied_n": 254,
+  "tied_ice": 0,
+  "tied_land_lt_half": 13,
+  "tied_both": 0,
+  "ranked_ice": 1485,
+  "ranked_land_lt_half": 671,
+  "tied_land_lt_half_ids": [
+   "E3872",
+   "E4035",
+   "E5114",
+   "E5309",
+   "E5824",
+   "E5825",
+   "E5832",
+   "E5833",
+   "E6191",
+   "E6923",
+   "E7263",
+   "E22128",
+   "E41234"
+  ],
+  "tied_land_lt_half_lc210": 13,
+  "eligible_tied_within_2deg_of_a_chosen": 5,
+  "min_sep_of_five_deg": 59.96338524940772,
+  "two_degree_rule_binding": false,
+  "five_without_2deg_rule": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ],
+  "five_without_ice_and_land_skips": [
+   3872,
+   50509,
+   44239,
+   26087,
+   26151
+  ],
+  "five_without_land_skip": [
+   3872,
+   50509,
+   44239,
+   26087,
+   26151
+  ],
+  "five_without_ice_skip": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ]
+ },
+ "bardenas_tabernas": {
+  "Bardenas": {
+   "cell": "E17098",
+   "criterion_by_criterion": {
+    "slope_300m_deg": {
+     "value": 1.911,
+     "bad": 15.0,
+     "good": 1.0,
+     "utility": 0.9349,
+     "weight": 0.45,
+     "points_lost_of_suitability": 2.93
+    },
+    "rough_300m_m": {
+     "value": 77.0,
+     "bad": 650.0,
+     "good": 30.0,
+     "utility": 0.9242,
+     "weight": 0.3,
+     "points_lost_of_suitability": 2.27
+    },
+    "rock_or_bare_frac": {
+     "value": 0.018,
+     "bad": 0.0,
+     "good": 0.7,
+     "utility": 0.0251,
+     "weight": 0.25,
+     "points_lost_of_suitability": 24.37
+    }
+   },
+   "suitability_check": 70.43,
+   "points_below_top_final": 14.79,
+   "n_ranked_better": 7042
+  },
+  "Tabernas": {
+   "cell": "E18897",
+   "criterion_by_criterion": {
+    "slope_300m_deg": {
+     "value": 3.165,
+     "bad": 15.0,
+     "good": 1.0,
+     "utility": 0.8454,
+     "weight": 0.45,
+     "points_lost_of_suitability": 6.96
+    },
+    "rough_300m_m": {
+     "value": 110.71,
+     "bad": 650.0,
+     "good": 30.0,
+     "utility": 0.8698,
+     "weight": 0.3,
+     "points_lost_of_suitability": 3.91
+    },
+    "rock_or_bare_frac": {
+     "value": 0.146,
+     "bad": 0.0,
+     "good": 0.7,
+     "utility": 0.209,
+     "weight": 0.25,
+     "points_lost_of_suitability": 19.78
+    }
+   },
+   "suitability_check": 69.36,
+   "points_below_top_final": 15.32,
+   "n_ranked_better": 7384
+  }
+ },
+ "slope_minimum": {
+  "slope_min_study_rule_1123_tolerance_score": {
+   "with_min": {
+    "passing": 10337,
+    "paired": 10337,
+    "distinct_twins": 1166,
+    "largest_twin_share": 0.0256,
+    "largest_twin": "M63712",
+    "largest_twin_points": 265,
+    "top5_full_ranking": [
+     3872,
+     4037,
+     4042,
+     4742,
+     4750
+    ],
+    "water_cci210_in_top50": 4,
+    "ice_in_top50_snow_ge_0_5": 0,
+    "cci220_in_top50": 0,
+    "land_lt_0_5_in_top50": 3,
+    "n_final_eq_top": 74,
+    "five_shipped_rule": [
+     17199,
+     50509,
+     26087,
+     5846,
+     41958
+    ]
+   },
+   "without_min": {
+    "passing": 18184,
+    "paired": 18184,
+    "distinct_twins": 1181,
+    "largest_twin_share": 0.1387,
+    "largest_twin": "M62913",
+    "largest_twin_points": 2522,
+    "top5_full_ranking": [
+     3675,
+     3872,
+     4037,
+     4042,
+     4044
+    ],
+    "water_cci210_in_top50": 13,
+    "ice_in_top50_snow_ge_0_5": 0,
+    "cci220_in_top50": 0,
+    "land_lt_0_5_in_top50": 10,
+    "n_final_eq_top": 412,
+    "five_shipped_rule": [
+     21798,
+     43523,
+     50509,
+     9794,
+     16851
+    ]
+   },
+   "added": 7847,
+   "added_snow_or_ice_cci220_or_snow_ge_0_5": 2862,
+   "added_cci220": 2856,
+   "added_water_cci210": 373,
+   "added_bare_200_202": 777,
+   "top50_overlap": 22,
+   "top50_added_points": 28,
+   "top50_added_slope_lt_0_5": 28,
+   "validation_pct_with": {
+    "Bardenas": 68.25,
+    "Tabernas": 71.32,
+    "Dumont Dunes": 68.96,
+    "MDRS": 20.5,
+    "Yungay": 8.11,
+    "Erfoud": 3.74,
+    "Dhofar": null,
+    "Ramon": 3.57,
+    "Haughton": 4.19,
+    "Death Valley": 80.04,
+    "Qaidam": 4.03,
+    "Concordia": null,
+    "NEEMO": null,
+    "HI-SEAS": 83.62,
+    "Rio Tinto": 42.23,
+    "El Soplao": 95.4
+   },
+   "validation_pct_without": {
+    "Bardenas": 81.95,
+    "Tabernas": 83.69,
+    "Dumont Dunes": 82.35,
+    "MDRS": 22.2,
+    "Yungay": 11.63,
+    "Erfoud": 8.1,
+    "Dhofar": null,
+    "Ramon": 7.99,
+    "Haughton": 8.42,
+    "Death Valley": 88.65,
+    "Qaidam": 8.29,
+    "Concordia": null,
+    "NEEMO": null,
+    "HI-SEAS": 90.69,
+    "Rio Tinto": 66.0,
+    "El Soplao": 97.38
+   },
+   "summary_with": {
+    "positives_found": 11,
+    "positives_ranked": 10,
+    "median_pct_ranked": 14.29,
+    "positives_in_top_quartile": 6,
+    "negatives_found": 5,
+    "negatives_ranked": 3,
+    "separation_share": 0.855
+   },
+   "summary_without": {
+    "positives_found": 11,
+    "positives_ranked": 10,
+    "median_pct_ranked": 16.91,
+    "positives_in_top_quartile": 6,
+    "negatives_found": 5,
+    "negatives_ranked": 3,
+    "separation_share": 0.855
+   },
+   "summary_verified_with": {
+    "positives_found": 8,
+    "positives_ranked": 7,
+    "median_pct_ranked": 8.11,
+    "positives_in_top_quartile": 5,
+    "negatives_found": 2,
+    "negatives_ranked": 1,
+    "separation_share": 0.906
+   },
+   "summary_verified_without": {
+    "positives_found": 8,
+    "positives_ranked": 7,
+    "median_pct_ranked": 11.63,
+    "positives_in_top_quartile": 5,
+    "negatives_found": 2,
+    "negatives_ranked": 1,
+    "separation_share": 0.906
+   }
+  },
+  "slope_min_study_corrected": {
+   "with_min": {
+    "passing": 10337,
+    "paired": 10337,
+    "distinct_twins": 1144,
+    "largest_twin_share": 0.0262,
+    "largest_twin": "M59712",
+    "largest_twin_points": 271,
+    "top5_full_ranking": [
+     3872,
+     4035,
+     4037,
+     4038,
+     4042
+    ],
+    "water_cci210_in_top50": 12,
+    "ice_in_top50_snow_ge_0_5": 0,
+    "cci220_in_top50": 0,
+    "land_lt_0_5_in_top50": 9,
+    "n_final_eq_top": 254,
+    "five_shipped_rule": [
+     4037,
+     50510,
+     44239,
+     26510,
+     26087
+    ]
+   },
+   "without_min": {
+    "passing": 18184,
+    "paired": 18184,
+    "distinct_twins": 1161,
+    "largest_twin_share": 0.1641,
+    "largest_twin": "M62913",
+    "largest_twin_points": 2984,
+    "top5_full_ranking": [
+     3675,
+     3676,
+     3872,
+     4028,
+     4035
+    ],
+    "water_cci210_in_top50": 25,
+    "ice_in_top50_snow_ge_0_5": 0,
+    "cci220_in_top50": 0,
+    "land_lt_0_5_in_top50": 16,
+    "n_final_eq_top": 1321,
+    "five_shipped_rule": [
+     4037,
+     50510,
+     39182,
+     27207,
+     18994
+    ]
+   },
+   "added": 7847,
+   "added_snow_or_ice_cci220_or_snow_ge_0_5": 2862,
+   "added_cci220": 2856,
+   "added_water_cci210": 373,
+   "added_bare_200_202": 777,
+   "top50_overlap": 24,
+   "top50_added_points": 26,
+   "top50_added_slope_lt_0_5": 26,
+   "validation_pct_with": {
+    "Bardenas": 68.16,
+    "Tabernas": 71.49,
+    "Dumont Dunes": 68.95,
+    "MDRS": 20.53,
+    "Yungay": 8.13,
+    "Erfoud": 3.73,
+    "Dhofar": null,
+    "Ramon": 3.57,
+    "Haughton": 4.16,
+    "Death Valley": 80.14,
+    "Qaidam": 4.05,
+    "Concordia": null,
+    "NEEMO": null,
+    "HI-SEAS": 83.69,
+    "Rio Tinto": 42.38,
+    "El Soplao": 95.42
+   },
+   "validation_pct_without": {
+    "Bardenas": 81.9,
+    "Tabernas": 83.79,
+    "Dumont Dunes": 82.35,
+    "MDRS": 22.23,
+    "Yungay": 11.64,
+    "Erfoud": 8.1,
+    "Dhofar": null,
+    "Ramon": 8.0,
+    "Haughton": 8.39,
+    "Death Valley": 88.71,
+    "Qaidam": 8.3,
+    "Concordia": null,
+    "NEEMO": null,
+    "HI-SEAS": 90.73,
+    "Rio Tinto": 67.23,
+    "El Soplao": 97.4
+   },
+   "summary_with": {
+    "positives_found": 11,
+    "positives_ranked": 10,
+    "median_pct_ranked": 14.32,
+    "positives_in_top_quartile": 6,
+    "negatives_found": 5,
+    "negatives_ranked": 3,
+    "separation_share": 0.855
+   },
+   "summary_without": {
+    "positives_found": 11,
+    "positives_ranked": 10,
+    "median_pct_ranked": 16.94,
+    "positives_in_top_quartile": 6,
+    "negatives_found": 5,
+    "negatives_ranked": 3,
+    "separation_share": 0.855
+   },
+   "summary_verified_with": {
+    "positives_found": 8,
+    "positives_ranked": 7,
+    "median_pct_ranked": 8.13,
+    "positives_in_top_quartile": 5,
+    "negatives_found": 2,
+    "negatives_ranked": 1,
+    "separation_share": 0.906
+   },
+   "summary_verified_without": {
+    "positives_found": 8,
+    "positives_ranked": 7,
+    "median_pct_ranked": 11.64,
+    "positives_in_top_quartile": 5,
+    "negatives_found": 2,
+    "negatives_ranked": 1,
+    "separation_share": 0.906
+   }
+  }
+ },
+ "faults": [
+  {
+   "id": "T1",
+   "kind": "text",
+   "where": "missions.json missions[rover].similarity.score; similarity.json texts.similarity_meaning_real_values",
+   "what": "publishes the Gaussian score exp(-0.5(d/tol)^2) of the earlier rule; the shipped score is the dead band exp(-0.5 max(0,d/sigma-1)^2)"
+  },
+  {
+   "id": "T2",
+   "kind": "text",
+   "where": "texts.rover_tie, missions.json top5.rule",
+   "what": "attributes the 254-way tie to measurement error alone; 10,335 pairs are within sigma, the 254 are those whose three suitability utilities are also saturated (slope <= 1 deg, bare >= 0.7, roughness <= 30 m on 250)"
+  },
+  {
+   "id": "T3",
+   "kind": "text",
+   "where": "missions.json top5.rule",
+   "what": "'241 sites ... tie' beside '254 share the top score': two counts for one tie; wording"
+  },
+  {
+   "id": "T4",
+   "kind": "config note",
+   "where": "criteria_sets rover corrected skips.water.why",
+   "what": "'TO BE CONFIRMED by the team lead' though confirmed at 12:10"
+  },
+  {
+   "id": "T5",
+   "kind": "text",
+   "where": "explain / pair panel of E4037",
+   "what": "named after Gjoa Haven, 1,116 km away; state the distance"
+  },
+  {
+   "id": "T6",
+   "kind": "text",
+   "where": "texts.top5_stability_rover",
+   "what": "pending; fill with the stability figures of this audit"
+  },
+  {
+   "id": "W1",
+   "kind": "decided criterion",
+   "what": "similarity saturated (10,335/10,337 at 100) and suitability saturated at the head (253 publish 100.00): final = 50 + suitability/2, Spearman 1.000"
+  },
+  {
+   "id": "W2",
+   "kind": "decided criterion",
+   "what": "Bardenas and Tabernas fall to 68.2 / 71.5 % via rock_or_bare_frac at 1 deg (-24.4 / -19.8 suitability points)"
+  },
+  {
+   "id": "W3",
+   "kind": "decided criterion",
+   "what": "which five are shown is unstable (exact repeat 10.5 %, twins kept 17.5-38 %); slope min 0.5 deg makes E26087 (0.523 deg) leave the funnel in 17 % of runs"
+  }
+ ],
+ "scripts": [
+  "tierra luna/audit/ra_rover_common.py",
+  "ra_rover_config.py",
+  "ra_rover_audit.py",
+  "ra_rover_fallback.py",
+  "ra_rover_weights.py",
+  "ra_rover_mc.py",
+  "ra_rover_texts.py",
+  "ra_rover_summary.py"
+ ]
+}

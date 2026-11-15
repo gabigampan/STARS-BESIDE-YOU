@@ -1,4 +1,24 @@
 {
- "pending_rerecord": [],
- "note": "Tracks whose new text is already in transcripts.json while the MP3 is still the old recording (maintained by the director; empty = none)."
+ "pending_rerecord": [
+  "00_welcome.mp3",
+  "m1_rover.mp3",
+  "m2_solar.mp3",
+  "m3_base.mp3",
+  "rover_1.mp3",
+  "rover_2.mp3",
+  "rover_3.mp3",
+  "rover_4.mp3",
+  "rover_5.mp3",
+  "solar_1.mp3",
+  "solar_2.mp3",
+  "solar_3.mp3",
+  "solar_4.mp3",
+  "solar_5.mp3",
+  "base_1.mp3",
+  "base_2.mp3",
+  "base_3.mp3",
+  "base_4.mp3",
+  "base_5.mp3"
+ ],
+ "note": "The team re-records these tracks; until the new recordings arrive the web shows their text only."
 }

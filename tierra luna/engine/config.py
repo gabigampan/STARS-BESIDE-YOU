@@ -40,7 +40,7 @@ DATASET_SETTINGS = ("inputs", "input_csv", "grid", "provenance", "column_aliases
                     "variables", "comparability", "bundle_format", "bundle_version", "output_dir",
                     "earth_land_cells", "earth_ocean_fill", "region_max_place_km", "export_columns",
                     "lunar_named_sites", "credits", "mission_notes", "similarity_columns", "similarity_excluded",
-                    "lunar_info_columns")
+                    "lunar_info_columns", "supplements")
 
 
 class Setting(BaseModel):
@@ -132,6 +132,9 @@ class EngineConfig(BaseModel):
     similarity_columns: Optional[Setting] = None
     similarity_excluded: Optional[Setting] = None
     lunar_info_columns: Optional[Setting] = None
+    supplements: Optional[Setting] = None
+    criteria_sets: Optional[Setting] = None
+    legacy_rules: Optional[Setting] = None
 
     def v(self, name: str) -> Any:
         """Return the value of a setting (deep copy, so callers cannot mutate config)."""

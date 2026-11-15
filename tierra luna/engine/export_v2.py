@@ -94,6 +94,11 @@ class BinFile:
         return {"row_sets": dict(self.row_sets), "columns": self.columns}
 
 
+
+def _conf_on(engine_cfg) -> bool:
+    """engine_config confidence 'export_per_pair' (revision 8: false; the label was uniform per mission)."""
+    return bool((engine_cfg.v("confidence") or {}).get("export_per_pair", True))
+
 def _round_array(values: np.ndarray, decimals: int) -> np.ndarray:
     """Python round per finite value (the published precision); NaN stays NaN."""
     a = np.asarray(values, dtype=np.float64)
@@ -361,7 +366,7 @@ def weighted_rows(mission_cfg: Dict, mid: str, reg: Dict, sim_vars: List[str]) -
             "levels": {b: e["bodies"][b]["level"] for b in BODIES},
             "weight": spec["weight"], "bad": spec.get("bad"), "good": spec.get("good"),
             "map": spec.get("map"), "default": spec.get("default"), "why": spec.get("why"),
-            "also_in_similarity": var in sim_vars,
+            "also_in_similarity": var in sim_vars,  # a similarity variable read from this column counts (Lunar base: tmin_k from tmin_c)
         })
     return out
 
@@ -443,7 +448,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             sim_block.update(twin_summary(res.twin_id[ranked], moon_ids))
         else:
             sim_block["twins"] = None
-            sim_block["no_twin_reason"] = "repo_global_mean compares every Earth cell with the mean profile of the whole Moon (the repository's default target), so there is no lunar twin; the shipped rule since the team decision of 2026-11-15 is zone_twin (engine_config similarity_rule)."
+            sim_block["no_twin_reason"] = "This build compares every Earth cell with the average of the whole Moon, so there is no single lunar twin. The published version pairs each Earth point with one lunar cell of the mission's target zone (team decision of 2026-11-15)."
         out.append({
             "id": mid, "title": titles.get(mid, mid), "description": m.get("description"), "author": m.get("author"),
             "threshold_status": status[mid], "provisional": bool(prov), "provisional_note": prov if prov else None,
@@ -451,7 +456,8 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             "on_missing_gate": mission_cfg.get("on_missing_gate"), "require_present": m.get("require_present", []),
             "files": {"EARTH": f"earth_{mid}.bin", "MOON": f"moon_{mid}.bin"},
             "gates": gate_rows(mission_cfg, mid, reg, engine_cfg),
-            "weighted_variables": weighted_rows(mission_cfg, mid, reg, list(res.sim_vars)),
+            "weighted_variables": weighted_rows(mission_cfg, mid, reg, list(res.sim_vars) + [
+                ((v.get("sides") or {}).get("EARTH") or {}).get("column") for v in (sim_block.get("variables") or [])]),
             "reason_codes": reason_entries_v2(codes[mid], mission_cfg, mid, engine_cfg, reg),
             "pass_counts": {"EARTH": int(passing.sum()), "EARTH_LAND_CELLS": int(land.sum()),
                             "MOON": int(res.moon_gates.passed.sum()), "MOON_CELLS": int(len(res.moon_gates.passed))},
@@ -461,13 +467,15 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             "missing_data": {"EARTH_LAND": missing_summary(land_g, suffix), "MOON": missing_summary(res.moon_gates, suffix)},
             "alpha": res.alpha,
             "similarity": sim_block,
-            "confidence_counts": {k: int(sum(1 for c in res.confidence if c == k)) for k in CONF_CODES},
+            **({"confidence_counts": {k: int(sum(1 for c in res.confidence if c == k)) for k in CONF_CODES}}
+               if _conf_on(engine_cfg) else {}),
             "distributions": {
                 "suitability": quantiles(res.earth_suit.score[passing], scd),
                 "similarity": quantiles(res.similarity_pct[ranked], scd),
                 "final": quantiles(res.final_published[ranked], scd),
-                "confidence_score": quantiles(res.confidence_score[ranked], cd),
+                **({"confidence_score": quantiles(res.confidence_score[ranked], cd)} if _conf_on(engine_cfg) else {}),
             },
+            "criteria_set": ((engine_cfg.v("criteria_sets") or {}).get("applied", {}) if engine_cfg.criteria_sets is not None else {}).get(mid),
             "component_results": comp_out,
             "known_limitations": [t["text"] for t in (engine_cfg.v("approved_texts") or {}).values()
                                   if t.get("mission") == mid and t.get("mission_card", True)] + list(notes.get(mid, []))
@@ -805,7 +813,7 @@ def _build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engin
                           "profile": {f: ctx.target[f] for f in ctx.active},
                           "info_not_in_similarity": lunar_info_summary(ds, engine_cfg)}
         base["twins"] = None
-        base["no_twin_reason"] = "repo_global_mean has no twin: the target is the mean profile of the whole Moon (the repository's default). The shipped rule since the team decision of 2026-11-15 is zone_twin, which has twins."
+        base["no_twin_reason"] = "This build compares every Earth cell with the average of the whole Moon, so there is no single lunar twin. The published version pairs each Earth point with one lunar cell of the mission's target zone (team decision of 2026-11-15)."
     else:
         base["target"] = {"kind": "zone_twin", "tie_rule": engine_cfg.v("twin_tie_rule"),
                           "lunar_cells_filtered": False,
@@ -1073,8 +1081,8 @@ def build_explain_v2(results: Dict[str, MissionResult], ds: Dataset, mission_cfg
                 "similarity": sim,
                 "alpha": res.alpha,
                 "final": rnd(res.final_published[i], scd),
-                "confidence": res.confidence[i],
-                "confidence_score": rnd(res.confidence_score[i], cd),
+                **({"confidence": res.confidence[i], "confidence_score": rnd(res.confidence_score[i], cd)}
+                   if _conf_on(engine_cfg) else {}),
             }
             for cid, cres in res.components.items():
                 cp = bool(cres.earth_gates.passed[i])
@@ -1346,11 +1354,14 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
             tw = res.twin_id[idx]
             ef.i32("twin", tw, "passing", missing=tw < 0,
                    description="lunar twin cell id (= moon_base.bin position)" + ("; missing = no lunar cell of the zone passes the pair filter" if is_real else ""))
-        conf = [res.confidence[i] for i in idx]
+        conf = [res.confidence[i] for i in idx] if _conf_on(engine_cfg) else [None] * len(idx)
         ccode = np.array([CONF_CODES.index(c) if c is not None else 0 for c in conf], dtype=np.int64)
+        # revision 8: the per-pair confidence label is not exported (every value missing); the
+        # columns stay so an older web build still reads the file and shows no label
         ef.i32("confidence", ccode, "passing", missing=np.array([c is None for c in conf]),
                codes="missions.json confidence_codes")
-        ef.quantised("confidence_score", _round_array(res.confidence_score[idx], cd), cd, "passing")
+        csc = _round_array(res.confidence_score[idx], cd) if _conf_on(engine_cfg) else np.full(len(idx), np.nan)
+        ef.quantised("confidence_score", csc, cd, "passing")
         if is_real:
             real = res.extra["real"]
             sdq = int(real["settings"]["score_decimals"])
@@ -1457,7 +1468,7 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
     data_credits = sorted({reg["variables"][v]["bodies"][b].get("licence_credit") or "" for v in eng_vars for b in BODIES} - {""})
     manifest = {
         "bundle_version": engine_cfg.v("bundle_version"),
-        "contract_revision": 7,
+        "contract_revision": 8,
         "engine_version": engine_cfg.v("engine_version"),
         "dataset": {"id": ds.id, "why": engine_cfg.dataset.why},
         "build_time": build_time,

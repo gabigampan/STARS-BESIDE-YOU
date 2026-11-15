@@ -18,6 +18,7 @@ descriptor.
 from __future__ import annotations
 
 import csv
+import os
 import json
 import math
 import re
@@ -121,6 +122,81 @@ def load_raw(engine_cfg: EngineConfig, paths: Optional[Dict[str, str]] = None) -
         if set(df["body"].astype(str).str.upper()) != {body}:
             raise ValueError(f"{paths[body]} must hold only {body} rows")
         out[body] = split_bodies(df, grid)[body]
+    return out
+
+
+def load_supplements(engine_cfg: EngineConfig, raw: Dict[str, pd.DataFrame]) -> List[Dict]:
+    """Join the dataset's supplementary columns (datasets.json ``supplements``) onto the raw
+    frames, keyed by cell id, without rebuilding the big tables.
+
+    Each supplement: {"file", "provenance", "body", "key_column", "key_prefix", "columns"}.
+    The key is '<prefix><id>' (e.g. 'E1234'); a cell absent from the file, or an empty
+    value, stays NaN (never 0). On the other body the column is added empty, and the
+    registry marks it 'no data' there. Returns [{file, sha256, rows, columns}] for the
+    manifest. Raises when a column already exists in the main table or a key is unknown."""
+    out = []
+    grid = grid_of(engine_cfg)
+    for sp in engine_cfg.v("supplements") or []:
+        body = sp["body"]
+        path = resolve_path(sp["file"])
+        df = pd.read_csv(path, keep_default_na=True)
+        key = df[sp["key_column"]].astype(str)
+        if not key.str.startswith(sp["key_prefix"]).all():
+            raise ValueError(f"{path}: key {sp['key_column']} must start with {sp['key_prefix']!r}")
+        cid = key.str[len(sp["key_prefix"]):].astype(np.int64).to_numpy()
+        if len(set(cid)) != len(cid) or cid.min() < 0 or cid.max() >= grid.cells:
+            raise ValueError(f"{path}: duplicate or out-of-grid cell ids")
+        target = raw[body]
+        pos = pd.Series(np.arange(len(target)), index=target["id"].to_numpy())
+        for col in sp["columns"]:
+            for b in BODIES:
+                if col in raw[b].columns:
+                    raise ValueError(f"supplementary column {col} already exists in the {b} table")
+            vals = np.full(len(target), np.nan)
+            src = pd.to_numeric(df[col], errors="coerce").to_numpy(dtype=np.float64)
+            hit = pos.reindex(cid).to_numpy()
+            ok = np.isfinite(hit)
+            vals[hit[ok].astype(np.int64)] = src[ok]
+            target[col] = vals
+            for b in BODIES:
+                if b != body:
+                    raw[b][col] = np.nan
+        out.append({"key": f"supplement:{os.path.basename(path)}", "file": os.path.basename(path),
+                    "sha256": sha256_file(path), "rows": int(len(df)), "columns": list(sp["columns"]),
+                    "provenance": sp["provenance"]})
+    return out
+
+
+def supplement_provenance_rows(engine_cfg: EngineConfig) -> Dict[str, Dict[str, Dict[str, str]]]:
+    """{body: {column: provenance row}} of the supplementary columns; the other body gets a
+    'no data' row naming the supplement."""
+    out: Dict[str, Dict[str, Dict[str, str]]] = {b: {} for b in BODIES}
+    for sp in engine_cfg.v("supplements") or []:
+        rows = read_provenance_csv(resolve_path(sp["provenance"]), sp["body"])
+        for col in sp["columns"]:
+            if col not in rows:
+                raise KeyError(f"{sp['provenance']} has no {sp['body']} row for {col}")
+            r = dict(rows[col])
+            for k, v in list(r.items()):  # 'same' / 'same as x' in the provenance file -> the first row's text
+                if v.lower().startswith("same") and k not in ("variable", "body", "level"):
+                    first = next(iter(rows.values()))
+                    r[k] = first.get(k, v)
+            out[sp["body"]][col] = r
+            for b in BODIES:
+                if b != sp["body"]:
+                    out[b][col] = {"variable": col, "body": b, "level": "no data",
+                                   "caveats": f"supplementary {sp['body']} column ({sp['file']}); no {b} value"}
+    return out
+
+
+def supplement_aliases(engine_cfg: EngineConfig) -> Dict[str, Dict[str, Dict]]:
+    """Identity alias entries of the supplementary columns, per body."""
+    out: Dict[str, Dict[str, Dict]] = {b: {} for b in BODIES}
+    for sp in engine_cfg.v("supplements") or []:
+        for col in sp["columns"]:
+            for b in BODIES:
+                out[b][col] = {"column": col, "caveat": sp.get("caveat", "") if b == sp["body"] else
+                               f"no {b} value (supplementary {sp['body']} column)"}
     return out
 
 
@@ -234,6 +310,10 @@ def _registry_from_csv(engine_cfg: EngineConfig, raw: Dict[str, pd.DataFrame]) -
     pcfg = engine_cfg.v("provenance")
     rows = {b: read_provenance_csv(resolve_path(pcfg[b]), b) for b in BODIES}
     aliases = load_aliases(engine_cfg)
+    for b, extra in supplement_provenance_rows(engine_cfg).items():
+        rows[b].update(extra)
+    for b, extra in supplement_aliases(engine_cfg).items():
+        aliases[b].update(extra)
     meta = engine_cfg.v("variables")
     comp = engine_cfg.v("comparability")
     overrides = engine_cfg.v("column_overrides")
@@ -352,11 +432,13 @@ class Dataset:
     cells: Dict[str, pd.DataFrame]
     reg: Dict
     inputs: List[Dict] = field(default_factory=list)
+    supplements: List[Dict] = field(default_factory=list)
 
 
 def load_dataset(engine_cfg: EngineConfig, paths: Optional[Dict[str, str]] = None) -> Dataset:
     """Read the tables, build the registry and the mission-view frames."""
     raw = load_raw(engine_cfg, paths)
+    supp = load_supplements(engine_cfg, raw)
     reg = build_registry(engine_cfg, raw)
     cols = reg["columns"]
     cells = {b: mission_view(raw[b], cols, b) for b in BODIES}
@@ -365,4 +447,4 @@ def load_dataset(engine_cfg: EngineConfig, paths: Optional[Dict[str, str]] = Non
             if k not in df.columns:
                 raise KeyError(f"{b}: input lacks {k}")
     return Dataset(id=engine_cfg.dataset_id, grid=grid_of(engine_cfg), raw=raw, cells=cells, reg=reg,
-                   inputs=inputs_info(engine_cfg, raw, paths))
+                   inputs=inputs_info(engine_cfg, raw, paths), supplements=supp)

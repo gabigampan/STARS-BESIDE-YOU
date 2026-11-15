@@ -129,6 +129,7 @@ def test_group_reasons_by_hand():
 
 
 # ----------------------------------------------------------------------------- results of the checked proposal
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_results_match_the_checked_proposal(real):
     r = real["results"]["lunar_base"]
     ex = r.extra["real"]
@@ -229,10 +230,11 @@ def test_bundle_carries_positions_real_values_and_reasons(lb):
     assert {"temp_k", "elevation_rel_m"} <= set(tw["twins"][0]["not_part_of_similarity"])
     assert "z" not in tw["twins"][0]
     man = b.manifest
-    assert man["contract_revision"] == 7 and man["counts"]["missions"]["lunar_base"]["ranked_EARTH"] == 450
+    assert man["contract_revision"] == 8 and man["counts"]["missions"]["lunar_base"]["ranked_EARTH"] == 450
     assert man["counts"]["missions"]["lunar_base"]["unpaired_EARTH"] == 1969
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_number_one_and_the_approved_pair_sentence(lb, ecfg):
     b, m, paired = lb
     ex = b.json("explain.json")["missions"]["lunar_base"][0]

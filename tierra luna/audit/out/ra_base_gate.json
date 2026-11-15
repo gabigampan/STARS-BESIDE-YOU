@@ -1,0 +1,424 @@
+{
+ "gate_15K": {
+  "passed": 2419,
+  "paired": 450,
+  "share_passing_below_15K": 0.0,
+  "median_amp_passing": 19.33,
+  "head": [
+   {
+    "rank": 1,
+    "earth": 21054,
+    "lat": 31.5,
+    "lon": -5.5,
+    "amp_k": 18.71,
+    "similarity": 99.36,
+    "final": 72.0
+   },
+   {
+    "rank": 2,
+    "earth": 21412,
+    "lat": 30.5,
+    "lon": -7.5,
+    "amp_k": 19.3,
+    "similarity": 97.55,
+    "final": 71.28
+   },
+   {
+    "rank": 3,
+    "earth": 17538,
+    "lat": 41.5,
+    "lon": 78.5,
+    "amp_k": 15.6,
+    "similarity": 97.31,
+    "final": 70.23
+   },
+   {
+    "rank": 4,
+    "earth": 20695,
+    "lat": 32.5,
+    "lon": -4.5,
+    "amp_k": 19.31,
+    "similarity": 95.06,
+    "final": 70.13
+   },
+   {
+    "rank": 5,
+    "earth": 21833,
+    "lat": 29.5,
+    "lon": 53.5,
+    "amp_k": 20.03,
+    "similarity": 92.5,
+    "final": 69.87
+   },
+   {
+    "rank": 6,
+    "earth": 18627,
+    "lat": 38.5,
+    "lon": 87.5,
+    "amp_k": 22.12,
+    "similarity": 83.98,
+    "final": 69.8
+   },
+   {
+    "rank": 7,
+    "earth": 19672,
+    "lat": 35.5,
+    "lon": 52.5,
+    "amp_k": 19.67,
+    "similarity": 93.33,
+    "final": 69.73
+   },
+   {
+    "rank": 8,
+    "earth": 18254,
+    "lat": 39.5,
+    "lon": 74.5,
+    "amp_k": 17.28,
+    "similarity": 92.32,
+    "final": 69.66
+   },
+   {
+    "rank": 9,
+    "earth": 44750,
+    "lat": -34.5,
+    "lon": -69.5,
+    "amp_k": 20.01,
+    "similarity": 92.12,
+    "final": 69.56
+   },
+   {
+    "rank": 10,
+    "earth": 42951,
+    "lat": -29.5,
+    "lon": -68.5,
+    "amp_k": 18.94,
+    "similarity": 98.33,
+    "final": 69.45
+   }
+  ]
+ },
+ "no_gate": {
+  "passed": 9981,
+  "paired": 2109,
+  "share_passing_below_15K": 0.758,
+  "median_amp_passing": 8.29,
+  "head": [
+   {
+    "rank": 1,
+    "earth": 2973,
+    "lat": 81.5,
+    "lon": -86.5,
+    "amp_k": 0.94,
+    "similarity": 99.83,
+    "final": 74.52
+   },
+   {
+    "rank": 2,
+    "earth": 2971,
+    "lat": 81.5,
+    "lon": -88.5,
+    "amp_k": 0.99,
+    "similarity": 99.07,
+    "final": 74.13
+   },
+   {
+    "rank": 3,
+    "earth": 2972,
+    "lat": 81.5,
+    "lon": -87.5,
+    "amp_k": 0.98,
+    "similarity": 97.65,
+    "final": 73.48
+   },
+   {
+    "rank": 4,
+    "earth": 3334,
+    "lat": 80.5,
+    "lon": -85.5,
+    "amp_k": 1.56,
+    "similarity": 98.74,
+    "final": 73.29
+   },
+   {
+    "rank": 5,
+    "earth": 3692,
+    "lat": 79.5,
+    "lon": -87.5,
+    "amp_k": 1.91,
+    "similarity": 97.9,
+    "final": 73.14
+   },
+   {
+    "rank": 6,
+    "earth": 7868,
+    "lat": 68.5,
+    "lon": 128.5,
+    "amp_k": 5.32,
+    "similarity": 97.09,
+    "final": 72.56
+   },
+   {
+    "rank": 7,
+    "earth": 2666,
+    "lat": 82.5,
+    "lon": -33.5,
+    "amp_k": 0.95,
+    "similarity": 98.14,
+    "final": 72.35
+   },
+   {
+    "rank": 8,
+    "earth": 3325,
+    "lat": 80.5,
+    "lon": -94.5,
+    "amp_k": 1.22,
+    "similarity": 95.44,
+    "final": 72.03
+   },
+   {
+    "rank": 9,
+    "earth": 2970,
+    "lat": 81.5,
+    "lon": -89.5,
+    "amp_k": 0.99,
+    "similarity": 95.02,
+    "final": 72.02
+   },
+   {
+    "rank": 10,
+    "earth": 2665,
+    "lat": 82.5,
+    "lon": -34.5,
+    "amp_k": 0.9,
+    "similarity": 97.26,
+    "final": 71.92
+   }
+  ]
+ },
+ "gate_10K": {
+  "passed": 3928,
+  "paired": 698,
+  "share_passing_below_15K": 0.384,
+  "median_amp_passing": 16.64,
+  "head": [
+   {
+    "rank": 1,
+    "earth": 44030,
+    "lat": -32.5,
+    "lon": -69.5,
+    "amp_k": 19.28,
+    "similarity": 97.28,
+    "final": 70.82
+   },
+   {
+    "rank": 2,
+    "earth": 17898,
+    "lat": 40.5,
+    "lon": 78.5,
+    "amp_k": 17.82,
+    "similarity": 94.39,
+    "final": 70.23
+   },
+   {
+    "rank": 3,
+    "earth": 17538,
+    "lat": 41.5,
+    "lon": 78.5,
+    "amp_k": 15.6,
+    "similarity": 94.56,
+    "final": 68.86
+   },
+   {
+    "rank": 4,
+    "earth": 42949,
+    "lat": -29.5,
+    "lon": -70.5,
+    "amp_k": 21.93,
+    "similarity": 93.2,
+    "final": 68.62
+   },
+   {
+    "rank": 5,
+    "earth": 18254,
+    "lat": 39.5,
+    "lon": 74.5,
+    "amp_k": 17.28,
+    "similarity": 89.71,
+    "final": 68.36
+   },
+   {
+    "rank": 6,
+    "earth": 40794,
+    "lat": -23.5,
+    "lon": -65.5,
+    "amp_k": 21.62,
+    "similarity": 88.32,
+    "final": 67.99
+   },
+   {
+    "rank": 7,
+    "earth": 18956,
+    "lat": 37.5,
+    "lon": 56.5,
+    "amp_k": 17.36,
+    "similarity": 95.43,
+    "final": 67.76
+   },
+   {
+    "rank": 8,
+    "earth": 19687,
+    "lat": 35.5,
+    "lon": 67.5,
+    "amp_k": 18.76,
+    "similarity": 98.57,
+    "final": 67.57
+   },
+   {
+    "rank": 9,
+    "earth": 41513,
+    "lat": -25.5,
+    "lon": -66.5,
+    "amp_k": 23.04,
+    "similarity": 80.32,
+    "final": 67.39
+   },
+   {
+    "rank": 10,
+    "earth": 21053,
+    "lat": 31.5,
+    "lon": -6.5,
+    "amp_k": 18.73,
+    "similarity": 89.49,
+    "final": 66.4
+   }
+  ]
+ },
+ "gate_5K": {
+  "passed": 8564,
+  "paired": 1786,
+  "share_passing_below_15K": 0.718,
+  "median_amp_passing": 9.32,
+  "head": [
+   {
+    "rank": 1,
+    "earth": 7477,
+    "lat": 69.5,
+    "lon": 97.5,
+    "amp_k": 5.18,
+    "similarity": 97.84,
+    "final": 72.35
+   },
+   {
+    "rank": 2,
+    "earth": 7508,
+    "lat": 69.5,
+    "lon": 128.5,
+    "amp_k": 5.53,
+    "similarity": 95.34,
+    "final": 71.69
+   },
+   {
+    "rank": 3,
+    "earth": 7868,
+    "lat": 68.5,
+    "lon": 128.5,
+    "amp_k": 5.32,
+    "similarity": 95.35,
+    "final": 71.69
+   },
+   {
+    "rank": 4,
+    "earth": 7917,
+    "lat": 68.5,
+    "lon": 177.5,
+    "amp_k": 5.77,
+    "similarity": 97.51,
+    "final": 70.59
+   },
+   {
+    "rank": 5,
+    "earth": 7476,
+    "lat": 69.5,
+    "lon": 96.5,
+    "amp_k": 5.07,
+    "similarity": 94.95,
+    "final": 70.48
+   },
+   {
+    "rank": 6,
+    "earth": 8228,
+    "lat": 67.5,
+    "lon": 128.5,
+    "amp_k": 5.93,
+    "similarity": 95.69,
+    "final": 70.24
+   },
+   {
+    "rank": 7,
+    "earth": 7590,
+    "lat": 68.5,
+    "lon": -149.5,
+    "amp_k": 6.05,
+    "similarity": 99.01,
+    "final": 69.88
+   },
+   {
+    "rank": 8,
+    "earth": 7836,
+    "lat": 68.5,
+    "lon": 96.5,
+    "amp_k": 5.26,
+    "similarity": 96.72,
+    "final": 69.86
+   },
+   {
+    "rank": 9,
+    "earth": 7838,
+    "lat": 68.5,
+    "lon": 98.5,
+    "amp_k": 5.28,
+    "similarity": 97.75,
+    "final": 69.75
+   },
+   {
+    "rank": 10,
+    "earth": 8277,
+    "lat": 67.5,
+    "lon": 177.5,
+    "amp_k": 5.98,
+    "similarity": 96.47,
+    "final": 69.46
+   }
+  ]
+ },
+ "stations": {
+  "Haughton E5130": {
+   "amp_k": 2.5,
+   "amp_max_month_k": 5.76
+  },
+  "Svalbard E3793": {
+   "amp_k": 1.23,
+   "amp_max_month_k": 2.99
+  },
+  "Kangerlussuaq E8049": {
+   "amp_k": 6.63,
+   "amp_max_month_k": 14.3
+  },
+  "Axel Heiberg E3689": {
+   "amp_k": 1.67,
+   "amp_max_month_k": 3.84
+  },
+  "McMurdo E60462": {
+   "amp_k": null,
+   "amp_max_month_k": null
+  },
+  "Concordia E59703": {
+   "amp_k": null,
+   "amp_max_month_k": null
+  },
+  "Askja E8803": {
+   "amp_k": 7.38,
+   "amp_max_month_k": 16.85
+  }
+ }
+}

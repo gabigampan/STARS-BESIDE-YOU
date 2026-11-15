@@ -287,3 +287,7 @@ lunar cell poleward of about 81.5 deg by geometry (R3).
   pole would receive about 32.7 kWh/m2 per lit day.
 - **Small islands and coasts**: a few cells hold one or two land pixels and odd means (for example -2,570 m at
   17.5 S, 177.5 W). Filter with `mask_fraction >= 0.3` or the `n_*` pixel counts.
+
+## Supplementary table: ISCCP clear-sky fraction (2026-11-15)
+
+`tierra luna/real_data/supplement/earth_cloud_isccp_1deg.csv` (64,800 Earth cells, key `cell_id` = `E<id>`; columns `cloud_frac_isccp`, `clear_frac_isccp`, `n_months_isccp`), written by `tierra luna/research/r2_build_cloud.py`. Provenance beside it (`provenance_earth_cloud_isccp.csv`): ISCCP H-series Basic HGM (gridded monthly mean) v01r00, variable `cldamt`, NOAA NCEI Climate Data Record, 60 monthly files 2012-01 to 2016-12, native 1-degree equal-angle grid identical to ours; per cell the mean of the monthly means, kept with at least 48 valid months (22 cells empty); clear = 1 - cloud; level DERIVED; licence "No constraints on data access or use"; cite Rossow and Schiffer 1999, BAMS 80:2261-2287, and the NCEI ISCCP-H CDR. Caveats: cloud detection least reliable over snow, ice and polar night; coastal cells mix land and ocean clouds; cloud amount is not irradiance. The engine joins it by cell id at build (`engine/datasets.json` `supplements`, `engine/dataset.py` `load_supplements`) without rebuilding the big tables; only `clear_frac_isccp` is read (Solar panels suitability, weight 0.35).

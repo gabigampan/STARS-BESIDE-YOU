@@ -1,0 +1,389 @@
+{
+ "mission": "lunar_base",
+ "commit_audited": "d24ebb3",
+ "verdicts": [
+  {
+   "item": 1,
+   "name": "configuration vs decisions",
+   "verdict": "GO",
+   "figure": "3 deviations = DECISIONS 11:28/11:36 s3 and s7; team values equal mission_scoring.json; similarity block identical to audited_morning; note: suitability weights sum 0.95 (renormalised, undocumented)"
+  },
+  {
+   "item": 2,
+   "name": "recomputation",
+   "verdict": "GO",
+   "figure": "2419/450/103; 0 twin and 0 rank mismatches; max diff 0.00 suitability, similarity, final; five identical"
+  },
+  {
+   "item": 3,
+   "name": "fallback audited_morning",
+   "verdict": "GO",
+   "figure": "0 mismatches against a493514; five 17538,16830,15751,21054,17187"
+  },
+  {
+   "item": 4,
+   "name": "new data",
+   "verdict": "GO (not applicable)",
+   "figure": "no supplementary column; skip columns skip nothing in Lunar base"
+  },
+  {
+   "item": 5,
+   "name": "robustness +-10%",
+   "verdict": "GO",
+   "figure": "twins kept 16/16 for all five; in five 16,16,15,15,10 of 16; five identical 4/16 (morning 8/20)"
+  },
+  {
+   "item": 6,
+   "name": "Monte Carlo stability",
+   "verdict": "GO (fragile, as this morning)",
+   "figure": "five repeat 0/200 in both; mean share in five 0.201 vs 0.145; top50 0.687 vs 0.620"
+  },
+  {
+   "item": 7,
+   "name": "external validation",
+   "verdict": "GO (same)",
+   "figure": "separation 0.615 both; 2 of 13 positives in top quartile both; MDRS 14.7->13.8 %, Craters of the Moon 7.0->7.4 %"
+  },
+  {
+   "item": 8,
+   "name": "the five places",
+   "verdict": "GO",
+   "figure": "land 0.958-1.000, ice 0-0.083, CCI 200, names = great-circle nearest, twins in zone, min separation 6.06 deg"
+  },
+  {
+   "item": 9,
+   "name": "texts",
+   "verdict": "NOT YET",
+   "figure": "external_validation_lunar_base says the passing benchmark sites have no twin (false: MDRS and Craters of the Moon have twins, ranks 335 and 179); top5_stability_lunar_base pending"
+  }
+ ],
+ "overall": "publish the corrected Lunar base (after fixing the two texts of item 9; no pair or score change needed)",
+ "five_safe_to_print": true,
+ "five": [
+  {
+   "earth": 21054,
+   "rank": 1,
+   "final": 72.0
+  },
+  {
+   "earth": 17538,
+   "rank": 3,
+   "final": 70.23
+  },
+  {
+   "earth": 21833,
+   "rank": 5,
+   "final": 69.87
+  },
+  {
+   "earth": 18627,
+   "rank": 6,
+   "final": 69.8
+  },
+  {
+   "earth": 19672,
+   "rank": 7,
+   "final": 69.73
+  }
+ ],
+ "stability": {
+  "runs": 200,
+  "seed": 20261115,
+  "sigma_source": "tierra luna/audit/p3_montecarlo.py SIGMA",
+  "corrected": {
+   "per_analog": {
+    "21054": {
+     "name": "Tinghir, Morocco",
+     "share_in_five": 0.18,
+     "share_top20": 0.515,
+     "share_top50": 0.725,
+     "share_twin_kept": 0.165,
+     "share_fails_funnel": 0.0,
+     "weights_pm10_in_five": "16/16",
+     "weights_pm10_twin_kept": "16/16"
+    },
+    "17538": {
+     "name": "Aheqi, Tian Shan, China",
+     "share_in_five": 0.23,
+     "share_top20": 0.525,
+     "share_top50": 0.62,
+     "share_twin_kept": 0.12,
+     "share_fails_funnel": 0.365,
+     "weights_pm10_in_five": "16/16",
+     "weights_pm10_twin_kept": "16/16"
+    },
+    "21833": {
+     "name": "Kherameh, Fars, Iran",
+     "share_in_five": 0.19,
+     "share_top20": 0.435,
+     "share_top50": 0.665,
+     "share_twin_kept": 0.12,
+     "share_fails_funnel": 0.0,
+     "weights_pm10_in_five": "15/16",
+     "weights_pm10_twin_kept": "16/16"
+    },
+    "18627": {
+     "name": "Waxxari, Xinjiang, China",
+     "share_in_five": 0.18,
+     "share_top20": 0.38,
+     "share_top50": 0.54,
+     "share_twin_kept": 0.445,
+     "share_fails_funnel": 0.0,
+     "weights_pm10_in_five": "15/16",
+     "weights_pm10_twin_kept": "16/16"
+    },
+    "19672": {
+     "name": "Aradan, Iran",
+     "share_in_five": 0.225,
+     "share_top20": 0.59,
+     "share_top50": 0.885,
+     "share_twin_kept": 0.055,
+     "share_fails_funnel": 0.0,
+     "weights_pm10_in_five": "10/16",
+     "weights_pm10_twin_kept": "16/16"
+    }
+   },
+   "five_identical_set": 0.0,
+   "five_identical_order": 0.0,
+   "points_within_of_fifth_baseline": {
+    "0.1": 2,
+    "0.5": 7,
+    "1.0": 10
+   },
+   "points_within_of_fifth_median_runs": {
+    "0.1": 1.0,
+    "0.5": 3.0,
+    "1.0": 6.0
+   },
+   "mean_share_in_five": 0.201,
+   "mean_share_top20": 0.489,
+   "mean_share_top50": 0.687
+  },
+  "audited_morning": {
+   "per_analog": {
+    "17538": {
+     "name": "Aheqi, Tian Shan, China",
+     "share_in_five": 0.38,
+     "share_top20": 0.595,
+     "share_top50": 0.62,
+     "share_twin_kept": 0.12,
+     "share_fails_funnel": 0.365,
+     "weights_pm10_in_five": "20/20",
+     "weights_pm10_twin_kept": "20/20"
+    },
+    "16830": {
+     "name": null,
+     "share_in_five": 0.105,
+     "share_top20": 0.38,
+     "share_top50": 0.59,
+     "share_twin_kept": 0.335,
+     "share_fails_funnel": 0.015,
+     "weights_pm10_in_five": "20/20",
+     "weights_pm10_twin_kept": "20/20"
+    },
+    "15751": {
+     "name": null,
+     "share_in_five": 0.085,
+     "share_top20": 0.425,
+     "share_top50": 0.57,
+     "share_twin_kept": 0.11,
+     "share_fails_funnel": 0.22,
+     "weights_pm10_in_five": "20/20",
+     "weights_pm10_twin_kept": "20/20"
+    },
+    "21054": {
+     "name": "Tinghir, Morocco",
+     "share_in_five": 0.035,
+     "share_top20": 0.35,
+     "share_top50": 0.59,
+     "share_twin_kept": 0.165,
+     "share_fails_funnel": 0.0,
+     "weights_pm10_in_five": "20/20",
+     "weights_pm10_twin_kept": "20/20"
+    },
+    "17187": {
+     "name": null,
+     "share_in_five": 0.12,
+     "share_top20": 0.415,
+     "share_top50": 0.73,
+     "share_twin_kept": 0.255,
+     "share_fails_funnel": 0.005,
+     "weights_pm10_in_five": "14/20",
+     "weights_pm10_twin_kept": "20/20"
+    }
+   },
+   "five_identical_set": 0.0,
+   "five_identical_order": 0.0,
+   "points_within_of_fifth_baseline": {
+    "0.1": 1,
+    "0.5": 7,
+    "1.0": 10
+   },
+   "points_within_of_fifth_median_runs": {
+    "0.1": 1.0,
+    "0.5": 3.0,
+    "1.0": 6.5
+   },
+   "mean_share_in_five": 0.145,
+   "mean_share_top20": 0.433,
+   "mean_share_top50": 0.62
+  },
+  "verdict": "corrected slightly more stable than this morning, still fragile",
+  "gate_distance_k": {
+   "21054": 3.71,
+   "17538": 0.6,
+   "21833": 5.03,
+   "18627": 7.12,
+   "19672": 4.67
+  }
+ },
+ "validation": [
+  {
+   "set": "corrected",
+   "passing": 2419,
+   "positives": 13,
+   "positives_passing": 3,
+   "positives_top_quartile": 2,
+   "median_pct_positives_passing": 13.8,
+   "negatives_passing": 0,
+   "separation": 0.615,
+   "sites_passing": [
+    {
+     "site_id": "LP08",
+     "name": "Mars Desert Research Station (MDRS) (Hanksville, Utah)",
+     "rank": 335,
+     "pct": 13.8,
+     "final": 51.86
+    },
+    {
+     "site_id": "LP10",
+     "name": "Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field)",
+     "rank": 1704,
+     "pct": 70.4,
+     "final": null
+    },
+    {
+     "site_id": "LP11",
+     "name": "Craters of the Moon National Monument",
+     "rank": 179,
+     "pct": 7.4,
+     "final": 57.6
+    }
+   ]
+  },
+  {
+   "set": "audited_morning",
+   "passing": 2419,
+   "positives": 13,
+   "positives_passing": 3,
+   "positives_top_quartile": 2,
+   "median_pct_positives_passing": 14.7,
+   "negatives_passing": 0,
+   "separation": 0.615,
+   "sites_passing": [
+    {
+     "site_id": "LP08",
+     "name": "Mars Desert Research Station (MDRS) (Hanksville, Utah)",
+     "rank": 356,
+     "pct": 14.7,
+     "final": 55.1
+    },
+    {
+     "site_id": "LP10",
+     "name": "Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field)",
+     "rank": 1629,
+     "pct": 67.3,
+     "final": null
+    },
+    {
+     "site_id": "LP11",
+     "name": "Craters of the Moon National Monument",
+     "rank": 170,
+     "pct": 7.0,
+     "final": 61.64
+    }
+   ]
+  }
+ ],
+ "difference_table": [
+  {
+   "variable": "tmin_k",
+   "scale": "percentile_within_population",
+   "role": "key",
+   "tolerance": 10.0,
+   "bound": 10.0,
+   "n": 450,
+   "median": 3.168517096793245,
+   "p90": 7.715156794425085,
+   "max": 9.786290084450485,
+   "all_within_bound": true
+  },
+  {
+   "variable": "lst_diurnal_amp_k",
+   "scale": "percentile_within_population",
+   "role": "key",
+   "tolerance": 10.0,
+   "bound": 10.0,
+   "n": 450,
+   "median": 2.9886907222583137,
+   "p90": 7.666612531742744,
+   "max": 9.952976436544027,
+   "all_within_bound": true
+  },
+  {
+   "variable": "slope_deg",
+   "scale": "real",
+   "role": "secondary",
+   "tolerance": 2.0,
+   "bound": 4.0,
+   "n": 450,
+   "median": 1.5065,
+   "p90": 2.6943,
+   "max": 3.917,
+   "all_within_bound": true
+  },
+  {
+   "variable": "roughness_m",
+   "scale": "real",
+   "role": "secondary",
+   "tolerance": 30.0,
+   "bound": 60.0,
+   "n": 450,
+   "median": 27.264999999999993,
+   "p90": 54.42600000000001,
+   "max": 59.81,
+   "all_within_bound": true
+  }
+ ],
+ "faults": [
+  {
+   "kind": "text",
+   "severity": "blocking",
+   "where": "similarity.json texts.external_validation_lunar_base",
+   "what": "claims the benchmark sites that pass have no twin; MDRS and Craters of the Moon pass with twins (ranks 335 and 179)"
+  },
+  {
+   "kind": "text",
+   "severity": "blocking",
+   "where": "similarity.json texts.top5_stability_lunar_base",
+   "what": "still 'pending'; fill with stability figures"
+  },
+  {
+   "kind": "text",
+   "severity": "minor",
+   "where": "missions.json weighted_variables",
+   "what": "tmin_c also_in_similarity false although tmin_k is a key similarity variable; weights 0.35/0.25/0.25/0.10 sum 0.95 without saying the suitability renormalises"
+  },
+  {
+   "kind": "documentation",
+   "severity": "minor",
+   "where": "engine_config criteria_sets lunar_base corrected rock_or_bare_frac reason",
+   "what": "says DERIVED, provenance says MEASURED"
+  },
+  {
+   "kind": "criterion_weakness",
+   "severity": "info",
+   "what": "five repeat 0/200; E17538 0.6 K above the 15 K gate fails the funnel in 36.5 % of runs; no polar analog passes"
+  }
+ ]
+}

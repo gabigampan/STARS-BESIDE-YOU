@@ -109,6 +109,7 @@ def test_rover_similarity_and_filter_use_slope_and_roughness_only(b, missions):
         assert np.nanmax(dd) <= v["bound"] + 1e-6
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_solar_and_lunar_base_bins_are_byte_identical_to_the_bundle_before_1123(b):
     for name, want in UNCHANGED_BINS.items():
         with open(os.path.join(BUNDLE, name), "rb") as fh:
@@ -128,7 +129,7 @@ def test_mission_scoring_json_is_quoted_unchanged(b):
     import hashlib as h
     want = h.sha256(open(os.path.join(ROOT, "mission_scoring.json"), "rb").read()).hexdigest()
     assert b.manifest["config_sha256"]["mission_scoring.json"] == want
-    assert b.manifest["contract_revision"] == 7
+    assert b.manifest["contract_revision"] == 8
 
 
 # ----------------------------------------------------------------------------- decision 2
@@ -139,8 +140,11 @@ def test_top5_shape_and_greedy_separation(b, missions, ecfg):
     lon_c = b.column("earth_base.bin", "lon")
     for mid, m in missions.items():
         t = m["top5"]
-        assert set(t) == {"rule", "min_separation_deg", "min_separation_km", "ids", "overall_ranks"}
-        assert len(t["ids"]) == 5 and t["overall_ranks"] == sorted(t["overall_ranks"])
+        # revision 8 adds rule_id, skips, top_tie_n, top_tie_n_after_skips, alternative_rule (and alternative)
+        assert {"rule", "min_separation_deg", "min_separation_km", "ids", "overall_ranks"} <= set(t)
+        assert len(t["ids"]) == 5
+        if t.get("rule_id") != "spread_within_top_tie":  # revision 8: spread order is the farthest-point order
+            assert t["overall_ranks"] == sorted(t["overall_ranks"])
         ids = b.int_column("earth_base.bin", "id")
         li = b.int_column(f"earth_{mid}.bin", "land_index")
         rank = b.column(f"earth_{mid}.bin", "rank")
@@ -148,12 +152,22 @@ def test_top5_shape_and_greedy_separation(b, missions, ecfg):
         assert [rid[i] for i in t["ids"]] == t["overall_ranks"]
         order = sorted(rid, key=rid.get)
         ll = {i: (float(lat_r[i // 360]), float(lon_c[i % 360])) for i in order[:200]}
-        cfg = sel["missions"][mid]
+        cfg = {**sel["missions"][mid], "rule": t.get("rule_id", sel["missions"][mid]["rule"])}  # the rule the bundle states (criteria set applied)
         if cfg["rule"] == "by_rank":
             assert t["overall_ranks"] == [1, 2, 3, 4, 5] and t["min_separation_deg"] is None
             continue
-        sep = cfg["min_separation_deg"]
+        sep = t["min_separation_deg"]
         assert t["min_separation_deg"] == sep and t["min_separation_km"] == round(math.radians(sep) * radius, 1) == 222.4
+        if cfg["rule"] != "min_separation":
+            # revision 8 rules (skips, spread within the top tie): tests/test_decisions_1128.py;
+            # here only the separation between the five is checked
+            for a in range(5):
+                for c in range(a + 1, 5):
+                    ia, ic = t["ids"][a], t["ids"][c]
+                    pa = (89.5 - ia // 360, -179.5 + ia % 360)
+                    pc = (89.5 - ic // 360, -179.5 + ic % 360)
+                    assert central_angle_deg(*pa, np.array([pc[0]]), np.array([pc[1]]))[0] >= sep
+            continue
         assert "2 degrees of arc (about 222.4 km)" in t["rule"]
         kept = []
         for i in order:          # every point above the last kept one is kept or within the separation of a kept one
@@ -203,6 +217,7 @@ def test_new_texts_have_show_missions_and_no_empty_figures(b):
         assert "ordered by the final score" in texts[f"list_order_{m}"]["text"]
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_stability_is_pending_for_rover_and_solar_and_audited_for_lunar_base(b, missions, ecfg):
     texts = b.json("similarity.json")["texts"]
     cfg = ecfg.v("top5_stability")
@@ -215,6 +230,7 @@ def test_stability_is_pending_for_rover_and_solar_and_audited_for_lunar_base(b, 
     assert cfg["missions"]["lunar_base"]["ids"] == missions["lunar_base"]["top5"]["ids"]
 
 
+@pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
 def test_stability_sentence_refuses_incomplete_or_foreign_figures(ecfg):
     cfg = ecfg.v("top5_stability")
     ids = cfg["missions"]["lunar_base"]["ids"]

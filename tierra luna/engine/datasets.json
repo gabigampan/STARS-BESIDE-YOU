@@ -159,6 +159,10 @@
     "lunar_info_columns": {
      "value": {},
      "why": "No extra lunar information column on the legacy table."
+    },
+    "supplements": {
+     "value": [],
+     "why": "No supplementary columns on this dataset (the supplementary tables are on the real 1-degree grid)."
     }
    }
   },
@@ -307,6 +311,12 @@
        "unit": "m/s",
        "kind": "numeric",
        "description": "Earth: WorldClim 2.1 windiest-month mean 10 m wind. Moon: not applicable. Not used by the engine (only by rover workable_days)."
+      },
+      "clear_frac_isccp": {
+       "label": "Clear-sky fraction (ISCCP satellite clouds)",
+       "unit": "fraction 0-1",
+       "kind": "numeric",
+       "description": "Earth: 1 minus the mean ISCCP-H cloud amount over 2012-2016 (60 monthly means, NOAA NCEI ISCCP-H HGM v01r00, DERIVED). Moon: no data (no atmosphere). Licence: no constraints on data access or use; cite Rossow and Schiffer 1999."
       }
      },
      "why": "Display label, unit, kind and a short definition of each mission variable on this dataset. Definitions summarise real_data/provenance_*.csv and column_aliases.json; levels, sources and caveats are read from those files, not from here."
@@ -380,6 +390,10 @@
       "wind_max_ms": {
        "status": "not_comparable",
        "reason": "No lunar data (no atmosphere)."
+      },
+      "clear_frac_isccp": {
+       "status": "not_comparable",
+       "reason": "An Earth-only atmospheric quantity: the Moon has no clouds, so it enters the Solar panels suitability on Earth only, never the similarity."
       }
      },
      "why": "One row per variable: whether the Earth and lunar values are the same physical quantity, decided from the definitions in the provenance files (pending team confirmation). 'not_comparable' variables are left out of the Earth-Moon similarity and the twin search but stay in suitability; 'comparable_with_caveat' variables are used and carry the reason to the interface."
@@ -430,20 +444,20 @@
     "mission_notes": {
      "value": {
       "rover": [
-       "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km; true_baseline in variables.json). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
-       "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET; missions.json similarity): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative team values of rover_preset.py for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_reasons).",
+       "The rover thresholds (slope 0.5-15 deg, roughness 5-650 m) were written for a 300 m baseline and are applied unchanged to km-baseline values (slope over about 3.7-3.8 km, roughness at a lag of about 1.9 km). km-baseline slopes are much gentler than rover-scale slopes and km-lag roughness is larger than 300 m roughness, so passing these gates says nothing about rover-scale hazards. Nothing was adjusted (known limitation, pending Robotics 1).",
+       "Similarity is computed on real values within stated tolerances, on slope and roughness only, 50 % each (decision of 2026-11-15 11:23 CET): the twin is the cell of the lunar south-polar zone (75-90 S) whose slope is within 2 deg and roughness within 30 m of the Earth cell (illustrative values of the team's rover file for a 5 km baseline), with the highest similarity. Relative elevation is no longer compared (it has no physical sense for a rover); it is shown per pair as a difference. A point with no such cell keeps its suitability but has no twin, no similarity and no final score.",
        "Relative elevation, temperature, diurnal amplitude and irradiance are not part of the rover similarity: their values on both sides and the difference are shown for information (the lunar south-polar twins are colder than their Earth points by a median of about 150 K)."
       ],
       "solar": [
        "The solar twin is matched on sunlight above the atmosphere (team decision of 2026-11-15, morning): Earth's annual-mean sunlight at the top of the atmosphere (DERIVED from latitude) against the lunar surface irradiance of the equatorial maria (|lat| <= 30 deg, elevation <= -1,200 m), within 0.6 kWh/m2/day, with slope and roughness as secondary criteria. Only part of that sunlight reaches the ground on Earth (shown per pair); on the Moon all of it does, in a lunar day of 29.5 Earth days. The maria receive the sunlight of Earth's tropics, so only points within about 33.5 deg of the equator find a twin; the others keep their suitability with no twin (missions.json similarity.unpaired_reasons).",
-       "Earth irradiance at the ground, sun geometry and the diurnal amplitude are suitability criteria. Earth irradiance at the ground is surface solar energy under the atmosphere and clouds (WorldClim) and lunar irradiance is airless geometry; the solar gates on irradiance, maximum sun elevation and low-sun fraction remove every lunar cell poleward of facts.moon_pass_abs_lat_max (shown in the lunar fail bits only: lunar cells are not filtered for the similarity).",
+       "Earth irradiance at the ground, sun geometry and the diurnal amplitude are suitability criteria. Earth irradiance at the ground is surface solar energy under the atmosphere and clouds (WorldClim) and lunar irradiance is airless geometry; the solar gates on irradiance, maximum sun elevation and low-sun fraction would remove the lunar cells nearer the poles (shown only when a lunar cell is inspected: lunar cells are not filtered for the similarity).",
        "Temperature and diurnal amplitude are not part of the solar similarity: their values on both sides and the difference are shown for information. 6,060 passing solar cells (all in Antarctica) have no land surface temperature: the amplitude weight drops out of their suitability with the remaining weights renormalised. None of them has a lunar twin (they lie at 64.5 S or further south, far from the latitudes whose sunlight matches the maria), so they have no similarity, no final score and no confidence."
       ],
       "lunar_base": [
-       "lunar_base is an exact copy of the team's thermal block (team design values, no external source). The ice block is shown per Earth cell as information only (passes or not, its suitability) and never changes this ranking; no lunar cell passes ice because lunar permafrost_class is the MODELLED label 'ninguno', which the ice gate excludes.",
-       "Similarity is a likeness of thermal POSITION and real terrain, not of temperature (team decision of 2026-11-15 08:55 CET; missions.json similarity, rule percentile_and_real_tolerance): the coldest temperature and the daily temperature swing are compared as percentiles within each population (Earth: the points passing this mission's funnel; Moon: the cells of NASA's nine candidate landing regions near the lunar south pole), each within 10 percentile points, and slope and roughness in real values (within 4 deg and 60 m). Equal positions do not mean equal temperatures: on every pair the twin is far colder and swings far more than the Earth point, and the real values and differences are shown with every pair (similarity.json texts.lunar_base_pair_sentence). A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_by_kind).",
-       "The coldest temperature (tmin_c) is a MODELLED air temperature on Earth (WorldClim, coldest month, interpolated) and a MEASURED surface temperature on the Moon (Diviner night minimum); the Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range. Both are suitability criteria on Earth, and in the similarity only their position within each population is compared, never their values.",
-       "Antarctica has no land surface temperature product here, so its cells fail on lst_diurnal_amp_k with 'no data' (missing_data)."
+       "The Lunar base criteria are an exact copy of the team's thermal block (team design values, no external source). The ice block is shown per Earth cell as information only (passes or not, its suitability) and never changes this ranking; no lunar cell passes ice because the lunar permafrost class is the MODELLED label 'none', which the ice gate excludes.",
+       "Similarity is a likeness of thermal POSITION and real terrain, not of temperature (team decision of 2026-11-15 08:55 CET): the coldest temperature and the daily temperature swing are compared as percentiles within each population (Earth: the points passing this mission's funnel; Moon: the cells of NASA's nine candidate landing regions near the lunar south pole), each within 10 percentile points, and slope and roughness in real values (within 4 deg and 60 m). Equal positions do not mean equal temperatures: on every pair the twin is far colder and swings far more than the Earth point, and the real values and differences are shown with every pair. A point with no such cell keeps its suitability but has no twin, no similarity and no final score.",
+       "The coldest temperature is a MODELLED air temperature on Earth (WorldClim, coldest month, interpolated) and a MEASURED surface temperature on the Moon (Diviner night minimum); the Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range. Both are suitability criteria on Earth, and in the similarity only their position within each population is compared, never their values.",
+       "Antarctica has no land surface temperature product here, so its cells fail for lack of a daily temperature swing value ('no data')."
       ]
      },
      "why": "Known limitations of each offered mission's results on the real tables, exported in missions.json 'known_limitations' next to computed 'facts'. Written after seeing the results; nothing was tuned. 2026-11-15 11:23 CET: the Rover notes describe the slope-and-roughness similarity; the Rover ice note with typed figures is replaced by the computed text similarity.json texts.surface_classes_rover (engine_config limit_texts), which is also on the mission card."
@@ -498,6 +512,22 @@
       }
      },
      "why": "Lunar columns exported as information next to the lunar values (team lead decision 3 allows the Diviner rock abundance as a separate lunar information value with its source). Level and source come from provenance_moon.csv."
+    },
+    "supplements": {
+     "value": [
+      {
+       "file": "real_data/supplement/earth_cloud_isccp_1deg.csv",
+       "provenance": "real_data/supplement/provenance_earth_cloud_isccp.csv",
+       "body": "EARTH",
+       "key_column": "cell_id",
+       "key_prefix": "E",
+       "columns": [
+        "clear_frac_isccp"
+       ],
+       "caveat": "ISCCP-H HGM v01r00 (NOAA NCEI) mean clear-sky fraction 2012-2016, 1 - cloud amount; DERIVED; least reliable over snow, ice and polar night; cloud amount is not irradiance"
+      }
+     ],
+     "why": "Supplementary columns joined by cell id at load time (engine.dataset.load_supplements), each with its own provenance file, so a new measured column does not require rebuilding the big tables. clear_frac_isccp: research 2 option E2, approved by the team lead at 11:51 CET on 2026-11-15 (docs/stats_audit/research_2_solar_idoneidad.md); written by tierra luna/research/r2_build_cloud.py from ISCCP-H HGM v01r00 (NOAA NCEI, 2012-2016); cite Rossow and Schiffer 1999, BAMS 80:2261-2287."
     }
    }
   }
