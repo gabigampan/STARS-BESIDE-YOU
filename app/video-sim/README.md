@@ -14,7 +14,8 @@ Nothing is recorded in real time (this container has no GPU; WebGL runs in Swift
 cd app/video-sim
 npm install                       # three@0.170.0 only (node_modules is git-ignored)
 W=/path/to/scratch/work           # downloads, terrain assets, frames (large; keep out of git)
-python3 -I tools/prepare.py scenarios/solar.json --work $W        # terrain + checks (~30 s)
+# solar: put sldem2015_512_00n_30n_315_360_float.img in $W/cache first (URL in media/solar/README.md)
+python3 -I tools/prepare.py scenarios/solar.json --work $W        # terrain + checks (~40 s)
 node render.js scenarios/solar.json --work $W                     # frames + mp4/webm/posters/vtt + ffprobe
 python3 -I tools/prepare.py scenarios/lunar-base.json --work $W   # (~80 s)
 node render.js scenarios/lunar-base.json --work $W
@@ -27,7 +28,14 @@ captions) and run the same two commands. `prepare.py` refuses to run if a value 
 coordinates. For the Lunar base video it also refuses to run if a number of the scenario's
 `pair_values` block (the closing card: real values, percentiles, differences, the per-pair
 sentence, the place names, the population sizes and the zone name) differs from the shipped bundle
-(`app/public/data/v2/explain.json`, the item of that rank, and `missions.json`).
+(`app/public/data/v2/explain.json`, the item of that rank, and `missions.json`). For the Solar panels
+video (`pair_values.mission = "solar"`) it checks the same way every number of the card against
+`explain.json` (solar rank 1: ids, coordinates, scores, Earth / Moon / difference / tolerance / role /
+weight of each similarity variable, the values not part of the similarity, the atmosphere block), the
+displayed 9.6 / 6.2 / 35 % recomputed with `similarity.json`'s display rule, the per-pair sentence and
+the saturation note verbatim, the zone rule and label (`missions.json`, `mission_zones.json`) and the
+level of every card value (`variables.json`, `missions.json` similarity sides). `render.js` runs these
+checks (`prepare.py --checks-only`) before every run and refuses to start on a mismatch.
 
 Other modes: `--stills 3,14.5` (single frames into `<work>/<name>/stills/`), `--frames a:b`
 (render a range only; already-rendered frames are skipped, so an interrupted render resumes),
@@ -41,7 +49,7 @@ runs the table and bundle checks without the terrain.
 | Path | What it does |
 |---|---|
 | `scenarios/*.json` | All inputs of one video. Every number on screen comes from here or from a stated formula. |
-| `tools/dem.py` | LOLA polar stereographic IMG access by HTTP range (only the needed rows), projection, LDEM_16 cross-check. |
+| `tools/dem.py` | LOLA polar stereographic IMG access by HTTP range (only the needed rows), projection, LDEM_16 cross-check; simple cylindrical tiles (SLDEM2015, LDEM_xxx) read locally by memory map (`"projection": "simple_cylindrical"`, `"file"` in `$W/cache`). |
 | `tools/prepare.py` | Table check, DEM fetch and georeference check, local grids, horizon maps, shaded relief, `terrain.json`. |
 | `tools/check_relief.py` | Side-by-side of the shaded relief and the renderer's straight-down view, with their correlation. |
 | `page/model.js` | The formulas (Sun position, disc visibility, panel power, temperature model, time compression). |
@@ -50,7 +58,9 @@ runs the table and bundle checks without the terrain.
 
 ## How the scene is built (and what is not data)
 
-- **Terrain (data).** Real LOLA relief around the cell centre, resampled onto a local east/north
+- **Terrain (data).** Real LOLA relief around the cell centre (Solar panels: SLDEM2015, LOLA + Kaguya,
+  simple cylindrical, at its north-south spacing; `native_step_px` samples the far field more coarsely),
+  resampled onto a local east/north
   grid at the product's true ground spacing at that latitude (polar stereographic scale factor
   k = 2/(1+sin|lat|); no upsampling), heights in the site's tangent frame with the Moon's
   curvature applied: z = (R+h)cos(d/R) - (R+h0). A near patch at full resolution and a far field
@@ -71,6 +81,13 @@ runs the table and bundle checks without the terrain.
   changed) is 1 while the habitat point sees the whole solar disc, EX while it sees none of it and
   1 / (1/EX + (1 - 1/EX) x visible disc fraction) in between, a function of t only; the panel says
   "Exposure raised xN to show the ground in shadow (not to scale)" whenever it is above 1.25.
+- **Status labels (Solar panels).** `sun_status` gives the labels: while the array unfolds
+  (`deploy_start_s`-`deploy_end_s`) "deploying", from `deploy_end_s` (the first frame at rest) "deployed"
+  for `done_hold_s`, otherwise the label follows the Sun at the array: behind the real terrain, partly
+  behind, or the elevation band (below `low_deg`, from `high_deg`) with morning / afternoon from the hour
+  angle. Display exposure (`render.low_sun_exposure`): min(max, max(1, sin(ref) / sin h)), stated on the
+  panel whenever it is above 1.25. Flat array (`final_tilt_deg` 0): P = S0 sin h x visible disc, and the
+  graph spans one whole lunar cycle with the night shaded.
 - **Status labels (Lunar base).** Each habitat step has an `active` label, shown from `t0` while the
   part moves, and a `done` label shown only from `t1`, the first frame at which the part is at rest
   (the motion is a smoothstep that reaches exactly 1 at `t1`). Outside the steps the label follows

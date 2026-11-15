@@ -1142,6 +1142,426 @@
     }
    },
    "top50_overlap_with_shipped": 1
+  },
+  "B_r1_p90_over_mean_w0.2_tol0.2": {
+   "passing": 10337,
+   "paired": 10332,
+   "distinct_twins": 992,
+   "top5_sep2": [
+    [
+     5111,
+     75.5,
+     -108.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     24340,
+     22.5,
+     40.5,
+     63712,
+     -86.5,
+     172.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     5309,
+     75.5,
+     89.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.97,
+     100.0,
+     99.99
+    ],
+    [
+     17204,
+     42.5,
+     104.5,
+     62227,
+     -82.5,
+     127.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     22128,
+     28.5,
+     -11.5,
+     63710,
+     -86.5,
+     170.5,
+     99.99,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 8,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 6796,
+     "of": 10332,
+     "pct_from_top": 65.8,
+     "twin": 63438
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7231,
+     "of": 10332,
+     "pct_from_top": 70.0,
+     "twin": 60929
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6816,
+     "of": 10332,
+     "pct_from_top": 66.0,
+     "twin": 62560
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2086,
+     "of": 10332,
+     "pct_from_top": 20.2,
+     "twin": 63438
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 800,
+     "of": 10332,
+     "pct_from_top": 7.7,
+     "twin": 62954
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 326,
+     "of": 10332,
+     "pct_from_top": 3.2,
+     "twin": 59895
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 332,
+     "of": 10332,
+     "pct_from_top": 3.2,
+     "twin": 60064
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 417,
+     "of": 10332,
+     "pct_from_top": 4.0,
+     "twin": 60063
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8166,
+     "of": 10332,
+     "pct_from_top": 79.0,
+     "twin": 61708
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 470,
+     "of": 10332,
+     "pct_from_top": 4.5,
+     "twin": 59895
+    }
+   }
+  },
+  "B_r1_p90_over_mean_w0.333_tol0.2": {
+   "passing": 10337,
+   "paired": 10332,
+   "distinct_twins": 1038,
+   "top5_sep2": [
+    [
+     5111,
+     75.5,
+     -108.5,
+     63714,
+     -86.5,
+     174.5,
+     100.0,
+     100.0,
+     100.0
+    ],
+    [
+     22176,
+     28.5,
+     36.5,
+     59451,
+     -75.5,
+     -128.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     24340,
+     22.5,
+     40.5,
+     63712,
+     -86.5,
+     172.5,
+     99.99,
+     100.0,
+     100.0
+    ],
+    [
+     17204,
+     42.5,
+     104.5,
+     62227,
+     -82.5,
+     127.5,
+     99.98,
+     100.0,
+     99.99
+    ],
+    [
+     22128,
+     28.5,
+     -11.5,
+     63710,
+     -86.5,
+     170.5,
+     99.99,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 8,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 6792,
+     "of": 10332,
+     "pct_from_top": 65.7,
+     "twin": 63438
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7183,
+     "of": 10332,
+     "pct_from_top": 69.5,
+     "twin": 60929
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6783,
+     "of": 10332,
+     "pct_from_top": 65.7,
+     "twin": 62560
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2090,
+     "of": 10332,
+     "pct_from_top": 20.2,
+     "twin": 63438
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 792,
+     "of": 10332,
+     "pct_from_top": 7.7,
+     "twin": 62954
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 324,
+     "of": 10332,
+     "pct_from_top": 3.1,
+     "twin": 59895
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 348,
+     "of": 10332,
+     "pct_from_top": 3.4,
+     "twin": 60064
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 418,
+     "of": 10332,
+     "pct_from_top": 4.0,
+     "twin": 60063
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8128,
+     "of": 10332,
+     "pct_from_top": 78.7,
+     "twin": 61708
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 499,
+     "of": 10332,
+     "pct_from_top": 4.8,
+     "twin": 63090
+    }
+   }
+  },
+  "B_r1_hurst_h_w0.2_tol0.1": {
+   "passing": 10337,
+   "paired": 10336,
+   "distinct_twins": 644,
+   "top5_sep2": [
+    [
+     5125,
+     75.5,
+     -94.5,
+     60716,
+     -78.5,
+     56.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     6212,
+     72.5,
+     -87.5,
+     59716,
+     -75.5,
+     136.5,
+     99.98,
+     100.0,
+     99.99
+    ],
+    [
+     6381,
+     72.5,
+     81.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.99,
+     100.0,
+     99.99
+    ],
+    [
+     6548,
+     71.5,
+     -111.5,
+     59716,
+     -75.5,
+     136.5,
+     99.97,
+     100.0,
+     99.99
+    ],
+    [
+     22489,
+     27.5,
+     -10.5,
+     61217,
+     -80.5,
+     -162.5,
+     99.98,
+     100.0,
+     99.99
+    ]
+   ],
+   "top50_overlap_with_decided": 10,
+   "analogs": {
+    "Bardenas": {
+     "cell": "E17098",
+     "rank": 7051,
+     "of": 10336,
+     "pct_from_top": 68.2,
+     "twin": 61481
+    },
+    "Tabernas": {
+     "cell": "E18897",
+     "rank": 7235,
+     "of": 10336,
+     "pct_from_top": 70.0,
+     "twin": 61709
+    },
+    "Dumont": {
+     "cell": "E19503",
+     "rank": 6875,
+     "of": 10336,
+     "pct_from_top": 66.5,
+     "twin": 61568
+    },
+    "MDRS": {
+     "cell": "E18429",
+     "rank": 2108,
+     "of": 10336,
+     "pct_from_top": 20.4,
+     "twin": 63079
+    },
+    "Yungay": {
+     "cell": "E41150",
+     "rank": 816,
+     "of": 10336,
+     "pct_from_top": 7.9,
+     "twin": 61598
+    },
+    "Erfoud": {
+     "cell": "E21055",
+     "rank": 475,
+     "of": 10336,
+     "pct_from_top": 4.6,
+     "twin": 60060
+    },
+    "Dhofar": {
+     "cell": "E25795",
+     "rank": null,
+     "note": "does not pass the Rover funnel"
+    },
+    "Ramon": {
+     "cell": "E21454",
+     "rank": 242,
+     "of": 10336,
+     "pct_from_top": 2.3,
+     "twin": 63715
+    },
+    "Haughton": {
+     "cell": "E5130",
+     "rank": 495,
+     "of": 10336,
+     "pct_from_top": 4.8,
+     "twin": 60424
+    },
+    "Death Valley": {
+     "cell": "E19143",
+     "rank": 8073,
+     "of": 10336,
+     "pct_from_top": 78.1,
+     "twin": 60029
+    },
+    "Qaidam": {
+     "cell": "E18633",
+     "rank": 425,
+     "of": 10336,
+     "pct_from_top": 4.1,
+     "twin": 60440
+    }
+   }
   }
  },
  "sites": [

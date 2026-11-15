@@ -443,7 +443,85 @@
       41
     ],
     "cue_rule": "Cue boundaries are the frames where the panel status changes (render.js --timeline), plus mid-phase cues and the closing card; render.js refuses to write captions if the status changes inside a cue.",
-    "en": {},
-    "es": {}
+    "en": {
+      "header": "Solar panels mission video (3D simulation), English descriptive captions",
+      "note": "No speech. Each cue gives the values on the on-screen panel at its start time; the panel status does not change within a cue. The Sun is computed; power and energy are a stated model for a flat (horizontal) panel per m², before any cell efficiency; array size and timing are illustrative. While the Sun is low the display exposure is raised (not to scale).",
+      "sun": "Sun",
+      "az": "azimuth",
+      "hz": "terrain horizon",
+      "power": "Power (model, flat panel)",
+      "energy": "energy",
+      "days": "Earth days elapsed",
+      "temp": "Surface",
+      "model": "model",
+      "status": {
+        "Sunrise: low Sun in the east, panels stowed": "Sunrise: low Sun in the east, panels stowed",
+        "Morning: Sun climbing, panels stowed": "Morning: Sun climbing, panels stowed",
+        "Unfolding the flat panels": "Unfolding the flat panels",
+        "Panels deployed, lying flat": "Panels deployed, lying flat",
+        "Low Sun in the east: long shadows": "Low Sun in the east: long shadows",
+        "Morning: Sun climbing in the east": "Morning: Sun climbing in the east",
+        "Sun high in the sky: short shadows, most power": "Sun high in the sky: short shadows, most power",
+        "Afternoon: Sun descending towards the west": "Afternoon: Sun descending towards the west",
+        "Low Sun in the west: long shadows": "Low Sun in the west: long shadows",
+        "Sun behind the terrain": "Sun behind the terrain",
+        "Sun partly behind the terrain": "Sun partly behind the terrain",
+        "Lunar night: Sun below the horizon": "Lunar night: Sun below the horizon"
+      },
+      "text": [
+        "3D simulation driven by table data, not real footage. Sunrise over the real relief (SLDEM2015, LOLA and Kaguya) of lunar cell M24296, 22.5° N 3.5° W, 75.8 km from the crater Huxley, in the low equatorial plains (the maria). The Sun is just above the eastern horizon; the exposure is raised for the low Sun (not to scale). The camera descends to the stowed panels.",
+        "The Sun climbs above 10°; the shadows shorten.",
+        "The mast rises and two wings of hinged panels unfold upwards.",
+        "The panels lie flat, facing the sky; energy is counted from now.",
+        "Morning: the Sun climbs in the east. The power of a flat panel follows the Sun's elevation (model, before cell efficiency).",
+        "The Sun is above 60°: short shadows and the most power.",
+        "Local noon: the Sun stands in the south at the cell's highest elevation in the table (69.04°).",
+        "Afternoon: the Sun descends towards the west; the shadows lengthen.",
+        "The power falls as the Sun gets lower. The lunar day lasts 29.5 Earth days and about half of it is night: after sunset a panel here gets no sunlight for about two Earth weeks (shaded on the graph).",
+        "Low Sun in the west: long shadows; the exposure is raised again (not to scale). Sunset and the lunar night follow.",
+        "Closing card: the Earth analog in Australia (cell E38464, 16.5° S 124.5° E, 128.7 km from Derby) and its lunar twin, cell M24296 near Huxley, matched on sunlight above the atmosphere: 9.6005 against 9.604 kWh/m² per day (difference 0.0035, tolerance 0.6). At the Earth site only 6.177 kWh/m² per day reach the ground (modelled): 6.2 of 9.6, 35 % is lost in the atmosphere; the Moon has no atmosphere. Slope 0.976° against 1.047°; roughness 39.2 m against 39.03 m. Suitability 96.9, similarity 99.99, final 98.45.",
+        "A panel at the Earth site does not receive what a panel on the Moon receives: only the sunlight that reaches the ground arrives there, while the Moon's day lasts 29.5 Earth days, about half of them dark. Mean surface temperature 302.37 K against 213.39 K and daily swing 11.89 K against 293.36 K are not part of the similarity. 3D simulation driven by table data. Not real footage."
+      ]
+    },
+    "es": {
+      "header": "Vídeo de la misión de paneles solares (simulación 3D), subtítulos descriptivos en español",
+      "note": "Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo; el estado del panel no cambia dentro de un subtítulo. El Sol es calculado; potencia y energía son un modelo declarado para un panel plano (horizontal) por m², antes de la eficiencia de las células; el tamaño de los paneles y los tiempos son ilustrativos. Mientras el Sol está bajo se aumenta la exposición de la imagen (no a escala).",
+      "sun": "Sol",
+      "az": "acimut",
+      "hz": "horizonte del terreno",
+      "power": "Potencia (modelo, panel plano)",
+      "energy": "energía",
+      "days": "días terrestres transcurridos",
+      "temp": "Superficie",
+      "model": "modelo",
+      "status": {
+        "Sunrise: low Sun in the east, panels stowed": "Amanecer: Sol bajo al este, paneles plegados",
+        "Morning: Sun climbing, panels stowed": "Mañana: el Sol sube, paneles plegados",
+        "Unfolding the flat panels": "Desplegando los paneles planos",
+        "Panels deployed, lying flat": "Paneles desplegados, en horizontal",
+        "Low Sun in the east: long shadows": "Sol bajo al este: sombras largas",
+        "Morning: Sun climbing in the east": "Mañana: el Sol sube por el este",
+        "Sun high in the sky: short shadows, most power": "Sol alto: sombras cortas, máxima potencia",
+        "Afternoon: Sun descending towards the west": "Tarde: el Sol baja hacia el oeste",
+        "Low Sun in the west: long shadows": "Sol bajo al oeste: sombras largas",
+        "Sun behind the terrain": "Sol tapado por el relieve",
+        "Sun partly behind the terrain": "Sol en parte tapado por el relieve",
+        "Lunar night: Sun below the horizon": "Noche lunar: Sol bajo el horizonte"
+      },
+      "text": [
+        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real (SLDEM2015, LOLA y Kaguya) de la celda lunar M24296, 22,5° N 3,5° O, a 75,8 km del cráter Huxley, en las llanuras ecuatoriales bajas (los mares). El Sol acaba de asomar por el horizonte este; la exposición se aumenta por el Sol bajo (no a escala). La cámara desciende hasta los paneles plegados.",
+        "El Sol pasa de 10°; las sombras se acortan.",
+        "El mástil sube y dos alas de paneles con bisagras se despliegan hacia arriba.",
+        "Los paneles quedan en horizontal, mirando al cielo; la energía se cuenta desde ahora.",
+        "Mañana: el Sol sube por el este. La potencia de un panel plano sigue la altura del Sol (modelo, antes de la eficiencia de las células).",
+        "El Sol pasa de 60°: sombras cortas y la máxima potencia.",
+        "Mediodía local: el Sol está al sur, a la altura máxima de la celda según la tabla (69,04°).",
+        "Tarde: el Sol baja hacia el oeste; las sombras se alargan.",
+        "La potencia cae a medida que el Sol baja. El día lunar dura 29,5 días terrestres y aproximadamente la mitad es de noche: tras la puesta de Sol un panel aquí no recibe luz durante unas dos semanas terrestres (sombreado en la gráfica).",
+        "Sol bajo al oeste: sombras largas; la exposición vuelve a aumentarse (no a escala). Después llegan la puesta de Sol y la noche lunar.",
+        "Tarjeta final: el análogo terrestre en Australia (celda E38464, 16,5° S 124,5° E, a 128,7 km de Derby) y su gemela lunar, la celda M24296 cerca de Huxley, emparejadas por la luz solar por encima de la atmósfera: 9,6005 frente a 9,604 kWh/m² al día (diferencia 0,0035, tolerancia 0,6). En el punto terrestre solo 6,177 kWh/m² al día llegan al suelo (modelado): 6,2 de 9,6, se pierde un 35 % en la atmósfera; la Luna no tiene atmósfera. Pendiente 0,976° frente a 1,047°; rugosidad 39,2 m frente a 39,03 m. Idoneidad 96,9, similitud 99,99, final 98,45.",
+        "Un panel en el punto terrestre no recibe lo mismo que un panel en la Luna: allí solo llega la luz que alcanza el suelo, mientras que el día lunar dura 29,5 días terrestres, aproximadamente la mitad a oscuras. La temperatura media de la superficie, 302,37 K frente a 213,39 K, y la oscilación diaria, 11,89 K frente a 293,36 K, no forman parte de la similitud. Simulación 3D basada en datos de las tablas. No son imágenes reales."
+      ]
+    }
   }
 }
