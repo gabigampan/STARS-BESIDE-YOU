@@ -5,6 +5,7 @@ import '@fontsource/barlow-semi-condensed/latin-600.css';
 import 'cesium/Build/Cesium/Widgets/CesiumWidget/CesiumWidget.css';
 import './styles.css';
 import './flow/flow.css';
+import './ui/mobileFold.css';
 
 import { bindGlobes, bindNoGlobes, globesApi, settleImagery } from './api';
 import { IMAGERY_TIMEOUT_MS } from './config';
@@ -19,6 +20,7 @@ import { LoadingScreen, setupCredits, setupResetButtons } from './ui/shell';
 import { FlowApp } from './flow/app';
 import { a11y, type A11y } from './a11y';
 import { setupKeys } from './a11y/keys';
+import { setupMobileFold } from './ui/mobileFold';
 
 declare global {
   interface Window {
@@ -155,6 +157,7 @@ function startFlow(): void {
   if (new URLSearchParams(window.location.search).get('flow') === 'off') return;
   window.starsFlow = new FlowApp();
   setupKeys(window.starsFlow, a11y());
+  setupMobileFold();
 }
 
 // Boot: the panels first (they need only the data bundle), then the globes once the start screen

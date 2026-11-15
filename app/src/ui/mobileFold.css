@@ -1,0 +1,281 @@
+/* Phones only: folding top bar and folding panel sheet (src/ui/mobileFold.ts sets body.mf-phone for
+   "(max-width: 820px), (max-height: 480px) and (orientation: landscape)"). Desktop never sees these. */
+
+.mf-chip,
+.mf-options,
+.mf-sheet,
+.mf-handle {
+  display: none;
+}
+
+/* ---------- top bar: one slim row ---------- */
+body.mf-phone .topbar {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 2px 0 12px;
+  z-index: 20;
+}
+body.mf-phone .brand {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  flex: none;
+}
+body.mf-phone .brand-name {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+body.mf-phone .brand-line {
+  display: none;
+}
+body.mf-phone .mf-chip {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 var(--step--1) / 1.2 var(--font-head);
+  color: var(--sodium);
+  padding: 4px 10px;
+  border: 1px solid var(--edge-strong);
+  border-radius: 999px;
+  justify-self: start;
+  max-width: max-content;
+  margin-right: auto;
+}
+body.mf-phone .mf-chip:empty {
+  visibility: hidden;
+}
+body.mf-phone .mf-options {
+  display: inline-flex;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+body.mf-phone.mf-open .mf-options {
+  border-color: var(--sodium);
+}
+
+/* the sheet under the bar: the switches, Keys, Data and the full step row */
+body.mf-phone .mf-sheet {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--glass-solid);
+  border-bottom: 1px solid var(--edge-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+body.mf-phone.mf-open .mf-sheet {
+  display: flex;
+}
+body.mf-phone .mf-sheet .topbar-tools {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+body.mf-phone .mf-sheet .switches {
+  order: 0;
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body.mf-phone .mf-sheet .steps {
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+body.mf-phone .mf-sheet .steps:empty {
+  display: none;
+}
+body.mf-phone .mf-sheet .steps-where {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  display: block;
+  margin-bottom: 6px;
+}
+body.mf-phone .mf-sheet .steps-list {
+  flex-wrap: wrap;
+}
+body.mf-phone .mf-sheet .step .step-label {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}
+body.mf-phone .mf-sheet .step .step-btn {
+  padding: 0 10px;
+}
+
+/* ---------- bottom sheet handle ---------- */
+body.mf-phone .mf-handle {
+  grid-area: handle;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 12px 0 16px;
+  color: var(--text);
+  background: var(--glass-solid);
+  border: 0;
+  border-top: 1px solid var(--edge-strong);
+  font: 600 var(--step--1) / 1.2 var(--font-head);
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  z-index: 7;
+}
+body.mf-phone .mf-handle[hidden] {
+  display: none;
+}
+body.mf-phone .mf-handle:focus-visible {
+  outline-offset: -3px;
+}
+.mf-handle-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mf-chev {
+  flex: none;
+  display: inline-flex;
+  transition: transform 0.15s;
+  transform: rotate(180deg);
+}
+body.mf-folded .mf-chev {
+  transform: none;
+}
+
+/* portrait: the globes stacked, the handle, then the panel (up to about half the screen) */
+body.mf-phone.flow .stage {
+  grid-template-areas: 'earth' 'moon' 'handle';
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) 48px;
+}
+body.mf-phone.flow .intro {
+  bottom: 48px;
+}
+body.mf-phone.flow.mf-folded .intro {
+  display: none;
+}
+body.mf-phone.flow[data-step='pick'] .stage,
+body.mf-phone.flow[data-step='compare'] .stage {
+  grid-template-areas: 'earth' 'moon' 'handle' 'side';
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) 48px min(50dvh, 480px);
+}
+body.mf-phone.flow[data-step='pick'] .stage > .panel,
+body.mf-phone.flow[data-step='compare'] .stage > .panel {
+  border-top: 0;
+  border-left: 0;
+}
+body.mf-phone.flow.mf-folded[data-step='pick'] .stage,
+body.mf-phone.flow.mf-folded[data-step='compare'] .stage {
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) 48px 0;
+}
+body.mf-phone.flow.mf-folded .stage > .panel {
+  display: none !important;
+}
+
+/* landscape phone: the two globes side by side, the panel at the right with the handle on top;
+   folded, the panel goes away to the side and the handle becomes a 48 px strip */
+@media (max-height: 480px) and (orientation: landscape) {
+  body.mf-phone.flow .stage {
+    grid-template-areas: 'earth moon' 'handle handle';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) 48px;
+  }
+  body.mf-phone.flow[data-step='pick'] .stage,
+  body.mf-phone.flow[data-step='compare'] .stage {
+    grid-template-areas: 'earth moon handle' 'earth moon side';
+    grid-template-columns: 1fr 1fr minmax(280px, 1fr);
+    grid-template-rows: 48px minmax(0, 1fr);
+  }
+  body.mf-phone.flow.mf-folded[data-step='pick'] .stage,
+  body.mf-phone.flow.mf-folded[data-step='compare'] .stage {
+    grid-template-areas: 'earth moon handle';
+    grid-template-columns: 1fr 1fr 48px;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  body.mf-phone.flow:not([data-step='choose']) .mf-handle {
+    border-top: 0;
+    border-left: 1px solid var(--edge-strong);
+    border-bottom: 1px solid var(--edge);
+  }
+  body.mf-phone.flow:not([data-step='choose']) .mf-chev {
+    transform: rotate(90deg);
+  }
+  body.mf-phone.flow.mf-folded:not([data-step='choose']) .mf-chev {
+    transform: rotate(-90deg);
+  }
+  body.mf-phone.flow.mf-folded:not([data-step='choose']) .mf-handle {
+    flex-direction: column-reverse;
+    justify-content: center;
+    padding: 12px 0;
+    border-bottom: 0;
+  }
+  body.mf-phone.flow.mf-folded:not([data-step='choose']) .mf-handle-text {
+    writing-mode: vertical-rl;
+    max-height: calc(100% - 40px);
+  }
+}
+
+/* ---------- Cesium / NASA credit: a small corner logo; the text credits are in "Data, limits and credits" ---------- */
+body.mf-phone .pane .cesium-widget-credits {
+  left: 4px !important;
+  right: auto !important;
+  bottom: 4px !important;
+  max-width: 50%;
+  padding: 0 4px;
+  background: transparent !important;
+  pointer-events: none;
+}
+body.mf-phone .pane .cesium-credit-textContainer,
+body.mf-phone .pane .cesium-credit-expand-link {
+  display: none !important;
+}
+body.mf-phone .pane .cesium-credit-logoContainer {
+  margin-right: 0;
+  pointer-events: auto;
+}
+body.mf-phone .pane .cesium-credit-logoContainer a {
+  margin-right: 0;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(10, 12, 15, 0.55);
+  min-height: 28px;
+}
+body.mf-phone .pane .cesium-credit-logoContainer img {
+  height: 14px !important;
+  width: auto !important;
+}
