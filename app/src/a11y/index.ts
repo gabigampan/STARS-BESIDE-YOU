@@ -10,6 +10,8 @@ export class A11y {
   readonly guide: AudioGuide;
   readonly audioSwitch: SwitchHandle;
   readonly paletteSwitch: SwitchHandle;
+  readonly namesSwitch: SwitchHandle;
+  private namesHandler: ((on: boolean) => void) | null = null;
   /** Both palettes (for the colour checks of the tests). */
   readonly palettes = PALETTES;
 
@@ -35,7 +37,38 @@ export class A11y {
       },
     });
     applyPalette(this.paletteSwitch.get() ? 'cvd' : 'standard');
-    slot.append(this.audioSwitch.el, this.paletteSwitch.el);
+    // the texts of the audio guide stay reachable for people who cannot hear it: in "Data, limits and credits"
+    void this.guide.ready.then(() => {
+      const body = document.getElementById('credits-body');
+      const list = this.guide.allTranscripts();
+      if (!body || !list.length) return;
+      const d = document.createElement('details');
+      d.className = 'guide-texts';
+      const sum = document.createElement('summary');
+      sum.textContent = `Texts of the audio guide (${list.length})`;
+      d.append(sum);
+      for (const t of list) {
+        const p = document.createElement('p');
+        p.dataset.file = t.file;
+        p.textContent = t.text;
+        d.append(p);
+      }
+      body.append(d);
+    });
+    this.namesSwitch = createSwitch({
+      id: 'switch-names',
+      label: 'Place names',
+      pref: 'starsBesideYou.placeNames',
+      defaultOn: true,
+      onChange: (on) => this.namesHandler?.(on),
+    });
+    slot.append(this.namesSwitch.el, this.audioSwitch.el, this.paletteSwitch.el);
+  }
+
+  /** The globes' place names follow the "Place names" switch. */
+  setPlaceNamesHandler(fn: (on: boolean) => void): void {
+    this.namesHandler = fn;
+    fn(this.namesSwitch.get());
   }
 }
 

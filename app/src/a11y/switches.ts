@@ -3,7 +3,7 @@
 // Each is a native <button role="switch">: Tab reaches it, Space and Enter toggle it, aria-checked
 // carries the state and the words "On" / "Off" beside the track show it without colour.
 
-import { readFlag, writeFlag } from './prefs';
+import { readPref, writeFlag } from './prefs';
 
 export interface SwitchHandle {
   readonly el: HTMLButtonElement;
@@ -11,7 +11,7 @@ export interface SwitchHandle {
   set(on: boolean, persist?: boolean): void;
 }
 
-export function createSwitch(opts: { id: string; label: string; pref: string; onChange: (on: boolean) => void }): SwitchHandle {
+export function createSwitch(opts: { id: string; label: string; pref: string; onChange: (on: boolean) => void; defaultOn?: boolean }): SwitchHandle {
   const el = document.createElement('button');
   el.type = 'button';
   el.id = opts.id;
@@ -29,10 +29,8 @@ export function createSwitch(opts: { id: string; label: string; pref: string; on
   const thumb = document.createElement('span');
   thumb.className = 'switch-thumb';
   track.append(thumb);
-  const state = document.createElement('span');
-  state.className = 'switch-state';
-  state.setAttribute('aria-hidden', 'true');
-  el.append(label, track, state);
+  // the state is the thumb's position (left off, right on) and aria-checked; no state word (team lead's ruling)
+  el.append(label, track);
 
   let on = false;
   const handle: SwitchHandle = {
@@ -42,16 +40,15 @@ export function createSwitch(opts: { id: string; label: string; pref: string; on
       on = next;
       el.setAttribute('aria-checked', String(on));
       el.dataset.state = on ? 'on' : 'off';
-      state.textContent = on ? 'On' : 'Off';
       if (persist) writeFlag(opts.pref, on);
       opts.onChange(on);
     },
   };
   el.addEventListener('click', () => handle.set(!on));
   // initial state from storage (default off), without writing it back
-  on = readFlag(opts.pref);
+  const stored = readPref(opts.pref);
+  on = stored === null ? !!opts.defaultOn : stored === 'on';
   el.setAttribute('aria-checked', String(on));
   el.dataset.state = on ? 'on' : 'off';
-  state.textContent = on ? 'On' : 'Off';
   return handle;
 }

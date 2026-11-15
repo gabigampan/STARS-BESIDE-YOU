@@ -92,6 +92,8 @@ export class MissionPanel {
       h('p', { class: 'muted', 'data-note': 'mission-line' }, `${missionName(m)} mission: ${missionLine(m).replace(/^./, (c) => c.toLowerCase())}`),
       h('p', { class: 'muted', 'data-note': 'rule', 'data-verbatim': twinsHere ? null : 'no_twin_reason' }, this.app.ruleText()),
       h('div', { class: 'zone-slot', 'data-slot': 'zone' }),
+      // what the markers on the two globes show (off the globes, team lead's ruling)
+      h('div', { class: 'markers-slot muted', 'data-slot': 'markers' }),
       h('p', { class: 'muted', 'data-note': 'cell-size' }, this.app.cellSizeText()),
     );
     const funnel = h(

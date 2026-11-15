@@ -13,29 +13,11 @@
     <header class="topbar">
       <div class="brand">
         <h1 class="brand-name">Stars Beside You</h1>
-        <p class="brand-line">Earth test sites for Moon missions, with the reasons</p>
       </div>
       <div class="topbar-tools">
-        <button type="button" class="btn" id="view-toggle" aria-expanded="false" aria-controls="view-tools">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>View</span>
-        </button>
-        <div class="view-tools" id="view-tools">
-        <fieldset class="sunlight" id="sunlight">
-          <legend class="sr-only">Sunlight on both globes</legend>
-          <span class="sunlight-label" aria-hidden="true">Sunlight</span>
-          <div class="sunlight-options">
-            <label class="seg"><input type="radio" name="sunlight" value="full-moon" checked aria-describedby="sun-time" /><span>Full Moon</span></label>
-            <label class="seg"><input type="radio" name="sunlight" value="now" aria-describedby="sun-time" /><span>Now</span></label>
-            <label class="seg"><input type="radio" name="sunlight" value="even" aria-describedby="sun-time" /><span>Even light</span></label>
-          </div>
-          <p class="sun-time" id="sun-time"></p>
-        </fieldset>
-        <p class="sr-only" id="sunlight-status" role="status" aria-live="polite"></p>
-        <button type="button" class="btn" id="labels-toggle" aria-pressed="true"><span class="toggle-box" aria-hidden="true"></span><span class="toggle-text">Place names: on</span></button>
-        </div>
-        <div class="switches" id="switches" role="group" aria-label="Accessibility"></div>
+        <div class="switches" id="switches" role="group" aria-label="Display and accessibility"></div>
         <button type="button" class="btn" id="keys-button" aria-haspopup="dialog" aria-keyshortcuts="?">Keys</button>
-        <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Data and limits</button>
+        <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Data, limits and credits</button>
       </div>
     </header>
     <nav class="steps" id="steps" aria-label="Steps"></nav>
@@ -46,19 +28,17 @@
         <div class="globe" id="earth-globe"></div>
         <div class="pane-caption">
           <h2 class="pane-title">Earth</h2>
-          <p class="pane-note">NASA Blue Marble by day, Black Marble city lights by night</p>
-          <div class="pane-rule earth-rule" id="earth-rule"></div>
+          <div class="pane-rule earth-rule" id="earth-rule" hidden></div>
         </div>
-        <button type="button" class="btn btn-quiet pane-reset" data-reset="earth">Reset view</button>
+        <button type="button" class="btn btn-quiet btn-icon pane-reset" data-reset="earth" aria-label="Reset the Earth view" title="Reset the Earth view"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg></button>
       </section>
       <section class="pane" id="moon-pane" aria-label="Moon globe">
         <div class="globe" id="moon-globe"></div>
         <div class="pane-caption">
           <h2 class="pane-title">Moon</h2>
-          <p class="pane-note">LRO Wide Angle Camera mosaic, IAU feature names</p>
-          <div class="pane-rule moon-rule" id="moon-rule"></div>
+          <div class="pane-rule moon-rule" id="moon-rule" hidden></div>
         </div>
-        <button type="button" class="btn btn-quiet pane-reset" data-reset="moon">Reset view</button>
+        <button type="button" class="btn btn-quiet btn-icon pane-reset" data-reset="moon" aria-label="Reset the Moon view" title="Reset the Moon view"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg></button>
       </section>
 
       <aside class="panel panel-mission" id="mission-panel" aria-label="Missions" hidden></aside>

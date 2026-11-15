@@ -212,14 +212,17 @@ export class VideoDialog implements VideoApi {
       el.src = t.src;
       el.srclang = t.srclang;
       el.label = t.label;
-      if (t.default || (!hasDefault && i === 0)) el.default = true;
+      // captions start off (the visitor turns them on with the player's captions control)
+      void hasDefault;
+      void i;
       video.appendChild(el);
     });
     // Captions on by default: show the default track (or the first one).
     const showCaptions = () => {
       const list = Array.from(video.textTracks);
       const want = tracks.findIndex((t) => t.default);
-      list.forEach((tt, i) => (tt.mode = i === (want >= 0 ? want : 0) ? 'showing' : 'disabled'));
+      void want;
+      list.forEach((tt) => (tt.mode = 'disabled'));
     };
     video.addEventListener('loadedmetadata', showCaptions);
     frame.appendChild(video);

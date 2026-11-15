@@ -13,9 +13,9 @@ import { applyIonUpgrade, ionEnabled } from './scene/ionUpgrade';
 import { Beams } from './modules/beams';
 import { Focus } from './modules/focus';
 import { Markers } from './modules/markers';
-import { Sunlight, bindSunlightControl } from './modules/sunlight';
+import { Sunlight } from './modules/sunlight';
 import { VideoDialog } from './modules/video';
-import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupViewMenu } from './ui/shell';
+import { LoadingScreen, setupCredits, setupResetButtons } from './ui/shell';
 import { FlowApp } from './flow/app';
 import { a11y, type A11y } from './a11y';
 import { setupKeys } from './a11y/keys';
@@ -82,8 +82,7 @@ function main(): void {
 
   globes.moonLabels.load().catch((err: unknown) => {
     // Names are secondary: the Moon stays usable, and the reason is shown in the caption.
-    const note = document.querySelector('#moon-pane .pane-note');
-    if (note) note.textContent = `Feature names unavailable (${err instanceof Error ? err.message : String(err)})`;
+    console.warn(`[labels] lunar feature names unavailable: ${err instanceof Error ? err.message : String(err)}`);
   });
 
   setupCredits([
@@ -113,10 +112,9 @@ function main(): void {
         ]
       : []),
   ]);
-  setupLabelsToggle(setLabels);
-  setupViewMenu();
+  // "Place names" is a switch of the header (src/a11y/index.ts), on by default
+  window.starsA11y?.setPlaceNamesHandler(setLabels);
   setupResetButtons((body) => globesApi.resetView(body));
-  bindSunlightControl(sunlight);
 
   // Keep the home view fitted when panes change size (rotation, window resize, stacked/side-by-side).
   let resizeTimer = 0;
