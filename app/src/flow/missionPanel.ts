@@ -417,7 +417,7 @@ export class MissionPanel {
             'span',
             { class: 'top5-twin', title: tw ?? '' },
             tw ? tw.replace(/^Moon: /, 'Lunar twin: ') : '',
-            it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `${tw ? ' · ' : ''}Ranked ${int(it.rank)} overall`) : null,
+            it.rank != null && it.rank !== it.pos ? h('span', { class: 'top5-overall' }, `${tw ? ' · ' : ''}Number ${int(it.rank)} in the full list`) : null,
           ),
         ),
         h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),
