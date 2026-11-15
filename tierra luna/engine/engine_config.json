@@ -635,7 +635,7 @@
                 "sigma": 0.265093,
                 "unit": "deg",
                 "formula": "sqrt((7.17/(sqrt(2)*1853))^2 + (10/(sqrt(2)*1895.2))^2) rad = 0.265093 deg",
-                "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025, ESSD 17, 1835-1849); LOLA about 10 m radial (Smith et al. 2010, GRL 37, L18204); docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
+                "source": "ETOPO 2022: MacFerrin, M., Amante, C., Carignan, K., Love, M. and Lim, E. (2025), 'The Earth Topography 2022 (ETOPO 2022) global DEM dataset', Earth Syst. Sci. Data 17, 1835-1849 (version published 08 May 2025), https://doi.org/10.5194/essd-17-1835-2025 ; abstract: 'ETOPO 2022 measures a global RMSE of 7.17 m'; section 6 'Validation results': 'ETOPO has a mean RMSE over land of 7.17 m (Fig. 6)' (mean of the RMSEs of the 1x1 degree sub-tiles over land, against ICESat-2); LOLA: Smith, D. E. et al. (2010), 'Initial observations from the Lunar Orbiter Laser Altimeter (LOLA)', Geophys. Res. Lett. 37, L18204 (final published version, September 2010), https://doi.org/10.1029/2010GL043751 (open copy http://hdl.handle.net/1721.1/74221); abstract: 'improve the lunar geodetic grid to ~10 m radial and ~100 m spatial accuracy with respect to the Moon's center of mass' (an absolute accuracy of the geodetic grid, not a per-pixel noise: pessimistic for a cell); formula: docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
                 "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (2 deg)",
                 "set_by": "the team lead, 2026-11-15 11:51 CET (desaturate the key variable by the measurement uncertainty), specified by research 5"
               }
@@ -654,7 +654,7 @@
                 "sigma": 17.401661,
                 "unit": "m",
                 "formula": "sqrt(2*7.17^2 + 2*10^2) = 17.401661 m",
-                "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025); LOLA about 10 m radial (Smith et al. 2010); research_5_rover_escala.md 'Para implementar'",
+                "source": "ETOPO 2022: MacFerrin, M., Amante, C., Carignan, K., Love, M. and Lim, E. (2025), 'The Earth Topography 2022 (ETOPO 2022) global DEM dataset', Earth Syst. Sci. Data 17, 1835-1849 (version published 08 May 2025), https://doi.org/10.5194/essd-17-1835-2025 ; abstract: 'ETOPO 2022 measures a global RMSE of 7.17 m'; section 6 'Validation results': 'ETOPO has a mean RMSE over land of 7.17 m (Fig. 6)' (mean of the RMSEs of the 1x1 degree sub-tiles over land, against ICESat-2); LOLA: Smith, D. E. et al. (2010), 'Initial observations from the Lunar Orbiter Laser Altimeter (LOLA)', Geophys. Res. Lett. 37, L18204 (final published version, September 2010), https://doi.org/10.1029/2010GL043751 (open copy http://hdl.handle.net/1721.1/74221); abstract: 'improve the lunar geodetic grid to ~10 m radial and ~100 m spatial accuracy with respect to the Moon's center of mass' (an absolute accuracy of the geodetic grid, not a per-pixel noise: pessimistic for a cell); formula: docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
                 "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (30 m)",
                 "set_by": "the team lead, 2026-11-15 11:51 CET, specified by research 5"
               }
@@ -964,7 +964,7 @@
         "min_separation": "The five shown are chosen down the full ranking by final score: the best point is kept, and any point whose cell centre lies within {deg} degrees of arc (about {km} km) of one already kept is skipped, so that neighbouring cells of one place do not fill the list. The full ranking itself is unchanged and stays ordered by final score.",
         "by_rank": "The five shown are numbers 1 to 5 of the full ranking, ordered by final score.",
         "rank_with_skips": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within {deg} degrees of arc (about {km} km) of one already kept. The full ranking itself is unchanged.",
-        "spread_within_top_tie": "{tied_n} sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged."
+        "spread_within_top_tie": "These are five of the {tied_all_n} sites tied at the top of our model, chosen to be spread across the world. The tie is within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m): the data cannot tell these sites apart. How the five are chosen among them: a cell half or more snow and ice is left out, and so is a cell less than half land ({tied_n} tied sites remain); the first is the remaining tied site with the highest similarity, then each next one is the tied site farthest from those already chosen, so the five are at least {deg} degrees apart (the closest two are {min_pair_deg} degrees apart). The full ranking itself is unchanged."
       }
     },
     "why": "Decision 2 of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf: a minimum separation of 2 degrees between the analogs of the top 5 in Rover and in Solar panels, so that neighbouring cells of one place do not fill the list. The director's reading: a rule for choosing the FIVE (greedy by rank: keep the best, skip any whose cell centre is within 2 degrees of arc, great circle on the sphere of body_radius_km EARTH = 6371.0 km, about 222.4 km, of one already kept); the full ranking stays by final score. Lunar base keeps ranks 1 to 5 (the rule would change nothing there today: docs/stats_audit/7_efecto_decisiones_pendientes.md P2). Exported as missions.json missions[].top5."
@@ -1482,7 +1482,7 @@
           "mismatches": "MOBILITY_MISMATCHES",
           "ranked_item": "{name} (top {pct} %)",
           "unranked_item": "{name} (does not pass the funnel: {reasons})",
-          "text": "What was checked against known places (Rover only): the mobility analog sites named in rover_preset.py, with coordinates checked in our benchmark, are placed in the full ranking of {ranked} points as follows: {positives}. Sites named there as mismatches: {mismatches}. Not checked because their benchmark coordinates are marked as written from memory: {unverified}. A low percentage is a high place in the list; the check describes the ranking, it does not prove it.",
+          "text": "What was checked against known places (Rover only): the mobility analog sites named in the team's rover file, with coordinates checked in our benchmark, are placed in the full ranking of {ranked} points as follows: {positives}. Sites named there as mismatches: {mismatches}. Not checked because their benchmark coordinates are marked as written from memory: {unverified}. A low percentage is a high place in the list; the check describes the ranking, it does not prove it.",
           "source": "computed at build from tierra luna/data/benchmark/analog_benchmark.csv and rover_preset.py MOBILITY_POSITIVES / MOBILITY_MISMATCHES, with the auditor's rule for unverified coordinates (docs/stats_audit/3_robustez_validacion_ranking.md section 6.1)"
         },
         "solar": {
@@ -1521,7 +1521,13 @@
           "mission_card"
         ],
         "decision": "2026-11-15 11:23 CET, points 4 and 5",
-        "text": "The list is ordered by the final score: {alpha_pct} % similarity to the lunar twin and {rest_pct} % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best."
+        "text": "The list is ordered by the final score: {alpha_pct} % similarity to the lunar twin and {rest_pct} % suitability for the mission. {five_sentence}",
+        "five_sentences": {
+          "spread_within_top_tie": "These are five of the {tied_n} sites tied at the top of our model, chosen to be spread across the world, not a proven best.",
+          "rank_with_skips": "These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a cell half or more snow and ice, a cell less than half land and a point within {deg} degrees of one already chosen are skipped (numbers {ranks} of the full ranking).",
+          "by_rank": "These are five of the highest-scoring analogs in our model (numbers 1 to 5 of the full ranking), not a proven best.",
+          "min_separation": "These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a point within {deg} degrees of one already chosen is skipped (numbers {ranks} of the full ranking)."
+        }
       },
       "surface_classes": {
         "kind": "surface_classes",
@@ -1565,11 +1571,11 @@
           "weights"
         ],
         "unread_labels": {
-          "tolerances": "the 'tolerances' block",
-          "workable_days": "the 'workable_days' block",
-          "weights": "the domain 'weights' (relieve, material, termico, luz, agua)"
+          "tolerances": "its block of tolerances",
+          "workable_days": "its block of workable days",
+          "weights": "its weights of five domains (relief, material, thermal, light, water)"
         },
-        "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: {inert_gates}. Values of the team's file mission_scoring.json that no code reads: {unread_values}. The team's file is quoted as it is: these numbers are listed here, not removed."
+        "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: {inert_gates}. Values of the team's scoring file that no code reads: {unread_values}. The team's file is quoted as it is: these numbers are listed here, not removed."
       },
       "zone_edge": {
         "show": [
@@ -1578,7 +1584,7 @@
         ],
         "decision": "2026-11-15 11:23 CET, decision 3 (the Lunar base zone is kept)",
         "source": "computed at build from engine/data/artemis_iii_regions.geojson (engine_config twin_zone_regions)",
-        "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions ({zone_cells} cells), so a twin may lie mostly outside the region nearest to it: {edge_n} of the {twins_n} Lunar base twins have less than {in_min_pct} % of their cell inside a region. Each twin says whether it is 'in' or 'at the edge of' NASA's candidate region it touches most (twins.json nasa_region)."
+        "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions ({zone_cells} cells), so a twin may lie mostly outside the region nearest to it: {edge_n} of the {twins_n} Lunar base twins have less than {in_min_pct} % of their cell inside a region. Beside each twin we print either 'in NASA's ... candidate region' ({in_min_pct} % or more of the twin's cell lies inside that region) or 'at the edge of NASA's ... candidate region' (less than {in_min_pct} %), naming the region its cell overlaps most."
       },
       "ties_at_top": {
         "kind": "ties_at_top",
@@ -1682,7 +1688,7 @@
         ],
         "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
         "source": "docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
-        "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so {tied_n} of the {ranked_n} paired sites share the top final score of {score}; {tied_kept_n} remain after skipping cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. How the five were chosen: {rule}",
+        "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so {tied_n} of the {ranked_n} paired sites share the top final score of {score}; {tied_kept_n} remain after leaving out cells that are half or more ice or less than half land. The tie is not a measured equality: the data cannot tell these sites apart. {rule}",
         "criteria_set": "corrected"
       },
       "rover_suitability_one_criterion": {
@@ -1721,6 +1727,72 @@
         "decision": "statistical audit part 5 (docs/stats_audit/5_inventario_sentido_fisico.md), order of 2026-11-15 11:36 CET",
         "source": "engine_config.json body_radius_km and toa_insolation; docs/DECISIONS.md",
         "text": "Two constants appear with two values. Earth's radius: the engine uses 6,371.0 km (body_radius_km: distances, cell sizes and the 2-degree separation); the Earth-table builder used 6,371.0088 km for its relief metrics. The 2-degree arc is 222.390 km with 6,371.0 and 222.390 km with 6,371.0088 (0.3 m apart; 222.4 km at the published precision). Earth's obliquity: the engine uses 23.44 degrees in the sunlight-above-the-atmosphere formula; the Earth-table builder used 23.4393 degrees for the sun-elevation columns. Over the 180 latitudes the sunlight above the atmosphere differs by at most 0.00012 kWh per square metre per day (it moves the 4th published decimal on 68 latitudes, never the 3rd); no number entering a result was changed."
+      },
+      "plain_names": {
+        "slope_300m_deg": "slope (degrees)",
+        "rough_300m_m": "roughness (m)",
+        "rock_or_bare_frac": "bare-ground share",
+        "slope_deg": "slope (degrees)",
+        "roughness_m": "roughness (m)",
+        "mask_fraction": "land share of the cell",
+        "sun_elev_max_deg": "maximum sun elevation (degrees)",
+        "sun_low_frac_0_5deg": "share of time with the sun below 5 degrees",
+        "irradiance_kwh_m2_day": "ground sunlight (WorldClim)",
+        "clear_frac_isccp": "clear-sky fraction (satellite clouds)",
+        "thermal_inertia_class": "thermal-inertia class",
+        "permafrost_class": "permafrost class",
+        "lst_diurnal_amp_k": "daily land-surface temperature swing",
+        "tmin_c": "coldest temperature",
+        "elevation_m": "elevation",
+        "snow_ice_frac": "snow and ice share of the cell"
+      },
+      "rover_suitability_saturation": {
+        "kind": "computed:suitability_saturation",
+        "mission": "rover",
+        "missions": [
+          "rover"
+        ],
+        "show": [
+          "mission_card",
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+        "source": "computed at build from the Earth table and the team's Rover suitability criteria (mission_scoring.json rover.soft, unchanged); worked example: Bardenas Reales and Tabernas Desert, benchmark coordinates (data/benchmark/analog_benchmark.csv)",
+        "sites": [
+          {
+            "name": "Bardenas Reales",
+            "lat": 42.1612,
+            "lon": -1.4663
+          },
+          {
+            "name": "Tabernas Desert",
+            "lat": 37.0676,
+            "lon": -2.5295
+          }
+        ],
+        "text": "The Rover suitability is saturated too. {sat_all_n} of the {tied_n} sites tied at the top score the maximum on every one of the team's Rover criteria ({criteria}), so the team's criteria do not tell them apart either ({suit100_n} of the {ranked_n} ranked points show a suitability of 100.00). Points that reach the maximum of each criterion, among the {ranked_n} ranked: {per_criterion}; all three: {sat_all_ranked_n}. Among the {tied_n} tied sites: slope {slope_range} degrees, roughness {rough_range} m, bare-ground share {bare_range}. Worked example: {examples}. The criteria as the team wrote them reward the gentlest, barest ground and say nothing else about mobility (a recognised badlands analog with some vegetation cover loses about a quarter of its score on the bare-ground share alone); this is a weakness of the suitability criteria, left as written and to be examined by the re-audit."
+      },
+      "rover_slope_minimum": {
+        "kind": "static",
+        "missions": [
+          "rover"
+        ],
+        "show": [
+          "mission_card",
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+        "source": "docs/DECISIONS.md, section of 11:23 CET 'Pendiente mínima de Rover (0,5°)': measured with the engine with and without the minimum",
+        "text": "The Rover minimum slope of 0.5 degrees is a criterion of the team with no official source. It is kept because of its measured effect: without it 7,847 more points pass (2,862 of them ice or snow cells), 28 of the top 50 become flats with a slope below 0.5 degrees (water-dominated cells in the top 50 go from 4 to 13), one lunar twin takes 13.9 % of the pairs instead of 2.6 %, and the known mobility analogs rank worse (Qaidam from the top 4.0 % to 8.3 %, Haughton 4.2 % to 8.4 %, Ramon 3.6 % to 8.0 %, Yungay 8.1 % to 11.6 %)."
+      },
+      "top5_rule_parts": {
+        "kind": "computed:top5_rule_parts",
+        "show": [
+          "data_and_limits"
+        ],
+        "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
+        "source": "computed at build from the five-selection rule (engine_config top5_selection) and the Earth table",
+        "text": "What each part of the rule for the five does. Ice (a cell half or more snow and ice is skipped): {ice}. Land (a cell less than half land is skipped, because slope and roughness only mean something on solid ground; a separate, separately switchable part of the rule): {land}. Distance (a point within {deg} degrees of one already chosen is skipped): {sep}. The full rankings are unchanged."
       }
     },
     "why": "Decision of 2026-11-15 11:23 CET, point 4 (taken by the delegate on the team lead's behalf): keep and state honestly, in the web's 'Data and limits', the ice cells in the Rover ranking, the common gate elevation >= 1 m, the saturation of the Solar panels similarity (approved_texts.solar_similarity_saturation), the fragility of each top 5 (top5_stability) and the numbers that have no effect; point 5: 'five of the highest-scoring analogs in our model', ordered by final score; decision 3: 'at the edge of' a NASA region. Templates only: every figure is computed at build (engine/limits.py) or taken from the audit file named in 'source'. Exported in similarity.json 'texts' with 'missions' (absent = every mission) and 'show' (mission_card, top5, pair_panel, data_and_limits)."

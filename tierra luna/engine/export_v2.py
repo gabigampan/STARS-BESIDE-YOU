@@ -448,7 +448,7 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             sim_block.update(twin_summary(res.twin_id[ranked], moon_ids))
         else:
             sim_block["twins"] = None
-            sim_block["no_twin_reason"] = "repo_global_mean compares every Earth cell with the mean profile of the whole Moon (the repository's default target), so there is no lunar twin; the shipped rule since the team decision of 2026-11-15 is zone_twin (engine_config similarity_rule)."
+            sim_block["no_twin_reason"] = "This build compares every Earth cell with the average of the whole Moon, so there is no single lunar twin. The published version pairs each Earth point with one lunar cell of the mission's target zone (team decision of 2026-11-15)."
         out.append({
             "id": mid, "title": titles.get(mid, mid), "description": m.get("description"), "author": m.get("author"),
             "threshold_status": status[mid], "provisional": bool(prov), "provisional_note": prov if prov else None,
@@ -812,7 +812,7 @@ def _build_similarity_json(ds: Dataset, results: Dict[str, MissionResult], engin
                           "profile": {f: ctx.target[f] for f in ctx.active},
                           "info_not_in_similarity": lunar_info_summary(ds, engine_cfg)}
         base["twins"] = None
-        base["no_twin_reason"] = "repo_global_mean has no twin: the target is the mean profile of the whole Moon (the repository's default). The shipped rule since the team decision of 2026-11-15 is zone_twin, which has twins."
+        base["no_twin_reason"] = "This build compares every Earth cell with the average of the whole Moon, so there is no single lunar twin. The published version pairs each Earth point with one lunar cell of the mission's target zone (team decision of 2026-11-15)."
     else:
         base["target"] = {"kind": "zone_twin", "tie_rule": engine_cfg.v("twin_tie_rule"),
                           "lunar_cells_filtered": False,
