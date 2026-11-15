@@ -57,6 +57,17 @@ export function setupHud(reduced: () => boolean): void {
       }
     }).observe(detail, { childList: true, subtree: true });
   }
+
+  // the Cesium logo links (a third-party credit): named, and out of the sequential tab order;
+  // they stay clickable with a pointer. Harmless when there is no WebGL and no such link.
+  const tameLogos = () => {
+    for (const a of document.querySelectorAll<HTMLAnchorElement>('.cesium-credit-logoContainer a')) {
+      if (a.getAttribute('aria-label') !== 'Cesium') a.setAttribute('aria-label', 'Cesium');
+      if (a.getAttribute('tabindex') !== '-1') a.setAttribute('tabindex', '-1');
+    }
+  };
+  tameLogos();
+  new MutationObserver(tameLogos).observe(document.body, { childList: true, subtree: true });
 }
 
 function countUp(dd: HTMLElement): void {
