@@ -559,7 +559,7 @@ def mission_score_text(spec: Any, generic: str) -> str:
     parts = [unit.get(v, v + " {}").format(repr(float(x))) for v, x in zip(spec.variables, sig) if np.isfinite(x)]
     return ("s = 1 when |earth value - moon value| <= sigma (a difference within the measurement uncertainty of the elevation models), "
             "else s = exp(-0.5 * max(0, |earth value - moon value| / sigma - 1)^2); sigma: " + ", ".join(parts)
-            + " (similarity.variables[].uncertainty_scale.sigma); the pair filter still keeps |difference| <= tolerance")
+            + " (engine_config.json real_value_similarity: uncertainty_scale.sigma of each variable); the pair filter still keeps |difference| <= tolerance")
 
 
 def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfig) -> Dict[str, Any]:

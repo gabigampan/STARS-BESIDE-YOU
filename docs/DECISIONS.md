@@ -1111,3 +1111,7 @@ Todas en el origen (`engine/engine_config.json`, `engine/datasets.json`, `engine
 ### Punto abierto (punto A de la auditoría)
 
 La configuración muerta que la primera pasada no pudo mover con seguridad (la entrada de zona solar "latitude <= -75", las tolerancias de referencia sin uso, la escala por rango agregado) sigue donde está; moverla a un bloque `legacy` exige cambiar lecturas del código y se deja abierta, sin tocar en esta pasada.
+
+## Textos finales: punto 9 de la reauditoría, lector independiente (15-11-2026)
+
+Detalle en `docs/stats_audit/11_textos_finales.md` (script `tierra luna/audit/z_texts_final.py`). Veredicto de textos: Rover, Placas solares y Base lunar GO. Los cinco análogos de cada misión están publicados y en `explain.json`. Corregido en origen, sin cambiar ningún número: la etiqueta de zona "PSR" se escribe en palabras; la fórmula de Rover remitía a un campo inexistente del bundle; "each variable scores lower the further apart" era falso para Rover; `not_used_by_engine.why` decía que la similitud usa los pesos de idoneidad y que estaba pendiente; la nota de saturación de Rover seguía remitiendo "a la reauditoría". Queda anotado, sin corregir: en la ficha de Rover la frase "These are five of the 254 sites tied at the top..." aparece tres veces (known_limitations[3], [7] y top5.rule). Los 30 `.bin` son idénticos a e28283a y a HEAD.

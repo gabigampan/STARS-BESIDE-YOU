@@ -1,0 +1,411 @@
+{
+ "texts_read": {
+  "rover": 201,
+  "solar": 214,
+  "lunar_base": 385,
+  "shared": 611
+ },
+ "checks": [
+  {
+   "mission": "rover",
+   "key": "top5.ids",
+   "claim": "five analogs published, each in explain.json, ranks as overall_ranks",
+   "verdict": "OK",
+   "figure": "ids [4037, 50510, 44239, 26510, 26087] ranks [3, 254, 251, 241, 236]"
+  },
+  {
+   "mission": "solar",
+   "key": "top5.ids",
+   "claim": "five analogs published, each in explain.json, ranks as overall_ranks",
+   "verdict": "OK",
+   "figure": "ids [40184, 29749, 23648, 29746, 28670] ranks [1, 2, 5, 7, 9]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "top5.ids",
+   "claim": "five analogs published, each in explain.json, ranks as overall_ranks",
+   "verdict": "OK",
+   "figure": "ids [21054, 17538, 21833, 18627, 19672] ranks [1, 3, 5, 6, 7]"
+  },
+  {
+   "mission": "rover",
+   "key": "ranked_count",
+   "claim": "10,337 ranked / paired points",
+   "verdict": "OK",
+   "figure": "rank>0: 10337"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_tie / ties_at_top_rover / list_order_rover",
+   "claim": "254 share the top final 100.00",
+   "verdict": "OK",
+   "figure": "254 at 100.0"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_tie",
+   "claim": "241 tied sites remain after skips",
+   "verdict": "OK",
+   "figure": "top_tie_n_after_skips 241"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "253 ranked show suitability 100.00; 250 at max on all three",
+   "verdict": "OK",
+   "figure": "253; audit 250"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "3,291 / 2,144 / 930 at max; ranges 0.500-0.961, 14.61-30.19, 0.707-1.000",
+   "verdict": "OK",
+   "figure": "audit per_criterion"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "Bardenas number 7,046, similarity 100.00, suitability",
+   "verdict": "OK",
+   "figure": "rank 7046 sim 100.00 suit 70.43"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "Tabernas number 7,390, similarity 100.00, suitability",
+   "verdict": "OK",
+   "figure": "rank 7390 sim 100.00 suit 69.36"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "first analog shown = number 3, sim 100, suit 100",
+   "verdict": "OK",
+   "figure": "rank 3"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_saturation",
+   "claim": "no stale 'to be examined by the re-audit'",
+   "verdict": "OK",
+   "figure": "re-audit done (9_reauditoria_rover W1/W2 'decided criterion')"
+  },
+  {
+   "mission": "rover",
+   "key": "top5_stability_rover / known_limitations[4]",
+   "claim": "stability shares, 10.5 %, 60 fives, twins 17.5-38 %, 89 %",
+   "verdict": "OK",
+   "figure": "stability.corrected"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_slope_minimum / known_limitations[10]",
+   "claim": "7,847 / 2,862 / 26 of 50 / 12->25 / 16.4 vs 2.6 / analog shifts",
+   "verdict": "OK",
+   "figure": "slope_min_study_corrected"
+  },
+  {
+   "mission": "rover",
+   "key": "external_validation_rover",
+   "claim": "site percentages",
+   "verdict": "OK",
+   "figure": "validation corrected_pct"
+  },
+  {
+   "mission": "rover",
+   "key": "known_limitations[2]",
+   "claim": "twins colder by a median of about 150 K",
+   "verdict": "OK",
+   "figure": "median 149.0 K over 9181 pairs"
+  },
+  {
+   "mission": "rover",
+   "key": "known_limitations[1] / weights_why",
+   "claim": "slope 50 %, roughness 50 %, tolerances 2 deg / 30 m",
+   "verdict": "OK",
+   "figure": "{'slope_deg': (0.5, 2.0), 'roughness_m': (0.5, 30.0)}"
+  },
+  {
+   "mission": "rover",
+   "key": "similarity.score / similarity_meaning_real_values / rule_options",
+   "claim": "sigma 0.265093 deg and 17.401661 m (0.27 / 17.4 shown)",
+   "verdict": "OK",
+   "figure": "{'slope_deg': 0.265093, 'roughness_m': 17.401661}"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_suitability_one_criterion / saturation",
+   "claim": "suitability weights 45 / 30 / 25 %",
+   "verdict": "OK",
+   "figure": "{'slope_300m_deg': 0.45, 'rough_300m_m': 0.3, 'rock_or_bare_frac': 0.25}"
+  },
+  {
+   "mission": "rover",
+   "key": "twins (largest share)",
+   "claim": "one lunar twin takes 2.6 % of the pairs",
+   "verdict": "OK",
+   "figure": "{'twin_id': 59712, 'earth_cells': 271, 'share': 0.0262}"
+  },
+  {
+   "mission": "rover",
+   "key": "top5_rule_parts",
+   "claim": "ice 0 tied / 1,485 ranked; land 13 tied / 671 ranked; closest two 60.0 deg",
+   "verdict": "OK",
+   "figure": "five_rule_exclusions"
+  },
+  {
+   "mission": "rover",
+   "key": "rover_no_new_variable / known_limitations[6]",
+   "claim": "5,400 cells in the Rover lunar zone",
+   "verdict": "OK",
+   "figure": "moon cells lat<=-75: 5400"
+  },
+  {
+   "mission": "rover",
+   "key": "known_limitations[3] + [7] + top5.rule",
+   "claim": "a sentence appears once on the mission card",
+   "verdict": "FAULT",
+   "figure": "'These are five of the 254 sites tied at the top of our model, chosen to be spread across the world...' appears 3 times (kl[3], kl[7], top5.rule)"
+  },
+  {
+   "mission": "rover",
+   "key": "explain #1 E4037 place",
+   "claim": "no text names a cell after a place >300 km",
+   "verdict": "OK",
+   "figure": "nearest_place Gjoa Haven at 1115.8 km is data only; screen applies 300 km rule"
+  },
+  {
+   "mission": "rover",
+   "key": "similarity_meaning_real_values",
+   "claim": "no clause says every variable scores lower the further apart (Rover is flat within sigma)",
+   "verdict": "OK",
+   "figure": "Rover s = 1 for |d| <= sigma"
+  },
+  {
+   "mission": "rover",
+   "key": "zone.name",
+   "claim": "no unexplained PSR",
+   "verdict": "OK",
+   "figure": "South Pole permanently shadowed regions and Shackleton rim (75°S–90°S)"
+  },
+  {
+   "mission": "solar",
+   "key": "ranked_count / known_limitations[0]",
+   "claim": "6,360 pairs",
+   "verdict": "OK",
+   "figure": "similarity present 6360"
+  },
+  {
+   "mission": "solar",
+   "key": "solar_similarity_saturation / known_limitations[0]",
+   "claim": "78 % score 99 or more; 514 show 100.00",
+   "verdict": "OK",
+   "figure": "78.0 %, 514"
+  },
+  {
+   "mission": "solar",
+   "key": "solar_similarity_saturation",
+   "claim": "top 100 similarity 99.00 to 100.00",
+   "verdict": "OK",
+   "figure": "min 99.00 max 100.00"
+  },
+  {
+   "mission": "solar",
+   "key": "solar_suitability_clouds",
+   "claim": "18,777 points pass the funnel",
+   "verdict": "OK",
+   "figure": "fail_bits==0: 18777"
+  },
+  {
+   "mission": "solar",
+   "key": "solar_suitability_clouds / known_limitations[6]",
+   "claim": "clear sky 0.35 of 0.70 = 50 %",
+   "verdict": "OK",
+   "figure": "{'slope_deg': 0.15, 'lst_diurnal_amp_k': 0.1, 'roughness_m': 0.1, 'clear_frac_isccp': 0.35}"
+  },
+  {
+   "mission": "solar",
+   "key": "known_limitations[2]",
+   "claim": "criteria clear sky 0.35, slope 0.15, swing 0.1, roughness 0.1",
+   "verdict": "OK",
+   "figure": "{'slope_deg': 0.15, 'lst_diurnal_amp_k': 0.1, 'roughness_m': 0.1, 'clear_frac_isccp': 0.35}"
+  },
+  {
+   "mission": "solar",
+   "key": "solar_suitability_clouds",
+   "claim": "3 passing points without cloud value; 4.5 S 122.5 E number 16, suitability 96.23, not in five",
+   "verdict": "OK",
+   "figure": "3 missing; cell rank 16 suit 96.23"
+  },
+  {
+   "mission": "solar",
+   "key": "known_limitations[3]",
+   "claim": "6,060 passing without LST, all at 64.5 S or south, none with a twin",
+   "verdict": "OK",
+   "figure": "6060, max lat -64.5"
+  },
+  {
+   "mission": "solar",
+   "key": "known_limitations[1]",
+   "claim": "only points within about 33.5 deg find a twin; tolerance 0.6",
+   "verdict": "OK",
+   "figure": "max |lat| paired 33.5"
+  },
+  {
+   "mission": "solar",
+   "key": "weights_why",
+   "claim": "similarity weights 80 / 10 / 10",
+   "verdict": "OK",
+   "figure": "[0.8, 0.1, 0.1]"
+  },
+  {
+   "mission": "solar",
+   "key": "list_order_solar / known_limitations[4]",
+   "claim": "numbers 1, 2, 5, 7 and 9",
+   "verdict": "OK",
+   "figure": "[1, 2, 5, 7, 9]"
+  },
+  {
+   "mission": "solar",
+   "key": "top5_stability_solar / known_limitations[5]",
+   "claim": "per-analog shares, 0 of 200, 14 of 14",
+   "verdict": "OK",
+   "figure": "stability.corrected (ids in top5 order)"
+  },
+  {
+   "mission": "solar",
+   "key": "external_validation_solar",
+   "claim": "11 of 13 sunny pass, 0 of 6 cloudy; 8.3 vs 14.9; 28.8 vs 27.9",
+   "verdict": "OK",
+   "figure": "validation[0]"
+  },
+  {
+   "mission": "solar",
+   "key": "external_validation_solar",
+   "claim": "station ranks as in the bundle",
+   "verdict": "OK",
+   "figure": "earth_solar.bin rank of each station cell"
+  },
+  {
+   "mission": "solar",
+   "key": "explain pair_sentence x5",
+   "claim": "loss % agrees with the two printed numbers",
+   "verdict": "OK",
+   "figure": "[True, True, True, True, True]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "external_validation_lunar_base / criteria",
+   "claim": "450 paired, 2,419 passing",
+   "verdict": "OK",
+   "figure": "450, 2419"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "lunar_base_criteria / deviations",
+   "claim": "permafrost missing on 607 of 2,419",
+   "verdict": "OK",
+   "figure": "607"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "lunar_base_criteria / known_limitations[7]",
+   "claim": "weights 0.35/0.25/0.25/0.10 sum 0.95 -> 36.8/26.3/26.3/10.5",
+   "verdict": "OK",
+   "figure": "[0.35, 0.25, 0.25, 0.1]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "weights_why",
+   "claim": "similarity 40/40/10/10",
+   "verdict": "OK",
+   "figure": "[0.4, 0.4, 0.1, 0.1]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "list_order_lunar_base / known_limitations[4]",
+   "claim": "numbers 1, 3, 5, 6 and 7",
+   "verdict": "OK",
+   "figure": "[1, 3, 5, 6, 7]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "top5_stability_lunar_base / known_limitations[5]",
+   "claim": "per-analog shares and weight changes",
+   "verdict": "OK",
+   "figure": "weights ['16', '16', '15', '15', '10']"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "external_validation_lunar_base",
+   "claim": "3 of 13 pass, 2 twins: MDRS 335, Craters of the Moon 179",
+   "verdict": "OK",
+   "figure": "validation[0].sites_passing"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "twin_sharing_note.where / zone_edge_lunar_base",
+   "claim": "103 twins, largest at most 5.6 %",
+   "verdict": "OK",
+   "figure": "103, 0.0556"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "known_limitations[1] / pair sentence",
+   "claim": "on every pair the twin is colder and swings more",
+   "verdict": "OK",
+   "figure": "450 pairs; temp diff sign 1.0..1.0, amp diff sign 1.0..1.0"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "zone source",
+   "claim": "280 cells",
+   "verdict": "OK",
+   "figure": "P1MEQ6UK); 280 cells"
+  },
+  {
+   "mission": "shared",
+   "key": "alpha_why / not_used_by_engine.why / rover known_limitations[0]",
+   "claim": "'pending' still stated as an open question",
+   "verdict": "OK",
+   "figure": "2 strings say 'pending' (team confirmation of alpha 0.5, domain weights, Robotics 1 thresholds): open questions, not stale figures"
+  },
+  {
+   "mission": "rover",
+   "key": "similarity.score / real_value.score_by_mission.rover",
+   "claim": "the sigma pointer names a field that exists",
+   "verdict": "OK",
+   "figure": "missions.json similarity.variables[] has no uncertainty_scale; sigma lives in engine_config.json real_value_similarity"
+  },
+  {
+   "mission": "rover",
+   "key": "not_used_by_engine.why",
+   "claim": "similarity is not weighted with the soft weights",
+   "verdict": "OK",
+   "figure": "similarity weights [0.5, 0.5] vs soft [0.45, 0.3, 0.25]"
+  },
+  {
+   "mission": "solar",
+   "key": "not_used_by_engine.why",
+   "claim": "similarity is not weighted with the soft weights",
+   "verdict": "OK",
+   "figure": "similarity weights [0.8, 0.1, 0.1] vs soft [0.15, 0.1, 0.1, 0.35]"
+  },
+  {
+   "mission": "lunar_base",
+   "key": "not_used_by_engine.why",
+   "claim": "similarity is not weighted with the soft weights",
+   "verdict": "OK",
+   "figure": "similarity weights [0.4, 0.4, 0.1, 0.1] vs soft [0.35, 0.25, 0.25, 0.1]"
+  }
+ ],
+ "faults": [
+  {
+   "mission": "rover",
+   "key": "known_limitations[3] + [7] + top5.rule",
+   "claim": "a sentence appears once on the mission card",
+   "verdict": "FAULT",
+   "figure": "'These are five of the 254 sites tied at the top of our model, chosen to be spread across the world...' appears 3 times (kl[3], kl[7], top5.rule)"
+  }
+ ]
+}

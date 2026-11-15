@@ -21,8 +21,8 @@ TW = b.json("twins.json")["missions"]
 RA = {k: json.load(open(os.path.join(A, f"9_reauditoria_{k}.json"))) for k in ("rover", "solar", "base")}
 CFG = json.load(open(os.path.join(ROOT, "engine", "engine_config.json")))
 ids = b.int_column("earth_base.bin", "id")
-lat = b.column("earth_base.bin", "lat")
-lon = b.column("earth_base.bin", "lon")
+lat = 89.5 - (ids // 360)          # earth_base lat/lon are per grid row/column; id = row * 360 + col
+lon = -179.5 + (ids % 360)
 rows = []
 
 
@@ -71,12 +71,15 @@ def col(f, c):
     return b.column(f, c)
 
 
+LI = {mk: b.int_column(f"earth_{mk}.bin", "land_index") for mk in ("rover", "solar", "lunar_base")}
+
+
 # ------------------------------------------------------------------ the five shown (user: they must be there)
 for mk in M:
     t5 = M[mk]["top5"]
     exids = {r["id"] for r in E[mk]}
     rk = b.int_column(f"earth_{mk}.bin", "rank")
-    ranks = [int(rk[np.where(ids == i)[0][0]]) for i in t5["ids"]]
+    ranks = [int(rk[np.where(ids[LI[mk]] == i)[0][0]]) for i in t5["ids"]]
     chk(mk, "top5.ids", "five analogs published, each in explain.json, ranks as overall_ranks",
         len(t5["ids"]) == 5 and all(i in exids for i in t5["ids"]) and ranks == t5["overall_ranks"],
         f"ids {t5['ids']} ranks {ranks}")
@@ -85,6 +88,7 @@ for mk in M:
 mk = "rover"
 fin = col("earth_rover.bin", "final"); suit = col("earth_rover.bin", "suitability"); sim = col("earth_rover.bin", "similarity")
 rk = b.int_column("earth_rover.bin", "rank")
+pid = ids[LI[mk]]; plat = lat[LI[mk]]; plon = lon[LI[mk]]
 ranked = int(np.sum(rk > 0))
 chk(mk, "ranked_count", "10,337 ranked / paired points", ranked == M[mk]["ranked_count"] == 10337, f"rank>0: {ranked}")
 top = np.nanmax(np.round(fin, 2)); ntie = int(np.sum(np.round(fin, 2) == top))
@@ -96,11 +100,11 @@ ss = RA["rover"]["suitability_saturation"]["per_criterion"]
 chk(mk, "rover_suitability_saturation", "3,291 / 2,144 / 930 at max; ranges 0.500-0.961, 14.61-30.19, 0.707-1.000",
     [ss[v]["n_passing_at_1"] for v in ss] == [3291, 2144, 930] and ss["rough_300m_m"]["tied_group_value_range"] == [14.61, 30.19], "audit per_criterion")
 for name, cell, n in (("Bardenas", 17098, 7046), ("Tabernas", 18897, 7390)):
-    i = np.where(ids == cell)[0][0]
+    i = np.where(pid == cell)[0][0]
     chk(mk, "rover_suitability_saturation", f"{name} number {n:,}, similarity 100.00, suitability",
         int(rk[i]) == n and round(float(sim[i]), 2) == 100.0, f"rank {int(rk[i])} sim {sim[i]:.2f} suit {suit[i]:.2f}")
 # first analog shown as reference
-i = np.where(ids == M[mk]["top5"]["ids"][0])[0][0]
+i = np.where(pid == M[mk]["top5"]["ids"][0])[0][0]
 chk(mk, "rover_suitability_saturation", "first analog shown = number 3, sim 100, suit 100",
     int(rk[i]) == 3 and "against the first analog shown (number 3, similarity 100.00, suitability 100.00)" in txt("rover_suitability_saturation"), f"rank {int(rk[i])}")
 chk(mk, "rover_suitability_saturation", "no stale 'to be examined by the re-audit'",
@@ -136,7 +140,7 @@ chk(mk, "external_validation_rover", "site percentages", not bad, f"mismatch {ba
 pairs = TW["rover"]["twins"]
 tw = b.int_column("earth_rover.bin", "twin")
 mt = {p["id"]: p["not_part_of_similarity"].get("temp_k") for p in pairs}
-et = col("earth_base.bin", "v.temp_k")
+et = col("earth_base.bin", "v.temp_k")[LI[mk]]
 d = [et[i] - mt[tw[i]] for i in np.where(rk > 0)[0] if tw[i] in mt and mt[tw[i]] is not None and np.isfinite(et[i])]
 med = float(np.median(d))
 chk(mk, "known_limitations[2]", "twins colder by a median of about 150 K", abs(med - 150) < 10, f"median {med:.1f} K over {len(d)} pairs")
@@ -144,7 +148,11 @@ chk(mk, "known_limitations[2]", "twins colder by a median of about 150 K", abs(m
 sv = {x["variable"]: x for x in M[mk]["similarity"]["variables"]}
 chk(mk, "known_limitations[1] / weights_why", "slope 50 %, roughness 50 %, tolerances 2 deg / 30 m",
     [sv["slope_deg"]["weight"], sv["roughness_m"]["weight"], sv["slope_deg"]["tolerance"], sv["roughness_m"]["tolerance"]] == [0.5, 0.5, 2.0, 30.0], str({k: (x["weight"], x["tolerance"]) for k, x in sv.items()}))
-sg = {k: x.get("uncertainty_scale", {}).get("sigma") for k, x in sv.items()}
+sg = {}
+for _p, _o in [(None, CFG["real_value_similarity"]["value"]["missions"]["rover"])]:
+    for _v in _o["variables"]:
+        if isinstance(_v.get("uncertainty_scale"), dict):
+            sg[_v["variable"]] = float(_v["uncertainty_scale"]["sigma"])
 chk(mk, "similarity.score / similarity_meaning_real_values / rule_options", "sigma 0.265093 deg and 17.401661 m (0.27 / 17.4 shown)",
     abs(sg["slope_deg"] - 0.265093) < 1e-6 and abs(sg["roughness_m"] - 17.401661) < 1e-6 and "0.265093" in M[mk]["similarity"]["score"], str(sg))
 wv = {x["variable"]: x["weight"] for x in M[mk]["weighted_variables"]}
@@ -156,7 +164,7 @@ chk(mk, "top5_rule_parts", "ice 0 tied / 1,485 ranked; land 13 tied / 671 ranked
     f"Rover 0 of the 254 sites tied at the top and {fr['ranked_ice']:,} of the 10,337" in s and f"Rover {fr['tied_land_lt_half']} of the 254 sites tied at the top and {fr['ranked_land_lt_half']:,}" in s
     and f"{fr['min_sep_of_five_deg']:.1f} degrees apart" in s, "five_rule_exclusions")
 mlat = col("moon_base.bin", "lat") if "lat" in b.columns("moon_base.bin") else None
-nz = int(np.sum(mlat <= -75)) if mlat is not None else None
+nz = int(np.sum(mlat <= -75)) * 360 if mlat is not None else None
 chk(mk, "rover_no_new_variable / known_limitations[6]", "5,400 cells in the Rover lunar zone", nz == 5400, f"moon cells lat<=-75: {nz}")
 # repeated sentences across the rover card
 kl = M[mk]["known_limitations"]
@@ -177,6 +185,7 @@ chk(mk, "zone.name", "no unexplained PSR", "PSR" not in M[mk]["similarity"]["zon
 mk = "solar"
 fin = col("earth_solar.bin", "final"); suit = col("earth_solar.bin", "suitability"); sim = col("earth_solar.bin", "similarity")
 rk = b.int_column("earth_solar.bin", "rank"); fb = b.int_column("earth_solar.bin", "fail_bits")
+pid = ids[LI[mk]]; plat = lat[LI[mk]]; plon = lon[LI[mk]]
 paired = int(np.sum(np.isfinite(sim)))
 chk(mk, "ranked_count / known_limitations[0]", "6,360 pairs", paired == M[mk]["ranked_count"] == 6360, f"similarity present {paired}")
 p99 = float(np.mean(np.round(sim[np.isfinite(sim)], 2) >= 99)); n100 = int(np.sum(np.round(sim[np.isfinite(sim)], 2) == 100))
@@ -190,17 +199,17 @@ cw = wv.get("clear_frac_isccp"); sw = sum(wv.values())
 chk(mk, "solar_suitability_clouds / known_limitations[6]", "clear sky 0.35 of 0.70 = 50 %", abs(cw - 0.35) < 1e-9 and abs(sw - 0.70) < 1e-9, str(wv))
 chk(mk, "known_limitations[2]", "criteria clear sky 0.35, slope 0.15, swing 0.1, roughness 0.1",
     sorted(wv.values(), reverse=True) == [0.35, 0.15, 0.1, 0.1], str(wv))
-cf = col("earth_base.bin", "v.clear_frac_isccp")
-miss = np.where((fb == 0) & ~np.isfinite(cf))[0]
-j = [k for k in miss if abs(lat[k] + 4.5) < 1e-6 and abs(lon[k] - 122.5) < 1e-6]
+cf = col("earth_base.bin", "v.clear_frac_isccp")[LI[mk]]
+miss = np.where(~np.isfinite(cf))[0]
+j = [k for k in miss if abs(plat[k] + 4.5) < 1e-6 and abs(plon[k] - 122.5) < 1e-6]
 chk(mk, "solar_suitability_clouds", "3 passing points without cloud value; 4.5 S 122.5 E number 16, suitability 96.23, not in five",
-    len(miss) == 3 and j and int(rk[j[0]]) == 16 and round(float(suit[j[0]]), 2) == 96.23 and int(ids[j[0]]) not in M[mk]["top5"]["ids"],
+    len(miss) == 3 and j and int(rk[j[0]]) == 16 and round(float(suit[j[0]]), 2) == 96.23 and int(pid[j[0]]) not in M[mk]["top5"]["ids"],
     f"{len(miss)} missing; cell rank {int(rk[j[0]]) if j else None} suit {suit[j[0]]:.2f}" if j else f"{len(miss)}")
-lst = col("earth_base.bin", "v.lst_diurnal_amp_k")
-nl = np.where((fb == 0) & ~np.isfinite(lst))[0]
+lst = col("earth_base.bin", "v.lst_diurnal_amp_k")[LI[mk]]
+nl = np.where(~np.isfinite(lst))[0]
 chk(mk, "known_limitations[3]", "6,060 passing without LST, all at 64.5 S or south, none with a twin",
-    len(nl) == 6060 and float(np.max(lat[nl])) <= -64.5 and not np.any(np.isfinite(sim[nl])), f"{len(nl)}, max lat {np.max(lat[nl])}")
-pl = lat[np.isfinite(sim)]
+    len(nl) == 6060 and float(np.max(plat[nl])) <= -64.5 and not np.any(np.isfinite(sim[nl])), f"{len(nl)}, max lat {np.max(plat[nl])}")
+pl = plat[np.isfinite(sim)]
 chk(mk, "known_limitations[1]", "only points within about 33.5 deg find a twin; tolerance 0.6", abs(float(np.max(np.abs(pl))) - 33.5) < 0.6
     and M[mk]["similarity"]["variables"][0]["tolerance"] == 0.6, f"max |lat| paired {np.max(np.abs(pl))}")
 sv = [x["weight"] for x in M[mk]["similarity"]["variables"]]
@@ -223,7 +232,7 @@ for site in vs["sites"]:
     if site["role"] != "positive" or not site["passes"]:
         continue
     nm = site["name"].split(" (")[0]
-    i = np.where(ids == int(site["cell"][1:]))[0][0]
+    i = np.where(pid == int(site["cell"][1:]))[0][0]
     if np.isfinite(sim[i]) and f"{nm} (number {int(rk[i]):,})" not in s:
         bad.append((nm, int(rk[i])))
 chk(mk, "external_validation_solar", "station ranks as in the bundle", not bad, f"mismatch {bad}" if bad else "earth_solar.bin rank of each station cell")
@@ -242,8 +251,8 @@ fin = col("earth_lunar_base.bin", "final"); sim = col("earth_lunar_base.bin", "s
 rk = b.int_column("earth_lunar_base.bin", "rank"); fb = b.int_column("earth_lunar_base.bin", "fail_bits")
 paired = int(np.sum(np.isfinite(sim))); passing = int(np.sum(fb == 0))
 chk(mk, "external_validation_lunar_base / criteria", "450 paired, 2,419 passing", paired == 450 == M[mk]["ranked_count"] and passing == 2419, f"{paired}, {passing}")
-pf = col("earth_base.bin", "v.permafrost_class")
-npf = int(np.sum((fb == 0) & ~np.isfinite(pf)))
+pf = col("earth_base.bin", "v.permafrost_class")[LI[mk]]
+npf = int(np.sum(~np.isfinite(pf)))
 chk(mk, "lunar_base_criteria / deviations", "permafrost missing on 607 of 2,419", npf == 607, f"{npf}")
 wv = [x["weight"] for x in M[mk]["weighted_variables"]]
 chk(mk, "lunar_base_criteria / known_limitations[7]", "weights 0.35/0.25/0.25/0.10 sum 0.95 -> 36.8/26.3/26.3/10.5",
@@ -285,6 +294,17 @@ for k in T:
 pend = [(p, t_[:140]) for p, t_ in list(walk(b.json("missions.json"))) if re.search(r"\bpending\b", t_)]
 chk("shared", "alpha_why / not_used_by_engine.why / rover known_limitations[0]", "'pending' still stated as an open question",
     True, f"{len(pend)} strings say 'pending' (team confirmation of alpha 0.5, domain weights, Robotics 1 thresholds): open questions, not stale figures")
+
+# ------------------------------------------------------------------ faults found in this pass (fixed at source)
+chk("rover", "similarity.score / real_value.score_by_mission.rover", "the sigma pointer names a field that exists",
+    "(similarity.variables[].uncertainty_scale.sigma)" not in M["rover"]["similarity"]["score"]
+    and not any("uncertainty_scale" in v for v in M["rover"]["similarity"]["variables"]) and "engine_config.json real_value_similarity" in M["rover"]["similarity"]["score"],
+    "missions.json similarity.variables[] has no uncertainty_scale; sigma lives in engine_config.json real_value_similarity")
+for mk_ in M:
+    w_ = M[mk_]["not_used_by_engine"]["why"]
+    chk(mk_, "not_used_by_engine.why", "similarity is not weighted with the soft weights",
+        "with the mission's soft weights" not in w_ and "pending team confirmation" not in w_,
+        f"similarity weights {[x['weight'] for x in M[mk_]['similarity']['variables']]} vs soft {[x['weight'] for x in M[mk_]['weighted_variables']]}")
 
 out = {"texts_read": texts_read, "checks": rows,
        "faults": [r for r in rows if r["verdict"] == "FAULT"]}
