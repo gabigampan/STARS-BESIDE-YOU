@@ -1,5 +1,7 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { mediaIndexPlugin } from './scripts/mediaIndex.ts';
 
 const cesiumBuild = 'node_modules/cesium/Build/Cesium';
 // Where Cesium's workers, textures and star map are served from (relative to the page).
@@ -17,6 +19,7 @@ export default defineConfig(({ mode }) => {
       ...(useIon ? {} : { 'import.meta.env.VITE_CESIUM_ION_TOKEN': JSON.stringify('') }),
     },
     plugins: [
+      mediaIndexPlugin(fileURLToPath(new URL('./public', import.meta.url))),
       viteStaticCopy({
         targets: [
           { src: `${cesiumBuild}/Workers`, dest: CESIUM_BASE, rename: { stripBase: 4 } },
