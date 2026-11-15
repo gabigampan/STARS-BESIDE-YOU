@@ -1018,6 +1018,9 @@ def verify_tracks(tracks: Dict[str, Dict[str, Any]], M: Dict[str, Any], texts: D
             ep, mp = pr["earth_place"], pr["moon_place"]
             al[str(ep["distance_km_spoken"])] = "nearest_place_km rounded once from the stored float32"
             al[str(mp["distance_km_spoken"])] = "feature_km rounded once from the stored float32"
+            if mid == "lunar_base":
+                for tok in NUM_RE.findall(mp["nasa_region_phrase"]):
+                    al[norm_num(tok)] = "part of NASA's official region name (twins.json nasa_region, on screen)"
             al[screen_num(abs(ep["cell_centre_lat"]), 1)] = "cell centre latitude (on screen)"
             al[screen_num(abs(ep["cell_centre_lon"]), 1)] = "cell centre longitude (on screen)"
             for s, v in pr["on_screen_scores"].items():

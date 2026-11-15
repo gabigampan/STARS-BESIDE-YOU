@@ -129,6 +129,7 @@ def external_validation(res, earth_ids: np.ndarray, cfg: Dict[str, Any], mcfg: D
 
 def _site_name(name: str) -> str:
     """Short site name: a second trailing parenthesis (a locality) is dropped."""
+    name = re.sub(r"\s*\(BSRN [A-Z]+\)$", "", name)
     return re.sub(r"\s*\([^()]*\)$", "", name) if name.count("(") > 1 else name
 
 
@@ -232,14 +233,26 @@ def stability_sentence(mid: str, top5_ids: List[int], cfg: Dict[str, Any]) -> Di
         return {"text": cfg["pending_sentence"], "status": "pending", "reason": reason, "source": None}
     per = [cfg["per_analog"].replace("{n}", str(k + 1)).replace("{top5}", fmt_pct(a)).replace("{top20}", fmt_pct(b))
            for k, (a, b) in enumerate(zip(e["in_top5_share"], e["in_top20_share"]))]
+    rep = e.get("five_repeat_share")
     text = fill(cfg["sentence"], {"simulations": fmt_int(e["simulations"]), "per_analog": "; ".join(per),
-                                  "survivors": e["weights_pm10_survivors"], "count": len(top5_ids)})
+                                  "survivors": e["weights_pm10_survivors"], "count": len(top5_ids),
+                                  "repeat": (cfg["repeat_sentence"].replace("{repeat_n}", fmt_int(round(rep * e["simulations"])))
+                                             .replace("{simulations}", fmt_int(e["simulations"])) if rep is not None else "")})
     return {"text": text, "status": "audited", "reason": None, "source": e["source"]}
 
 
 def _plain(var: str, names: Dict[str, str]) -> str:
     """Plain-words name of a column or criterion for a sentence a user reads."""
     return names.get(var, var.replace("_", " "))
+
+
+def plain_sentence(text: str, names: Dict[str, str]) -> str:
+    """A sentence for a user: column names in plain words, file and test references removed
+    (they stay in the 'source' fields, which the web does not print)."""
+    text = re.sub(r"\s*\([^()]*\.(?:py|md|json|csv)\b[^()]*\)", "", text)
+    for k in sorted(names, key=len, reverse=True):
+        text = re.sub(rf"\b{re.escape(k)}\b", names[k], text)
+    return text
 
 
 def _reasons(codes: List[str], mission_cfg: Dict[str, Any], mid: str, names: Optional[Dict[str, str]] = None) -> str:
@@ -636,21 +649,22 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
                 parts["sep"].append(f"{titles.get(mid, mid)} {fmt_int(n_sep)} points above the fifth one shown")
         return {k: "; ".join(v) or "none" for k, v in parts.items()} | {"deg": f"{deg:g}" if deg is not None else "2"}
     if name == "deviations_table":
+        names = engine_cfg.v("limit_texts").get("plain_names", {})
         rows = []
         for mid, info in applied.items():
             for d in info["deviations"]:
                 def show(x):
                     if x is None:
                         return "not used (weight 0)"
-                    return ", ".join(f"{k} {x[k]:g}" if isinstance(x[k], (int, float)) else f"{k} {x[k]}"
+                    lab = {"weight": "weight {}", "bad": "no marks at {}", "good": "full marks at {}"}
+                    return ", ".join(lab[k].format(f"{x[k]:g}" if isinstance(x[k], (int, float)) else x[k])
                                      for k in ("weight", "bad", "good") if k in x) or "map " + ", ".join(
                         f"{k} {v:g}" for k, v in x.get("map", {}).items())
-                rows.append(f"{engine_cfg.v('mission_titles_short').get(mid, mid)} | {d['criterion']} | {show(d['team'])} | "
-                            f"{show(d['ours'])} | {d['reason']} | {d['source']}")
+                rows.append(f"{engine_cfg.v('mission_titles_short').get(mid, mid)} | {_plain(d['criterion'], names)} | {show(d['team'])} | "
+                            f"{show(d['ours'])} | {plain_sentence(d['reason'], names)}")
         if not rows:
             return None
-        sets = "; ".join(f"{engine_cfg.v('mission_titles_short').get(m, m)}: {i['set']}" for m, i in applied.items())
-        return {"rows": " || ".join(rows), "n": fmt_int(len(rows)), "sets": sets}
+        return {"rows": " || ".join(rows), "n": fmt_int(len(rows))}
     raise ValueError(f"unknown computed limits text {name!r}")
 
 

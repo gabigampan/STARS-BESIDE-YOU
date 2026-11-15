@@ -366,7 +366,7 @@ def weighted_rows(mission_cfg: Dict, mid: str, reg: Dict, sim_vars: List[str]) -
             "levels": {b: e["bodies"][b]["level"] for b in BODIES},
             "weight": spec["weight"], "bad": spec.get("bad"), "good": spec.get("good"),
             "map": spec.get("map"), "default": spec.get("default"), "why": spec.get("why"),
-            "also_in_similarity": var in sim_vars,
+            "also_in_similarity": var in sim_vars,  # a similarity variable read from this column counts (Lunar base: tmin_k from tmin_c)
         })
     return out
 
@@ -456,7 +456,8 @@ def build_missions_v2(ds: Dataset, results: Dict[str, MissionResult], mission_cf
             "on_missing_gate": mission_cfg.get("on_missing_gate"), "require_present": m.get("require_present", []),
             "files": {"EARTH": f"earth_{mid}.bin", "MOON": f"moon_{mid}.bin"},
             "gates": gate_rows(mission_cfg, mid, reg, engine_cfg),
-            "weighted_variables": weighted_rows(mission_cfg, mid, reg, list(res.sim_vars)),
+            "weighted_variables": weighted_rows(mission_cfg, mid, reg, list(res.sim_vars) + [
+                ((v.get("sides") or {}).get("EARTH") or {}).get("column") for v in (sim_block.get("variables") or [])]),
             "reason_codes": reason_entries_v2(codes[mid], mission_cfg, mid, engine_cfg, reg),
             "pass_counts": {"EARTH": int(passing.sum()), "EARTH_LAND_CELLS": int(land.sum()),
                             "MOON": int(res.moon_gates.passed.sum()), "MOON_CELLS": int(len(res.moon_gates.passed))},
