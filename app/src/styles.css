@@ -839,3 +839,102 @@ kbd.key {
   border-bottom-width: 2px;
   border-radius: 3px;
 }
+
+/* ---------- phones: a compact header so that the globes keep their room ---------- */
+@media (max-width: 899px) {
+  .topbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+  }
+  .brand-name {
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  .brand-line {
+    display: none;
+  }
+  .topbar-tools {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .switches {
+    order: 5;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+  .switch {
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .topbar-tools > .btn {
+    padding: 0 10px;
+  }
+  .caption {
+    padding: 2px 12px 4px;
+  }
+  .caption-head {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .caption-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .caption-state {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .caption-repeat {
+    flex: none;
+    padding: 0 10px;
+  }
+  .caption-text {
+    max-height: 2.9em;
+  }
+}
+@media (max-height: 500px) and (max-width: 950px) {
+  /* phone in landscape: one header row, the caption in one line */
+  .switches {
+    order: 0;
+    flex: 0 1 auto;
+  }
+  .caption-text {
+    max-height: 1.45em;
+  }
+}
+@media (max-width: 520px) {
+  /* the name stays the page heading for screen readers; the row goes to the controls */
+  .brand {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .topbar-tools {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 520px) {
+  .switch {
+    padding: 0 6px;
+    gap: 4px;
+  }
+  .switch-track {
+    width: 32px;
+  }
+  .switch[aria-checked='true'] .switch-thumb {
+    transform: translateX(10px);
+  }
+  .switch-state {
+    min-width: 1.7em;
+  }
+}

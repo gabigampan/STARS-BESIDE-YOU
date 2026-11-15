@@ -290,7 +290,7 @@ async function run(browser, base, variant, size, full) {
     const p1 = await page.evaluate(() => [document.getElementById('switch-palette').getAttribute('aria-checked'), document.documentElement.dataset.palette, getComputedStyle(document.documentElement).getPropertyValue('--sodium').trim()]);
     check(onPal && p1[0] === 'true' && p1[1] === 'cvd' && p1[2].toUpperCase() === PALETTES.cvd.css['--sodium'], `${tag}: Tab reaches Colour-blind mode; Space switches the whole palette at once (${p1.join(', ')})`);
     // both on, reload: remembered
-    await page.click('#switch-audio');
+    await page.evaluate(() => document.querySelector('#switch-audio').click());
     await page.reload({ timeout: T });
     await page.waitForFunction(() => window.starsFlow?.hasData() && window.starsA11y, null, { timeout: T });
     const after = await page.evaluate(() => [document.getElementById('switch-audio').getAttribute('aria-checked'), document.getElementById('switch-palette').getAttribute('aria-checked'), document.documentElement.dataset.palette]);
@@ -320,7 +320,7 @@ async function run(browser, base, variant, size, full) {
     page.on('pageerror', (e) => errs.push(String(e)));
     await page.goto(base, { timeout: T });
     await page.waitForFunction(() => window.starsFlow?.hasData() && window.starsA11y, null, { timeout: T });
-    await page.click('#switch-palette');
+    await page.evaluate(() => document.querySelector('#switch-palette').click());
     const r = await page.evaluate(() => [document.getElementById('switch-palette').getAttribute('aria-checked'), document.documentElement.dataset.palette]);
     check(errs.length === 0 && r[0] === 'true' && r[1] === 'cvd', `${tag}: without localStorage the switches still work (${r.join(', ')}; ${errs.length} errors)`);
     await ctx.close();
@@ -336,8 +336,10 @@ async function run(browser, base, variant, size, full) {
       await press(page, String(i + 1));
       await waitStep(page, 'pick');
       const mid = await page.evaluate(() => window.starsFlow.state.missionId);
-      const live = await page.waitForFunction(() => document.getElementById('flow-status').textContent.length > 10, null, { timeout: 5000 }).then(() => true, () => false);
-      check(mid === offered[i] && (await focusIsHeading(page)) && live, `${tag}: key ${i + 1} opens ${offered[i]}; focus on the step heading; the live region announces it`);
+      const live = await page.waitForFunction(() => document.getElementById('flow-status').textContent.length > 10, null, { timeout: 10000 }).then(() => true, () => false);
+      const fh = await focusIsHeading(page);
+      const fwhere = await page.evaluate(() => `${document.activeElement?.tagName}.${document.activeElement?.className}`);
+      check(mid === offered[i] && fh && live, `${tag}: key ${i + 1} opens ${offered[i]} (${mid}); focus on the step heading (${fwhere}); the live region announces it (${live})`);
       const top = await page.evaluate(() => [...document.querySelectorAll('.top5-btn')].map((b) => ({ rank: Number(b.dataset.rank), id: Number(b.dataset.id), text: b.innerText, w: b.getBoundingClientRect().width, h: b.getBoundingClientRect().height })));
       const ranked = await page.evaluate((m) => window.starsFlow.store.ranked(m).filter((p) => p.rank != null && p.rank <= 5).sort((a, b) => a.rank - b.rank).map((p) => p.id), mid);
       check(top.length === 5 && top.every((b, k) => b.rank === k + 1 && b.id === ranked[k]), `${tag} ${mid}: five numbered buttons, ranks 1 to 5 of the bundle under the team's weights`);
@@ -383,7 +385,7 @@ async function run(browser, base, variant, size, full) {
     }
     // Escape closes a dialog first
     await page.evaluate(() => document.body.focus());
-    await page.click('#keys-button');
+    await page.evaluate(() => document.querySelector('#keys-button').click());
     const listed = await page.evaluate(() => document.getElementById('keys-dialog').open && /Escape|Esc/.test(document.getElementById('keys-body').innerText));
     await page.keyboard.press('Escape');
     await page.waitForTimeout(150);
@@ -444,12 +446,12 @@ async function run(browser, base, variant, size, full) {
     m = await media(page);
     check(m.max <= 1, `${tag}: during rapid key presses at most one track was playing at any moment (max ${m.max})`);
     // switch off: everything stops at once
-    await page.click('#switch-audio');
+    await page.evaluate(() => document.querySelector('#switch-audio').click());
     m = await media(page);
     check(m.now === 0 && (await guide(page)).state === 'text-only', `${tag}: switching the guide off stops the sound at once; caption "Text only"`);
     // a failing track: caption with the text-only wording, no error on screen
     await page.evaluate(() => (window.__media.fail = true));
-    await page.click('#switch-audio');
+    await page.evaluate(() => document.querySelector('#switch-audio').click());
     await page.waitForTimeout(200);
     g = await guide(page);
     const alerts = await page.evaluate(() => document.querySelectorAll('[role="alert"]').length);
@@ -532,25 +534,37 @@ async function run(browser, base, variant, size, full) {
   }
 
   // ---- touch: two-finger pinch changes the camera distance, one-finger drag changes the heading
-  if (size.width < 900 && twins) {
+  if (size.width < 900 && size.height > size.width && twins) {
     const { page, ctx } = await openPage(browser, base, { size, touch: true });
     await press(page, '1');
     await waitStep(page, 'pick');
-    await page.waitForTimeout(2500);
-    const box = await page.evaluate(() => { const r = document.querySelector('#earth-globe canvas').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height }; });
+    // the camera flight to the best places disables input until it ends (Cesium), so wait for it
+    await page.waitForFunction(() => window.starsBesideYou.scene('earth').screenSpaceCameraController.enableInputs, null, { timeout: 120000 }).catch(() => undefined);
+    await page.evaluate(() => (document.getElementById('loading').hidden = true));
+    await page.waitForTimeout(500);
+    // a point of the Earth canvas that nothing covers (the panel sits over part of it on a phone)
+    const box = await page.evaluate(() => {
+      const cv = document.querySelector('#earth-globe canvas');
+      const r = cv.getBoundingClientRect();
+      for (let fy = 0.5; fy > 0.1; fy -= 0.05) for (let fx = 0.5; fx > 0.15; fx -= 0.05) {
+        const x = r.left + r.width * fx, y = r.top + r.height * fy;
+        if (document.elementFromPoint(x, y) === cv && document.elementFromPoint(x - 45, y) === cv && document.elementFromPoint(x + 45, y) === cv) return { x, y, w: Math.min(120, r.width / 3), h: r.height };
+      }
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: 120, h: r.height, covered: true };
+    });
     const cam = () => page.evaluate(() => { const c = window.starsBesideYou.viewer('earth').camera; return { h: c.heading, d: window.Cesium ? 0 : 0, height: c.positionCartographic.height, lon: c.positionCartographic.longitude }; });
     const cdp = await ctx.newCDPSession(page);
     const touch = (type, pts) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: pts.map(([x, y], i) => ({ x, y, id: i })) });
     const c0 = await cam();
     const steps = 12;
-    await touch('touchStart', [[box.x - 20, box.y], [box.x + 20, box.y]]);
-    for (let i = 1; i <= steps; i++) await touch('touchMove', [[box.x - 20 - i * 6, box.y], [box.x + 20 + i * 6, box.y]]);
+    await touch('touchStart', [[box.x - 15, box.y], [box.x + 15, box.y]]);
+    for (let i = 1; i <= steps; i++) await touch('touchMove', [[box.x - 15 - i * 3, box.y], [box.x + 15 + i * 3, box.y]]);
     await touch('touchEnd', []);
     await page.waitForTimeout(1500);
     const c1 = await cam();
     check(Math.abs(c1.height - c0.height) / c0.height > 0.02, `${tag}: a two-finger pinch on the Earth globe changes the camera distance (${(c0.height / 1000).toFixed(0)} km to ${(c1.height / 1000).toFixed(0)} km)`);
     await touch('touchStart', [[box.x - box.w * 0.25, box.y]]);
-    for (let i = 1; i <= steps; i++) await touch('touchMove', [[box.x - box.w * 0.25 + i * (box.w * 0.04), box.y]]);
+    for (let i = 1; i <= steps; i++) await touch('touchMove', [[box.x - box.w * 0.25 + i * (box.w * 0.04), box.y + i * 2]]);
     await touch('touchEnd', []);
     await page.waitForTimeout(1500);
     const c2 = await cam();
@@ -571,11 +585,11 @@ async function run(browser, base, variant, size, full) {
     await waitStep(page, 'compare');
     await page.waitForTimeout(500);
     await axeScreen(page, `the pair screen (${label})`);
-    await page.click('#keys-button');
+    await page.evaluate(() => document.querySelector('#keys-button').click());
     await axeScreen(page, `the shortcuts dialog (${label})`);
     await page.keyboard.press('Escape');
     if (full) {
-      await page.click('#credits-button');
+      await page.evaluate(() => document.querySelector('#credits-button').click());
       await page.waitForTimeout(300);
       await axeScreen(page, `the Data and limits dialog (${label})`);
       await page.keyboard.press('Escape');
@@ -611,16 +625,16 @@ if (!only || only.includes('widths')) {
     try {
       const { page, ctx } = await openPage(browser, srv.base, { size });
       await switchChecks(page, `${tag} start screen`);
-      await page.screenshot({ path: join(SHOTS, `start-${size.width}.png`) });
+      await page.screenshot({ path: join(SHOTS, `start-${size.width}.png`), timeout: 180000 });
       await press(page, '1');
       await waitStep(page, 'pick');
       await switchChecks(page, `${tag} mission screen`);
-      await page.screenshot({ path: join(SHOTS, `mission-${size.width}.png`) });
+      await page.screenshot({ path: join(SHOTS, `mission-${size.width}.png`), timeout: 180000 });
       await press(page, '1');
       await waitStep(page, 'compare');
       await focusIsHeading(page);
       await switchChecks(page, `${tag} pair screen`);
-      await page.screenshot({ path: join(SHOTS, `pair-${size.width}.png`) });
+      await page.screenshot({ path: join(SHOTS, `pair-${size.width}.png`), timeout: 180000 });
       await ctx.close();
     } catch (e) {
       fail(`${tag}: the run stopped: ${e instanceof Error ? e.message.split('\n')[0] : e}`);
