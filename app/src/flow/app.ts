@@ -16,6 +16,7 @@ import { renderSteps, type Step } from './steps';
 import { h } from './dom';
 import { ZoneView } from './zones';
 import { a11y } from '../a11y';
+import { onPalette } from '../a11y/palette';
 import { missionLine, purposeText } from './copy';
 
 export interface RankItem extends RankedPoint {
@@ -44,7 +45,7 @@ export class FlowApp {
   private custom: { scores: MissionScores; items: RankItem[]; rankOf: Map<number, number> } | null = null;
   private recomputeTimes: number[] = [];
   private recomputeSeq = 0;
-  private missionPanel!: MissionPanel;
+  missionPanel!: MissionPanel;
   private readonly status = document.getElementById('flow-status') as HTMLElement;
   private readonly intro = document.getElementById('intro') as HTMLElement;
   private readonly detail = document.getElementById('detail-panel') as HTMLElement;
@@ -61,6 +62,18 @@ export class FlowApp {
     this.missionPanel = new MissionPanel(this, document.getElementById('mission-panel') as HTMLElement);
     this.renderIntro();
     this.updateGuide();
+    // colour-blind mode: every overlay of the globes takes the new palette at once
+    onPalette(() => {
+      if (this.state.missionId && this.state.step !== 'choose') this.updateMarkers();
+      this.zones.repaint();
+      try {
+        (globesApi.focus as unknown as { repaint?: () => void }).repaint?.();
+        globesApi.scene('earth').requestRender();
+        globesApi.scene('moon').requestRender();
+      } catch {
+        /* globes not created */
+      }
+    });
     this.ready = this.start();
   }
 
@@ -579,7 +592,9 @@ export class FlowApp {
       this.viewTopEarth();
     }
     this.missionPanel.render();
-    if (id != null) this.missionPanel.focusRow(id);
+    // a new step: focus on its heading (the row of the pair stays marked in the list)
+    this.missionPanel.focusFirst();
+    void id;
     this.updateGuide();
     const m = this.mission();
     if (m) this.announce(`Back to the ${missionName(m)} mission: its five best analogs and the full ranking.`);

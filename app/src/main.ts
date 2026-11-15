@@ -18,6 +18,7 @@ import { VideoDialog } from './modules/video';
 import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupViewMenu } from './ui/shell';
 import { FlowApp } from './flow/app';
 import { a11y, type A11y } from './a11y';
+import { setupKeys } from './a11y/keys';
 
 declare global {
   interface Window {
@@ -115,6 +116,7 @@ function main(): void {
 function startFlow(): void {
   if (new URLSearchParams(window.location.search).get('flow') === 'off') return;
   window.starsFlow = new FlowApp();
+  setupKeys(window.starsFlow, a11y());
 }
 
 main();

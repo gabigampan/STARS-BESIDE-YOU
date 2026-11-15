@@ -28,11 +28,12 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
     card.append(h('p', { class: 'loading-line', role: 'status' }, h('span', { class: 'spinner', 'aria-hidden': 'true' }), 'Loading the mission data'));
   } else {
     const cur = app.state.missionId;
-    for (const m of app.store.offeredMissions()) {
+    app.store.offeredMissions().forEach((m, i) => {
       const loading = app.loading() === m.id;
       const b = h(
         'button',
-        { type: 'button', class: 'choice', 'data-mission': m.id, 'aria-pressed': cur === m.id ? 'true' : 'false', 'aria-busy': loading ? 'true' : null },
+        { type: 'button', class: 'choice', 'data-mission': m.id, 'aria-pressed': cur === m.id ? 'true' : 'false', 'aria-busy': loading ? 'true' : null, 'aria-keyshortcuts': String(i + 1) },
+        h('span', { class: 'choice-key' }, h('kbd', { class: 'key' }, String(i + 1)), h('span', { class: 'choice-key-text' }, `Press ${i + 1}`)),
         h('span', { class: 'choice-name' }, missionName(m), icon('next')),
         h('span', { class: 'choice-line' }, missionLine(m)),
         h(
@@ -56,8 +57,15 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
         e.preventDefault();
       });
       group.append(b);
-    }
+    });
     card.append(group);
+    card.append(
+      h(
+        'p',
+        { class: 'intro-keys' },
+        'Keyboard: press 1, 2 or 3 to choose a mission, Escape to go back one step, R to repeat the audio guide. All shortcuts are under "Keys" in the header.',
+      ),
+    );
     card.append(
       h(
         'p',

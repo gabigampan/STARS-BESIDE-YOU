@@ -4,12 +4,14 @@
 import { AudioGuide } from './audio';
 import { createSwitch, type SwitchHandle } from './switches';
 import { PREF_AUDIO, PREF_PALETTE } from './prefs';
-import { applyPalette } from './palette';
+import { applyPalette, PALETTES } from './palette';
 
 export class A11y {
   readonly guide: AudioGuide;
   readonly audioSwitch: SwitchHandle;
   readonly paletteSwitch: SwitchHandle;
+  /** Both palettes (for the colour checks of the tests). */
+  readonly palettes = PALETTES;
 
   constructor() {
     this.guide = new AudioGuide(document.getElementById('guide-caption') as HTMLElement);

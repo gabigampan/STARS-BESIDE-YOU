@@ -11,6 +11,7 @@ import {
   PolylineCollection,
   type PerspectiveFrustum,
 } from 'cesium';
+import { palette } from '../a11y/palette';
 import { resetView, type Body, type BodyView, type Globes } from '../scene/globes';
 
 /** A cell footprint in degrees (west/east longitude -180..180, east of west). */
@@ -155,7 +156,15 @@ class CellOutline {
     view.scene.primitives.add(this.lines);
   }
 
+  private last: CellFootprint | undefined;
+
+  /** Draw again with the active palette (colour-blind mode switched). */
+  redraw(): void {
+    this.set(this.last);
+  }
+
   set(cell: CellFootprint | undefined): void {
+    this.last = cell;
     this.lines.removeAll();
     if (cell) {
       const lift = this.view.body === 'earth' ? 400 : 150;
@@ -183,7 +192,7 @@ class CellOutline {
       this.lines.add({
         positions,
         width: 1.5,
-        material: Material.fromType('Color', { color: Color.fromBytes(244, 240, 230, 210) }),
+        material: Material.fromType('Color', { color: Color.fromBytes(...palette().cellLine, 210) }),
       });
     }
     this.view.scene.requestRender();
@@ -220,6 +229,12 @@ export class Focus implements FocusApi {
 
   outline(body: Body, cell: CellFootprint | null): void {
     this.outlines[body].set(cell ?? undefined);
+  }
+
+  /** Redraw the cell outlines in the active palette. */
+  repaint(): void {
+    this.outlines.earth.redraw();
+    this.outlines.moon.redraw();
   }
 
   focusPair(pair: { earth: FocusPoint; moon: FocusPoint }, options: FocusOptions = {}): Promise<boolean> {

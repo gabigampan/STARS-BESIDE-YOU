@@ -1480,3 +1480,97 @@ body.view-open .topbar {
   padding-top: 8px;
   border-top: 1px dashed var(--edge);
 }
+
+/* ---------- keyboard guide: key hints, the five best analogs, shortcuts (src/a11y/keys.ts) ---------- */
+
+.choice-key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.choice-key .key {
+  font-size: 1.05em;
+  min-width: 1.9em;
+}
+.intro-keys {
+  margin-top: 12px;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5 h3 {
+  margin: 0 0 4px;
+}
+.top5-note {
+  margin-bottom: 8px;
+}
+.top5-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.top5-btn {
+  width: 100%;
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.top5-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--sodium);
+}
+.top5-key {
+  font-size: 1.15em;
+  min-width: 2em;
+}
+.top5-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.top5-place {
+  font-weight: 600;
+}
+.top5-twin {
+  font-size: var(--step--1);
+  color: var(--text-dim);
+}
+.top5-score {
+  display: grid;
+  justify-items: end;
+}
+.top5-score-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.top5-score-val {
+  font: 600 var(--step-1) / 1 var(--font-head);
+}
+.keys-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--step--1);
+}
+.keys-table th,
+.keys-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--edge);
+  vertical-align: top;
+}
+.keys-table td:first-child {
+  white-space: nowrap;
+}

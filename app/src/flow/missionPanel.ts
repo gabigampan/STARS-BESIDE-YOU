@@ -273,7 +273,7 @@ export class MissionPanel {
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, details, ranking, about, elim, funnel, levelLegend()));
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, this.topFive(m), details, ranking, about, elim, funnel, levelLegend()));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
@@ -329,10 +329,57 @@ export class MissionPanel {
   }
 
   /** Keyboard focus on the main action of this screen: the first ranked place. */
+  /** A new step: keyboard focus goes to its heading (the five best analogs follow it). */
   focusFirst(): void {
-    const row = this.listEl?.querySelector<HTMLElement>('.rank-row');
-    if (row) row.focus({ preventScroll: true });
-    else (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus();
+    (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus({ preventScroll: true });
+  }
+
+  /**
+   * The five best analogs of the mission under the TEAM's weights (read from the bundle at run time):
+   * five large numbered buttons, keys 1 to 5; each opens the comparison of that pair.
+   */
+  topFiveItems(m: Mission): RankItem[] {
+    return this.app.store
+      .ranked(m.id)
+      .filter((p) => p.rank != null && p.rank <= 5)
+      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
+      .map((p) => ({ ...p, place: this.app.placeText(p.id) }));
+  }
+
+  private topFive(m: Mission): HTMLElement {
+    const items = this.topFiveItems(m);
+    const twins = this.app.missionHasTwins(m);
+    const sec = h('section', { class: 'panel-sec top5', 'aria-labelledby': 'top5-title' });
+    sec.append(
+      h('h3', { id: 'top5-title' }, `The ${items.length === 5 ? 'five' : items.length} best ${twins ? 'analogs' : 'places'}`),
+      h(
+        'p',
+        { class: 'muted top5-note' },
+        this.app.usingCustom()
+          ? "These are the team's top five, ranked with the team's weights. Your own weights are in use in the full ranking below, so its order differs."
+          : `Ranked with the team's weights. Press a number from 1 to ${items.length} to open one.`,
+      ),
+    );
+    const ol = h('ol', { class: 'top5-list' });
+    for (const it of items) {
+      const tw = this.twinWords(it);
+      const b = h(
+        'button',
+        { type: 'button', class: 'top5-btn', 'data-id': String(it.id), 'data-rank': String(it.rank), 'aria-keyshortcuts': String(it.rank) },
+        h('kbd', { class: 'key top5-key', 'aria-hidden': 'true' }, String(it.rank)),
+        h(
+          'span',
+          { class: 'top5-text' },
+          h('span', { class: 'top5-place' }, h('span', { class: 'sr-only' }, `Analog ${it.rank}: `), it.place),
+          tw ? h('span', { class: 'top5-twin' }, tw.replace(/^Moon: /, 'Lunar twin: ')) : null,
+        ),
+        h('span', { class: 'top5-score' }, h('span', { class: 'top5-score-label' }, 'Final score'), h('span', { class: 'top5-score-val' }, it.final != null ? fixed(it.final, 2) : '–')),
+      );
+      b.addEventListener('click', () => void this.app.select(it.id));
+      ol.append(h('li', null, b));
+    }
+    sec.append(ol);
+    return sec;
   }
 
   renderList(): void {
