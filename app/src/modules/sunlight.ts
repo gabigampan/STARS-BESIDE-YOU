@@ -59,14 +59,10 @@ export class Sunlight implements SunlightApi {
     const time = params.get('time');
     const light = params.get('light');
     const ms = time ? Date.parse(time) : NaN;
-    if (Number.isFinite(ms)) {
-      this.linkTime = JulianDate.fromDate(new Date(ms));
-      this.apply('link', true);
-    } else if (light === 'now' || light === 'even' || light === 'full-moon') {
-      this.apply(light, true);
-    } else {
-      this.apply('full-moon', true);
-    }
+    // the team lead's ruling: one fixed, even lighting on both globes (no sunlight options)
+    void ms;
+    void light;
+    this.apply('even', true);
   }
 
   mode(): SunlightMode {

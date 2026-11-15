@@ -30,7 +30,8 @@ export function renderSteps(nav: HTMLElement, m: StepsModel): void {
     const state = i === ci ? 'current' : i < ci ? 'done' : 'todo';
     const marker = h('span', { class: 'step-num', 'aria-hidden': 'true' }, state === 'done' ? icon('check') : String(i + 1));
     const text = h('span', { class: 'step-label' }, it.label);
-    const sr = h('span', { class: 'sr-only' }, state === 'current' ? ' (current step)' : state === 'done' ? ' (done)' : '');
+    // the current step is announced by aria-current; no extra "(current step)" text
+    const sr = h('span', { class: 'sr-only' }, state === 'done' ? ' (done)' : '');
     let el: HTMLElement;
     if (state !== 'current' && it.reachable) {
       el = h('button', { type: 'button', class: 'step-btn' }, marker, text, sr);
@@ -38,6 +39,5 @@ export function renderSteps(nav: HTMLElement, m: StepsModel): void {
     } else el = h('span', { class: 'step-btn', 'aria-current': state === 'current' ? 'step' : null }, marker, text, sr);
     ol.append(h('li', { class: `step is-${state}` }, el));
   });
-  const where = h('p', { class: 'steps-where' }, `Step ${ci + 1} of ${items.length}`, m.missionName ? h('span', { class: 'steps-mission' }, ` · ${m.missionName} mission`) : null);
-  nav.replaceChildren(where, ol);
+  nav.replaceChildren(ol);
 }

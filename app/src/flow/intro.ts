@@ -2,8 +2,8 @@
 // selector as the main action: exactly the missions the bundle offers, in its order.
 
 import type { FlowApp } from './app';
-import { AUDIENCE, missionLine, purposeText, missionName, statusWords } from './copy';
-import { button, h, icon, int } from './dom';
+import { AUDIENCE, missionLine, purposeText, missionName } from './copy';
+import { button, h, icon } from './dom';
 
 export function renderIntro(root: HTMLElement, app: FlowApp): void {
   const hadFocus = root.contains(document.activeElement) ? (document.activeElement as HTMLElement).dataset.mission : undefined;
@@ -22,8 +22,8 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
   }
   const ready = app.hasData();
   const legendId = 'choose-legend';
-  const group = h('div', { class: 'choices', role: 'group', 'aria-labelledby': legendId });
-  card.append(h('p', { class: 'intro-cta', id: legendId }, 'Choose a mission to start'));
+  const group = h('div', { class: 'choices', role: 'group', 'aria-label': 'Choose a mission' });
+  void legendId;
   if (!ready) {
     card.append(h('p', { class: 'loading-line', role: 'status' }, h('span', { class: 'spinner', 'aria-hidden': 'true' }), 'Loading the mission data'));
   } else {
@@ -33,19 +33,11 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
       const b = h(
         'button',
         { type: 'button', class: 'choice', 'data-mission': m.id, 'aria-pressed': cur === m.id ? 'true' : 'false', 'aria-busy': loading ? 'true' : null, 'aria-keyshortcuts': String(i + 1) },
-        h('span', { class: 'choice-key' }, h('kbd', { class: 'key' }, String(i + 1)), h('span', { class: 'choice-key-text' }, `Press ${i + 1}`)),
+        h('span', { class: 'choice-key' }, h('kbd', { class: 'key', title: `Key ${i + 1}` }, String(i + 1))),
         h('span', { class: 'choice-name' }, missionName(m), icon('next')),
         h('span', { class: 'choice-line' }, missionLine(m)),
-        h(
-          'span',
-          { class: 'choice-meta' },
-          loading ? h('span', { class: 'spinner', 'aria-hidden': 'true' }) : null,
-          loading
-            ? 'Loading'
-            : app.store.hasTwins(m.id) && m.ranked_count < m.pass_counts.EARTH
-              ? `${int(m.ranked_count)} with a lunar twin, of ${int(m.pass_counts.EARTH)} places that pass · ${statusWords(m).toLowerCase()}`
-              : `${int(m.pass_counts.EARTH)} places pass · ${statusWords(m).toLowerCase()}`,
-        ),
+        // only a loading sign here; the counts and threshold status are in the mission panel and "Data, limits and credits"
+        loading ? h('span', { class: 'choice-meta' }, h('span', { class: 'spinner', 'aria-hidden': 'true' }), 'Loading') : null,
       );
       b.addEventListener('click', () => void app.chooseMission(m.id));
       b.addEventListener('keydown', (e) => {
@@ -59,19 +51,19 @@ export function renderIntro(root: HTMLElement, app: FlowApp): void {
       group.append(b);
     });
     card.append(group);
+
+    // the method's small print, folded (the full account is in "Data, limits and credits")
     card.append(
       h(
-        'p',
-        { class: 'intro-keys' },
-        'Keyboard: press 1, 2 or 3 to choose a mission, Escape to go back one step, R to repeat the audio guide. All shortcuts are under "Keys" in the header.',
-      ),
-    );
-    card.append(
-      h(
-        'p',
-        { class: 'intro-foot' },
-        `${app.cellSizeText()} `,
-        h('span', { 'data-verbatim': app.hasData() && !app.store.hasTwins() ? 'no_twin_reason' : null }, app.ruleText()),
+        'details',
+        { class: 'intro-more' },
+        h('summary', null, 'About the data'),
+        h(
+          'p',
+          { class: 'intro-foot' },
+          `${app.cellSizeText()} `,
+          h('span', { 'data-verbatim': app.hasData() && !app.store.hasTwins() ? 'no_twin_reason' : null }, app.ruleText()),
+        ),
       ),
     );
   }

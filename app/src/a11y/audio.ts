@@ -66,7 +66,6 @@ export class AudioGuide {
   /** audio/pending.json: tracks whose new text is in transcripts.json while the MP3 is still the old one. */
   private pending = new Set<string>();
   private expanded = false;
-  private foldStart = false;
   private readonly moreBtn: HTMLButtonElement;
   private step: GuideStep | null = null;
   private state: CaptionState = 'text-only';
@@ -107,7 +106,8 @@ export class AudioGuide {
     this.moreBtn.className = 'btn btn-small caption-more';
     this.moreBtn.setAttribute('aria-controls', 'caption-text');
     this.moreBtn.addEventListener('click', () => this.setExpanded(!this.expanded));
-    head.append(this.titleEl, this.stateEl, this.moreBtn, this.repeatBtn);
+    // one short line: the track's name, its state, and "Text" that opens the transcript on demand (R repeats; no button)
+    head.append(this.titleEl, this.stateEl, this.moreBtn);
     this.textEl = document.createElement('p');
     this.textEl.className = 'caption-text';
     this.textEl.id = 'caption-text';
@@ -118,8 +118,9 @@ export class AudioGuide {
     // the whole caption is always shown (never clipped); "Show less" folds it on request
     // exception: a phone on its side folds the welcome caption so that the mission cards fit the first
     // screen ("Full text" unfolds it); every later step, and the guide when it speaks, show it whole
-    this.foldStart = !this.enabled && (window.matchMedia?.('(max-height: 500px) and (min-aspect-ratio: 1/1)').matches ?? false);
-    this.setExpanded(!this.foldStart);
+    // the transcript stays folded until asked for; the whole line is shown only while the guide is on
+    this.setExpanded(false);
+    root.hidden = !this.enabled;
 
     this.el.addEventListener('playing', () => this.setState('playing'));
     this.el.addEventListener('pause', () => {
@@ -150,6 +151,14 @@ export class AudioGuide {
     this.manifest = m && Array.isArray(m.tracks) ? m : null;
     this.transcripts = t && typeof t === 'object' ? t : null;
     if (this.step) this.render();
+  }
+
+  /** Every track's caption (transcripts.json), in the order of tracks.json, for "Data, limits and credits". */
+  allTranscripts(): { file: string; text: string }[] {
+    const t = this.transcripts;
+    if (!t) return [];
+    const files = this.manifest?.tracks.map((x) => x.file) ?? Object.keys(t);
+    return files.filter((f) => typeof t[f] === 'string').map((f) => ({ file: f, text: t[f] }));
   }
 
   isEnabled(): boolean {
@@ -184,10 +193,7 @@ export class AudioGuide {
 
   /** Enter a new step: stop whatever sounds, show its caption, and play its track when the guide is on. */
   setStep(step: GuideStep): void {
-    if (this.foldStart && step.title !== 'Welcome') {
-      this.foldStart = false;
-      this.setExpanded(true);
-    }
+
     const same = !!step.track && this.step?.track?.file === step.track.file && (this.state === 'playing' || this.state === 'loading');
     this.step = step;
     if (same) {
@@ -206,13 +212,15 @@ export class AudioGuide {
     this.expanded = on;
     this.root.dataset.expanded = String(on);
     this.moreBtn.setAttribute('aria-expanded', String(on));
-    this.moreBtn.textContent = on ? 'Show less' : 'Full text';
-    this.moreBtn.setAttribute('aria-label', on ? 'Show less of the guide text' : 'Full text of the guide');
+    this.moreBtn.textContent = on ? 'Hide text' : 'Text';
+    this.moreBtn.setAttribute('aria-label', on ? 'Hide text of the audio guide' : 'Text of the audio guide');
+    this.textEl.hidden = !on;
   }
 
   setEnabled(on: boolean): void {
     this.enabled = on;
-    if (on) this.setExpanded(true);
+    this.root.hidden = !on;
+    if (!on) this.setExpanded(false);
     if (!on) {
       this.stop();
       this.setState('text-only');
@@ -294,7 +302,7 @@ export class AudioGuide {
 
   private render(): void {
     const s = this.step;
-    this.titleEl.textContent = s ? `Guide: ${s.title}` : 'Guide';
+    this.titleEl.textContent = s ? `Audio guide: ${s.title}` : "Audio guide";
     this.textEl.textContent = this.captionText();
     this.root.dataset.source = s?.track && this.transcripts && typeof this.transcripts[s.track.file] === 'string' ? 'transcript' : 'screen';
     this.setState(this.state);

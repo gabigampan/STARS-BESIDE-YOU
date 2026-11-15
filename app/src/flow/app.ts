@@ -681,6 +681,10 @@ export class FlowApp {
     const zp = m ? this.zones.control(m, 'zone-why-panel') : null;
     slot?.replaceChildren(...(zp ? [zp] : []));
     this.updateEarthNote();
+    // the marker legends of both globes, in the panel instead of over the globes
+    const ms = document.querySelector('#mission-panel [data-slot="markers"]');
+    const earth = document.getElementById('earth-rule');
+    ms?.replaceChildren(...[earth, this.moonNote].flatMap((el) => (el ? [...el.querySelectorAll(':scope > p')].map((p) => p.cloneNode(true)) : [])));
   }
 
   /** The Earth-side legend of the markers (what size, brightness and the numbers mean). */
