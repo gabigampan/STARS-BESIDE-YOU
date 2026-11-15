@@ -167,6 +167,99 @@ for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
   }
   await ctx.close();
 }
+// ---------- F: no two visible touch targets closer than 8 px (same rule as tests/flow.mjs) ----------
+// start, mission and pair steps; phones with the sheet unfolded and folded; desktop with "Full ranking" open
+const tightPairs = (page) =>
+  page.evaluate(() => {
+    const vis = (el) => el && el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+    const targets = [...document.querySelectorAll('button, a[href], input:not([type=radio]), select, summary, label.seg')].filter((el) => {
+      if (!vis(el) || el.disabled || el.closest('.sr-only')) return false;
+      const r = el.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return false;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      if (cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight) return false;
+      const top = document.elementFromPoint(cx, cy);
+      return !!top && (el.contains(top) || top.contains(el) || top.closest('label') === el);
+    });
+    const nameOf = (el) => (el.id ? '#' + el.id + ' ' : '') + (el.textContent || el.getAttribute('aria-label') || el.tagName || '').trim().slice(0, 25);
+    const out = [];
+    const rs = targets.map((el) => [el, el.getBoundingClientRect()]);
+    for (let i = 0; i < rs.length; i++)
+      for (let j = i + 1; j < rs.length; j++) {
+        const [a, ra] = rs[i], [b, rb] = rs[j];
+        if (a.contains(b) || b.contains(a)) continue;
+        const d = Math.max(Math.max(0, rb.left - ra.right, ra.left - rb.right), Math.max(0, rb.top - ra.bottom, ra.top - rb.bottom));
+        if (d < 8 - 0.5) out.push(`${nameOf(a)} | ${nameOf(b)} (${d.toFixed(1)} px)`);
+      }
+    return out;
+  });
+// smallest gap between any visible element matching selA and any matching selB (null when none is visible)
+const gapOf = (page, selA, selB) =>
+  page.evaluate(([x, y]) => {
+    const shown = (s) => [...document.querySelectorAll(s)].filter((e) => e.getClientRects().length && e.checkVisibility({ checkVisibilityCSS: true }));
+    let best = null;
+    for (const a of shown(x))
+      for (const b of shown(y)) {
+        const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        const d = Math.round(Math.max(Math.max(0, rb.left - ra.right, ra.left - rb.right), Math.max(0, rb.top - ra.bottom, ra.top - rb.bottom)) * 10) / 10;
+        best = best == null ? d : Math.min(best, d);
+      }
+    return best;
+  }, [selA, selB]);
+for (const [w, h] of [[1440, 900], [1366, 768], [375, 812], [812, 375], [667, 375]]) {
+  const phone = w < 900;
+  const ctx = await browser.newContext(phone ? { viewport: { width: w, height: h }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 } : { viewport: { width: w, height: h } });
+  const page = await ctx.newPage();
+  await page.goto(srv.base);
+  await ready(page);
+  await page.waitForTimeout(800);
+  const sweep = async (view) => {
+    const t = await tightPairs(page);
+    check(t.length === 0, `F ${w}x${h} ${view}: no targets closer than 8 px${t.length ? ': ' + t.slice(0, 6).join('; ') : ''}`);
+  };
+  const folds = async (view) => {
+    await sweep(view + (phone ? ' (sheet unfolded)' : ''));
+    if (!phone || !(await page.locator('#mf-handle').isVisible())) return;
+    const logoGap = await gapOf(page, '.cesium-credit-logoContainer a', '#mf-handle');
+    if (logoGap != null) check(logoGap >= 8, `F ${w}x${h} ${view}: credit logo to sheet handle ${logoGap} px (want >= 8)`);
+    await page.click('#mf-handle');
+    await page.waitForTimeout(400);
+    await sweep(view + ' (sheet folded)');
+    const g2 = await gapOf(page, '.cesium-credit-logoContainer a', '#mf-handle');
+    if (g2 != null) check(g2 >= 8, `F ${w}x${h} ${view} folded: credit logo to sheet handle ${g2} px (want >= 8)`);
+    await page.click('#mf-handle');
+    await page.waitForTimeout(400);
+  };
+  await sweep('start');
+  const [m] = await missionIds(page);
+  await page.click(`#intro .choice[data-mission="${m}"]`);
+  await waitStep(page, 'pick');
+  await page.waitForTimeout(600);
+  await folds('mission');
+  // FAULT 2: "Full ranking" unfolded, "Show 50 more" against the next folded row ("Adjust the weights")
+  const opened = await page.evaluate(() => {
+    const d = document.querySelector('#mission-panel .ranking-box');
+    if (!d) return false;
+    d.open = true;
+    return true;
+  });
+  if (opened) {
+    await page.waitForTimeout(300);
+    await page.evaluate(() => document.getElementById('show-more')?.scrollIntoView({ block: 'center' }));
+    await page.waitForTimeout(200);
+    const g = await gapOf(page, '#show-more', '#mission-panel .weights > summary');
+    check(g != null && g >= 8, `F ${w}x${h} mission, full ranking open: "Show more" to "Adjust the weights" ${g} px (want >= 8)`);
+    await sweep('mission, full ranking open');
+    await page.evaluate(() => { document.querySelector('#mission-panel .ranking-box').open = false; });
+    await page.waitForTimeout(300);
+  }
+  await page.locator('.top5-btn').first().click();
+  await waitStep(page, 'pair');
+  await page.waitForTimeout(800);
+  await folds('pair');
+  await ctx.close();
+}
+
 await browser.close();
 await srv.close?.();
 console.log(failed ? `${failed} check(s) failed` : 'all regression checks passed');

@@ -283,3 +283,22 @@ body.mf-phone .pane .cesium-credit-logoContainer img {
   height: 14px !important;
   width: auto !important;
 }
+
+/* the credit logo's 44x44 hit area (transparent 8 px borders, see styles.css) 8 px or more from the
+   sheet handle: the pill keeps its size and moves up, so it covers no more of the globe */
+body.mf-phone .pane .cesium-widget-credits {
+  bottom: 16px !important;
+}
+body.mf-phone .pane .cesium-credit-logoContainer a {
+  min-height: 44px;
+}
+/* landscape phone: the handle (top of the right column) 8 px or more under the Options button */
+@media (max-height: 480px) and (orientation: landscape) {
+  body.mf-phone.flow[data-step='pick'] .stage,
+  body.mf-phone.flow[data-step='compare'] .stage {
+    grid-template-rows: 54px minmax(0, 1fr);
+  }
+  body.mf-phone.flow:not([data-step='choose']) .mf-handle {
+    margin-top: 6px;
+  }
+}

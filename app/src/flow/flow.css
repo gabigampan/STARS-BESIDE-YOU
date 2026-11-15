@@ -2028,3 +2028,35 @@ body.flow[data-step='choose'] .pane-reset {
     padding-bottom: 4px;
   }
 }
+
+/* at least 8 px between adjacent touch targets in the mission panel (regress check F): the three folded
+   rows sit 8 px apart and after the fifth analog; open, the full ranking keeps 8 px below "Show 50 more" */
+#mission-panel .panel-body {
+  padding-top: 10px; /* "Change mission" 8 px or more under the step row at 1366x768 */
+}
+#mission-panel .panel-sec.weights,
+#mission-panel .ranking-box,
+#mission-panel .method-box {
+  margin-top: 8px;
+}
+#mission-panel .ranking-box[open] {
+  padding-bottom: 8px;
+}
+
+/* "Departures from the team's criteria": on a narrow dialog the table scrolls inside its own region (check G) */
+.criteria-set > [role='region'] {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.criteria-set > [role='region']:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+/* long URLs and unbroken strings in the dialog wrap instead of widening it (check G) */
+#credits-body :is(p, li, dd, dt, a, code, pre) {
+  overflow-wrap: anywhere;
+}
+#credits-body pre {
+  white-space: pre-wrap;
+}

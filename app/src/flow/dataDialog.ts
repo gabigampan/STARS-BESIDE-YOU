@@ -169,12 +169,17 @@ function criteriaTable(store: DataStore, m: Mission): HTMLElement | null {
     { class: 'criteria-set', 'data-criteria': cs.set ?? '' },
     h('p', null, h('strong', null, 'Criteria used: '), cs.title ?? cs.set ?? ''),
     rows.length
-      ? h(
+      ? // phones: the four columns scroll inside their own focusable region, never the dialog (regress check G)
+        h(
+          'div',
+          { role: 'region', tabindex: '0', 'aria-label': `Departures from the team's criteria, ${missionName(m)} mission` },
+          h(
           'table',
           { class: 'keys-table' },
           h('caption', { class: 'sr-only' }, `Departures from the team's criteria, ${missionName(m)} mission`),
           h('thead', null, h('tr', null, h('th', { scope: 'col' }, 'Criterion'), h('th', { scope: 'col' }, "Team's set"), h('th', { scope: 'col' }, 'Used here'), h('th', { scope: 'col' }, 'Why'))),
           h('tbody', null, rows),
+          ),
         )
       : h('p', { class: 'muted' }, "No departure from the team's criteria."),
   );
