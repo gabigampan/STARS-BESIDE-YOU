@@ -412,6 +412,8 @@ def build_limits(ds, results: Dict[str, Any], mission_cfg: Dict[str, Any], engin
         mids = [m for m in t.get("missions", list(results)) if m in results]
         if t.get("missions") and not mids:
             continue
+        if t.get("criteria_set") and any((applied.get(m) or {}).get("set") != t["criteria_set"] for m in mids):
+            continue  # the text describes a criteria set this build does not use
         vals = _computed_figures(kind.split(":", 1)[1], t, results, earth, mission_cfg, engine_cfg, top5, applied) \
             if kind.startswith("computed:") else {}
         if vals is None:
@@ -439,12 +441,16 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
     """Figures of one computed limits text (recomputed at every build; never typed)."""
     if name == "soft_column_percentiles":  # p10 / p90 of a soft column over the mission's passing points
         res = results[t["mission"]]
+        if t["column"] not in earth.columns or t["column"] not in res.earth_suit.utilities:
+            return None
         ok = np.isfinite(res.earth_suit.score)
         v = pd.to_numeric(earth[t["column"]], errors="coerce").to_numpy(dtype=np.float64)[ok]
         fin = np.isfinite(v)
         return {"passing_n": fmt_int(ok.sum()), "missing_n": fmt_int((~fin).sum()),
                 "p10": f"{np.percentile(v[fin], 10):.3f}", "p90": f"{np.percentile(v[fin], 90):.3f}"}
     if name == "site_values":  # a column at named sites (polar stations)
+        if t["column"] not in earth.columns:
+            return None
         rows = _cell_rows(earth, t["sites"])
         col = pd.to_numeric(earth[t["column"]], errors="coerce").to_numpy(dtype=np.float64)
         parts = []
@@ -456,6 +462,8 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
         return {"sites": "; ".join(parts), "gate_min": f"{gmin:g}"}
     if name == "spearman_soft":  # Spearman between two utilities over the passing points
         res = results[t["mission"]]
+        if any(x not in res.earth_suit.utilities for x in t["variables"]):
+            return None
         a, b = (res.earth_suit.utilities[x] for x in t["variables"])
         ok = np.isfinite(a) & np.isfinite(b) & np.isfinite(res.earth_suit.score)
         ra = pd.Series(a[ok]).rank().to_numpy()
