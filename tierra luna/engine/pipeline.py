@@ -341,6 +341,16 @@ def _run_mission_real(mission: str, earth: pd.DataFrame, moon: pd.DataFrame, mis
         "best_gap": full(rt.best_gap), "list_order": order, "info": info, "derived": real["derived"],
         "settings": rv,
     }
+    atm = rv.get("atmosphere_comparison")
+    if atm and atm["variable"] in spec.variables:  # sunlight above vs below Earth's atmosphere
+        toa = dv[atm["variable"]]["EARTH"]
+        ground = pd.to_numeric(earth[atm["ground_column"]], errors="coerce").to_numpy(dtype=np.float64)
+        ok = eg.passed & np.isfinite(toa) & np.isfinite(ground) & (toa > 0)
+        extra["real"]["atm"] = {
+            "ground_kwh_m2_day": np.where(ok, ground, np.nan),
+            "toa_kwh_m2_day": np.where(ok, toa, np.nan),
+            "lost_share": np.where(ok, 1.0 - ground / np.where(ok, toa, 1.0), np.nan),
+        }
     return MissionResult(
         mission=mission, earth_gates=eg, moon_gates=mg, earth_suit=es, soft_vars=svars,
         sim_vars=list(spec.variables), sim_excluded={}, kinds={v: "numeric" for v in spec.variables},

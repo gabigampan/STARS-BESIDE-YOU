@@ -16,7 +16,9 @@ Pair filter: every key variable with d_v <= key_multiplier * tau_v (a missing ke
 fails), every secondary variable with d_v <= secondary_multiplier * tau_v (a missing
 secondary value is left out of the filter and of the similarity, its weight
 renormalised). The twin is the zone cell that passes the filter with the highest
-similarity (ties: lowest lunar id). A cell with no zone cell passing has no twin, no
+similarity (ties: lowest lunar id), compared at full double precision; the published
+per-variable scores are rounded to score_decimals and the published similarity is
+computed from them (so the browser reproduces it exactly). A cell with no zone cell passing has no twin, no
 similarity, no final and no rank; the reason is recorded (which variable and the
 smallest gap found).
 
@@ -201,7 +203,7 @@ def passes_filter(d: np.ndarray, spec: RuleSpec) -> np.ndarray:
 @dataclass
 class RealTwins:
     twin: np.ndarray                  # lunar id, -1 when no pair
-    similarity: np.ndarray            # unrounded similarity from published scores, NaN when no pair
+    similarity: np.ndarray            # similarity from the published scores (unrounded), NaN when no pair
     scores: np.ndarray                # n x k published scores (NaN: no pair or value missing)
     earth_values: np.ndarray          # n x k
     moon_values: np.ndarray           # n x k (NaN when no pair)
@@ -235,7 +237,7 @@ def find_twins(ev: np.ndarray, mv: np.ndarray, zone_ids: np.ndarray, spec: RuleS
         d = np.abs(ev[a:b, None, :] - mv[None, :, :])                # rows x zone x k
         fin = np.isfinite(d)
         ok = passes_filter(d, spec)
-        s = np.where(fin, scores(np.where(fin, d, 0.0), spec.tau, spec.score_decimals), np.nan)
+        s = np.where(fin, np.exp(-0.5 * (np.where(fin, d, 0.0) / spec.tau) ** 2), np.nan)  # full precision
         sv = weighted_similarity(s, fin, spec.weights)
         sv = np.where(ok & np.isfinite(sv), sv, -np.inf)
         j = np.argmax(sv, axis=1)                                     # first maximum = lowest id
@@ -271,10 +273,9 @@ def find_twins(ev: np.ndarray, mv: np.ndarray, zone_ids: np.ndarray, spec: RuleS
     fin = np.isfinite(diff)
     sc = np.where(fin, scores(np.where(fin, diff, 0.0), spec.tau, spec.score_decimals), np.nan)
     sc[~has] = np.nan
-    sim2 = np.where(has, weighted_similarity(sc, fin, spec.weights), np.nan)
-    if not np.array_equal(np.isnan(sim2), np.isnan(sim)) or np.any(sim2[has] != sim[has]):
-        raise AssertionError("twin similarity is not reproduced from the published scores")
-    return RealTwins(twin=twin, similarity=sim, scores=sc, earth_values=ev, moon_values=moon_vals,
+    # published similarity: from the published (rounded) scores, as the browser recomputes it
+    sim_pub = np.where(has, weighted_similarity(sc, fin, spec.weights), np.nan)
+    return RealTwins(twin=twin, similarity=sim_pub, scores=sc, earth_values=ev, moon_values=moon_vals,
                      diff=np.where(has[:, None], diff, np.nan), nopair_kind=nk, nopair_var=nv, nopair_gap=ng,
                      best_gap=best_gap)
 

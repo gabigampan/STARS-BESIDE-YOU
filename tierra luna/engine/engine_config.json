@@ -291,7 +291,19 @@
       "similarity_meaning": {
         "decision": 1,
         "text": "Each Earth point is paired with its lunar twin: the single 1-degree lunar cell, inside the mission's target zone, that holds the most similar relative position on the Moon as the Earth point holds on Earth (slope, roughness, relative elevation and surface temperature, each compared within its own world). A high similarity means 'same place in each world's range', not 'same values': both sets of values are shown side by side.",
-        "where": "wherever a similarity is shown, next to the absolute values of every similarity variable on Earth (earth_base.bin v.<column>) and on the Moon (twins.json values)"
+        "where": "lunar_base only (zone_twin rule): wherever a similarity is shown, next to the absolute values of every similarity variable on Earth (earth_base.bin v.<column>) and on the Moon (twins.json values)",
+        "missions": [
+          "lunar_base"
+        ]
+      },
+      "similarity_meaning_real_values": {
+        "decision": "2026-11-15 morning",
+        "missions": [
+          "rover",
+          "solar"
+        ],
+        "text": "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Both values and their difference are shown side by side.",
+        "where": "rover and solar (real_value_tolerance rule): wherever a similarity is shown, next to each similarity variable's Earth value, lunar value, difference and tolerance (earth_<mission>_pairs.bin '<variable>.earth', '<variable>.moon', '<variable>.diff'; tolerances in missions.json similarity.variables)"
       },
       "rock_note": {
         "decision": 2,
@@ -301,30 +313,89 @@
       "missing_temperature_mark": {
         "decision": 3,
         "text": "no temperature data: similarity computed with 3 variables",
-        "where": "on every pair whose similarity used fewer variables because temperature is missing (earth_<mission>.bin sim_missing_bits has the temp_k bit), in the panel and in the ranking list"
+        "where": "lunar_base only (rover and solar no longer use temperature in the similarity): on every pair whose similarity used fewer variables because temperature is missing (earth_<mission>.bin sim_missing_bits has the temp_k bit), in the panel and in the ranking list",
+        "missions": [
+          "lunar_base"
+        ]
       },
       "missing_temperature_note": {
         "decision": 3,
         "text": "No surface temperature here: the satellite climatology we use does not cover Antarctica. This twin was chosen on relief only (slope, roughness, relative elevation), so its similarity is not comparable with points that include temperature.",
-        "where": "in the panel of those points"
+        "where": "lunar_base only: in the panel of those points",
+        "missions": [
+          "lunar_base"
+        ]
       },
       "twin_sharing_note": {
         "decision": 4,
         "text": "This lunar twin is shared by N Earth points (X % of the ranked points for this mission). The lunar base zone is small (280 cells), cold and rugged, so a few gentle cells are the best match for most places on Earth.",
-        "where": "next to the twin; N = twins.json earth_cells (or moon_<mission>.bin twin_count), X = 100 * N / missions.json ranked_count. The second sentence is about lunar_base; for rover and solar show the first sentence only",
+        "where": "next to the twin; N = twins.json earth_cells (or moon_<mission>.bin twin_count), X = 100 * N / missions.json ranked_count (the paired points). The second sentence is about lunar_base; for rover and solar show the first sentence only",
         "placeholders": {
           "N": "Earth points sharing the twin",
           "X": "their share of the mission's ranked points, in percent"
         }
       },
+      "no_twin_note": {
+        "decision": "2026-11-15 morning",
+        "missions": [
+          "rover",
+          "solar"
+        ],
+        "text": "No lunar analog: no cell of the mission's lunar zone has {variable} within {bound} {unit} of this point (closest: {gap} {unit} away). The point keeps its suitability; it has no similarity and no final score.",
+        "where": "rover and solar: on every passing point without a twin (earth_<mission>.bin twin missing), in the panel and the ranking list (listed after the paired points by suitability)",
+        "placeholders": {
+          "variable": "label of missions.json similarity.variables[k] where k = earth_<mission>_pairs.bin nopair_var",
+          "bound": "that variable's bound (missions.json similarity.variables[k].bound)",
+          "unit": "its unit",
+          "gap": "earth_<mission>_pairs.bin nopair_gap (the smallest gap found), same decimals as the bound"
+        },
+        "variant_no_joint_match": "No lunar analog: every variable alone has a close lunar cell, but no single cell of the zone is within the bounds for all of them at once (closest: {variable} {gap} {unit} away, bound {bound} {unit}). The point keeps its suitability; it has no similarity and no final score.",
+        "variant_note": "use variant_no_joint_match when nopair_kind is 'no_joint_match' (missions.json similarity.nopair_kinds)"
+      },
       "solar_limitation": {
-        "decision": 5,
+        "decision": "2026-11-15 morning",
         "mission": "solar",
-        "text": "Limitation: for solar arrays, the lunar twin is chosen by terrain shape and surface temperature, not by sunlight. The twin lies in the lunar south-polar zone, where Artemis plans to land; it is the best match in relief, but it is about 126 K colder than the Earth point and receives far less energy. Read the pair as 'similar terrain', not 'similar sunlight'.",
-        "where": "the Solar panels mission card (missions.json known_limitations, first item)"
+        "missions": [
+          "solar"
+        ],
+        "mission_card": false,
+        "replaces": "the solar limitation of decision 5 (2026-11-15 night), superseded: the solar twin is no longer chosen by terrain and temperature",
+        "text": "This pair is matched on sunlight above the atmosphere: {toa_earth} kWh/m²/day at the top of Earth's atmosphere here and {toa_moon} kWh/m²/day on the lunar surface. At the Earth site only {ground_earth} of those {toa_earth} kWh/m²/day reach the ground ({loss_pct} % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts {lunar_day} Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion.",
+        "where": "on every solar pair (earth_solar.bin twin present), in the panel next to the twin",
+        "placeholders": {
+          "toa_earth": {
+            "file": "earth_solar_pairs.bin",
+            "column": "atm.toa_kwh_m2_day",
+            "decimals": 1,
+            "meaning": "Earth's sunlight above the atmosphere (DERIVED, toa_insolation)"
+          },
+          "toa_moon": {
+            "file": "earth_solar_pairs.bin",
+            "column": "irradiance_toa_kwh_m2_day.moon",
+            "decimals": 1,
+            "meaning": "lunar surface irradiance of the twin"
+          },
+          "ground_earth": {
+            "file": "earth_solar_pairs.bin",
+            "column": "atm.ground_kwh_m2_day",
+            "decimals": 1,
+            "meaning": "Earth's irradiance at the ground (earth_base.bin v.irradiance_kwh_m2_day)"
+          },
+          "loss_pct": {
+            "file": "earth_solar_pairs.bin",
+            "column": "atm.lost_share",
+            "decimals": 0,
+            "multiply": 100,
+            "meaning": "share of the sunlight above the atmosphere that does not reach the ground at the Earth site, in percent"
+          },
+          "lunar_day": {
+            "filled_at_build": true,
+            "from": "engine_config lunar_day_earth_days, 1 decimal"
+          }
+        }
       }
     },
-    "why": "The English web texts approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; missing_temperature_mark is the short mark the team asked for in answer 3. Exported in similarity.json 'texts'; a text with a 'mission' is also the first item of that mission's missions.json 'known_limitations'."
+    "why": "English web texts. similarity_meaning, rock_note, missing_temperature_mark, missing_temperature_note and twin_sharing_note: approved by the team on 2026-11-15 (answers 1 to 5 to docs/DECISIONS.md), copied verbatim from section 8 of each decision; similarity_meaning and the temperature texts now apply to lunar_base only ('missions'). similarity_meaning_real_values, no_twin_note and solar_limitation: written for the team decision of 2026-11-15 (morning; the delegate's conditions: the meaning must say that similarity is computed on real values within stated tolerances; the solar text says that the pair is matched on sunlight above the atmosphere, how much reaches the ground at the Earth site, that the lunar day lasts 29.5 Earth days and that terrain is secondary, in at most three sentences, and never says or implies that panels charge the same in both places); the solar_limitation of decision 5 is superseded. A text with 'placeholders' is a template the app fills per pair from the named file and column. Exported in similarity.json 'texts'; a text with 'mission' and 'mission_card' not false is also the first item of that mission's missions.json 'known_limitations'."
   },
   "real_value_similarity": {
     "value": {
@@ -512,6 +583,11 @@
           "lst_diurnal_amp_k"
         ],
         "note": "Not part of the similarity: their real values on both sides and the difference are exported per pair for information (the team lead asked at 04:48 to see them)."
+      },
+      "atmosphere_comparison": {
+        "variable": "irradiance_toa_kwh_m2_day",
+        "ground_column": "irradiance_kwh_m2_day",
+        "why": "Team condition of 2026-11-15 (morning): every solar pair also carries the Earth cell's irradiance at the ground and the share lost in the atmosphere (1 - ground / above the atmosphere)."
       }
     },
     "why": "Team decision of 2026-11-15 (morning), given by the team lead's delegate on the team lead's behalf, answering docs/ANALOG_PRINCIPLE.md (docs/DECISIONS.md section 'Decisiones tomadas (15-11-2026, mañana)'). Method (P1-P9 of the team lead, 2026-11-15 04:47-04:49 CET): similarity on real values with a Gaussian score per variable, key variables 80 % of the weight, pair filter key <= tolerance and secondary <= 2 x tolerance. Tolerances: rover slope 2 deg and roughness 30 m are illustrative team values (rover_preset.py version 3, 5 km baseline); relative elevation 500 m and irradiance 0.6 kWh/m2/day were set by the delegate on the team lead's behalf on 2026-11-15. Zones: rover south pole (unchanged), solar the equatorial maria of analog_finder. Temperature 10 K and amplitude 5 K are reference values only and not used. score_decimals = the published precision of the per-variable scores (int32 q / 1e6), so the browser recomputes similarity exactly."
