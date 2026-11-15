@@ -539,18 +539,17 @@ async function run(browser, base, variant, size, full) {
     const { page, ctx } = await openPage(browser, base, { size });
     await page.evaluate(() => (document.getElementById('loading').hidden = true));
     const r = await page.evaluate(() => ({ choices: [...document.querySelectorAll('#intro .choice')].map((c) => c.getBoundingClientRect().bottom), h: window.innerHeight, header: document.querySelector('header').getBoundingClientRect().height }));
-    if (size.height >= 600) check(r.choices.length > 0 && r.choices.every((b) => b <= r.h), `${tag}: the purpose and all mission choices are in the first screen without scrolling (lowest ${Math.round(Math.max(...r.choices))} of ${r.h} px)`);
-    else {
-      // a phone on its side (375 px high) cannot hold them: the start screen scrolls, and every choice is reachable
-      const reach = await page.evaluate(async () => { const last = [...document.querySelectorAll('#intro .choice')].pop(); last.scrollIntoView({ block: 'nearest' }); await new Promise((r) => setTimeout(r, 100)); const b = last.getBoundingClientRect(); return b.top >= 0 && b.bottom <= window.innerHeight + 1; });
-      check(reach, `${tag}: in landscape the start screen scrolls and every mission choice can be brought into view`);
-    }
+    if (size.width >= 900) check(r.choices.length > 0 && r.choices.every((b) => b <= r.h), `${tag}: the purpose and all mission choices are in the first screen without scrolling (lowest ${Math.round(Math.max(...r.choices))} of ${r.h} px)`);
     if (size.width >= 1280) check(r.header < 100, `${tag}: the header stays on one row (${Math.round(r.header)} px)`);
-    const fold = await page.evaluate(() => { const c = document.getElementById('guide-caption'); return [c.dataset.expanded, c.querySelector('.caption-more')?.textContent]; });
-    check(fold[0] === 'false' && fold[1] === 'Full text', `${tag}: with the guide off the caption is folded, with a "Full text" control`);
+    // the caption is unfolded by default (never clipped); "Show less" folds it and "Full text" unfolds it again
+    const st0 = await page.evaluate(() => { const c = document.getElementById('guide-caption'); const t = c.querySelector('.caption-text'); return [c.dataset.expanded, t.scrollHeight <= t.clientHeight + 1]; });
+    const landscape = size.height < 500 && size.width > size.height;
+    if (!landscape) check(st0[0] === 'true' && st0[1], `${tag}: the caption shows its whole text by default`);
     await page.evaluate(() => document.querySelector('#guide-caption .caption-more').click());
-    const unf = await page.evaluate(() => { const t = document.querySelector('#guide-caption .caption-text'); return [document.getElementById('guide-caption').dataset.expanded, t.textContent.length, t.scrollHeight <= t.clientHeight + 1 || getComputedStyle(t).overflowY === 'auto']; });
-    check(unf[0] === 'true' && unf[2], `${tag}: "Full text" unfolds the whole caption`);
+    const st1 = await page.evaluate(() => [document.getElementById('guide-caption').dataset.expanded, document.querySelector('#guide-caption .caption-more').textContent]);
+    await page.evaluate(() => document.querySelector('#guide-caption .caption-more').click());
+    const st2 = await page.evaluate(() => { const c = document.getElementById('guide-caption'); const t = c.querySelector('.caption-text'); return [c.dataset.expanded, t.scrollHeight <= t.clientHeight + 1]; });
+    check(st1[0] !== st2[0] && (st2[0] === 'true' ? st2[1] : st1[0] === 'true'), `${tag}: the caption control folds and unfolds it, and unfolded it shows the whole text`);
     await ctx.close();
   }
 

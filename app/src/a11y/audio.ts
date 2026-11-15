@@ -65,6 +65,7 @@ export class AudioGuide {
   /** audio/pending.json: tracks whose new text is in transcripts.json while the MP3 is still the old one. */
   private pending = new Set<string>();
   private expanded = false;
+  private foldStart = false;
   private readonly moreBtn: HTMLButtonElement;
   private step: GuideStep | null = null;
   private state: CaptionState = 'text-only';
@@ -114,7 +115,10 @@ export class AudioGuide {
     root.append(head, this.textEl);
     // the whole text is shown while the guide speaks; with the guide off it starts folded (one control unfolds it)
     // the whole caption is always shown (never clipped); "Show less" folds it on request
-    this.setExpanded(!(window.matchMedia?.('(max-height: 500px) and (min-aspect-ratio: 1/1)').matches ?? false));
+    // exception: a phone on its side folds the welcome caption so that the mission cards fit the first
+    // screen ("Full text" unfolds it); every later step, and the guide when it speaks, show it whole
+    this.foldStart = !this.enabled && (window.matchMedia?.('(max-height: 500px) and (min-aspect-ratio: 1/1)').matches ?? false);
+    this.setExpanded(!this.foldStart);
 
     this.el.addEventListener('playing', () => this.setState('playing'));
     this.el.addEventListener('pause', () => {
@@ -177,6 +181,10 @@ export class AudioGuide {
 
   /** Enter a new step: stop whatever sounds, show its caption, and play its track when the guide is on. */
   setStep(step: GuideStep): void {
+    if (this.foldStart && step.title !== 'Welcome') {
+      this.foldStart = false;
+      this.setExpanded(true);
+    }
     const same = !!step.track && this.step?.track?.file === step.track.file && (this.state === 'playing' || this.state === 'loading');
     this.step = step;
     if (same) {

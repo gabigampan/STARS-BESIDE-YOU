@@ -1659,7 +1659,7 @@ body.view-open .topbar {
   body.flow[data-step='compare'] .stage {
     grid-template-areas: 'earth' 'moon' 'side';
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(160px, 24dvh) minmax(160px, 24dvh) minmax(0, 1fr);
+    grid-template-rows: minmax(140px, 19dvh) minmax(140px, 19dvh) minmax(0, 1fr);
   }
 }
 /* landscape (a phone on its side): the two globes on the left, the panel scrolls on the right */
