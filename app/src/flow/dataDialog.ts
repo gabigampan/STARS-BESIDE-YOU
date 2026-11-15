@@ -4,7 +4,7 @@
 
 import type { DataStore } from '../data/store.ts';
 import type { Mission } from '../data/types.ts';
-import { missionName, plainText, roleWord, setByWords, statusWords } from './copy';
+import { missionName, plainText, roleWord, setByWords, staleForRule, statusWords } from './copy';
 import { gateWords, plainFunnel } from './funnel';
 import { append, h, int, levelTag, valueText } from './dom';
 
@@ -50,7 +50,8 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
           )
         : null,
       // the engine's record, in plain words (file, code and column references left out)
-      h('ul', { 'data-record': m.id }, m.known_limitations.map((l) => h('li', null, plainText(store, l, m)))),
+      // an entry that describes the z-score similarity is left out for a mission that no longer uses it
+      h('ul', { 'data-record': m.id }, m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => h('li', null, plainText(store, l, m)))),
     );
   }
 

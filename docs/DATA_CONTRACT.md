@@ -90,10 +90,10 @@ Sizes from the build of 2026-11-15 (Lunar base decision), revision 6 (`manifest.
 | `explain.json` | JSON | on demand | - | top 25 ranked Earth cells per mission with the whole funnel | 165,953 |
 | `iau_moon_features.json` | JSON | on demand | - | 2,023 primary IAU lunar features | 105,663 |
 | `lunar_named_sites.json` | JSON | on demand | - | named lunar sites, their cell and per-mission outcome | 13,798 |
-| `mission_zones.json` | JSON | on demand (Moon view) | - | the six lunar regions, each mission's zone as regions, the "why not here" texts | 11,815 |
+| `mission_zones.json` | JSON | on demand (Moon view) | - | the six lunar regions, each mission's zone as regions, the "why not here" texts | 12,301 |
 | `validity.json` | JSON | on demand | - | schema validation report of the input tables | 251 |
 
-- **First view** (`manifest.load.first_view` plus the manifest), revision 6: **2,353,573 bytes**, under the 2,500,000-byte target. **Total**: **13,766,106 bytes**, under 14,000,000. Revision 5: 2,340,377 and 13,484,232. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. Revision 4 (zone_twin for all three missions): 2,261,764 and 11,393,483. The comparison build with `--similarity-rule repo_global_mean` (no twins, no pairs files): first view 2,220,513, total 9,653,647.
+- **First view** (`manifest.load.first_view` plus the manifest), revision 6: **2,353,573 bytes**, under the 2,500,000-byte target. **Total**: **13,766,592 bytes**, under 14,000,000. Revision 5: 2,340,377 and 13,484,232. Both targets are `engine_config.json` `first_view_budget_bytes`; the tests check them. Revision 4 (zone_twin for all three missions): 2,261,764 and 11,393,483. The comparison build with `--similarity-rule repo_global_mean` (no twins, no pairs files): first view 2,220,513, total 9,653,647.
 - **Showing the funnel of one land cell** needs the first view (values, gates, reason tables, scores of the default mission), the mission file of each mission shown (fail bits and scores; 0.17-0.63 MB) and **one** detail tile (at most 332,160 bytes): never the whole set of tiles.
 - Earth files hold only **land cells**: cells with any land (`mask_fraction > 0`, datasets.json `earth_land_cells`). Pure-ocean cells are absent; they fail every mission on the land gates.
 

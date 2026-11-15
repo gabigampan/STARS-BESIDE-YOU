@@ -25,7 +25,9 @@ const OTHER =
   '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars/bundle_global_mean';
 const args = process.argv.filter((a) => a.startsWith('--bundle=')).map((a) => a.slice(9));
 const ZONES = process.env.ZONE_FIXTURE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/fixture_zones';
-const bundles = args.length ? args : [join(APP, 'public/data/v2'), ...(existsSync(OTHER) ? [OTHER] : []), ...(existsSync(ZONES) ? [ZONES] : [])];
+// the revision 5 bundle as shipped this morning (kept to prove the app still reads it)
+const REV5 = process.env.REV5_BUNDLE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/rev5';
+const bundles = args.length ? args : [join(APP, 'public/data/v2'), ...[OTHER, REV5, ZONES].filter((d) => existsSync(d))];
 // Technical strings that must never reach the interface (column names, interval notation, code)
 const TECHNICAL = /[a-z0-9]_[a-z0-9]|\binf\b|\bNaN\b|\bundefined\b|\bnull\b|\[[^\]]*,[^\]]*\]|\.json\b|\.py\b|\{[a-z_]+\}/;
 
@@ -140,7 +142,8 @@ for (const dir of bundles) {
     if (valueRule) {
       // revision 5: per-pair sentences and no-twin sentences
       let badPair = 0, badNo = 0, sentences = 0;
-      const tpl = store.similarity.texts?.no_twin_note;
+      const tpl = store.textFor('no_twin_note', m.id);
+      const tplOf = (kind) => tpl.variants?.[kind] ?? (kind === 'no_joint_match' ? tpl.variant_no_joint_match : tpl.text);
       for (let p = 0; p < n; p++) {
         const r = ranked0.find((x) => x.passPos === p);
         const ps = store.pairSentencesAt(m.id, p);
@@ -152,7 +155,7 @@ for (const dir of bundles) {
           const rows = store.pairRowsAt(m.id, p);
           if (rows.some((row) => row.def.role === 'key' && row.within !== true)) badPair++;
         } else {
-          if (!np || !np.sentence || /\{|\}/.test(np.sentence) || !np.sentence.startsWith((np.kind === 'no_joint_match' ? tpl.variant_no_joint_match : tpl.text).slice(0, 20))) badNo++;
+          if (!np || !np.sentence || /\{|\}/.test(np.sentence) || !np.sentence.startsWith(tplOf(np.kind).slice(0, 20))) badNo++;
           if (ps.length) badPair++;
         }
       }
@@ -188,7 +191,8 @@ for (const dir of bundles) {
       const sum = tw.reduce((s, t) => s + t.earth_cells, 0);
       check(sum === m.ranked_count, `${m.id}: twins.json earth_cells add up to the ranked count (${sum})`);
       const s1 = store.twinSharingText(m.id, tw[0].earth_cells);
-      check(!!s1 && !/\bN\b|\bX\b/.test(s1) && (m.id === 'lunar_base') === /lunar base zone/.test(s1), `${m.id}: sharing sentence "${s1}"`);
+      const firstOnly = /first sentence only, for every mission/i.test(store.similarity.texts.twin_sharing_note.where);
+      check(!!s1 && !/\bN\b|\bX\b/.test(s1) && (!firstOnly && m.id === 'lunar_base') === /lunar base zone/.test(s1), `${m.id}: sharing sentence "${s1}"`);
     }
     // the known limitations reach the interface in plain words
     const techLims = m.known_limitations.map((l) => plainText(store, l, m)).filter((t) => TECHNICAL.test(t));

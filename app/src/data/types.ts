@@ -140,8 +140,14 @@ export interface PairVariable {
   tolerance_set_by: string;
   why?: string;
   sides?: Record<BodyKey, { kind: string; column: string | null; level: Level | null; text: string }>;
-  /** Columns of earth_<m>_pairs.bin: earth, moon, diff (revision 6 may add percentile columns). */
+  /** Columns of earth_<m>_pairs.bin: earth, moon, diff (real values); revision 6 adds earth_pct, moon_pct, diff_pct. */
   pairs_columns: Record<string, string>;
+  /** Revision 6: the columns of the compared values (percentiles for a percentile-scaled variable). */
+  compared_columns?: Record<string, string>;
+  /** Revision 6: 'real' or 'percentile_within_population'. */
+  scale?: string;
+  /** Revision 6: the unit of the real values when the compared unit differs (K for a percentile variable). */
+  real_unit?: string;
   score_column: string;
   /** Any further keys a later revision adds (scale, percentile columns...). */
   [key: string]: unknown;
@@ -172,6 +178,11 @@ export interface MissionSimilarity {
   unpaired_reasons?: UnpairedReason[];
   pairs_file?: string;
   list_rule?: string;
+  /** Revision 6 (lunar_base): values shown for information, read from the pairs file. */
+  info_columns?: { variable: string; unit: string; columns: Record<string, string>; part_of_similarity: boolean }[];
+  pair_sentence?: string;
+  nopair_groups?: Record<string, string[]>;
+  unpaired_by_kind?: Record<string, number>;
   twins?: unknown;
   no_twin_reason?: string;
   zone?: ZoneInfo;
@@ -273,6 +284,7 @@ export interface PlaceholderSpec {
   column: string;
   decimals?: number;
   multiply?: number;
+  subtract?: number;
   meaning?: string;
 }
 
@@ -287,6 +299,10 @@ export interface BundleText {
   /** Plain placeholders (a description) or per-pair placeholders (a pairs-file column). */
   placeholders?: Record<string, string | PlaceholderSpec>;
   variant_no_joint_match?: string;
+  /** Revision 6: one sentence per no-twin kind. */
+  variants?: Record<string, string>;
+  /** Revision 6: a text that no longer applies (not shown). */
+  status?: string;
   [key: string]: unknown;
 }
 
@@ -296,19 +312,22 @@ export interface SimilarityJson {
   rules?: Record<string, string>;
   z_rule_missions?: string[];
   real_value?: { info_differences?: Record<string, string[] | string>; [key: string]: unknown };
-  rule_why: string;
-  rule_options: Record<string, string>;
+  /** Revision 6: the percentile rule of lunar_base. */
+  percentile_and_real?: { meaning?: string; [key: string]: unknown };
+  rule_why?: string;
+  rule_options?: Record<string, string>;
   alpha: number;
-  formula: { z: string; distance: string; similarity: string; decay: number; final: string };
-  meaning: string;
-  earth_population: { rule: string; cells: number };
-  moon_population: { rule: string; cells: number };
-  variables: SimilarityVariable[];
-  active_variables: string[];
-  variation_findings: { variable: string; body: BodyKey; variation: string; action: string }[];
-  not_part_of_similarity: string[];
-  not_part_of_similarity_note: string;
-  target: GlobalMeanTarget | ZoneTwinTarget;
+  // The z-score keys: absent since revision 6 when no shipped mission uses z-scores.
+  formula?: { z: string; distance: string; similarity: string; decay: number; final: string };
+  meaning?: string;
+  earth_population?: { rule: string; cells: number };
+  moon_population?: { rule: string; cells: number };
+  variables?: SimilarityVariable[];
+  active_variables?: string[];
+  variation_findings?: { variable: string; body: BodyKey; variation: string; action: string }[];
+  not_part_of_similarity?: string[];
+  not_part_of_similarity_note?: string;
+  target?: GlobalMeanTarget | ZoneTwinTarget;
   /** Contract revision 4: the approved web texts (decisions 1 to 5), verbatim. */
   texts?: Record<string, BundleText>;
   twins?: unknown;
@@ -384,6 +403,8 @@ export interface Twin {
   earth_cells: number;
   /** z-score rules only. */
   z?: Record<string, number | null>;
+  /** Revision 6: the twin's percentile within the zone for the percentile variables. */
+  percentiles?: Record<string, number | null>;
   values: Record<string, number | null>;
   not_part_of_similarity: Record<string, number | string | null>;
   feature: { name: string; type: string; distance_km: number; url: string } | null;

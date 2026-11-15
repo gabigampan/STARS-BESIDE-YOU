@@ -5,7 +5,7 @@
 import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { firstSentence, missionLine, missionName, roleWord, statusWords } from './copy';
+import { firstSentence, missionLine, missionName, noPairKindWords, roleWord, statusWords } from './copy';
 import { sentenceUnit } from '../data/store.ts';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
@@ -313,14 +313,18 @@ export class MissionPanel {
     const sim = m.similarity;
     const zone = this.app.zoneName(m) ?? "the mission's lunar zone";
     const parts: string[] = [];
-    const joint = (sim.unpaired_reasons ?? []).filter((r) => r.kind === 'no_joint_match').reduce((s, r) => s + r.earth_cells, 0);
-    for (const r of sim.unpaired_reasons ?? []) {
-      const d = sim.variables?.find((v) => v.variable === r.variable);
-      const label = d?.label.toLowerCase() ?? 'a key value';
-      if (r.kind === 'no_zone_cell_within_bound') parts.push(`for ${int(r.earth_cells)}, no cell of ${zone} has ${label} within ${num(r.bound, 2)} ${sentenceUnit(d?.unit ?? '')}`);
-      else if (r.kind === 'key_value_missing_on_earth') parts.push(`${int(r.earth_cells)} have no ${label} value on Earth`);
+    if (sim.unpaired_by_kind) {
+      for (const [kind, cells] of Object.entries(sim.unpaired_by_kind)) if (cells > 0) parts.push(`${int(cells)}: ${noPairKindWords(kind)}`);
+    } else {
+      const joint = (sim.unpaired_reasons ?? []).filter((r) => r.kind === 'no_joint_match').reduce((s, r) => s + r.earth_cells, 0);
+      for (const r of sim.unpaired_reasons ?? []) {
+        const d = sim.variables?.find((v) => v.variable === r.variable);
+        const label = d?.label.toLowerCase() ?? 'a key value';
+        if (r.kind === 'no_zone_cell_within_bound') parts.push(`for ${int(r.earth_cells)}, no cell of ${zone} has ${label} within ${num(r.bound, 2)} ${sentenceUnit(d?.unit ?? '')}`);
+        else if (r.kind === 'key_value_missing_on_earth') parts.push(`${int(r.earth_cells)} have no ${label} value on Earth`);
+      }
+      if (joint) parts.push(`for ${int(joint)}, ${noPairKindWords('no_joint_match')}`);
     }
-    if (joint) parts.push(`for ${int(joint)}, each value alone has a close lunar cell but no single cell is within every tolerance at once`);
     return `${int(n)} points pass the filters but have no lunar twin${parts.length ? `: ${parts.join('; ')}` : ''}. They keep their suitability, have no similarity or final score, and are listed by suitability.`;
   }
 

@@ -30,15 +30,19 @@ export function plainFunnel(store: DataStore, m: Mission | null, meaning: string
   const ref = m ?? store.missionsJson.missions[0];
   const common = ref.gates.filter((g) => g.step === 1).map((g) => gateWords(store, ref, g));
   const sim = store.similarity;
-  const active = sim.active_variables.map((v) => store.similarityLabel(v).label);
+  const active = (sim.active_variables ?? []).map((v) => store.similarityLabel(v).label);
   /** The similarity step of one mission, from its own rule. */
   const simText = (x: Mission): string => {
     const vars = store.pairVariables(x.id);
     if (vars.length) {
-      const key = vars.filter((v) => v.role === 'key').map((v) => v.label.toLowerCase());
-      const sec = vars.filter((v) => v.role !== 'key').map((v) => v.label.toLowerCase());
+      const pct = vars.filter((v) => v.scale && v.scale !== 'real');
+      const real = vars.filter((v) => !v.scale || v.scale === 'real');
+      const names = (l: typeof vars) => l.map((v) => `${v.label.toLowerCase()} (${v.role === 'key' ? 'key' : 'secondary'})`).join(', ');
+      const how = pct.length
+        ? `Compared as positions, the percentile of each side within its own population, for ${names(pct)}; on real values for ${names(real)}. `
+        : `Compared on real values: ${names(real)}. `;
       return (
-        `Compared on real values: key ${key.length === 1 ? 'variable' : 'variables'} ${key.join(' and ')}${sec.length ? `; secondary ${sec.join(' and ')}` : ''}. ` +
+        how +
         'A point is paired only with a lunar cell of the mission\'s zone whose key values are within their tolerance and secondary values within twice theirs; a point with no such cell keeps its suitability but has no twin, no similarity and no final score.'
       );
     }

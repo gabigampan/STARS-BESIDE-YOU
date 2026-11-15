@@ -24,7 +24,8 @@ function cellSize(app: FlowApp, lat: number, body: 'EARTH' | 'MOON'): string {
 }
 
 /** The level word of a shown value: "no data" when the value is missing (one of the four levels). */
-function levelOfValue(value: unknown, level: Level | string | null | undefined): HTMLElement {
+function levelOfValue(value: unknown, level: Level | string | null | undefined): HTMLElement | null {
+  if (value != null && !level) return null; // a value whose level the bundle does not state: no word rather than a wrong one
   return levelTag(value == null ? 'NO_DATA' : (level as Level | null | undefined));
 }
 
@@ -174,10 +175,16 @@ function zText(z: number | null): string {
 /** The plain-words meaning of the similarity, from the bundle (decision 1; the generic meaning without twins). */
 export function meaningText(app: FlowApp, m = app.mission()): string {
   const st = app.store;
-  if (m && st.isValueRule(m.id)) return st.text('similarity_meaning_real_values') ?? st.similarity.meaning;
-  if (m ? st.hasTwins(m.id) : st.hasTwins()) return st.text('similarity_meaning') ?? st.similarity.meaning;
+  const general = st.similarity.meaning ?? '';
+  if (m ? st.hasTwins(m.id) : st.hasTwins()) {
+    // the approved meaning of this mission's rule (similarity_meaning_<rule> naming the mission, or the general one)
+    const own = m ? st.textFor('similarity_meaning', m.id) : null;
+    if (own) return own.text;
+    if (m && st.isValueRule(m.id)) return st.text('similarity_meaning_real_values') ?? general;
+    return st.text('similarity_meaning') ?? general;
+  }
   // The approved sentence describes twins; without them the bundle's general meaning applies (its first sentence).
-  return /^.*?\.(?=\s|$)/.exec(st.similarity.meaning)?.[0] ?? st.similarity.meaning;
+  return /^.*?\.(?=\s|$)/.exec(general)?.[0] ?? general;
 }
 
 function meaningNote(app: FlowApp): HTMLElement {
@@ -221,7 +228,7 @@ function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
       h('dl', { class: 'figs' }, fig('Suitability', fixed(o.suitability, 2), 'suitability')),
     );
   }
-  const moon = twins ? twinPlace(o) : ((st.similarity.target as { name?: string }).name ?? 'the whole-Moon average');
+  const moon = twins ? twinPlace(o) : ((st.similarity.target as { name?: string } | undefined)?.name ?? 'the whole-Moon average');
   return h(
     'div',
     { class: 'pair-strip', 'data-pair': o.twin ? String(o.twin.id) : 'mean' },
@@ -236,6 +243,13 @@ function diffText(v: number | null, unit: string): string {
   return valueText(v, unit === 'degC' ? 'K' : unit);
 }
 
+/** How a side's real value is made, in words from the bundle ("modelled air temperature (WorldClim)"), with its level. */
+function sideSub(app: FlowApp, r: PairRow, body: 'EARTH' | 'MOON'): HTMLElement | null {
+  const sw = app.store.sideWords(r.def, body);
+  if (!sw.words && !sw.level) return null;
+  return h('span', { class: 'sub', 'data-k': `side-${body.toLowerCase()}` }, sw.words ?? '', sw.words ? ' · ' : '', levelTag(sw.level));
+}
+
 /** The similarity of a real-value pair: one block per variable (key variables first), the arithmetic, the information values. */
 function pairSimilarity(app: FlowApp, o: MissionOutcome): (HTMLElement | null)[] {
   const st = app.store;
@@ -246,12 +260,13 @@ function pairSimilarity(app: FlowApp, o: MissionOutcome): (HTMLElement | null)[]
       'div',
       { class: `pair-var role-${r.def.role}`, 'data-variable': r.def.variable, 'data-within': String(r.within) },
       h('h4', { class: 'pair-var-head' }, h('span', null, r.def.label), h('span', { class: `tag tag-role` }, roleWord(r.def.role))),
+      r.real ? h('p', { class: 'pair-scale' }, 'Compared as a position: the percentile of each side within its own population (Earth: the points passing this mission; Moon: the cells of the zone).') : null,
       h(
         'dl',
         { class: 'pair-vals' },
-        h('div', { 'data-k': 'earth' }, h('dt', null, 'Earth'), h('dd', null, valueText(r.earth, r.def.unit))),
-        h('div', { 'data-k': 'moon' }, h('dt', null, 'Moon'), h('dd', null, valueText(r.moon, r.def.unit))),
-        h('div', { 'data-k': 'diff' }, h('dt', null, 'Difference'), h('dd', null, diffText(r.diff, r.def.unit))),
+        h('div', { 'data-k': 'earth' }, h('dt', null, r.real ? 'Earth position' : 'Earth'), h('dd', null, valueText(r.earth, r.def.unit))),
+        h('div', { 'data-k': 'moon' }, h('dt', null, r.real ? 'Moon position' : 'Moon'), h('dd', null, valueText(r.moon, r.def.unit))),
+        h('div', { 'data-k': 'diff' }, h('dt', null, r.real ? 'Difference in position' : 'Difference'), h('dd', null, diffText(r.diff, r.def.unit))),
         h(
           'div',
           { 'data-k': 'tolerance' },
@@ -268,6 +283,15 @@ function pairSimilarity(app: FlowApp, o: MissionOutcome): (HTMLElement | null)[]
         h('div', { 'data-k': 'weight' }, h('dt', null, 'Weight'), h('dd', null, num(r.weight, 2))),
         h('div', { 'data-k': 'score' }, h('dt', null, 'Score 0-1'), h('dd', null, r.score == null ? 'left out (no value)' : fixed(r.score, 3))),
       ),
+      r.real
+        ? h(
+            'dl',
+            { class: 'pair-vals pair-real', 'data-k': 'real' },
+            h('div', { 'data-k': 'earth-real' }, h('dt', null, 'Earth, real value'), h('dd', null, valueText(r.real.earth, r.real.unit), sideSub(app, r, 'EARTH'))),
+            h('div', { 'data-k': 'moon-real' }, h('dt', null, 'Moon, real value'), h('dd', null, valueText(r.real.moon, r.real.unit), sideSub(app, r, 'MOON'))),
+            h('div', { 'data-k': 'diff-real' }, h('dt', null, 'Real difference'), h('dd', null, diffText(r.real.diff, r.real.unit))),
+          )
+        : null,
     );
   const used = rows.filter((r) => r.score != null);
   const arith =
@@ -406,7 +430,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       { class: 'panel-sec lunar', 'data-twin': 'none' },
       h('h3', null, 'Lunar side'),
       h('p', { class: 'lead no-twin', 'data-verbatim': 'no_twin_reason' }, app.noTwinText(m)),
-      h('p', { class: 'muted' }, `The lunar reference is "${(store.similarity.target as { name?: string }).name ?? 'the whole-Moon average'}": the values in the similarity table below. There is no lunar marker, beam or paired view under this rule.`),
+      h('p', { class: 'muted' }, `The lunar reference is "${(store.similarity.target as { name?: string } | undefined)?.name ?? 'the whole-Moon average'}": the values in the similarity table below. There is no lunar marker, beam or paired view under this rule.`),
     );
   }
 
@@ -463,7 +487,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, zText(r.moon.z), ' · ', levelOfValue(r.moon.value, r.moon.level)))),
     ),
   );
-  const notActive = store.similarity.variables.filter((v) => v.status !== 'active');
+  const notActive = (store.similarity.variables ?? []).filter((v) => v.status !== 'active');
   const infoRows = o.infoRows.map((r) =>
     h(
       'tr',
@@ -499,7 +523,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     sec(
       'Similarity to the Moon',
       o.pass
-        ? h('p', { class: 'lead' }, 'Similarity ', h('strong', { 'data-value': 'similarity' }, fixed(o.similarity, 2)), ' / 100', o.simVarsUsed != null ? h('span', { class: 'muted' }, ` · computed with ${o.simVarsUsed} of ${store.similarity.active_variables.length} variables`) : null)
+        ? h('p', { class: 'lead' }, 'Similarity ', h('strong', { 'data-value': 'similarity' }, fixed(o.similarity, 2)), ' / 100', o.simVarsUsed != null ? h('span', { class: 'muted' }, ` · computed with ${o.simVarsUsed} of ${store.similarity.active_variables?.length ?? 0} variables`) : null)
         : h('p', { class: 'lead' }, twins ? 'No similarity and no lunar twin are computed for a cell eliminated for this mission; its Earth values are shown for reference.' : 'No similarity is scored for an eliminated cell; the values are shown for comparison.'),
       meaningNote(app),
       o.missingTemp ? missingTempNote(app) : null,

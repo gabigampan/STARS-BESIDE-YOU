@@ -562,8 +562,8 @@ export class FlowApp {
   /** The mission's search zone name on the Moon (missions.json similarity.zone, else similarity.json target.zones). */
   zoneName(m: Mission | null = this.mission()): string | null {
     if (!m) return null;
-    const t = this.store.similarity.target as { zones?: Record<string, { name?: string }> };
-    return m.similarity.zone?.name ?? t.zones?.[m.id]?.name ?? null;
+    const t = this.store.similarity.target as { zones?: Record<string, { name?: string }> } | undefined;
+    return m.similarity.zone?.name ?? t?.zones?.[m.id]?.name ?? null;
   }
 
   /** The true cell size in plain words (both bodies). */

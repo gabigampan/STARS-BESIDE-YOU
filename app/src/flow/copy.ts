@@ -42,7 +42,7 @@ export function statusWords(m: Mission): string {
 /** The purpose sentence; with twins the result is a pair (an Earth place and its lunar match). */
 export function purposeText(twins: boolean): string {
   return twins
-    ? 'Find the places on Earth where a Moon mission can be tested, each paired with the place on the Moon it matches (each world measured on its own scale), and see why.'
+    ? 'Find the places on Earth where a Moon mission can be tested, each paired with the place on the Moon it resembles, with the values of both side by side, and see why.'
     : 'Find the places on Earth where a Moon mission can be tested, see how each one compares with the Moon (each world measured on its own scale), and why.';
 }
 
@@ -135,4 +135,23 @@ export function plainText(store: DataStore, text: string, mission?: Mission): st
   t = classWordsIn(t);
   t = t.replace(/\s{2,}/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
   return t.replace(/(^|[.!?]\s+)([a-z])/g, (_all, p: string, c: string) => p + c.toUpperCase());
+}
+
+/** Why a point has no twin, by kind (missions.json similarity.nopair_kinds), in a few plain words for the list. */
+const NOPAIR_WORDS: Record<string, string> = {
+  key_value_missing_on_earth: 'a key value is missing on Earth',
+  no_zone_cell_within_bound: 'no cell of the zone is close enough in a key value',
+  no_joint_match: 'each value alone has a close lunar cell, but no single cell is within every tolerance at once',
+  no_cell_meets_thermal_position: 'no cell of the zone matches the thermal position',
+  no_cell_meets_terrain: 'no cell of the zone matches the terrain',
+  no_cell_meets_either: 'no cell matches either the thermal position or the terrain',
+  no_single_cell_meets_both: 'some cells match the thermal position and others the terrain, but no single cell matches both',
+};
+export function noPairKindWords(kind: string): string {
+  return NOPAIR_WORDS[kind] ?? kind.replace(/_/g, ' ');
+}
+
+/** A known limitation that describes the z-score similarity, for a mission whose rule no longer uses z-scores. */
+export function staleForRule(store: DataStore, m: Mission, text: string): boolean {
+  return store.isValueRule(m.id) && /\bz-scores?\b/i.test(text);
 }

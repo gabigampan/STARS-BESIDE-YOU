@@ -16,6 +16,7 @@ import type {
   MissionsJson,
   MissionZonesJson,
   NumArray,
+  BundleText,
   PairVariable,
   PlaceholderSpec,
   PlaceDetailJson,
@@ -133,6 +134,12 @@ export interface PairRow {
   within: boolean | null;
   /** Further columns a later revision adds for this variable (e.g. percentiles), by their key in pairs_columns. */
   extra: Record<string, number | null>;
+  /**
+   * Revision 6: when the variable is compared on another scale than its real values (a percentile
+   * within each population), `earth`, `moon` and `diff` are the compared values (in def.unit) and
+   * `real` holds the real values and their difference (in def.real_unit). Null when compared as is.
+   */
+  real: { earth: number | null; moon: number | null; diff: number | null; unit: string } | null;
 }
 
 /** An approved per-pair sentence of the bundle (a text with pairs-file placeholders), filled for one pair. */
@@ -575,14 +582,24 @@ export class DataStore {
     const md = this.missionDataOf(missionId);
     const defs = this.pairVariables(missionId);
     return defs.map((def, i) => {
-      const earth = this.pairValue(md, def.pairs_columns.earth, p);
-      const moon = this.pairValue(md, def.pairs_columns.moon, p);
-      const diff = this.pairValue(md, def.pairs_columns.diff, p);
+      const cmp = def.compared_columns ?? def.pairs_columns;
+      const earth = this.pairValue(md, cmp.earth, p);
+      const moon = this.pairValue(md, cmp.moon, p);
+      const diff = this.pairValue(md, cmp.diff, p);
       const score = p >= 0 ? this.q(md.table, def.score_column, p) : null;
       const extra: Record<string, number | null> = {};
       for (const [k, col] of Object.entries(def.pairs_columns)) if (k !== 'earth' && k !== 'moon' && k !== 'diff') extra[k] = this.pairValue(md, col, p);
+      const separate = cmp.earth !== def.pairs_columns.earth;
+      const real = separate
+        ? {
+            earth: this.pairValue(md, def.pairs_columns.earth, p),
+            moon: this.pairValue(md, def.pairs_columns.moon, p),
+            diff: this.pairValue(md, def.pairs_columns.diff, p),
+            unit: def.real_unit ?? def.unit,
+          }
+        : null;
       const within = diff == null ? null : diff <= def.bound * (1 + 1e-6) + 1e-9;
-      return { def, earth, moon, diff, score, weight: simWeights?.[i] ?? def.weight, within, extra };
+      return { def, earth, moon, diff, score, weight: simWeights?.[i] ?? def.weight, within, extra, real };
     });
   }
 
@@ -599,21 +616,43 @@ export class DataStore {
     const def = vi == null || vi === missing ? null : (sim.variables?.[vi] ?? null);
     const g = md.pairs.cols['nopair_gap']?.[p];
     const gap = g == null || Number.isNaN(g) ? null : f32Decimal(g);
-    return { kind, variable: def, gap, sentence: this.noTwinSentence(kind, def, gap) };
+    const vi2 = md.pairs.cols['nopair_var2']?.[p];
+    const def2 = vi2 == null || vi2 === missing ? null : (sim.variables?.[vi2] ?? null);
+    const g2 = md.pairs.cols['nopair_gap2']?.[p];
+    const gap2 = g2 == null || Number.isNaN(g2) ? null : f32Decimal(g2);
+    return { kind, variable: def, gap, sentence: this.noTwinSentence(kind, def, gap, missionId, def2, gap2) };
+  }
+
+  /**
+   * The approved text of a kind for a mission (similarity.json texts): the entry `key` itself, or a
+   * mission-specific entry `key_<anything>` that names the mission; texts with a status ("no longer
+   * applies") or an empty mission list are never returned.
+   */
+  textFor(key: string, missionId: string | null): BundleText | null {
+    const texts = this.similarity.texts ?? {};
+    const usable = (t: BundleText | undefined) => !!t && !t.status && (!t.missions || (missionId != null && t.missions.includes(missionId)));
+    const own = Object.entries(texts).find(([k, t]) => k.startsWith(`${key}_`) && missionId != null && t.missions?.includes(missionId) && !t.status);
+    if (own) return own[1];
+    return usable(texts[key]) ? texts[key] : null;
   }
 
   /** texts.no_twin_note (its no_joint_match variant when that is the reason) with the placeholders filled. */
-  noTwinSentence(kind: string, def: PairVariable | null, gap: number | null): string {
-    const t = this.similarity.texts?.['no_twin_note'];
+  noTwinSentence(kind: string, def: PairVariable | null, gap: number | null, missionId: string | null = null, def2: PairVariable | null = null, gap2: number | null = null): string {
+    const t = this.textFor('no_twin_note', missionId) ?? this.similarity.texts?.['no_twin_note'] ?? null;
     if (!t) return '';
-    const template = kind === 'no_joint_match' && typeof t.variant_no_joint_match === 'string' ? t.variant_no_joint_match : t.text;
-    const unit = def ? sentenceUnit(def.unit) : '';
+    const template = t.variants?.[kind] ?? (kind === 'no_joint_match' && typeof t.variant_no_joint_match === 'string' ? t.variant_no_joint_match : t.text);
+    const label = (d: PairVariable | null) => (d ? midSentence(d.label) : 'a key variable');
+    const gapText = (x: number | null) => (x == null ? 'no value' : nfSentence(ceil2(x), 2));
     const filled = template
-      .replace(/\{variable\}/g, def ? midSentence(def.label) : 'a key variable')
+      .replace(/\{variable2\}/g, label(def2))
+      .replace(/\{gap2\}/g, gapText(gap2))
+      .replace(/\{unit2\}/g, def2 ? sentenceUnit(def2.unit) : '')
+      .replace(/\{variable\}/g, label(def))
       .replace(/\{bound\}/g, def ? nfSentence(def.bound, 2) : '')
-      .replace(/\{gap\}/g, gap == null ? 'no value' : nfSentence(ceil2(gap), 2))
-      .replace(/\{unit\}/g, unit)
-      .replace(/ {2,}/g, ' ');
+      .replace(/\{gap\}/g, gapText(gap))
+      .replace(/\{unit\}/g, def ? sentenceUnit(def.unit) : '')
+      .replace(/ {2,}/g, ' ')
+      .replace(/ ([,.;)])/g, '$1');
     return filled;
   }
 
@@ -639,7 +678,7 @@ export class DataStore {
           completed = false;
           break;
         }
-        const v = f32Decimal(raw) * (spec.multiply ?? 1);
+        const v = (f32Decimal(raw) - (spec.subtract ?? 0)) * (spec.multiply ?? 1);
         const d = spec.decimals ?? 1;
         text = text.split(`{${name}}`).join(new Intl.NumberFormat('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v));
       }
@@ -650,7 +689,7 @@ export class DataStore {
 
   /** The bit of `temp_k` in sim_missing_bits (its position in similarity.json active_variables), -1 when not active. */
   tempBit(): number {
-    return this.similarity.active_variables.indexOf('temp_k');
+    return this.similarity.active_variables?.indexOf('temp_k') ?? -1;
   }
 
   /** True when the pair of passing position `p` left temperature out of its similarity. */
@@ -665,7 +704,10 @@ export class DataStore {
 
   /** An approved web text of the bundle (similarity.json texts.<key>.text), verbatim; null when absent. */
   text(key: string): string | null {
-    return this.similarity.texts?.[key]?.text ?? null;
+    const t = this.similarity.texts?.[key];
+    // a text marked as no longer applying (revision 6: status), or applying to no mission, is not shown
+    if (!t || t.status || (Array.isArray(t.missions) && t.missions.length === 0)) return null;
+    return t.text ?? null;
   }
 
   /**
@@ -679,8 +721,12 @@ export class DataStore {
     const x = ranked > 0 ? (100 * earthCells) / ranked : 0;
     // Pick the sentences on the template (no decimals in it yet), then fill N and X.
     let template = t.text;
-    const onlyFor = /about lunar_base/.test(t.where) ? 'lunar_base' : null;
-    if (onlyFor && missionId !== onlyFor) template = /^.*?\.(?=\s|$)/.exec(template)?.[0] ?? template;
+    const first = /^.*?\.(?=\s|$)/.exec(template)?.[0] ?? template;
+    if (/first sentence only, for every mission/i.test(t.where)) template = first;
+    else {
+      const onlyFor = /about lunar_base/.test(t.where) ? 'lunar_base' : null;
+      if (onlyFor && missionId !== onlyFor) template = first;
+    }
     return template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
   }
 
@@ -960,9 +1006,11 @@ export class DataStore {
   }
 
   similarityLabel(variable: string): { label: string; unit: string } {
-    const sv = this.similarity.variables.find((v) => v.variable === variable);
+    const sv = this.similarity.variables?.find((v) => v.variable === variable);
+    const pv = this.missionsJson.missions.flatMap((m) => m.similarity.variables ?? []).find((v) => v.variable === variable);
     const info = this.varByName.get(variable) ?? (sv?.columns.EARTH ? this.varByName.get(sv.columns.EARTH) : undefined);
     if (info) return { label: info.label, unit: info.unit };
+    if (pv) return { label: pv.label, unit: pv.real_unit ?? pv.unit };
     return { label: SIMILARITY_FALLBACK_LABELS[variable] ?? variable.replace(/_/g, ' '), unit: '' };
   }
 
@@ -1042,15 +1090,15 @@ export class DataStore {
     const twinId = p >= 0 && md.twin ? md.twin[p] : this.manifest.encoding.int32_missing;
     const twin = twinId !== this.manifest.encoding.int32_missing ? this.twin(missionId, twinId) : null;
     const target = this.similarity.target;
-    const zRows = !valueRule;
-    const similarityRows: SimilarityRow[] = (zRows ? this.similarity.active_variables : []).map((f) => {
-      const sv = this.similarity.variables.find((v) => v.variable === f)!;
+    const zRows = !valueRule && !!target && Array.isArray(this.similarity.active_variables);
+    const similarityRows: SimilarityRow[] = (zRows ? (this.similarity.active_variables ?? []) : []).map((f) => {
+      const sv = this.similarity.variables!.find((v) => v.variable === f)!;
       const { label, unit } = this.similarityLabel(f);
       const ez = tp ? this.q(tp.tile, `z.${f}`, tp.pos) : null;
       const ev = this.earthValue(sv.columns.EARTH, landPos).raw;
       let mz: number | null = null;
       let mv: number | null = null;
-      if (target.kind === 'global_mean') {
+      if (target?.kind === 'global_mean') {
         mz = target.profile[f]?.z ?? null;
         mv = target.profile[f]?.value ?? null;
       } else if (twin) {
@@ -1067,12 +1115,12 @@ export class DataStore {
         clipped: Math.abs(ez ?? 0) >= 4 || Math.abs(mz ?? 0) >= 4,
       };
     });
-    const infoRows: InfoRow[] = (zRows ? this.similarity.not_part_of_similarity : []).map((variable) => {
+    const infoRows: InfoRow[] = (zRows ? (this.similarity.not_part_of_similarity ?? []) : []).map((variable) => {
       const info = this.varByName.get(variable);
       const earth = this.earthValue(info?.bodies.EARTH?.column ?? variable, landPos);
       let moonValue: number | string | null = null;
       let how: InfoRow['moon']['how'] = 'mean';
-      if (target.kind === 'global_mean') {
+      if (target?.kind === 'global_mean') {
         const t = target.info_not_in_similarity[variable];
         moonValue = t?.mean ?? t?.commonest ?? null;
         how = t?.commonest != null ? 'commonest' : 'mean';
@@ -1136,7 +1184,7 @@ export class DataStore {
       pairRows,
       noPair: pass && valueRule ? this.noPairAt(missionId, p) : null,
       pairSentences: pass && valueRule ? this.pairSentencesAt(missionId, p) : [],
-      pairInfo: pass && valueRule ? this.pairInfoOf(landPos, twin) : [],
+      pairInfo: pass && valueRule ? this.pairInfoOf(landPos, twin, missionId, p) : [],
     };
   }
 
@@ -1145,9 +1193,35 @@ export class DataStore {
    * carries (twins.json not_part_of_similarity) against the Earth cell's own, with the difference.
    * Without a twin, the Earth values of the bundle's information list for the rule.
    */
-  pairInfoOf(landPos: number, twin: Twin | null): PairInfoRow[] {
+  pairInfoOf(landPos: number, twin: Twin | null, missionId?: string, p = -1): PairInfoRow[] {
     const names = twin ? Object.keys(twin.not_part_of_similarity) : [];
-    return names.map((variable) => {
+    // revision 6: values exported per pair in the pairs file come first, from there (both sides and the difference)
+    const md = missionId ? this.missionDataOf(missionId) : null;
+    const cols = twin && md ? (md.mission.similarity.info_columns ?? []) : [];
+    const fromPairs: PairInfoRow[] = cols.map((c) => {
+      const info = this.varByName.get(c.variable);
+      const lab = this.similarityLabel(c.variable);
+      return {
+        variable: c.variable,
+        label: info?.label ?? lab.label,
+        unit: c.unit,
+        earth: this.pairValue(md!, c.columns.earth, p),
+        moon: this.pairValue(md!, c.columns.moon, p),
+        diff: (() => {
+          const d = this.pairValue(md!, c.columns.diff, p);
+          return d == null ? null : Math.abs(d);
+        })(),
+        diffUnit: c.unit === 'degC' ? 'K' : c.unit,
+        levels: { EARTH: info?.bodies.EARTH?.level ?? null, MOON: info?.bodies.MOON?.level ?? null },
+      };
+    });
+    const done = new Set(cols.map((c) => c.variable));
+    // a value already compared in the similarity is not repeated here
+    for (const d of missionId ? this.pairVariables(missionId) : []) {
+      done.add(d.variable);
+      if (d.sides?.EARTH?.column) done.add(d.sides.EARTH.column);
+    }
+    return fromPairs.concat(names.filter((n) => !done.has(n)).map((variable) => {
       const info = this.varByName.get(variable);
       const ev = this.earthValue(info?.bodies.EARTH?.column ?? variable, landPos).value;
       const e = typeof ev === 'number' ? f32Decimal(ev) : ev;
@@ -1164,7 +1238,23 @@ export class DataStore {
         diffUnit: unit === 'degC' ? 'K' : unit,
         levels: { EARTH: info?.bodies.EARTH?.level ?? null, MOON: info?.bodies.MOON?.level ?? null },
       };
-    });
+    }));
+  }
+
+  /**
+   * How one side of a similarity variable is made, in a few words from the bundle (missions.json
+   * similarity.variables[].sides): its level and, for a temperature, whether it is an air or a surface
+   * temperature and from which product ("modelled air temperature (WorldClim)").
+   */
+  sideWords(def: PairVariable, body: 'EARTH' | 'MOON'): { level: Level | null; words: string | null } {
+    const side = def.sides?.[body];
+    if (!side) return { level: null, words: null };
+    const lv = /\b(MEASURED|DERIVED|MODELLED)\b/.exec(String(side.level ?? ''))?.[1] as Level | undefined;
+    const what = /\b(AIR|SURFACE)\s+temperature/i.exec(side.text ?? '')?.[1]?.toLowerCase();
+    const product = /\b(WorldClim|Diviner|MODIS|LOLA|ETOPO)\b/.exec(side.text ?? '')?.[1];
+    const levelWord = lv ? ({ MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled' } as Record<string, string>)[lv] : null;
+    const words = what ? `${levelWord ? levelWord + ' ' : ''}${what} temperature${product ? ` (${product})` : ''}` : null;
+    return { level: lv ?? null, words };
   }
 
   /** The real column a mission variable is read from (gates or weighted variables say it). */
@@ -1200,11 +1290,12 @@ export class DataStore {
     }
     const tp = this.tilePos(landPos);
     if (!tp) throw new Error('tile not loaded');
-    const F = this.similarity.active_variables;
-    const nw = F.map((f) => this.similarity.variables.find((v) => v.variable === f)!.norm_weight ?? 0);
+    const F = this.similarity.active_variables ?? [];
+    const target = this.similarity.target;
+    if (!F.length || !target || !this.similarity.formula) return this.q(md.table, 'similarity', md.passPos[landPos]);
+    const nw = F.map((f) => this.similarity.variables?.find((v) => v.variable === f)?.norm_weight ?? 0);
     const ze = F.map((f) => this.q(tp.tile, `z.${f}`, tp.pos));
     let zm: (number | null)[];
-    const target = this.similarity.target;
     if (target.kind === 'global_mean') zm = F.map((f) => target.profile[f]?.z ?? null);
     else {
       const p = md.passPos[landPos];

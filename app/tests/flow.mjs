@@ -29,7 +29,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DataStore } from '../src/data/store.ts';
-import { classWord, plainText } from '../src/flow/copy.ts';
+import { classWord, plainText, staleForRule } from '../src/flow/copy.ts';
 import { serve } from './lib/serve.mjs';
 
 const require = createRequire(import.meta.url);
@@ -343,7 +343,7 @@ async function run(browser, srv, variant, exp, size) {
   const solarLim = store.similarity.texts?.solar_limitation?.text;
   // the technical record sits in a closed disclosure: read its text content; the approved solar limitation is shown open
   // known limitations: the engine's record in plain words (plainText), never the per-pair template
-  const lims = store.offeredMissions().every((x) => x.known_limitations.every((l) => dlg.all.includes(plainText(store, l, x)))) && (!solarLim || !/\{/.test(solarLim) || !dlg.all.includes(solarLim));
+  const lims = store.offeredMissions().every((x) => x.known_limitations.every((l) => (staleForRule(store, x, l) ? !dlg.all.includes(plainText(store, l, x)) : dlg.all.includes(plainText(store, l, x))))) && (!solarLim || !/\{/.test(solarLim) || !dlg.all.includes(solarLim));
   check(/111 km/.test(dlg.text) && /30 km/.test(dlg.text), `${tag}: "Data and limits" states the cell size`);
   check(dlg.meaning.length > 40 && store.offeredMissions().every((x) => dlg.meaning.includes(x.id === 'lunar_base' || !store.isValueRule(x.id) ? '' : store.text('similarity_meaning_real_values') ?? '')), `${tag}: "Data and limits" says what similarity means for each mission's rule`);
   check(lims, `${tag}: "Data and limits" lists every known limitation of the three missions, in plain words`);
@@ -548,7 +548,12 @@ async function run(browser, srv, variant, exp, size) {
         note: document.querySelector('.video-dialog .video-note')?.textContent ?? '',
         step: document.querySelector('#steps .steps-where')?.textContent ?? '',
         src: document.querySelector('.video-dialog video')?.currentSrc ?? '',
+        paused: document.querySelector('.video-dialog video')?.paused ?? true,
+        t: document.querySelector('.video-dialog video')?.currentTime ?? 0,
+        focus: document.activeElement?.tagName ?? '',
       }));
+      if (size.reduce) check(v.paused && v.focus === 'VIDEO', `${tag} ${m.id}: under reduced motion the film waits, paused, with focus on the player`);
+      else check(!v.paused && v.t > 0 && v.focus === 'VIDEO', `${tag} ${m.id}: "Start the mission" plays the film (t = ${v.t.toFixed(2)} s) with focus on the player, not on Close`);
       check(/3D simulation/.test(v.title) && /not real footage/i.test(v.credit + v.note), `${tag} ${m.id}: video labelled as a 3D simulation, not real footage ("${v.credit}")`);
       check(v.credit === media[MEDIA_FOLDER[m.id]].credit, `${tag} ${m.id}: credit line from the media README`);
       check(/Step 4 of 4/.test(v.step), `${tag} ${m.id}: step indicator on "Start the mission"`);
@@ -756,8 +761,10 @@ async function checkPanel(page, label, store, m, id, twins) {
     rows.forEach((r, i) => {
       const b = p.pairVars[i];
       if (!b) return;
-      const close = (txt, v) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= 0.006 * Math.abs(v) + 0.006;
+      const pct = r.def.unit === 'percentile points';
+      const close = (txt, v, p1 = pct) => v == null ? /no data/.test(txt) : Math.abs(nums(txt)[0] - v) <= (p1 ? 0.051 : 0.006 * Math.abs(v) + 0.006);
       if (!close(b.vals.earth, r.earth) || !close(b.vals.moon, r.moon) || !close(b.vals.diff, r.diff)) bad.push(`pair values ${r.def.variable}: ${b.vals.earth} / ${b.vals.moon} / ${b.vals.diff}`);
+      if (r.real && (!close(b.vals['earth-real'], r.real.earth, false) || !close(b.vals['moon-real'], r.real.moon, false) || !close(b.vals['diff-real'], r.real.diff, false) || !/\bK\b/.test(b.vals['diff-real'] ?? '') === (r.real.unit === 'K'))) bad.push(`real values ${r.def.variable}: ${b.vals['earth-real']} / ${b.vals['moon-real']} / ${b.vals['diff-real']}`);
       if (!close(b.vals.tolerance, r.def.tolerance) || !b.vals.tolerance.includes(`Set by: ${r.def.tolerance_set_by.split(':')[0].trim()}`)) bad.push(`tolerance ${r.def.variable}`);
       if (!b.vals.within.includes(r.within ? 'Within' : 'Outside') || b.within !== String(r.within)) bad.push(`within ${r.def.variable}`);
       if (!near(nums(b.vals.weight)[0], r.weight, 2) || (r.score != null && !near(nums(b.vals.score)[0], r.score, 3))) bad.push(`weight/score ${r.def.variable}`);
@@ -844,7 +851,9 @@ async function checkTop(page, tag, store, explain, m, top) {
   if (e.similarity.variables) {
     for (const v of e.similarity.variables) {
       const b = p.pairVars.find((x) => x.v === v.variable);
-      if (!b || !near(nums(b.vals.score)[0], v.score, 3) || Math.abs(nums(b.vals.earth)[0] - v.earth) > 0.006 * Math.abs(v.earth) + 0.006 || Math.abs(nums(b.vals.moon)[0] - v.moon) > 0.006 * Math.abs(v.moon) + 0.006) bad.push(`pair variable ${v.variable} vs explain.json`);
+      const tol = (x) => (v.unit === 'percentile points' ? 0.051 : 0.006 * Math.abs(x) + 0.006);
+      if (!b || !near(nums(b.vals.score)[0], v.score, 3) || Math.abs(nums(b.vals.earth)[0] - v.earth) > tol(v.earth) || Math.abs(nums(b.vals.moon)[0] - v.moon) > tol(v.moon)) bad.push(`pair variable ${v.variable} vs explain.json`);
+      if (b && v.earth_real != null && v.unit !== v.real_unit && Math.abs(nums(b.vals['earth-real'])[0] - v.earth_real) > 0.006 * Math.abs(v.earth_real) + 0.006) bad.push(`real value ${v.variable} vs explain.json`);
     }
   }
   check(bad.length === 0, `${tag} ${m.id}: top cell ${top.id} similarity variables equal explain.json${bad.length ? ': ' + bad.join('; ') : ''}`);
