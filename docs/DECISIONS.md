@@ -37,7 +37,7 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 | Rover | Polo sur, latitud ≤ 75 S (`analog_finder.py` línea 189: `lat <= -75.0`) | 5.400 | 1.440 |
 | Paneles solares | la misma zona del polo sur | 5.400 | 1.440 |
 | Base lunar | las nueve regiones candidatas de aterrizaje de Artemis que NASA anunció el 28-10-2024 (rejillas USGS, McClernan 2024, doi:10.5066/P1MEQ6UK, CC0) | 280 | 114 |
-| (referencia) Tycho, la zona del Rover en `main` | caja 35 S-55 S, 30 O-5 E (`analog_finder.py` líneas 193-195) | 700 | no calculado |
+| (referencia) Tycho, la zona del Rover en `main` | caja 35 S-55 S, 30 O-5 E (`analog_finder.py` líneas 193-195) | 700 | 198 |
 | (referencia) Luna entera | todas | 64.800 | 16.200 |
 
 **Qué versión de `analog_finder.py` está en uso.** En `main` el Rover apunta a Tycho (`git show main:"tierra luna/analog_finder.py"`, línea 259: `"rover": rocky_target,`). En `final-integration` está la decisión posterior del equipo, que lo manda al polo sur. Entró en el **commit `ff6f1ae`** (14-11-2026, 23:46 UTC, "Checkpoint: rover v3 integration and web interaction modules in progress"; `git log -S"Plan decision 2"` devuelve solo ese commit). Líneas 259-261 de `compute_mission_optimality_scores`:
@@ -50,7 +50,7 @@ Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). 
 
 El fichero de trabajo no tiene cambios respecto a ese commit (`git diff HEAD` vacío).
 
-**Pero el gemelo todavía no está encendido.** El producto se construye con el motor `tierra luna/engine/`, y su ajuste `similarity_rule` vale hoy `"repo_global_mean"` (`engine/engine_config.json`, línea 218): cada punto de la Tierra se compara con el **perfil medio de toda la Luna**, no hay gemelo y la similitud es la misma para las tres misiones. La regla del gemelo es el valor `"zone_twin"` del mismo ajuste (línea 224), con las zonas de `similarity_zones` (líneas 246-274). Encenderla es cambiar ese valor y volver a construir (`python -m engine build`), según `ASSUMPTIONS.md` §0.4.
+**Pero el gemelo todavía no está encendido.** El producto se construye con el motor `tierra luna/engine/`, y su ajuste `similarity_rule` vale hoy `"repo_global_mean"` (`engine/engine_config.json`, línea 218): cada punto de la Tierra se compara con el **perfil medio de toda la Luna**, no hay gemelo y la similitud es la misma para las tres misiones. Ojo: el motor de hoy **ya quita la roca** y ya ignora la temperatura que falta (decisiones 2 y 3), así que lo que enseña hoy la web (llamémoslo **E0**) no es lo mismo que daría `analog_finder.py` tal cual, con roca y con z = 0 para lo que falta (**A0**, la línea base de la propuesta). He comprobado E0 contra el paquete publicado en `app/public/data/v2` (`similarity.json` dice `rule: repo_global_mean`): mi cálculo reproduce su similitud en los 31.533 puntos (diferencia 0) y sus tres top 10 en el mismo orden. La regla del gemelo es el valor `"zone_twin"` del mismo ajuste (línea 224), con las zonas de `similarity_zones` (líneas 246-274). Encenderla es cambiar ese valor y volver a construir (`python -m engine build`), según `ASSUMPTIONS.md` §0.4.
 
 **Pesos fijos frente a pesos por misión.** Con `DEFAULT_WEIGHTS` las tres misiones usan los mismos cuatro pesos. La otra posibilidad es convertir los pesos por dominio de cada misión (relieve, material, térmico, luz, agua; `mission_scoring.json`) en pesos por variable:
 
@@ -89,7 +89,8 @@ El cráter de Haughton (isla Devon, Nunavut, Canadá), un análogo lunar real, c
 
 | regla | similitud | final | puesto (de 10.337) | gemelo lunar |
 |---|---|---|---|---|
-| Hoy en el motor (Luna media, A0) | 45,4 | 72,1 | 4.224 | ninguno |
+| Hoy en la web (motor, Luna media sin roca, E0) | 72,8 | 85,8 | 625 | ninguno |
+| `analog_finder` tal cual (Luna media con roca, A0; la línea base de la propuesta) | 45,4 | 72,1 | 4.224 | ninguno |
 | A1 (pesos fijos, polo sur) | 96,1 | 97,5 | 80 | M59910, 76,5 S 29,5 O, cráter Newton a 85 km |
 | A2 (pesos "Use Weights") | 96,0 | 97,5 | 81 | el mismo |
 | A3a (sin diluir) | 96,1 | 97,5 | 78 | el mismo |
@@ -104,7 +105,7 @@ El gemelo polar (Newton) tiene pendiente 6,8°, rugosidad 243 m, elevación rela
 | **A. Encender A1 con pesos fijos** (`similarity_rule = zone_twin`) | Da un par real con nombre, coordenadas y enlace al nomenclátor de la IAU. Mismos pesos para las tres misiones: fácil de explicar. Para el Rover da casi lo mismo que A3a (Spearman 1,000). Ya está implementado y verificado. | Los pesos no dependen de la misión. Los gemelos se concentran (decisión 4). Paneles solares sigue siendo indefendible (decisión 5). |
 | B. A1 con pesos A2 ("Use Weights") | Usa los pesos que el equipo escribió por misión. | "Luz" y "agua" no tienen variable y se cuelan en temperatura y elevación: en Base lunar la temperatura pesa el 61,62 % y el 66,1 % de los puntos acaba en una celda. |
 | C. A1 con pesos A3a | Respeta los dominios sin filtraciones. | Base lunar: 75 % temperatura, el 63,9 % de los puntos en una celda. Habría que explicar una regla nueva de reparto. |
-| D. Seguir con la Luna media (hoy) | No hay que tocar nada. | No hay par. La similitud es la misma para las tres misiones. El top 10 del Rover lo forman praderas con vegetación por el efecto de la roca (decisión 2). |
+| D. Seguir con la Luna media (hoy) | No hay que tocar nada. | No hay par. La similitud es la misma para las tres misiones. Se compara con una "Luna media" que no es ningún sitio: el top 10 del Rover es estepa de Mongolia, Mongolia Interior y Xinjiang, más una celda de Chubut (Argentina). |
 | E. Rover a Tycho (como en `main`) | Tycho es un cráter conocido. | Contradice la decisión del equipo ya en la rama (`ff6f1ae`). El top 10 pasa a ser estepa de Mongolia y Kazajistán; una sola celda (M49851, 48,5 S 8,5 O, cerca de Maginus) se lleva el 25,5 % de los puntos (2.633). |
 
 ### 5. Recomendación y por qué
@@ -113,24 +114,26 @@ El gemelo polar (Newton) tiene pendiente 6,8°, rugosidad 243 m, elevación rela
 
 ### 6. Qué cambia en los resultados si se acepta
 
-Todos los puntos clasificados pasan de "sin gemelo" a "con gemelo": **31.533 pares** (10.337 + 18.777 + 2.419). Ningún punto del top 10 actual sigue en el top 10 en ninguna misión (propuesta, §1). Spearman del final, antes frente a después: Rover 0,334; Paneles 0,567; Base lunar −0,159 (propuesta, §1).
+Todos los puntos clasificados pasan de "sin gemelo" a "con gemelo": **31.533 pares** (10.337 + 18.777 + 2.419). Ningún punto del top 10 actual sigue en el top 10 en ninguna misión (0/10 en las tres, tanto frente a lo que enseña hoy la web, E0, como frente a A0). Spearman del final, antes frente a después: frente a la web de hoy (E0, ambos con el tratamiento del motor para la temperatura que falta), Rover 0,578; Paneles 0,646; Base lunar 0,117. Frente a A0 (propuesta, §1): 0,334; 0,567; −0,159.
 
-*Matiz:* el motor trata los puntos antárticos sin temperatura de forma distinta a la propuesta (decisión 3). Eso no cambia ningún top 10 de abajo.
+*Matiz:* el motor trata los puntos antárticos sin temperatura de forma distinta a la propuesta (decisión 3). Eso no cambia ningún top 10 de "después".
 
-**Rover, antes (Luna media):**
+Los "antes" de abajo son los que enseña hoy la web (E0, leídos del paquete `app/public/data/v2` y recalculados). Los top 10 de A0 (con roca) están en la propuesta, §5; el del Rover eran praderas de Canadá, Montana y Kazajistán.
+
+**Rover, antes (web de hoy, E0):**
 
 | # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
 |---|---|---|---|---|---|---|
-| 1 | E12303 | 55,5 N 116,5 O | Canada / Alberta | 75,0 | 98,3 | 86,6 |
-| 2 | E14294 | 50,5 N 74,5 E | Kazakhstan / Qaraghandy | 75,0 | 97,8 | 86,4 |
-| 3 | E12306 | 55,5 N 113,5 O | Canada / Alberta | 75,0 | 97,7 | 86,4 |
-| 4 | E11945 | 56,5 N 114,5 O | Canada | 75,0 | 97,6 | 86,3 |
-| 5 | E14654 | 49,5 N 74,5 E | Kazakhstan / Qaraghandy | 75,0 | 97,2 | 86,1 |
-| 6 | E14653 | 49,5 N 73,5 E | Kazakhstan / Qaraghandy | 75,1 | 97,1 | 86,1 |
-| 7 | E14112 | 50,5 N 107,5 O | Canada / Saskatchewan | 75,2 | 96,8 | 86,0 |
-| 8 | E14835 | 48,5 N 104,5 O | United States / Montana | 75,0 | 96,7 | 85,9 |
-| 9 | E14474 | 49,5 N 105,5 O | Canada / Saskatchewan | 75,3 | 96,3 | 85,8 |
-| 10 | E13759 | 51,5 N 100,5 O | Canada / Manitoba | 75,0 | 96,6 | 85,8 |
+| 1 | E15056 | 48,5 N 116,5 E | China / Inner Mongolia | 100,0 | 98,8 | 99,4 |
+| 2 | E15055 | 48,5 N 115,5 E | Mongolia | 100,0 | 97,2 | 98,6 |
+| 3 | E15054 | 48,5 N 114,5 E | Mongolia / East Aimak | 100,0 | 96,7 | 98,4 |
+| 4 | E15748 | 46,5 N 88,5 E | China / Xinjiang Uygur Zizhiqu | 100,0 | 95,8 | 97,9 |
+| 5 | E15053 | 48,5 N 113,5 E | Mongolia / East Aimak | 100,0 | 94,9 | 97,4 |
+| 6 | E15414 | 47,5 N 114,5 E | Mongolia / East Aimak | 100,0 | 94,8 | 97,4 |
+| 7 | E15747 | 46,5 N 87,5 E | China / Xinjiang Uygur Zizhiqu | 100,0 | 94,8 | 97,4 |
+| 8 | E15776 | 46,5 N 116,5 E | Mongolia | 97,7 | 96,1 | 96,9 |
+| 9 | E48709 | 45,5 S 70,5 O | Argentina / Chubut | 100,0 | 93,8 | 96,9 |
+| 10 | E16137 | 45,5 N 117,5 E | China / Inner Mongolia | 100,0 | 93,2 | 96,6 |
 
 **Rover, después (A1):**
 
@@ -147,20 +150,20 @@ Todos los puntos clasificados pasan de "sin gemelo" a "con gemelo": **31.533 par
 | 9 | E4037 | 78,5 N 102,5 O | Canada | 100,0 | 97,3 | 98,6 | M59545, 75,5 S 34,5 O, Casatus a 91 km |
 | 10 | E6538 | 71,5 N 121,5 O | Canada | 100,0 | 97,3 | 98,6 | M60093, 76,5 S 153,5 E, Schrodinger a 163 km |
 
-**Paneles solares, antes:**
+**Paneles solares, antes (web de hoy, E0):**
 
 | # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
 |---|---|---|---|---|---|---|
-| 1 | E30079 | 6,5 N 19,5 E | Central African Rep. / Nana-Grebizi | 92,9 | 83,5 | 88,2 |
-| 2 | E30078 | 6,5 N 18,5 E | Central African Rep. / Ouham | 93,2 | 83,2 | 88,2 |
-| 3 | E38385 | 16,5 S 45,5 E | Madagascar / Melaky | 96,5 | 79,9 | 88,2 |
-| 4 | E39563 | 19,5 S 143,5 E | Australia | 94,9 | 81,4 | 88,1 |
-| 5 | E30077 | 6,5 N 17,5 E | Central African Rep. / Ouham | 93,3 | 83,0 | 88,1 |
-| 6 | E42681 | 28,5 S 21,5 E | South Africa / Northern Cape | 93,5 | 82,5 | 88,0 |
-| 7 | E38106 | 15,5 S 126,5 E | Australia | 95,9 | 80,0 | 88,0 |
-| 8 | E44216 | 32,5 S 116,5 E | Australia / Western Australia | 90,2 | 85,7 | 88,0 |
-| 9 | E38744 | 17,5 S 44,5 E | Madagascar / Melaky | 96,8 | 79,1 | 87,9 |
-| 10 | E30080 | 6,5 N 20,5 E | Central African Rep. / Ouaka | 92,5 | 83,4 | 87,9 |
+| 1 | E42680 | 28,5 S 20,5 E | South Africa / Northern Cape | 94,0 | 81,2 | 87,7 |
+| 2 | E30079 | 6,5 N 19,5 E | Central African Rep. / Nana-Grebizi | 92,9 | 82,1 | 87,5 |
+| 3 | E30078 | 6,5 N 18,5 E | Central African Rep. / Ouham | 93,2 | 81,8 | 87,5 |
+| 4 | E39563 | 19,5 S 143,5 E | Australia | 94,9 | 80,0 | 87,4 |
+| 5 | E43039 | 29,5 S 19,5 E | South Africa / Northern Cape | 92,4 | 82,4 | 87,4 |
+| 6 | E30077 | 6,5 N 17,5 E | Central African Rep. / Ouham | 93,3 | 81,5 | 87,4 |
+| 7 | E41352 | 24,5 S 132,5 E | Australia | 94,5 | 80,3 | 87,4 |
+| 8 | E42072 | 26,5 S 132,5 E | Australia | 93,4 | 81,4 | 87,4 |
+| 9 | E42681 | 28,5 S 21,5 E | South Africa / Northern Cape | 93,5 | 81,2 | 87,4 |
+| 10 | E43138 | 29,5 S 118,5 E | Australia | 92,6 | 82,2 | 87,4 |
 
 **Paneles solares, después:**
 
@@ -177,20 +180,20 @@ Todos los puntos clasificados pasan de "sin gemelo" a "con gemelo": **31.533 par
 | 9 | E41606 | 25,5 S 26,5 E | South Africa / North-West | 91,6 | 72,6 | 82,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
 | 10 | E43042 | 29,5 S 22,5 E | South Africa / Northern Cape | 93,0 | 71,2 | 82,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
 
-**Base lunar, antes:**
+**Base lunar, antes (web de hoy, E0):**
 
 | # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
 |---|---|---|---|---|---|---|
-| 1 | E15778 | 46,5 N 118,5 E | China / Inner Mongolia | 36,5 | 87,6 | 62,0 |
-| 2 | E18287 | 39,5 N 107,5 E | China / Inner Mongolia | 38,7 | 85,3 | 62,0 |
-| 3 | E18288 | 39,5 N 108,5 E | China / Inner Mongolia | 38,5 | 85,0 | 61,8 |
-| 4 | E15418 | 47,5 N 118,5 E | Mongolia / East Aimak | 37,6 | 84,6 | 61,1 |
-| 5 | E14109 | 50,5 N 110,5 O | Canada / Alberta | 26,1 | 96,0 | 61,1 |
-| 6 | E18289 | 39,5 N 109,5 E | China / Inner Mongolia | 36,1 | 85,8 | 60,9 |
-| 7 | E18649 | 38,5 N 109,5 E | China / Shaanxi | 35,0 | 86,8 | 60,9 |
-| 8 | E14835 | 48,5 N 104,5 O | United States / Montana | 24,8 | 96,7 | 60,7 |
-| 9 | E14654 | 49,5 N 74,5 E | Kazakhstan / Qaraghandy | 24,3 | 97,2 | 60,7 |
-| 10 | E14699 | 49,5 N 119,5 E | China / Inner Mongolia | 35,2 | 86,1 | 60,7 |
+| 1 | E15055 | 48,5 N 115,5 E | Mongolia | 53,0 | 97,2 | 75,1 |
+| 2 | E15056 | 48,5 N 116,5 E | China / Inner Mongolia | 49,0 | 98,8 | 73,9 |
+| 3 | E17553 | 41,5 N 93,5 E | China | 62,6 | 84,9 | 73,8 |
+| 4 | E17200 | 42,5 N 100,5 E | China / Inner Mongolia | 60,7 | 86,5 | 73,6 |
+| 5 | E15054 | 48,5 N 114,5 E | Mongolia / East Aimak | 50,3 | 96,7 | 73,5 |
+| 6 | E17921 | 40,5 N 101,5 E | China / Inner Mongolia | 63,2 | 83,8 | 73,5 |
+| 7 | E18266 | 39,5 N 86,5 E | China | 62,0 | 84,8 | 73,4 |
+| 8 | E15415 | 47,5 N 115,5 E | Mongolia / East Aimak | 50,2 | 96,6 | 73,4 |
+| 9 | E14695 | 49,5 N 115,5 E | Mongolia / East Aimak | 51,0 | 95,6 | 73,3 |
+| 10 | E17201 | 42,5 N 101,5 E | China / Inner Mongolia | 60,6 | 85,9 | 73,3 |
 
 **Base lunar, después:**
 
@@ -250,7 +253,7 @@ Como comparación, si el Rover se mandara a Tycho (opción E), el top 10 sería 
 - En la tabla lunar real vale **1 en las 64.800 celdas**. Es una definición, no una medida: `real_data/provenance_moon.csv` dice "1 for every cell: the team's variable means exposed (unvegetated) ground; the Moon has none".
 - `normalize_planetary_features` (línea 162) no encuentra variación (rango intercuartílico 0, desviación típica 0), usa escala 1 y da a toda la Luna **z = (1 − 1)/1 = 0**. La variable sigue marcada como válida (línea 178) y conserva su peso: 16,67 % de la similitud cuando el radar falta.
 - En la Tierra es la fracción de suelo desnudo o con vegetación escasa según ESA CCI Land Cover 2020 (clases 200-202 y 150-153). Es una clasificación de cubierta del suelo, no una medida de rocas.
-- El motor ya la quita en las tablas reales: `engine/datasets.json`, `similarity_excluded` (líneas 487-489). La propuesta (A1) también. Lo que falta es que el equipo confirme que la retirada es definitiva.
+- El motor ya la quita en las tablas reales: `engine/datasets.json`, `similarity_excluded` (líneas 487-489). La propuesta (A1) también. Por eso la web de hoy ya no tiene este sesgo: lo tiene `analog_finder.py` usado tal cual (A0). Lo que falta es que el equipo confirme que la retirada es definitiva.
 
 ### 2. El problema
 
@@ -292,7 +295,7 @@ Desierto de Atacama, núcleo de Yungay, celda **E41150 (24,5 S 69,5 O, Chile)**:
 | Paneles solares | 45,1 / 15.418 de 18.777 | 71,3 / 3.535 | 70,8 / 3.568 | el mismo |
 | Base lunar | 44,2 / 109 de 2.419 | 67,7 / 41 | 67,2 / 46 | M62486, 83,5 S 26,5 E, Mons Mouton a 36 km (región Mons Mouton Plateau) |
 
-En el otro extremo, una pradera de Alberta (E12303, 55,5 N 116,5 O, fracción desnuda 0,0009) era el número 1 del Rover con la regla de hoy.
+En el otro extremo, una pradera de Alberta (E12303, 55,5 N 116,5 O, fracción desnuda 0,0009) es el número 1 del Rover con `analog_finder` tal cual (A0, Luna media con roca). En la web de hoy (E0, ya sin roca) Atacama tiene similitud 50,8 y puesto 4.871 en el Rover.
 
 ### 4. Las opciones
 
@@ -316,7 +319,7 @@ Recuerda que en las tablas reales tampoco hay radar: su 0,10 también se reparte
 
 ### 5. Recomendación y por qué
 
-**La retirada es definitiva; el reparto, proporcional.** Mantenerla castiga justo el terreno que más se parece a la Luna. El reparto proporcional es el que ya usan el motor y la propuesta, conserva el orden de los pesos del equipo y difiere del reparto a partes iguales en menos del 3,3 % de los gemelos, sin tocar el top 10 del Rover ni el de Base lunar. **Sí se sigue enseñando como dato informativo:** el motor la exporta marcada "part_of_similarity: false" (`engine/export_v2.py` línea 573, en el estado de trabajo de hoy y `datasets.json` línea 477). Lo que no he podido confirmar es que el panel de la web la pinte: en `app/src` no encuentro ninguna referencia a la variable. Hay que comprobarlo en la web.
+**La retirada es definitiva; el reparto, proporcional.** Mantenerla castiga justo el terreno que más se parece a la Luna. El reparto proporcional es el que ya usan el motor y la propuesta, conserva el orden de los pesos del equipo y difiere del reparto a partes iguales en el 2,2-3,3 % de los gemelos, sin tocar el top 10 del Rover ni el de Base lunar. **Sí se sigue enseñando como dato informativo:** el motor la exporta fuera de la similitud: en el resumen lunar marcada `"part_of_similarity": False` (`engine/export_v2.py`, `lunar_info_summary`, líneas 573-585 del fichero de trabajo de hoy, que otros agentes están editando) y, para cada gemelo, en `not_part_of_similarity` de `twins.json` (líneas 614-619). `datasets.json` la declara excluida en `similarity_excluded` (líneas 487-489). En la Luna ese dato vale siempre 1. Lo que no he podido confirmar es que el panel de la web la pinte: en `app/src` no encuentro ninguna referencia a la variable. Hay que comprobarlo en la web.
 
 ### 6. Qué cambia en los resultados si se acepta
 
@@ -376,7 +379,7 @@ Frente a "dejarla dentro": **0 gemelos cambian** en las tres misiones. Lo que ca
 
 **ASSUMPTIONS.md**, en §0.3, al final del párrafo "The rock variable on the real tables":
 
-> "Confirmed by the team lead on 2026-11-15 as final. With the variable kept, every lunar cell has z = 0 and an Earth cell with bare fraction >= 0.5 gets z = +4, so no desert cell could exceed a similarity of 47.96; the twins would not change (the term is the same for every lunar candidate), only the ranking. The weight is redistributed in proportion (an equal split changes 2-3 % of twins and no rover or lunar_base top-10 cell)."
+> "Confirmed by the team lead on 2026-11-15 as final. With the variable kept, every lunar cell has z = 0 and an Earth cell with bare fraction >= 0.5 gets z = +4, so no desert cell could exceed a similarity of 47.96; the twins would not change (the term is the same for every lunar candidate), only the ranking. The weight is redistributed in proportion (an equal split changes 2.2-3.3 % of twins and no rover or lunar_base top-10 cell)."
 
 **Web:**
 
@@ -413,7 +416,7 @@ Frente a "dejarla dentro": **0 gemelos cambian** en las tres misiones. Lo que ca
 
 Con z = 0, una celda del interior antártico se compara con la Luna como si estuviera a 284 K, una temperatura templada. En el Rover, los 1.156 puntos afectados reciben una similitud de 72,3 a 83,8 (mediana 78,3) y gemelos elegidos para una temperatura falsa.
 
-**Cuántas están hoy en un top 10: ninguna.** Ninguna de estas celdas está en el top 10, ni en el top 100, de ninguna misión, ni con la regla de hoy en el motor (Luna media) ni con A1. El daño está en los paneles de esos puntos (su gemelo y su similitud), no en lo que se ve primero.
+**Cuántas están hoy en un top 10: ninguna.** Ninguna de estas celdas está en el top 10, ni en el top 100, de ninguna misión, ni con la regla de hoy en el motor (E0; la mejor está en el puesto 542 del Rover) ni con A1. Solo con `analog_finder` tal cual (A0, z = 0 y con roca) entrarían 14 en el top 100 del Rover (la mejor, puesto 73), ninguna en el top 10. El daño está en los paneles de esos puntos (su gemelo y su similitud), no en lo que se ve primero.
 
 ### 3. Un ejemplo concreto
 
@@ -424,7 +427,7 @@ Estación Concordia (Dome C), celda **E59703 (75,5 S 123,5 E, Antártida)**, Pan
 | z = 0 (como `analog_finder`; cifras de la propuesta) | 0 (= 284,3 K) | 74,9 | 14.587 | M59522, 75,5 S 57,5 O, Le Gentil a 150 km (158,9 K) |
 | Ignorar y renormalizar (como el motor) | no se usa | 90,2 | 14.949 | M62845, 84,5 S 25,5 E, Mons Mouton a 16 km, región Mons Mouton Plateau (129,3 K) |
 | Excluir la celda | — | — | fuera del ranking | — |
-| Otra fuente: NASA POWER, temperatura de piel anual en Dome C | −3,10 (217,7 K) | no calculado | no calculado | no calculado |
+| Otra fuente: NASA POWER, temperatura de piel anual en Dome C (solo este punto) | −3,10 (217,7 K) | 81,5 | no calculado (habría que rellenar las 6.558 celdas) | M62850, 84,5 S 30,5 E, Mons Mouton a 3 km (124,7 K) |
 
 El puesto baja aunque la similitud suba, porque los otros 6.059 puntos antárticos también suben.
 
@@ -435,7 +438,7 @@ El puesto baja aunque la similitud suba, porque los otros 6.059 puntos antártic
 | opción | qué pasa (cálculo de hoy) | a favor | en contra |
 |---|---|---|---|
 | Dejar z = 0 | Lo de la propuesta. | Es la fórmula literal del repositorio. | Trata la Antártida como templada. No se puede defender. |
-| **Ignorar y renormalizar** | Cambian de gemelo 1.123 de los 1.156 puntos del Rover y 6.023 de los 6.060 de Paneles. Su similitud mediana sube de 78,3 a 98,0 (Rover) y de 77,1 a 96,1 (Paneles). El mejor puesto pasa de 4.222 a 888 (Rover) y de 12.459 a 3.881 (Paneles). Top 10 igual (10/10); ninguno entra en el top 100. Spearman del final con z = 0: 0,908 (Rover), 0,784 (Paneles). Gemelos distintos: 305 → 744 (Rover) y 186 → 721 (Paneles). | Mismo trato que la idoneidad. Ya está en el motor: cero trabajo. No inventa ningún valor. | Con tres variables es más fácil parecerse: su similitud sale **inflada** (mediana 98,0, frente a 79,1 de todos los puntos del Rover). Hay que marcarlo. |
+| **Ignorar y renormalizar** | Cambian de gemelo 1.123 de los 1.156 puntos del Rover y 6.023 de los 6.060 de Paneles. Su similitud mediana sube de 78,3 a 98,0 (Rover) y de 77,1 a 96,1 (Paneles). El mejor puesto pasa de 4.222 a 888 (Rover) y de 12.459 a 3.881 (Paneles). Top 10 igual (10/10); ninguno entra en el top 100. Spearman del final con z = 0: 0,908 (Rover), 0,784 (Paneles). Gemelos distintos: 305 → 744 (Rover) y 186 → 721 (Paneles). | Mismo trato que la idoneidad. Ya está en el motor: cero trabajo. No inventa ningún valor. | Con tres variables es más fácil parecerse: su similitud sale **inflada** (mediana 98,0, frente a 80,1 de los puntos del Rover que sí tienen temperatura; en Paneles 96,1 frente a 74,8). Hay que marcarlo. |
 | Excluir esas celdas | Quedan 9.181 puntos en el Rover y 12.717 en Paneles. Top 10 igual. | Sencillo y honesto. | Quita la Antártida, que es el análogo polar más evidente, y el 32,3 % de los puntos de Paneles. Concordia desaparece. |
 | Otra fuente de temperatura | Ver abajo. Solo probada en 5 puntos. | Rellenaría el hueco con un dato real. | Es otra magnitud. Unas 6.558 consultas. No cabe antes de la entrega. |
 | Marcarlas en la web | Se combina con cualquiera de las anteriores. | Transparente. | Por sí sola no arregla el número. |
@@ -443,7 +446,7 @@ El puesto baja aunque la similitud suba, porque los otros 6.059 puntos antártic
 **Otra fuente sin cuenta: NASA POWER.** Lo he comprobado hoy.
 
 - API de climatología por punto, sin clave: `https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=TS&community=RE&longitude=123.35&latitude=-75.10&format=JSON`
-- Variable `TS`, "Earth Skin Temperature", en °C. Fuente MERRA-2. Climatología 2001-2025 (lo dice la cabecera de la respuesta). Resolución nativa 0,5° × 0,625°. Datos de NASA, de uso libre.
+- Variable `TS`, "Earth Skin Temperature", en °C. Fuente MERRA-2. Climatología 2001-2025 (lo dice la cabecera de la respuesta, versión de la API v2.10.1). Resolución: la nativa de MERRA-2, 0,5° × 0,625° (la cabecera dice "Source Native Resolution"; la cifra no la he podido leer en la documentación de POWER, que solo se carga con JavaScript). Licencia: datos de NASA; no he encontrado el texto de la licencia en una página legible sin JavaScript, así que está sin confirmar.
 - En Dome C devuelve −55,45 °C (217,7 K). La temperatura del aire a 2 m (`T2M`) en el mismo punto: −51,18 °C.
 - **No es la misma magnitud** que la que usamos en el resto del mundo. Nuestra temperatura es la de superficie medida por satélite MODIS con cielo despejado. `TS` es la temperatura de piel de un reanálisis (un modelo), con todo tipo de cielo. Comparadas en tres celdas que tienen las dos:
 
@@ -454,11 +457,11 @@ El puesto baja aunque la similitud suba, porque los otros 6.059 puntos antártic
 | 62,5 N 129,5 E (Yakutia) | 263,6 K | 262,3 K | +1,3 K |
 
   Tres puntos no son una calibración. Mezclar las dos fuentes metería un sesgo de varios kelvin solo en la Antártida.
-- Con cuenta: MODIS MOD11C3 o MOD11A2 (LP DAAC; la descarga pide una cuenta Earthdata Login) cubre la Antártida y sí es la misma magnitud. ERA5 (temperatura de piel, Copernicus Climate Data Store) pide una cuenta CDS. No los he descargado hoy; lo de que piden cuenta lo sé por sus páginas de acceso, no lo he comprobado en esta tarea.
+- Con cuenta: MODIS MOD11C3 o MOD11A2 (LP DAAC; la descarga pide una cuenta Earthdata Login) cubre la Antártida y sí es la misma magnitud. ERA5 (temperatura de piel, Copernicus Climate Data Store) pide una cuenta CDS. No los he descargado hoy. Comprobado para MOD11C3 v061: el enlace de descarga de un fichero (LP DAAC, `lp-prod-protected`) redirige a `urs.earthdata.nasa.gov`, el inicio de sesión de Earthdata. Lo de ERA5 no está comprobado.
 
 ### 5. Recomendación y por qué
 
-**Ignorar la variable en esas celdas y renormalizar** (lo del director), **y marcar esos puntos en la web.** Es el mismo trato que da `mission_scoring` a un dato que falta, no inventa nada, ya está en el motor y no mueve ningún top 10. Mis números añaden un matiz: con tres variables la similitud de esos puntos sale más alta (mediana 98,0 frente a 79,1), así que la marca en el panel no es opcional.
+**Ignorar la variable en esas celdas y renormalizar** (lo del director), **y marcar esos puntos en la web.** Es el mismo trato que da `mission_scoring` a un dato que falta, no inventa nada, ya está en el motor y no mueve ningún top 10. Mis números añaden un matiz: con tres variables la similitud de esos puntos sale más alta (en el Rover, mediana 98,0 frente a 80,1 de los puntos con temperatura), así que la marca en el panel no es opcional.
 
 ### 6. Qué cambia en los resultados si se acepta
 
@@ -473,7 +476,7 @@ Frente a las cifras de la propuesta (z = 0): cambian de gemelo **1.123 pares del
 
 **ASSUMPTIONS.md**, en §0.3, a continuación de "One departure..." (o como punto nuevo):
 
-> "Earth temp_k is missing on 6,578 of the 25,095 land cells (6,558 south of 60 S: the OpenLandMap MODIS LST climatology stops at about 62 S). Team lead decision (2026-11-15): for those cells temperature is left out of the distance and the remaining weights are renormalised (slope 41.67 %, roughness 33.33 %, relative elevation 25.00 %), the same rule mission_scoring.apply_soft applies to a missing soft criterion; the repository's analog_finder would set z = 0 (the Earth median, 284.27 K). It affects 1,156 rover and 6,060 solar ranked points and no lunar_base point (its required diurnal amplitude is also missing there); none is in any top 100. Their similarity is computed on three variables and is therefore higher (rover median 98.0 against 79.1 for all points); the app marks them. NASA POWER skin temperature (MERRA-2, keyless) covers Antarctica but is a different quantity (all-sky reanalysis skin temperature, not clear-sky MODIS LST) and was not used."
+> "Earth temp_k is missing on 6,578 of the 25,095 land cells (6,558 south of 60 S: the OpenLandMap MODIS LST climatology stops at about 62 S). Team lead decision (2026-11-15): for those cells temperature is left out of the distance and the remaining weights are renormalised (slope 41.67 %, roughness 33.33 %, relative elevation 25.00 %), the same rule mission_scoring.apply_soft applies to a missing soft criterion; the repository's analog_finder would set z = 0 (the Earth median, 284.27 K). It affects 1,156 rover and 6,060 solar ranked points and no lunar_base point (its required diurnal amplitude is also missing there); none is in any top 100. Their similarity is computed on three variables and is therefore higher (rover median 98.0 against 80.1 for rover points with temperature); the app marks them. NASA POWER skin temperature (MERRA-2, keyless) covers Antarctica but is a different quantity (all-sky reanalysis skin temperature, not clear-sky MODIS LST) and was not used."
 
 **Web**, en el panel de esos puntos:
 
@@ -510,7 +513,7 @@ Valores y posición de las tres celdas dentro de la zona (percentil 100 = el val
 | M63665 Slater | −1.302 m | 5,8° | 155 m | 134,6 K | −0,44 / +0,28 / −0,05 / −1,96 | 10 / 23 / 16 / 64 |
 | M64191 de Gerlache | +1.047 m | 9,8° | 279 m | 155,2 K | +0,89 / +1,51 / +1,29 / −1,32 | 54 / 52 / 54 / 95 |
 
-M62515 es de las celdas más suaves de la zona (rugosidad en el percentil 7) con una altura media y una temperatura de las menos frías: es el mejor compromiso para un punto de la Tierra "normal". En Rover y Paneles sí hay una celda en el borde: M59479 (Boltzmann, 75,5 S 100,5 O) es **la celda más cálida** de toda la zona del polo sur (z −0,79 = máximo de la zona), y el 76,3 % de los puntos del Rover y el 92,1 % de los de Paneles son más cálidos que ella.
+M62515 es de las celdas más suaves de la zona (rugosidad en el percentil 7) con una altura media y una temperatura de las menos frías: es el mejor compromiso para un punto de la Tierra "normal". En Rover y Paneles sí hay una celda en el borde: M59479 (Boltzmann, 75,5 S 100,5 O) es **la celda más cálida** de toda la zona del polo sur (z −0,79 = máximo de la zona), y el 73,3 % de los puntos del Rover y el 88,3 % de los de Paneles que tienen temperatura son más cálidos que ella (76,3 % y 92,1 % si se cuentan los antárticos con z = 0, que no son un dato real).
 
 **¿Pasa también en Rover y Paneles?** Sí, en menor medida (regla A1 con z = 0; propuesta §3 y cálculo de hoy):
 
@@ -606,7 +609,7 @@ La idoneidad sube con el calor y el sol. La similitud baja con el calor, porque 
 
 En la Tierra solo hay irradiancia (WorldClim, bajo la atmósfera) y las dos fórmulas de latitud. No hay `illum_frac`.
 
-**Los gemelos actuales ya son de las celdas mejor iluminadas de la zona:** `illum_frac` mediana 0,436 (la mediana de la zona es 0,315). Todos están en la fila de latitud 75,5 S, el borde norte y cálido de la zona. El problema no es qué celda polar se elige; es que ninguna celda polar se parece a un sitio soleado y cálido de la Tierra.
+**Los gemelos actuales ya son de las celdas mejor iluminadas de la zona:** `illum_frac` mediana 0,436 (la mediana de la zona es 0,315 y su percentil 90, 0,409); con el tratamiento del motor para la Antártida, 0,417. El 79 % de los pares (54 % con el tratamiento del motor) tiene el gemelo en la fila de latitud 75,5 S, el borde norte y cálido de la zona; los 10 gemelos del top 10 están en 75,5 S o 76,5 S. El problema no es qué celda polar se elige; es que ninguna celda polar se parece a un sitio soleado y cálido de la Tierra.
 
 ### 3. Un ejemplo concreto
 
@@ -633,7 +636,7 @@ Todas calculadas sobre los datos reales, con los pesos A1 salvo donde se dice.
 | Polo sur, `illum_frac` ≥ 0,30 | 2.932 | 19 | −0,681 | 126,3 K | 180; 16,8 % | 10/10 | 1 h. No cambia nada. |
 | Polo sur, `illum_frac` ≥ 0,40 | 761 | 2.032 | −0,601 | 126,6 K | 108; 16,8 % | 10/10 | 1 h. Casi nada. |
 | Polo sur, `illum_frac` ≥ 0,44 (87 celdas, el 1,6 % mejor iluminado) | 87 | 15.669 | −0,581 | 127,3 K | 30; 12,4 % | 3/10 | 1 h. Sigue siendo indefendible. |
-| Irradiancia añadida a la similitud (16,67 % cada una de las cinco) | 5.400 | 2.791 | **−0,826** (peor) | 125,7 K | 136; 19,6 % | 0/10 | 1-2 h. Empeora: el top 10 pasa a Canadá y China (idoneidad 64-70). |
+| Irradiancia añadida a la similitud (1/6 = 16,67 % para la irradiancia; las otras cuatro, los pesos A1 × 5/6: pendiente 27,78 %, rugosidad 22,22 %, elevación 16,67 %, temperatura 16,67 %) | 5.400 | 2.791 | **−0,826** (peor) | 125,7 K | 136; 19,6 % | 0/10 | 1-2 h. Empeora: el top 10 pasa a Canadá y China (idoneidad 63,5-70,3). |
 | Gemelo único = la celda mejor iluminada (M59715, Schrödinger, `illum_frac` 0,474) | 1 | 18.777 | +0,202 | 136,3 K | 1; 100 % | 0/10 | 1 h. Similitud mediana 40,2: no es un par. |
 | Elegir el gemelo por idoneidad solar | 0 | — | — | — | — | — | No se puede con los filtros del equipo: ninguna celda del polo sur pasa el filtro de irradiancia (máximo 2,475 < 2,5), y la altura del Sol ≥ 10° elimina todo lo que está por encima de unos 81,5° (FILTERS.md, §g). |
 
@@ -654,7 +657,7 @@ Cualquier umbral de iluminación es una decisión del equipo. Lo que enseñan lo
 | 9 | E38385 | 16,5 S 45,5 E | Madagascar / Melaky | 96,5 | 96,4 | 96,4 | M29777, 7,5 N 77,5 E, Wildt a 68 km |
 | 10 | E42436 | 27,5 S 136,5 E | Australia | 94,0 | 98,7 | 96,4 | M31563, 2,5 N 63,5 E, Petit a 6 km |
 
-**Top 10 con la Luna entera** (8 de 10 puntos coinciden con los mares):
+**Top 10 con la Luna entera** (5 de 10 puntos coinciden con los mares):
 
 | # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
 |---|---|---|---|---|---|---|---|
@@ -747,6 +750,31 @@ Si se deja como está: 0 cambios; el top 10 es el A1 de la decisión 1 y solo se
 ## Lo que no se ha podido calcular hoy
 
 - La temperatura de NASA POWER para las 6.558 celdas antárticas (solo se probó en 5 puntos) y el efecto que tendría en los pares.
-- La celda de Tycho en la tabla antigua de 2 grados.
 - Si el panel de la web pinta hoy la fracción de suelo desnudo y el recuento de puntos por gemelo: `app/` lo están editando otros agentes y solo se buscó en `app/src`, sin resultado.
 - No se ejecutó el motor: las cifras "como el motor" salen de reimplementar su tratamiento de los datos que faltan, y coinciden con las que publica `ASSUMPTIONS.md` §0.7.
+
+## Comprobación
+
+Revisión independiente hecha el 15-11-2026 con scripts propios (`scratchpad/stars/decisions-check/`: `cctx.py`, `c1.py`, `c1b.py`, `c1c.py`, `c2.py` a `c5.py`; salidas `*.out`), que parten solo de la reimplementación independiente de `proposal-verify/` (no del código del autor). Mis gemelos A1 coinciden celda a celda con los de esa reimplementación en las tres misiones (diferencia de similitud 0).
+
+**Recalculado y correcto tal como estaba:** el commit `ff6f1ae` (14-11-2026 23:46:05 UTC, único resultado de `git log -S"Plan decision 2"`) y las líneas 259-261 citadas, más la línea 259 de `main`; las líneas de `analog_finder.py` (68-75, 143-181, 166, 189, 193-198, 225-240, 463, 476, 489), de `engine_config.json` (218, 224, 246-274), de `repo_similarity.py` (31-36, 153-175, 185-210) y de `mission_scoring.py` (117-134); las celdas por zona (5.400 / 1.440, 280 / 114, 700, 64.800 / 16.200); los pesos (A1 33,33 / 26,67 / 20,00 / 20,00 %; A2 y A3a por misión; renormalizados sin temperatura 41,67 / 33,33 / 25,00 %; reparto a partes iguales y "todo al relieve"); los cambios de gemelo, Spearman y top 10 de A2 y A3a; el ejemplo de Haughton en A1, A2, A3a y Tycho; los top 10 "después" de las tres misiones y el de Tycho (Spearman 0,543; M49851 con 2.633 puntos, 25,5 %); toda la decisión 2 (estadísticos de la fracción desnuda, z, tope de 47,96, 0 gemelos cambiados, Spearman 0,362 / 0,666 / 0,550, solapes 0/10, 8/10, 0/10, medianas por tramo, ejemplo de Atacama, top 10 "con roca", clase CCI 220 en Groenlandia); en la decisión 3, las 6.578 / 6.558 / 7 celdas, la mediana de 284,27 K, los 1.156 / 6.060 / 0 puntos afectados, el motivo de Base lunar, los 1.123 / 6.023 cambios, las medianas 78,3 → 98,0 y 77,1 → 96,1, los mejores puestos 4.222 → 888 y 12.459 → 3.881, los Spearman 0,908 / 0,784, la exclusión (9.181 / 12.717), las cifras del motor (744 / 895 y 721 / 3.047, que coinciden con `ASSUMPTIONS.md` §0.7) y el ejemplo de Dome C; en la decisión 4, las tres celdas (puntos, coordenadas, nombre IAU, distancia y región), la distribución de gemelos de las tres misiones, los límites del 5 % (121 puntos) y del 10 % (242) y los tres gemelos más parecidos; en la decisión 5, la correlación −0,681 y las de cada variable, los tercios, el salto de 126,3 K, los datos de iluminación y todas las opciones (celdas, gemelos que cambian, Spearman, salto, solapes, ejemplo E44120, top 10 de los mares, de la Luna entera y de `illum_frac` ≥ 0,44). NASA POWER: he repetido la consulta en Dome C (TS −55,45 °C, T2M −51,18 °C, MERRA-2, 2001-2025, sin clave) y en las tres celdas de comparación (+5,2 / −7,1 / +1,3 K).
+
+**Corregido:**
+
+1. **Lo que enseña hoy la web no era lo que el documento llamaba "hoy".** El motor de hoy ya quita la roca y ya ignora la temperatura que falta, así que su Luna media (E0) no es la A0 de la propuesta (con roca). Lo he comprobado contra el paquete publicado `app/public/data/v2`: mi E0 reproduce su similitud en los 31.533 puntos y sus top 10. He cambiado los tres top 10 "antes" de la decisión 1 (ahora estepa de Mongolia, Mongolia Interior y Xinjiang en Rover y Base lunar; Northern Cape, República Centroafricana y Australia en Paneles), los Spearman antes/después (0,578 / 0,646 / 0,117 frente a E0; los de A0 se mantienen como referencia), la fila "hoy" del ejemplo de Haughton (similitud 72,8, puesto 625, no 45,4 y 4.224, que son de A0), la opción D de la decisión 1 y la frase sobre la pradera de Alberta en la decisión 2 (es el número 1 de A0, no de la web de hoy).
+2. Decisión 3: "ninguna en el top 100 con la regla de hoy" es cierto para la web de hoy (mejor puesto 542), pero con `analog_finder` tal cual (A0) entrarían 14 en el top 100 del Rover; añadido.
+3. Decisión 3: la comparación de la similitud inflada usaba la mediana de todos los puntos (79,1), que incluye a los propios antárticos; ahora se compara con los puntos con temperatura (Rover 80,1; Paneles 74,8), también en el texto para `ASSUMPTIONS.md`.
+4. Decisión 3: la fila de NASA POWER del ejemplo de Dome C ya tiene similitud y gemelo (81,5; M62850, Mons Mouton a 3 km); el puesto sigue sin calcular. La resolución y la licencia de POWER no se pueden leer en su documentación sin JavaScript: quedan marcadas como no confirmadas. Que MOD11C3 pide cuenta Earthdata está ahora comprobado (redirección a `urs.earthdata.nasa.gov`).
+5. Decisión 4: los porcentajes de puntos más cálidos que Boltzmann (76,3 % y 92,1 %) contaban como "más cálidos" los antárticos con z = 0; con los puntos que tienen temperatura son 73,3 % y 88,3 %.
+6. Decisión 5: no "todos" los gemelos están en 75,5 S: lo están el 79 % (54 % con el tratamiento del motor). La Luna entera y los mares comparten 5 de 10 puntos del top 10, no 8. La opción "irradiancia añadida" no reparte 16,67 % a cada variable: da 1/6 a la irradiancia y escala las otras cuatro (27,78 / 22,22 / 16,67 / 16,67 %). Idoneidad de ese top 10: 63,5-70,3.
+7. Decisión 2: el reparto a partes iguales cambia el 2,2-3,3 % de los gemelos (no "menos del 3,3 %" ni "2-3 %"); las líneas de `export_v2.py` eran imprecisas (la marca `part_of_similarity` está en 580 y 585, dentro de `lunar_info_summary`, 573-585, y la exportación por gemelo en 614-619 del fichero de trabajo, que otros agentes están editando).
+8. Tycho en la tabla antigua de 2 grados: 198 celdas (antes "no calculado").
+
+**No verificado:**
+
+- Que el panel de la web enseñe la fracción desnuda del punto de la Tierra y el recuento por gemelo (no he leído `app/src`, que están editando otros agentes). Sí he visto que el motor exporta el recuento por gemelo (`earth_cells` en `twins.json`).
+- La resolución (0,5° × 0,625°) y la licencia de NASA POWER en su documentación; el acceso a ERA5; si MOD11C3 cubre de verdad la Antártida en nuestras celdas (no descargado).
+- Los percentiles dentro de la zona de la tabla de la decisión 4 dependen de cómo se defina el percentil: a mí me salen 72 (temperatura de M62515) y 22 (pendiente de M63665) en lugar de 73 y 23. No cambia la lectura.
+- El límite por gemelo depende del orden de asignación; con mi orden (de más a menos parecido) reproduzco las cifras del documento con 121 y 242 puntos de tope.
+- Las horas de trabajo son estimaciones del autor; no se pueden comprobar.
+- No he ejecutado el motor; E0 lo he comparado con el paquete ya publicado, y la regla `zone_twin` con la reimplementación de su tratamiento de los datos que faltan.
