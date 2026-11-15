@@ -348,8 +348,9 @@ async function run(browser, base, variant, size, full) {
       if (spec.rule) check(await page.evaluate((r) => [...document.querySelectorAll('.top5 [data-text="top5.rule"]')].some((e) => e.textContent === r), spec.rule), `${tag} ${mid}: the rule of the five is shown under them, verbatim`);
       const notesOk = await page.evaluate((m) => {
         const st = window.starsFlow.store;
-        const top = st.notesFor('top5', m).every((n) => [...document.querySelectorAll('.top5 .bundle-note')].some((e) => e.textContent === n.text));
-        const card = st.notesFor('mission_card', m).every((n) => [...document.querySelectorAll('#mission-panel .card-notes .bundle-note')].some((e) => e.textContent === n.text));
+        // each note is shown where the bundle says (its text verbatim, file and column names left out)
+        const top = st.notesFor('top5', m).every((n) => document.querySelector(`.top5 .bundle-note[data-text="${n.key}"]`));
+        const card = st.notesFor('mission_card', m).every((n) => document.querySelector(`#mission-panel .card-notes .bundle-note[data-text="${n.key}"]`));
         return top && card;
       }, mid);
       check(notesOk, `${tag} ${mid}: every bundle note marked for the five and the mission card is shown there, verbatim`);
@@ -496,10 +497,8 @@ async function run(browser, base, variant, size, full) {
     m = await media(page);
     check(m.now === 0 && (await guide(page)).state === 'text-only', `${tag}: switching the guide off stops the sound at once; caption "Text only"`);
     // a failing track: caption with the text-only wording, no error on screen (on a step that has a track)
-    if (mm) {
-      await page.evaluate(() => window.starsFlow.changeMission());
-      await waitStep(page, 'choose');
-    }
+    await page.evaluate(() => window.starsFlow.changeMission());
+    await waitStep(page, 'choose');
     await page.evaluate(() => (window.__media.fail = true));
     await page.evaluate(() => document.querySelector('#switch-audio').click());
     await page.waitForTimeout(200);

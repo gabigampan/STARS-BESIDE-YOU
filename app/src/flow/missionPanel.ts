@@ -5,7 +5,7 @@
 import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { missionLine, missionName, noPairKindWords, roleWord, statusWords } from './copy';
+import { missionLine, missionName, noPairKindWords, roleWord, statusWords, plainText } from './copy';
 import { ceil2, sentenceUnit, type NoPair } from '../data/store.ts';
 import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
 import type { RankItem } from './app';
@@ -357,7 +357,7 @@ export class MissionPanel {
       'details',
       { class: 'card-notes', 'data-notes': 'mission_card' },
       h('summary', null, `Limits of this list (${notes.length})`),
-      ...notes.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, n.text)),
+      ...notes.map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, plainText(this.app.store, n.text, m))),
     );
   }
 
@@ -397,7 +397,7 @@ export class MissionPanel {
     sec.append(ol);
     // the rule of the five and the bundle's notes for this list (texts with "show": top5), verbatim
     if (m.top5?.rule) sec.append(h('p', { class: 'muted top5-rule', 'data-text': 'top5.rule' }, m.top5.rule));
-    for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, n.text));
+    for (const n of this.app.store.notesFor('top5', m.id)) sec.append(h('p', { class: 'muted bundle-note', 'data-text': n.key }, plainText(this.app.store, n.text, m)));
     return sec;
   }
 

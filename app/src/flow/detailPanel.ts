@@ -531,7 +531,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       sec(
         'Similarity to the Moon',
         ...(o.pass && o.final != null && o.pairRows.length
-          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, n.text)))]
+          ? [...pairSimilarity(app, o), ...app.store.notesFor('pair_panel', m.id).map((n) => h('p', { class: 'note-box bundle-note', 'data-text': n.key }, icon('info'), h('span', null, plainText(app.store, n.text, m))))]
           : [
               h(
                 'p',

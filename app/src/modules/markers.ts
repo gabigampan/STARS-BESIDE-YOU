@@ -186,16 +186,13 @@ class BodyMarkers {
       font: `500 15px ${FONT}`,
       fillColor: TEXT,
       outlineColor: HALO,
-      outlineWidth: 4,
+      // a wide dark halo keeps the name readable over bright ground (deserts, ice)
+      outlineWidth: 6,
       style: LabelStyle.FILL_AND_OUTLINE,
       horizontalOrigin: HorizontalOrigin.LEFT,
       verticalOrigin: VerticalOrigin.CENTER,
       pixelOffset: new Cartesian2(16, 0),
       disableDepthTestDistance: NO_DEPTH,
-      // a dark plate keeps the name readable over bright ground (deserts, ice)
-      showBackground: true,
-      backgroundColor: Color.fromBytes(0, 0, 0, 190),
-      backgroundPadding: new Cartesian2(6, 4),
     };
     this.selLabel = this.overlayLabels.add(labelOpts);
     this.hoverLabel = this.overlayLabels.add(labelOpts);
