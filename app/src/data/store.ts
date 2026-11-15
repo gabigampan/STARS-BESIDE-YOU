@@ -116,7 +116,7 @@ export interface PlaceLabel {
   region: string | null;
   nearest: string | null;
   nearestKm: number | null;
-  /** "Region, Country", or "near <place>, Country", or the country, or null. */
+  /** "Region, Country", or the country, or null. */
   text: string | null;
 }
 
@@ -481,8 +481,9 @@ export class DataStore {
       if (ni !== missing) out.nearest = this.placeDetail.nearest_places[ni] ?? null;
       if (!Number.isNaN(nk)) out.nearestKm = nk;
     }
+    // The region comes only from a nearby place in the same country (places.json region_rule);
+    // without it the label is the country alone (the nearest place may be far away).
     if (out.region && out.country) out.text = `${out.region}, ${out.country}`;
-    else if (out.nearest && out.country && out.nearestKm != null) out.text = `near ${out.nearest}, ${out.country}`;
     else out.text = out.country;
     return out;
   }

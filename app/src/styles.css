@@ -329,7 +329,7 @@ a:hover {
 /* Cesium's own credit line stays visible; it just gets type that matches the shell. */
 .cesium-widget-credits {
   font-family: var(--font-body) !important;
-  font-size: 11px !important;
+  font-size: 14px !important;
   color: #d9d7d2 !important;
   text-shadow: 0 0 3px #000, 0 0 2px #000;
   max-width: calc(100% - 12px);
@@ -546,10 +546,10 @@ a:hover {
 
 /* Wide screens: the panel becomes a third column beside the globes. */
 @media (min-width: 900px) and (min-aspect-ratio: 1/1) {
-  body.is-focused .stage:has(#detail-panel:not([hidden])) {
+  body.is-focused:not(.flow) .stage:has(#detail-panel:not([hidden])) {
     grid-template-columns: 1fr 1fr clamp(320px, 26vw, 440px);
   }
-  body.is-focused .stage .panel-detail {
+  body.is-focused:not(.flow) .stage .panel-detail {
     position: relative;
     inset: auto;
     grid-column: 3;
@@ -562,13 +562,13 @@ a:hover {
 }
 /* Phones and portrait screens: a bottom sheet over the lower part; the globes shrink above it. */
 @media not ((min-width: 900px) and (min-aspect-ratio: 1/1)) {
-  body.is-focused {
+  body.is-focused:not(.flow) {
     --sheet-h: min(42dvh, 380px);
   }
-  body.is-focused .stage:has(#detail-panel:not([hidden])) {
+  body.is-focused:not(.flow) .stage:has(#detail-panel:not([hidden])) {
     margin-bottom: var(--sheet-h);
   }
-  body.is-focused .stage .panel-detail {
+  body.is-focused:not(.flow) .stage .panel-detail {
     position: fixed;
     left: 0;
     right: 0;
@@ -585,10 +585,10 @@ a:hover {
 }
 /* Phones: a shorter sheet, and the tagline steps aside while focused so the two globes keep room. */
 @media (max-width: 599px) {
-  body.is-focused {
+  body.is-focused:not(.flow) {
     --sheet-h: min(34dvh, 320px);
   }
-  body.is-focused:has(#detail-panel:not([hidden])) .brand-line {
+  body.is-focused:not(.flow):has(#detail-panel:not([hidden])) .brand-line {
     display: none;
   }
 }

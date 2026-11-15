@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <meta name="description" content="Stars Beside You: find the places on Earth that best stand in for sites on the Moon, for four test missions." />
+    <meta name="description" content="Stars Beside You: find the places on Earth where a Moon mission can be tested, see how closely each one resembles the Moon, and why. Three missions: rover, solar panels, lunar base." />
     <title>Stars Beside You</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='12' cy='16' r='9' fill='%233b6ea5'/%3E%3Ccircle cx='25' cy='16' r='4' fill='%23c9c6bd'/%3E%3C/svg%3E" />
     <script>window.CESIUM_BASE_URL = './cesium/';</script>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <div class="brand">
         <h1 class="brand-name">Stars Beside You</h1>
-        <p class="brand-line">Find the places on Earth that best stand in for sites on the Moon, mission by mission.</p>
+        <p class="brand-line">Earth test sites for Moon missions, with the reasons</p>
       </div>
       <div class="topbar-tools">
         <fieldset class="sunlight" id="sunlight">
@@ -28,9 +28,10 @@
         </fieldset>
         <p class="sr-only" id="sunlight-status" role="status" aria-live="polite"></p>
         <button type="button" class="btn" id="labels-toggle" aria-pressed="true">Place names</button>
-        <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Credits</button>
+        <button type="button" class="btn" id="credits-button" aria-haspopup="dialog">Data and limits</button>
       </div>
     </header>
+    <nav class="steps" id="steps" aria-label="Steps"></nav>
 
     <main class="stage" id="stage">
       <section class="pane" id="earth-pane" aria-label="Earth globe">
@@ -48,11 +49,12 @@
           <p class="pane-note">LRO Wide Angle Camera mosaic, IAU feature names</p>
         </div>
         <button type="button" class="btn btn-quiet pane-reset" data-reset="moon">Reset view</button>
+        <div class="moon-rule" id="moon-rule"></div>
       </section>
 
-      <!-- Reserved for the next stage: mission selector + weights (left), comparison (right/bottom). -->
       <aside class="panel panel-mission" id="mission-panel" aria-label="Missions" hidden></aside>
-      <aside class="panel panel-detail" id="detail-panel" aria-label="Comparison" hidden></aside>
+      <aside class="panel panel-detail" id="detail-panel" aria-label="Comparison of the pair" hidden></aside>
+      <section class="intro" id="intro" aria-labelledby="intro-title" hidden></section>
     </main>
 
     <div class="loading" id="loading" role="status" aria-live="polite">
@@ -70,12 +72,13 @@
 
     <dialog class="credits" id="credits-dialog" aria-labelledby="credits-title">
       <div class="credits-head">
-        <h2 id="credits-title">Imagery and data credits</h2>
-        <button type="button" class="btn" id="credits-close">Close</button>
+        <h2 id="credits-title">Data, limits and credits</h2>
+        <button type="button" class="btn btn-icon" id="credits-close" aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
       <div class="credits-body" id="credits-body"></div>
     </dialog>
 
+    <p class="sr-only" id="flow-status" role="status" aria-live="polite"></p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

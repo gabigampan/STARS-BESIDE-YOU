@@ -1,7 +1,7 @@
 {
   "name": "solar",
   "mission": "Solar panels",
-  "output_dir": "../public/media/solar",
+  "output_dir": "../../public/media/solar",
   "fps": 30,
   "width": 1920,
   "height": 1080,
@@ -210,7 +210,7 @@
   },
   "poster_s": 26.0,
   "encode": {
-    "x264_crf": 20,
+    "x264_crf": 25,
     "vp9_crf": 34
   },
   "card": {
@@ -328,17 +328,17 @@
       },
       "text": [
         "3D simulation driven by table data, not real footage. Dawn over the real LOLA relief at 75.5° S 100.5° W, near Boltzmann crater on the far side; only the high ground is lit.",
-        "The Sun is still below the terrain horizon at the array site.",
-        "The Sun clears the eastern terrain; the camera descends to the stowed array.",
-        "The mast extends and the two wings of hinged panels unfold.",
-        "The vertical panels turn to face the Sun.",
+        "The Sun clears the eastern terrain at the array site; the camera descends to the stowed array.",
+        "The mast extends and the two wings of hinged panels begin to unfold.",
+        "The wings open fully; energy is counted from the end of deployment.",
+        "The vertical panels turn to face the Sun as it moves along the horizon.",
         "Long shadows of the mast and panels lie across the ground.",
         "Local noon: the Sun is at its highest, about 16° above the horizon, in the north.",
         "The Sun moves west along the horizon; the shadows swing round.",
         "",
         "",
         "The Sun sinks towards the western terrain.",
-        "Low Sun: the ground near the array falls into shadow.",
+        "Low Sun in the west: the ground near the array falls into shadow, then the Sun goes behind the western terrain and the power drops.",
         "Closing card: Earth analog Western Cape, South Africa (cell E44120) against the lunar cell M59479. Horizontal irradiance 5.518 against 2.372 kWh/m² per day; highest Sun 80.939° against 16.04°; Sun below 5° for 0.07016 against 0.2271 of daylight; lunar cell sunlit 0.4543 of the time; slope 2.137° against 10.693°; elevation 1127.1 m against 122.4 m.",
         "The Earth cell gets 2.3 times the horizontal sunlight under a far higher Sun on gentler ground; tests there would not reproduce the low lunar Sun. 3D simulation driven by table data. Not real footage."
       ]
@@ -365,17 +365,17 @@
       },
       "text": [
         "Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real LOLA en 75,5° S 100,5° O, cerca del cráter Boltzmann en la cara oculta; solo el terreno alto está iluminado.",
-        "El Sol sigue por debajo del horizonte del relieve en el punto de los paneles.",
-        "El Sol supera el relieve del este; la cámara desciende hasta los paneles plegados.",
-        "El mástil se extiende y las dos alas de paneles con bisagras se despliegan.",
-        "Los paneles verticales giran para mirar al Sol.",
+        "El Sol supera el relieve del este en el punto de los paneles; la cámara desciende hasta los paneles plegados.",
+        "El mástil se extiende y las dos alas de paneles con bisagras empiezan a desplegarse.",
+        "Las alas se abren del todo; la energía se cuenta desde el final del despliegue.",
+        "Los paneles verticales giran para mirar al Sol mientras se desplaza a ras del horizonte.",
         "Las sombras largas del mástil y los paneles se extienden por el suelo.",
         "Mediodía local: el Sol está en su punto más alto, unos 16° sobre el horizonte, al norte.",
         "El Sol se desplaza al oeste a ras del horizonte; las sombras giran.",
         "",
         "",
         "El Sol baja hacia el relieve del oeste.",
-        "Sol bajo: el suelo junto a los paneles queda en sombra.",
+        "Sol bajo al oeste: el suelo junto a los paneles queda en sombra, luego el Sol se oculta tras el relieve del oeste y la potencia cae.",
         "Tarjeta final: el análogo terrestre Cabo Occidental, Sudáfrica (celda E44120) frente a la celda lunar M59479. Irradiancia horizontal 5,518 frente a 2,372 kWh/m² al día; Sol más alto 80,939° frente a 16,04°; Sol por debajo de 5° durante 0,07016 frente a 0,2271 de las horas de luz; celda lunar iluminada 0,4543 del tiempo; pendiente 2,137° frente a 10,693°; altitud 1127,1 m frente a 122,4 m.",
         "La celda terrestre recibe 2,3 veces más luz solar horizontal, con un Sol mucho más alto y en terreno más suave; allí no se reproduce el Sol bajo de la Luna. Simulación 3D basada en datos de las tablas. No son imágenes reales."
       ]

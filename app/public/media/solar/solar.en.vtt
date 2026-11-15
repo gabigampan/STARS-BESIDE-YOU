@@ -1,0 +1,83 @@
+WEBVTT - Solar mission video (3D simulation), English descriptive captions
+
+NOTE
+No speech. Each cue gives the values on the on-screen panel at its start time. Sun, power and energy are computed; sizes and timing are illustrative.
+
+1
+00:00.000 --> 00:03.000
+3D simulation driven by table data, not real footage. Dawn over the real LOLA relief at 75.5° S 100.5° W, near Boltzmann crater on the far side; only the high ground is lit.
+Dawn: Sun behind the terrain · Sun 2.5° / azimuth 86.5° · terrain horizon 5.3°
+Power 0 W/m² · energy 0.00 kWh/m² · 0.0 Earth days elapsed · ×35,800
+
+2
+00:03.000 --> 00:06.000
+The Sun clears the eastern terrain at the array site; the camera descends to the stowed array.
+Dawn: array stowed · Sun 6.2° / azimuth 71.8° · terrain horizon 6.3°
+Power 469 W/m² · energy 0.00 kWh/m² · 1.2 Earth days elapsed · ×35,800
+
+3
+00:06.000 --> 00:09.000
+The mast extends and the two wings of hinged panels begin to unfold.
+Deploying the array · Sun 9.6° / azimuth 56.9° · terrain horizon 6.6°
+Power 1,342 W/m² · energy 0.00 kWh/m² · 2.5 Earth days elapsed · ×35,800
+
+4
+00:09.000 --> 00:12.000
+The wings open fully; energy is counted from the end of deployment.
+Deploying the array · Sun 12.5° / azimuth 41.7° · terrain horizon 6.5°
+Power 1,329 W/m² · energy 0.00 kWh/m² · 3.7 Earth days elapsed · ×35,800
+
+5
+00:12.000 --> 00:15.000
+The vertical panels turn to face the Sun as it moves along the horizon.
+Tracking the Sun · Sun 14.6° / azimuth 26.2° · terrain horizon 6.0°
+Power 1,317 W/m² · energy 13.13 kWh/m² · 5.0 Earth days elapsed · ×35,800
+
+6
+00:15.000 --> 00:18.000
+Long shadows of the mast and panels lie across the ground.
+Tracking the Sun · Sun 15.8° / azimuth 10.6° · terrain horizon 4.7°
+Power 1,310 W/m² · energy 52.32 kWh/m² · 6.2 Earth days elapsed · ×35,800
+
+7
+00:18.000 --> 00:21.000
+Local noon: the Sun is at its highest, about 16° above the horizon, in the north.
+Tracking the Sun · Sun 16.0° / azimuth 354.8° · terrain horizon 3.5°
+Power 1,308 W/m² · energy 91.39 kWh/m² · 7.5 Earth days elapsed · ×35,800
+
+8
+00:21.000 --> 00:24.000
+The Sun moves west along the horizon; the shadows swing round.
+Tracking the Sun · Sun 15.1° / azimuth 339.1° · terrain horizon 2.5°
+Power 1,314 W/m² · energy 130.52 kWh/m² · 8.7 Earth days elapsed · ×35,800
+
+9
+00:24.000 --> 00:27.000
+Tracking the Sun · Sun 13.3° / azimuth 323.6° · terrain horizon 1.8°
+Power 1,324 W/m² · energy 169.90 kWh/m² · 10.0 Earth days elapsed · ×35,800
+
+10
+00:27.000 --> 00:30.000
+Tracking the Sun · Sun 10.7° / azimuth 308.3° · terrain horizon 1.4°
+Power 1,337 W/m² · energy 209.64 kWh/m² · 11.2 Earth days elapsed · ×35,800
+
+11
+00:30.000 --> 00:33.000
+The Sun sinks towards the western terrain.
+Tracking the Sun · Sun 7.4° / azimuth 293.3° · terrain horizon 0.9°
+Power 1,350 W/m² · energy 249.76 kWh/m² · 12.4 Earth days elapsed · ×35,800
+
+12
+00:33.000 --> 00:36.000
+Low Sun in the west: the ground near the array falls into shadow, then the Sun goes behind the western terrain and the power drops.
+Tracking the Sun · Sun 3.8° / azimuth 278.5° · terrain horizon 0.6°
+Power 1,358 W/m² · energy 290.19 kWh/m² · 13.7 Earth days elapsed · ×35,800
+
+13
+00:36.000 --> 00:39.000
+Closing card: Earth analog Western Cape, South Africa (cell E44120) against the lunar cell M59479. Horizontal irradiance 5.518 against 2.372 kWh/m² per day; highest Sun 80.939° against 16.04°; Sun below 5° for 0.07016 against 0.2271 of daylight; lunar cell sunlit 0.4543 of the time; slope 2.137° against 10.693°; elevation 1127.1 m against 122.4 m.
+
+14
+00:39.000 --> 00:42.000
+The Earth cell gets 2.3 times the horizontal sunlight under a far higher Sun on gentler ground; tests there would not reproduce the low lunar Sun. 3D simulation driven by table data. Not real footage.
+

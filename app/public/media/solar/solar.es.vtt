@@ -1,0 +1,83 @@
+WEBVTT - Vídeo de la misión solar (simulación 3D), subtítulos descriptivos en español
+
+NOTE
+Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. Sol, potencia y energía son calculados; tamaños y tiempos son ilustrativos.
+
+1
+00:00.000 --> 00:03.000
+Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real LOLA en 75,5° S 100,5° O, cerca del cráter Boltzmann en la cara oculta; solo el terreno alto está iluminado.
+Amanecer: Sol tras el relieve · Sol 2,5° / acimut 86,5° · horizonte del terreno 5,3°
+Potencia 0 W/m² · energía 0,00 kWh/m² · 0,0 días terrestres transcurridos · ×35.800
+
+2
+00:03.000 --> 00:06.000
+El Sol supera el relieve del este en el punto de los paneles; la cámara desciende hasta los paneles plegados.
+Amanecer: paneles plegados · Sol 6,2° / acimut 71,8° · horizonte del terreno 6,3°
+Potencia 469 W/m² · energía 0,00 kWh/m² · 1,2 días terrestres transcurridos · ×35.800
+
+3
+00:06.000 --> 00:09.000
+El mástil se extiende y las dos alas de paneles con bisagras empiezan a desplegarse.
+Desplegando los paneles · Sol 9,6° / acimut 56,9° · horizonte del terreno 6,6°
+Potencia 1.342 W/m² · energía 0,00 kWh/m² · 2,5 días terrestres transcurridos · ×35.800
+
+4
+00:09.000 --> 00:12.000
+Las alas se abren del todo; la energía se cuenta desde el final del despliegue.
+Desplegando los paneles · Sol 12,5° / acimut 41,7° · horizonte del terreno 6,5°
+Potencia 1.329 W/m² · energía 0,00 kWh/m² · 3,7 días terrestres transcurridos · ×35.800
+
+5
+00:12.000 --> 00:15.000
+Los paneles verticales giran para mirar al Sol mientras se desplaza a ras del horizonte.
+Siguiendo al Sol · Sol 14,6° / acimut 26,2° · horizonte del terreno 6,0°
+Potencia 1.317 W/m² · energía 13,13 kWh/m² · 5,0 días terrestres transcurridos · ×35.800
+
+6
+00:15.000 --> 00:18.000
+Las sombras largas del mástil y los paneles se extienden por el suelo.
+Siguiendo al Sol · Sol 15,8° / acimut 10,6° · horizonte del terreno 4,7°
+Potencia 1.310 W/m² · energía 52,32 kWh/m² · 6,2 días terrestres transcurridos · ×35.800
+
+7
+00:18.000 --> 00:21.000
+Mediodía local: el Sol está en su punto más alto, unos 16° sobre el horizonte, al norte.
+Siguiendo al Sol · Sol 16,0° / acimut 354,8° · horizonte del terreno 3,5°
+Potencia 1.308 W/m² · energía 91,39 kWh/m² · 7,5 días terrestres transcurridos · ×35.800
+
+8
+00:21.000 --> 00:24.000
+El Sol se desplaza al oeste a ras del horizonte; las sombras giran.
+Siguiendo al Sol · Sol 15,1° / acimut 339,1° · horizonte del terreno 2,5°
+Potencia 1.314 W/m² · energía 130,52 kWh/m² · 8,7 días terrestres transcurridos · ×35.800
+
+9
+00:24.000 --> 00:27.000
+Siguiendo al Sol · Sol 13,3° / acimut 323,6° · horizonte del terreno 1,8°
+Potencia 1.324 W/m² · energía 169,90 kWh/m² · 10,0 días terrestres transcurridos · ×35.800
+
+10
+00:27.000 --> 00:30.000
+Siguiendo al Sol · Sol 10,7° / acimut 308,3° · horizonte del terreno 1,4°
+Potencia 1.337 W/m² · energía 209,64 kWh/m² · 11,2 días terrestres transcurridos · ×35.800
+
+11
+00:30.000 --> 00:33.000
+El Sol baja hacia el relieve del oeste.
+Siguiendo al Sol · Sol 7,4° / acimut 293,3° · horizonte del terreno 0,9°
+Potencia 1.350 W/m² · energía 249,76 kWh/m² · 12,4 días terrestres transcurridos · ×35.800
+
+12
+00:33.000 --> 00:36.000
+Sol bajo al oeste: el suelo junto a los paneles queda en sombra, luego el Sol se oculta tras el relieve del oeste y la potencia cae.
+Siguiendo al Sol · Sol 3,8° / acimut 278,5° · horizonte del terreno 0,6°
+Potencia 1.358 W/m² · energía 290,19 kWh/m² · 13,7 días terrestres transcurridos · ×35.800
+
+13
+00:36.000 --> 00:39.000
+Tarjeta final: el análogo terrestre Cabo Occidental, Sudáfrica (celda E44120) frente a la celda lunar M59479. Irradiancia horizontal 5,518 frente a 2,372 kWh/m² al día; Sol más alto 80,939° frente a 16,04°; Sol por debajo de 5° durante 0,07016 frente a 0,2271 de las horas de luz; celda lunar iluminada 0,4543 del tiempo; pendiente 2,137° frente a 10,693°; altitud 1127,1 m frente a 122,4 m.
+
+14
+00:39.000 --> 00:42.000
+La celda terrestre recibe 2,3 veces más luz solar horizontal, con un Sol mucho más alto y en terreno más suave; allí no se reproduce el Sol bajo de la Luna. Simulación 3D basada en datos de las tablas. No son imágenes reales.
+

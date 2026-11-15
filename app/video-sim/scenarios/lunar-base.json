@@ -1,7 +1,7 @@
 {
   "name": "lunar-base",
   "mission": "Lunar base",
-  "output_dir": "../public/media/lunar-base",
+  "output_dir": "../../public/media/lunar-base",
   "fps": 30,
   "width": 1920,
   "height": 1080,
@@ -252,7 +252,7 @@
   },
   "poster_s": 28.0,
   "encode": {
-    "x264_crf": 20,
+    "x264_crf": 25,
     "vp9_crf": 34
   },
   "card": {

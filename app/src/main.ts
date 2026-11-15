@@ -4,6 +4,7 @@ import '@fontsource/barlow-semi-condensed/latin-500.css';
 import '@fontsource/barlow-semi-condensed/latin-600.css';
 import 'cesium/Build/Cesium/Widgets/CesiumWidget/CesiumWidget.css';
 import './styles.css';
+import './flow/flow.css';
 
 import { bindGlobes, globesApi, settleImagery } from './api';
 import { IMAGERY_TIMEOUT_MS } from './config';
@@ -15,11 +16,14 @@ import { Markers } from './modules/markers';
 import { Sunlight, bindSunlightControl } from './modules/sunlight';
 import { VideoDialog } from './modules/video';
 import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons } from './ui/shell';
+import { FlowApp } from './flow/app';
 
 declare global {
   interface Window {
     /** The globes API, for the browser console and automated tests. */
     starsBesideYou?: typeof globesApi;
+    /** The product flow (state, data store, actions), for the console and automated tests. */
+    starsFlow?: FlowApp;
   }
 }
 
@@ -101,4 +105,11 @@ function main(): void {
   if (ionEnabled()) void applyIonUpgrade(globes);
 }
 
+/** `?flow=off` leaves the bare scene (used by the interaction-module tests, which bring their own items). */
+function startFlow(): void {
+  if (new URLSearchParams(window.location.search).get('flow') === 'off') return;
+  window.starsFlow = new FlowApp();
+}
+
 main();
+startFlow();
