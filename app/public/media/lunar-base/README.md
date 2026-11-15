@@ -11,14 +11,14 @@ Story (46 s): part of one lunar day, accelerated, at lunar cell **M63528 (86.5°
 
 | File | What it is | Size (bytes) |
 |---|---|---|
-| `lunar-base.mp4` | @MP4@ | @S_MP4@ |
-| `lunar-base.webm` | @WEBM@ | @S_WEBM@ |
-| `lunar-base-poster.jpg` | Frame 600 (t = 20 s): module and inflatable in sunlight, berm being built, long shadows | @S_JPG@ |
-| `lunar-base-poster.webp` | Same frame, WebP quality 88 | @S_WEBP@ |
-| `lunar-base.en.vtt` | English descriptive captions, 14 cues, 0-46 s; cue boundaries at every status change | @S_EN@ |
-| `lunar-base.es.vtt` | Spanish descriptive captions, 14 cues, 0-46 s | @S_ES@ |
+| `lunar-base.mp4` | H.264 High@L4.1, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, no audio, faststart (`moov` at byte 36, before `mdat`), CRF 25 | 11,103,348 |
+| `lunar-base.webm` | VP9 profile 0, yuv420p, 1920x1080, 30 fps, 46.000 s, 1380 frames, two-pass CRF 34 | 11,792,467 |
+| `lunar-base-poster.jpg` | Frame 600 (t = 20 s): module and inflatable in sunlight, berm being built, long shadows | 332,974 |
+| `lunar-base-poster.webp` | Same frame, WebP quality 88 | 197,072 |
+| `lunar-base.en.vtt` | English descriptive captions, 14 cues, 0-46 s; cue boundaries at every status change | 4,596 |
+| `lunar-base.es.vtt` | Spanish descriptive captions, 14 cues, 0-46 s | 5,250 |
 
-ffprobe (`-count_frames`): @PROBE@; both VTT files parse in ffmpeg's WebVTT demuxer.
+ffprobe (`-count_frames`): mp4 `h264 High level 41 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 1.93 Mb/s`; webm `vp9 Profile 0 yuv420p 1920x1080 30/1, 1380 frames, duration 46.000000, 2.05 Mb/s`; both VTT files parse in ffmpeg's WebVTT demuxer.
 
 ```html
 <video controls playsinline preload="metadata" poster="/media/lunar-base/lunar-base-poster.webp">
@@ -40,13 +40,24 @@ node render.js scenarios/lunar-base.json --work $W --timeline     # optional: la
 node render.js scenarios/lunar-base.json --work $W                # 1380 frames, then encodes, captions, ffprobe
 ```
 
-Render time: @RT@
+Render time: 2,198 ms per frame on average (SwiftShader, no GPU, 4 cores shared with other jobs, screenshot included), 1380 frames in about 51 minutes; encodes about 4 minutes; `prepare.py` 208 s.
 
 ## Status labels (what the picture shows)
 
 | Label on the panel | From - to (s) | Picture |
 |---|---|---|
-@TIMELINE@
+| Sun up, behind the northern terrain | 0.00-4.07 | camera descends from 1.5 km; habitat point in terrain shadow, the northern ridge in sunlight (overexposed); exposure x16 stated |
+| Sun rising over the terrain | 4.07-5.50 | the solar disc clears the northern terrain; ground lights up, exposure falls to x1.2 |
+| Lowering the module | 5.50-9.50 | module descends from 22 m onto its legs, in sunlight |
+| Module placed | 9.50-11.00 | module at rest on the ground (from frame 285) |
+| Inflatable section deploying | 11.00-15.50 | inflatable section expands from the end of the module |
+| Inflatable section deployed | 15.50-16.50 | inflatable at full size, at rest |
+| Building the regolith berm | 16.50-22.50 | berm rises around the habitat |
+| Regolith berm built | 22.50-24.00 | berm complete |
+| Habitat assembled, sunlit | 24.00-27.97 | complete habitat in low sunlight, long shadows |
+| Sun partly behind the terrain | 27.97-29.10 | solar disc partly behind the western terrain; light dims, exposure rises |
+| Sun behind the terrain: site in shadow | 29.10-40.00 (held on the card fade 40-40.8) | habitat and ground in terrain shadow under the uniform fill, distant sunlit terrain overexposed; exposure x16 stated |
+| (closing card) | 40.0-46.0 | pair card, no panel |
 
 "Module placed" appears from frame 285 (t = 9.5 s), the first frame at which the module rests on its legs (its descent is a smoothstep that reaches exactly 1 at 9.5 s); while it moves (5.5-9.5 s) the label is "Lowering the module". The same rule holds for "Inflatable section deployed" (from 15.5 s) and "Regolith berm built" (from 22.5 s). Caption cues start at the same frames, and the renderer refuses to write captions if the label changes inside a cue.
 
@@ -74,7 +85,7 @@ Render time: @RT@
 
 - Sun: sin h = sin(lat) sin(d) + cos(lat) cos(d) cos(H), lat = −86.5°, d = −1.54°, H linear from −22° to +100° (122°, 10.0 Earth days) over 40 s. Flat-horizon sunrise and sunset at H = ±116.1°; highest Sun 5.04° at H = 0 (the table's `sun_elev_max_deg`).
 - Terrain horizon and disc visibility: from the habitat point 2 m above ground, 720 azimuths. The Sun's disc starts to clear the northern terrain at 4.07 s (H = −9.6°) and is fully visible from 5.93 s; it starts to go behind the western terrain at 27.97 s (H = 63.3°) and is fully hidden from 29.1 s (H = 66.8°), while still 2.9° above the flat horizon. At this season the point is sunlit for about 76° of the 360° cycle; the table's `illum_frac` 0.0773 is the cell average over all seasons.
-- **Surface temperature (model, stated on screen):** T = Tmin + (Tmax − Tmin) x g, g = cycle-normalised (sin h)^(1/4) while the Sun is up and more than half of its disc clears the real terrain, then g_sunset x exp(−t/τ) with τ = 3 Earth days, rescaled over the full cycle so that it reaches exactly 41.23 K and 194.51 K. Shown in this part of the day: @TRANGE@. Only the two end values are data; the curve shape, τ and the use of the local horizon are assumptions.
+- **Surface temperature (model, stated on screen):** T = Tmin + (Tmax − Tmin) x g, g = cycle-normalised (sin h)^(1/4) while the Sun is up and more than half of its disc clears the real terrain, then g_sunset x exp(−t/τ) with τ = 3 Earth days, rescaled over the full cycle so that it reaches exactly 41.23 K and 194.51 K. Shown in this part of the day: 41.23-194.51 K (the shown extremes are the measured values, to 0.01 K). Only the two end values are data; the curve shape, τ and the use of the local horizon are assumptions.
 - Time compression = 10.0 d / 40 s = **x21,600** (21,616 rounded to 3 figures).
 - Thermal tint: linear colour between the two measured values, one tint for the whole 6 km patch; the 3D terrain itself is never tinted.
 
@@ -82,7 +93,7 @@ Render time: @RT@
 
 This is a simulation, and the Sun is low here: at 86.5° S it never rises above 5.04° (southern-summer solstice, the most sunlit season, chosen for that reason), so shadows are long and the habitat point is sunlit only while the Sun clears the real terrain horizon. The light is one parallel Sun of fixed intensity with terrain shadows from the real LOLA horizons, plus a 3.5 % uniform fill standing in for light reflected by the surrounding sunlit ground (an assumption; the real reflected light is neither uniform nor computed). Nothing is brightened in the scene itself. What changes is the **display exposure**, as a camera's would: 1 while the habitat point sees the whole solar disc, x16 while it sees none of it, and 1 / (1/16 + (15/16) x visible disc fraction) in between, so the shadowed ground stays readable; whenever it is above 1.25 the panel says "Exposure raised xN to show the ground in shadow (not to scale)". Under the raised exposure the distant terrain still in sunlight shows as overexposed white, which is what a camera set for the shadow would record.
 
-The video replaced (pair M62859 / E19345) had about 4 s that were almost black (24.7-28.6 s, scene-area mean luma 23.7-24.6 of 255): the Sun was behind the terrain and the only light was earthshine from a thin crescent Earth (lit fraction about 0.14) at a fixed exposure. Luminance of this render: @LUMA@
+The video replaced (pair M62859 / E19345) had about 4 s that were almost black (24.7-28.6 s, scene-area mean luma 23.7-24.6 of 255): the Sun was behind the terrain and the only light was earthshine from a thin crescent Earth (lit fraction about 0.14) at a fixed exposure. Luminance of this render: mean luma of every frame (ffmpeg signalstats YAVG, 0-255) over 0-40 s: full frame 43.5-99.7, scene area (1100 x 900 px right of the panel) 44.8-126.6; per-second scene means 65-102; the lowest frame is t = 28.87 s (Sun almost hidden, exposure rising). No frame of the 3D part is below 43; the only frames below 40 are the closing card (dark background by design, 30-31, as the old card's 28.7).
 
 ## Assumptions (illustrative, stated)
 
