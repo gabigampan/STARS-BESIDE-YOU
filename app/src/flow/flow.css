@@ -1873,7 +1873,7 @@ body.view-open .topbar {
   gap: 10px;
 }
 .top5-list {
-  gap: 6px;
+  gap: 8px; /* at least 8 px between adjacent touch targets */
 }
 .top5-twin,
 .top5-overall {
