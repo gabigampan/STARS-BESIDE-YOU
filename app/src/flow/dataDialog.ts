@@ -11,6 +11,7 @@ import { append, h, int, levelTag, valueText } from './dom';
 const add = (el: Element, ...c: (Node | string | null)[]) => append(el, c);
 
 export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => string, meaning: (m: Mission) => string): void {
+  seenTexts.clear();
   const body = document.getElementById('credits-body');
   if (!body) return;
   body.querySelector('.data-sections')?.remove();
@@ -51,10 +52,10 @@ export function renderDataDialog(store: DataStore, ruleText: (m: Mission) => str
         : null,
       // the engine's record, in plain words (file, code and column references left out)
       // an entry that describes the z-score similarity is left out for a mission that no longer uses it
-      h('ul', { 'data-record': m.id }, m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => h('li', null, plainText(store, l, m)))),
+      h('ul', { 'data-record': m.id }, dedupe(m.known_limitations.filter((l) => !staleForRule(store, m, l)).map((l) => plainText(store, l, m)), seenFor(m)).map((t) => h('li', null, t))),
       criteriaTable(store, m),
       // the bundle's notes for this place ("show" includes data_and_limits), verbatim
-      ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(store, n.text, m))),
+      ...store.notesFor('data_and_limits', m.id).filter((n) => n.missions).filter((n) => keep(noteText(store, n.text, m), seenFor(m))).map((n) => h('p', { class: 'bundle-note', 'data-text': n.key }, noteText(store, n.text, m))),
     );
   }
   const general = store.notesFor('data_and_limits', null).filter((n) => !n.missions);
@@ -177,4 +178,22 @@ function criteriaTable(store: DataStore, m: Mission): HTMLElement | null {
         )
       : h('p', { class: 'muted' }, "No departure from the team's criteria."),
   );
+}
+
+/** Texts already printed for a mission in the dialog (starting with its five's rule). */
+const seenTexts = new Map<string, string[]>();
+function seenFor(m: Mission): string[] {
+  let s = seenTexts.get(m.id);
+  if (!s) seenTexts.set(m.id, (s = m.top5?.rule ? [m.top5.rule] : []));
+  return s;
+}
+/** A text is printed unless its whole text, or its first sentence, is already contained in one printed above it. */
+function keep(t: string, seen: string[]): boolean {
+  const first = /^.*?\.(?=\s|$)/.exec(t)?.[0] ?? t;
+  if (seen.some((x) => x.includes(t) || x.includes(first))) return false;
+  seen.push(t);
+  return true;
+}
+function dedupe(list: string[], seen: string[]): string[] {
+  return list.filter((t) => keep(t, seen));
 }

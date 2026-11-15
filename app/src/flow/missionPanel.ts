@@ -351,7 +351,15 @@ export class MissionPanel {
 
   /** The bundle's notes for the mission card (texts with "show": mission_card), behind one labelled disclosure. */
   private cardNotes(m: Mission): HTMLElement | null {
-    const notes = this.app.store.notesFor('mission_card', m.id);
+    // a note whose text (or first sentence) is already in the five's rule or an earlier note is not repeated
+    const seen: string[] = m.top5?.rule ? [m.top5.rule] : [];
+    const notes = this.app.store.notesFor('mission_card', m.id).filter((n) => {
+      const t = noteText(this.app.store, n.text, m);
+      const first = /^.*?\.(?=\s|$)/.exec(t)?.[0] ?? t;
+      if (seen.some((x) => x.includes(t) || x.includes(first))) return false;
+      seen.push(t);
+      return true;
+    });
     if (!notes.length) return null;
     return h(
       'details',
