@@ -1,0 +1,2 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,sim.roughness_m.weight0,sim_weight,"similarity weight of roughness_m (0.1) -> 0, still in the pair filter",18777,0,0,6360,0,0,5349,0,False,6,False,38464-40324;38105-40042;38744-23920;37746-40113;38465-24309

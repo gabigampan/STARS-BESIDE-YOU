@@ -1,0 +1,288 @@
+{
+ "rover": {
+  "perturbations": 14,
+  "pairs": {
+   "17566": {
+    "place": "about 66 km north-west of Bayinbaolige, Inner Mongolia, China",
+    "audio_rank": 1,
+    "in_top5": 12,
+    "same_rank": 12,
+    "same_twin": 13,
+    "runs": 14,
+    "worst_rank": 394,
+    "worst_run": "drop:elevation_rel_m:both",
+    "lost_top5_in": [
+     "drop:elevation_rel_m:both (rank 394)",
+     "drop:elevation_rel_m:sim_only (rank 46)"
+    ]
+   },
+   "23945": {
+    "place": "about 80 km north of Tamanrasset, Tamanghasset, Algeria",
+    "audio_rank": 2,
+    "in_top5": 12,
+    "same_rank": 12,
+    "same_twin": 13,
+    "runs": 14,
+    "worst_rank": 452,
+    "worst_run": "drop:elevation_rel_m:both",
+    "lost_top5_in": [
+     "drop:elevation_rel_m:both (rank 452)",
+     "drop:elevation_rel_m:sim_only (rank 86)"
+    ]
+   },
+   "18282": {
+    "place": "about 78 km north-east of Ehen Hudag, Inner Mongolia, China",
+    "audio_rank": 3,
+    "in_top5": 12,
+    "same_rank": 12,
+    "same_twin": 13,
+    "runs": 14,
+    "worst_rank": 357,
+    "worst_run": "drop:elevation_rel_m:both",
+    "lost_top5_in": [
+     "drop:elevation_rel_m:both (rank 357)",
+     "drop:elevation_rel_m:sim_only (rank 111)"
+    ]
+   },
+   "18280": {
+    "place": "about 28 km north-east of Banqiao, Gansu Sheng, China",
+    "audio_rank": 4,
+    "in_top5": 12,
+    "same_rank": 12,
+    "same_twin": 13,
+    "runs": 14,
+    "worst_rank": 448,
+    "worst_run": "drop:elevation_rel_m:both",
+    "lost_top5_in": [
+     "drop:elevation_rel_m:both (rank 448)",
+     "drop:elevation_rel_m:sim_only (rank 143)"
+    ]
+   },
+   "15395": {
+    "place": "about 41 km south-east of Buga, Govi-Altay, Mongolia",
+    "audio_rank": 5,
+    "in_top5": 12,
+    "same_rank": 12,
+    "same_twin": 13,
+    "runs": 14,
+    "worst_rank": 447,
+    "worst_run": "drop:elevation_rel_m:both",
+    "lost_top5_in": [
+     "drop:elevation_rel_m:both (rank 447)",
+     "drop:elevation_rel_m:sim_only (rank 109)"
+    ]
+   }
+  },
+  "new_top5_entrants": {
+   "3872": [
+    "drop:elevation_rel_m:both (rank 1)"
+   ],
+   "4037": [
+    "drop:elevation_rel_m:both (rank 2)"
+   ],
+   "4042": [
+    "drop:elevation_rel_m:both (rank 3)"
+   ],
+   "4742": [
+    "drop:elevation_rel_m:both (rank 4)"
+   ],
+   "4750": [
+    "drop:elevation_rel_m:both (rank 5)"
+   ],
+   "11627": [
+    "drop:elevation_rel_m:sim_only (rank 1)"
+   ],
+   "40874": [
+    "drop:elevation_rel_m:sim_only (rank 2)"
+   ],
+   "11626": [
+    "drop:elevation_rel_m:sim_only (rank 3)"
+   ],
+   "6385": [
+    "drop:elevation_rel_m:sim_only (rank 4)"
+   ],
+   "6408": [
+    "drop:elevation_rel_m:sim_only (rank 5)"
+   ]
+  },
+  "pairs_surviving_all": 0
+ },
+ "solar": {
+  "perturbations": 22,
+  "pairs": {
+   "38464": {
+    "place": "about 129 km north-east of Derby, Australia",
+    "audio_rank": 1,
+    "in_top5": 22,
+    "same_rank": 22,
+    "same_twin": 20,
+    "runs": 22,
+    "worst_rank": 1,
+    "worst_run": "suit:irradiance_kwh_m2_day:x1.1",
+    "lost_top5_in": []
+   },
+   "38105": {
+    "place": "about 283 km north-east of Derby, Australia",
+    "audio_rank": 2,
+    "in_top5": 22,
+    "same_rank": 22,
+    "same_twin": 18,
+    "runs": 22,
+    "worst_rank": 2,
+    "worst_run": "suit:irradiance_kwh_m2_day:x1.1",
+    "lost_top5_in": []
+   },
+   "38744": {
+    "place": "about 80 km north-east of Maintirano, Melaky, Madagascar",
+    "audio_rank": 3,
+    "in_top5": 22,
+    "same_rank": 22,
+    "same_twin": 20,
+    "runs": 22,
+    "worst_rank": 3,
+    "worst_run": "suit:irradiance_kwh_m2_day:x1.1",
+    "lost_top5_in": []
+   },
+   "37746": {
+    "place": "about 280 km north-west of Kununurra, Australia",
+    "audio_rank": 4,
+    "in_top5": 22,
+    "same_rank": 22,
+    "same_twin": 16,
+    "runs": 22,
+    "worst_rank": 4,
+    "worst_run": "suit:irradiance_kwh_m2_day:x1.1",
+    "lost_top5_in": []
+   },
+   "38465": {
+    "place": "about 218 km north-east of Derby, Australia",
+    "audio_rank": 5,
+    "in_top5": 14,
+    "same_rank": 14,
+    "same_twin": 20,
+    "runs": 22,
+    "worst_rank": 6,
+    "worst_run": "suit:irradiance_kwh_m2_day:x0.9",
+    "lost_top5_in": [
+     "suit:irradiance_kwh_m2_day:x0.9 (rank 6)",
+     "suit:sun_elev_max_deg:x1.1 (rank 6)",
+     "suit:sun_elev_max_deg:x0.9 (rank 6)",
+     "suit:sun_low_frac_0_5deg:x1.1 (rank 6)",
+     "suit:slope_deg:x1.1 (rank 6)",
+     "suit:slope_deg:x0.9 (rank 6)",
+     "suit:lst_diurnal_amp_k:x1.1 (rank 6)",
+     "suit:roughness_m:x1.1 (rank 6)"
+    ]
+   }
+  },
+  "new_top5_entrants": {
+   "38385": [
+    "suit:irradiance_kwh_m2_day:x0.9 (rank 5)",
+    "suit:sun_elev_max_deg:x1.1 (rank 5)",
+    "suit:sun_elev_max_deg:x0.9 (rank 5)",
+    "suit:sun_low_frac_0_5deg:x1.1 (rank 5)",
+    "suit:slope_deg:x1.1 (rank 5)",
+    "suit:slope_deg:x0.9 (rank 5)",
+    "suit:lst_diurnal_amp_k:x1.1 (rank 5)",
+    "suit:roughness_m:x1.1 (rank 5)"
+   ]
+  },
+  "pairs_surviving_all": 4
+ },
+ "lunar_base": {
+  "perturbations": 24,
+  "pairs": {
+   "17538": {
+    "place": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+    "audio_rank": 1,
+    "in_top5": 24,
+    "same_rank": 11,
+    "same_twin": 24,
+    "runs": 24,
+    "worst_rank": 5,
+    "worst_run": "drop:slope_deg:both",
+    "lost_top5_in": []
+   },
+   "16830": {
+    "place": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+    "audio_rank": 2,
+    "in_top5": 24,
+    "same_rank": 13,
+    "same_twin": 24,
+    "runs": 24,
+    "worst_rank": 2,
+    "worst_run": "suit:lst_diurnal_amp_k:x0.9",
+    "lost_top5_in": []
+   },
+   "15751": {
+    "place": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+    "audio_rank": 3,
+    "in_top5": 24,
+    "same_rank": 14,
+    "same_twin": 22,
+    "runs": 24,
+    "worst_rank": 5,
+    "worst_run": "suit:tmin_c:x0.9",
+    "lost_top5_in": []
+   },
+   "21054": {
+    "place": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+    "audio_rank": 4,
+    "in_top5": 20,
+    "same_rank": 14,
+    "same_twin": 24,
+    "runs": 24,
+    "worst_rank": 7,
+    "worst_run": "drop:slope_deg:both",
+    "lost_top5_in": [
+     "drop:slope_deg:both (rank 7)",
+     "drop:slope_deg:sim_only (rank 7)",
+     "drop:roughness_m:both (rank 6)",
+     "drop:roughness_m:sim_only (rank 6)"
+    ]
+   },
+   "17187": {
+    "place": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+    "audio_rank": 5,
+    "in_top5": 16,
+    "same_rank": 14,
+    "same_twin": 24,
+    "runs": 24,
+    "worst_rank": 8,
+    "worst_run": "drop:roughness_m:both",
+    "lost_top5_in": [
+     "suit:lst_diurnal_amp_k:x1.1 (rank 6)",
+     "suit:tmin_c:x0.9 (rank 7)",
+     "suit:irradiance_kwh_m2_day:x1.1 (rank 6)",
+     "suit:permafrost_class:x0.9 (rank 6)",
+     "sim:tmin_k:x0.9 (rank 6)",
+     "sim:slope_deg:x1.1 (rank 6)",
+     "drop:roughness_m:both (rank 8)",
+     "drop:roughness_m:sim_only (rank 7)"
+    ]
+   }
+  },
+  "new_top5_entrants": {
+   "42949": [
+    "suit:lst_diurnal_amp_k:x1.1 (rank 5)",
+    "suit:tmin_c:x0.9 (rank 4)",
+    "suit:irradiance_kwh_m2_day:x1.1 (rank 5)",
+    "suit:permafrost_class:x0.9 (rank 5)",
+    "sim:tmin_k:x0.9 (rank 5)",
+    "sim:slope_deg:x1.1 (rank 5)"
+   ],
+   "18627": [
+    "drop:slope_deg:both (rank 4)",
+    "drop:slope_deg:sim_only (rank 4)",
+    "drop:roughness_m:both (rank 5)",
+    "drop:roughness_m:sim_only (rank 5)"
+   ],
+   "16833": [
+    "drop:roughness_m:both (rank 3)",
+    "drop:roughness_m:sim_only (rank 3)"
+   ]
+  },
+  "pairs_surviving_all": 3
+ },
+ "overall_surviving_all": 7
+}

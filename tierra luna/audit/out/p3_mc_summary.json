@@ -1,4 +1,226 @@
 {
+ "lunar_base_f0.5": {
+  "runs": 200,
+  "sigma_factor": 0.5,
+  "seed": 20261115,
+  "pairs": [
+   {
+    "audio_rank": 1,
+    "earth_id": 17538,
+    "place": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.675,
+    "top20": 0.81,
+    "top50": 0.81,
+    "same_rank": 0.245,
+    "rank_p05": 1.0,
+    "rank_median": 3.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.19,
+    "fails_funnel_share": 0.19,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.65,
+    "twins_seen": {
+     "63528": 70,
+     "63866": 48,
+     "-2": 38,
+     "62880": 12
+    }
+   },
+   {
+    "audio_rank": 2,
+    "earth_id": 16830,
+    "place": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.265,
+    "top20": 0.555,
+    "top50": 0.82,
+    "same_rank": 0.03,
+    "rank_p05": 1.0,
+    "rank_median": 17.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.06,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.06,
+    "twin_changed_share": 0.315,
+    "twins_seen": {
+     "63841": 137,
+     "62523": 24,
+     "63839": 17,
+     "-1": 12
+    }
+   },
+   {
+    "audio_rank": 3,
+    "earth_id": 15751,
+    "place": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+    "top5": 0.145,
+    "top20": 0.76,
+    "top50": 0.905,
+    "same_rank": 0.02,
+    "rank_p05": 3.950000000000001,
+    "rank_median": 12.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.065,
+    "fails_funnel_share": 0.065,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.64,
+    "twins_seen": {
+     "64018": 72,
+     "64019": 56,
+     "64027": 18,
+     "-2": 13
+    }
+   },
+   {
+    "audio_rank": 4,
+    "earth_id": 21054,
+    "place": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+    "top5": 0.095,
+    "top20": 0.58,
+    "top50": 0.8,
+    "same_rank": 0.035,
+    "rank_p05": 4.0,
+    "rank_median": 18.0,
+    "rank_p95": 126.39999999999986,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.625,
+    "twins_seen": {
+     "62517": 75,
+     "62135": 26,
+     "62518": 24,
+     "62515": 21
+    }
+   },
+   {
+    "audio_rank": 5,
+    "earth_id": 17187,
+    "place": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.105,
+    "top20": 0.545,
+    "top50": 0.88,
+    "same_rank": 0.02,
+    "rank_p05": 3.0,
+    "rank_median": 19.0,
+    "rank_p95": 190.6499999999991,
+    "unranked_share": 0.045,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.045,
+    "twin_changed_share": 0.39,
+    "twins_seen": {
+     "62523": 122,
+     "63841": 23,
+     "64023": 16,
+     "63521": 10
+    }
+   }
+  ],
+  "top5_identical_set_share": 0.0,
+  "top5_identical_order_share": 0.0,
+  "top5_overlap_hist": {
+   "0": 24,
+   "1": 106,
+   "2": 59,
+   "3": 11
+  },
+  "top5_overlap_mean": 1.28,
+  "top5_members_most_frequent": {
+   "17538": 0.675,
+   "18254": 0.55,
+   "18255": 0.38,
+   "42949": 0.345,
+   "17898": 0.27,
+   "16830": 0.265,
+   "17897": 0.255,
+   "16833": 0.225,
+   "18627": 0.195,
+   "17895": 0.155,
+   "15391": 0.15,
+   "15751": 0.145
+  },
+  "distinct_top5_members": 44,
+  "ranked_count": {
+   "baseline": 450,
+   "min": 426,
+   "max": 491
+  },
+  "passing_count": {
+   "min": 2382,
+   "max": 2458
+  },
+  "sigma": {
+   "EARTH:elevation_m": [
+    "abs",
+    7.17,
+    "doc: ETOPO 2022 global RMSE vs ICESat-2 (MacFerrin et al. 2025)"
+   ],
+   "EARTH:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell slope accuracy documented)"
+   ],
+   "EARTH:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell roughness accuracy documented)"
+   ],
+   "EARTH:tmin_c": [
+    "abs",
+    1.39,
+    "doc: WorldClim 2 cross-validation RMSE of minimum temperature (Fick & Hijmans 2017, Table 3)"
+   ],
+   "EARTH:irradiance_kwh_m2_day": [
+    "abs",
+    0.40277777777777773,
+    "doc: WorldClim 2 cross-validation RMSE of solar radiation 1.45 MJ/m2/day = 0.403 kWh/m2/day"
+   ],
+   "EARTH:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: MOD11 QC best class 'average LST error <= 1K' per overpass, day minus night -> sqrt(2) K"
+   ],
+   "EARTH:rock_or_bare_frac": [
+    "abs",
+    0.05,
+    "illustrative 0.05 (classification product; per-cell error not documented)"
+   ],
+   "MOON:elevation_m": [
+    "abs",
+    10.0,
+    "doc: LOLA geodetic grid ~10 m radial accuracy (Smith et al. 2010)"
+   ],
+   "MOON:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:tmin_c": [
+    "abs",
+    1.0,
+    "doc: Diviner NETD < 1 K over 60-120 K (Hayne et al. 2017, citing Paige et al. 2010)"
+   ],
+   "MOON:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: max minus min, each with 1 K -> sqrt(2) K"
+   ],
+   "MOON:irradiance_kwh_m2_day": [
+    "rel",
+    0.02,
+    "illustrative 2 % (geometry formula plus LOLA illumination fraction)"
+   ]
+  },
+  "not_perturbed": {
+   "Earth irradiance_toa (formula)": "same S0 = 1361 W/m2 on both bodies; geometry exact (own integration matches to 6e-6)",
+   "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude, exact",
+   "thermal_inertia_class, permafrost_class, mask_fraction": "categories / land share, not perturbed"
+  }
+ },
  "lunar_base_f1": {
   "runs": 200,
   "sigma_factor": 1.0,
@@ -443,7 +665,7 @@
   }
  },
  "rover_f1": {
-  "runs": 20,
+  "runs": 110,
   "sigma_factor": 1.0,
   "seed": 20261115,
   "pairs": [
@@ -451,130 +673,352 @@
     "audio_rank": 1,
     "earth_id": 17566,
     "place": "about 66 km north-west of Bayinbaolige, Inner Mongolia, China",
-    "top5": 1.0,
+    "top5": 0.891,
     "top20": 1.0,
     "top50": 1.0,
-    "same_rank": 0.65,
+    "same_rank": 0.536,
     "rank_p05": 1.0,
     "rank_median": 1.0,
-    "rank_p95": 2.0500000000000007,
+    "rank_p95": 8.0,
     "unranked_share": 0.0,
     "fails_funnel_share": 0.0,
     "no_twin_share": 0.0,
     "twin_changed_share": 0.0,
     "twins_seen": {
-     "59895": 20
+     "59895": 110
     }
    },
    {
     "audio_rank": 2,
     "earth_id": 23945,
     "place": "about 80 km north of Tamanrasset, Tamanghasset, Algeria",
-    "top5": 0.75,
+    "top5": 0.827,
     "top20": 1.0,
     "top50": 1.0,
-    "same_rank": 0.2,
+    "same_rank": 0.191,
     "rank_p05": 1.0,
-    "rank_median": 3.5,
-    "rank_p95": 9.250000000000004,
+    "rank_median": 3.0,
+    "rank_p95": 9.0,
     "unranked_share": 0.0,
     "fails_funnel_share": 0.0,
     "no_twin_share": 0.0,
     "twin_changed_share": 0.0,
     "twins_seen": {
-     "59895": 20
+     "59895": 110
     }
    },
    {
     "audio_rank": 3,
     "earth_id": 18282,
     "place": "about 78 km north-east of Ehen Hudag, Inner Mongolia, China",
-    "top5": 0.65,
+    "top5": 0.755,
     "top20": 1.0,
     "top50": 1.0,
-    "same_rank": 0.05,
-    "rank_p05": 1.9500000000000002,
-    "rank_median": 4.0,
-    "rank_p95": 12.100000000000001,
+    "same_rank": 0.173,
+    "rank_p05": 1.0,
+    "rank_median": 3.0,
+    "rank_p95": 14.0,
     "unranked_share": 0.0,
     "fails_funnel_share": 0.0,
     "no_twin_share": 0.0,
     "twin_changed_share": 0.0,
     "twins_seen": {
-     "59895": 20
+     "59895": 110
     }
    },
    {
     "audio_rank": 4,
     "earth_id": 18280,
     "place": "about 28 km north-east of Banqiao, Gansu Sheng, China",
-    "top5": 0.4,
-    "top20": 0.8,
-    "top50": 1.0,
-    "same_rank": 0.05,
+    "top5": 0.355,
+    "top20": 0.809,
+    "top50": 0.982,
+    "same_rank": 0.064,
     "rank_p05": 1.0,
-    "rank_median": 8.0,
-    "rank_p95": 40.400000000000006,
+    "rank_median": 9.0,
+    "rank_p95": 38.099999999999994,
     "unranked_share": 0.0,
     "fails_funnel_share": 0.0,
     "no_twin_share": 0.0,
     "twin_changed_share": 0.0,
     "twins_seen": {
-     "59895": 20
+     "59895": 110
     }
    },
    {
     "audio_rank": 5,
     "earth_id": 15395,
     "place": "about 41 km south-east of Buga, Govi-Altay, Mongolia",
-    "top5": 0.35,
-    "top20": 1.0,
+    "top5": 0.218,
+    "top20": 0.945,
     "top50": 1.0,
-    "same_rank": 0.15,
-    "rank_p05": 3.0,
-    "rank_median": 7.5,
-    "rank_p95": 13.350000000000005,
+    "same_rank": 0.118,
+    "rank_p05": 3.45,
+    "rank_median": 8.0,
+    "rank_p95": 20.549999999999997,
     "unranked_share": 0.0,
     "fails_funnel_share": 0.0,
     "no_twin_share": 0.0,
     "twin_changed_share": 0.0,
     "twins_seen": {
-     "59895": 20
+     "59895": 110
     }
    }
   ],
-  "top5_identical_set_share": 0.05,
+  "top5_identical_set_share": 0.027,
   "top5_identical_order_share": 0.0,
   "top5_overlap_hist": {
-   "2": 3,
-   "3": 12,
-   "4": 4,
-   "5": 1
+   "0": 1,
+   "1": 5,
+   "2": 19,
+   "3": 51,
+   "4": 31,
+   "5": 3
   },
-  "top5_overlap_mean": 3.15,
+  "top5_overlap_mean": 3.05,
   "top5_members_most_frequent": {
-   "17566": 1.0,
-   "23945": 0.75,
-   "18282": 0.65,
-   "18281": 0.45,
-   "18280": 0.4,
-   "15395": 0.35,
-   "15034": 0.25,
-   "16121": 0.2,
-   "26144": 0.2,
-   "16844": 0.2,
-   "16841": 0.15,
-   "16482": 0.15
+   "17566": 0.891,
+   "23945": 0.827,
+   "18282": 0.755,
+   "18281": 0.4,
+   "18280": 0.355,
+   "15034": 0.273,
+   "16841": 0.218,
+   "15395": 0.218,
+   "16482": 0.191,
+   "16844": 0.173,
+   "15394": 0.173,
+   "26144": 0.136
   },
-  "distinct_top5_members": 16,
+  "distinct_top5_members": 20,
   "ranked_count": {
    "baseline": 10192,
-   "min": 9962,
-   "max": 10252
+   "min": 9788,
+   "max": 10268
   },
   "passing_count": {
-   "min": 10314,
-   "max": 10354
+   "min": 10309,
+   "max": 10373
+  },
+  "sigma": {
+   "EARTH:elevation_m": [
+    "abs",
+    7.17,
+    "doc: ETOPO 2022 global RMSE vs ICESat-2 (MacFerrin et al. 2025)"
+   ],
+   "EARTH:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell slope accuracy documented)"
+   ],
+   "EARTH:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell roughness accuracy documented)"
+   ],
+   "EARTH:tmin_c": [
+    "abs",
+    1.39,
+    "doc: WorldClim 2 cross-validation RMSE of minimum temperature (Fick & Hijmans 2017, Table 3)"
+   ],
+   "EARTH:irradiance_kwh_m2_day": [
+    "abs",
+    0.40277777777777773,
+    "doc: WorldClim 2 cross-validation RMSE of solar radiation 1.45 MJ/m2/day = 0.403 kWh/m2/day"
+   ],
+   "EARTH:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: MOD11 QC best class 'average LST error <= 1K' per overpass, day minus night -> sqrt(2) K"
+   ],
+   "EARTH:rock_or_bare_frac": [
+    "abs",
+    0.05,
+    "illustrative 0.05 (classification product; per-cell error not documented)"
+   ],
+   "MOON:elevation_m": [
+    "abs",
+    10.0,
+    "doc: LOLA geodetic grid ~10 m radial accuracy (Smith et al. 2010)"
+   ],
+   "MOON:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:tmin_c": [
+    "abs",
+    1.0,
+    "doc: Diviner NETD < 1 K over 60-120 K (Hayne et al. 2017, citing Paige et al. 2010)"
+   ],
+   "MOON:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: max minus min, each with 1 K -> sqrt(2) K"
+   ],
+   "MOON:irradiance_kwh_m2_day": [
+    "rel",
+    0.02,
+    "illustrative 2 % (geometry formula plus LOLA illumination fraction)"
+   ]
+  },
+  "not_perturbed": {
+   "Earth irradiance_toa (formula)": "same S0 = 1361 W/m2 on both bodies; geometry exact (own integration matches to 6e-6)",
+   "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude, exact",
+   "thermal_inertia_class, permafrost_class, mask_fraction": "categories / land share, not perturbed"
+  }
+ },
+ "solar_f1": {
+  "runs": 50,
+  "sigma_factor": 1.0,
+  "seed": 20261115,
+  "pairs": [
+   {
+    "audio_rank": 1,
+    "earth_id": 38464,
+    "place": "about 129 km north-east of Derby, Australia",
+    "top5": 0.0,
+    "top20": 0.1,
+    "top50": 0.42,
+    "same_rank": 0.0,
+    "rank_p05": 13.45,
+    "rank_median": 64.0,
+    "rank_p95": 1258.1999999999998,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.98,
+    "twins_seen": {
+     "40767": 2,
+     "24584": 2,
+     "22889": 2,
+     "23147": 2
+    }
+   },
+   {
+    "audio_rank": 2,
+    "earth_id": 38105,
+    "place": "about 283 km north-east of Derby, Australia",
+    "top5": 0.0,
+    "top20": 0.08,
+    "top50": 0.42,
+    "same_rank": 0.0,
+    "rank_p05": 16.8,
+    "rank_median": 72.5,
+    "rank_p95": 1499.1,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.98,
+    "twins_seen": {
+     "40408": 3,
+     "24296": 3,
+     "40484": 2,
+     "41553": 2
+    }
+   },
+   {
+    "audio_rank": 3,
+    "earth_id": 38744,
+    "place": "about 80 km north-east of Maintirano, Melaky, Madagascar",
+    "top5": 0.02,
+    "top20": 0.14,
+    "top50": 0.5,
+    "same_rank": 0.0,
+    "rank_p05": 9.0,
+    "rank_median": 52.0,
+    "rank_p95": 1376.5999999999995,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.92,
+    "twins_seen": {
+     "40854": 4,
+     "25084": 3,
+     "40845": 3,
+     "42285": 2
+    }
+   },
+   {
+    "audio_rank": 4,
+    "earth_id": 37746,
+    "place": "about 280 km north-west of Kununurra, Australia",
+    "top5": 0.0,
+    "top20": 0.0,
+    "top50": 0.28,
+    "same_rank": 0.0,
+    "rank_p05": 27.8,
+    "rank_median": 97.0,
+    "rank_p95": 1558.3999999999996,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.98,
+    "twins_seen": {
+     "24671": 4,
+     "25399": 2,
+     "40824": 2,
+     "41555": 2
+    }
+   },
+   {
+    "audio_rank": 5,
+    "earth_id": 38465,
+    "place": "about 218 km north-east of Derby, Australia",
+    "top5": 0.0,
+    "top20": 0.06,
+    "top50": 0.38,
+    "same_rank": 0.0,
+    "rank_p05": 21.8,
+    "rank_median": 74.5,
+    "rank_p95": 1483.9999999999986,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 1.0,
+    "twins_seen": {
+     "24684": 4,
+     "23577": 3,
+     "25073": 2,
+     "39684": 2
+    }
+   }
+  ],
+  "top5_identical_set_share": 0.0,
+  "top5_identical_order_share": 0.0,
+  "top5_overlap_hist": {
+   "0": 49,
+   "1": 1
+  },
+  "top5_overlap_mean": 0.02,
+  "top5_members_most_frequent": {
+   "28699": 0.28,
+   "29420": 0.2,
+   "29718": 0.16,
+   "30365": 0.12,
+   "27643": 0.12,
+   "27646": 0.12,
+   "37034": 0.1,
+   "37033": 0.1,
+   "31176": 0.1,
+   "28339": 0.1,
+   "37042": 0.1,
+   "29719": 0.1
+  },
+  "distinct_top5_members": 116,
+  "ranked_count": {
+   "baseline": 6360,
+   "min": 7042,
+   "max": 7547
+  },
+  "passing_count": {
+   "min": 18491,
+   "max": 18636
   },
   "sigma": {
    "EARTH:elevation_m": [

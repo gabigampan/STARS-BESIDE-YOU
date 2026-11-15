@@ -1,7 +1,9 @@
 """p3_montecarlo (point F): propagate input uncertainty to the ranking.
 
-Usage: python p3_montecarlo.py MISSION [RUNS] [SIGMA_FACTOR] [SEED]
-  defaults: RUNS 200, SIGMA_FACTOR 1.0, SEED 20261115.
+Usage: python p3_montecarlo.py MISSION [RUNS] [SIGMA_FACTOR] [SEED] [SUBSET]
+  defaults: RUNS 200, SIGMA_FACTOR 1.0, SEED 20261115, SUBSET all.
+  SUBSET (decomposition runs): 'only:BODY:col,BODY:col' perturbs only those entries,
+  'except:BODY:col,...' all but those (keys as in SIGMA, e.g. EARTH:irradiance_kwh_m2_day).
 
 Each run adds independent Gaussian noise per cell to the input columns (table below),
 then recomputes from scratch with p3_common: derived variables (relative elevation with
@@ -46,13 +48,15 @@ NOT_PERTURBED = {
 }
 
 
-def perturb(T, rng, f):
+def perturb(T, rng, f, subset=None):
     out = {}
     for body, df in T.items():
         d = df.copy()
         n = len(d)
         for (b, c), (kind, val, _) in SIGMA.items():
             if b != body:
+                continue
+            if subset is not None and f"{b}:{c}" not in subset:
                 continue
             cols = {"slope": ["slope_deg", "slope_300m_deg"], "rough": ["roughness_m", "rough_300m_m"]}.get(c, [c])
             e = rng.standard_normal(n) * val * f
@@ -71,6 +75,13 @@ def main():
     runs = int(sys.argv[2]) if len(sys.argv) > 2 else 200
     f = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
     seed = int(sys.argv[4]) if len(sys.argv) > 4 else 20261115
+    sub_arg = sys.argv[5] if len(sys.argv) > 5 else "all"
+    subset = None
+    if sub_arg != "all":
+        mode, keys = sub_arg.split(":", 1)
+        keys = set(keys.split(","))
+        allk = {f"{b}:{c}" for (b, c) in SIGMA}
+        subset = keys if mode == "only" else allk - keys
     P = load_params()
     T = load_tables(P)
     lbz = lunar_base_zone_ids()
@@ -80,10 +91,10 @@ def main():
     ids = [p["earth_id"] for p in pairs]
     rng = np.random.default_rng(seed + {"rover": 0, "solar": 1, "lunar_base": 2}[m] + int(f * 1000))
     rec = {"rank": [], "twin": [], "top5": [], "n_ranked": [], "n_pass": []}
-    tag = f"{m}_f{f:g}"
+    tag = f"{m}_f{f:g}" + ("" if sub_arg == "all" else "_" + sub_arg.replace(":", "-").replace(",", "+"))
     t0 = time.time()
     for k in range(runs):
-        Tp = perturb(T, rng, f)
+        Tp = perturb(T, rng, f, subset)
         SV = sim_values(Tp, P, toa=toa)
         r = run_mission(Tp, m, P, lbz, SV).set_index("id")
         rr = [int(r.loc[i, "rank"]) if i in r.index and r.loc[i, "rank"] > 0 else 0 for i in ids]
@@ -95,7 +106,7 @@ def main():
         rec["n_pass"].append(int(len(r)))
         if (k + 1) % 10 == 0 or k + 1 == runs:
             print(tag, k + 1, round(time.time() - t0), flush=True)
-            json.dump({"mission": m, "runs_done": k + 1, "sigma_factor": f, "seed": seed, "ids": ids,
+            json.dump({"mission": m, "runs_done": k + 1, "sigma_factor": f, "subset": sub_arg, "seed": seed, "ids": ids,
                        "audio": pairs, "baseline_top5": [int(x) for x in base[(base["rank"] >= 1) & (base["rank"] <= 5)]
                                                          .sort_values("rank").index],
                        "baseline_ranked": int((base["rank"] > 0).sum()), "sigma": {f"{b}:{c}": v for (b, c), v in SIGMA.items()},

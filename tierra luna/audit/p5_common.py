@@ -320,6 +320,24 @@ def run_mission(T, D, m: str, P: Dict, chunk: int = 96, cache: Optional[Dict] = 
 
 
 def _twin_search(ev, mv, key, tau, bound, w, n, chunk):
+    """Exact search. Speed-up only: an Earth point with, for some key variable, no zone cell
+    within the bound can have no twin (the filter needs every key within its bound), so it is
+    skipped; the remaining points are searched over every zone cell."""
+    possible = np.ones(n, dtype=bool)
+    for q in np.flatnonzero(key):
+        mq = np.sort(mv[:, q][np.isfinite(mv[:, q])])
+        x = ev[:, q]
+        lo = np.searchsorted(mq, np.where(np.isfinite(x), x - bound[q], np.inf), side="left")
+        hi = np.searchsorted(mq, np.where(np.isfinite(x), x + bound[q], -np.inf), side="right")
+        possible &= np.isfinite(x) & (hi > lo)
+    idx = np.flatnonzero(possible)
+    out = np.full(n, -1)
+    if len(idx):
+        out[idx] = _twin_search_full(ev[idx], mv, key, tau, bound, w, len(idx), chunk)
+    return out
+
+
+def _twin_search_full(ev, mv, key, tau, bound, w, n, chunk):
     twin_pos = np.full(n, -1)
     for a in range(0, n, chunk):
         b = min(n, a + chunk)

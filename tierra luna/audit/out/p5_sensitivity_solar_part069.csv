@@ -1,0 +1,2 @@
+mission,id,group,change,earth_pass,entered,left,paired,pairs_gained,pairs_lost,twin_changed,top5_kept,top5_same_order,top50_kept,top50_same_order,top5_new
+solar,sim.irradiance_toa_kwh_m2_day.weight0,sim_weight,"similarity weight of irradiance_toa_kwh_m2_day (0.8) -> 0, still in the pair filter",18777,0,0,6360,0,0,5491,0,False,3,False,38105-42652;38464-41915;38744-42285;37746-26753;38465-22497
