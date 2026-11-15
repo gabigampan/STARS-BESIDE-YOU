@@ -1,0 +1,348 @@
+{
+ "checks": [
+  {
+   "check": "similarity variables are slope_deg and roughness_m only",
+   "ok": true,
+   "got": [
+    "slope_deg",
+    "roughness_m"
+   ],
+   "want": [
+    "slope_deg",
+    "roughness_m"
+   ],
+   "note": "11:23 decision 1"
+  },
+  {
+   "check": "weights 0.5 / 0.5, sum 1",
+   "ok": true,
+   "got": [
+    0.5,
+    0.5
+   ],
+   "want": [
+    0.5,
+    0.5
+   ],
+   "note": ""
+  },
+  {
+   "check": "both key",
+   "ok": true,
+   "got": [
+    "key",
+    "key"
+   ],
+   "want": [
+    "key",
+    "key"
+   ],
+   "note": ""
+  },
+  {
+   "check": "tolerances 2 deg and 30 m (unchanged)",
+   "ok": true,
+   "got": [
+    2.0,
+    30.0
+   ],
+   "want": [
+    2.0,
+    30.0
+   ],
+   "note": ""
+  },
+  {
+   "check": "key filter bound multiplier 1",
+   "ok": true,
+   "got": {
+    "key": 1.0,
+    "secondary": 2.0
+   },
+   "want": {
+    "key": 1.0
+   },
+   "note": ""
+  },
+  {
+   "check": "elevation_rel_m out of similarity and filter",
+   "ok": true,
+   "got": null,
+   "want": null,
+   "note": ""
+  },
+  {
+   "check": "elevation_rel_m information row",
+   "ok": true,
+   "got": [
+    [
+     "elevation_rel_m",
+     "temp_k",
+     "lst_diurnal_amp_k",
+     "irradiance_kwh_m2_day"
+    ],
+    [
+     "elevation_rel_m"
+    ]
+   ],
+   "want": "contains elevation_rel_m",
+   "note": ""
+  },
+  {
+   "check": "zone unchanged (lat <= -75)",
+   "ok": true,
+   "got": -75.0,
+   "want": -75.0,
+   "note": ""
+  },
+  {
+   "check": "sigma slope = formula",
+   "ok": true,
+   "got": 0.265093,
+   "want": 0.265093,
+   "note": "pixel sizes from the radii: Earth 60 arc-second N-S 1853.2 m, LDEM_16 1895.2 m -> 0.265080 deg"
+  },
+  {
+   "check": "sigma roughness = formula",
+   "ok": true,
+   "got": 17.401661,
+   "want": 17.401661,
+   "note": ""
+  },
+  {
+   "check": "score form exp(-0.5 max(0, d/sigma - 1)^2)",
+   "ok": true,
+   "got": [
+    "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (2 deg)",
+    "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (30 m)"
+   ],
+   "want": "research 5 'Para implementar'",
+   "note": ""
+  },
+  {
+   "check": "five: spread_within_top_tie",
+   "ok": true,
+   "got": "spread_within_top_tie",
+   "want": "spread_within_top_tie",
+   "note": ""
+  },
+  {
+   "check": "five: min separation 2 deg",
+   "ok": true,
+   "got": 2.0,
+   "want": 2.0,
+   "note": ""
+  },
+  {
+   "check": "five: ice skip snow_ice_frac >= 0.5",
+   "ok": true,
+   "got": {
+    "enabled": true,
+    "column": "snow_ice_frac",
+    "op": ">=",
+    "value": 0.5,
+    "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+   },
+   "want": ">= 0.5",
+   "note": ""
+  },
+  {
+   "check": "five: water skip mask_fraction < 0.5",
+   "ok": true,
+   "got": {
+    "enabled": true,
+    "column": "mask_fraction",
+    "op": "<",
+    "value": 0.5,
+    "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+   },
+   "want": "< 0.5",
+   "note": "brief: 'less than half land' is part of the order; config text says 'TO BE CONFIRMED by the team lead'"
+  },
+  {
+   "check": "mission gates equal mission_scoring.json",
+   "ok": true,
+   "got": {
+    "slope_300m_deg": [
+     0.5,
+     15.0
+    ],
+    "rough_300m_m": [
+     5.0,
+     650.0
+    ]
+   },
+   "want": {
+    "slope_300m_deg": [
+     0.5,
+     15.0
+    ],
+    "rough_300m_m": [
+     5.0,
+     650.0
+    ]
+   },
+   "note": ""
+  },
+  {
+   "check": "soft criteria equal mission_scoring.json",
+   "ok": true,
+   "got": {
+    "slope_300m_deg": [
+     0.45,
+     15.0,
+     1.0
+    ],
+    "rough_300m_m": [
+     0.3,
+     650.0,
+     30.0
+    ],
+    "rock_or_bare_frac": [
+     0.25,
+     0.0,
+     0.7
+    ]
+   },
+   "want": {
+    "slope_300m_deg": [
+     0.45,
+     15.0,
+     1.0
+    ],
+    "rough_300m_m": [
+     0.3,
+     650.0,
+     30.0
+    ],
+    "rock_or_bare_frac": [
+     0.25,
+     0.0,
+     0.7
+    ]
+   },
+   "note": ""
+  },
+  {
+   "check": "soft weights sum 1",
+   "ok": true,
+   "got": 1.0,
+   "want": 1.0,
+   "note": ""
+  },
+  {
+   "check": "slope minimum 0.5 kept",
+   "ok": true,
+   "got": [
+    0.5,
+    15.0
+   ],
+   "want": 0.5,
+   "note": ""
+  },
+  {
+   "check": "criteria set mission_scoring_deviations empty for rover",
+   "ok": true,
+   "got": null,
+   "want": [],
+   "note": ""
+  },
+  {
+   "check": "selected criteria set rover = corrected",
+   "ok": true,
+   "got": "corrected",
+   "want": "corrected",
+   "note": ""
+  },
+  {
+   "check": "mix factor 0.5",
+   "ok": true,
+   "got": 0.5,
+   "want": 0.5,
+   "note": ""
+  }
+ ],
+ "all_ok": true,
+ "corrected_set": {
+  "title": "Corrected (11:23, 11:28, 11:36 and 11:51 CET)",
+  "engine_patch": {
+   "top5_selection.missions.rover": {
+    "rule": "spread_within_top_tie",
+    "min_separation_deg": 2.0,
+    "skips": {
+     "ice": {
+      "enabled": true,
+      "column": "snow_ice_frac",
+      "op": ">=",
+      "value": 0.5,
+      "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+     },
+     "water": {
+      "enabled": true,
+      "column": "mask_fraction",
+      "op": "<",
+      "value": 0.5,
+      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+     }
+    },
+    "alternative_rule": "rank_with_skips"
+   }
+  },
+  "mission_scoring_deviations": [],
+  "note": "Slope and roughness only (relative elevation an information row, 11:23), similarity desaturated by the measurement uncertainty of the elevation models (research_5, 11:51), five by geographic spread among the tied points. The rule and its variables are the main real_value_similarity.missions.rover block."
+ },
+ "rover_similarity_block": {
+  "zone": {
+   "kind": "lat_max",
+   "lat_max": -75.0,
+   "name": "South Pole PSR & Shackleton Rim (75°S–90°S)",
+   "source": "analog_finder.build_lunar_reference_zones: 'lat <= -75.0'",
+   "why": "Unchanged from the zone_twin rule (team decision of 2026-11-15)."
+  },
+  "variables": [
+   {
+    "variable": "slope_deg",
+    "role": "key",
+    "weight": 0.5,
+    "label": "Slope",
+    "unit": "deg",
+    "tolerance": 2.0,
+    "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+    "why": "5 km baseline of rover_preset.py: our slopes have a 3.7-3.8 km baseline, closer to 5 km than to 300 m on a log scale (docs/ANALOG_PRINCIPLE.md section C).",
+    "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)",
+    "uncertainty_scale": {
+     "sigma": 0.265093,
+     "unit": "deg",
+     "formula": "sqrt((7.17/(sqrt(2)*1853))^2 + (10/(sqrt(2)*1895.2))^2) rad = 0.265093 deg",
+     "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025, ESSD 17, 1835-1849); LOLA about 10 m radial (Smith et al. 2010, GRL 37, L18204); docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
+     "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (2 deg)",
+     "set_by": "the team lead, 2026-11-15 11:51 CET (desaturate the key variable by the measurement uncertainty), specified by research 5"
+    }
+   },
+   {
+    "variable": "roughness_m",
+    "role": "key",
+    "weight": 0.5,
+    "label": "Roughness",
+    "unit": "m",
+    "tolerance": 30.0,
+    "tolerance_set_by": "illustrative team values: tierra luna/rover_preset.py version 3, tolerances_by_baseline '5km' (lines 196-205; marked 'ILUSTRATIVO - set by Robotics 1' there); adopted by the team decision of 2026-11-15 (morning)",
+    "why": "5 km baseline of rover_preset.py (roughness at a ~1.9 km lag on both bodies).",
+    "weight_set_by": "the team lead's delegate on the team lead's behalf, 2026-11-15 11:23 CET (decision 1: relative elevation to weight zero, its 0.2 shared equally between slope and roughness; before: 0.4)",
+    "uncertainty_scale": {
+     "sigma": 17.401661,
+     "unit": "m",
+     "formula": "sqrt(2*7.17^2 + 2*10^2) = 17.401661 m",
+     "source": "ETOPO 2022 RMSE 7.17 m (MacFerrin et al. 2025); LOLA about 10 m radial (Smith et al. 2010); research_5_rover_escala.md 'Para implementar'",
+     "score": "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (30 m)",
+     "set_by": "the team lead, 2026-11-15 11:51 CET, specified by research 5"
+    }
+   }
+  ],
+  "weights_why": "Decision of 2026-11-15 11:23 CET, taken by the delegate on the team lead's behalf (decision 1): relative elevation goes to weight zero (it has no physical sense for a rover and clashes with the principle of 04:47, Rover = slope and roughness); its weight is shared among the terrain variables, with no new variable: slope 50 % and roughness 50 %, both key, tolerances unchanged (2 deg and 30 m). The director's reading, told to the team lead: relative elevation also leaves the pair filter (a zero-weight variable must not decide which pairs exist) and stays as an information row with its difference (info_differences.rover). Before (team decision of 2026-11-15, morning): slope 40 %, roughness 40 % (key), relative elevation 20 % (secondary, tolerance 500 m, filter bound 1,000 m)."
+ },
+ "top5_selection_rover_main": {
+  "rule": "min_separation",
+  "min_separation_deg": 2.0
+ }
+}

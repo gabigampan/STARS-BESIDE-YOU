@@ -1,0 +1,2948 @@
+{
+ "bundle": "/home/user/stars-beside-you/app/public/data/v2",
+ "morning_bundle": "/tmp/claude-0/-home-user-stars-beside-you/c438b3a2-e85e-5112-bace-b715b34b3ce7/scratchpad/bundle_a493514",
+ "sim_spec_corrected": {
+  "names": [
+   "slope_deg",
+   "roughness_m"
+  ],
+  "w": [
+   0.5,
+   0.5
+  ],
+  "tol": [
+   2.0,
+   30.0
+  ],
+  "role": [
+   "key",
+   "key"
+  ],
+  "bound": [
+   2.0,
+   30.0
+  ],
+  "sig": [
+   0.265093,
+   17.401661
+  ]
+ },
+ "sim_spec_morning": {
+  "names": [
+   "slope_deg",
+   "roughness_m",
+   "elevation_rel_m"
+  ],
+  "w": [
+   0.4,
+   0.4,
+   0.2
+  ],
+  "tol": [
+   2.0,
+   30.0,
+   500.0
+  ],
+  "role": [
+   "key",
+   "key",
+   "secondary"
+  ],
+  "bound": [
+   2.0,
+   30.0,
+   1000.0
+  ],
+  "sig": null
+ },
+ "top5_rule_corrected": {
+  "rule": "spread_within_top_tie",
+  "min_separation_deg": 2.0,
+  "skips": {
+   "ice": {
+    "enabled": true,
+    "column": "snow_ice_frac",
+    "op": ">=",
+    "value": 0.5,
+    "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+   },
+   "water": {
+    "enabled": true,
+    "column": "mask_fraction",
+    "op": "<",
+    "value": 0.5,
+    "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+   }
+  },
+  "alternative_rule": "rank_with_skips"
+ },
+ "funnel": {
+  "cells_in_table": 64800,
+  "passing": 10337,
+  "fail_counts_among_cells_with_elevation": {
+   "slope_300m_deg:missing": 462,
+   "rough_300m_m:missing": 124,
+   "elevation_m:missing": 0,
+   "elevation_m:below_min": 177,
+   "mask_fraction:missing": 0,
+   "mask_fraction:below_min": 3023,
+   "slope_300m_deg:below_min": 12639,
+   "slope_300m_deg:above_max": 1,
+   "rough_300m_m:below_min": 4352,
+   "rough_300m_m:above_max": 0
+  },
+  "fail_counts_all_cells": {
+   "slope_300m_deg:missing": 40017,
+   "rough_300m_m:missing": 39679,
+   "elevation_m:missing": 39555,
+   "elevation_m:below_min": 177,
+   "mask_fraction:missing": 0,
+   "mask_fraction:below_min": 42578,
+   "slope_300m_deg:below_min": 12639,
+   "slope_300m_deg:above_max": 1,
+   "rough_300m_m:below_min": 4352,
+   "rough_300m_m:above_max": 0
+  },
+  "passing_equals_model": true
+ },
+ "compare_corrected_vs_bundle": {
+  "n_mine": 10337,
+  "n_bundle": 10337,
+  "same_passing_set": true,
+  "suitability": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "similarity": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "final": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "rank": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "twin": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "score_slope_deg": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "score_roughness_m": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.earth": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.moon": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.diff": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.earth": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.moon": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.diff": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  }
+ },
+ "bundle_mission_top5": {
+  "rule": "241 sites (cells less than half ice and at least half land) tie at the top score: their difference in slope and roughness from their lunar twin is within the measurement error of the elevation models, so the data cannot tell them apart. The five shown are chosen among those tied sites (without cells that are half or more ice or less than half land) to be as far apart as possible: the first is the tied site with the highest similarity, then each next one is the tied site farthest from those already chosen. The full ranking itself is unchanged.",
+  "min_separation_deg": 2.0,
+  "min_separation_km": 222.4,
+  "ids": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ],
+  "overall_ranks": [
+   3,
+   254,
+   251,
+   241,
+   236
+  ],
+  "rule_id": "spread_within_top_tie",
+  "skips": {
+   "ice": {
+    "enabled": true,
+    "column": "snow_ice_frac",
+    "op": ">=",
+    "value": 0.5
+   },
+   "water": {
+    "enabled": true,
+    "column": "mask_fraction",
+    "op": "<",
+    "value": 0.5
+   }
+  },
+  "top_tie_n": 254,
+  "top_tie_n_after_skips": 241,
+  "alternative_rule": "rank_with_skips",
+  "alternative": {
+   "rule_id": "rank_with_skips",
+   "ids": [
+    4037,
+    4742,
+    4751,
+    4962,
+    5125
+   ],
+   "overall_ranks": [
+    3,
+    6,
+    9,
+    10,
+    15
+   ],
+   "rule": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within 2 degrees of arc (about 222.4 km) of one already kept. The full ranking itself is unchanged."
+  }
+ },
+ "bundle_fail_bit_counts": {
+  "elevation_m:below_min": 177,
+  "elevation_m:missing": 252,
+  "mask_fraction:below_min": 3275,
+  "rough_300m_m:below_min": 4352,
+  "rough_300m_m:missing": 376,
+  "slope_300m_deg:above_max": 1,
+  "slope_300m_deg:below_min": 12639,
+  "slope_300m_deg:missing": 714
+ },
+ "bundle_fail_bits_len": 25497,
+ "difference_table_corrected": [
+  {
+   "variable": "slope_deg",
+   "role": "key",
+   "weight": 0.5,
+   "tolerance": 2.0,
+   "filter_bound": 2.0,
+   "sigma": 0.265093,
+   "n_pairs": 10337,
+   "median": 0.016,
+   "p90": 0.044,
+   "max": 0.28,
+   "all_within_bound": true,
+   "share_within_sigma": 0.99981
+  },
+  {
+   "variable": "roughness_m",
+   "role": "key",
+   "weight": 0.5,
+   "tolerance": 30.0,
+   "filter_bound": 30.0,
+   "sigma": 17.401661,
+   "n_pairs": 10337,
+   "median": 1.09,
+   "p90": 2.84,
+   "max": 16.89,
+   "all_within_bound": true,
+   "share_within_sigma": 1.0
+  }
+ ],
+ "pairs_both_within_sigma": 10335,
+ "difference_table_morning": [
+  {
+   "variable": "slope_deg",
+   "role": "key",
+   "weight": 0.4,
+   "tolerance": 2.0,
+   "filter_bound": 2.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 0.408,
+   "p90": 0.851,
+   "max": 1.971,
+   "all_within_bound": true
+  },
+  {
+   "variable": "roughness_m",
+   "role": "key",
+   "weight": 0.4,
+   "tolerance": 30.0,
+   "filter_bound": 30.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 5.34,
+   "p90": 20.549,
+   "max": 29.97,
+   "all_within_bound": true
+  },
+  {
+   "variable": "elevation_rel_m",
+   "role": "secondary",
+   "weight": 0.2,
+   "tolerance": 500.0,
+   "filter_bound": 1000.0,
+   "sigma": null,
+   "n_pairs": 10192,
+   "median": 247.8862,
+   "p90": 798.8762,
+   "max": 999.9862,
+   "all_within_bound": true
+  }
+ ],
+ "info_elevation_rel_corrected": {
+  "median": 3410.6,
+  "p90": 5415.9,
+  "max": 10517.3
+ },
+ "general_corrected": {
+  "passing": 10337,
+  "paired": 10337,
+  "distinct_twins": 1144,
+  "largest_twin": "M59712",
+  "largest_twin_points": 271,
+  "largest_twin_share": 0.0262,
+  "top_final": 100.0,
+  "n_final_eq_top": 254,
+  "fifth_of_ranking": 100.0,
+  "n_within_0_1_of_fifth": 317,
+  "n_within_0_5": 422,
+  "n_within_1": 497,
+  "n_sim_pub_100": 10335,
+  "spearman_final_suit": 1.0,
+  "top10_ids": [
+   3872,
+   4035,
+   4037,
+   4038,
+   4042,
+   4742,
+   4743,
+   4750,
+   4751,
+   4962
+  ]
+ },
+ "general_morning": {
+  "passing": 10337,
+  "paired": 10192,
+  "distinct_twins": 401,
+  "largest_twin": "M61116",
+  "largest_twin_points": 2033,
+  "largest_twin_share": 0.1995,
+  "top_final": 99.39,
+  "n_final_eq_top": 1,
+  "fifth_of_ranking": 98.91,
+  "n_within_0_1_of_fifth": 7,
+  "n_within_0_5": 15,
+  "n_within_1": 22,
+  "n_sim_pub_100": 1,
+  "spearman_final_suit": 0.4984,
+  "top10_ids": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395,
+   18281,
+   16841,
+   16121,
+   15034,
+   16482
+  ]
+ },
+ "five_corrected": [
+  {
+   "id": "E4037",
+   "lat": 78.5,
+   "lon": -102.5,
+   "rank": 3,
+   "final": 100.0,
+   "sim": 100.0,
+   "sim_full": 100.0,
+   "suit": 100.0,
+   "twin": "M63714",
+   "twin_lat": -86.5,
+   "twin_lon": 174.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Sverdrup",
+    "km": 68.6
+   },
+   "slope_E": 0.77,
+   "slope_M": 0.793,
+   "rough_E": 29.34,
+   "rough_M": 29.5,
+   "land_share": 0.6968,
+   "water_share": 0.3032,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.8027,
+   "rock_or_bare_frac": 0.8676,
+   "elevation_m": 91.7,
+   "dist_to_all_water_cell_km": 89.0,
+   "nearest_place_own": {
+    "name": "Gjoa Haven",
+    "admin1": "Nunavut",
+    "cc": "CA",
+    "km": 1115.8
+   },
+   "nearest_place_bundle": {
+    "name": "Gjoa Haven",
+    "km": 1115.8
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E50510",
+   "lat": -50.5,
+   "lon": -69.5,
+   "rank": 254,
+   "final": 100.0,
+   "sim": 100.0,
+   "sim_full": 100.0,
+   "suit": 100.0,
+   "twin": "M59438",
+   "twin_lat": -75.5,
+   "twin_lon": -141.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Zeeman",
+    "km": 51.3
+   },
+   "slope_E": 0.722,
+   "slope_M": 0.739,
+   "rough_E": 29.16,
+   "rough_M": 30.62,
+   "land_share": 0.9278,
+   "water_share": 0.0722,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 150,
+   "bare_frac": 0.0027,
+   "rock_or_bare_frac": 0.7098,
+   "elevation_m": 235.3,
+   "dist_to_all_water_cell_km": 179.0,
+   "nearest_place_own": {
+    "name": "Comandante Luis Piedra Buena",
+    "admin1": "Santa Cruz",
+    "cc": "AR",
+    "km": 70.8
+   },
+   "nearest_place_bundle": {
+    "name": "Comandante Luis Piedra Buena",
+    "km": 70.8
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E44239",
+   "lat": -32.5,
+   "lon": 139.5,
+   "rank": 251,
+   "final": 100.0,
+   "sim": 100.0,
+   "sim_full": 100.0,
+   "suit": 100.0,
+   "twin": "M59712",
+   "twin_lat": -75.5,
+   "twin_lon": 132.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Schrodinger",
+    "km": 23.5
+   },
+   "slope_E": 0.547,
+   "slope_M": 0.547,
+   "rough_E": 18.18,
+   "rough_M": 15.66,
+   "land_share": 1.0,
+   "water_share": 0.0,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 150,
+   "bare_frac": 0.0091,
+   "rock_or_bare_frac": 0.7581,
+   "elevation_m": 319.8,
+   "dist_to_all_water_cell_km": 454.0,
+   "nearest_place_own": {
+    "name": "Peterborough",
+    "admin1": "South Australia",
+    "cc": "AU",
+    "km": 81.0
+   },
+   "nearest_place_bundle": {
+    "name": "Peterborough",
+    "km": 81.0
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E26510",
+   "lat": 16.5,
+   "lon": 50.5,
+   "rank": 241,
+   "final": 100.0,
+   "sim": 100.0,
+   "sim_full": 100.0,
+   "suit": 100.0,
+   "twin": "M63711",
+   "twin_lat": -86.5,
+   "twin_lon": 171.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Haynes",
+    "km": 68.4
+   },
+   "slope_E": 0.643,
+   "slope_M": 0.677,
+   "rough_E": 21.87,
+   "rough_M": 19.22,
+   "land_share": 1.0,
+   "water_share": 0.0,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.9995,
+   "rock_or_bare_frac": 0.9998,
+   "elevation_m": 789.6,
+   "dist_to_all_water_cell_km": 247.0,
+   "nearest_place_own": {
+    "name": "Dahasuways",
+    "admin1": "Al Mahrah",
+    "cc": "YE",
+    "km": 89.7
+   },
+   "nearest_place_bundle": {
+    "name": "Dahasuways",
+    "km": 89.7
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E26087",
+   "lat": 17.5,
+   "lon": -12.5,
+   "rank": 236,
+   "final": 100.0,
+   "sim": 100.0,
+   "sim_full": 100.0,
+   "suit": 100.0,
+   "twin": "M61294",
+   "twin_lat": -80.5,
+   "twin_lon": -85.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Drygalski",
+    "km": 29.4
+   },
+   "slope_E": 0.523,
+   "slope_M": 0.51,
+   "rough_E": 26.42,
+   "rough_M": 26.8,
+   "land_share": 0.9998,
+   "water_share": 0.0002,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.4952,
+   "rock_or_bare_frac": 0.7591,
+   "elevation_m": 152.0,
+   "dist_to_all_water_cell_km": 530.0,
+   "nearest_place_own": {
+    "name": "Barkewol",
+    "admin1": "Assaba",
+    "cc": "MR",
+    "km": 95.6
+   },
+   "nearest_place_bundle": {
+    "name": "Barkewol",
+    "km": 95.6
+   },
+   "place_name_agrees": true
+  }
+ ],
+ "five_corrected_min_sep_deg": 59.96338524940772,
+ "five_corrected_info": {
+  "rule": "spread_within_top_tie",
+  "top": 100.0,
+  "tied_all": 254,
+  "tied_eligible": 241,
+  "min_sep_deg": 59.96338524940772
+ },
+ "five_morning": [
+  {
+   "id": "E17566",
+   "lat": 41.5,
+   "lon": 106.5,
+   "rank": 1,
+   "final": 99.39,
+   "sim": 99.5657,
+   "sim_full": 99.565711,
+   "suit": 99.223,
+   "twin": "M59895",
+   "twin_lat": -76.5,
+   "twin_lon": -44.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Casatus",
+    "km": 159.2
+   },
+   "slope_E": 1.038,
+   "slope_M": 1.148,
+   "rough_E": 43.53,
+   "rough_M": 44.2,
+   "land_share": 0.9999,
+   "water_share": 0.0001,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.6726,
+   "rock_or_bare_frac": 0.8348,
+   "elevation_m": 1433.4,
+   "dist_to_all_water_cell_km": 1155.0,
+   "nearest_place_own": {
+    "name": "Bayinbaolige",
+    "admin1": "Inner Mongolia",
+    "cc": "CN",
+    "km": 65.6
+   },
+   "nearest_place_bundle": {
+    "name": "Bayinbaolige",
+    "km": 65.6
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E23945",
+   "lat": 23.5,
+   "lon": 5.5,
+   "rank": 2,
+   "final": 99.21,
+   "sim": 99.7593,
+   "sim_full": 99.759295,
+   "suit": 98.662,
+   "twin": "M59895",
+   "twin_lat": -76.5,
+   "twin_lon": -44.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Casatus",
+    "km": 159.2
+   },
+   "slope_E": 1.215,
+   "slope_M": 1.148,
+   "rough_E": 43.37,
+   "rough_M": 44.2,
+   "land_share": 1.0,
+   "water_share": 0.0,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.9986,
+   "rock_or_bare_frac": 0.9987,
+   "elevation_m": 1457.8,
+   "dist_to_all_water_cell_km": 1305.0,
+   "nearest_place_own": {
+    "name": "Tamanrasset",
+    "admin1": "Tamanghasset",
+    "cc": "DZ",
+    "km": 79.5
+   },
+   "nearest_place_bundle": {
+    "name": "Tamanrasset",
+    "km": 79.5
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E18282",
+   "lat": 39.5,
+   "lon": 102.5,
+   "rank": 3,
+   "final": 99.17,
+   "sim": 98.7673,
+   "sim_full": 98.767344,
+   "suit": 99.577,
+   "twin": "M59895",
+   "twin_lat": -76.5,
+   "twin_lon": -44.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Casatus",
+    "km": 159.2
+   },
+   "slope_E": 0.908,
+   "slope_M": 1.148,
+   "rough_E": 38.75,
+   "rough_M": 44.2,
+   "land_share": 0.9981,
+   "water_share": 0.0019,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.7102,
+   "rock_or_bare_frac": 0.9496,
+   "elevation_m": 1443.6,
+   "dist_to_all_water_cell_km": 1471.0,
+   "nearest_place_own": {
+    "name": "Ehen Hudag",
+    "admin1": "Inner Mongolia",
+    "cc": "CN",
+    "km": 78.4
+   },
+   "nearest_place_bundle": {
+    "name": "Ehen Hudag",
+    "km": 78.4
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E18280",
+   "lat": 39.5,
+   "lon": 100.5,
+   "rank": 4,
+   "final": 99.08,
+   "sim": 99.4954,
+   "sim_full": 99.495375,
+   "suit": 98.664,
+   "twin": "M59895",
+   "twin_lat": -76.5,
+   "twin_lon": -44.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Casatus",
+    "km": 159.2
+   },
+   "slope_E": 1.131,
+   "slope_M": 1.148,
+   "rough_E": 48.91,
+   "rough_M": 44.2,
+   "land_share": 0.9999,
+   "water_share": 0.0001,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.5521,
+   "rock_or_bare_frac": 0.7058,
+   "elevation_m": 1547.4,
+   "dist_to_all_water_cell_km": 1643.0,
+   "nearest_place_own": {
+    "name": "Banqiao",
+    "admin1": "Gansu Sheng",
+    "cc": "CN",
+    "km": 27.8
+   },
+   "nearest_place_bundle": {
+    "name": "Banqiao",
+    "km": 27.8
+   },
+   "place_name_agrees": true
+  },
+  {
+   "id": "E15395",
+   "lat": 47.5,
+   "lon": 95.5,
+   "rank": 5,
+   "final": 98.91,
+   "sim": 99.1221,
+   "sim_full": 99.12213,
+   "suit": 98.693,
+   "twin": "M59895",
+   "twin_lat": -76.5,
+   "twin_lon": -44.5,
+   "twin_in_zone": true,
+   "twin_feature": {
+    "name": "Casatus",
+    "km": 159.2
+   },
+   "slope_E": 1.236,
+   "slope_M": 1.148,
+   "rough_E": 41.33,
+   "rough_M": 44.2,
+   "land_share": 0.999,
+   "water_share": 0.001,
+   "snow_ice_frac": 0.0,
+   "lc_dominant_cci": 200,
+   "bare_frac": 0.6361,
+   "rock_or_bare_frac": 0.7377,
+   "elevation_m": 1658.4,
+   "dist_to_all_water_cell_km": 2181.0,
+   "nearest_place_own": {
+    "name": "Buga",
+    "admin1": "Govi-Altay",
+    "cc": "MN",
+    "km": 41.0
+   },
+   "nearest_place_bundle": {
+    "name": "Buga",
+    "km": 41.0
+   },
+   "place_name_agrees": true
+  }
+ ],
+ "five_morning_min_sep_deg": 1.5432174645742511,
+ "five_corrected_ids": [
+  4037,
+  50510,
+  44239,
+  26510,
+  26087
+ ],
+ "five_morning_ids": [
+  17566,
+  23945,
+  18282,
+  18280,
+  15395
+ ],
+ "five_bundle_ids": [
+  4037,
+  50510,
+  44239,
+  26510,
+  26087
+ ],
+ "five_equal_bundle": true,
+ "five_corrected_alternative_rules": {
+  "rank_with_skips": [
+   4037,
+   4742,
+   4751,
+   4962,
+   5125
+  ],
+  "spread_ice_only": [
+   3872,
+   50509,
+   44239,
+   26087,
+   26151
+  ],
+  "min_separation_no_skips": [
+   3872,
+   4035,
+   4742,
+   4751,
+   4962
+  ]
+ },
+ "tied_group": {
+  "n": 254,
+  "n_ice_skipped": 0,
+  "n_water_skipped": 13,
+  "n_eligible": 241,
+  "lc_dominant_counts": {
+   "200": 164,
+   "150": 71,
+   "210": 18,
+   "153": 1
+  },
+  "lat_bands": {
+   "(-90, -60]": 0,
+   "(-60, -30]": 5,
+   "(-30, 0]": 6,
+   "(0, 30]": 63,
+   "(30, 60]": 112,
+   "(60, 90]": 68
+  }
+ },
+ "validation_corrected": {
+  "n_ranked": 10337,
+  "sites": [
+   {
+    "name": "Bardenas",
+    "bench_id": "ES06",
+    "role": "positive",
+    "found": true,
+    "cell": "E17098",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 7046,
+    "pct": 68.16,
+    "tie_aware_pct": 68.16,
+    "tied_with": 7,
+    "final": 85.21,
+    "sim": 100.0,
+    "suit": 70.426,
+    "slope": 1.911,
+    "rough": 77.0,
+    "twin": "M63454",
+    "twin_slope": 1.903,
+    "twin_rough": 74.11,
+    "utils": {
+     "slope_300m_deg": 0.9349,
+     "rough_300m_m": 0.9242,
+     "rock_or_bare_frac": 0.0251
+    }
+   },
+   {
+    "name": "Tabernas",
+    "bench_id": "ES04",
+    "role": "positive",
+    "found": true,
+    "cell": "E18897",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 7390,
+    "pct": 71.49,
+    "tie_aware_pct": 71.48,
+    "tied_with": 8,
+    "final": 84.68,
+    "sim": 100.0,
+    "suit": 69.361,
+    "slope": 3.165,
+    "rough": 110.71,
+    "twin": "M63446",
+    "twin_slope": 3.149,
+    "twin_rough": 110.63,
+    "utils": {
+     "slope_300m_deg": 0.8454,
+     "rough_300m_m": 0.8698,
+     "rock_or_bare_frac": 0.209
+    }
+   },
+   {
+    "name": "Dumont Dunes",
+    "bench_id": "MA04",
+    "role": "positive",
+    "found": true,
+    "cell": "E19503",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 7127,
+    "pct": 68.95,
+    "tie_aware_pct": 68.95,
+    "tied_with": 3,
+    "final": 85.09,
+    "sim": 100.0,
+    "suit": 70.173,
+    "slope": 2.779,
+    "rough": 90.92,
+    "twin": "M61190",
+    "twin_slope": 2.781,
+    "twin_rough": 93.13,
+    "utils": {
+     "slope_300m_deg": 0.8729,
+     "rough_300m_m": 0.9017,
+     "rock_or_bare_frac": 0.1536
+    }
+   },
+   {
+    "name": "MDRS",
+    "bench_id": "MA05",
+    "role": "positive",
+    "found": true,
+    "cell": "E18429",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 2122,
+    "pct": 20.53,
+    "tie_aware_pct": 20.52,
+    "tied_with": 4,
+    "final": 88.69,
+    "sim": 100.0,
+    "suit": 77.379,
+    "slope": 1.901,
+    "rough": 74.14,
+    "twin": "M63454",
+    "twin_slope": 1.903,
+    "twin_rough": 74.11,
+    "utils": {
+     "slope_300m_deg": 0.9356,
+     "rough_300m_m": 0.9288,
+     "rock_or_bare_frac": 0.2964
+    }
+   },
+   {
+    "name": "Yungay",
+    "bench_id": "MA01",
+    "role": "positive",
+    "found": true,
+    "cell": "E41150",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 840,
+    "pct": 8.13,
+    "tie_aware_pct": 8.13,
+    "tied_with": 1,
+    "final": 96.6,
+    "sim": 100.0,
+    "suit": 93.193,
+    "slope": 2.413,
+    "rough": 76.82,
+    "twin": "M61590",
+    "twin_slope": 2.421,
+    "twin_rough": 76.31,
+    "utils": {
+     "slope_300m_deg": 0.8991,
+     "rough_300m_m": 0.9245,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Erfoud",
+    "bench_id": "MA15",
+    "role": "positive",
+    "found": true,
+    "cell": "E21055",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 386,
+    "pct": 3.73,
+    "tie_aware_pct": 3.73,
+    "tied_with": 4,
+    "final": 99.65,
+    "sim": 100.0,
+    "suit": 99.291,
+    "slope": 0.97,
+    "rough": 44.66,
+    "twin": "M63305",
+    "twin_slope": 0.97,
+    "twin_rough": 43.93,
+    "utils": {
+     "slope_300m_deg": 1.0,
+     "rough_300m_m": 0.9764,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Dhofar",
+    "bench_id": "MA17",
+    "role": "positive",
+    "found": true,
+    "cell": "E25795",
+    "unverified_coords": false,
+    "passes": false,
+    "reasons": [
+     "slope_300m_deg=0.143 < 0.5",
+     "rough_300m_m=4.85 < 5.0"
+    ],
+    "rank": null
+   },
+   {
+    "name": "Ramon",
+    "bench_id": "MA16",
+    "role": "positive",
+    "found": true,
+    "cell": "E21454",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 369,
+    "pct": 3.57,
+    "tie_aware_pct": 3.56,
+    "tied_with": 3,
+    "final": 99.72,
+    "sim": 100.0,
+    "suit": 99.431,
+    "slope": 1.041,
+    "rough": 39.03,
+    "twin": "M63457",
+    "twin_slope": 1.058,
+    "twin_rough": 39.73,
+    "utils": {
+     "slope_300m_deg": 0.9971,
+     "rough_300m_m": 0.9854,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Haughton",
+    "bench_id": "MA06",
+    "role": "positive",
+    "found": true,
+    "cell": "E5130",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 430,
+    "pct": 4.16,
+    "tie_aware_pct": 4.17,
+    "tied_with": 4,
+    "final": 99.44,
+    "sim": 100.0,
+    "suit": 98.888,
+    "slope": 1.012,
+    "rough": 52.19,
+    "twin": "M59714",
+    "twin_slope": 1.077,
+    "twin_rough": 50.83,
+    "utils": {
+     "slope_300m_deg": 0.9991,
+     "rough_300m_m": 0.9642,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Death Valley",
+    "bench_id": "MA03",
+    "role": "positive",
+    "found": true,
+    "cell": "E19143",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 8284,
+    "pct": 80.14,
+    "tie_aware_pct": 80.14,
+    "tied_with": 3,
+    "final": 83.1,
+    "sim": 100.0,
+    "suit": 66.21,
+    "slope": 3.1,
+    "rough": 111.73,
+    "twin": "M59424",
+    "twin_slope": 3.129,
+    "twin_rough": 110.39,
+    "utils": {
+     "slope_300m_deg": 0.85,
+     "rough_300m_m": 0.8682,
+     "rock_or_bare_frac": 0.0766
+    }
+   },
+   {
+    "name": "Qaidam",
+    "bench_id": "MA14",
+    "role": "positive",
+    "found": true,
+    "cell": "E18633",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 419,
+    "pct": 4.05,
+    "tie_aware_pct": 4.05,
+    "tied_with": 2,
+    "final": 99.51,
+    "sim": 100.0,
+    "suit": 99.022,
+    "slope": 1.049,
+    "rough": 46.96,
+    "twin": "M60078",
+    "twin_slope": 1.061,
+    "twin_rough": 46.11,
+    "utils": {
+     "slope_300m_deg": 0.9965,
+     "rough_300m_m": 0.9726,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Concordia",
+    "bench_id": "OP01",
+    "role": "negative",
+    "found": true,
+    "cell": "E59703",
+    "unverified_coords": false,
+    "passes": false,
+    "reasons": [
+     "slope_300m_deg=0.043 < 0.5",
+     "rough_300m_m=1.09 < 5.0"
+    ],
+    "rank": null
+   },
+   {
+    "name": "NEEMO",
+    "bench_id": "OP03",
+    "role": "negative",
+    "found": true,
+    "cell": "E23499",
+    "unverified_coords": true,
+    "passes": false,
+    "reasons": [
+     "elevation_m=0.5 < 1.0",
+     "mask_fraction=0.0022 < 0.3",
+     "slope_300m_deg missing",
+     "rough_300m_m missing"
+    ],
+    "rank": null
+   },
+   {
+    "name": "HI-SEAS",
+    "bench_id": "OP02",
+    "role": "negative",
+    "found": true,
+    "cell": "E25224",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 8651,
+    "pct": 83.69,
+    "tie_aware_pct": 83.67,
+    "tied_with": 6,
+    "final": 82.26,
+    "sim": 100.0,
+    "suit": 64.522,
+    "slope": 5.111,
+    "rough": 135.55,
+    "twin": "M63816",
+    "twin_slope": 5.108,
+    "twin_rough": 133.9,
+    "utils": {
+     "slope_300m_deg": 0.7064,
+     "rough_300m_m": 0.8298,
+     "rock_or_bare_frac": 0.3137
+    }
+   },
+   {
+    "name": "Rio Tinto",
+    "bench_id": "ES01",
+    "role": "negative",
+    "found": true,
+    "cell": "E18893",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 4381,
+    "pct": 42.38,
+    "tie_aware_pct": 42.45,
+    "tied_with": 33,
+    "final": 87.44,
+    "sim": 100.0,
+    "suit": 74.871,
+    "slope": 0.972,
+    "rough": 37.54,
+    "twin": "M60429",
+    "twin_slope": 1.009,
+    "twin_rough": 36.89,
+    "utils": {
+     "slope_300m_deg": 1.0,
+     "rough_300m_m": 0.9878,
+     "rock_or_bare_frac": 0.0094
+    }
+   },
+   {
+    "name": "El Soplao",
+    "bench_id": "ES08",
+    "role": "negative",
+    "found": true,
+    "cell": "E16735",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 9864,
+    "pct": 95.42,
+    "tie_aware_pct": 95.43,
+    "tied_with": 2,
+    "final": 76.99,
+    "sim": 100.0,
+    "suit": 53.974,
+    "slope": 5.411,
+    "rough": 195.43,
+    "twin": "M59609",
+    "twin_slope": 5.415,
+    "twin_rough": 195.61,
+    "utils": {
+     "slope_300m_deg": 0.6849,
+     "rough_300m_m": 0.7332,
+     "rock_or_bare_frac": 0.0463
+    }
+   }
+  ],
+  "summary_published_rank": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 14.33,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_tie_aware": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 14.32,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_verified_published_rank": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 8.13,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "summary_verified_tie_aware": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 8.13,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "other_usable_rows": [
+   {
+    "bench_id": "ES02",
+    "name": "Lanzarote - Timanfaya lava fields",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology",
+    "cell": "E22126",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES03",
+    "name": "Lanzarote - La Corona lava tube (Cueva de los Verdes)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "lava tube",
+    "cell": "E21766",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES05",
+    "name": "Teide National Park - Minas de San Jose (Tenerife)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "volcanic/basalt; geomorphology (mobility)",
+    "cell": "E22123",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES07",
+    "name": "Barranco del Jaroso - Sierra Almagrera (Almeria)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy",
+    "cell": "E18898",
+    "passes": true,
+    "pct": 48.39,
+    "tie_aware_pct": 48.38,
+    "rank": 5002
+   },
+   {
+    "bench_id": "ES09",
+    "name": "Laguna de Tirez (Toledo)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy; astrobiology (brines/evaporites)",
+    "cell": "E18176",
+    "passes": true,
+    "pct": 22.09,
+    "tie_aware_pct": 22.07,
+    "rank": 2283
+   },
+   {
+    "bench_id": "MA02",
+    "name": "Atacama/Andes - Salar de Pajonales",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy (evaporites); astrobiology; high altitude UV",
+    "cell": "E41511",
+    "passes": true,
+    "pct": 55.24,
+    "tie_aware_pct": 55.19,
+    "rank": 5710
+   },
+   {
+    "bench_id": "MA07",
+    "name": "McMurdo Dry Valleys",
+    "benchmark_role": "positive",
+    "analog_type": "cold/permafrost/ice; climate/aridity",
+    "cell": "E60462",
+    "passes": true,
+    "pct": 98.41,
+    "tie_aware_pct": 98.41,
+    "rank": 10173
+   },
+   {
+    "bench_id": "MA08",
+    "name": "Svalbard - Bockfjorden volcanic complex (Sverrefjell)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; mineralogy (carbonates); cold/permafrost",
+    "cell": "E3793",
+    "passes": true,
+    "pct": 74.78,
+    "tie_aware_pct": 74.78,
+    "rank": 7730
+   },
+   {
+    "bench_id": "MA10",
+    "name": "Iceland - Askja caldera",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology",
+    "cell": "E8803",
+    "passes": true,
+    "pct": 6.18,
+    "tie_aware_pct": 6.2,
+    "rank": 639
+   },
+   {
+    "bench_id": "MA11",
+    "name": "Iceland - Holuhraun 2014-15 lava flow",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology (mobility)",
+    "cell": "E9163",
+    "passes": true,
+    "pct": 20.99,
+    "tie_aware_pct": 20.98,
+    "rank": 2170
+   },
+   {
+    "bench_id": "MA13",
+    "name": "Dallol / Danakil Depression",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy; astrobiology (polyextreme hydrothermal brines)",
+    "cell": "E27220",
+    "passes": true,
+    "pct": 4.98,
+    "tie_aware_pct": 4.98,
+    "rank": 515
+   },
+   {
+    "bench_id": "MA19",
+    "name": "Kangerlussuaq (ice-sheet margin)",
+    "benchmark_role": "positive",
+    "analog_type": "cold/permafrost/ice",
+    "cell": "E8049",
+    "passes": true,
+    "pct": 61.6,
+    "tie_aware_pct": 61.66,
+    "rank": 6368
+   },
+   {
+    "bench_id": "MA20",
+    "name": "Makgadikgadi Salt Pans",
+    "benchmark_role": "positive",
+    "analog_type": "mineralogy (evaporites); geomorphology (playa)",
+    "cell": "E39805",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "MO01",
+    "name": "Nordlinger Ries crater",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "impact structure",
+    "cell": "E14950",
+    "passes": true,
+    "pct": 32.38,
+    "tie_aware_pct": 35.6,
+    "rank": 3347
+   },
+   {
+    "bench_id": "MO04",
+    "name": "Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; operations",
+    "cell": "E19508",
+    "passes": true,
+    "pct": 58.85,
+    "tie_aware_pct": 58.84,
+    "rank": 6083
+   },
+   {
+    "bench_id": "MO05",
+    "name": "Mauna Kea - Pu'u Hiwahine (PISCES site)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "volcanic/basalt; regolith/ISRU",
+    "cell": "E25224",
+    "passes": true,
+    "pct": 83.69,
+    "tie_aware_pct": 83.67,
+    "rank": 8651
+   },
+   {
+    "bench_id": "MO06",
+    "name": "Kilauea volcano",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt",
+    "cell": "E25224",
+    "passes": true,
+    "pct": 83.69,
+    "tie_aware_pct": 83.67,
+    "rank": 8651
+   },
+   {
+    "bench_id": "MO07",
+    "name": "Craters of the Moon National Monument",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; lava tube",
+    "cell": "E16626",
+    "passes": true,
+    "pct": 62.28,
+    "tie_aware_pct": 62.29,
+    "rank": 6438
+   },
+   {
+    "bench_id": "MO11",
+    "name": "Mount Etna (ARCHES)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology (mobility); operations",
+    "cell": "E18914",
+    "passes": true,
+    "pct": 81.33,
+    "tie_aware_pct": 81.32,
+    "rank": 8407
+   }
+  ],
+  "other_usable_positive_ranked_median_pct": 58.85
+ },
+ "validation_morning": {
+  "n_ranked": 10192,
+  "sites": [
+   {
+    "name": "Bardenas",
+    "bench_id": "ES06",
+    "role": "positive",
+    "found": true,
+    "cell": "E17098",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 4532,
+    "pct": 44.47,
+    "tie_aware_pct": 44.47,
+    "tied_with": 13,
+    "final": 82.34,
+    "sim": 94.2634,
+    "suit": 70.426,
+    "slope": 1.911,
+    "rough": 77.0,
+    "twin": "M61352",
+    "twin_slope": 2.485,
+    "twin_rough": 79.72,
+    "utils": {
+     "slope_300m_deg": 0.9349,
+     "rough_300m_m": 0.9242,
+     "rock_or_bare_frac": 0.0251
+    }
+   },
+   {
+    "name": "Tabernas",
+    "bench_id": "ES04",
+    "role": "positive",
+    "found": true,
+    "cell": "E18897",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 2516,
+    "pct": 24.69,
+    "tie_aware_pct": 24.68,
+    "tied_with": 6,
+    "final": 84.55,
+    "sim": 99.7315,
+    "suit": 69.361,
+    "slope": 3.165,
+    "rough": 110.71,
+    "twin": "M64032",
+    "twin_slope": 3.322,
+    "twin_rough": 111.99,
+    "utils": {
+     "slope_300m_deg": 0.8454,
+     "rough_300m_m": 0.8698,
+     "rock_or_bare_frac": 0.209
+    }
+   },
+   {
+    "name": "Dumont Dunes",
+    "bench_id": "MA04",
+    "role": "positive",
+    "found": true,
+    "cell": "E19503",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 2329,
+    "pct": 22.85,
+    "tie_aware_pct": 22.85,
+    "tied_with": 3,
+    "final": 84.95,
+    "sim": 99.7346,
+    "suit": 70.173,
+    "slope": 2.779,
+    "rough": 90.92,
+    "twin": "M64055",
+    "twin_slope": 3.006,
+    "twin_rough": 91.54,
+    "utils": {
+     "slope_300m_deg": 0.8729,
+     "rough_300m_m": 0.9017,
+     "rock_or_bare_frac": 0.1536
+    }
+   },
+   {
+    "name": "MDRS",
+    "bench_id": "MA05",
+    "role": "positive",
+    "found": true,
+    "cell": "E18429",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 2949,
+    "pct": 28.93,
+    "tie_aware_pct": 28.94,
+    "tied_with": 9,
+    "final": 83.92,
+    "sim": 90.4545,
+    "suit": 77.379,
+    "slope": 1.901,
+    "rough": 74.14,
+    "twin": "M59619",
+    "twin_slope": 3.068,
+    "twin_rough": 86.01,
+    "utils": {
+     "slope_300m_deg": 0.9356,
+     "rough_300m_m": 0.9288,
+     "rock_or_bare_frac": 0.2964
+    }
+   },
+   {
+    "name": "Yungay",
+    "bench_id": "MA01",
+    "role": "positive",
+    "found": true,
+    "cell": "E41150",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 939,
+    "pct": 9.21,
+    "tie_aware_pct": 9.2,
+    "tied_with": 3,
+    "final": 91.15,
+    "sim": 89.1051,
+    "suit": 93.193,
+    "slope": 2.413,
+    "rough": 76.82,
+    "twin": "M61036",
+    "twin_slope": 1.793,
+    "twin_rough": 82.06,
+    "utils": {
+     "slope_300m_deg": 0.8991,
+     "rough_300m_m": 0.9245,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Erfoud",
+    "bench_id": "MA15",
+    "role": "positive",
+    "found": true,
+    "cell": "E21055",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 260,
+    "pct": 2.55,
+    "tie_aware_pct": 2.55,
+    "tied_with": 3,
+    "final": 94.63,
+    "sim": 89.9738,
+    "suit": 99.291,
+    "slope": 0.97,
+    "rough": 44.66,
+    "twin": "M59895",
+    "twin_slope": 1.148,
+    "twin_rough": 44.2,
+    "utils": {
+     "slope_300m_deg": 1.0,
+     "rough_300m_m": 0.9764,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Dhofar",
+    "bench_id": "MA17",
+    "role": "positive",
+    "found": true,
+    "cell": "E25795",
+    "unverified_coords": false,
+    "passes": false,
+    "reasons": [
+     "slope_300m_deg=0.143 < 0.5",
+     "rough_300m_m=4.85 < 5.0"
+    ],
+    "rank": null
+   },
+   {
+    "name": "Ramon",
+    "bench_id": "MA16",
+    "role": "positive",
+    "found": true,
+    "cell": "E21454",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 629,
+    "pct": 6.17,
+    "tie_aware_pct": 6.16,
+    "tied_with": 3,
+    "final": 92.59,
+    "sim": 85.7533,
+    "suit": 99.431,
+    "slope": 1.041,
+    "rough": 39.03,
+    "twin": "M61116",
+    "twin_slope": 1.449,
+    "twin_rough": 50.15,
+    "utils": {
+     "slope_300m_deg": 0.9971,
+     "rough_300m_m": 0.9854,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Haughton",
+    "bench_id": "MA06",
+    "role": "positive",
+    "found": true,
+    "cell": "E5130",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 172,
+    "pct": 1.69,
+    "tie_aware_pct": 1.69,
+    "tied_with": 1,
+    "final": 95.44,
+    "sim": 92.0007,
+    "suit": 98.888,
+    "slope": 1.012,
+    "rough": 52.19,
+    "twin": "M61116",
+    "twin_slope": 1.449,
+    "twin_rough": 50.15,
+    "utils": {
+     "slope_300m_deg": 0.9991,
+     "rough_300m_m": 0.9642,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Death Valley",
+    "bench_id": "MA03",
+    "role": "positive",
+    "found": true,
+    "cell": "E19143",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 3807,
+    "pct": 37.35,
+    "tie_aware_pct": 37.32,
+    "tied_with": 13,
+    "final": 83.05,
+    "sim": 99.8945,
+    "suit": 66.21,
+    "slope": 3.1,
+    "rough": 111.73,
+    "twin": "M64046",
+    "twin_slope": 3.244,
+    "twin_rough": 111.65,
+    "utils": {
+     "slope_300m_deg": 0.85,
+     "rough_300m_m": 0.8682,
+     "rock_or_bare_frac": 0.0766
+    }
+   },
+   {
+    "name": "Qaidam",
+    "bench_id": "MA14",
+    "role": "positive",
+    "found": true,
+    "cell": "E18633",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 25,
+    "pct": 0.25,
+    "tie_aware_pct": 0.25,
+    "tied_with": 1,
+    "final": 97.77,
+    "sim": 96.5087,
+    "suit": 99.022,
+    "slope": 1.049,
+    "rough": 46.96,
+    "twin": "M61037",
+    "twin_slope": 1.505,
+    "twin_rough": 56.65,
+    "utils": {
+     "slope_300m_deg": 0.9965,
+     "rough_300m_m": 0.9726,
+     "rock_or_bare_frac": 1.0
+    }
+   },
+   {
+    "name": "Concordia",
+    "bench_id": "OP01",
+    "role": "negative",
+    "found": true,
+    "cell": "E59703",
+    "unverified_coords": false,
+    "passes": false,
+    "reasons": [
+     "slope_300m_deg=0.043 < 0.5",
+     "rough_300m_m=1.09 < 5.0"
+    ],
+    "rank": null
+   },
+   {
+    "name": "NEEMO",
+    "bench_id": "OP03",
+    "role": "negative",
+    "found": true,
+    "cell": "E23499",
+    "unverified_coords": true,
+    "passes": false,
+    "reasons": [
+     "elevation_m=0.5 < 1.0",
+     "mask_fraction=0.0022 < 0.3",
+     "slope_300m_deg missing",
+     "rough_300m_m missing"
+    ],
+    "rank": null
+   },
+   {
+    "name": "HI-SEAS",
+    "bench_id": "OP02",
+    "role": "negative",
+    "found": true,
+    "cell": "E25224",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 5286,
+    "pct": 51.86,
+    "tie_aware_pct": 51.82,
+    "tied_with": 13,
+    "final": 81.59,
+    "sim": 98.6608,
+    "suit": 64.522,
+    "slope": 5.111,
+    "rough": 135.55,
+    "twin": "M62160",
+    "twin_slope": 4.831,
+    "twin_rough": 137.33,
+    "utils": {
+     "slope_300m_deg": 0.7064,
+     "rough_300m_m": 0.8298,
+     "rock_or_bare_frac": 0.3137
+    }
+   },
+   {
+    "name": "Rio Tinto",
+    "bench_id": "ES01",
+    "role": "negative",
+    "found": true,
+    "cell": "E18893",
+    "unverified_coords": true,
+    "passes": true,
+    "reasons": [],
+    "rank": 4548,
+    "pct": 44.62,
+    "tie_aware_pct": 44.62,
+    "tied_with": 4,
+    "final": 82.32,
+    "sim": 89.7605,
+    "suit": 74.871,
+    "slope": 0.972,
+    "rough": 37.54,
+    "twin": "M61116",
+    "twin_slope": 1.449,
+    "twin_rough": 50.15,
+    "utils": {
+     "slope_300m_deg": 1.0,
+     "rough_300m_m": 0.9878,
+     "rock_or_bare_frac": 0.0094
+    }
+   },
+   {
+    "name": "El Soplao",
+    "bench_id": "ES08",
+    "role": "negative",
+    "found": true,
+    "cell": "E16735",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 9126,
+    "pct": 89.54,
+    "tie_aware_pct": 89.56,
+    "tied_with": 4,
+    "final": 76.27,
+    "sim": 98.575,
+    "suit": 53.974,
+    "slope": 5.411,
+    "rough": 195.43,
+    "twin": "M64151",
+    "twin_slope": 5.753,
+    "twin_rough": 200.24,
+    "utils": {
+     "slope_300m_deg": 0.6849,
+     "rough_300m_m": 0.7332,
+     "rock_or_bare_frac": 0.0463
+    }
+   }
+  ],
+  "summary_published_rank": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 16.03,
+   "positives_in_top_quartile": 7,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.927
+  },
+  "summary_tie_aware": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 16.02,
+   "positives_in_top_quartile": 7,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.927
+  },
+  "summary_verified_published_rank": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 9.21,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "summary_verified_tie_aware": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 9.2,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "other_usable_rows": [
+   {
+    "bench_id": "ES02",
+    "name": "Lanzarote - Timanfaya lava fields",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology",
+    "cell": "E22126",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES03",
+    "name": "Lanzarote - La Corona lava tube (Cueva de los Verdes)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "lava tube",
+    "cell": "E21766",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES05",
+    "name": "Teide National Park - Minas de San Jose (Tenerife)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "volcanic/basalt; geomorphology (mobility)",
+    "cell": "E22123",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "ES07",
+    "name": "Barranco del Jaroso - Sierra Almagrera (Almeria)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy",
+    "cell": "E18898",
+    "passes": true,
+    "pct": 18.48,
+    "tie_aware_pct": 18.47,
+    "rank": 1883
+   },
+   {
+    "bench_id": "ES09",
+    "name": "Laguna de Tirez (Toledo)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy; astrobiology (brines/evaporites)",
+    "cell": "E18176",
+    "passes": true,
+    "pct": 85.3,
+    "tie_aware_pct": 85.32,
+    "rank": 8694
+   },
+   {
+    "bench_id": "MA02",
+    "name": "Atacama/Andes - Salar de Pajonales",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy (evaporites); astrobiology; high altitude UV",
+    "cell": "E41511",
+    "passes": true,
+    "pct": 23.9,
+    "tie_aware_pct": 23.89,
+    "rank": 2436
+   },
+   {
+    "bench_id": "MA07",
+    "name": "McMurdo Dry Valleys",
+    "benchmark_role": "positive",
+    "analog_type": "cold/permafrost/ice; climate/aridity",
+    "cell": "E60462",
+    "passes": true,
+    "pct": 97.34,
+    "tie_aware_pct": 97.34,
+    "rank": 9921
+   },
+   {
+    "bench_id": "MA08",
+    "name": "Svalbard - Bockfjorden volcanic complex (Sverrefjell)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; mineralogy (carbonates); cold/permafrost",
+    "cell": "E3793",
+    "passes": true,
+    "pct": 37.26,
+    "tie_aware_pct": 37.32,
+    "rank": 3798
+   },
+   {
+    "bench_id": "MA10",
+    "name": "Iceland - Askja caldera",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology",
+    "cell": "E8803",
+    "passes": true,
+    "pct": 2.66,
+    "tie_aware_pct": 2.68,
+    "rank": 271
+   },
+   {
+    "bench_id": "MA11",
+    "name": "Iceland - Holuhraun 2014-15 lava flow",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology (mobility)",
+    "cell": "E9163",
+    "passes": true,
+    "pct": 16.29,
+    "tie_aware_pct": 16.31,
+    "rank": 1660
+   },
+   {
+    "bench_id": "MA13",
+    "name": "Dallol / Danakil Depression",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "mineralogy; astrobiology (polyextreme hydrothermal brines)",
+    "cell": "E27220",
+    "passes": true,
+    "pct": 0.72,
+    "tie_aware_pct": 0.72,
+    "rank": 73
+   },
+   {
+    "bench_id": "MA19",
+    "name": "Kangerlussuaq (ice-sheet margin)",
+    "benchmark_role": "positive",
+    "analog_type": "cold/permafrost/ice",
+    "cell": "E8049",
+    "passes": true,
+    "pct": 23.39,
+    "tie_aware_pct": 23.39,
+    "rank": 2384
+   },
+   {
+    "bench_id": "MA20",
+    "name": "Makgadikgadi Salt Pans",
+    "benchmark_role": "positive",
+    "analog_type": "mineralogy (evaporites); geomorphology (playa)",
+    "cell": "E39805",
+    "passes": false,
+    "rank": null
+   },
+   {
+    "bench_id": "MO01",
+    "name": "Nordlinger Ries crater",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "impact structure",
+    "cell": "E14950",
+    "passes": true,
+    "pct": 97.39,
+    "tie_aware_pct": 97.4,
+    "rank": 9926
+   },
+   {
+    "bench_id": "MO04",
+    "name": "Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; operations",
+    "cell": "E19508",
+    "passes": true,
+    "pct": 43.19,
+    "tie_aware_pct": 43.2,
+    "rank": 4402
+   },
+   {
+    "bench_id": "MO05",
+    "name": "Mauna Kea - Pu'u Hiwahine (PISCES site)",
+    "benchmark_role": "positive_property_specific",
+    "analog_type": "volcanic/basalt; regolith/ISRU",
+    "cell": "E25224",
+    "passes": true,
+    "pct": 51.86,
+    "tie_aware_pct": 51.82,
+    "rank": 5286
+   },
+   {
+    "bench_id": "MO06",
+    "name": "Kilauea volcano",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt",
+    "cell": "E25224",
+    "passes": true,
+    "pct": 51.86,
+    "tie_aware_pct": 51.82,
+    "rank": 5286
+   },
+   {
+    "bench_id": "MO07",
+    "name": "Craters of the Moon National Monument",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; lava tube",
+    "cell": "E16626",
+    "passes": true,
+    "pct": 24.46,
+    "tie_aware_pct": 24.46,
+    "rank": 2493
+   },
+   {
+    "bench_id": "MO11",
+    "name": "Mount Etna (ARCHES)",
+    "benchmark_role": "positive",
+    "analog_type": "volcanic/basalt; geomorphology (mobility); operations",
+    "cell": "E18914",
+    "passes": true,
+    "pct": 42.58,
+    "tie_aware_pct": 42.56,
+    "rank": 4340
+   }
+  ],
+  "other_usable_positive_ranked_median_pct": 37.26
+ },
+ "recognised_in_tied_group": {},
+ "paired_suitability_quantiles_0_5_25_50_75_95_100": [
+  19.85,
+  54.72,
+  68.2,
+  74.16,
+  75.43,
+  97.68,
+  100.0
+ ],
+ "paired_rock_or_bare_quantiles": [
+  0.0,
+  0.0,
+  0.008,
+  0.196,
+  0.903
+ ],
+ "bardenas_tabernas": {
+  "Bardenas": {
+   "cell": "E17098",
+   "corrected": {
+    "name": "Bardenas",
+    "bench_id": "ES06",
+    "role": "positive",
+    "found": true,
+    "cell": "E17098",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 7046,
+    "pct": 68.16,
+    "tie_aware_pct": 68.16,
+    "tied_with": 7,
+    "final": 85.21,
+    "sim": 100.0,
+    "suit": 70.426,
+    "slope": 1.911,
+    "rough": 77.0,
+    "twin": "M63454",
+    "twin_slope": 1.903,
+    "twin_rough": 74.11,
+    "utils": {
+     "slope_300m_deg": 0.9349,
+     "rough_300m_m": 0.9242,
+     "rock_or_bare_frac": 0.0251
+    }
+   },
+   "morning": {
+    "name": "Bardenas",
+    "bench_id": "ES06",
+    "role": "positive",
+    "found": true,
+    "cell": "E17098",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 4532,
+    "pct": 44.47,
+    "tie_aware_pct": 44.47,
+    "tied_with": 13,
+    "final": 82.34,
+    "sim": 94.2634,
+    "suit": 70.426,
+    "slope": 1.911,
+    "rough": 77.0,
+    "twin": "M61352",
+    "twin_slope": 2.485,
+    "twin_rough": 79.72,
+    "utils": {
+     "slope_300m_deg": 0.9349,
+     "rough_300m_m": 0.9242,
+     "rock_or_bare_frac": 0.0251
+    }
+   },
+   "rock_or_bare_frac": 0.0176,
+   "land_share": 0.9961,
+   "lc_dominant_cci": 11.0,
+   "criterion_by_criterion": {
+    "slope_300m_deg": {
+     "value": 1.911,
+     "bad": 15.0,
+     "good": 1.0,
+     "utility": 0.9349,
+     "weight": 0.45,
+     "points_lost_of_suitability": 2.93
+    },
+    "rough_300m_m": {
+     "value": 77.0,
+     "bad": 650.0,
+     "good": 30.0,
+     "utility": 0.9242,
+     "weight": 0.3,
+     "points_lost_of_suitability": 2.27
+    },
+    "rock_or_bare_frac": {
+     "value": 0.018,
+     "bad": 0.0,
+     "good": 0.7,
+     "utility": 0.0251,
+     "weight": 0.25,
+     "points_lost_of_suitability": 24.37
+    }
+   },
+   "suitability_check": 70.43,
+   "points_below_top_final": 14.79,
+   "n_ranked_better": 7042
+  },
+  "Tabernas": {
+   "cell": "E18897",
+   "corrected": {
+    "name": "Tabernas",
+    "bench_id": "ES04",
+    "role": "positive",
+    "found": true,
+    "cell": "E18897",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 7390,
+    "pct": 71.49,
+    "tie_aware_pct": 71.48,
+    "tied_with": 8,
+    "final": 84.68,
+    "sim": 100.0,
+    "suit": 69.361,
+    "slope": 3.165,
+    "rough": 110.71,
+    "twin": "M63446",
+    "twin_slope": 3.149,
+    "twin_rough": 110.63,
+    "utils": {
+     "slope_300m_deg": 0.8454,
+     "rough_300m_m": 0.8698,
+     "rock_or_bare_frac": 0.209
+    }
+   },
+   "morning": {
+    "name": "Tabernas",
+    "bench_id": "ES04",
+    "role": "positive",
+    "found": true,
+    "cell": "E18897",
+    "unverified_coords": false,
+    "passes": true,
+    "reasons": [],
+    "rank": 2516,
+    "pct": 24.69,
+    "tie_aware_pct": 24.68,
+    "tied_with": 6,
+    "final": 84.55,
+    "sim": 99.7315,
+    "suit": 69.361,
+    "slope": 3.165,
+    "rough": 110.71,
+    "twin": "M64032",
+    "twin_slope": 3.322,
+    "twin_rough": 111.99,
+    "utils": {
+     "slope_300m_deg": 0.8454,
+     "rough_300m_m": 0.8698,
+     "rock_or_bare_frac": 0.209
+    }
+   },
+   "rock_or_bare_frac": 0.1463,
+   "land_share": 0.9975,
+   "lc_dominant_cci": 100.0,
+   "criterion_by_criterion": {
+    "slope_300m_deg": {
+     "value": 3.165,
+     "bad": 15.0,
+     "good": 1.0,
+     "utility": 0.8454,
+     "weight": 0.45,
+     "points_lost_of_suitability": 6.96
+    },
+    "rough_300m_m": {
+     "value": 110.71,
+     "bad": 650.0,
+     "good": 30.0,
+     "utility": 0.8698,
+     "weight": 0.3,
+     "points_lost_of_suitability": 3.91
+    },
+    "rock_or_bare_frac": {
+     "value": 0.146,
+     "bad": 0.0,
+     "good": 0.7,
+     "utility": 0.209,
+     "weight": 0.25,
+     "points_lost_of_suitability": 19.78
+    }
+   },
+   "suitability_check": 69.36,
+   "points_below_top_final": 15.32,
+   "n_ranked_better": 7384
+  }
+ },
+ "moon_zone_quantiles_0_5_25_50_75_95_100": {
+  "slope_deg": [
+   0.234,
+   2.255,
+   4.53,
+   6.415,
+   9.043,
+   13.084,
+   22.846
+  ],
+  "roughness_m": [
+   7.11,
+   75.337,
+   141.535,
+   198.49,
+   264.505,
+   386.888,
+   616.28
+  ]
+ },
+ "slope_min_study_rule_1123_tolerance_score": {
+  "with_min": {
+   "passing": 10337,
+   "paired": 10337,
+   "distinct_twins": 1166,
+   "largest_twin_share": 0.0256,
+   "largest_twin": "M63712",
+   "largest_twin_points": 265,
+   "top5_full_ranking": [
+    3872,
+    4037,
+    4042,
+    4742,
+    4750
+   ],
+   "water_cci210_in_top50": 4,
+   "ice_in_top50_snow_ge_0_5": 0,
+   "cci220_in_top50": 0,
+   "land_lt_0_5_in_top50": 3,
+   "n_final_eq_top": 74,
+   "five_shipped_rule": [
+    17199,
+    50509,
+    26087,
+    5846,
+    41958
+   ]
+  },
+  "without_min": {
+   "passing": 18184,
+   "paired": 18184,
+   "distinct_twins": 1181,
+   "largest_twin_share": 0.1387,
+   "largest_twin": "M62913",
+   "largest_twin_points": 2522,
+   "top5_full_ranking": [
+    3675,
+    3872,
+    4037,
+    4042,
+    4044
+   ],
+   "water_cci210_in_top50": 13,
+   "ice_in_top50_snow_ge_0_5": 0,
+   "cci220_in_top50": 0,
+   "land_lt_0_5_in_top50": 10,
+   "n_final_eq_top": 412,
+   "five_shipped_rule": [
+    21798,
+    43523,
+    50509,
+    9794,
+    16851
+   ]
+  },
+  "added": 7847,
+  "added_snow_or_ice_cci220_or_snow_ge_0_5": 2862,
+  "added_cci220": 2856,
+  "added_water_cci210": 373,
+  "added_bare_200_202": 777,
+  "top50_overlap": 22,
+  "top50_added_points": 28,
+  "top50_added_slope_lt_0_5": 28,
+  "validation_pct_with": {
+   "Bardenas": 68.25,
+   "Tabernas": 71.32,
+   "Dumont Dunes": 68.96,
+   "MDRS": 20.5,
+   "Yungay": 8.11,
+   "Erfoud": 3.74,
+   "Dhofar": null,
+   "Ramon": 3.57,
+   "Haughton": 4.19,
+   "Death Valley": 80.04,
+   "Qaidam": 4.03,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 83.62,
+   "Rio Tinto": 42.23,
+   "El Soplao": 95.4
+  },
+  "validation_pct_without": {
+   "Bardenas": 81.95,
+   "Tabernas": 83.69,
+   "Dumont Dunes": 82.35,
+   "MDRS": 22.2,
+   "Yungay": 11.63,
+   "Erfoud": 8.1,
+   "Dhofar": null,
+   "Ramon": 7.99,
+   "Haughton": 8.42,
+   "Death Valley": 88.65,
+   "Qaidam": 8.29,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 90.69,
+   "Rio Tinto": 66.0,
+   "El Soplao": 97.38
+  },
+  "validation_tie_aware_with": {
+   "Bardenas": 68.26,
+   "Tabernas": 71.3,
+   "Dumont Dunes": 68.96,
+   "MDRS": 20.48,
+   "Yungay": 8.11,
+   "Erfoud": 3.74,
+   "Dhofar": null,
+   "Ramon": 3.56,
+   "Haughton": 4.19,
+   "Death Valley": 80.03,
+   "Qaidam": 4.03,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 83.61,
+   "Rio Tinto": 42.24,
+   "El Soplao": 95.4
+  },
+  "validation_tie_aware_without": {
+   "Bardenas": 81.96,
+   "Tabernas": 83.69,
+   "Dumont Dunes": 82.35,
+   "MDRS": 22.19,
+   "Yungay": 11.63,
+   "Erfoud": 8.1,
+   "Dhofar": null,
+   "Ramon": 7.99,
+   "Haughton": 8.42,
+   "Death Valley": 88.65,
+   "Qaidam": 8.29,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 90.68,
+   "Rio Tinto": 66.24,
+   "El Soplao": 97.39
+  },
+  "summary_with": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 14.29,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_without": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 16.91,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_verified_with": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 8.11,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "summary_verified_without": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 11.63,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  }
+ },
+ "slope_min_study_corrected": {
+  "with_min": {
+   "passing": 10337,
+   "paired": 10337,
+   "distinct_twins": 1144,
+   "largest_twin_share": 0.0262,
+   "largest_twin": "M59712",
+   "largest_twin_points": 271,
+   "top5_full_ranking": [
+    3872,
+    4035,
+    4037,
+    4038,
+    4042
+   ],
+   "water_cci210_in_top50": 12,
+   "ice_in_top50_snow_ge_0_5": 0,
+   "cci220_in_top50": 0,
+   "land_lt_0_5_in_top50": 9,
+   "n_final_eq_top": 254,
+   "five_shipped_rule": [
+    4037,
+    50510,
+    44239,
+    26510,
+    26087
+   ]
+  },
+  "without_min": {
+   "passing": 18184,
+   "paired": 18184,
+   "distinct_twins": 1161,
+   "largest_twin_share": 0.1641,
+   "largest_twin": "M62913",
+   "largest_twin_points": 2984,
+   "top5_full_ranking": [
+    3675,
+    3676,
+    3872,
+    4028,
+    4035
+   ],
+   "water_cci210_in_top50": 25,
+   "ice_in_top50_snow_ge_0_5": 0,
+   "cci220_in_top50": 0,
+   "land_lt_0_5_in_top50": 16,
+   "n_final_eq_top": 1321,
+   "five_shipped_rule": [
+    4037,
+    50510,
+    39182,
+    27207,
+    18994
+   ]
+  },
+  "added": 7847,
+  "added_snow_or_ice_cci220_or_snow_ge_0_5": 2862,
+  "added_cci220": 2856,
+  "added_water_cci210": 373,
+  "added_bare_200_202": 777,
+  "top50_overlap": 24,
+  "top50_added_points": 26,
+  "top50_added_slope_lt_0_5": 26,
+  "validation_pct_with": {
+   "Bardenas": 68.16,
+   "Tabernas": 71.49,
+   "Dumont Dunes": 68.95,
+   "MDRS": 20.53,
+   "Yungay": 8.13,
+   "Erfoud": 3.73,
+   "Dhofar": null,
+   "Ramon": 3.57,
+   "Haughton": 4.16,
+   "Death Valley": 80.14,
+   "Qaidam": 4.05,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 83.69,
+   "Rio Tinto": 42.38,
+   "El Soplao": 95.42
+  },
+  "validation_pct_without": {
+   "Bardenas": 81.9,
+   "Tabernas": 83.79,
+   "Dumont Dunes": 82.35,
+   "MDRS": 22.23,
+   "Yungay": 11.64,
+   "Erfoud": 8.1,
+   "Dhofar": null,
+   "Ramon": 8.0,
+   "Haughton": 8.39,
+   "Death Valley": 88.71,
+   "Qaidam": 8.3,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 90.73,
+   "Rio Tinto": 67.23,
+   "El Soplao": 97.4
+  },
+  "validation_tie_aware_with": {
+   "Bardenas": 68.16,
+   "Tabernas": 71.48,
+   "Dumont Dunes": 68.95,
+   "MDRS": 20.52,
+   "Yungay": 8.13,
+   "Erfoud": 3.73,
+   "Dhofar": null,
+   "Ramon": 3.56,
+   "Haughton": 4.17,
+   "Death Valley": 80.14,
+   "Qaidam": 4.05,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 83.67,
+   "Rio Tinto": 42.45,
+   "El Soplao": 95.43
+  },
+  "validation_tie_aware_without": {
+   "Bardenas": 81.9,
+   "Tabernas": 83.79,
+   "Dumont Dunes": 82.35,
+   "MDRS": 22.23,
+   "Yungay": 11.64,
+   "Erfoud": 8.1,
+   "Dhofar": null,
+   "Ramon": 7.99,
+   "Haughton": 8.41,
+   "Death Valley": 88.71,
+   "Qaidam": 8.3,
+   "Concordia": null,
+   "NEEMO": null,
+   "HI-SEAS": 90.71,
+   "Rio Tinto": 67.27,
+   "El Soplao": 97.4
+  },
+  "summary_with": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 14.32,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_without": {
+   "positives_found": 11,
+   "positives_ranked": 10,
+   "median_pct_ranked": 16.94,
+   "positives_in_top_quartile": 6,
+   "negatives_found": 5,
+   "negatives_ranked": 3,
+   "separation_share": 0.855
+  },
+  "summary_verified_with": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 8.13,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  },
+  "summary_verified_without": {
+   "positives_found": 8,
+   "positives_ranked": 7,
+   "median_pct_ranked": 11.64,
+   "positives_in_top_quartile": 5,
+   "negatives_found": 2,
+   "negatives_ranked": 1,
+   "separation_share": 0.906
+  }
+ },
+ "fallback": {
+  "compare": {
+   "n_mine": 10337,
+   "n_bundle": 10337,
+   "same_passing_set": true,
+   "suitability": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "similarity": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "final": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "rank": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "twin": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "score_slope_deg": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "score_roughness_m": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "score_elevation_rel_m": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_slope_deg.earth": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_slope_deg.moon": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_slope_deg.diff": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_roughness_m.earth": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_roughness_m.moon": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_roughness_m.diff": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_elevation_rel_m.earth": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_elevation_rel_m.moon": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   },
+   "pairs_elevation_rel_m.diff": {
+    "mismatch": 0,
+    "mismatch_beyond_one_last_digit": 0,
+    "nan_pattern_mismatch": 0,
+    "max_abs_diff": 0.0
+   }
+  },
+  "five_mine": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395
+  ],
+  "five_bundle": [
+   17566,
+   23945,
+   18282,
+   18280,
+   15395
+  ],
+  "all_equal": true
+ },
+ "suitability_saturation": {
+  "n_suit_100": 253,
+  "n_suit_100_full": 250,
+  "per_criterion": {
+   "slope_300m_deg": {
+    "weight": 0.45,
+    "bad": 15.0,
+    "good": 1.0,
+    "share_passing_at_utility_1": 0.3184,
+    "n_passing_at_1": 3291,
+    "tied_group_all_at_1": true,
+    "tied_group_n_at_1": 254,
+    "tied_group_value_range": [
+     0.5,
+     0.961
+    ]
+   },
+   "rough_300m_m": {
+    "weight": 0.3,
+    "bad": 650.0,
+    "good": 30.0,
+    "share_passing_at_utility_1": 0.2074,
+    "n_passing_at_1": 2144,
+    "tied_group_all_at_1": false,
+    "tied_group_n_at_1": 250,
+    "tied_group_value_range": [
+     14.61,
+     30.19
+    ]
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.25,
+    "bad": 0.0,
+    "good": 0.7,
+    "share_passing_at_utility_1": 0.09,
+    "n_passing_at_1": 930,
+    "tied_group_all_at_1": true,
+    "tied_group_n_at_1": 254,
+    "tied_group_value_range": [
+     0.707,
+     1.0
+    ]
+   }
+  },
+  "n_all_three_utilities_1": 250,
+  "tied_group_equals_all_utilities_1_and_sim_100": false,
+  "n_all_utilities_1_but_sim_lt_100": 0,
+  "share_of_suitability_eq_100_among_sim_100": null
+ },
+ "five_rule_exclusions": {
+  "tied_n": 254,
+  "tied_ice": 0,
+  "tied_land_lt_half": 13,
+  "tied_both": 0,
+  "ranked_ice": 1485,
+  "ranked_land_lt_half": 671,
+  "tied_land_lt_half_ids": [
+   "E3872",
+   "E4035",
+   "E5114",
+   "E5309",
+   "E5824",
+   "E5825",
+   "E5832",
+   "E5833",
+   "E6191",
+   "E6923",
+   "E7263",
+   "E22128",
+   "E41234"
+  ],
+  "tied_land_lt_half_lc210": 13,
+  "eligible_tied_within_2deg_of_a_chosen": 5,
+  "min_sep_of_five_deg": 59.96338524940772,
+  "two_degree_rule_binding": false,
+  "five_without_2deg_rule": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ],
+  "five_without_ice_and_land_skips": [
+   3872,
+   50509,
+   44239,
+   26087,
+   26151
+  ],
+  "five_without_land_skip": [
+   3872,
+   50509,
+   44239,
+   26087,
+   26151
+  ],
+  "five_without_ice_skip": [
+   4037,
+   50510,
+   44239,
+   26510,
+   26087
+  ]
+ },
+ "seconds": 54
+}

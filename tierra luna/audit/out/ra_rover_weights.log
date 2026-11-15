@@ -1,0 +1,24 @@
+corrected {"base_five": [4037, 50510, 44239, 26510, 26087], "base_twins": [63714, 59438, 59712, 63711, 61294], "n_perturbations": 10, "per_analog": [{"id": 4037, "stays_in_five": 10, "keeps_twin": 10, "stays_in_five_and_keeps_twin": 10, "stays_tied_top": 10, "of": 10}, {"id": 50510, "stays_in_five": 10, "keeps_twin": 10, "stays_in_five_and_keeps_twin": 10, "stays_tied_top": 10, "of": 10}, {"id": 44239, "stays_in_five": 10, "keeps_twin": 10, "stays_in_five_and_keeps_twin": 10, "stays_tied_top": 10, "of": 10}, {"id": 26510, "stays_in_five": 10, "keeps_twin": 10, "stays_in_five_and_keeps_twin": 10, "stays_tied_top": 10, "of": 10}, {"id": 26087, "stays_in_five": 10, "keeps_twin": 10, "stays_in_five_and_keeps_twin": 10, "stays_tied_top": 10, "of": 10}], "same_five_count": 10}
+   suitability slope_300m_deg 1.1 [4037, 50510, 44239, 26510, 26087] 254
+   suitability slope_300m_deg 0.9 [4037, 50510, 44239, 26510, 26087] 254
+   suitability rough_300m_m 1.1 [4037, 50510, 44239, 26510, 26087] 254
+   suitability rough_300m_m 0.9 [4037, 50510, 44239, 26510, 26087] 254
+   suitability rock_or_bare_frac 1.1 [4037, 50510, 44239, 26510, 26087] 254
+   suitability rock_or_bare_frac 0.9 [4037, 50510, 44239, 26510, 26087] 254
+   similarity slope_deg 1.1 [4037, 50510, 44239, 26510, 26087] 254
+   similarity slope_deg 0.9 [4037, 50510, 44239, 26510, 26087] 254
+   similarity roughness_m 1.1 [4037, 50510, 44239, 26510, 26087] 254
+   similarity roughness_m 0.9 [4037, 50510, 44239, 26510, 26087] 254
+audited_morning {"base_five": [17566, 23945, 18282, 18280, 15395], "base_twins": [59895, 59895, 59895, 59895, 59895], "n_perturbations": 12, "per_analog": [{"id": 17566, "stays_in_five": 12, "keeps_twin": 12, "stays_in_five_and_keeps_twin": 12, "stays_tied_top": 12, "of": 12}, {"id": 23945, "stays_in_five": 12, "keeps_twin": 12, "stays_in_five_and_keeps_twin": 12, "stays_tied_top": 0, "of": 12}, {"id": 18282, "stays_in_five": 12, "keeps_twin": 12, "stays_in_five_and_keeps_twin": 12, "stays_tied_top": 0, "of": 12}, {"id": 18280, "stays_in_five": 12, "keeps_twin": 12, "stays_in_five_and_keeps_twin": 12, "stays_tied_top": 0, "of": 12}, {"id": 15395, "stays_in_five": 12, "keeps_twin": 12, "stays_in_five_and_keeps_twin": 12, "stays_tied_top": 0, "of": 12}], "same_five_count": 12}
+   suitability slope_300m_deg 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   suitability slope_300m_deg 0.9 [17566, 23945, 18282, 18280, 15395] 1
+   suitability rough_300m_m 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   suitability rough_300m_m 0.9 [17566, 23945, 18282, 18280, 15395] 1
+   suitability rock_or_bare_frac 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   suitability rock_or_bare_frac 0.9 [17566, 23945, 18282, 18280, 15395] 1
+   similarity slope_deg 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   similarity slope_deg 0.9 [17566, 23945, 18282, 18280, 15395] 1
+   similarity roughness_m 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   similarity roughness_m 0.9 [17566, 23945, 18282, 18280, 15395] 1
+   similarity elevation_rel_m 1.1 [17566, 23945, 18282, 18280, 15395] 1
+   similarity elevation_rel_m 0.9 [17566, 23945, 18282, 18280, 15395] 1

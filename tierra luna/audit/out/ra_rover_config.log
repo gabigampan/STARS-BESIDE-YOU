@@ -1,0 +1,23 @@
+OK  similarity variables are slope_deg and roughness_m only | ["slope_deg", "roughness_m"] | 11:23 decision 1
+OK  weights 0.5 / 0.5, sum 1 | [0.5, 0.5] | 
+OK  both key | ["key", "key"] | 
+OK  tolerances 2 deg and 30 m (unchanged) | [2.0, 30.0] | 
+OK  key filter bound multiplier 1 | {"key": 1.0, "secondary": 2.0} | 
+OK  elevation_rel_m out of similarity and filter | null | 
+OK  elevation_rel_m information row | [["elevation_rel_m", "temp_k", "lst_diurnal_amp_k", "irradiance_kwh_m2_day"], ["elevation_rel_m"]] | 
+OK  zone unchanged (lat <= -75) | -75.0 | 
+OK  sigma slope = formula | 0.265093 | pixel sizes from the radii: Earth 60 arc-second N-S 1853.2 m, LDEM_16 1895.2 m -> 0.265080 deg
+OK  sigma roughness = formula | 17.401661 | 
+OK  score form exp(-0.5 max(0, d/sigma - 1)^2) | ["s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps |d| <= tolerance (2 deg)", "s = exp(-0.5 * max(0, |d| / sigma - 1)^2); the pair filter keeps  | 
+OK  five: spread_within_top_tie | "spread_within_top_tie" | 
+OK  five: min separation 2 deg | 2.0 | 
+OK  five: ice skip snow_ice_frac >= 0.5 | {"enabled": true, "column": "snow_ice_frac", "op": ">=", "value": 0.5, "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regol | 
+OK  five: water skip mask_fraction < 0.5 | {"enabled": true, "column": "mask_fraction", "op": "<", "value": 0.5, "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid gro | brief: 'less than half land' is part of the order; config text says 'TO BE CONFIRMED by the team lead'
+OK  mission gates equal mission_scoring.json | {"slope_300m_deg": [0.5, 15.0], "rough_300m_m": [5.0, 650.0]} | 
+OK  soft criteria equal mission_scoring.json | {"slope_300m_deg": [0.45, 15.0, 1.0], "rough_300m_m": [0.3, 650.0, 30.0], "rock_or_bare_frac": [0.25, 0.0, 0.7]} | 
+OK  soft weights sum 1 | 1.0 | 
+OK  slope minimum 0.5 kept | [0.5, 15.0] | 
+OK  criteria set mission_scoring_deviations empty for rover | null | 
+OK  selected criteria set rover = corrected | "corrected" | 
+OK  mix factor 0.5 | 0.5 | 
+all_ok True

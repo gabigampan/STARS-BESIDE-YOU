@@ -1,0 +1,152 @@
+{
+ "criteria": "audited_morning",
+ "bundle": "/tmp/claude-0/-home-user-stars-beside-you/c438b3a2-e85e-5112-bace-b715b34b3ce7/scratchpad/bundle_a493514",
+ "compare": {
+  "n_mine": 10337,
+  "n_bundle": 10337,
+  "same_passing_set": true,
+  "suitability": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "similarity": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "final": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "rank": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "twin": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "score_slope_deg": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "score_roughness_m": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "score_elevation_rel_m": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.earth": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.moon": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_slope_deg.diff": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.earth": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.moon": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_roughness_m.diff": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_elevation_rel_m.earth": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_elevation_rel_m.moon": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  },
+  "pairs_elevation_rel_m.diff": {
+   "mismatch": 0,
+   "mismatch_beyond_one_last_digit": 0,
+   "nan_pattern_mismatch": 0,
+   "max_abs_diff": 0.0
+  }
+ },
+ "five_mine": [
+  17566,
+  23945,
+  18282,
+  18280,
+  15395
+ ],
+ "five_bundle_by_rank": [
+  17566,
+  23945,
+  18282,
+  18280,
+  15395
+ ],
+ "five_bundle_missions_json": null,
+ "five_equal": true,
+ "n_paired_mine": 10192,
+ "difference_table": [
+  {
+   "variable": "slope_deg",
+   "n_pairs": 10192,
+   "median": 0.4079999999999999,
+   "p90": 0.851,
+   "max": 1.971
+  },
+  {
+   "variable": "roughness_m",
+   "n_pairs": 10192,
+   "median": 5.340000000000003,
+   "p90": 20.548999999999992,
+   "max": 29.970000000000002
+  },
+  {
+   "variable": "elevation_rel_m",
+   "n_pairs": 10192,
+   "median": 247.88619678254616,
+   "p90": 798.8761967825462,
+   "max": 999.986196782546
+  }
+ ],
+ "seconds": 8
+}

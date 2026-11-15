@@ -1,0 +1,189 @@
+corrected first_audit 20 55
+corrected first_audit 40 110
+corrected first_audit 60 163
+corrected first_audit 80 218
+corrected first_audit 100 273
+corrected first_audit 120 326
+corrected first_audit 140 376
+corrected first_audit 160 428
+corrected first_audit 180 482
+corrected first_audit 200 529
+{
+ "criteria": "corrected",
+ "sigma_set": "first_audit",
+ "sigmas": {
+  "EARTH:elevation_m": [
+   "abs",
+   7.17
+  ],
+  "EARTH:slope": [
+   "rel",
+   0.05
+  ],
+  "EARTH:rough": [
+   "rel",
+   0.05
+  ],
+  "EARTH:rock_or_bare_frac": [
+   "abs",
+   0.05
+  ],
+  "MOON:elevation_m": [
+   "abs",
+   10.0
+  ],
+  "MOON:slope": [
+   "rel",
+   0.05
+  ],
+  "MOON:rough": [
+   "rel",
+   0.05
+  ]
+ },
+ "runs": 200,
+ "seed": 20261115,
+ "base_five": [
+  4037,
+  50510,
+  44239,
+  26510,
+  26087
+ ],
+ "base_twins": [
+  63714,
+  59438,
+  59712,
+  63711,
+  61294
+ ],
+ "per_analog": [
+  {
+   "id": 4037,
+   "twin": 63714,
+   "in_five_share": 0.525,
+   "top20_share_rank": 0.725,
+   "top50_share_rank": 0.725,
+   "top20_share_tie_aware": 0.725,
+   "top50_share_tie_aware": 0.725,
+   "tied_top_share": 0.725,
+   "twin_kept_share": 0.295,
+   "passes_share": 1.0,
+   "rank_median": 3.0
+  },
+  {
+   "id": 50510,
+   "twin": 59438,
+   "in_five_share": 0.43,
+   "top20_share_rank": 0.0,
+   "top50_share_rank": 0.0,
+   "top20_share_tie_aware": 0.43,
+   "top50_share_tie_aware": 0.43,
+   "tied_top_share": 0.43,
+   "twin_kept_share": 0.3,
+   "passes_share": 1.0,
+   "rank_median": 271.0
+  },
+  {
+   "id": 44239,
+   "twin": 59712,
+   "in_five_share": 0.65,
+   "top20_share_rank": 0.0,
+   "top50_share_rank": 0.0,
+   "top20_share_tie_aware": 0.885,
+   "top50_share_tie_aware": 0.885,
+   "tied_top_share": 0.885,
+   "twin_kept_share": 0.38,
+   "passes_share": 0.96,
+   "rank_median": 254.0
+  },
+  {
+   "id": 26510,
+   "twin": 63711,
+   "in_five_share": 0.875,
+   "top20_share_rank": 0.0,
+   "top50_share_rank": 0.0,
+   "top20_share_tie_aware": 1.0,
+   "top50_share_tie_aware": 1.0,
+   "tied_top_share": 1.0,
+   "twin_kept_share": 0.175,
+   "passes_share": 1.0,
+   "rank_median": 244.0
+  },
+  {
+   "id": 26087,
+   "twin": 61294,
+   "in_five_share": 0.67,
+   "top20_share_rank": 0.0,
+   "top50_share_rank": 0.0,
+   "top20_share_tie_aware": 0.74,
+   "top50_share_tie_aware": 0.74,
+   "tied_top_share": 0.74,
+   "twin_kept_share": 0.25,
+   "passes_share": 0.83,
+   "rank_median": 239.0
+  }
+ ],
+ "five_repeat_exact_share": 0.105,
+ "five_repeat_as_set_share": 0.105,
+ "distinct_fives": 60,
+ "n_tied_top_median_p5_p95": [
+  256.0,
+  245.95,
+  265.0
+ ],
+ "within_of_fifth_median": {
+  "within_0_1": 311.0,
+  "within_0_5": 422.0,
+  "within_1": 502.0
+ },
+ "within_of_fifth_p5_p95": {
+  "within_0_1": [
+   300.95,
+   322.0
+  ],
+  "within_0_5": [
+   411.0,
+   432.04999999999995
+  ],
+  "within_1": [
+   490.95,
+   513.05
+  ]
+ },
+ "tied_group": {
+  "base_tied_n": 254,
+  "base_eligible_n": 241,
+  "tied_n_median_p5_p95": [
+   256.0,
+   245.95,
+   265.0
+  ],
+  "tied_eligible_n_median_p5_p95": [
+   242.0,
+   232.0,
+   252.0
+  ],
+  "base_tied_still_tied_share_median_p5_p95": [
+   0.8898,
+   0.8583,
+   0.9213
+  ],
+  "tied_jaccard_median_p5_p95": [
+   0.801,
+   0.7624,
+   0.8304
+  ],
+  "base_eligible_still_eligible_tied_share_median_p5_p95": [
+   0.8859,
+   0.8548,
+   0.917
+  ],
+  "eligible_jaccard_median_p5_p95": [
+   0.7933,
+   0.7554,
+   0.8251
+  ]
+ },
+ "seconds": 529
+}
