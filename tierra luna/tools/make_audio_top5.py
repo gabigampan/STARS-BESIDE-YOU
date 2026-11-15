@@ -134,12 +134,13 @@ def south_laea(lon: float, lat: float, r: float) -> Tuple[float, float]:
 
 def project_geom(g, r: float, step_deg: float = 0.01):
     """A lon/lat shapely geometry densified to step_deg and projected (equal area)."""
-    from shapely import segmentize
-    from shapely.ops import transform
-    def fwd(x, y, z=None):
-        pts = [south_laea(a, b, r) for a, b in zip(x, y)]
-        return [p[0] for p in pts], [p[1] for p in pts]
-    return transform(fwd, segmentize(g, step_deg))
+    import shapely
+
+    def fwd(c):
+        lon, lat = c[:, 0], c[:, 1]
+        rho = 2.0 * r * np.sin(np.radians(90.0 + lat) / 2.0)
+        return np.column_stack([rho * np.sin(np.radians(lon)), rho * np.cos(np.radians(lon))])
+    return shapely.transform(shapely.segmentize(g, step_deg), fwd)
 
 
 def region_share_of_cell(lat: float, lon: float, region_geom, r: float) -> float:

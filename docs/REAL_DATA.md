@@ -135,7 +135,8 @@ Full text, URLs and caveats per row are in the two provenance CSVs. Coverage = s
 | sun_elev_max_deg, sun_low_frac_0_5deg | DERIVED | formula, eps = 1.54 deg | sec. 2 | 1.000 |
 | mask_fraction, rock_or_bare_frac | MODELLED | definition | 1 everywhere (no ocean, no vegetation). rock_or_bare_frac is **not** rock abundance | 1.000 |
 | thermal_inertia_class | MODELLED | assumption | "regolito" everywhere | 1.000 |
-| permafrost_class, rain_mm_day, wind_max_ms | no data | not applicable (no liquid water, no atmosphere) | empty, not 0 | 0 |
+| permafrost_class | MODELLED | label set by definition (team lead decision 2026-11-14; real_data/provenance_moon.csv) | 'ninguno' in all 64,800 cells (a label, not a measurement; corrected 2026-11-15 after the statistical audit, docs/stats_audit/1_datos_rejilla_nombres.md 1.6.2: it was listed here as empty) | 0 |
+| rain_mm_day, wind_max_ms | no data | not applicable (no liquid water, no atmosphere) | empty, not 0 | 0 |
 | slope_300m_deg, rough_300m_m | no data | none | not written | - |
 
 ## 5. Corrections made during verification
@@ -197,7 +198,8 @@ NSSDC fact sheet, science.nasa.gov pages: 200 (PIA13720 after a 301 to its trail
 1.54 deg tilt; doi.org for MOD11A2: 302 to the DAAC). The CCI blob gives 409 without the keyless SAS token, as
 expected. Licences checked on the source pages: Zenodo record 1420115 CC BY-SA 4.0; PANGAEA 888600 CC BY 3.0 and
 902576 CC BY 4.0; WorldClim non-commercial (section 3). No column without a source carries a value: Moon
-permafrost, rain and wind are empty in all 64,800 cells; Earth LST is empty in Antarctica rather than filled.
+rain and wind are empty in all 64,800 cells, and Moon permafrost_class is the MODELLED label 'ninguno' in all 64,800
+(set by definition, real_data/provenance_moon.csv; corrected 2026-11-15 after the statistical audit, docs/stats_audit/1_datos_rejilla_nombres.md 1.6.2); Earth LST is empty in Antarctica rather than filled.
 
 **6.4 Physical sanity.** Earth land (mask_fraction >= 0.5): LST vs abs(lat) Spearman -0.92; LST anomaly vs
 elevation anomaly within each latitude row r = -0.71, slope -4.4 K/km (a surface lapse rate); tmin_c vs temp_k
@@ -247,7 +249,8 @@ lunar cell poleward of about 81.5 deg by geometry (R3).
 ## 8. Variables that remain without data
 
 - `slope_300m_deg`, `rough_300m_m`: not written for either body (no keyless global product at 300 m).
-- Moon `permafrost_class`, `rain_mm_day`, `wind_max_ms`: not applicable, empty in every cell.
+- Moon `rain_mm_day`, `wind_max_ms`: not applicable, empty in every cell. Moon `permafrost_class`: the MODELLED label
+  'ninguno' in every cell, not empty (corrected 2026-11-15 after the statistical audit, docs/stats_audit/1_datos_rejilla_nombres.md 1.6.2).
 - Moon `rock_abundance_frac`: empty poleward of 60 deg (21,608 cells); the 128 px/deg product (80S-80N, 1.9 GB)
   was not used.
 - Earth `temp_k`, `lst_diurnal_amp_k`, `lst_diurnal_amp_max_k`: empty for Antarctica (the LST layers stop at 62 S),
@@ -279,7 +282,8 @@ lunar cell poleward of about 81.5 deg by geometry (R3).
 - **Elevation references differ**: Earth above the EGM2008 geoid, Moon above a 1737.4 km sphere.
 - **Earth latitude is geodetic** (section 2), up to 0.19 deg from planetocentric.
 - **Lunar irradiance** is for a horizontal surface, per 24-hour Earth day, at the top of a non-existent atmosphere;
-  Earth irradiance is measured-climatology surface radiation after clouds. A vertical tracking panel at a lunar
+  Earth irradiance is MODELLED surface radiation after clouds (WorldClim 2.1 srad, an interpolated climatology;
+  corrected 2026-11-15 after the statistical audit, 1.6.3: it was called measured-climatology here). A vertical tracking panel at a lunar
   pole would receive about 32.7 kWh/m2 per lit day.
 - **Small islands and coasts**: a few cells hold one or two land pixels and odd means (for example -2,570 m at
   17.5 S, 177.5 W). Filter with `mask_fraction >= 0.3` or the `n_*` pixel counts.

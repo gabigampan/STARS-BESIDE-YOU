@@ -25,7 +25,8 @@
  },
  "caveats": [
   "Each place is a 1-degree cell, about 111 km north-south on Earth (about 30 km on the Moon); values are cell averages.",
-  "Earth temperatures and ground sunlight are modelled climatologies (WorldClim, MODIS-based amplitude, modelled irradiance), not site measurements.",
+  "East-west a cell narrows towards the poles: the lunar twin of a Lunar base pair is only 1.3 to 3.4 km wide east-west (30 km north-south), so each Earth cell averages 88 to 224 times more ground than its twin (14 times for Solar panels, 39 to 53 for Rover); see cell_area_km2 in each pair.",
+  "Earth coldest air temperature and ground sunlight are modelled climatologies (WorldClim); the daily temperature swing is derived from MODIS land-surface temperature (daytime minus night-time overpass); none of them is a site measurement.",
   "Names are the nearest named feature or populated place to the cell centre, not a landing site or the cell's own name.",
   "Lunar base pairs are a likeness of thermal position within each world's population, not of temperature: the real temperatures are about 200 K apart.",
   "Sunlight above the atmosphere is alike for Solar panels pairs, but on Earth a large share is lost in the atmosphere; panels would not charge the same."
@@ -85,6 +86,8 @@
       "nearest_named_place_admin1_in_geonames": "Inner Mongolia",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 65.6,
+      "distance_km_spoken": 66,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 65.6,
       "direction_from_place": "north-west",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -100,12 +103,14 @@
       "nearest_named_feature": "Casatus",
       "feature_type": "Crater, craters",
       "distance_km": 159.2,
+      "distance_km_spoken": 159,
       "distance_km_recomputed": 159.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -76.5,
       "cell_centre_lon": -44.5,
       "lunar_region_code": "B",
-      "lunar_region_label": "South-polar region outside the nine NASA regions"
+      "lunar_region_label": "South-polar region outside the nine NASA regions",
+      "cell_east_west_km": 7.08
      },
      "similarity": 99.57,
      "suitability": 99.22,
@@ -194,6 +199,14 @@
        "difference": 2.801
       }
      },
+     "cell_area_km2": {
+      "earth": 9260.2,
+      "moon": 214.7,
+      "earth_over_moon": 43.1,
+      "earth_east_west_km": 83.3,
+      "moon_east_west_km": 7.08,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Similar slopes: 1.04 degrees on Earth and 1.15 on the Moon, 0.11 apart.",
@@ -270,6 +283,8 @@
       "nearest_named_place_admin1_in_geonames": "Tamanghasset",
       "nearest_named_place_country_code_in_geonames": "DZ",
       "distance_km": 79.5,
+      "distance_km_spoken": 80,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 79.5,
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -285,12 +300,14 @@
       "nearest_named_feature": "Casatus",
       "feature_type": "Crater, craters",
       "distance_km": 159.2,
+      "distance_km_spoken": 159,
       "distance_km_recomputed": 159.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -76.5,
       "cell_centre_lon": -44.5,
       "lunar_region_code": "B",
-      "lunar_region_label": "South-polar region outside the nine NASA regions"
+      "lunar_region_label": "South-polar region outside the nine NASA regions",
+      "cell_east_west_km": 7.08
      },
      "similarity": 99.76,
      "suitability": 98.66,
@@ -379,6 +396,14 @@
        "difference": 4.472
       }
      },
+     "cell_area_km2": {
+      "earth": 11338.7,
+      "moon": 214.7,
+      "earth_over_moon": 52.8,
+      "earth_east_west_km": 102.0,
+      "moon_east_west_km": 7.08,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Similar slopes: 1.22 degrees on Earth and 1.15 on the Moon, 0.07 apart.",
@@ -455,6 +480,8 @@
       "nearest_named_place_admin1_in_geonames": "Inner Mongolia",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 78.4,
+      "distance_km_spoken": 78,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 78.4,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -470,12 +497,14 @@
       "nearest_named_feature": "Casatus",
       "feature_type": "Crater, craters",
       "distance_km": 159.2,
+      "distance_km_spoken": 159,
       "distance_km_recomputed": 159.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -76.5,
       "cell_centre_lon": -44.5,
       "lunar_region_code": "B",
-      "lunar_region_label": "South-polar region outside the nine NASA regions"
+      "lunar_region_label": "South-polar region outside the nine NASA regions",
+      "cell_east_west_km": 7.08
      },
      "similarity": 98.77,
      "suitability": 99.58,
@@ -564,6 +593,14 @@
        "difference": 2.847
       }
      },
+     "cell_area_km2": {
+      "earth": 9540.5,
+      "moon": 214.7,
+      "earth_over_moon": 44.4,
+      "earth_east_west_km": 85.8,
+      "moon_east_west_km": 7.08,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Similar slopes: 0.91 degrees on Earth and 1.15 on the Moon, 0.24 apart.",
@@ -640,6 +677,8 @@
       "nearest_named_place_admin1_in_geonames": "Gansu Sheng",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 27.8,
+      "distance_km_spoken": 28,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 27.8,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -655,12 +694,14 @@
       "nearest_named_feature": "Casatus",
       "feature_type": "Crater, craters",
       "distance_km": 159.2,
+      "distance_km_spoken": 159,
       "distance_km_recomputed": 159.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -76.5,
       "cell_centre_lon": -44.5,
       "lunar_region_code": "B",
-      "lunar_region_label": "South-polar region outside the nine NASA regions"
+      "lunar_region_label": "South-polar region outside the nine NASA regions",
+      "cell_east_west_km": 7.08
      },
      "similarity": 99.5,
      "suitability": 98.66,
@@ -749,6 +790,14 @@
        "difference": 2.863
       }
      },
+     "cell_area_km2": {
+      "earth": 9540.5,
+      "moon": 214.7,
+      "earth_over_moon": 44.4,
+      "earth_east_west_km": 85.8,
+      "moon_east_west_km": 7.08,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Similar slopes: 1.13 degrees on Earth and 1.15 on the Moon, 0.02 apart.",
@@ -825,6 +874,8 @@
       "nearest_named_place_admin1_in_geonames": "Govi-Altay",
       "nearest_named_place_country_code_in_geonames": "MN",
       "distance_km": 41.0,
+      "distance_km_spoken": 41,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 41.0,
       "direction_from_place": "south-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -840,12 +891,14 @@
       "nearest_named_feature": "Casatus",
       "feature_type": "Crater, craters",
       "distance_km": 159.2,
+      "distance_km_spoken": 159,
       "distance_km_recomputed": 159.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -76.5,
       "cell_centre_lon": -44.5,
       "lunar_region_code": "B",
-      "lunar_region_label": "South-polar region outside the nine NASA regions"
+      "lunar_region_label": "South-polar region outside the nine NASA regions",
+      "cell_east_west_km": 7.08
      },
      "similarity": 99.12,
      "suitability": 98.69,
@@ -933,6 +986,14 @@
        "moon": 1.774,
        "difference": 2.189
       }
+     },
+     "cell_area_km2": {
+      "earth": 8353.1,
+      "moon": 214.7,
+      "earth_over_moon": 38.9,
+      "earth_east_west_km": 75.1,
+      "moon_east_west_km": 7.08,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
      },
      "common_traits": [
       {
@@ -1051,6 +1112,8 @@
       "nearest_named_place_admin1_in_geonames": "Western Australia",
       "nearest_named_place_country_code_in_geonames": "AU",
       "distance_km": 128.7,
+      "distance_km_spoken": 129,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 128.7,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -1067,12 +1130,14 @@
       "nearest_named_feature": "Huxley",
       "feature_type": "Crater, craters",
       "distance_km": 75.8,
+      "distance_km_spoken": 76,
       "distance_km_recomputed": 75.8,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": 22.5,
       "cell_centre_lon": -3.5,
       "lunar_region_code": "D",
-      "lunar_region_label": "Low equatorial plains (the maria)"
+      "lunar_region_label": "Low equatorial plains (the maria)",
+      "cell_east_west_km": 28.02
      },
      "similarity": 99.99,
      "suitability": 96.9,
@@ -1169,6 +1234,14 @@
       },
       "lost_percent_from_bundle_share": 36
      },
+     "cell_area_km2": {
+      "earth": 11855.0,
+      "moon": 849.5,
+      "earth_over_moon": 14.0,
+      "earth_east_west_km": 106.6,
+      "moon_east_west_km": 28.02,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Nearly the same sunlight above the atmosphere: 9.60 kWh per square metre per day at the Earth site and 9.60 on the Moon (less than 0.01 apart). On Earth only about 6.2 of 9.6 reaches the ground, about 35 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
@@ -1248,6 +1321,8 @@
       "nearest_named_place_admin1_in_geonames": "Western Australia",
       "nearest_named_place_country_code_in_geonames": "AU",
       "distance_km": 282.9,
+      "distance_km_spoken": 283,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 282.9,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -1264,12 +1339,14 @@
       "nearest_named_feature": "Struve",
       "feature_type": "Crater, craters",
       "distance_km": 58.2,
+      "distance_km_spoken": 58,
       "distance_km_recomputed": 58.2,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": 21.5,
       "cell_centre_lon": -76.5,
       "lunar_region_code": "D",
-      "lunar_region_label": "Low equatorial plains (the maria)"
+      "lunar_region_label": "Low equatorial plains (the maria)",
+      "cell_east_west_km": 28.21
      },
      "similarity": 99.88,
      "suitability": 96.9,
@@ -1366,6 +1443,14 @@
       },
       "lost_percent_from_bundle_share": 37
      },
+     "cell_area_km2": {
+      "earth": 11914.5,
+      "moon": 855.5,
+      "earth_over_moon": 13.9,
+      "earth_east_west_km": 107.2,
+      "moon_east_west_km": 28.21,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Nearly the same sunlight above the atmosphere: 9.64 kWh per square metre per day at the Earth site and 9.67 on the Moon (0.03 apart). On Earth only about 6.1 of 9.6 reaches the ground, about 36 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
@@ -1445,6 +1530,8 @@
       "nearest_named_place_admin1_in_geonames": "Melaky",
       "nearest_named_place_country_code_in_geonames": "MG",
       "distance_km": 80.1,
+      "distance_km_spoken": 80,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 80.1,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -1460,12 +1547,14 @@
       "nearest_named_feature": "Thebit",
       "feature_type": "Crater, craters",
       "distance_km": 61.3,
+      "distance_km_spoken": 61,
       "distance_km_recomputed": 61.3,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -23.5,
       "cell_centre_lon": -5.5,
       "lunar_region_code": "D",
-      "lunar_region_label": "Low equatorial plains (the maria)"
+      "lunar_region_label": "Low equatorial plains (the maria)",
+      "cell_east_west_km": 27.81
      },
      "similarity": 99.95,
      "suitability": 96.77,
@@ -1562,6 +1651,14 @@
       },
       "lost_percent_from_bundle_share": 38
      },
+     "cell_area_km2": {
+      "earth": 11791.9,
+      "moon": 843.2,
+      "earth_over_moon": 14.0,
+      "earth_east_west_km": 106.0,
+      "moon_east_west_km": 27.81,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Nearly the same sunlight above the atmosphere: 9.55 kWh per square metre per day at the Earth site and 9.53 on the Moon (0.02 apart). On Earth only about 6.0 of 9.6 reaches the ground, about 38 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
@@ -1641,6 +1738,8 @@
       "nearest_named_place_admin1_in_geonames": "Western Australia",
       "nearest_named_place_country_code_in_geonames": "AU",
       "distance_km": 279.7,
+      "distance_km_spoken": 280,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 279.7,
       "direction_from_place": "north-west",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -1657,12 +1756,14 @@
       "nearest_named_feature": "Dziewulski",
       "feature_type": "Crater, craters",
       "distance_km": 71.9,
+      "distance_km_spoken": 72,
       "distance_km_recomputed": 71.9,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": 21.5,
       "cell_centre_lon": 101.5,
       "lunar_region_code": "D",
-      "lunar_region_label": "Low equatorial plains (the maria)"
+      "lunar_region_label": "Low equatorial plains (the maria)",
+      "cell_east_west_km": 28.21
      },
      "similarity": 99.98,
      "suitability": 96.62,
@@ -1759,6 +1860,14 @@
       },
       "lost_percent_from_bundle_share": 37
      },
+     "cell_area_km2": {
+      "earth": 11970.3,
+      "moon": 855.5,
+      "earth_over_moon": 14.0,
+      "earth_east_west_km": 107.7,
+      "moon_east_west_km": 28.21,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Nearly the same sunlight above the atmosphere: 9.69 kWh per square metre per day at the Earth site and 9.67 on the Moon (0.01 apart). On Earth only about 6.1 of 9.7 reaches the ground, about 37 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
@@ -1838,6 +1947,8 @@
       "nearest_named_place_admin1_in_geonames": "Western Australia",
       "nearest_named_place_country_code_in_geonames": "AU",
       "distance_km": 218.2,
+      "distance_km_spoken": 218,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 218.2,
       "direction_from_place": "north-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -1854,12 +1965,14 @@
       "nearest_named_feature": "Rimae Pettit",
       "feature_type": "Rima, rimae",
       "distance_km": 82.5,
+      "distance_km_spoken": 83,
       "distance_km_recomputed": 82.5,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -22.5,
       "cell_centre_lon": -93.5,
       "lunar_region_code": "D",
-      "lunar_region_label": "Low equatorial plains (the maria)"
+      "lunar_region_label": "Low equatorial plains (the maria)",
+      "cell_east_west_km": 28.02
      },
      "similarity": 100.0,
      "suitability": 96.48,
@@ -1956,6 +2069,14 @@
       },
       "lost_percent_from_bundle_share": 36
      },
+     "cell_area_km2": {
+      "earth": 11855.0,
+      "moon": 849.5,
+      "earth_over_moon": 14.0,
+      "earth_east_west_km": 106.6,
+      "moon_east_west_km": 28.02,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Nearly the same sunlight above the atmosphere: 9.60 kWh per square metre per day at the Earth site and 9.60 on the Moon (less than 0.01 apart). On Earth only about 6.1 of 9.6 reaches the ground, about 36 percent being lost in the atmosphere; the Moon has no atmosphere, so this is a likeness of sunlight above the air, not of what panels would collect.",
@@ -2017,14 +2138,14 @@
        }
       }
      ],
-     "say": "Number five for solar panels: a site about 218 kilometres north-east of Derby, in Australia, pairs with a spot about 82 kilometres from Rimae Pettit, a rima, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 36 percent is lost in the air and only 6.1 reach the ground; similarity 100 (rounded) out of 100."
+     "say": "Number five for solar panels: a site about 218 kilometres north-east of Derby, in Australia, pairs with a spot about 83 kilometres from Rimae Pettit, a rima, on the lunar equatorial plains. Above the atmosphere both get about 9.6 kilowatt hours per square metre a day, but on Earth about 36 percent is lost in the air and only 6.1 reach the ground; similarity 100 (rounded) out of 100."
     }
    ]
   },
   "lunar_base": {
    "name": "Lunar base (thermal endurance)",
    "similarity_rule": "percentile_and_real_tolerance",
-   "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+   "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
    "similarity_variables": [
     {
      "variable": "tmin_k",
@@ -2083,6 +2204,8 @@
       "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 62.3,
+      "distance_km_spoken": 62,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 62.3,
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -2098,16 +2221,25 @@
       "nearest_named_feature": "Mons Malapert",
       "feature_type": "Mons, montes",
       "distance_km": 25.1,
+      "distance_km_spoken": 25,
       "distance_km_recomputed": 25.1,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -86.5,
       "cell_centre_lon": -11.5,
       "lunar_region_code": "A",
       "lunar_region_label": "The nine NASA candidate regions",
-      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "cell_east_west_km": 1.85,
+      "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
       "nasa_candidate_regions_intersected": [
        "Haworth"
       ],
+      "cell_centre_inside_nasa_candidate_region": false,
+      "nasa_candidate_region_share_of_cell": {
+       "Haworth": 0.0043
+      },
+      "nasa_candidate_region_share_method": "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline is the union of the region's 1 km grid squares, an upper bound of the region",
+      "nasa_candidate_region_wording": "at the edge of NASA's Haworth candidate region (0.4 % of the cell lies inside it; its centre is outside)",
+      "nasa_candidate_region_wording_rule": "'in' when at least 50% of the cell lies inside the region, else 'at the edge of'",
       "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
      },
      "similarity": 97.31,
@@ -2236,6 +2368,14 @@
       }
      },
      "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 195 K colder on average (minimum -232 °C at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m.",
+     "cell_area_km2": {
+      "earth": 9260.2,
+      "moon": 56.1,
+      "earth_over_moon": 165.0,
+      "earth_east_west_km": 83.3,
+      "moon_east_west_km": 1.85,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Both rank in the coldest tenth of their own population by coldest temperature (8th percentile on Earth, 8th on the Moon, 0.3 points apart), although the temperatures themselves are far apart: about -25 degrees C air on Earth against -232 degrees C surface on the Moon, 207 K.",
@@ -2256,7 +2396,7 @@
         "difference_k": 207.38,
         "populations": {
          "EARTH": "2,419 Earth points passing the Lunar base funnel",
-         "MOON": "280 lunar cells of NASA's nine candidate regions"
+         "MOON": "280 lunar cells overlapping NASA's nine candidate regions"
         },
         "percentile_direction": "low percentile = colder"
        }
@@ -2331,7 +2471,7 @@
        }
       }
      ],
-     "say": "Number one for a lunar base: a site about 62 kilometres north of Aheqi, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 25 kilometres from Mons Malapert, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 138 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.5 degrees and roughness by less than 1 metre; similarity 97.3 out of 100."
+     "say": "Number one for a lunar base: a site about 62 kilometres north of Aheqi, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 25 kilometres from Mons Malapert, at the edge of NASA's Haworth candidate region (0.4 % of the cell lies inside it; its centre is outside), near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 138 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.5 degrees and roughness by less than 1 metre; similarity 97.3 out of 100."
     },
     {
      "mission": {
@@ -2349,6 +2489,8 @@
       "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 43.6,
+      "distance_km_spoken": 44,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 43.6,
       "direction_from_place": "south-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -2364,16 +2506,25 @@
       "nearest_named_feature": "Cartwright",
       "feature_type": "Crater, craters",
       "distance_km": 15.5,
+      "distance_km_spoken": 15,
       "distance_km_recomputed": 15.5,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -87.5,
       "cell_centre_lon": -58.5,
       "lunar_region_code": "A",
       "lunar_region_label": "The nine NASA candidate regions",
-      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "cell_east_west_km": 1.32,
+      "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
       "nasa_candidate_regions_intersected": [
        "de Gerlache Rim 2"
       ],
+      "cell_centre_inside_nasa_candidate_region": false,
+      "nasa_candidate_region_share_of_cell": {
+       "de Gerlache Rim 2": 0.0782
+      },
+      "nasa_candidate_region_share_method": "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline is the union of the region's 1 km grid squares, an upper bound of the region",
+      "nasa_candidate_region_wording": "at the edge of NASA's de Gerlache Rim 2 candidate region (7.8 % of the cell lies inside it; its centre is outside)",
+      "nasa_candidate_region_wording_rule": "'in' when at least 50% of the cell lies inside the region, else 'at the edge of'",
       "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
      },
      "similarity": 96.61,
@@ -2502,6 +2653,14 @@
       }
      },
      "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 184 K colder on average (minimum -227 °C at the surface against -18.9 °C air temperature here) and its day-night swing is 155 K larger; slope differs by 1.1° and roughness by 9.6 m.",
+     "cell_area_km2": {
+      "earth": 8968.6,
+      "moon": 40.1,
+      "earth_over_moon": 223.6,
+      "earth_east_west_km": 80.7,
+      "moon_east_west_km": 1.32,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Both rank in the coldest quarter of their own population by coldest temperature (21st percentile on Earth, 19th on the Moon, 2.7 points apart), although the temperatures themselves are far apart: about -19 degrees C air on Earth against -227 degrees C surface on the Moon, 208 K.",
@@ -2522,7 +2681,7 @@
         "difference_k": 208.18,
         "populations": {
          "EARTH": "2,419 Earth points passing the Lunar base funnel",
-         "MOON": "280 lunar cells of NASA's nine candidate regions"
+         "MOON": "280 lunar cells overlapping NASA's nine candidate regions"
         },
         "percentile_direction": "low percentile = colder"
        }
@@ -2597,7 +2756,7 @@
        }
       }
      ],
-     "say": "Number two for a lunar base: a site about 44 kilometres south-east of Mori, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 16 kilometres from the crater Cartwright, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 155 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.1 degrees and roughness by 10 metres; similarity 96.6 out of 100."
+     "say": "Number two for a lunar base: a site about 44 kilometres south-east of Mori, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 15 kilometres from the crater Cartwright, at the edge of NASA's de Gerlache Rim 2 candidate region (7.8 % of the cell lies inside it; its centre is outside), near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 155 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.1 degrees and roughness by 10 metres; similarity 96.6 out of 100."
     },
     {
      "mission": {
@@ -2609,12 +2768,14 @@
      "moon_cell_id": "M64018",
      "ids_note": "reference only, not to be read aloud",
      "earth_place": {
-      "speakable": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+      "speakable": "about 45 km north of Burenhayrhan, Hovd, Mongolia",
       "nearest_named_place": "Burenhayrhan",
       "nearest_named_place_source": "GeoNames cities1000 populated places (the engine's offline copy in the reverse_geocoder package, tierra luna/engine/places.py); bundle: place_detail.json nearest_places / earth_place_detail.bin",
       "nearest_named_place_admin1_in_geonames": "Hovd",
       "nearest_named_place_country_code_in_geonames": "MN",
       "distance_km": 45.5,
+      "distance_km_spoken": 45,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 45.5,
       "direction_from_place": "north",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -2630,16 +2791,25 @@
       "nearest_named_feature": "Slater",
       "feature_type": "Crater, craters",
       "distance_km": 19.4,
+      "distance_km_spoken": 19,
       "distance_km_recomputed": 19.4,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -87.5,
       "cell_centre_lon": 118.5,
       "lunar_region_code": "A",
       "lunar_region_label": "The nine NASA candidate regions",
-      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "cell_east_west_km": 1.32,
+      "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
       "nasa_candidate_regions_intersected": [
        "Slater Plain"
       ],
+      "cell_centre_inside_nasa_candidate_region": false,
+      "nasa_candidate_region_share_of_cell": {
+       "Slater Plain": 0.3294
+      },
+      "nasa_candidate_region_share_method": "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline is the union of the region's 1 km grid squares, an upper bound of the region",
+      "nasa_candidate_region_wording": "at the edge of NASA's Slater Plain candidate region (33 % of the cell lies inside it; its centre is outside)",
+      "nasa_candidate_region_wording_rule": "'in' when at least 50% of the cell lies inside the region, else 'at the edge of'",
       "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
      },
      "similarity": 96.86,
@@ -2768,6 +2938,14 @@
       }
      },
      "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 194 K colder on average (minimum -232 °C at the surface against -25.8 °C air temperature here) and its day-night swing is 137 K larger; slope differs by 1.6° and roughness by 3.8 m.",
+     "cell_area_km2": {
+      "earth": 8510.9,
+      "moon": 40.1,
+      "earth_over_moon": 212.2,
+      "earth_east_west_km": 76.5,
+      "moon_east_west_km": 1.32,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Both rank in the coldest tenth of their own population by coldest temperature (6th percentile on Earth, 7th on the Moon, 0.8 points apart), although the temperatures themselves are far apart: about -26 degrees C air on Earth against -232 degrees C surface on the Moon, 207 K.",
@@ -2788,7 +2966,7 @@
         "difference_k": 206.65,
         "populations": {
          "EARTH": "2,419 Earth points passing the Lunar base funnel",
-         "MOON": "280 lunar cells of NASA's nine candidate regions"
+         "MOON": "280 lunar cells overlapping NASA's nine candidate regions"
         },
         "percentile_direction": "low percentile = colder"
        }
@@ -2863,7 +3041,7 @@
        }
       }
      ],
-     "say": "Number three for a lunar base: a site about 46 kilometres north of Burenhayrhan, in Hovd, Mongolia, pairs with a spot about 19 kilometres from the crater Slater, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 137 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.6 degrees and roughness by 4 metres; similarity 96.9 out of 100."
+     "say": "Number three for a lunar base: a site about 45 kilometres north of Burenhayrhan, in Hovd, Mongolia, pairs with a spot about 19 kilometres from the crater Slater, at the edge of NASA's Slater Plain candidate region (33 % of the cell lies inside it; its centre is outside), near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 207 kelvin lower and its daily swing 137 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.6 degrees and roughness by 4 metres; similarity 96.9 out of 100."
     },
     {
      "mission": {
@@ -2881,6 +3059,8 @@
       "nearest_named_place_admin1_in_geonames": "Souss-Massa-Draa",
       "nearest_named_place_country_code_in_geonames": "MA",
       "distance_km": 3.5,
+      "distance_km_spoken": 4,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 3.5,
       "direction_from_place": "south-east",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -2896,16 +3076,25 @@
       "nearest_named_feature": "Wapowski",
       "feature_type": "Crater, craters",
       "distance_km": 18.3,
+      "distance_km_spoken": 18,
       "distance_km_recomputed": 18.3,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -83.5,
       "cell_centre_lon": 57.5,
       "lunar_region_code": "A",
       "lunar_region_label": "The nine NASA candidate regions",
-      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "cell_east_west_km": 3.43,
+      "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
       "nasa_candidate_regions_intersected": [
        "Nobile Rim 2"
       ],
+      "cell_centre_inside_nasa_candidate_region": false,
+      "nasa_candidate_region_share_of_cell": {
+       "Nobile Rim 2": 0.4457
+      },
+      "nasa_candidate_region_share_method": "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline is the union of the region's 1 km grid squares, an upper bound of the region",
+      "nasa_candidate_region_wording": "at the edge of NASA's Nobile Rim 2 candidate region (45 % of the cell lies inside it; its centre is outside)",
+      "nasa_candidate_region_wording_rule": "'in' when at least 50% of the cell lies inside the region, else 'at the edge of'",
       "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
      },
      "similarity": 99.36,
@@ -3034,6 +3223,14 @@
       }
      },
      "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 163 K colder on average (minimum -210 °C at the surface against -1.5 °C air temperature here) and its day-night swing is 158 K larger; slope differs by 0.2° and roughness by 4.5 m.",
+     "cell_area_km2": {
+      "earth": 10542.2,
+      "moon": 104.1,
+      "earth_over_moon": 101.3,
+      "earth_east_west_km": 94.8,
+      "moon_east_west_km": 3.43,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "A similar cold position within their own population by coldest temperature (63rd percentile on Earth, 63rd on the Moon, 0.1 points apart), although the temperatures themselves are far apart: about -2 degrees C air on Earth against -210 degrees C surface on the Moon, 209 K.",
@@ -3054,7 +3251,7 @@
         "difference_k": 208.6,
         "populations": {
          "EARTH": "2,419 Earth points passing the Lunar base funnel",
-         "MOON": "280 lunar cells of NASA's nine candidate regions"
+         "MOON": "280 lunar cells overlapping NASA's nine candidate regions"
         },
         "percentile_direction": "low percentile = colder"
        }
@@ -3129,7 +3326,7 @@
        }
       }
      ],
-     "say": "Number four for a lunar base: a site about 4 kilometres south-east of Tinghir, in Souss-Massa-Draa, Morocco, pairs with a spot about 18 kilometres from the crater Wapowski, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 209 kelvin lower and its daily swing 158 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.2 degrees and roughness by 4 metres; similarity 99.4 out of 100."
+     "say": "Number four for a lunar base: a site about 4 kilometres south-east of Tinghir, in Souss-Massa-Draa, Morocco, pairs with a spot about 18 kilometres from the crater Wapowski, at the edge of NASA's Nobile Rim 2 candidate region (45 % of the cell lies inside it; its centre is outside), near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 209 kelvin lower and its daily swing 158 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 0.2 degrees and roughness by 4 metres; similarity 99.4 out of 100."
     },
     {
      "mission": {
@@ -3147,6 +3344,8 @@
       "nearest_named_place_admin1_in_geonames": "Xinjiang Uygur Zizhiqu",
       "nearest_named_place_country_code_in_geonames": "CN",
       "distance_km": 53.3,
+      "distance_km_spoken": 53,
+      "distance_rounding": "distance_km_spoken is rounded once to the unit, half up, from the stored float32 (earth_place_detail.bin nearest_place_km), not from the 1-decimal distance_km",
       "distance_km_recomputed": 53.3,
       "direction_from_place": "south",
       "direction_note": "initial great-circle bearing from the named place to the cell centre, 8-point compass",
@@ -3162,16 +3361,25 @@
       "nearest_named_feature": "Oberbeck",
       "feature_type": "Crater, craters",
       "distance_km": 15.9,
+      "distance_km_spoken": 16,
       "distance_km_recomputed": 15.9,
       "feature_source": "bundle iau_moon_features.json (USGS/IAU Gazetteer of Planetary Nomenclature), moon_base.bin feature / feature_km",
       "cell_centre_lat": -83.5,
       "cell_centre_lon": 63.5,
       "lunar_region_code": "A",
       "lunar_region_label": "The nine NASA candidate regions",
-      "zone": "one of NASA's nine candidate landing regions near the lunar south pole",
+      "cell_east_west_km": 3.43,
+      "zone": "the 280 lunar cells that overlap NASA's nine candidate landing regions near the lunar south pole (the engine's zone: the 1-degree cell square intersects a region outline)",
       "nasa_candidate_regions_intersected": [
        "Nobile Rim 2"
       ],
+      "cell_centre_inside_nasa_candidate_region": false,
+      "nasa_candidate_region_share_of_cell": {
+       "Nobile Rim 2": 0.0032
+      },
+      "nasa_candidate_region_share_method": "area of the 1-degree cell inside the region outline over the cell's area, south-polar Lambert azimuthal equal-area projection on the 1737.4 km sphere (edges densified to 0.01 degrees); the outline is the union of the region's 1 km grid squares, an upper bound of the region",
+      "nasa_candidate_region_wording": "at the edge of NASA's Nobile Rim 2 candidate region (0.3 % of the cell lies inside it; its centre is outside)",
+      "nasa_candidate_region_wording_rule": "'in' when at least 50% of the cell lies inside the region, else 'at the edge of'",
       "nasa_candidate_regions_source": "tierra luna/engine/data/artemis_iii_regions.geojson (engine data; the bundle has only region A); engine rule: the 1-degree cell square intersects the region outline (an upper bound)"
      },
      "similarity": 95.03,
@@ -3300,6 +3508,14 @@
       }
      },
      "pair_sentence_from_bundle": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 192 K colder on average (minimum -226 °C at the surface against -18.3 °C air temperature here) and its day-night swing is 156 K larger; slope differs by 1.5° and roughness by 11.9 m.",
+     "cell_area_km2": {
+      "earth": 9115.8,
+      "moon": 104.1,
+      "earth_over_moon": 87.6,
+      "earth_east_west_km": 82.0,
+      "moon_east_west_km": 3.43,
+      "rule": "1-degree cell on the sphere: R^2 x dlon x |sin(lat2) - sin(lat1)|; east-west width 2 pi R / 360 x cos(lat)"
+     },
      "common_traits": [
       {
        "text": "Both rank in the coldest quarter of their own population by coldest temperature (23rd percentile on Earth, 22nd on the Moon, 0.8 points apart), although the temperatures themselves are far apart: about -18 degrees C air on Earth against -226 degrees C surface on the Moon, 208 K.",
@@ -3320,7 +3536,7 @@
         "difference_k": 207.8,
         "populations": {
          "EARTH": "2,419 Earth points passing the Lunar base funnel",
-         "MOON": "280 lunar cells of NASA's nine candidate regions"
+         "MOON": "280 lunar cells overlapping NASA's nine candidate regions"
         },
         "percentile_direction": "low percentile = colder"
        }
@@ -3395,7 +3611,7 @@
        }
       }
      ],
-     "say": "Number five for a lunar base: a site about 53 kilometres south of Ewirgol, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 16 kilometres from the crater Oberbeck, in one of NASA's nine candidate landing regions near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 156 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.5 degrees and roughness by 12 metres; similarity 95.0 out of 100."
+     "say": "Number five for a lunar base: a site about 53 kilometres south of Ewirgol, in Xinjiang Uygur Zizhiqu, China, pairs with a spot about 16 kilometres from the crater Oberbeck, at the edge of NASA's Nobile Rim 2 candidate region (0.3 % of the cell lies inside it; its centre is outside), near the lunar south pole. They are not equally cold, the Moon spot's coldest temperature is about 208 kelvin lower and its daily swing 156 kelvin larger, but each holds a similar place in its own world's range of cold and swing, and slopes differ by 1.5 degrees and roughness by 12 metres; similarity 95.0 out of 100."
     }
    ]
   }

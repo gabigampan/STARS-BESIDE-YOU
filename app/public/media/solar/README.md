@@ -1,5 +1,7 @@
 # Solar mission video
 
+> **This video shows the EARLIER method, not today's pairs (note of 2026-11-15, statistical audit, `docs/stats_audit/4_audios_coherencia.md` 9.2.7).** It was made when Solar panels used the south-polar zone (latitude 75 S or further south) and the z-score twin rule; both were replaced on the morning of 2026-11-15 (`docs/DECISIONS.md`, "Decisiones tomadas (15-11-2026, mañana)"). Today Solar panels pair on sunlight above the atmosphere with cells of the equatorial maria (latitude within 30 degrees, elevation -1,200 m or lower). The pair in the video, lunar cell M59479 (75.5 S, 100.5 W) with Earth cell E44120 (Western Cape), is not a pair of the shipped bundle: E44120 now ranks 5,786th, with the twin M21923, and M59479 is outside today's Solar panels zone. The vertical tracking panels and the low polar Sun of the video do not describe today's Solar panels pairs either. Nothing in the video or its captions has been changed; a re-render on the number 1 pair (E38464 with M24296) is being scheduled separately. Until then, do not present this video as one of today's pairs.
+
 **Credit line to show in the app:**
 "Solar mission video: 3D simulation by the Stars Beside You team, driven by table data (not real footage)"
 

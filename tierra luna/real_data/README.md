@@ -56,7 +56,8 @@ deterministic (no random numbers, fixed quadrature grids).
 | sun_elev_max_deg, sun_low_frac_0_5deg | DERIVED | exact geometry, obliquity 1.54 deg (PIA13720) |
 | mask_fraction, rock_or_bare_frac | MODELLED | 1 by definition (no ocean, no vegetation) |
 | thermal_inertia_class | MODELLED | "regolito" everywhere (NASA: "Nearly the entire Moon is covered by ... lunar regolith") |
-| permafrost_class, rain_mm_day, wind_max_ms | no data | not applicable on the Moon: empty, not 0 |
+| permafrost_class | MODELLED | the label 'ninguno' in every cell, set by definition (team lead decision 2026-11-14; provenance_moon.csv), not empty (corrected 2026-11-15 after the statistical audit, docs/stats_audit/1_datos_rejilla_nombres.md 1.6.2) |
+| rain_mm_day, wind_max_ms | no data | not applicable on the Moon: empty, not 0 |
 
 `slope_300m_deg` and `rough_300m_m` are not written: no global product has a 300 m baseline. `column_aliases.json`
 maps them to `slope_deg` and `roughness_m` with the true baselines.
@@ -72,7 +73,8 @@ Irradiance (horizontal, per 24 h): 10.40 kWh/m2/day at the equator, 7.29 at 45.5
 - Temperatures vs the R2 latitude profile: zonal medians of max, min and amplitude agree within 0-3.5 K in every
   band (e.g. 0-10N max 391.4 / min 94.4 K vs R2 391.8 / 94.4 K; published 95-390 K, NSSDC Moon fact sheet).
 - Empty values: rock_abundance_frac 21,608 (60 rows outside 60S-60N plus 8 cells with < 50 % valid pixels);
-  permafrost_class, rain_mm_day, wind_max_ms 64,800 (not applicable). All other columns are complete.
+  rain_mm_day, wind_max_ms 64,800 (not applicable). permafrost_class is not empty: the MODELLED label 'ninguno' in all
+  64,800 cells (corrected 2026-11-15 after the statistical audit, docs/stats_audit/1_datos_rejilla_nombres.md 1.6.2). All other columns are complete.
 - One Diviner label (40s30s) has its MINIMUM and MAXIMUM_LATITUDE swapped; the build uses the data's own latitudes.
 
 ### What a 1-degree cell can and cannot show
