@@ -1115,3 +1115,20 @@ La configuración muerta que la primera pasada no pudo mover con seguridad (la e
 ## Textos finales: punto 9 de la reauditoría, lector independiente (15-11-2026)
 
 Detalle en `docs/stats_audit/11_textos_finales.md` (script `tierra luna/audit/z_texts_final.py`). Veredicto de textos: Rover, Placas solares y Base lunar GO. Los cinco análogos de cada misión están publicados y en `explain.json`. Corregido en origen, sin cambiar ningún número: la etiqueta de zona "PSR" se escribe en palabras; la fórmula de Rover remitía a un campo inexistente del bundle; "each variable scores lower the further apart" era falso para Rover; `not_used_by_engine.why` decía que la similitud usa los pesos de idoneidad y que estaba pendiente; la nota de saturación de Rover seguía remitiendo "a la reauditoría". Queda anotado, sin corregir: en la ficha de Rover la frase "These are five of the 254 sites tied at the top..." aparece tres veces (known_limitations[3], [7] y top5.rule). Los 30 `.bin` son idénticos a e28283a y a HEAD.
+
+
+## Texto aprobado modificado tras la reauditoría (15-11-2026): similarity_meaning_real_values
+
+Por qué cambió: el líder decidió a las 11:51 y a las 12:10 CET del 15-11-2026 que Rover puntúa con 1 una diferencia que queda dentro de la incertidumbre de medida de los modelos de elevación (banda muerta: pendiente 0,27°, rugosidad 17,4 m). Con esa decisión, la frase aprobada "each variable scores lower the further apart the two values are" dejaba de ser cierta para Rover (fallo T1 de la reauditoría, `docs/stats_audit/9_reauditoria_rover.json`; relectura independiente en `docs/stats_audit/11_textos_finales.md`). El texto se corrigió en origen (`tierra luna/engine/engine_config.json` `approved_texts.similarity_meaning_real_values`) en las pasadas de texto posteriores a la reauditoría: 4624505 (textos del motor tras la reauditoría, T1) y 3ed19b2 (relectura independiente; es el commit que cambia la frase en `engine_config.json`).
+
+Texto ANTES (aprobado por el líder, punto 8 de arriba; `engine_config.json` en cd14aea):
+
+> "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Both values and their difference are shown side by side."
+
+Texto DESPUÉS (vigente en `engine_config.json` y en `similarity.json` `texts`):
+
+> "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and a variable never scores higher when the two values are further apart. Each mission has its own score rule. Solar panels: the score falls from 1 with the first difference, as exp(-0.5 (difference / tolerance)^2). Rover: a difference within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m) scores 1, and beyond it the score falls as exp(-0.5 max(0, difference / uncertainty - 1)^2). Both values and their difference are shown side by side."
+
+Ningún número del modelo cambia: solo cambia la redacción; la regla de puntuación descrita es la que ya publica el bundle.
+
+**PENDIENTE DE CONFIRMACIÓN DEL LÍDER.** El líder aprobó la redacción anterior; el cambio de significado (la banda muerta de Rover) es decisión suya, pero la frase nueva la escribió la pasada de textos del motor y la comprobó un lector independiente. El líder aún no ha confirmado esta redacción.
