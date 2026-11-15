@@ -1,0 +1,11 @@
+target,cell,table_tmin_c,table_elev_m,station,name,st_elev_m,km,period,years,n_months,coldest_month,coldest_month_mean_tmin_c,mean_daily_range_k,n_days_range
+"coldest tmin cell (-89.5, 43.5)",E64663,-72.28,2824.0,AYW00090001,AMUNDSEN-SCOTT,-999.9,55.6,1970_2000,1970-1996,302.0,8.0,-63.86,6.23,9373.0
+"coldest tmin cell (-89.5, 43.5)",E64663,-72.28,2824.0,AYW00090001,AMUNDSEN-SCOTT,-999.9,55.6,all,1957-2025,550.0,7.0,-63.7,6.15,16221.0
+"cell nearest the South Pole station (-89.5, -24.5)",E64595,-59.24,2737.9,AYW00090001,AMUNDSEN-SCOTT,-999.9,55.6,1970_2000,1970-1996,302.0,8.0,-63.86,6.23,9373.0
+"cell nearest the South Pole station (-89.5, -24.5)",E64595,-59.24,2737.9,AYW00090001,AMUNDSEN-SCOTT,-999.9,55.6,all,1957-2025,550.0,7.0,-63.7,6.15,16221.0
+"cell of Vostok station (-78.5, 106.5)",E60766,-61.17,3483.8,AYM00089606,VOSTOK,3488.0,9.9,1970_2000,1990-2000,6.0,10.0,-66.27,10.27,1177.0
+"cell of Vostok station (-78.5, 106.5)",E60766,-61.17,3483.8,AYM00089606,VOSTOK,3488.0,9.9,all,1990-2026,90.0,6.0,-73.62,9.67,4460.0
+"cell of Dome C (-75.5, 123.5)",E59703,-49.27,3239.6,AYM00089828,DOME C II,3250.0,42.8,1970_2000,,,,,,
+"cell of Dome C (-75.5, 123.5)",E59703,-49.27,3239.6,AYM00089828,DOME C II,3250.0,42.8,all,2025-2026,22.0,5.0,-69.26,13.13,628.0
+"warmest tmin cell (3.5, 73.5)",E31213,26.29,,MV000043555,MALE,2.0,77.9,1970_2000,1981-1986,13.0,12.0,25.08,4.96,1158.0
+"warmest tmin cell (3.5, 73.5)",E31213,26.29,,MV000043555,MALE,2.0,77.9,all,1981-2025,143.0,10.0,25.56,4.96,2862.0

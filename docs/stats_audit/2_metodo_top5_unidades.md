@@ -58,7 +58,16 @@ Empates del gemelo: Rover y Base lunar no tienen ninguno exacto; Paneles tiene 3
 
 ### 3.3 Redondeo a 2 decimales
 
-El paquete reproduce **exactamente** su similitud almacenada desde sus propias `s.<v>` con la fórmula del contrato (suma en el orden de `similarity.variables`, `round` de Python): 0 diferencias en 10.192 + 6.360 + 450 pares (`p2_contract_sum.py`). Una primera pasada mía daba diferencias de 0,01 en mitades exactas porque `round()` sobre un `numpy.float64` redondea como `numpy.round`; corregido en mis scripts (`round(float(x), 2)`). Resultado tras la corrección: ver `out/p2_recompute.json` (`similarity_2dp`, `suitability_2dp`, `final_2dp`, `rank`) — RECOMPUTE_SUMMARY.
+El paquete reproduce **exactamente** su similitud almacenada desde sus propias `s.<v>` con la fórmula del contrato (suma en el orden de `similarity.variables`, `round` de Python): 0 diferencias en 10.192 + 6.360 + 450 pares (`p2_contract_sum.py`). Una primera pasada mía daba diferencias de 0,01 en mitades exactas porque `round()` sobre un `numpy.float64` redondea como `numpy.round`; corregido en mis scripts (`round(float(x), 2)`). Resultado tras la corrección (`out/p2_recompute.json`, `similarity_2dp`, `suitability_2dp`, `final_2dp`, `rank`, comparados a la precisión publicada):
+
+| | Rover | Paneles | Base lunar |
+|---|---|---|---|
+| similitud distinta (de puntos que pasan) | 0 de 10.337 | 6 de 18.777 | 0 de 2.419 |
+| idoneidad distinta | 0 | 0 | 0 |
+| final distinto | 0 | 1 | 0 |
+| rango distinto | 0 | 6 | 0 |
+
+Los 6 + 1 de Paneles son la precisión de mi irradiancia (nota de 3.2): son valores a menos de 1e-4 de una mitad del segundo decimal (p. ej. 89,25496 que el paquete publica 89,26), y el final distinto (E21426, 90,144975) cae en un grupo de seis puntos empatados a 90,15 en los rangos 4.147-4.152, que es donde se reordenan los 6 rangos. Ningún punto de los 100 primeros de ninguna misión cambia. Con mi idoneidad, mi similitud y mi final, el top 5 de las tres misiones es idéntico al del paquete.
 
 ### 3.4 Fallos (documentación; no cambian ningún criterio)
 

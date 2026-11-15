@@ -7,7 +7,9 @@ number removed or perturbed at a time, and counts against the unperturbed run:
   and the overlap of the top 5 and top 50 pairs (Earth id, twin id) and their order.
 Deterministic. Run:
   <python> "tierra luna/audit/p5_sensitivity.py" [mission ...]
-Outputs: out/p5_sensitivity_<mission>.csv (one row per perturbation).
+Outputs: out/p5_sensitivity_<mission>.csv (one row per perturbation); with --part START STOP
+(to split a mission over processes) out/p5_sensitivity_<mission>_partSTART.csv; p5_inventory.py
+reads all of them.
 """
 from __future__ import annotations
 
@@ -157,7 +159,9 @@ def compare(r0, r1):
     }
 
 
-def main(missions):
+def main(missions, start=0, stop=None, tag=""):
+    """start/stop: run only perturbations [start, stop) of the list (to split a mission over several
+    processes); rows are appended to the CSV as they are computed."""
     t0 = time.time()
     P0 = load_params()
     T = load_tables(P0)
@@ -166,7 +170,10 @@ def main(missions):
         cache = {}
         base = run_mission(T, D0, m, P0, cache=cache)
         rows = []
-        for pid, grp, desc, kind, fn in perturbations(P0, m):
+        path = os.path.join(OUT, f"p5_sensitivity_{m}{tag}.csv")
+        fh = open(path, "w", newline="", encoding="utf-8")
+        wr = None
+        for pid, grp, desc, kind, fn in perturbations(P0, m)[start:stop]:
             if kind == "P":
                 Q, D, tag = fn(P0), D0, "base"
             else:
@@ -177,13 +184,22 @@ def main(missions):
             r = run_mission(T, D, m, Q, cache=cache, dtag=tag)
             row = {"mission": m, "id": pid, "group": grp, "change": desc, **compare(base, r)}
             rows.append(row)
+            if wr is None:
+                wr = csv.DictWriter(fh, fieldnames=list(row.keys()))
+                wr.writeheader()
+            wr.writerow(row)
+            fh.flush()
             print(m, pid, {k: row[k] for k in ("entered", "left", "pairs_gained", "pairs_lost", "twin_changed", "top5_kept", "top50_kept")}, flush=True)
-        with open(os.path.join(OUT, f"p5_sensitivity_{m}.csv"), "w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-            w.writeheader()
-            w.writerows(rows)
+        fh.close()
         print(m, "done", round(time.time() - t0, 1), "s", flush=True)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:] or list(MISSIONS))
+    # usage: p5_sensitivity.py [mission ...]   or   p5_sensitivity.py mission --part START STOP
+    a = sys.argv[1:]
+    if "--part" in a:
+        k = a.index("--part")
+        st, sp = int(a[k + 1]), int(a[k + 2])
+        main(a[:k], st, sp, f"_part{st:03d}")
+    else:
+        main(a or list(MISSIONS))

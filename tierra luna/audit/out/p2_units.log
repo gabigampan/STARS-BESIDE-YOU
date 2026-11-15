@@ -1,0 +1,16 @@
+rover share>=99: 0.1405 >=99.99: 0.0004 pub 100: 1
+solar share>=99: 0.7799 >=99.99: 0.177 pub 100: 514
+lunar_base share>=99: 0.0156 >=99.99: 0.0 pub 100: 0
+       mission                   variable       role               unit  tolerance   bound      median         p90         max
+0        rover                  slope_deg        key                deg        2.0     2.0    0.408000    0.851000    1.971000
+1        rover                roughness_m        key                  m       30.0    30.0    5.340000   20.548999   29.969999
+2        rover            elevation_rel_m  secondary                  m      500.0  1000.0  247.886192  798.876172  999.986206
+3        solar  irradiance_toa_kwh_m2_day        key         kWh/m2/day        0.6     0.6    0.020764    0.322246    0.569576
+4        solar                  slope_deg  secondary                deg        2.0     4.0    0.034000    0.146000    1.941000
+5        solar                roughness_m  secondary                  m       30.0    60.0    0.500000    2.360000   58.139999
+6   lunar_base                     tmin_k        key  percentile points       10.0    10.0    3.168517    7.715157    9.786290
+7   lunar_base              tmin_k (real)        key                  K        NaN     NaN  207.875000  210.553003  211.940002
+8   lunar_base          lst_diurnal_amp_k        key  percentile points       10.0    10.0    2.988691    7.666613    9.952976
+9   lunar_base   lst_diurnal_amp_k (real)        key                  K        NaN     NaN  153.764999  161.281999  179.399994
+10  lunar_base                  slope_deg  secondary                deg        2.0     4.0    1.506500    2.694300    3.917000
+11  lunar_base                roughness_m  secondary                  m       30.0    60.0   27.265000   54.425998   59.810001

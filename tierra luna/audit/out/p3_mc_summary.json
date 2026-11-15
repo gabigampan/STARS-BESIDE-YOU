@@ -1,0 +1,652 @@
+{
+ "lunar_base_f1": {
+  "runs": 200,
+  "sigma_factor": 1.0,
+  "seed": 20261115,
+  "pairs": [
+   {
+    "audio_rank": 1,
+    "earth_id": 17538,
+    "place": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.435,
+    "top20": 0.61,
+    "top50": 0.645,
+    "same_rank": 0.14,
+    "rank_p05": 1.0,
+    "rank_median": 8.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.35,
+    "fails_funnel_share": 0.35,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.85,
+    "twins_seen": {
+     "-2": 70,
+     "63528": 30,
+     "64020": 17,
+     "63866": 17
+    }
+   },
+   {
+    "audio_rank": 2,
+    "earth_id": 16830,
+    "place": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.14,
+    "top20": 0.425,
+    "top50": 0.66,
+    "same_rank": 0.03,
+    "rank_p05": 3.0,
+    "rank_median": 26.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.165,
+    "fails_funnel_share": 0.03,
+    "no_twin_share": 0.135,
+    "twin_changed_share": 0.64,
+    "twins_seen": {
+     "63841": 72,
+     "-1": 27,
+     "63839": 21,
+     "62523": 20
+    }
+   },
+   {
+    "audio_rank": 3,
+    "earth_id": 15751,
+    "place": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+    "top5": 0.145,
+    "top20": 0.45,
+    "top50": 0.6,
+    "same_rank": 0.04,
+    "rank_p05": 3.0,
+    "rank_median": 27.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.31,
+    "fails_funnel_share": 0.23,
+    "no_twin_share": 0.08,
+    "twin_changed_share": 0.88,
+    "twins_seen": {
+     "-2": 46,
+     "64019": 39,
+     "64018": 24,
+     "-1": 16
+    }
+   },
+   {
+    "audio_rank": 4,
+    "earth_id": 21054,
+    "place": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+    "top5": 0.055,
+    "top20": 0.345,
+    "top50": 0.59,
+    "same_rank": 0.02,
+    "rank_p05": 5.0,
+    "rank_median": 37.5,
+    "rank_p95": "unranked",
+    "unranked_share": 0.135,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.135,
+    "twin_changed_share": 0.875,
+    "twins_seen": {
+     "-1": 27,
+     "62517": 25,
+     "62515": 23,
+     "62135": 22
+    }
+   },
+   {
+    "audio_rank": 5,
+    "earth_id": 17187,
+    "place": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.075,
+    "top20": 0.395,
+    "top50": 0.715,
+    "same_rank": 0.025,
+    "rank_p05": 4.950000000000001,
+    "rank_median": 26.5,
+    "rank_p95": "unranked",
+    "unranked_share": 0.12,
+    "fails_funnel_share": 0.015,
+    "no_twin_share": 0.105,
+    "twin_changed_share": 0.73,
+    "twins_seen": {
+     "62523": 54,
+     "-1": 21,
+     "63841": 15,
+     "63837": 11
+    }
+   }
+  ],
+  "top5_identical_set_share": 0.0,
+  "top5_identical_order_share": 0.0,
+  "top5_overlap_hist": {
+   "0": 71,
+   "1": 90,
+   "2": 37,
+   "3": 2
+  },
+  "top5_overlap_mean": 0.85,
+  "top5_members_most_frequent": {
+   "18254": 0.45,
+   "17538": 0.435,
+   "18255": 0.31,
+   "17898": 0.28,
+   "17897": 0.26,
+   "42949": 0.18,
+   "17895": 0.165,
+   "44750": 0.165,
+   "18627": 0.16,
+   "15391": 0.15,
+   "15751": 0.145,
+   "16830": 0.14
+  },
+  "distinct_top5_members": 75,
+  "ranked_count": {
+   "baseline": 450,
+   "min": 404,
+   "max": 506
+  },
+  "passing_count": {
+   "min": 2378,
+   "max": 2501
+  },
+  "sigma": {
+   "EARTH:elevation_m": [
+    "abs",
+    7.17,
+    "doc: ETOPO 2022 global RMSE vs ICESat-2 (MacFerrin et al. 2025)"
+   ],
+   "EARTH:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell slope accuracy documented)"
+   ],
+   "EARTH:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell roughness accuracy documented)"
+   ],
+   "EARTH:tmin_c": [
+    "abs",
+    1.39,
+    "doc: WorldClim 2 cross-validation RMSE of minimum temperature (Fick & Hijmans 2017, Table 3)"
+   ],
+   "EARTH:irradiance_kwh_m2_day": [
+    "abs",
+    0.40277777777777773,
+    "doc: WorldClim 2 cross-validation RMSE of solar radiation 1.45 MJ/m2/day = 0.403 kWh/m2/day"
+   ],
+   "EARTH:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: MOD11 QC best class 'average LST error <= 1K' per overpass, day minus night -> sqrt(2) K"
+   ],
+   "EARTH:rock_or_bare_frac": [
+    "abs",
+    0.05,
+    "illustrative 0.05 (classification product; per-cell error not documented)"
+   ],
+   "MOON:elevation_m": [
+    "abs",
+    10.0,
+    "doc: LOLA geodetic grid ~10 m radial accuracy (Smith et al. 2010)"
+   ],
+   "MOON:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:tmin_c": [
+    "abs",
+    1.0,
+    "doc: Diviner NETD < 1 K over 60-120 K (Hayne et al. 2017, citing Paige et al. 2010)"
+   ],
+   "MOON:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: max minus min, each with 1 K -> sqrt(2) K"
+   ],
+   "MOON:irradiance_kwh_m2_day": [
+    "rel",
+    0.02,
+    "illustrative 2 % (geometry formula plus LOLA illumination fraction)"
+   ]
+  },
+  "not_perturbed": {
+   "Earth irradiance_toa (formula)": "same S0 = 1361 W/m2 on both bodies; geometry exact (own integration matches to 6e-6)",
+   "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude, exact",
+   "thermal_inertia_class, permafrost_class, mask_fraction": "categories / land share, not perturbed"
+  }
+ },
+ "lunar_base_f2": {
+  "runs": 100,
+  "sigma_factor": 2.0,
+  "seed": 20261115,
+  "pairs": [
+   {
+    "audio_rank": 1,
+    "earth_id": 17538,
+    "place": "about 62 km north of Aheqi, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.2,
+    "top20": 0.4,
+    "top50": 0.46,
+    "same_rank": 0.05,
+    "rank_p05": 1.9500000000000002,
+    "rank_median": Infinity,
+    "rank_p95": "unranked",
+    "unranked_share": 0.5,
+    "fails_funnel_share": 0.49,
+    "no_twin_share": 0.01,
+    "twin_changed_share": 0.99,
+    "twins_seen": {
+     "-2": 49,
+     "62878": 5,
+     "62881": 5,
+     "63872": 3
+    }
+   },
+   {
+    "audio_rank": 2,
+    "earth_id": 16830,
+    "place": "about 44 km south-east of Mori, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.02,
+    "top20": 0.22,
+    "top50": 0.37,
+    "same_rank": 0.0,
+    "rank_p05": 8.0,
+    "rank_median": 94.5,
+    "rank_p95": "unranked",
+    "unranked_share": 0.4,
+    "fails_funnel_share": 0.14,
+    "no_twin_share": 0.26,
+    "twin_changed_share": 0.93,
+    "twins_seen": {
+     "-1": 26,
+     "-2": 14,
+     "63841": 7,
+     "62523": 5
+    }
+   },
+   {
+    "audio_rank": 3,
+    "earth_id": 15751,
+    "place": "about 46 km north of Burenhayrhan, Hovd, Mongolia",
+    "top5": 0.08,
+    "top20": 0.25,
+    "top50": 0.44,
+    "same_rank": 0.01,
+    "rank_p05": 2.95,
+    "rank_median": 158.0,
+    "rank_p95": "unranked",
+    "unranked_share": 0.47,
+    "fails_funnel_share": 0.33,
+    "no_twin_share": 0.14,
+    "twin_changed_share": 0.96,
+    "twins_seen": {
+     "-2": 33,
+     "-1": 14,
+     "64019": 7,
+     "64027": 5
+    }
+   },
+   {
+    "audio_rank": 4,
+    "earth_id": 21054,
+    "place": "about 4 km south-east of Tinghir, Souss-Massa-Draa, Morocco",
+    "top5": 0.04,
+    "top20": 0.18,
+    "top50": 0.35,
+    "same_rank": 0.02,
+    "rank_p05": 6.95,
+    "rank_median": 152.5,
+    "rank_p95": "unranked",
+    "unranked_share": 0.38,
+    "fails_funnel_share": 0.15,
+    "no_twin_share": 0.23,
+    "twin_changed_share": 0.95,
+    "twins_seen": {
+     "-1": 23,
+     "-2": 15,
+     "63660": 7,
+     "62517": 5
+    }
+   },
+   {
+    "audio_rank": 5,
+    "earth_id": 17187,
+    "place": "about 53 km south of Ewirgol, Xinjiang Uygur Zizhiqu, China",
+    "top5": 0.04,
+    "top20": 0.3,
+    "top50": 0.53,
+    "same_rank": 0.0,
+    "rank_p05": 7.0,
+    "rank_median": 46.5,
+    "rank_p95": "unranked",
+    "unranked_share": 0.35,
+    "fails_funnel_share": 0.25,
+    "no_twin_share": 0.1,
+    "twin_changed_share": 0.93,
+    "twins_seen": {
+     "-2": 25,
+     "-1": 10,
+     "64023": 8,
+     "62523": 7
+    }
+   }
+  ],
+  "top5_identical_set_share": 0.0,
+  "top5_identical_order_share": 0.0,
+  "top5_overlap_hist": {
+   "0": 64,
+   "1": 34,
+   "2": 2
+  },
+  "top5_overlap_mean": 0.38,
+  "top5_members_most_frequent": {
+   "17898": 0.25,
+   "17897": 0.21,
+   "18255": 0.2,
+   "17538": 0.2,
+   "18254": 0.19,
+   "19697": 0.16,
+   "42950": 0.14,
+   "43309": 0.13,
+   "18627": 0.13,
+   "42949": 0.11,
+   "44750": 0.11,
+   "42590": 0.11
+  },
+  "distinct_top5_members": 118,
+  "ranked_count": {
+   "baseline": 450,
+   "min": 442,
+   "max": 560
+  },
+  "passing_count": {
+   "min": 2432,
+   "max": 2590
+  },
+  "sigma": {
+   "EARTH:elevation_m": [
+    "abs",
+    7.17,
+    "doc: ETOPO 2022 global RMSE vs ICESat-2 (MacFerrin et al. 2025)"
+   ],
+   "EARTH:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell slope accuracy documented)"
+   ],
+   "EARTH:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell roughness accuracy documented)"
+   ],
+   "EARTH:tmin_c": [
+    "abs",
+    1.39,
+    "doc: WorldClim 2 cross-validation RMSE of minimum temperature (Fick & Hijmans 2017, Table 3)"
+   ],
+   "EARTH:irradiance_kwh_m2_day": [
+    "abs",
+    0.40277777777777773,
+    "doc: WorldClim 2 cross-validation RMSE of solar radiation 1.45 MJ/m2/day = 0.403 kWh/m2/day"
+   ],
+   "EARTH:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: MOD11 QC best class 'average LST error <= 1K' per overpass, day minus night -> sqrt(2) K"
+   ],
+   "EARTH:rock_or_bare_frac": [
+    "abs",
+    0.05,
+    "illustrative 0.05 (classification product; per-cell error not documented)"
+   ],
+   "MOON:elevation_m": [
+    "abs",
+    10.0,
+    "doc: LOLA geodetic grid ~10 m radial accuracy (Smith et al. 2010)"
+   ],
+   "MOON:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:tmin_c": [
+    "abs",
+    1.0,
+    "doc: Diviner NETD < 1 K over 60-120 K (Hayne et al. 2017, citing Paige et al. 2010)"
+   ],
+   "MOON:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: max minus min, each with 1 K -> sqrt(2) K"
+   ],
+   "MOON:irradiance_kwh_m2_day": [
+    "rel",
+    0.02,
+    "illustrative 2 % (geometry formula plus LOLA illumination fraction)"
+   ]
+  },
+  "not_perturbed": {
+   "Earth irradiance_toa (formula)": "same S0 = 1361 W/m2 on both bodies; geometry exact (own integration matches to 6e-6)",
+   "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude, exact",
+   "thermal_inertia_class, permafrost_class, mask_fraction": "categories / land share, not perturbed"
+  }
+ },
+ "rover_f1": {
+  "runs": 20,
+  "sigma_factor": 1.0,
+  "seed": 20261115,
+  "pairs": [
+   {
+    "audio_rank": 1,
+    "earth_id": 17566,
+    "place": "about 66 km north-west of Bayinbaolige, Inner Mongolia, China",
+    "top5": 1.0,
+    "top20": 1.0,
+    "top50": 1.0,
+    "same_rank": 0.65,
+    "rank_p05": 1.0,
+    "rank_median": 1.0,
+    "rank_p95": 2.0500000000000007,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.0,
+    "twins_seen": {
+     "59895": 20
+    }
+   },
+   {
+    "audio_rank": 2,
+    "earth_id": 23945,
+    "place": "about 80 km north of Tamanrasset, Tamanghasset, Algeria",
+    "top5": 0.75,
+    "top20": 1.0,
+    "top50": 1.0,
+    "same_rank": 0.2,
+    "rank_p05": 1.0,
+    "rank_median": 3.5,
+    "rank_p95": 9.250000000000004,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.0,
+    "twins_seen": {
+     "59895": 20
+    }
+   },
+   {
+    "audio_rank": 3,
+    "earth_id": 18282,
+    "place": "about 78 km north-east of Ehen Hudag, Inner Mongolia, China",
+    "top5": 0.65,
+    "top20": 1.0,
+    "top50": 1.0,
+    "same_rank": 0.05,
+    "rank_p05": 1.9500000000000002,
+    "rank_median": 4.0,
+    "rank_p95": 12.100000000000001,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.0,
+    "twins_seen": {
+     "59895": 20
+    }
+   },
+   {
+    "audio_rank": 4,
+    "earth_id": 18280,
+    "place": "about 28 km north-east of Banqiao, Gansu Sheng, China",
+    "top5": 0.4,
+    "top20": 0.8,
+    "top50": 1.0,
+    "same_rank": 0.05,
+    "rank_p05": 1.0,
+    "rank_median": 8.0,
+    "rank_p95": 40.400000000000006,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.0,
+    "twins_seen": {
+     "59895": 20
+    }
+   },
+   {
+    "audio_rank": 5,
+    "earth_id": 15395,
+    "place": "about 41 km south-east of Buga, Govi-Altay, Mongolia",
+    "top5": 0.35,
+    "top20": 1.0,
+    "top50": 1.0,
+    "same_rank": 0.15,
+    "rank_p05": 3.0,
+    "rank_median": 7.5,
+    "rank_p95": 13.350000000000005,
+    "unranked_share": 0.0,
+    "fails_funnel_share": 0.0,
+    "no_twin_share": 0.0,
+    "twin_changed_share": 0.0,
+    "twins_seen": {
+     "59895": 20
+    }
+   }
+  ],
+  "top5_identical_set_share": 0.05,
+  "top5_identical_order_share": 0.0,
+  "top5_overlap_hist": {
+   "2": 3,
+   "3": 12,
+   "4": 4,
+   "5": 1
+  },
+  "top5_overlap_mean": 3.15,
+  "top5_members_most_frequent": {
+   "17566": 1.0,
+   "23945": 0.75,
+   "18282": 0.65,
+   "18281": 0.45,
+   "18280": 0.4,
+   "15395": 0.35,
+   "15034": 0.25,
+   "16121": 0.2,
+   "26144": 0.2,
+   "16844": 0.2,
+   "16841": 0.15,
+   "16482": 0.15
+  },
+  "distinct_top5_members": 16,
+  "ranked_count": {
+   "baseline": 10192,
+   "min": 9962,
+   "max": 10252
+  },
+  "passing_count": {
+   "min": 10314,
+   "max": 10354
+  },
+  "sigma": {
+   "EARTH:elevation_m": [
+    "abs",
+    7.17,
+    "doc: ETOPO 2022 global RMSE vs ICESat-2 (MacFerrin et al. 2025)"
+   ],
+   "EARTH:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell slope accuracy documented)"
+   ],
+   "EARTH:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 % (no per-cell roughness accuracy documented)"
+   ],
+   "EARTH:tmin_c": [
+    "abs",
+    1.39,
+    "doc: WorldClim 2 cross-validation RMSE of minimum temperature (Fick & Hijmans 2017, Table 3)"
+   ],
+   "EARTH:irradiance_kwh_m2_day": [
+    "abs",
+    0.40277777777777773,
+    "doc: WorldClim 2 cross-validation RMSE of solar radiation 1.45 MJ/m2/day = 0.403 kWh/m2/day"
+   ],
+   "EARTH:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: MOD11 QC best class 'average LST error <= 1K' per overpass, day minus night -> sqrt(2) K"
+   ],
+   "EARTH:rock_or_bare_frac": [
+    "abs",
+    0.05,
+    "illustrative 0.05 (classification product; per-cell error not documented)"
+   ],
+   "MOON:elevation_m": [
+    "abs",
+    10.0,
+    "doc: LOLA geodetic grid ~10 m radial accuracy (Smith et al. 2010)"
+   ],
+   "MOON:slope": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:rough": [
+    "rel",
+    0.05,
+    "illustrative 5 %"
+   ],
+   "MOON:tmin_c": [
+    "abs",
+    1.0,
+    "doc: Diviner NETD < 1 K over 60-120 K (Hayne et al. 2017, citing Paige et al. 2010)"
+   ],
+   "MOON:lst_diurnal_amp_k": [
+    "abs",
+    1.4142135623730951,
+    "doc-derived: max minus min, each with 1 K -> sqrt(2) K"
+   ],
+   "MOON:irradiance_kwh_m2_day": [
+    "rel",
+    0.02,
+    "illustrative 2 % (geometry formula plus LOLA illumination fraction)"
+   ]
+  },
+  "not_perturbed": {
+   "Earth irradiance_toa (formula)": "same S0 = 1361 W/m2 on both bodies; geometry exact (own integration matches to 6e-6)",
+   "sun_elev_max_deg, sun_low_frac_0_5deg": "formulas of latitude, exact",
+   "thermal_inertia_class, permafrost_class, mask_fraction": "categories / land share, not perturbed"
+  }
+ }
+}

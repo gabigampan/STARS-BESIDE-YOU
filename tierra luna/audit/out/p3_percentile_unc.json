@@ -1,0 +1,56 @@
+{
+ "earth_population": 2419,
+ "moon_population": 280,
+ "one_rank_step_points": {
+  "EARTH": 0.0413,
+  "MOON": 0.3571
+ },
+ "EARTH:tmin_c": {
+  "sigma": 1.39,
+  "value_q05_q50_q95": [
+   -26.44,
+   -6.6,
+   4.63
+  ],
+  "abs_percentile_shift_median": 2.67,
+  "abs_percentile_shift_p90": 8.27,
+  "share_shift_gt_5": 0.253,
+  "share_shift_gt_10": 0.064
+ },
+ "EARTH:lst_diurnal_amp_k": {
+  "sigma": 1.414,
+  "value_q05_q50_q95": [
+   15.47,
+   19.33,
+   25.72
+  ],
+  "abs_percentile_shift_median": 7.57,
+  "abs_percentile_shift_p90": 22.34,
+  "share_shift_gt_5": 0.632,
+  "share_shift_gt_10": 0.398
+ },
+ "MOON:tmin_c": {
+  "sigma": 1.0,
+  "value_q05_q50_q95": [
+   -233.15,
+   -214.32,
+   -201.67
+  ],
+  "abs_percentile_shift_median": 1.79,
+  "abs_percentile_shift_p90": 5.36,
+  "share_shift_gt_5": 0.109,
+  "share_shift_gt_10": 0.012
+ },
+ "MOON:lst_diurnal_amp_k": {
+  "sigma": 1.414,
+  "value_q05_q50_q95": [
+   144.14,
+   178.53,
+   216.95
+  ],
+  "abs_percentile_shift_median": 1.07,
+  "abs_percentile_shift_p90": 4.11,
+  "share_shift_gt_5": 0.056,
+  "share_shift_gt_10": 0.002
+ }
+}

@@ -272,7 +272,7 @@ def unit_of(v):
 # ---------------- automatic part
 AUTO_RULES = [
     (r"^ms\.missions\.(thermal|ice)\.", "component block, not an offered mission: thermal is copied into lunar_base (engine/config.py check_components refuses drift); ice is evaluated per Earth point and shown as information only, never changes the ranking (ASSUMPTIONS.md 0.1)", "no effect on pairs or ranking", "keep as component (documented) or move out of the shipped config"),
-    (r"^ms\.missions\.\w+\.weights\.", "domain weights relieve/material/termico/luz/agua: engine_config not_used_by_engine_why says the engine does not read them", "NOT READ BY THE ENGINE", "DEAD CONFIGURATION: remove from the shipped config or mark as web-only 'Use Weights' (and check the web really reads it)"),
+    (r"^ms\.missions\.\w+\.weights\.", "domain weights relieve/material/termico/luz/agua: engine_config not_used_by_engine_why says the engine does not read them (engine/config.py check_components only compares lunar_base with thermal); the mission_scoring note says the web's 'Use Weights' button uses them, but app/src has no reference to them (grep relieve|luz: 0 hits)", "NOT READ BY THE ENGINE NOR BY THE WEB", "DEAD CONFIGURATION: remove from the shipped config (or move to a documented 'not used' block) and correct the note in mission_scoring.json"),
     (r"^ms\.missions\.rover\.tolerances\.", "old 300 m rover tolerances (5 deg, 10 m): not_used_by_engine_why; the shipped tolerances are engine_config real_value_similarity", "NOT READ BY THE ENGINE", "DEAD CONFIGURATION: remove, or mark 'superseded by real_value_similarity'"),
     (r"^ms\.missions\.rover\.workable_days\.", "Phase-1 workable-days defaults: not_used_by_engine_why ('not read by mission_scoring.py')", "NOT READ BY THE ENGINE", "DEAD CONFIGURATION: remove"),
     (r"^ec\.repo_similarity\.", "parameters of the repo_global_mean / zone_twin rules (z-score, decay 0.45): no shipped mission uses them since 2026-11-15 08:55", "no effect on the shipped bundle", "keep only as the --similarity-rule alternative (documented) or remove"),
@@ -341,13 +341,20 @@ def builders():
             if not m:
                 continue
             name, val, com = m.group(1), m.group(2).strip(), (m.group(4) or "")
+            if not com:   # nearest comment line just above (section header or legend note)
+                for j in range(i - 1, max(-1, i - 4), -1):
+                    t = lines[j].strip()
+                    if t.startswith("#") and len(t.strip("#- ")) > 3:
+                        com = "(comment above) " + t.strip("# ")
+                        break
             if name in ("NR", "NC", "NCELL", "NROWS", "NCOLS"):
                 continue
             ROWS.append({"id": f"BUILDER {f}:{name}", "value": val, "unit": "", "category": "table builder constant",
-                         "origin_class": "literature" if re.search(r"fact sheet|IAU|IUGG|PIA|IERS|label", com) else ("design" if com else "NOT RECORDED"),
+                         "origin_class": "literature" if re.search(r"fact sheet|IAU|IUGG|PIA|IERS|label|legend", com) else ("design" if com else "NOT RECORDED"),
                          "origin": com or "no comment in the code", "defined_in": f"tierra luna/real_data/{f}:{i + 1}",
                          "used_at": uses(name, limit=3), "effect_measured": "acts through the tables; not perturbed (needs a rebuild from the raw downloads)",
-                         "flag": "" if com else "NO ORIGIN RECORDED", "proposal": "" if com else "add the source or the reason in a comment",
+                         "flag": ("" if not com.startswith("(comment above) 3.") and com and not (name == "RA_MIN_VALID_FRAC") else "NO ORIGIN RECORDED (the comment above is a section title)") if com else "NO ORIGIN RECORDED",
+                         "proposal": "" if (com and name != "RA_MIN_VALID_FRAC") else "add the source or the reason in a comment (acts only on the information column rock_abundance_frac, never on a result)" if name == "RA_MIN_VALID_FRAC" else "add the source or the reason in a comment",
                          "correction_changes_design": ""})
 
 
