@@ -76,12 +76,14 @@ export function renderCredits(container: HTMLElement, extra: CreditEntry[] = [])
   list.className = 'credits-list';
   for (const c of [...CREDITS, ...extra]) {
     const dt = document.createElement('dt');
-    const a = document.createElement('a');
-    a.href = c.link;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.textContent = c.source;
-    dt.append(a);
+    if (c.link) {
+      const a = document.createElement('a');
+      a.href = c.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = c.source;
+      dt.append(a);
+    } else dt.textContent = c.source;
     const used = document.createElement('dd');
     used.textContent = c.used;
     const credit = document.createElement('dd');

@@ -6,6 +6,7 @@
 // Usage: node tests/review.mjs [--no-build] [--only=twin|notwin] [--sizes=desktop,phone]
 // Screenshots: $SHOTS_DIR (default below).
 
+import * as FX from './lib/fixtures.mjs';
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -19,9 +20,8 @@ const { chromium } = require('playwright');
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(APP, 'dist');
-const SCRATCH = '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars';
-const SHOTS = process.env.SHOTS_DIR ?? join(SCRATCH, 'shots-final');
-const OTHER = process.env.OTHER_BUNDLE ?? join(SCRATCH, 'bundle_global_mean');
+const SHOTS = join(FX.SHOTS_DIR, 'review');
+const OTHER = FX.NO_TWIN_BUNDLE;
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 const ONLY = arg('only');
 const SIZES = (arg('sizes') ?? 'desktop,phone').split(',');

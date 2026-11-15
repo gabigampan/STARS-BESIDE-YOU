@@ -21,6 +21,7 @@
 // Usage: node tests/flow.mjs [--no-build] [--only=twin|notwin|zones] [--sizes=desktop,phone] [--skip-extra] [--extras-only]
 // Screenshots: $SHOTS_DIR (default below).
 
+import * as FX from './lib/fixtures.mjs';
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -37,14 +38,13 @@ const { chromium } = require('playwright');
 
 const APP = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(APP, 'dist');
-const SCRATCH = '/tmp/claude-0/-home-user-NASA/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/stars';
-const SHOTS = process.env.SHOTS_DIR ?? join(SCRATCH, 'shots-frontend3');
-const OTHER = process.env.OTHER_BUNDLE ?? join(SCRATCH, 'bundle_global_mean');
+const SHOTS = join(FX.SHOTS_DIR, 'flow');
+const OTHER = FX.NO_TWIN_BUNDLE;
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 const ONLY = arg('only');
 const SIZES = (arg('sizes') ?? 'desktop,phone').split(',');
 const RED = /\bundefined\b|\bNaN\b|\bnull\b|lorem ipsum|title here|\basdf\b|error \d{3}|\[object object\]/i;
-const ZONES = process.env.ZONE_FIXTURE ?? '/tmp/claude-0/-home-user/7228bb30-9725-52d9-8d71-762c955fd0bd/scratchpad/web5/fixture_zones';
+const ZONES = FX.ZONE_FIXTURE;
 
 const failures = [];
 const ok = (m) => console.log(`ok   ${m}`);

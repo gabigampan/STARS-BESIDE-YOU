@@ -763,7 +763,9 @@ export class DataStore {
       const onlyFor = /about lunar_base/.test(t.where) ? 'lunar_base' : null;
       if (onlyFor && missionId !== onlyFor) template = first;
     }
-    return template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
+    const filled = template.replace(/\bN\b/, new Intl.NumberFormat('en-GB').format(earthCells)).replace(/\bX\b/, x < 0.1 ? x.toFixed(2) : x.toFixed(1));
+    // one Earth point, not "1 Earth points"
+    return earthCells === 1 ? filled.replace(/\b1 Earth points\b/, '1 Earth point') : filled;
   }
 
   // ---------- grid ----------

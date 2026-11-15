@@ -80,8 +80,22 @@ function main(): void {
     if (note) note.textContent = `Feature names unavailable (${err instanceof Error ? err.message : String(err)})`;
   });
 
-  setupCredits(
-    ionEnabled()
+  setupCredits([
+    {
+      source: 'Audio guide (19 recordings)',
+      used: 'The spoken guide of the start screen, the three mission introductions and the five best pairs of each mission (public/audio). Off by default; its text is always shown as a caption.',
+      credit: 'Recorded by the Stars Beside You team (text to speech, American English voice); shipped unchanged, with SHA-256 checksums.',
+      licence: "The team's own recordings for this project.",
+      link: '',
+    },
+    {
+      source: 'Colour-blind mode palette: Okabe-Ito colours',
+      used: 'Every colour of the interface and of the globe overlays when "Colour-blind mode" is on; checked with the culori colour-vision-deficiency simulation (protanopia, deuteranopia, tritanopia).',
+      credit: 'M. Okabe and K. Ito, "Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people", J*Fly.',
+      licence: 'Published colour values.',
+      link: 'https://jfly.uni-koeln.de/color/',
+    },
+    ...(ionEnabled()
       ? [
           {
             source: 'Cesium ion (optional upgrade)',
@@ -91,8 +105,8 @@ function main(): void {
             link: 'https://cesium.com/platform/cesium-ion/',
           },
         ]
-      : [],
-  );
+      : []),
+  ]);
   setupLabelsToggle(setLabels);
   setupViewMenu();
   setupResetButtons((body) => globesApi.resetView(body));

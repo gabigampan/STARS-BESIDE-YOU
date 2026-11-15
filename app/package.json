@@ -15,7 +15,8 @@
     "smoke": "node tests/smoke.mjs",
     "test:modules": "node tests/modules.mjs",
     "test:data": "node tests/data.mjs",
-    "test:flow": "node tests/flow.mjs"
+    "test:flow": "node tests/flow.mjs",
+    "test:a11y": "node tests/a11y.mjs"
   },
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
