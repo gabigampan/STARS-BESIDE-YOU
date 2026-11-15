@@ -1,0 +1,752 @@
+# Cinco decisiones sobre los pares Tierra-Luna
+
+Documento interno del equipo Stars Beside You (NASA Space Apps Challenge 2026). Escrito el 15 de noviembre de 2026 en la rama `final-integration`. Entrega: hoy, 23:59 CET.
+
+**La pregunta de fondo:** ¿podemos defender ante el jurado los pares que enseña el producto (un punto de la Tierra y su gemelo lunar) para las tres misiones: Rover, Paneles solares y Base lunar?
+
+**De dónde salen los números.** Todo se ha calculado hoy, sin tocar el repositorio, con los scripts de `scratchpad/stars/decisions/` (`ctx.py`, `d1.py` a `d5.py`, `d5ex.py`, `gen_tables.py`; resultados en `decisions/out/d1.json` a `d5.json`). Esos scripts reutilizan el código de la propuesta verificada (`proposal2/scripts_v3/analysis_v3.py`): la regla A1 recalculada hoy reproduce la de la propuesta celda a celda (mismos 31.533 gemelos, diferencia de similitud 0). Lo que viene de la propuesta lleva la cita "propuesta, §x" (`docs/SIMILARITY_PROPOSAL.md`). Datos: tablas reales de 1 grado (`tierra luna/output_real/earth_real_1deg.csv` y `moon_real_1deg.csv`). Las horas de trabajo son estimaciones, no medidas.
+
+**Vocabulario mínimo.**
+
+- **Celda**: un cuadrado de 1 grado × 1 grado. En la Tierra mide unos 111 km de norte a sur; en la Luna, unos 30 km.
+- **Idoneidad** (0-100): lo bien que una celda de la Tierra cumple los criterios de la misión (`mission_scoring.json`). Solo la reciben las celdas que pasan los filtros duros.
+- **z (puntuación típica robusta)**: dónde está un valor dentro de su propio cuerpo. `z = (valor − mediana del cuerpo) / escala`, con escala = rango intercuartílico / 1,349, recortado a ±4. z = 0 es "justo en la mediana"; z = +1 es "una desviación típica por encima". La Tierra y la Luna se normalizan **cada una por separado**.
+- **Similitud** (0-100): `100 × exp(−0,45 × d)`, donde `d = √(Σ peso × (z Tierra − z Luna)²)`. 100 = misma posición relativa en las cuatro variables.
+- **Gemelo**: la celda lunar, dentro de la zona de la misión, con la similitud más alta.
+- **Final** = 0,5 × similitud + 0,5 × idoneidad. El ranking ordena por el final.
+- **Spearman**: correlación de rangos, de −1 (orden inverso) a +1 (mismo orden).
+
+---
+
+## Decisión 1. La regla del gemelo
+
+### 1. Qué pasa ahora
+
+**Cómo se elige hoy el gemelo, paso a paso (regla A1 de la propuesta):**
+
+1. La celda de la Tierra pasa el embudo de la misión sin cambios (puertas comunes, variables obligatorias, filtros duros y la idoneidad de `mission_scoring.json`; Base lunar = copia del bloque `thermal`). Las celdas de la Luna no se filtran.
+2. Cada cuerpo se normaliza por separado con `normalize_planetary_features` (`tierra luna/analog_finder.py`, líneas 143-181; la fórmula de z está en las líneas 160-167). En la Tierra la población son las celdas con `elevation_m > 0` (línea 463); en la Luna, todas.
+3. Variables y pesos: `DEFAULT_WEIGHTS` (líneas 68-75): elevación relativa 0,15; pendiente 0,25; rugosidad 0,20; temperatura 0,15; roca 0,15; radar 0,10. En las tablas reales no hay radar y la roca se ha quitado (decisión 2), así que los pesos se reparten en proporción entre las cuatro que quedan: **pendiente 33,33 %, rugosidad 26,67 %, elevación relativa 20,00 %, temperatura 20,00 %**.
+4. Distancia y similitud: la de `compute_analog_ranking` (línea 489: `similarity_pct = 100.0 * np.exp(-0.45 * rms_dist)`).
+5. El gemelo es la celda lunar **de la zona de la misión** con la distancia más pequeña; si hay empate, la de identificador más bajo.
+
+**Zona lunar de cada misión y número de celdas** (cálculo de hoy y propuesta, §3):
+
+| misión | zona lunar | celdas, tabla real 1° | celdas, tabla antigua 2° |
+|---|---|---|---|
+| Rover | Polo sur, latitud ≤ 75 S (`analog_finder.py` línea 189: `lat <= -75.0`) | 5.400 | 1.440 |
+| Paneles solares | la misma zona del polo sur | 5.400 | 1.440 |
+| Base lunar | las nueve regiones candidatas de aterrizaje de Artemis que NASA anunció el 28-10-2024 (rejillas USGS, McClernan 2024, doi:10.5066/P1MEQ6UK, CC0) | 280 | 114 |
+| (referencia) Tycho, la zona del Rover en `main` | caja 35 S-55 S, 30 O-5 E (`analog_finder.py` líneas 193-195) | 700 | no calculado |
+| (referencia) Luna entera | todas | 64.800 | 16.200 |
+
+**Qué versión de `analog_finder.py` está en uso.** En `main` el Rover apunta a Tycho (`git show main:"tierra luna/analog_finder.py"`, línea 259: `"rover": rocky_target,`). En `final-integration` está la decisión posterior del equipo, que lo manda al polo sur. Entró en el **commit `ff6f1ae`** (14-11-2026, 23:46 UTC, "Checkpoint: rover v3 integration and web interaction modules in progress"; `git log -S"Plan decision 2"` devuelve solo ese commit). Líneas 259-261 de `compute_mission_optimality_scores`:
+
+```python
+        # [AI-assisted] Plan decision 2: the lunar target is the Shackleton
+        # region (the only Moon Base site NASA has named), not Tycho.
+        "rover": polar_target,
+```
+
+El fichero de trabajo no tiene cambios respecto a ese commit (`git diff HEAD` vacío).
+
+**Pero el gemelo todavía no está encendido.** El producto se construye con el motor `tierra luna/engine/`, y su ajuste `similarity_rule` vale hoy `"repo_global_mean"` (`engine/engine_config.json`, línea 218): cada punto de la Tierra se compara con el **perfil medio de toda la Luna**, no hay gemelo y la similitud es la misma para las tres misiones. La regla del gemelo es el valor `"zone_twin"` del mismo ajuste (línea 224), con las zonas de `similarity_zones` (líneas 246-274). Encenderla es cambiar ese valor y volver a construir (`python -m engine build`), según `ASSUMPTIONS.md` §0.4.
+
+**Pesos fijos frente a pesos por misión.** Con `DEFAULT_WEIGHTS` las tres misiones usan los mismos cuatro pesos. La otra posibilidad es convertir los pesos por dominio de cada misión (relieve, material, térmico, luz, agua; `mission_scoring.json`) en pesos por variable:
+
+- **A2** = la función que ya existe, `map_domain_weights_to_features` (`analog_finder.py` líneas 225-240, la del botón "Use Weights" de la web). Reparte "luz" y "agua", que no tienen variable propia, entre temperatura y elevación.
+- **A3a** = cada dominio gasta su peso solo en sus variables; "luz" y "agua" se descartan.
+
+Pesos efectivos en la tabla real (propuesta, §4.1), en % de la similitud:
+
+| misión | variante | pendiente | rugosidad | elevación relativa | temperatura |
+|---|---|---|---|---|---|
+| las tres | A1 (fijos) | 33,33 | 26,67 | 20,00 | 20,00 |
+| Rover | A2 | 25,65 | 27,14 | 20,07 | 27,14 |
+| Rover | A3a | 32,41 | 25,93 | 19,44 | 22,22 |
+| Paneles solares | A2 | 17,36 | 9,32 | 26,69 | 46,62 |
+| Paneles solares | A3a | 17,86 | 14,29 | 10,71 | 57,14 |
+| Base lunar | A2 | 12,18 | 15,13 | 11,07 | 61,62 |
+| Base lunar | A3a | 10,42 | 8,33 | 6,25 | 75,00 |
+
+### 2. El problema
+
+Hoy no hay pares: la web enseña una similitud contra una "Luna media" que no existe en ningún sitio, la misma para las tres misiones. Eso no responde a la promesa del producto ("este sitio de la Tierra se parece a este sitio de la Luna").
+
+Además, la elección de pesos cambia mucho los gemelos de Paneles solares y Base lunar. Gemelos que cambian respecto a A1 (cálculo de hoy sobre las salidas por celda de la propuesta):
+
+| misión | puntos | cambian de gemelo con A2 | con A3a | Spearman del final A1 vs A2 / A3a (propuesta §3) | top 10 compartido A1 vs A2 / A3a |
+|---|---|---|---|---|---|
+| Rover | 10.337 | 2.106 (20,4 %) | 632 (6,1 %) | 0,997 / 1,000 | 8/10 / 10/10 |
+| Paneles solares | 18.777 | 7.732 (41,2 %) | 10.885 (58,0 %) | 0,933 / 0,887 | 0/10 / 0/10 |
+| Base lunar | 2.419 | 2.041 (84,4 %) | 2.137 (88,3 %) | 0,987 / 0,980 | 5/10 / 4/10 |
+
+Con A2 o A3a la temperatura pesa entre el 47 % y el 75 % en Paneles y Base lunar, y en Base lunar una sola celda lunar (M64190, de Gerlache) se lleva el 66,1 % (A2) o el 63,9 % (A3a) de todos los puntos (propuesta, §3.3).
+
+### 3. Un ejemplo concreto
+
+El cráter de Haughton (isla Devon, Nunavut, Canadá), un análogo lunar real, cae en la celda **E5130 (75,5 N 89,5 O)**. Rover, idoneidad 98,9. Valores de la celda: pendiente 1,01°, rugosidad 52 m, elevación relativa −432 m, temperatura de superficie 253,0 K.
+
+| regla | similitud | final | puesto (de 10.337) | gemelo lunar |
+|---|---|---|---|---|
+| Hoy en el motor (Luna media, A0) | 45,4 | 72,1 | 4.224 | ninguno |
+| A1 (pesos fijos, polo sur) | 96,1 | 97,5 | 80 | M59910, 76,5 S 29,5 O, cráter Newton a 85 km |
+| A2 (pesos "Use Weights") | 96,0 | 97,5 | 81 | el mismo |
+| A3a (sin diluir) | 96,1 | 97,5 | 78 | el mismo |
+| A1 con la zona de `main` (Tycho) | 80,1 | 89,5 | 919 | M50930, 51,5 S 9,5 O, Maginus a 81 km |
+
+El gemelo polar (Newton) tiene pendiente 6,8°, rugosidad 243 m, elevación relativa −1.027 m y 154,1 K. Los valores absolutos no se parecen; las posiciones relativas sí (z de la pendiente +0,51 en la Tierra y +0,58 en la Luna; z de la temperatura −1,45 y −1,35).
+
+### 4. Las opciones
+
+| opción | a favor | en contra |
+|---|---|---|
+| **A. Encender A1 con pesos fijos** (`similarity_rule = zone_twin`) | Da un par real con nombre, coordenadas y enlace al nomenclátor de la IAU. Mismos pesos para las tres misiones: fácil de explicar. Para el Rover da casi lo mismo que A3a (Spearman 1,000). Ya está implementado y verificado. | Los pesos no dependen de la misión. Los gemelos se concentran (decisión 4). Paneles solares sigue siendo indefendible (decisión 5). |
+| B. A1 con pesos A2 ("Use Weights") | Usa los pesos que el equipo escribió por misión. | "Luz" y "agua" no tienen variable y se cuelan en temperatura y elevación: en Base lunar la temperatura pesa el 61,62 % y el 66,1 % de los puntos acaba en una celda. |
+| C. A1 con pesos A3a | Respeta los dominios sin filtraciones. | Base lunar: 75 % temperatura, el 63,9 % de los puntos en una celda. Habría que explicar una regla nueva de reparto. |
+| D. Seguir con la Luna media (hoy) | No hay que tocar nada. | No hay par. La similitud es la misma para las tres misiones. El top 10 del Rover lo forman praderas con vegetación por el efecto de la roca (decisión 2). |
+| E. Rover a Tycho (como en `main`) | Tycho es un cráter conocido. | Contradice la decisión del equipo ya en la rama (`ff6f1ae`). El top 10 pasa a ser estepa de Mongolia y Kazajistán; una sola celda (M49851, 48,5 S 8,5 O, cerca de Maginus) se lleva el 25,5 % de los puntos (2.633). |
+
+### 5. Recomendación y por qué
+
+**Encender A1 tal como está propuesta, con los pesos fijos `DEFAULT_WEIGHTS`, polo sur para Rover y Paneles y las nueve regiones de Artemis para Base lunar.** Los números lo apoyan: A3a da el mismo Rover que A1; A2 y A3a, en las otras dos misiones, convierten la similitud en una comparación casi solo de temperatura y concentran Base lunar en una celda. No hay ningún número que contradiga la recomendación del director.
+
+### 6. Qué cambia en los resultados si se acepta
+
+Todos los puntos clasificados pasan de "sin gemelo" a "con gemelo": **31.533 pares** (10.337 + 18.777 + 2.419). Ningún punto del top 10 actual sigue en el top 10 en ninguna misión (propuesta, §1). Spearman del final, antes frente a después: Rover 0,334; Paneles 0,567; Base lunar −0,159 (propuesta, §1).
+
+*Matiz:* el motor trata los puntos antárticos sin temperatura de forma distinta a la propuesta (decisión 3). Eso no cambia ningún top 10 de abajo.
+
+**Rover, antes (Luna media):**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
+|---|---|---|---|---|---|---|
+| 1 | E12303 | 55,5 N 116,5 O | Canada / Alberta | 75,0 | 98,3 | 86,6 |
+| 2 | E14294 | 50,5 N 74,5 E | Kazakhstan / Qaraghandy | 75,0 | 97,8 | 86,4 |
+| 3 | E12306 | 55,5 N 113,5 O | Canada / Alberta | 75,0 | 97,7 | 86,4 |
+| 4 | E11945 | 56,5 N 114,5 O | Canada | 75,0 | 97,6 | 86,3 |
+| 5 | E14654 | 49,5 N 74,5 E | Kazakhstan / Qaraghandy | 75,0 | 97,2 | 86,1 |
+| 6 | E14653 | 49,5 N 73,5 E | Kazakhstan / Qaraghandy | 75,1 | 97,1 | 86,1 |
+| 7 | E14112 | 50,5 N 107,5 O | Canada / Saskatchewan | 75,2 | 96,8 | 86,0 |
+| 8 | E14835 | 48,5 N 104,5 O | United States / Montana | 75,0 | 96,7 | 85,9 |
+| 9 | E14474 | 49,5 N 105,5 O | Canada / Saskatchewan | 75,3 | 96,3 | 85,8 |
+| 10 | E13759 | 51,5 N 100,5 O | Canada / Manitoba | 75,0 | 96,6 | 85,8 |
+
+**Rover, después (A1):**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E5128 | 75,5 N 91,5 O | Canada | 99,8 | 98,4 | 99,1 | M60952, 79,5 S 67,5 O, Drygalski a 108 km |
+| 2 | E6903 | 70,5 N 116,5 O | Canada | 100,0 | 98,1 | 99,0 | M60093, 76,5 S 153,5 E, Schrodinger a 163 km |
+| 3 | E5485 | 74,5 N 94,5 O | Canada | 99,8 | 97,9 | 98,9 | M60536, 78,5 S 123,5 O, Ashbrook a 105 km |
+| 4 | E6904 | 70,5 N 115,5 O | Canada | 100,0 | 97,6 | 98,8 | M60093, 76,5 S 153,5 E, Schrodinger a 163 km |
+| 5 | E5845 | 73,5 N 94,5 O | Canada | 99,8 | 97,7 | 98,8 | M59507, 75,5 S 72,5 O, Le Gentil a 46 km |
+| 6 | E4036 | 78,5 N 103,5 O | Canada | 100,0 | 97,5 | 98,8 | M59545, 75,5 S 34,5 O, Casatus a 91 km |
+| 7 | E5129 | 75,5 N 90,5 O | Canada | 99,8 | 97,7 | 98,7 | M60536, 78,5 S 123,5 O, Ashbrook a 105 km |
+| 8 | E5118 | 75,5 N 101,5 O | Canada | 99,6 | 97,9 | 98,7 | M61164, 79,5 S 144,5 E, Nefed ev a 65 km |
+| 9 | E4037 | 78,5 N 102,5 O | Canada | 100,0 | 97,3 | 98,6 | M59545, 75,5 S 34,5 O, Casatus a 91 km |
+| 10 | E6538 | 71,5 N 121,5 O | Canada | 100,0 | 97,3 | 98,6 | M60093, 76,5 S 153,5 E, Schrodinger a 163 km |
+
+**Paneles solares, antes:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
+|---|---|---|---|---|---|---|
+| 1 | E30079 | 6,5 N 19,5 E | Central African Rep. / Nana-Grebizi | 92,9 | 83,5 | 88,2 |
+| 2 | E30078 | 6,5 N 18,5 E | Central African Rep. / Ouham | 93,2 | 83,2 | 88,2 |
+| 3 | E38385 | 16,5 S 45,5 E | Madagascar / Melaky | 96,5 | 79,9 | 88,2 |
+| 4 | E39563 | 19,5 S 143,5 E | Australia | 94,9 | 81,4 | 88,1 |
+| 5 | E30077 | 6,5 N 17,5 E | Central African Rep. / Ouham | 93,3 | 83,0 | 88,1 |
+| 6 | E42681 | 28,5 S 21,5 E | South Africa / Northern Cape | 93,5 | 82,5 | 88,0 |
+| 7 | E38106 | 15,5 S 126,5 E | Australia | 95,9 | 80,0 | 88,0 |
+| 8 | E44216 | 32,5 S 116,5 E | Australia / Western Australia | 90,2 | 85,7 | 88,0 |
+| 9 | E38744 | 17,5 S 44,5 E | Madagascar / Melaky | 96,8 | 79,1 | 87,9 |
+| 10 | E30080 | 6,5 N 20,5 E | Central African Rep. / Ouaka | 92,5 | 83,4 | 87,9 |
+
+**Paneles solares, después:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E44120 | 32,5 S 20,5 E | South Africa / Western Cape | 86,8 | 78,0 | 82,4 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 2 | E40517 | 22,5 S 17,5 E | Namibia / Khomas | 93,3 | 71,4 | 82,4 | M60006, 76,5 S 66,5 E, Demonax a 68 km |
+| 3 | E37308 | 13,5 S 48,5 E | Madagascar / Diana | 92,1 | 72,7 | 82,4 | M59478, 75,5 S 101,5 O, Boltzmann a 88 km |
+| 4 | E27615 | 13,5 N 75,5 E | India / Karnataka | 90,9 | 73,6 | 82,3 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 5 | E42682 | 28,5 S 22,5 E | South Africa / Northern Cape | 93,0 | 71,4 | 82,2 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+| 6 | E42323 | 27,5 S 23,5 E | South Africa / Northern Cape | 92,9 | 71,3 | 82,1 | M59539, 75,5 S 40,5 O, Casatus a 117 km |
+| 7 | E42683 | 28,5 S 23,5 E | South Africa / Northern Cape | 92,4 | 71,9 | 82,1 | M59539, 75,5 S 40,5 O, Casatus a 117 km |
+| 8 | E27814 | 12,5 N 85,5 O | Nicaragua / Boaco | 91,2 | 73,1 | 82,1 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 9 | E41606 | 25,5 S 26,5 E | South Africa / North-West | 91,6 | 72,6 | 82,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+| 10 | E43042 | 29,5 S 22,5 E | South Africa / Northern Cape | 93,0 | 71,2 | 82,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+
+**Base lunar, antes:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final |
+|---|---|---|---|---|---|---|
+| 1 | E15778 | 46,5 N 118,5 E | China / Inner Mongolia | 36,5 | 87,6 | 62,0 |
+| 2 | E18287 | 39,5 N 107,5 E | China / Inner Mongolia | 38,7 | 85,3 | 62,0 |
+| 3 | E18288 | 39,5 N 108,5 E | China / Inner Mongolia | 38,5 | 85,0 | 61,8 |
+| 4 | E15418 | 47,5 N 118,5 E | Mongolia / East Aimak | 37,6 | 84,6 | 61,1 |
+| 5 | E14109 | 50,5 N 110,5 O | Canada / Alberta | 26,1 | 96,0 | 61,1 |
+| 6 | E18289 | 39,5 N 109,5 E | China / Inner Mongolia | 36,1 | 85,8 | 60,9 |
+| 7 | E18649 | 38,5 N 109,5 E | China / Shaanxi | 35,0 | 86,8 | 60,9 |
+| 8 | E14835 | 48,5 N 104,5 O | United States / Montana | 24,8 | 96,7 | 60,7 |
+| 9 | E14654 | 49,5 N 74,5 E | Kazakhstan / Qaraghandy | 24,3 | 97,2 | 60,7 |
+| 10 | E14699 | 49,5 N 119,5 E | China / Inner Mongolia | 35,2 | 86,1 | 60,7 |
+
+**Base lunar, después:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E19345 | 36,5 N 85,5 E | China / Xinjiang Uygur Zizhiqu | 69,6 | 83,8 | 76,7 | M62859, 84,5 S 39,5 E, Floss a 11 km [Mons Mouton Plateau] |
+| 2 | E19704 | 35,5 N 84,5 E | China | 71,6 | 80,8 | 76,2 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 3 | E19699 | 35,5 N 79,5 E | China | 67,4 | 84,2 | 75,8 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 4 | E19703 | 35,5 N 83,5 E | China | 69,6 | 81,9 | 75,7 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 5 | E18986 | 37,5 N 86,5 E | China / Xinjiang Uygur Zizhiqu | 60,3 | 89,5 | 74,9 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 6 | E19346 | 36,5 N 86,5 E | China | 66,4 | 83,2 | 74,8 | M62859, 84,5 S 39,5 E, Floss a 11 km [Mons Mouton Plateau] |
+| 7 | E19705 | 35,5 N 85,5 E | China | 66,0 | 83,1 | 74,6 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 8 | E19698 | 35,5 N 78,5 E | China | 62,3 | 86,0 | 74,1 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 9 | E41871 | 26,5 S 68,5 O | Argentina | 69,6 | 78,7 | 74,1 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 10 | E19702 | 35,5 N 82,5 E | China | 64,4 | 83,3 | 73,9 | M63217, 85,5 S 37,5 E, Masina a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+
+Como comparación, si el Rover se mandara a Tycho (opción E), el top 10 sería este (Spearman 0,543 con A1; 0/10 en común):
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E15768 | 46,5 N 108,5 E | Mongolia / Govi-Sumber | 100,0 | 99,2 | 99,6 | M51296, 52,5 S 3,5 O, Deluc a 77 km |
+| 2 | E15033 | 48,5 N 93,5 E | Mongolia / Uvs | 100,0 | 99,1 | 99,5 | M50923, 51,5 S 16,5 O, Longomontanus a 119 km |
+| 3 | E16131 | 45,5 N 111,5 E | Mongolia / East Gobi Aymag | 100,0 | 99,1 | 99,5 | M52001, 54,5 S 18,5 O, Clavius a 140 km |
+| 4 | E15767 | 46,5 N 107,5 E | Mongolia / Middle Govi | 100,0 | 98,8 | 99,4 | M51296, 52,5 S 3,5 O, Deluc a 77 km |
+| 5 | E15770 | 46,5 N 110,5 E | Mongolia / Hentiy | 100,0 | 98,7 | 99,4 | M50923, 51,5 S 16,5 O, Longomontanus a 119 km |
+| 6 | E16126 | 45,5 N 106,5 E | Mongolia / Middle Govi | 100,0 | 98,7 | 99,4 | M51296, 52,5 S 3,5 O, Deluc a 77 km |
+| 7 | E15771 | 46,5 N 111,5 E | Mongolia / Suhbaatar | 100,0 | 98,5 | 99,3 | M50923, 51,5 S 16,5 O, Longomontanus a 119 km |
+| 8 | E16132 | 45,5 N 112,5 E | Mongolia / Suhbaatar | 100,0 | 98,3 | 99,2 | M52001, 54,5 S 18,5 O, Clavius a 140 km |
+| 9 | E16431 | 44,5 N 51,5 E | Kazakhstan / Mangghystau | 100,0 | 98,3 | 99,1 | M46241, 38,5 S 18,5 O, Heinsius a 34 km |
+| 10 | E16122 | 45,5 N 102,5 E | Mongolia / OEvoerhangay | 100,0 | 98,3 | 99,1 | M50921, 51,5 S 18,5 O, Longomontanus a 88 km |
+
+### 7. Riesgo ante el jurado
+
+- *"¿Cómo va a parecerse una celda con 0,9° de pendiente a una con 6,2°?"* Respuesta: la similitud compara posiciones relativas dentro de cada cuerpo, no valores. Ambas celdas son un poco más empinadas que la mediana de su cuerpo y de las más frías de su cuerpo. Por eso el panel enseña los valores absolutos de los dos puntos al lado de la similitud.
+- *"¿Por qué el Rover va al polo sur y no a Tycho?"* Respuesta: porque las misiones Artemis van al polo sur; es la decisión del equipo (commit `ff6f1ae`).
+- *"¿Por qué los mismos pesos para las tres misiones?"* Respuesta: los pesos por misión del equipo están escritos por dominios, no por variables. Al traducirlos, la temperatura pasa a pesar entre el 47 % y el 75 % y Base lunar acaba con dos tercios de los puntos en un único gemelo. Lo hemos medido y lo hemos descartado.
+
+### 8. Qué se escribe en ASSUMPTIONS.md y qué se enseña en la web
+
+**ASSUMPTIONS.md** (en inglés, como el resto del fichero), en §0.4:
+
+> "Team lead decision (2026-11-15): `similarity_rule` is set to `zone_twin`. The twin of an Earth point is the single lunar cell of the mission's zone with the smallest weighted z-distance, with the repository's `DEFAULT_WEIGHTS` renormalised over elevation, slope, roughness and temperature (20.00 / 33.33 / 26.67 / 20.00 %), the same for the three missions. Zones: rover and solar, the south-pole zone (lat <= -75, 5,400 one-degree cells; analog_finder.py commit ff6f1ae moved the rover there from Tycho); lunar_base, the 280 one-degree cells touching NASA's nine Artemis candidate landing regions. Mission domain weights (A2, A3a) were evaluated and rejected: they make temperature 47-75 % of the similarity for solar and lunar_base and put 64-66 % of lunar_base points on one twin (docs/SIMILARITY_PROPOSAL.md §3, §4.1)."
+
+**Web** (en inglés):
+
+> "Each Earth point is paired with its lunar twin: the single 1-degree lunar cell, inside the mission's target zone, that holds the most similar relative position on the Moon as the Earth point holds on Earth (slope, roughness, relative elevation and surface temperature, each compared within its own world). A high similarity means 'same place in each world's range', not 'same values': both sets of values are shown side by side."
+
+*Traducción:* "Cada punto de la Tierra se empareja con su gemelo lunar: la celda lunar de 1 grado, dentro de la zona objetivo de la misión, que ocupa en la Luna la posición relativa más parecida a la que el punto ocupa en la Tierra (pendiente, rugosidad, elevación relativa y temperatura de superficie, cada una comparada dentro de su propio mundo). Una similitud alta significa 'mismo lugar dentro del rango de cada mundo', no 'mismos valores': se enseñan los valores de los dos lados."
+
+---
+
+## Decisión 2. Quitar la variable de roca de la similitud
+
+### 1. Qué pasa ahora
+
+- En `analog_finder.py` la variable `rock_or_bare_frac` (fracción de suelo desnudo o roca) está en `DEFAULT_WEIGHTS` con 0,15 (línea 73) y entra en la similitud siempre que tenga algún valor en los dos cuerpos (línea 476).
+- En la tabla lunar real vale **1 en las 64.800 celdas**. Es una definición, no una medida: `real_data/provenance_moon.csv` dice "1 for every cell: the team's variable means exposed (unvegetated) ground; the Moon has none".
+- `normalize_planetary_features` (línea 162) no encuentra variación (rango intercuartílico 0, desviación típica 0), usa escala 1 y da a toda la Luna **z = (1 − 1)/1 = 0**. La variable sigue marcada como válida (línea 178) y conserva su peso: 16,67 % de la similitud cuando el radar falta.
+- En la Tierra es la fracción de suelo desnudo o con vegetación escasa según ESA CCI Land Cover 2020 (clases 200-202 y 150-153). Es una clasificación de cubierta del suelo, no una medida de rocas.
+- El motor ya la quita en las tablas reales: `engine/datasets.json`, `similarity_excluded` (líneas 487-489). La propuesta (A1) también. Lo que falta es que el equipo confirme que la retirada es definitiva.
+
+### 2. El problema
+
+**Cómo produce el sesgo, paso a paso.**
+
+1. Fracción desnuda en las 25.095 celdas de tierra firme: **mediana 0,001**. El 41,2 % de las celdas tiene exactamente el mínimo (0). El 61,3 % tiene 0,01 o menos. Percentil 75: 0,123. Percentil 90: 0,751. Solo el 14,6 % llega a 0,5 o más (el 7,2 % a 0,9 o más).
+2. Escala robusta en la Tierra: 0,0914. Eso da estas z:
+
+| fracción desnuda en la Tierra | z en la Tierra | z de cualquier celda lunar | aporte a la distancia (peso 1/6 × diferencia²) |
+|---|---|---|---|
+| 0 (bosque o cultivo) | −0,01 | 0 | 0,00002 |
+| 0,001 (la mediana) | 0,00 | 0 | 0 |
+| 0,05 | +0,54 | 0 | 0,05 |
+| 0,10 | +1,08 | 0 | 0,20 |
+| 0,30 | +3,27 | 0 | 1,78 |
+| 0,5 o más (desierto) | +4,00 (recortado) | 0 | 2,67 |
+
+3. Como la Luna está en z = 0, la similitud premia a las celdas de la Tierra que están en la mediana terrestre, es decir, **con vegetación**. Una celda desértica (z = +4) no puede pasar de una similitud de **47,96** aunque las otras cuatro variables coincidan exactamente. El 17,4 % de la tierra firme está recortada en z = +4.
+4. **Lo que no hace:** no cambia ningún gemelo. Como todas las celdas lunares tienen el mismo z = 0, el término de roca suma la misma cantidad a todos los candidatos y el más cercano sigue siendo el mismo. Cálculo de hoy: **0 gemelos cambian** en las tres misiones si se deja la roca. Lo que cambia es la similitud y, con ella, el ranking.
+
+Similitud mediana de los puntos del Rover según su fracción desnuda (cálculo de hoy):
+
+| fracción desnuda | puntos | similitud mediana con roca | sin roca (A1) |
+|---|---|---|---|
+| < 0,01 | 5.332 | 79,1 | 77,4 |
+| 0,01-0,1 | 1.766 | 83,5 | 86,2 |
+| 0,1-0,5 | 1.793 | 59,8 | 87,9 |
+| ≥ 0,5 | 1.446 | 46,7 | 80,1 |
+
+Con la roca dentro, el suelo más desnudo, que es el más lunar, es el que peor puntúa. Es lo contrario de lo que se busca.
+
+### 3. Un ejemplo concreto
+
+Desierto de Atacama, núcleo de Yungay, celda **E41150 (24,5 S 69,5 O, Chile)**: fracción desnuda 0,988, z = +4.
+
+| misión | con roca: similitud / puesto | sin roca (A1): similitud / puesto | sin roca, reparto a partes iguales: similitud / puesto | gemelo (el mismo en los tres casos) |
+|---|---|---|---|---|
+| Rover | 45,1 / 7.822 de 10.337 | 71,3 / 2.529 | 70,8 / 2.572 | M60256, 77,5 S 43,5 O, Casatus a 176 km |
+| Paneles solares | 45,1 / 15.418 de 18.777 | 71,3 / 3.535 | 70,8 / 3.568 | el mismo |
+| Base lunar | 44,2 / 109 de 2.419 | 67,7 / 41 | 67,2 / 46 | M62486, 83,5 S 26,5 E, Mons Mouton a 36 km (región Mons Mouton Plateau) |
+
+En el otro extremo, una pradera de Alberta (E12303, 55,5 N 116,5 O, fracción desnuda 0,0009) era el número 1 del Rover con la regla de hoy.
+
+### 4. Las opciones
+
+**Mantener o quitar:**
+
+| opción | a favor | en contra |
+|---|---|---|
+| **Quitarla (decidido, falta confirmar)** | Elimina un sesgo hacia la vegetación demostrado con números. Los gemelos no cambian. | La similitud tiene una variable menos: no queda ninguna de material. |
+| Mantenerla | Ninguno defendible. | Castiga los desiertos. El top 10 del Rover con roca son celdas de la capa de hielo de Groenlandia con fracción desnuda 0-0,006 (hielo permanente, clase CCI 220, que no cuenta como desnudo). |
+| Sustituirla por la abundancia de rocas de Diviner (`rock_abundance_frac`) | Es una medida real de rocas en la Luna. | Es otra magnitud y solo cubre de 60 S a 60 N: no hay dato en ninguna de las dos zonas objetivo (propuesta, §2.2). |
+
+**Cómo repartir su 0,15:**
+
+| reparto | pendiente | rugosidad | elevación relativa | temperatura | gemelos que cambian frente al proporcional (Rover / Paneles / Base) | top 10 compartido |
+|---|---|---|---|---|---|---|
+| **Proporcional (el del motor y A1)** | 33,33 % | 26,67 % | 20,00 % | 20,00 % | referencia | referencia |
+| A partes iguales (0,0375 a cada una) | 31,94 % | 26,39 % | 20,83 % | 20,83 % | 327 / 422 / 81 (3,2 % / 2,2 % / 3,3 %) | 10/10, 9/10, 10/10 |
+| Todo al relieve (proporcional entre pendiente, rugosidad y elevación) | 34,72 % | 27,78 % | 20,83 % | 16,67 % | 1.194 / 1.607 / 314 | 9/10, 8/10, 9/10 |
+
+Recuerda que en las tablas reales tampoco hay radar: su 0,10 también se reparte, en proporción, en los tres casos.
+
+### 5. Recomendación y por qué
+
+**La retirada es definitiva; el reparto, proporcional.** Mantenerla castiga justo el terreno que más se parece a la Luna. El reparto proporcional es el que ya usan el motor y la propuesta, conserva el orden de los pesos del equipo y difiere del reparto a partes iguales en menos del 3,3 % de los gemelos, sin tocar el top 10 del Rover ni el de Base lunar. **Sí se sigue enseñando como dato informativo:** el motor la exporta marcada "part_of_similarity: false" (`engine/export_v2.py` línea 573, en el estado de trabajo de hoy y `datasets.json` línea 477). Lo que no he podido confirmar es que el panel de la web la pinte: en `app/src` no encuentro ninguna referencia a la variable. Hay que comprobarlo en la web.
+
+### 6. Qué cambia en los resultados si se acepta
+
+Frente a "dejarla dentro": **0 gemelos cambian** en las tres misiones. Lo que cambia es el orden. Spearman del final con roca frente a sin roca: Rover 0,362, Paneles 0,666, Base lunar 0,550. Top 10 en común: Rover 0/10, Paneles 8/10, Base lunar 0/10. El "después" son los top 10 A1 de la decisión 1. El "antes" (con roca) es este:
+
+**Rover con roca** (fracción desnuda del top 10: 0-0,006; sin roca: 0,72-1,00):
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E4474 | 77,5 N 25,5 O | Greenland | 75,1 | 99,1 | 87,1 | M60586, 78,5 S 73,5 O, Drygalski a 85 km |
+| 2 | E3362 | 80,5 N 57,5 O | Greenland | 75,0 | 99,0 | 87,0 | M60275, 77,5 S 24,5 O, Newton a 56 km |
+| 3 | E4111 | 78,5 N 28,5 O | Greenland | 75,0 | 98,5 | 86,7 | M59861, 76,5 S 78,5 O, Le Gentil a 70 km |
+| 4 | E9137 | 64,5 N 42,5 O | Greenland | 75,0 | 98,4 | 86,7 | M60295, 77,5 S 4,5 O, Short a 93 km |
+| 5 | E4803 | 76,5 N 56,5 O | Greenland | 75,0 | 98,3 | 86,7 | M61054, 79,5 S 34,5 E, Schomberger a 106 km |
+| 6 | E7332 | 69,5 N 47,5 O | Greenland | 75,0 | 98,2 | 86,6 | M61054, 79,5 S 34,5 E, Schomberger a 106 km |
+| 7 | E5163 | 75,5 N 56,5 O | Greenland | 75,0 | 98,2 | 86,6 | M60384, 77,5 S 84,5 E, Hale a 115 km |
+| 8 | E3017 | 81,5 N 42,5 O | Greenland | 75,0 | 97,9 | 86,4 | M60690, 78,5 S 30,5 E, Schomberger a 68 km |
+| 9 | E4075 | 78,5 N 64,5 O | Greenland | 75,0 | 97,9 | 86,4 | M59861, 76,5 S 78,5 O, Le Gentil a 70 km |
+| 10 | E9496 | 63,5 N 43,5 O | Greenland | 74,8 | 97,8 | 86,3 | M60260, 77,5 S 39,5 O, Newton a 152 km |
+
+**Paneles solares con roca:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E40517 | 22,5 S 17,5 E | Namibia / Khomas | 93,3 | 73,6 | 83,4 | M60006, 76,5 S 66,5 E, Demonax a 68 km |
+| 2 | E37308 | 13,5 S 48,5 E | Madagascar / Diana | 92,1 | 74,7 | 83,4 | M59478, 75,5 S 101,5 O, Boltzmann a 88 km |
+| 3 | E42682 | 28,5 S 22,5 E | South Africa / Northern Cape | 93,0 | 73,6 | 83,3 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+| 4 | E27615 | 13,5 N 75,5 E | India / Karnataka | 90,9 | 75,6 | 83,3 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 5 | E42323 | 27,5 S 23,5 E | South Africa / Northern Cape | 92,9 | 73,5 | 83,2 | M59539, 75,5 S 40,5 O, Casatus a 117 km |
+| 6 | E38385 | 16,5 S 45,5 E | Madagascar / Melaky | 96,5 | 69,9 | 83,2 | M59736, 75,5 S 156,5 E, Schrodinger a 184 km |
+| 7 | E42683 | 28,5 S 23,5 E | South Africa / Northern Cape | 92,4 | 74,0 | 83,2 | M59539, 75,5 S 40,5 O, Casatus a 117 km |
+| 8 | E41606 | 25,5 S 26,5 E | South Africa / North-West | 91,6 | 74,7 | 83,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+| 9 | E27814 | 12,5 N 85,5 O | Nicaragua / Boaco | 91,2 | 75,1 | 83,1 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 10 | E42322 | 27,5 S 22,5 E | South Africa / Northern Cape | 93,6 | 72,6 | 83,1 | M59636, 75,5 S 56,5 E, Demonax a 81 km |
+
+**Base lunar con roca** (fracción desnuda del top 10: 0,003-0,024; sin roca: 0,50-0,93):
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E18639 | 38,5 N 99,5 E | China / Qinghai Sheng | 42,0 | 90,4 | 66,2 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 2 | E21509 | 30,5 N 89,5 E | China / Tibet Autonomous Region | 49,5 | 81,2 | 65,3 | M63217, 85,5 S 37,5 E, Masina a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 3 | E20432 | 33,5 N 92,5 E | China | 47,9 | 82,2 | 65,1 | M62859, 84,5 S 39,5 E, Floss a 11 km [Mons Mouton Plateau] |
+| 4 | E20433 | 33,5 N 93,5 E | China | 49,0 | 80,4 | 64,7 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 5 | E20072 | 34,5 N 92,5 E | China | 48,1 | 81,2 | 64,6 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 6 | E22231 | 28,5 N 91,5 E | China / Tibet Autonomous Region | 44,0 | 85,2 | 64,6 | M63218, 85,5 S 38,5 E, Masina a 15 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 7 | E21151 | 31,5 N 91,5 E | China / Tibet Autonomous Region | 48,2 | 81,0 | 64,6 | M62859, 84,5 S 39,5 E, Floss a 11 km [Mons Mouton Plateau] |
+| 8 | E20791 | 32,5 N 91,5 E | China / Tibet Autonomous Region | 48,4 | 80,4 | 64,4 | M62858, 84,5 S 38,5 E, Floss a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+| 9 | E20076 | 34,5 N 96,5 E | China / Qinghai Sheng | 44,9 | 83,9 | 64,4 | M62859, 84,5 S 39,5 E, Floss a 11 km [Mons Mouton Plateau] |
+| 10 | E20075 | 34,5 N 95,5 E | China / Qinghai Sheng | 47,8 | 80,8 | 64,3 | M63217, 85,5 S 37,5 E, Masina a 13 km [Mons Mouton Plateau, Nobile Rim 1] |
+
+### 7. Riesgo ante el jurado
+
+- *"¿Por qué no usáis la composición del suelo?"* Respuesta: en la Luna no tenemos una variable de material comparable con la de la Tierra. La que había era 1 en toda la Luna por definición y, normalizada, premiaba la vegetación. La quitamos y la seguimos enseñando como dato.
+- *"Entonces vuestra similitud es solo relieve y temperatura."* Correcto, y lo decimos.
+
+### 8. Qué se escribe en ASSUMPTIONS.md y qué se enseña en la web
+
+**ASSUMPTIONS.md**, en §0.3, al final del párrafo "The rock variable on the real tables":
+
+> "Confirmed by the team lead on 2026-11-15 as final. With the variable kept, every lunar cell has z = 0 and an Earth cell with bare fraction >= 0.5 gets z = +4, so no desert cell could exceed a similarity of 47.96; the twins would not change (the term is the same for every lunar candidate), only the ranking. The weight is redistributed in proportion (an equal split changes 2-3 % of twins and no rover or lunar_base top-10 cell)."
+
+**Web:**
+
+> "Bare-ground fraction is shown for information only. It is not part of the similarity: on the Moon it is 1 everywhere by definition, so it cannot tell lunar places apart."
+
+*Traducción:* "La fracción de suelo desnudo se muestra solo como información. No forma parte de la similitud: en la Luna vale 1 en todas partes por definición, así que no distingue unos lugares lunares de otros."
+
+---
+
+## Decisión 3. Celdas antárticas sin temperatura
+
+### 1. Qué pasa ahora
+
+**Por qué no tienen temperatura.** La temperatura de la Tierra (`temp_k`) es la temperatura media anual de la **superficie terrestre** con cielo despejado (media de día y noche) de la climatología MODIS de OpenLandMap (Hengl 2018, doi:10.5281/zenodo.1420115, derivada de MOD11A2 v006, 2000-2017, 1 km). Según `real_data/provenance_earth.csv`, cubre de **87,37 N a unos 62 S: no incluye la Antártida**.
+
+**Qué hace el código con el hueco.** Hay dos comportamientos distintos en el repositorio:
+
+- `analog_finder.py`, línea 166: `z = np.where(np.isfinite(vals), (vals - med) / scale, 0.0)`. Un valor que falta recibe z = 0, es decir, **la mediana de la Tierra: 284,27 K** (unos 11 °C; escala 21,49 K). La propuesta calculó sus cifras así.
+- El motor (`engine/repo_similarity.py`, docstring de las líneas 31-36 y función `sq_distance`, líneas 153-175) ya hace otra cosa: si falta un valor, quita esa variable de la distancia de ese par y renormaliza el resto ("ignorar y renormalizar"). Comprobación cruzada: con este tratamiento salen hoy 744 gemelos distintos en el Rover (el más compartido, 895 puntos) y 721 en Paneles (3.047). Son exactamente las cifras de la vista previa `zone_twin` del motor en `ASSUMPTIONS.md` §0.7. No he ejecutado el motor; la coincidencia sale de comparar mis resultados con esas cifras.
+
+**Cuántas celdas son.** De las 25.095 celdas de tierra firme, **6.578** no tienen temperatura. 6.558 están al sur de 60 S. De las 6.565 celdas de tierra al sur de 60 S, solo 7 tienen dato. Las otras 20 son tiras costeras o islotes con menos del 2 % de tierra, que no pasan la puerta `mask_fraction >= 0,3` (propuesta, §2.2).
+
+**Puntos clasificados afectados, por misión:**
+
+| misión | puntos clasificados | sin temperatura | % |
+|---|---|---|---|
+| Rover | 10.337 | 1.156 (todos al sur de 60 S) | 11,2 % |
+| Paneles solares | 18.777 | 6.060 (todos al sur de 60 S) | 32,3 % |
+| Base lunar | 2.419 | 0 | 0 % |
+
+**Por qué Base lunar no se ve afectada:** su bloque (copia de `thermal`) exige `lst_diurnal_amp_k` (`require_present`), la amplitud térmica diaria. Sale del mismo producto MODIS, así que tampoco existe en la Antártida. El 99,9 % de las celdas antárticas de tierra falla con "lst_diurnal_amp_k sin dato" y ninguna pasa.
+
+### 2. El problema
+
+Con z = 0, una celda del interior antártico se compara con la Luna como si estuviera a 284 K, una temperatura templada. En el Rover, los 1.156 puntos afectados reciben una similitud de 72,3 a 83,8 (mediana 78,3) y gemelos elegidos para una temperatura falsa.
+
+**Cuántas están hoy en un top 10: ninguna.** Ninguna de estas celdas está en el top 10, ni en el top 100, de ninguna misión, ni con la regla de hoy en el motor (Luna media) ni con A1. El daño está en los paneles de esos puntos (su gemelo y su similitud), no en lo que se ve primero.
+
+### 3. Un ejemplo concreto
+
+Estación Concordia (Dome C), celda **E59703 (75,5 S 123,5 E, Antártida)**, Paneles solares, idoneidad 55,7. Valores: elevación relativa +2.544 m, pendiente 0,04°, rugosidad 1,1 m, sin temperatura.
+
+| tratamiento | z de la temperatura | similitud | puesto (de 18.777) | gemelo |
+|---|---|---|---|---|
+| z = 0 (como `analog_finder`; cifras de la propuesta) | 0 (= 284,3 K) | 74,9 | 14.587 | M59522, 75,5 S 57,5 O, Le Gentil a 150 km (158,9 K) |
+| Ignorar y renormalizar (como el motor) | no se usa | 90,2 | 14.949 | M62845, 84,5 S 25,5 E, Mons Mouton a 16 km, región Mons Mouton Plateau (129,3 K) |
+| Excluir la celda | — | — | fuera del ranking | — |
+| Otra fuente: NASA POWER, temperatura de piel anual en Dome C | −3,10 (217,7 K) | no calculado | no calculado | no calculado |
+
+El puesto baja aunque la similitud suba, porque los otros 6.059 puntos antárticos también suben.
+
+### 4. Las opciones
+
+**"Ignorar y renormalizar"** significa: en esas celdas la distancia se calcula solo con pendiente, rugosidad y elevación relativa, y sus pesos se reescalan para que sumen 1: **pendiente 41,67 %, rugosidad 33,33 %, elevación relativa 25,00 %**. Es lo mismo que hace `mission_scoring.apply_soft` (`tierra luna/mission_scoring.py`, líneas 117-134) cuando falta un criterio de la idoneidad: suma peso × utilidad solo de las variables con dato (líneas 131-132) y divide entre el peso con dato (línea 134).
+
+| opción | qué pasa (cálculo de hoy) | a favor | en contra |
+|---|---|---|---|
+| Dejar z = 0 | Lo de la propuesta. | Es la fórmula literal del repositorio. | Trata la Antártida como templada. No se puede defender. |
+| **Ignorar y renormalizar** | Cambian de gemelo 1.123 de los 1.156 puntos del Rover y 6.023 de los 6.060 de Paneles. Su similitud mediana sube de 78,3 a 98,0 (Rover) y de 77,1 a 96,1 (Paneles). El mejor puesto pasa de 4.222 a 888 (Rover) y de 12.459 a 3.881 (Paneles). Top 10 igual (10/10); ninguno entra en el top 100. Spearman del final con z = 0: 0,908 (Rover), 0,784 (Paneles). Gemelos distintos: 305 → 744 (Rover) y 186 → 721 (Paneles). | Mismo trato que la idoneidad. Ya está en el motor: cero trabajo. No inventa ningún valor. | Con tres variables es más fácil parecerse: su similitud sale **inflada** (mediana 98,0, frente a 79,1 de todos los puntos del Rover). Hay que marcarlo. |
+| Excluir esas celdas | Quedan 9.181 puntos en el Rover y 12.717 en Paneles. Top 10 igual. | Sencillo y honesto. | Quita la Antártida, que es el análogo polar más evidente, y el 32,3 % de los puntos de Paneles. Concordia desaparece. |
+| Otra fuente de temperatura | Ver abajo. Solo probada en 5 puntos. | Rellenaría el hueco con un dato real. | Es otra magnitud. Unas 6.558 consultas. No cabe antes de la entrega. |
+| Marcarlas en la web | Se combina con cualquiera de las anteriores. | Transparente. | Por sí sola no arregla el número. |
+
+**Otra fuente sin cuenta: NASA POWER.** Lo he comprobado hoy.
+
+- API de climatología por punto, sin clave: `https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=TS&community=RE&longitude=123.35&latitude=-75.10&format=JSON`
+- Variable `TS`, "Earth Skin Temperature", en °C. Fuente MERRA-2. Climatología 2001-2025 (lo dice la cabecera de la respuesta). Resolución nativa 0,5° × 0,625°. Datos de NASA, de uso libre.
+- En Dome C devuelve −55,45 °C (217,7 K). La temperatura del aire a 2 m (`T2M`) en el mismo punto: −51,18 °C.
+- **No es la misma magnitud** que la que usamos en el resto del mundo. Nuestra temperatura es la de superficie medida por satélite MODIS con cielo despejado. `TS` es la temperatura de piel de un reanálisis (un modelo), con todo tipo de cielo. Comparadas en tres celdas que tienen las dos:
+
+| celda | NASA POWER TS | nuestra temperatura | diferencia |
+|---|---|---|---|
+| 75,5 N 91,5 O (Ártico canadiense) | 258,7 K | 253,5 K | +5,2 K |
+| 24,5 S 69,5 O (Atacama) | 288,9 K | 296,0 K | −7,1 K |
+| 62,5 N 129,5 E (Yakutia) | 263,6 K | 262,3 K | +1,3 K |
+
+  Tres puntos no son una calibración. Mezclar las dos fuentes metería un sesgo de varios kelvin solo en la Antártida.
+- Con cuenta: MODIS MOD11C3 o MOD11A2 (LP DAAC; la descarga pide una cuenta Earthdata Login) cubre la Antártida y sí es la misma magnitud. ERA5 (temperatura de piel, Copernicus Climate Data Store) pide una cuenta CDS. No los he descargado hoy; lo de que piden cuenta lo sé por sus páginas de acceso, no lo he comprobado en esta tarea.
+
+### 5. Recomendación y por qué
+
+**Ignorar la variable en esas celdas y renormalizar** (lo del director), **y marcar esos puntos en la web.** Es el mismo trato que da `mission_scoring` a un dato que falta, no inventa nada, ya está en el motor y no mueve ningún top 10. Mis números añaden un matiz: con tres variables la similitud de esos puntos sale más alta (mediana 98,0 frente a 79,1), así que la marca en el panel no es opcional.
+
+### 6. Qué cambia en los resultados si se acepta
+
+Frente a las cifras de la propuesta (z = 0): cambian de gemelo **1.123 pares del Rover y 6.023 de Paneles**; Base lunar, 0. **El top 10 de las tres misiones no cambia** (10/10 en común) y ningún punto antártico entra en el top 100. Las cifras de reparto de gemelos de la propuesta pasan a ser: Rover 744 gemelos distintos (el mayor, M59479 Boltzmann, 895 puntos, 8,7 %; la mitad de los puntos en 12 gemelos); Paneles 721 (M59734 Schrödinger, 3.047, 16,2 %; la mitad en 7). Estas son las cifras que hay que citar, porque son las del motor.
+
+### 7. Riesgo ante el jurado
+
+- *"¿Qué temperatura usáis en la Antártida?"* Respuesta: ninguna; el producto de satélite que usamos no la cubre. En esos puntos el gemelo se elige solo por relieve, y el panel lo dice.
+- *"Entonces esos pares se parecen demasiado."* Sí: con una variable menos es más fácil parecerse. Por eso los marcamos, y ninguno está entre los 100 primeros.
+
+### 8. Qué se escribe en ASSUMPTIONS.md y qué se enseña en la web
+
+**ASSUMPTIONS.md**, en §0.3, a continuación de "One departure..." (o como punto nuevo):
+
+> "Earth temp_k is missing on 6,578 of the 25,095 land cells (6,558 south of 60 S: the OpenLandMap MODIS LST climatology stops at about 62 S). Team lead decision (2026-11-15): for those cells temperature is left out of the distance and the remaining weights are renormalised (slope 41.67 %, roughness 33.33 %, relative elevation 25.00 %), the same rule mission_scoring.apply_soft applies to a missing soft criterion; the repository's analog_finder would set z = 0 (the Earth median, 284.27 K). It affects 1,156 rover and 6,060 solar ranked points and no lunar_base point (its required diurnal amplitude is also missing there); none is in any top 100. Their similarity is computed on three variables and is therefore higher (rover median 98.0 against 79.1 for all points); the app marks them. NASA POWER skin temperature (MERRA-2, keyless) covers Antarctica but is a different quantity (all-sky reanalysis skin temperature, not clear-sky MODIS LST) and was not used."
+
+**Web**, en el panel de esos puntos:
+
+> "No surface temperature here: the satellite climatology we use does not cover Antarctica. This twin was chosen on relief only (slope, roughness, relative elevation), so its similarity is not comparable with points that include temperature."
+
+*Traducción:* "Aquí no hay temperatura de superficie: la climatología de satélite que usamos no cubre la Antártida. Este gemelo se ha elegido solo por el relieve (pendiente, rugosidad, elevación relativa), así que su similitud no es comparable con la de los puntos que incluyen temperatura."
+
+---
+
+## Decisión 4. Concentración de gemelos en Base lunar
+
+### 1. Qué pasa ahora
+
+La regla da a cada punto su gemelo más cercano, sin límite de cuántos puntos pueden compartir uno (`engine/repo_similarity.py`, `best_twins`, líneas 185-210; propuesta, regla A1). En Base lunar hay 2.419 puntos y 280 celdas candidatas, pero solo se usan 48. **Tres celdas se llevan el 54,1 % de los puntos (1.308):**
+
+| celda lunar | lat, lon | nombre IAU más cercano | región NASA | puntos | % |
+|---|---|---|---|---|---|
+| M62515 | 83,5 S 55,5 E | Wapowski, a 14 km | Nobile Rim 2 | 671 | 27,7 % |
+| M63665 | 86,5 S 125,5 E | Slater, a 52 km | Slater Plain | 332 | 13,7 % |
+| M64191 | 88,5 S 68,5 O | de Gerlache, a 16 km | de Gerlache Rim 2 | 305 | 12,6 % |
+
+### 2. El problema
+
+**Por qué pasa.** No es solo que la zona sea pequeña, y no es una celda pegada al borde del rango en todas las variables. Es una combinación de dos cosas:
+
+1. **Los puntos de la Tierra están fuera de la zona en temperatura.** El 99,96 % de los puntos de Base lunar tiene un z de temperatura mayor que la celda más cálida de la zona (z máximo de la zona −0,94; mediana de los puntos de la Tierra +0,21). La temperatura empuja a todos en la misma dirección: hacia las celdas menos frías.
+2. **La zona es abrupta y la Tierra no.** Medianas de z en las 280 celdas: pendiente +1,43, rugosidad +1,11. Medianas de los puntos de la Tierra: +0,43 y +0,42. Muy pocas celdas de la zona tienen un relieve "normal" y además no son de las más frías. Esas pocas ganan siempre.
+
+Valores y posición de las tres celdas dentro de la zona (percentil 100 = el valor más alto de las 280):
+
+| celda | elevación relativa | pendiente | rugosidad | temperatura | z (elev / pend / rug / temp) | percentil en la zona (elev / pend / rug / temp) |
+|---|---|---|---|---|---|---|
+| M62515 Wapowski | +849 m | 5,1° | 124 m | 138,1 K | +0,78 / +0,04 / −0,39 / −1,84 | 50 / 17 / 7 / 73 |
+| M63665 Slater | −1.302 m | 5,8° | 155 m | 134,6 K | −0,44 / +0,28 / −0,05 / −1,96 | 10 / 23 / 16 / 64 |
+| M64191 de Gerlache | +1.047 m | 9,8° | 279 m | 155,2 K | +0,89 / +1,51 / +1,29 / −1,32 | 54 / 52 / 54 / 95 |
+
+M62515 es de las celdas más suaves de la zona (rugosidad en el percentil 7) con una altura media y una temperatura de las menos frías: es el mejor compromiso para un punto de la Tierra "normal". En Rover y Paneles sí hay una celda en el borde: M59479 (Boltzmann, 75,5 S 100,5 O) es **la celda más cálida** de toda la zona del polo sur (z −0,79 = máximo de la zona), y el 76,3 % de los puntos del Rover y el 92,1 % de los de Paneles son más cálidos que ella.
+
+**¿Pasa también en Rover y Paneles?** Sí, en menor medida (regla A1 con z = 0; propuesta §3 y cálculo de hoy):
+
+| misión | puntos | gemelos distintos | % del primero | de los 3 primeros | de los 10 primeros | gemelos que reúnen la mitad |
+|---|---|---|---|---|---|---|
+| Rover | 10.337 | 305 | 9,2 % | 24,1 % | 52,4 % | 10 |
+| Paneles solares | 18.777 | 186 | 16,8 % | 37,8 % | 67,9 % | 6 |
+| Base lunar | 2.419 | 48 | 27,7 % | 54,1 % | 76,5 % | 3 |
+| Rover, como el motor (decisión 3) | 10.337 | 744 | 8,7 % | 22,4 % | 47,0 % | 12 |
+| Paneles, como el motor | 18.777 | 721 | 16,2 % | 34,5 % | 57,2 % | 7 |
+
+### 3. Un ejemplo concreto
+
+Atacama, núcleo de Yungay (E41150, 24,5 S 69,5 O), Base lunar, idoneidad 73,7. Sus tres gemelos más parecidos:
+
+| orden | celda | lugar | región NASA | similitud |
+|---|---|---|---|---|
+| 1 | M62486 | 83,5 S 26,5 E, Mons Mouton a 36 km | Mons Mouton Plateau | 67,7 |
+| 2 | M62488 | 83,5 S 28,5 E, Mons Mouton a 34 km | Mons Mouton Plateau | 67,0 |
+| 3 | M64189 | 88,5 S 70,5 O, de Gerlache a 14 km | de Gerlache Rim 2 | 67,0 |
+
+Para el número 1 de Base lunar (E19345, 36,5 N 85,5 E, Xinjiang): Floss 83,8, Floss (la celda vecina) 77,8, Masina 76,0, todas en Mons Mouton Plateau.
+
+### 4. Las opciones
+
+| opción | qué produce (cálculo de hoy, Base lunar) | a favor | en contra |
+|---|---|---|---|
+| **Aceptarlo y enseñar cuántos puntos comparten cada gemelo** | Nada cambia. | Honesto. El motor ya exporta los puntos de cada gemelo (`twins.json`, `ASSUMPTIONS.md` §0.4). | El usuario ve el mismo gemelo muchas veces. |
+| Límite del 5 % por gemelo (121 puntos) | Reasignados 1.021 puntos (42,2 %). Pierden una mediana de 1,26 puntos de similitud (máximo 2,68). 55 gemelos; la mitad de los puntos en 11. Top 10 igual. | Reparte. | El gemelo deja de ser "el más parecido" para el 42 % de los puntos, y el resultado depende del orden de asignación. Hay que explicar una regla artificial. |
+| Límite del 10 % (242 puntos) | Reasignados 624 (25,8 %). Pérdida mediana 1,00 (máximo 2,35). 52 gemelos; la mitad en 6. Top 10 igual. | Menos intrusivo. | Mismos problemas, algo menores. |
+| Enseñar los tres gemelos más parecidos | El 2.º está a una mediana de 0,78 puntos de similitud del 1.º y el 3.º a 1,27 (percentil 90: 3,75). El 2.º está a una mediana de 13,7 km del 1.º (el 58,5 % a 45 km o menos) y el 3.º a 33,0 km. Entre los tres primeros de todos los puntos aparecen 75 celdas distintas. | Muestra que el gemelo no es único. | En Base lunar el 2.º y el 3.º suelen ser la celda de al lado: aportan poco. Más trabajo en la web. |
+
+En Rover y Paneles los tres primeros están más separados: el 2.º, a una mediana de 250 km (Rover) y 121 km (Paneles) del 1.º; el 3.º, a 344 y 431 km. Las diferencias de similitud son parecidas: 0,63 y 1,18 (Rover), 0,60 y 1,14 (Paneles).
+
+### 5. Recomendación y por qué
+
+**Aceptarlo y enseñar cuántos puntos comparten cada gemelo** (lo del director). Un límite cambia el gemelo de entre el 26 % y el 42 % de los puntos para ganar poco (no toca el top 10) y añade una regla difícil de defender. Los tres gemelos de Base lunar suelen ser celdas vecinas, así que enseñarlos no cambia el mensaje. La concentración es una consecuencia real de comparar la Tierra con una zona pequeña, fría y abrupta, y se puede contar tal cual.
+
+### 6. Qué cambia en los resultados si se acepta
+
+Nada: 0 gemelos cambian y los tres top 10 son los de la decisión 1. Solo se añade el recuento en el panel.
+
+### 7. Riesgo ante el jurado
+
+- *"¿Por qué 671 puntos de la Tierra tienen el mismo gemelo?"* Respuesta: porque la zona de Base lunar son 280 celdas de un terreno muy abrupto y frío; casi todos los puntos de la Tierra son más cálidos que cualquiera de ellas, y la celda cerca de Wapowski (Nobile Rim 2) es de las pocas suaves y de las menos frías. Lo enseñamos con su recuento.
+- *"¿No es el gemelo arbitrario?"* La segunda opción suele estar a menos de un punto de similitud y a unos 14 km: el mensaje ("tu sitio se parece a esta zona de Mons Mouton / Nobile") no depende de esa elección.
+
+### 8. Qué se escribe en ASSUMPTIONS.md y qué se enseña en la web
+
+**ASSUMPTIONS.md**, en §0.7:
+
+> "Twin concentration is accepted (team lead decision, 2026-11-15) and shown in the app. lunar_base: 48 of the 280 zone cells are used; three hold 54.1 % of the 2,419 points (M62515 near Wapowski, Nobile Rim 2, 27.7 %; M63665 near Slater, Slater Plain, 13.7 %; M64191 near de Gerlache, de Gerlache Rim 2, 12.6 %). Cause: 99.96 % of the Earth points are warmer than the warmest zone cell, and the zone is rugged (median slope z +1.43 against +0.43 on Earth), so the few gentle, least-cold cells win. A cap of 5 % per twin would reassign 1,021 points for a median loss of 1.26 similarity points and change no top-10 cell; it was rejected."
+
+**Web**, junto al gemelo:
+
+> "This lunar twin is shared by N Earth points (X % of the ranked points for this mission). The lunar base zone is small (280 cells), cold and rugged, so a few gentle cells are the best match for most places on Earth."
+
+*Traducción:* "Este gemelo lunar lo comparten N puntos de la Tierra (X % de los puntos clasificados de esta misión). La zona de la base lunar es pequeña (280 celdas), fría y abrupta, así que unas pocas celdas suaves son la mejor coincidencia para la mayoría de los lugares de la Tierra."
+
+---
+
+## Decisión 5. Paneles solares frente al polo sur
+
+### 1. Qué pasa ahora
+
+- **La idoneidad** (`mission_scoring.json`, bloque `solar`) premia el sol: irradiancia (35 %, de 2,5 a 6 kWh/m²/día), Sol alto (15 %), poco tiempo de Sol rasante (15 %), poca pendiente (15 %), poca amplitud térmica (10 %) y poca rugosidad (10 %). Filtros duros: irradiancia ≥ 2,5, pendiente ≤ 15°, altura máxima del Sol ≥ 10°, Sol rasante ≤ 25 % del día, no sobre agua.
+- **La similitud** compara el punto con la zona lunar del polo sur (latitud ≤ 75 S) usando solo relieve y temperatura. **No hay ninguna variable de iluminación en la similitud.**
+- El gemelo, por tanto, se elige por relieve y temperatura. Y la zona del polo sur es la parte más fría de la Luna.
+
+### 2. El problema
+
+**Por qué la correlación es −0,68** (Spearman entre similitud e idoneidad de los 18.777 puntos; cálculo de hoy: −0,681). Correlación de cada variable de la Tierra con una y con otra:
+
+| variable de la Tierra | con la idoneidad | con la similitud |
+|---|---|---|
+| temperatura | +0,929 | **−0,980** |
+| irradiancia | +0,874 | −0,812 |
+| latitud (en valor absoluto) | −0,857 | +0,537 |
+| elevación relativa | −0,390 | +0,046 |
+| pendiente | +0,019 | +0,240 |
+| rugosidad | +0,078 | +0,209 |
+
+La idoneidad sube con el calor y el sol. La similitud baja con el calor, porque los gemelos son celdas polares frías. Por tercios de idoneidad: temperatura mediana 263,3 / 278,7 / 298,2 K; similitud mediana 77,7 / 79,9 / 68,9. Los mejores sitios para paneles son los que peor se parecen a su gemelo. En el top 10 la diferencia de temperatura con el gemelo es de 120-135 K (propuesta, §3.2); la mediana de todos los pares, 126,3 K.
+
+**¿Hay variables de iluminación lunar en nuestros datos?** Sí, en la tabla lunar real, pero ninguna tiene una pareja medida en la Tierra:
+
+| variable | qué es | nivel | cobertura | en la zona del polo sur (5.400 celdas) |
+|---|---|---|---|---|
+| `illum_frac` | fracción media del tiempo en que el Sol ilumina el suelo, de los mapas de iluminación de LOLA (Mazarico et al. 2011, AVGVISIB, 240 m), promediada sobre la celda | DERIVED_LOLA_TOPOGRAPHY desde 65° hacia el polo (18.000 celdas); en el resto, DERIVED_FLAT_GEOMETRY (geometría con horizonte plano, 46.800 celdas) | 64.800 celdas | mediana 0,315; percentil 90: 0,409; máximo 0,474. El promedio por celda diluye los picos casi siempre iluminados |
+| `irradiance_kwh_m2_day` | energía solar diaria sobre superficie horizontal (constante solar 1.361 W/m² × geometría; con `illum_frac` de LOLA donde existe) | DERIVED | 64.800 | mediana 0,84; máximo 2,475. **Ninguna celda del polo sur llega al filtro solar de 2,5** |
+| `sun_elev_max_deg` | altura máxima del Sol, fórmula de la latitud con horizonte plano | DERIVED | 64.800 | solo 15 valores distintos (2,04-16,04°): es la latitud |
+| `sun_low_frac_0_5deg` | fracción del día con el Sol entre 0 y 5° | DERIVED | 64.800 | 13 valores (0,227-1): también es la latitud |
+
+En la Tierra solo hay irradiancia (WorldClim, bajo la atmósfera) y las dos fórmulas de latitud. No hay `illum_frac`.
+
+**Los gemelos actuales ya son de las celdas mejor iluminadas de la zona:** `illum_frac` mediana 0,436 (la mediana de la zona es 0,315). Todos están en la fila de latitud 75,5 S, el borde norte y cálido de la zona. El problema no es qué celda polar se elige; es que ninguna celda polar se parece a un sitio soleado y cálido de la Tierra.
+
+### 3. Un ejemplo concreto
+
+Número 1 de Paneles con A1: **E44120 (32,5 S 20,5 E, Western Cape, Sudáfrica)**, idoneidad 86,8, 293,1 K, irradiancia 5,52 kWh/m²/día.
+
+| opción | gemelo | temperatura del gemelo | `illum_frac` del gemelo | similitud | final | puesto (de 18.777) |
+|---|---|---|---|---|---|---|
+| A1 (hoy) | M59479, 75,5 S 100,5 O, Boltzmann a 81 km | 172,2 K | 0,454 | 78,0 | 82,4 | 1 |
+| Luna entera | M41526, 25,5 S 53,5 O, Cavendish a 28 km | 210,2 K | 0,502 | 98,4 | 92,6 | 2.484 |
+| Mares ecuatoriales | M27590, 13,5 N 50,5 E, Glaisher a 36 km | 212,9 K | 0,502 | 83,1 | 85,0 | 5.449 |
+| Polo sur, solo `illum_frac` ≥ 0,44 | el mismo Boltzmann | 172,2 K | 0,454 | 78,0 | 82,4 | 1 |
+| Irradiancia añadida a la similitud | el mismo Boltzmann | 172,2 K | 0,454 | 59,0 | 72,9 | 2.975 |
+| Una sola celda, la mejor iluminada | M59715, 75,5 S 135,5 E, Schrödinger a 31 km | 153,7 K | 0,474 | 29,7 | 58,3 | 6.610 |
+
+### 4. Las opciones
+
+Todas calculadas sobre los datos reales, con los pesos A1 salvo donde se dice.
+
+| opción | celdas candidatas | gemelos que cambian (de 18.777) | Spearman similitud-idoneidad | diferencia mediana de temperatura Tierra-gemelo | gemelos distintos; el más compartido | top 10 en común con A1 | trabajo y si cabe hoy |
+|---|---|---|---|---|---|---|---|
+| A1 actual (polo sur) | 5.400 | — | −0,681 | 126,3 K | 186; 16,8 % | — | — |
+| **Otra zona: Luna entera** | 64.800 | 18.508 | −0,059 | 85,3 K | 4.595; 2,3 % | 0/10 | 2-3 h (nuevo tipo de zona en `similarity_zones`, pruebas, reconstrucción, textos). Cabe con riesgo. |
+| **Otra zona: mares ecuatoriales** (ya definida en `build_lunar_reference_zones`, líneas 196-198: latitud ≤ 30°, elevación ≤ −1.200 m) | 6.686 | 18.777 | **+0,620** | 79,5 K | 374; 21,7 % (M22063, 28,5 N 76,5 O, cerca de Russell) | 0/10 | igual que la anterior |
+| Polo sur, `illum_frac` ≥ 0,30 | 2.932 | 19 | −0,681 | 126,3 K | 180; 16,8 % | 10/10 | 1 h. No cambia nada. |
+| Polo sur, `illum_frac` ≥ 0,40 | 761 | 2.032 | −0,601 | 126,6 K | 108; 16,8 % | 10/10 | 1 h. Casi nada. |
+| Polo sur, `illum_frac` ≥ 0,44 (87 celdas, el 1,6 % mejor iluminado) | 87 | 15.669 | −0,581 | 127,3 K | 30; 12,4 % | 3/10 | 1 h. Sigue siendo indefendible. |
+| Irradiancia añadida a la similitud (16,67 % cada una de las cinco) | 5.400 | 2.791 | **−0,826** (peor) | 125,7 K | 136; 19,6 % | 0/10 | 1-2 h. Empeora: el top 10 pasa a Canadá y China (idoneidad 64-70). |
+| Gemelo único = la celda mejor iluminada (M59715, Schrödinger, `illum_frac` 0,474) | 1 | 18.777 | +0,202 | 136,3 K | 1; 100 % | 0/10 | 1 h. Similitud mediana 40,2: no es un par. |
+| Elegir el gemelo por idoneidad solar | 0 | — | — | — | — | — | No se puede con los filtros del equipo: ninguna celda del polo sur pasa el filtro de irradiancia (máximo 2,475 < 2,5), y la altura del Sol ≥ 10° elimina todo lo que está por encima de unos 81,5° (FILTERS.md, §g). |
+
+Cualquier umbral de iluminación es una decisión del equipo. Lo que enseñan los números es que ningún umbral dentro del polo sur arregla la contradicción: los gemelos ya están en las celdas mejor iluminadas. Solo cambiar de zona la quita (−0,68 → −0,06 con la Luna entera, +0,62 con los mares). Pero eso cambia el relato: los paneles dejan de ir "al polo sur de Artemis". Otras fuentes oficiales de iluminación (los mapas LOLA a 20-60 m de PGDA, https://pgda.gsfc.nasa.gov/products/69) solo afinarían la iluminación dentro del polo sur, que, como se ha visto, no es el problema.
+
+**Top 10 de Paneles con los mares ecuatoriales:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E42435 | 27,5 S 135,5 E | Australia | 94,2 | 99,3 | 96,8 | M36499, 11,5 S 40,5 O, Dorsa Ewing a 66 km |
+| 2 | E38744 | 17,5 S 44,5 E | Madagascar / Melaky | 96,8 | 96,6 | 96,7 | M33959, 4,5 S 60,5 O, Damoiseau a 25 km |
+| 3 | E39104 | 18,5 S 44,5 E | Madagascar / Melaky | 95,9 | 97,4 | 96,7 | M35159, 7,5 S 59,5 E, Acosta a 59 km |
+| 4 | E42075 | 26,5 S 135,5 E | Australia | 94,5 | 98,8 | 96,7 | M36499, 11,5 S 40,5 O, Dorsa Ewing a 66 km |
+| 5 | E39464 | 19,5 S 44,5 E | Madagascar / Menabe | 95,9 | 97,3 | 96,6 | M31198, 3,5 N 58,5 E, Cartan a 33 km |
+| 6 | E27554 | 13,5 N 14,5 E | Chad / Lac | 96,3 | 96,8 | 96,5 | M32260, 0,5 N 40,5 E, Mount Marilyn a 24 km |
+| 7 | E37390 | 13,5 S 130,5 E | Australia | 96,1 | 96,9 | 96,5 | M33004, 1,5 S 64,5 E, Hargreaves a 24 km |
+| 8 | E29420 | 8,5 N 80,5 E | Sri Lanka / North Central | 94,9 | 98,1 | 96,5 | M36499, 11,5 S 40,5 O, Dorsa Ewing a 66 km |
+| 9 | E38385 | 16,5 S 45,5 E | Madagascar / Melaky | 96,5 | 96,4 | 96,4 | M29777, 7,5 N 77,5 E, Wildt a 68 km |
+| 10 | E42436 | 27,5 S 136,5 E | Australia | 94,0 | 98,7 | 96,4 | M31563, 2,5 N 63,5 E, Petit a 6 km |
+
+**Top 10 con la Luna entera** (8 de 10 puntos coinciden con los mares):
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E42435 | 27,5 S 135,5 E | Australia | 94,2 | 99,3 | 96,8 | M36499, 11,5 S 40,5 O, Dorsa Ewing a 66 km |
+| 2 | E39799 | 20,5 S 19,5 E | Namibia | 94,1 | 99,4 | 96,7 | M32867, 1,5 S 72,5 O, Rimae Riccioli a 17 km |
+| 3 | E38744 | 17,5 S 44,5 E | Madagascar / Melaky | 96,8 | 96,6 | 96,7 | M33959, 4,5 S 60,5 O, Damoiseau a 25 km |
+| 4 | E39104 | 18,5 S 44,5 E | Madagascar / Melaky | 95,9 | 97,4 | 96,7 | M35159, 7,5 S 59,5 E, Acosta a 59 km |
+| 5 | E42075 | 26,5 S 135,5 E | Australia | 94,5 | 98,8 | 96,7 | M36499, 11,5 S 40,5 O, Dorsa Ewing a 66 km |
+| 6 | E22885 | 26,5 N 25,5 E | Egypt | 94,0 | 99,3 | 96,6 | M23893, 23,5 N 46,5 O, Aristarchus a 28 km |
+| 7 | E22886 | 26,5 N 26,5 E | Egypt | 94,1 | 99,1 | 96,6 | M23893, 23,5 N 46,5 O, Aristarchus a 28 km |
+| 8 | E22891 | 26,5 N 31,5 E | Egypt / Suhaj | 94,8 | 98,3 | 96,6 | M31576, 2,5 N 76,5 E, Nobili a 73 km |
+| 9 | E39464 | 19,5 S 44,5 E | Madagascar / Menabe | 95,9 | 97,3 | 96,6 | M31198, 3,5 N 58,5 E, Cartan a 33 km |
+| 10 | E40158 | 21,5 S 18,5 E | Namibia | 93,9 | 99,2 | 96,5 | M28795, 10,5 N 175,5 E, Safarik a 36 km |
+
+**Top 10 con el polo sur restringido a `illum_frac` ≥ 0,44:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E44120 | 32,5 S 20,5 E | South Africa / Western Cape | 86,8 | 78,0 | 82,4 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 2 | E27615 | 13,5 N 75,5 E | India / Karnataka | 90,9 | 73,6 | 82,3 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 3 | E27814 | 12,5 N 85,5 O | Nicaragua / Boaco | 91,2 | 73,1 | 82,1 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 4 | E29738 | 7,5 N 38,5 E | Ethiopia / Oromiya | 89,7 | 74,5 | 82,1 | M59679, 75,5 S 99,5 E, Rittenhouse a 71 km |
+| 5 | E43759 | 31,5 S 19,5 E | South Africa / Northern Cape | 87,8 | 76,3 | 82,1 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 6 | E40516 | 22,5 S 16,5 E | Namibia / Erongo | 92,3 | 71,7 | 82,0 | M59676, 75,5 S 96,5 E, Hale a 56 km |
+| 7 | E41247 | 24,5 S 27,5 E | South Africa / Limpopo | 91,7 | 72,1 | 81,9 | M59676, 75,5 S 96,5 E, Hale a 56 km |
+| 8 | E42318 | 27,5 S 18,5 E | Namibia / Karas | 92,9 | 70,8 | 81,8 | M59676, 75,5 S 96,5 E, Hale a 56 km |
+| 9 | E30460 | 5,5 N 40,5 E | Ethiopia | 89,9 | 73,7 | 81,8 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 10 | E41609 | 25,5 S 29,5 E | South Africa / Mpumalanga | 88,7 | 74,9 | 81,8 | M59676, 75,5 S 96,5 E, Hale a 56 km |
+
+**Top 10 con irradiancia en la similitud:**
+
+| # | celda Tierra | lat, lon | lugar | idoneidad | similitud | final | gemela lunar (IAU más cercano) |
+|---|---|---|---|---|---|---|---|
+| 1 | E17228 | 42,5 N 128,5 E | China / Jilin Sheng | 70,3 | 80,2 | 75,2 | M59479, 75,5 S 100,5 O, Boltzmann a 81 km |
+| 2 | E14141 | 50,5 N 78,5 O | Canada / Quebec | 66,2 | 83,5 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 3 | E14139 | 50,5 N 80,5 O | Canada | 66,2 | 83,4 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 4 | E14140 | 50,5 N 79,5 O | Canada | 66,1 | 83,4 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 5 | E14137 | 50,5 N 82,5 O | Canada | 66,4 | 83,2 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 6 | E14138 | 50,5 N 81,5 O | Canada | 66,4 | 83,2 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 7 | E13431 | 52,5 N 68,5 O | Canada / Quebec | 63,5 | 86,1 | 74,8 | M59481, 75,5 S 98,5 O, Boltzmann a 66 km |
+| 8 | E14136 | 50,5 N 83,5 O | Canada / Ontario | 66,5 | 83,1 | 74,8 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 9 | E14499 | 49,5 N 80,5 O | Canada / Ontario | 67,1 | 82,4 | 74,7 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+| 10 | E14498 | 49,5 N 81,5 O | Canada / Ontario | 67,1 | 82,4 | 74,7 | M59734, 75,5 S 154,5 E, Schrodinger a 169 km |
+
+### 5. Recomendación y por qué
+
+**Ningún cambio en la integración sin una decisión del equipo** (lo del director), **y si se deja así, publicar la limitación.** Mis números no lo contradicen. Las opciones "baratas" (umbral de iluminación, irradiancia en la similitud, gemelo único) no arreglan nada o lo empeoran. La única que quita la contradicción (cambiar de zona) cambia la historia de la misión y cuesta 2-3 h en un día de entrega. Si el equipo quiere cambiar, la opción con mejor resultado es la de los mares ecuatoriales: es una zona que ya existe en el código, sus gemelos están a pleno sol (`illum_frac` 0,50) y la similitud pasa a ir a favor de la idoneidad (+0,62).
+
+### 6. Qué cambia en los resultados si se acepta
+
+Si se deja como está: 0 cambios; el top 10 es el A1 de la decisión 1 y solo se añade el texto. Si el equipo eligiera los mares: cambian de gemelo los 18.777 pares y el top 10 pasa a ser el de la tabla de arriba (0/10 en común con A1).
+
+### 7. Riesgo ante el jurado
+
+- *"¿Por qué el mejor sitio para paneles de la Tierra se empareja con un cráter polar casi a oscuras?"* Esta es la pregunta más probable y la más dañina. Respuesta honesta: el gemelo se elige por relieve y temperatura, no por la luz. Para los paneles el par dice "este terreno tiene una forma parecida a este del polo sur", no "aquí hay la misma luz". La diferencia de temperatura es de unos 126 K y lo decimos.
+- *"¿No tenéis datos de iluminación?"* En la Luna sí (LOLA), pero en la Tierra no hay una magnitud equivalente medida igual, así que no puede entrar en una comparación entre los dos cuerpos.
+
+### 8. Qué se escribe en ASSUMPTIONS.md y qué se enseña en la web
+
+**ASSUMPTIONS.md**, nuevo punto en §0.7:
+
+> "Known limitation, solar (left unchanged pending a team decision, 2026-11-15): solar suitability rewards warm, sunny places while the twin comes from the coldest part of the Moon and is chosen on relief and temperature only; similarity and suitability are anti-correlated (Spearman -0.68; Earth temperature correlates +0.93 with suitability and -0.98 with similarity). The twins already are the best-lit polar cells (LOLA illum_frac median 0.436 against 0.315 for the zone); restricting candidates to illum_frac >= 0.30 / 0.40 / 0.44 changes 19 / 2,032 / 15,669 of 18,777 twins and leaves the anti-correlation at -0.58 to -0.68. Only another target zone removes it (whole Moon -0.06; equatorial maria +0.62). No south-pole cell passes the solar irradiance gate (maximum 2.475 < 2.5 kWh/m2/day)."
+
+**Web**, en la ficha de la misión de Paneles solares (texto de limitación):
+
+> "Limitation: for solar arrays, the lunar twin is chosen by terrain shape and surface temperature, not by sunlight. The twin lies in the lunar south-polar zone, where Artemis plans to land; it is the best match in relief, but it is about 126 K colder than the Earth point and receives far less energy. Read the pair as 'similar terrain', not 'similar sunlight'."
+
+*Traducción:* "Limitación: para los paneles solares, el gemelo lunar se elige por la forma del terreno y la temperatura de superficie, no por la luz del Sol. El gemelo está en la zona del polo sur lunar, donde Artemis prevé aterrizar; es el más parecido en relieve, pero está unos 126 K más frío que el punto de la Tierra y recibe mucha menos energía. Lee el par como 'terreno parecido', no como 'luz parecida'."
+
+---
+
+## Resumen
+
+| decisión | recomendación | impacto en los resultados | tiempo de trabajo (estimado) | ¿bloquea la entrega? |
+|---|---|---|---|---|
+| 1. Regla del gemelo | Encender A1 (`zone_twin`) con `DEFAULT_WEIGHTS` | 31.533 pares nuevos; ningún top 10 actual se mantiene (0/10 en las tres misiones) | 1 h: cambiar el ajuste, reconstruir, revisar, textos | **Sí**: sin ella no hay pares |
+| 2. Quitar la roca | Retirada definitiva; reparto proporcional; se enseña como dato | 0 gemelos cambian; el orden sí (top 10 frente a "con roca": 0/10, 8/10, 0/10) | 0 h en el motor (ya hecho); 15 min de textos; comprobar que la web la pinta | No |
+| 3. Antártida sin temperatura | Ignorar y renormalizar, y marcar en la web | 1.123 (Rover) y 6.023 (Paneles) gemelos cambian frente a la propuesta; ningún top 10 cambia; Base lunar no se ve afectada | 0 h en el motor (ya lo hace); 30-60 min para la marca en el panel | No, pero el texto y las cifras citadas dependen de ella |
+| 4. Concentración en Base lunar | Aceptar y enseñar cuántos puntos comparten cada gemelo | Ninguno | 30-60 min si el panel aún no muestra el recuento | No |
+| 5. Paneles frente al polo sur | Sin cambios sin decisión del equipo; publicar la limitación | Ninguno si se deja; 18.777 gemelos si se cambia a mares | 15 min el texto; 2-3 h cambiar de zona | No si se publica la limitación |
+
+**Orden en que conviene responder:**
+
+1. **Decisión 1**, porque todo lo demás describe pares que solo existen si se enciende `zone_twin`, y el motor tiene que reconstruirse.
+2. **Decisión 5**, porque es la única que puede pedir trabajo de código (cambio de zona) y necesita al equipo; si la respuesta es "se deja", el texto de limitación tiene que estar en la web antes de grabar el vídeo y las capturas.
+3. **Decisión 3**, porque fija qué cifras de gemelos se citan (las del motor: 744 y 721 gemelos distintos, no 305 y 186) y el texto del panel antártico.
+4. **Decisión 2**, que ya está hecha; solo hay que confirmarla y comprobar que la web enseña la variable.
+5. **Decisión 4**, que solo afecta al texto y al recuento del panel.
+
+## Lo que no se ha podido calcular hoy
+
+- La temperatura de NASA POWER para las 6.558 celdas antárticas (solo se probó en 5 puntos) y el efecto que tendría en los pares.
+- La celda de Tycho en la tabla antigua de 2 grados.
+- Si el panel de la web pinta hoy la fracción de suelo desnudo y el recuento de puntos por gemelo: `app/` lo están editando otros agentes y solo se buscó en `app/src`, sin resultado.
+- No se ejecutó el motor: las cifras "como el motor" salen de reimplementar su tratamiento de los datos que faltan, y coinciden con las que publica `ASSUMPTIONS.md` §0.7.

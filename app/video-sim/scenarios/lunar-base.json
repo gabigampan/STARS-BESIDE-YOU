@@ -7,7 +7,6 @@
   "height": 1080,
   "duration_s": 46,
   "card_s": 6,
-
   "site": {
     "body": "MOON",
     "cell_id": "M62859",
@@ -15,48 +14,151 @@
     "lon_deg": 39.5,
     "label": "84.5° S 39.5° E",
     "place": "Mons Mouton plateau",
-    "place_ref": {"feature": "Mons Mouton", "iau_lat": -84.6, "iau_lon_e": 31.0, "diameter_km": 130.0, "source": "IAU/USGS Gazetteer of Planetary Nomenclature, https://planetarynames.wr.usgs.gov/Feature/16070; 'Mons Mouton Plateau' is one of nine candidate Artemis III landing regions, NASA RELEASE24-136 (2024-10-28), https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/"}
-  },
-  "earth_site": {"body": "EARTH", "cell_id": "E19345", "lat_deg": 36.5, "lon_deg": 85.5, "name": "Kunlun Mountains, Xinjiang, China"},
-
-  "table_values": {
-    "moon": {
-      "elevation_m": {"value": 6055.9, "level": "MEASURED", "unit": "m above the 1737.4 km sphere"},
-      "slope_deg": {"value": 9.608, "level": "DERIVED", "unit": "deg (3.79 km baseline)"},
-      "temp_k": {"value": 152.45, "level": "DERIVED", "unit": "K, mean surface brightness temperature"},
-      "tmax_k": {"value": 255.56, "level": "MEASURED", "unit": "K"},
-      "tmin_k": {"value": 68.5, "level": "MEASURED", "unit": "K"},
-      "lst_diurnal_amp_k": {"value": 187.06, "level": "DERIVED", "unit": "K"},
-      "tmin_c": {"value": -204.65, "level": "DERIVED", "unit": "degC"},
-      "sun_elev_max_deg": {"value": 7.04, "level": "DERIVED", "unit": "deg"},
-      "illum_frac": {"value": 0.4183, "level": "DERIVED", "unit": "fraction of time lit (LOLA topography)"}
-    },
-    "earth": {
-      "elevation_m": {"value": 4926, "level": "MEASURED", "unit": "m above the EGM2008 geoid"},
-      "slope_deg": {"value": 2.003, "level": "DERIVED", "unit": "deg (3.71 km baseline)"},
-      "temp_k": {"value": 271.65, "level": "DERIVED", "unit": "K, mean land surface temperature (MODIS)"},
-      "lst_diurnal_amp_k": {"value": 27.12, "level": "DERIVED", "unit": "K (MODIS day minus night, annual mean)"},
-      "tmin_c": {"value": -28.68, "level": "MODELLED", "unit": "degC, air (WorldClim)"},
-      "permafrost_class": {"value": "continuo", "level": "MODELLED", "unit": "class"},
-      "permafrost_area_frac": {"value": 0.9453, "level": "MODELLED", "unit": "fraction"},
-      "sun_elev_max_deg": {"value": 76.939, "level": "DERIVED", "unit": "deg"}
+    "place_ref": {
+      "feature": "Mons Mouton",
+      "iau_lat": -84.6,
+      "iau_lon_e": 31.0,
+      "diameter_km": 130.0,
+      "source": "IAU/USGS Gazetteer of Planetary Nomenclature, https://planetarynames.wr.usgs.gov/Feature/16070; 'Mons Mouton Plateau' is one of nine candidate Artemis III landing regions, NASA RELEASE24-136 (2024-10-28), https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/"
     }
   },
-
-  "constants": {
-    "solar_constant_W_m2": {"value": 1361.0, "level": "MEASURED", "source": "NSSDC Moon fact sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"},
-    "moon_obliquity_deg": {"value": 1.54, "level": "MEASURED", "source": "NASA Photojournal PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map"},
-    "synodic_period_days": {"value": 29.53, "level": "MEASURED", "source": "NSSDC Moon fact sheet, 'Synodic period (days) 29.53', https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"},
-    "moon_radius_m": {"value": 1737400, "level": "MEASURED", "source": "NSSDC Moon fact sheet, volumetric mean radius 1737.4 km; LOLA reference sphere"}
+  "earth_site": {
+    "body": "EARTH",
+    "cell_id": "E19345",
+    "lat_deg": 36.5,
+    "lon_deg": 85.5,
+    "name": "Kunlun Mountains, Xinjiang, China"
   },
-
+  "table_values": {
+    "moon": {
+      "elevation_m": {
+        "value": 6055.9,
+        "level": "MEASURED",
+        "unit": "m above the 1737.4 km sphere"
+      },
+      "slope_deg": {
+        "value": 9.608,
+        "level": "DERIVED",
+        "unit": "deg (3.79 km baseline)"
+      },
+      "temp_k": {
+        "value": 152.45,
+        "level": "DERIVED",
+        "unit": "K, mean surface brightness temperature"
+      },
+      "tmax_k": {
+        "value": 255.56,
+        "level": "MEASURED",
+        "unit": "K"
+      },
+      "tmin_k": {
+        "value": 68.5,
+        "level": "MEASURED",
+        "unit": "K"
+      },
+      "lst_diurnal_amp_k": {
+        "value": 187.06,
+        "level": "DERIVED",
+        "unit": "K"
+      },
+      "tmin_c": {
+        "value": -204.65,
+        "level": "DERIVED",
+        "unit": "degC"
+      },
+      "sun_elev_max_deg": {
+        "value": 7.04,
+        "level": "DERIVED",
+        "unit": "deg"
+      },
+      "illum_frac": {
+        "value": 0.4183,
+        "level": "DERIVED",
+        "unit": "fraction of time lit (LOLA topography)"
+      }
+    },
+    "earth": {
+      "elevation_m": {
+        "value": 4926,
+        "level": "MEASURED",
+        "unit": "m above the EGM2008 geoid"
+      },
+      "slope_deg": {
+        "value": 2.003,
+        "level": "DERIVED",
+        "unit": "deg (3.71 km baseline)"
+      },
+      "temp_k": {
+        "value": 271.65,
+        "level": "DERIVED",
+        "unit": "K, mean land surface temperature (MODIS)"
+      },
+      "lst_diurnal_amp_k": {
+        "value": 27.12,
+        "level": "DERIVED",
+        "unit": "K (MODIS day minus night, annual mean)"
+      },
+      "tmin_c": {
+        "value": -28.68,
+        "level": "MODELLED",
+        "unit": "degC, air (WorldClim)"
+      },
+      "permafrost_class": {
+        "value": "continuo",
+        "level": "MODELLED",
+        "unit": "class"
+      },
+      "permafrost_area_frac": {
+        "value": 0.9453,
+        "level": "MODELLED",
+        "unit": "fraction"
+      },
+      "sun_elev_max_deg": {
+        "value": 76.939,
+        "level": "DERIVED",
+        "unit": "deg"
+      }
+    }
+  },
+  "constants": {
+    "solar_constant_W_m2": {
+      "value": 1361.0,
+      "level": "MEASURED",
+      "source": "NSSDC Moon fact sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+    },
+    "moon_obliquity_deg": {
+      "value": 1.54,
+      "level": "MEASURED",
+      "source": "NASA Photojournal PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map"
+    },
+    "synodic_period_days": {
+      "value": 29.53,
+      "level": "MEASURED",
+      "source": "NSSDC Moon fact sheet, 'Synodic period (days) 29.53', https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+    },
+    "moon_radius_m": {
+      "value": 1737400,
+      "level": "MEASURED",
+      "source": "NSSDC Moon fact sheet, volumetric mean radius 1737.4 km; LOLA reference sphere"
+    }
+  },
   "dem": {
-    "near": {"product": "LOLA LDEM_80S_20M (polar stereographic, V2.0)", "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_20m.img", "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_20m.lbl", "half_extent_m": 3000},
-    "far": {"product": "LOLA LDEM_80S_80M (polar stereographic, V2.0)", "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_80m.img", "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_80m.lbl", "half_extent_m": 50000, "render_step_px": 4},
+    "near": {
+      "product": "LOLA LDEM_80S_20M (polar stereographic, V2.0)",
+      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_20m.img",
+      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_20m.lbl",
+      "half_extent_m": 3000
+    },
+    "far": {
+      "product": "LOLA LDEM_80S_80M (polar stereographic, V2.0)",
+      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_80m.img",
+      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_80s_80m.lbl",
+      "half_extent_m": 50000,
+      "render_step_px": 4
+    },
     "line_sign": -1,
     "horizon_azimuths": 90
   },
-
   "sun": {
     "declination_deg": -1.54,
     "declination_note": "Southern-summer solstice: the Sun reaches the table's sun_elev_max_deg (7.04 deg) at local noon. Illustrative choice of season.",
@@ -64,42 +166,270 @@
     "hour_angle_end_deg": 210,
     "sim_end_s": 40
   },
-
   "temperature_model": {
     "description": "Stated shape model, not a measurement: T = Tmin + (Tmax - Tmin) * g, where g is the cycle-normalised value of a radiative-equilibrium shape (sin h)^(1/4) while the Sun is above the flat horizon, decaying after sunset as g_sunset * exp(-t_after_sunset / tau). The curve is rescaled so that over the full cycle shown it reaches exactly the cell's measured Diviner minimum and maximum.",
     "tau_days": 3.0,
     "inset_tint": "small inset only, blue (Tmin) to warm grey (Tmax)"
   },
-
   "earth_visibility": {
     "source": "JPL Horizons API (DE441), observer at the site (coord@301, 39.5 E, -84.5, 0 km), target 399, QUANTITIES=4, airless, 2026-01-01..2044-12-31 every 12 h",
-    "elev_min_deg": -3.33, "elev_max_deg": 11.25, "elev_mean_deg": 3.95, "frac_above_flat_horizon": 0.702,
-    "az_min_deg": 311.96, "az_max_deg": 328.68,
+    "elev_min_deg": -3.33,
+    "elev_max_deg": 11.25,
+    "elev_mean_deg": 3.95,
+    "frac_above_flat_horizon": 0.702,
+    "az_min_deg": 311.96,
+    "az_max_deg": 328.68,
     "az_mean_deg": 320.37,
     "draw": "auto",
     "decision": "Drawn at its 2026-2044 mean position (az 320.37, elev 3.95 deg) only if that is above the real terrain horizon in that direction; its monthly libration wander (az 312-329, elev -3.3..11.3 deg) is not animated."
   },
-
   "habitat": {
     "assumption": "Illustrative engineering shapes, not a real design: rigid cylindrical module 4.0 m diameter x 8.0 m long on its side; inflatable section 6.0 m diameter x 5.0 m long attached at one end; regolith berm 1.5 m high, ring of 11 m inner radius. Deployment order and timing are illustrative.",
-    "module_d_m": 4.0, "module_l_m": 8.0,
-    "inflatable_d_m": 6.0, "inflatable_l_m": 5.0,
-    "berm_h_m": 1.5, "berm_r_m": 11.0, "berm_w_m": 4.0,
+    "module_d_m": 4.0,
+    "module_l_m": 8.0,
+    "inflatable_d_m": 6.0,
+    "inflatable_l_m": 5.0,
+    "berm_h_m": 1.5,
+    "berm_r_m": 11.0,
+    "berm_w_m": 4.0,
     "steps": [
-      {"name": "Module placed", "t0": 4.0, "t1": 9.0},
-      {"name": "Inflatable section deploying", "t0": 10.0, "t1": 16.0},
-      {"name": "Regolith berm built", "t0": 17.0, "t1": 25.0}
+      {
+        "name": "Module placed",
+        "t0": 4.0,
+        "t1": 9.0
+      },
+      {
+        "name": "Inflatable section deploying",
+        "t0": 10.0,
+        "t1": 16.0
+      },
+      {
+        "name": "Regolith berm built",
+        "t0": 17.0,
+        "t1": 25.0
+      }
     ]
   },
-
   "camera": {
     "keys": [
-      {"t": 0.0, "dist": 2200, "elev_deg": 50, "az_deg": 120, "target_z": 0},
-      {"t": 4.0, "dist": 80, "elev_deg": 12, "az_deg": 150, "target_z": 2},
-      {"t": 16.0, "dist": 62, "elev_deg": 9, "az_deg": 140, "target_z": 2},
-      {"t": 30.0, "dist": 58, "elev_deg": 8, "az_deg": 130, "target_z": 2},
-      {"t": 40.0, "dist": 66, "elev_deg": 9, "az_deg": 145, "target_z": 2}
+      {
+        "t": 0.0,
+        "dist": 2000,
+        "elev_deg": 22,
+        "az_deg": 150,
+        "target_z": 0
+      },
+      {
+        "t": 4.5,
+        "dist": 85,
+        "elev_deg": 12,
+        "az_deg": 150,
+        "target_z": 2
+      },
+      {
+        "t": 16.0,
+        "dist": 66,
+        "elev_deg": 10,
+        "az_deg": 165,
+        "target_z": 2
+      },
+      {
+        "t": 27.0,
+        "dist": 64,
+        "elev_deg": 9,
+        "az_deg": 150,
+        "target_z": 2
+      },
+      {
+        "t": 40.0,
+        "dist": 70,
+        "elev_deg": 9,
+        "az_deg": 125,
+        "target_z": 2
+      }
     ],
     "fov_deg": 50
+  },
+  "poster_s": 28.0,
+  "encode": {
+    "x264_crf": 20,
+    "vp9_crf": 34
+  },
+  "card": {
+    "title": "Earth analog and lunar twin: lunar base",
+    "subtitle": "Values from the project tables (1-degree cells). Each value carries its level.",
+    "rows": [
+      {
+        "label": "Diurnal temperature amplitude",
+        "earth": {
+          "var": "lst_diurnal_amp_k",
+          "unit": "K",
+          "note": "MODIS land surface"
+        },
+        "moon": {
+          "var": "lst_diurnal_amp_k",
+          "unit": "K",
+          "note": "Diviner surface"
+        }
+      },
+      {
+        "label": "Minimum temperature",
+        "earth": {
+          "var": "tmin_c",
+          "unit": "°C",
+          "note": "air, WorldClim"
+        },
+        "moon": {
+          "var": "tmin_c",
+          "unit": "°C",
+          "note": "surface"
+        }
+      },
+      {
+        "label": "Maximum surface temperature",
+        "earth": null,
+        "moon": {
+          "var": "tmax_k",
+          "unit": "K"
+        }
+      },
+      {
+        "label": "Mean surface temperature",
+        "earth": {
+          "var": "temp_k",
+          "unit": "K"
+        },
+        "moon": {
+          "var": "temp_k",
+          "unit": "K"
+        }
+      },
+      {
+        "label": "Elevation",
+        "earth": {
+          "var": "elevation_m",
+          "unit": "m",
+          "note": "geoid"
+        },
+        "moon": {
+          "var": "elevation_m",
+          "unit": "m",
+          "note": "1737.4 km sphere"
+        }
+      },
+      {
+        "label": "Mean slope (3.7 km baseline)",
+        "earth": {
+          "var": "slope_deg",
+          "unit": "°"
+        },
+        "moon": {
+          "var": "slope_deg",
+          "unit": "°"
+        }
+      },
+      {
+        "label": "Permafrost",
+        "earth": {
+          "var": "permafrost_class",
+          "text": "continuous",
+          "unit": ""
+        },
+        "moon": null
+      }
+    ],
+    "sentence": "Both are high, cold, bare sites, but the cold differs in size: the Kunlun cell swings 27.12 K between day and night against 187.06 K on Mons Mouton, and its coldest value (−28.68 °C, air) is far above the lunar surface minimum (−204.65 °C, 68.5 K). It reproduces a high plateau on frozen ground, not the lunar thermal range.",
+    "legend": "Levels as stated in the project provenance tables. Earth minimum: WorldClim 2.1 air temperature (modelled, non-commercial licence), not a surface value. Moon temperatures: Diviner bolometric surface brightness temperature. Earth elevation above the EGM2008 geoid; Moon elevation above the 1737.4 km reference sphere."
+  },
+  "render": {
+    "earthshine_display_fraction": 0.2
+  },
+  "captions": {
+    "cue_times": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      43
+    ],
+    "en": {
+      "header": "Lunar base mission video (3D simulation), English descriptive captions",
+      "note": "No speech. Each cue gives the values on the on-screen panel at its start time. The surface temperature follows a stated model curve between the cell's measured Diviner minimum (68.5 K) and maximum (255.56 K); the Sun is computed; habitat shapes, sizes and timing are illustrative.",
+      "sun": "Sun",
+      "az": "azimuth",
+      "hz": "terrain horizon",
+      "power": "Power",
+      "energy": "energy",
+      "days": "Earth days elapsed",
+      "temp": "Surface temperature",
+      "model": "model",
+      "status": {
+        "Lunar night": "Lunar night",
+        "Night ending: sunrise": "Night ending: sunrise",
+        "Module placed": "Placing the module",
+        "Inflatable section deploying": "Inflatable section deploying",
+        "Regolith berm built": "Building the regolith berm",
+        "Habitat assembled, daylight": "Habitat assembled, daylight",
+        "Sun blocked by terrain": "Sun blocked by terrain",
+        "Night: surface cooling": "Night: surface cooling"
+      },
+      "text": [
+        "3D simulation driven by table data, not real footage. Lunar night over the real LOLA relief of the Mons Mouton plateau, 84.5° S 39.5° E. The Earth stands low in the north-west sky.",
+        "The camera descends to the site. Night view: exposure raised to show earthshine.",
+        "Sunrise: the Sun skims the horizon; the cylindrical module is lowered onto its legs.",
+        "The Sun stays below about 7° all day; shadows are very long.",
+        "The inflatable section expands from the end of the module.",
+        "A regolith berm rises in a ring around the habitat.",
+        "The habitat is assembled; the Sun moves west along the horizon.",
+        "Sunset: the ground falls into shadow and the surface starts to cool.",
+        "Lunar night, lit only by earthshine (exposure raised, not to scale).",
+        "The surface temperature approaches the measured minimum, 68.5 K.",
+        "Closing card: Earth analog Kunlun Mountains, Xinjiang, China (cell E19345) against the lunar cell M62859 on Mons Mouton. Diurnal amplitude 27.12 K against 187.06 K; minimum −28.68 °C (air, modelled) against −204.65 °C (surface); lunar maximum 255.56 K; mean surface temperature 271.65 K against 152.45 K; elevation 4926 m against 6055.9 m; slope 2.003° against 9.608°; continuous permafrost on Earth (modelled).",
+        "Kunlun reproduces a high plateau on frozen ground, not the lunar thermal range. 3D simulation driven by table data. Not real footage."
+      ]
+    },
+    "es": {
+      "header": "Vídeo de la misión base lunar (simulación 3D), subtítulos descriptivos en español",
+      "note": "Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. La temperatura de la superficie sigue una curva de modelo declarada entre el mínimo (68,5 K) y el máximo (255,56 K) medidos por Diviner en la celda; el Sol es calculado; formas, tamaños y tiempos del hábitat son ilustrativos.",
+      "sun": "Sol",
+      "az": "acimut",
+      "hz": "horizonte del terreno",
+      "power": "Potencia",
+      "energy": "energía",
+      "days": "días terrestres transcurridos",
+      "temp": "Temperatura de la superficie",
+      "model": "modelo",
+      "status": {
+        "Lunar night": "Noche lunar",
+        "Night ending: sunrise": "Fin de la noche: amanecer",
+        "Module placed": "Colocando el módulo",
+        "Inflatable section deploying": "Desplegando la sección inflable",
+        "Regolith berm built": "Construyendo el muro de regolito",
+        "Habitat assembled, daylight": "Hábitat montado, de día",
+        "Sun blocked by terrain": "Sol tapado por el relieve",
+        "Night: surface cooling": "Noche: la superficie se enfría"
+      },
+      "text": [
+        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Noche lunar sobre el relieve real LOLA de la meseta de Mons Mouton, 84,5° S 39,5° E. La Tierra está baja en el cielo, al noroeste.",
+        "La cámara desciende hasta el punto. Vista nocturna: exposición aumentada para mostrar la luz cenicienta.",
+        "Amanecer: el Sol roza el horizonte; el módulo cilíndrico se baja sobre sus patas.",
+        "El Sol no pasa de unos 7° en todo el día; las sombras son muy largas.",
+        "La sección inflable se expande desde el extremo del módulo.",
+        "Un muro de regolito se levanta en anillo alrededor del hábitat.",
+        "El hábitat está montado; el Sol se desplaza al oeste a ras del horizonte.",
+        "Puesta de Sol: el suelo queda en sombra y la superficie empieza a enfriarse.",
+        "Noche lunar, iluminada solo por la luz cenicienta de la Tierra (exposición aumentada, no a escala).",
+        "La temperatura de la superficie se acerca al mínimo medido, 68,5 K.",
+        "Tarjeta final: el análogo terrestre montes Kunlun, Xinjiang, China (celda E19345) frente a la celda lunar M62859 en Mons Mouton. Amplitud diaria 27,12 K frente a 187,06 K; mínima −28,68 °C (aire, modelada) frente a −204,65 °C (superficie); máxima lunar 255,56 K; temperatura media de la superficie 271,65 K frente a 152,45 K; altitud 4926 m frente a 6055,9 m; pendiente 2,003° frente a 9,608°; permafrost continuo en la Tierra (modelado).",
+        "Kunlun reproduce una meseta alta sobre suelo helado, no el rango térmico lunar. Simulación 3D basada en datos de las tablas. No son imágenes reales."
+      ]
+    }
   }
 }

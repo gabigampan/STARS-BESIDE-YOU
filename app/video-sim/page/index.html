@@ -7,7 +7,7 @@
   :root { --panel-bg: rgba(14, 17, 24, 0.86); --label: #b9c0cc; --value: #f2f4f7; --status: #f2a33a; --muted: #9aa3b1; }
   html, body { margin: 0; padding: 0; background: #000; width: 1920px; height: 1080px; overflow: hidden; }
   canvas#gl { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
-  #panel { position: absolute; left: 28px; top: 28px; width: 560px; padding: 22px 26px 18px; box-sizing: border-box;
+  #panel { position: absolute; left: 28px; top: 28px; width: 600px; padding: 22px 26px 18px; box-sizing: border-box;
     background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
     font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace; font-size: 23px; line-height: 34px; color: var(--value); }
   #panel .title { font-family: "Inter", sans-serif; font-weight: 600; font-size: 29px; line-height: 38px; margin-bottom: 4px; letter-spacing: 0.2px; }
@@ -19,12 +19,12 @@
   #panel .tag { color: var(--muted); font-size: 22px; }
   #graphwrap { margin-top: 12px; }
   #graphwrap .cap { font-size: 22px; color: var(--muted); line-height: 30px; }
-  #inset { position: absolute; right: 28px; top: 28px; width: 300px; padding: 16px 18px; box-sizing: border-box; background: var(--panel-bg);
+  #inset { position: absolute; right: 28px; top: 28px; width: 340px; padding: 16px 18px; box-sizing: border-box; background: var(--panel-bg);
     border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; font-family: "JetBrains Mono", monospace; font-size: 22px; line-height: 30px; color: var(--label); display: none; }
-  #inset canvas { display: block; width: 264px; height: 264px; border-radius: 6px; margin: 8px 0 6px; }
-  #foot { position: absolute; left: 28px; bottom: 26px; right: 28px; font-family: "Inter", sans-serif; font-size: 22px; line-height: 30px; color: #d4d8de;
+  #inset canvas { display: block; width: 304px; height: 304px; border-radius: 6px; margin: 8px 0 6px; }
+  #foot { position: absolute; left: 20px; bottom: 18px; right: 20px; padding: 8px 12px; border-radius: 8px; background: rgba(0,0,0,0.55); font-family: "Inter", sans-serif; font-size: 22px; line-height: 30px; color: #d4d8de;
     text-shadow: 0 0 6px #000, 0 0 3px #000; }
-  #card { position: absolute; inset: 0; background: rgba(4, 6, 10, 0.93); opacity: 0; color: #f2f4f7; font-family: "Inter", sans-serif; }
+  #card { position: absolute; inset: 0; background: rgba(4, 6, 10, 0.975); opacity: 0; color: #f2f4f7; font-family: "Inter", sans-serif; }
   #card .inner { position: absolute; left: 120px; right: 120px; top: 92px; }
   #card h1 { font-weight: 600; font-size: 46px; line-height: 56px; margin: 0 0 6px; }
   #card .sub { font-size: 26px; color: #aab2bf; margin-bottom: 30px; line-height: 34px; }
@@ -43,7 +43,7 @@
 <body>
 <canvas id="gl" width="1920" height="1080"></canvas>
 <div id="panel"></div>
-<div id="inset"><div id="insetTitle">Thermal tint (model)</div><canvas id="insetCanvas" width="264" height="264"></canvas><div id="insetScale"></div></div>
+<div id="inset"><div id="insetTitle">Thermal tint (model)</div><canvas id="insetCanvas" width="304" height="304"></canvas><div id="insetScale"></div></div>
 <div id="foot"></div>
 <div id="card"><div class="inner" id="cardInner"></div><div class="disclaimer">3D simulation driven by table data. Not real footage.</div></div>
 <script type="module" src="/page/main.js"></script>
