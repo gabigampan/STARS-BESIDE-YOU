@@ -327,29 +327,28 @@ body.flow[data-step='compare'] .stage > .panel {
   }
 }
 
-/* the Moon-side statement of the similarity rule */
-.moon-rule {
-  position: absolute;
-  left: var(--pad);
-  right: var(--pad);
-  bottom: calc(var(--pad) + 22px);
+/* the statement of the similarity rule (Moon) and the marker legend (Earth), inside each pane's caption
+   so they never sit on the imagery credit line */
+.pane-rule {
   max-width: 34em;
-  padding: 8px 12px;
-  background: rgba(10, 12, 15, 0.9);
-  border: 1px solid var(--edge);
-  border-radius: 3px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--edge);
   font-size: var(--step--1);
   line-height: 1.35;
-  z-index: 3;
-  pointer-events: none;
+  color: var(--text);
 }
-.moon-rule:empty,
-body:not(.flow) .moon-rule,
-body.flow[data-step='choose'] .moon-rule {
+.pane-rule p {
+  margin: 0;
+}
+.pane-rule:empty,
+body:not(.flow) .pane-rule,
+body.flow[data-step='choose'] .pane-rule {
   display: none;
 }
 @media not ((min-width: 900px) and (min-aspect-ratio: 1/1)) {
-  body.flow.has-twins .moon-rule {
+  /* small panes keep the globe free; the same sentences are in the panel */
+  body.flow .pane-rule {
     display: none;
   }
   body.flow:not([data-step='choose']) .pane-reset {
@@ -926,10 +925,42 @@ table.rows tr.is-fail th {
   .steps-mission {
     display: none;
   }
-  /* phones and portrait tablets: the sunlight and place-name controls step aside so the globes keep room */
-  body.flow .sunlight,
-  body.flow #labels-toggle {
+  /* phones and portrait tablets: the sunlight and place-name controls sit behind the "View" button */
+  #view-toggle {
+    display: inline-flex;
+  }
+  .view-tools {
     display: none;
+    position: absolute;
+    top: 100%;
+    right: var(--pad);
+    left: var(--pad);
+    z-index: 6;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: var(--glass-solid);
+    border: 1px solid var(--edge-strong);
+    border-radius: 3px;
+  }
+  body.view-open .view-tools {
+    display: flex;
+  }
+  .view-tools .sunlight {
+    grid-template-columns: 1fr;
+  }
+  .view-tools .sun-time {
+    justify-self: start;
+    white-space: normal;
+  }
+  .view-tools .sunlight-options {
+    flex-wrap: wrap;
+  }
+  /* the Cesium logo stays, smaller, so the small globes keep room */
+  .cesium-credit-logoContainer img {
+    height: 16px !important;
+    width: auto !important;
   }
   body.flow .topbar {
     flex-direction: row;
@@ -956,7 +987,7 @@ table.rows tr.is-fail th {
   }
   .steps-list {
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 8px;
   }
   .step.is-current .step-btn {
     padding-right: 8px;
@@ -1036,4 +1067,203 @@ table.rows .sub.note {
 }
 .funnel-sec .funnel li + li {
   margin-top: 6px;
+}
+
+/* ---------- header: "View" menu (narrow screens) and the Place names toggle ---------- */
+#view-toggle {
+  align-items: center;
+  gap: 8px;
+}
+@media (min-width: 900px) {
+  #view-toggle {
+    display: none;
+  }
+  .view-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+#view-toggle .icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+/* On or off is told by the words and by the box (ticked when on), not by colour; the border stays quiet. */
+#labels-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+#labels-toggle[aria-pressed] {
+  border-color: var(--edge-strong);
+  box-shadow: none;
+}
+#labels-toggle .toggle-box {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  box-sizing: border-box;
+  position: relative;
+}
+#labels-toggle[aria-pressed='true'] .toggle-box::after {
+  content: '';
+  position: absolute;
+  left: 3.5px;
+  top: 0.5px;
+  width: 4px;
+  height: 8px;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- the pair at a glance (comparison head; legible from 2 m) ---------- */
+.pair-strip {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.pair-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+}
+.pair-k {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+.pair-line strong {
+  font: 600 clamp(1.375rem, 1.1rem + 0.7vw, 2.25rem) / 1.15 var(--font-head);
+}
+.figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 10px 0 0;
+}
+.figs .fig {
+  margin: 0;
+}
+.figs dt {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+.figs dd {
+  margin: 0;
+  font: 600 clamp(2rem, 1.6rem + 1vw, 3.25rem) / 1.05 var(--font-head);
+  font-variant-numeric: tabular-nums;
+}
+.figs .fig[data-fig='final'] dd {
+  color: var(--text);
+}
+
+/* the engine's exact elimination reason, under the plain-words one */
+.result .reason-exact {
+  flex-basis: 100%;
+  color: var(--text-dim);
+  font-size: var(--step--1) !important;
+}
+.result .reason-exact code,
+.result .reason-exact {
+  font-size: var(--step--1);
+}
+.result .reason-exact code {
+  font-family: var(--font-body);
+  overflow-wrap: anywhere;
+}
+
+/* ranked rows: the place, then where it is and its lunar twin */
+.rank-name {
+  font-weight: 500;
+}
+.rank-where {
+  color: var(--text-dim);
+  font-size: var(--step--1);
+}
+
+/* search in the ranking (a magnifier, a known pattern) */
+.search {
+  margin: 10px 0 4px;
+}
+.search-label {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.search-field {
+  position: relative;
+}
+.search-field .icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 2;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 12px 0 40px;
+  font: 400 var(--step--1) var(--font-body);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--edge-strong);
+  border-radius: 3px;
+}
+.search-input::placeholder {
+  color: var(--text-dim);
+  opacity: 1;
+}
+.search-input:focus-visible {
+  outline: 2px solid var(--sodium);
+  outline-offset: 2px;
+}
+
+/* links in "Data and limits" are targets too: 44 px tall */
+.credits-list a,
+.credits-body a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.tech-notes,
+.team-note {
+  margin-top: 10px;
+}
+.tech-notes summary,
+.team-note summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* very large screens: wider panels (type already scales with the root size) */
+@media (min-width: 2560px) and (min-aspect-ratio: 1/1) {
+  html {
+    font-size: 150%;
+  }
+  body.flow[data-step='pick'] .stage {
+    grid-template-columns: clamp(340px, 26vw, 960px) 1fr 1fr;
+  }
+  body.flow[data-step='compare'] .stage {
+    grid-template-columns: 1fr 1fr clamp(380px, 30vw, 1150px);
+  }
 }

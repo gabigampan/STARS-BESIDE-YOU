@@ -33,7 +33,32 @@ export function setupLabelsToggle(onChange: (visible: boolean) => void): void {
   btn.addEventListener('click', () => {
     const next = btn.getAttribute('aria-pressed') !== 'true';
     btn.setAttribute('aria-pressed', String(next));
+    // the state in words as well as by the box (never by colour alone)
+    const t = btn.querySelector('.toggle-text');
+    if (t) t.textContent = `Place names: ${next ? 'on' : 'off'}`;
     onChange(next);
+  });
+}
+
+/** Narrow screens: the Sunlight and Place names controls sit behind a "View" button. */
+export function setupViewMenu(): void {
+  const btn = document.getElementById('view-toggle');
+  const tools = document.getElementById('view-tools');
+  if (!btn || !tools) return;
+  const set = (open: boolean) => {
+    btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('view-open', open);
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('view-open')) {
+      set(false);
+      btn.focus();
+    }
+  });
+  document.addEventListener('pointerdown', (e) => {
+    const t = e.target as Node;
+    if (document.body.classList.contains('view-open') && !tools.contains(t) && !btn.contains(t)) set(false);
   });
 }
 

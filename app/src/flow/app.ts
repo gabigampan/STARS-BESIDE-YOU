@@ -10,7 +10,7 @@ import { missionName } from './copy';
 import { renderDataDialog, openDataDialog } from './dataDialog';
 import { meaningText, renderDetail, renderDetailLoading } from './detailPanel';
 import { renderIntro } from './intro';
-import { hasVideo, loadMediaIndex, videoSpec } from './media';
+import { anyVideo, hasVideo, loadMediaIndex, videoSpec } from './media';
 import { MissionPanel } from './missionPanel';
 import { renderSteps, type Step } from './steps';
 import { h } from './dom';
@@ -179,10 +179,10 @@ export class FlowApp {
 
   renderSteps(): void {
     const m = this.mission();
-    const anyVideo = this.dataReady && this.store.offeredMissions().some((x) => hasVideo(x));
+    const any = this.dataReady ? this.store.offeredMissions().some((x) => hasVideo(x)) : anyVideo();
     renderSteps(this.stepsNav, {
       step: this.state.step,
-      withVideo: m ? hasVideo(m) : anyVideo,
+      withVideo: m ? hasVideo(m) : any,
       missionName: m ? missionName(m) : null,
       canPick: !!m,
       canCompare: this.state.selectedId != null,
@@ -242,6 +242,11 @@ export class FlowApp {
     this.missionPanel.render();
     this.updateMarkers();
     this.renderIntro();
+    if (!opts.keepSelection) {
+      this.viewTopEarth();
+      // the chosen card is gone: keyboard focus goes to the main action of the new screen, the first ranked place
+      this.missionPanel.focusFirst();
+    }
     const m = this.store.mission(id);
     this.announce(`${missionName(m)} mission chosen: ${this.ranking().length} places on Earth pass its filters.`);
     // Start fetching the utilities for the weight sliders in the background.
@@ -416,7 +421,11 @@ export class FlowApp {
   // ---------- compare ----------
 
   async select(id: number, missionId?: string): Promise<void> {
-    if (missionId && missionId !== this.state.missionId) await this.chooseMission(missionId, { keepSelection: true });
+    if (missionId && missionId !== this.state.missionId) {
+      // visible response at once while the other mission loads (checklist 07)
+      renderDetailLoading(this.detail, this, id);
+      await this.chooseMission(missionId, { keepSelection: true });
+    }
     const m = this.mission();
     if (!m) return;
     const seq = ++this.detailSeq;
@@ -483,6 +492,7 @@ export class FlowApp {
     if (!wasTwin) {
       globesApi.resetView();
       void this.viewTwinZone();
+      this.viewTopEarth();
     }
     this.missionPanel.render();
     if (id != null) this.missionPanel.focusRow(id);
@@ -505,9 +515,9 @@ export class FlowApp {
     openDataDialog(missionId);
   }
 
-  /** Text block shown when the bundle has no twin (panel and Moon side). */
-  noTwinText(): string {
-    return 'Under the current rule each Earth point is compared with the average of the whole Moon; no single lunar place is designated.';
+  /** Why there is no twin, verbatim from the bundle (the mission's similarity.no_twin_reason, else similarity.json's). */
+  noTwinText(m: Mission | null = this.mission()): string {
+    return m?.similarity.no_twin_reason ?? this.store.similarity.no_twin_reason ?? this.store.missionsJson.missions.find((x) => x.similarity.no_twin_reason)?.similarity.no_twin_reason ?? '';
   }
 
   /** The true cell size in plain words (both bodies). */
@@ -523,7 +533,7 @@ export class FlowApp {
       const zone = m?.similarity.zone?.name;
       return `Similarity rule: each Earth point is paired with its most similar lunar cell inside the mission's target zone${zone ? ` (${zone})` : ''}.`;
     }
-    return 'Similarity rule: each Earth point is compared with the average of the whole Moon; no single lunar place is designated.';
+    return `Similarity rule: ${this.noTwinText()}`;
   }
 
   updateMoonNote(): void {
@@ -537,5 +547,23 @@ export class FlowApp {
     } else {
       this.moonNote.append(h('p', null, this.noTwinText()));
     }
+    this.updateEarthNote();
+  }
+
+  /** The Earth-side legend of the markers (what size, brightness and the numbers mean). */
+  updateEarthNote(): void {
+    const el = document.getElementById('earth-rule');
+    if (!el) return;
+    const m = this.mission();
+    el.replaceChildren();
+    if (!this.dataReady || !m) return;
+    const n = this.ranking().length;
+    el.append(h('p', null, `Markers: the ${n.toLocaleString('en-GB')} ranked places; larger and brighter means a higher final score; numbers are the top 10 ranks.`));
+  }
+
+  /** Turn the Earth camera to the best-ranked places of the open mission. */
+  private viewTopEarth(): void {
+    const top = this.ranking()[0];
+    if (top) void globesApi.flyTo('earth', top.lat, top.lon, 9000, 1.2);
   }
 }

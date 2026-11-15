@@ -27,6 +27,11 @@ export async function loadMediaIndex(): Promise<void> {
   }
 }
 
+/** Whether any mission video exists (the step count does not depend on the mission data). */
+export function anyVideo(): boolean {
+  return Object.values(index).some((e) => (e?.sources.length ?? 0) > 0);
+}
+
 export function hasVideo(m: Mission): boolean {
   return (index[missionMediaFolder(m)]?.sources.length ?? 0) > 0;
 }

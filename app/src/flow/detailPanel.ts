@@ -5,10 +5,10 @@
 // the other two missions; the ice component for Lunar base; then Back and Start mission.
 
 import type { GateRow, MissionOutcome, RequiredRow } from '../data/store.ts';
-import type { Level } from '../data/types.ts';
+import type { Level, Mission, ReasonCode } from '../data/types.ts';
 import type { FlowApp } from './app';
-import { missionName, statusWords } from './copy';
-import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, num, valueText, verdict } from './dom';
+import { REGION_CAVEAT, missionName, statusWords } from './copy';
+import { LEVEL_WORDS, button, capitalise, fixed, h, icon, int, latLonText, levelTag, limitWords, num, valueText, verdict } from './dom';
 import { levelLegend } from './legend';
 import { hasVideo } from './media';
 
@@ -19,7 +19,80 @@ function cellSize(app: FlowApp, lat: number, body: 'EARTH' | 'MOON'): string {
   const g = app.store.manifest.grid.bodies[body];
   const ns = g.cell_ns_km;
   const ew = ns * Math.cos((lat * Math.PI) / 180);
-  return `${int(ns)} km north-south x ${int(ew)} km east-west`;
+  // one decimal below 10 km, so a polar cell never reads "0 km"
+  return `${int(ns)} km north-south x ${ew < 10 ? num(ew, 1) : int(ew)} km east-west`;
+}
+
+/** The level word of a shown value: "no data" when the value is missing (one of the four levels). */
+function levelOfValue(value: unknown, level: Level | string | null | undefined): HTMLElement {
+  return levelTag(value == null ? 'NO_DATA' : (level as Level | null | undefined));
+}
+
+function unitOf(app: FlowApp, m: Mission, variable: string): string {
+  return app.store.variable(variable)?.unit ?? m.weighted_variables.find((w) => w.variable === variable)?.unit ?? '';
+}
+
+/**
+ * The true baseline and caveat of a relief variable (variables.json bodies.EARTH), resolving
+ * "see <variable> baseline" to that variable's own text. Null for variables without a baseline.
+ */
+export function reliefNote(app: FlowApp, variable: string): { baseline: string; caveat: string } | null {
+  const e = app.store.variable(variable)?.bodies.EARTH;
+  if (!e?.true_baseline) return null;
+  let caveat = e.caveat ?? '';
+  let baseline = e.true_baseline;
+  const ref = /^see (\S+) baseline$/.exec(caveat.trim());
+  if (ref) {
+    const r = app.store.variable(ref[1])?.bodies.EARTH;
+    caveat = r?.caveat ?? '';
+    if (/^see /.test(baseline)) baseline = r?.true_baseline ?? baseline;
+  }
+  return { baseline, caveat };
+}
+
+function reliefSub(app: FlowApp, variable: string): HTMLElement | null {
+  const n = reliefNote(app, variable);
+  return n ? h('span', { class: 'sub note', 'data-note': 'baseline' }, `True baseline: ${n.baseline} (see "Slope and roughness" below)`) : null;
+}
+
+/** The caveat of every relief variable shown in the panel, once each (ASSUMPTIONS 0.9 item 3). */
+function reliefSection(app: FlowApp, variables: string[]): HTMLElement | null {
+  const seen = new Set<string>();
+  const items: HTMLElement[] = [];
+  for (const v of variables) {
+    const n = reliefNote(app, v);
+    const label = app.store.variable(v)?.label ?? v;
+    if (!n || seen.has(label)) continue;
+    seen.add(label);
+    items.push(h('li', { 'data-variable': v }, h('strong', null, `${label}: `), `true baseline ${n.baseline}. ${capitalise(n.caveat)}`));
+  }
+  if (!items.length) return null;
+  return h(
+    'section',
+    { class: 'panel-sec relief', 'data-sec': 'relief' },
+    h('h3', null, 'Slope and roughness'),
+    h('p', { class: 'muted' }, `These are averages over a cell of about ${int(app.store.manifest.grid.bodies.EARTH.cell_ns_km)} km, computed over kilometre baselines, not rover-scale values.`),
+    h('ul', { class: 'notes' }, items),
+  );
+}
+
+/** One elimination reason in plain words: the variable's label, this cell's value and the limit. */
+export function reasonWords(app: FlowApp, o: MissionOutcome, r: ReasonCode): string {
+  const m = o.mission;
+  const label = app.store.labelOfMissionVariable(m, r.variable);
+  if (r.kind === 'missing') return `${label}: no data for this cell`;
+  const row = [...o.common, ...o.gates].find((g) => g.gate.variable === r.variable);
+  if (!row) return capitalise(r.label);
+  const unit = unitOf(app, m, r.variable);
+  const val = valueText(row.value.value, unit);
+  if (r.kind === 'below_min') return `${label} below the minimum: ${val}, needs ${limitWords(row.gate, unit)}`;
+  if (r.kind === 'above_max') return `${label} above the maximum: ${val}, needs ${limitWords(row.gate, unit)}`;
+  return `${label}: ${val}, which this mission excludes (${limitWords(row.gate, unit)})`;
+}
+
+/** Short reason labels (bundle reason_codes[].label), for lists. */
+function reasonLabels(o: MissionOutcome): string {
+  return o.reasons.map((r) => capitalise(r.label)).join('; ');
 }
 
 function backButton(app: FlowApp): HTMLButtonElement {
@@ -58,9 +131,17 @@ function gateTable(caption: string, rows: GateRow[], app: FlowApp, m: MissionOut
         h(
           'tr',
           { class: r.pass ? 'is-pass' : 'is-fail', 'data-variable': r.gate.variable, 'data-pass': String(r.pass) },
-          h('th', { scope: 'row' }, app.store.labelOfMissionVariable(m.mission, r.gate.variable)),
-          h('td', { class: 'mono' }, r.gate.limit),
-          h('td', null, valueText(r.value.value, app.store.variable(r.gate.variable)?.unit ?? m.mission.weighted_variables.find((w) => w.variable === r.gate.variable)?.unit ?? '')),
+          h(
+            'th',
+            { scope: 'row' },
+            app.store.labelOfMissionVariable(m.mission, r.gate.variable),
+            reliefSub(app, r.gate.variable),
+            r.gate.variable === 'mask_fraction' && typeof r.value.value === 'number' && r.value.value < 0.5
+              ? h('span', { class: 'sub note', 'data-note': 'half-land' }, 'Less than half of this cell is land, so its averages mix land and sea: a coarse cell.')
+              : null,
+          ),
+          h('td', { 'data-limit': r.gate.limit }, limitWords(r.gate, unitOf(app, m.mission, r.gate.variable))),
+          h('td', null, h('span', { class: 'val' }, valueText(r.value.value, unitOf(app, m.mission, r.gate.variable))), h('span', { class: 'sub' }, levelOfValue(r.value.value, app.store.levelOf(r.gate.variable, 'EARTH')))),
           h('td', null, verdict(r.pass)),
         ),
       ),
@@ -109,8 +190,25 @@ export function tempMark(app: FlowApp): HTMLElement | null {
 }
 
 function missingTempNote(app: FlowApp): HTMLElement | null {
-  const t = app.store.text('missing_temperature_note');
+  // The approved note describes a twin chosen on relief only: it applies only when the bundle has twins.
+  const t = app.store.hasTwins() ? app.store.text('missing_temperature_note') : null;
   return h('div', { class: 'note-box', 'data-note': 'missing-temperature' }, tempMark(app), t ? h('p', null, t) : null);
+}
+
+/** Headline of the pair (checklist 06 extra, legible from 2 m): the lunar match and the three scores. */
+function pairStrip(app: FlowApp, o: MissionOutcome): HTMLElement | null {
+  if (!o.pass) return null;
+  const st = app.store;
+  const fig = (k: string, v: string, key: string) => h('div', { class: 'fig', 'data-fig': key }, h('dt', null, k), h('dd', null, v));
+  let moon: string;
+  if (st.hasTwins()) moon = o.twin?.feature ? `near ${o.twin.feature.name}` : o.twin ? `lunar cell at ${latLonText(o.twin.lat, o.twin.lon)}` : 'no lunar twin';
+  else moon = (st.similarity.target as { name?: string }).name ?? 'the whole-Moon average';
+  return h(
+    'div',
+    { class: 'pair-strip' },
+    h('p', { class: 'pair-line' }, h('span', { class: 'pair-k' }, st.hasTwins() ? 'Paired on the Moon with' : 'Compared on the Moon with'), h('strong', null, moon)),
+    h('dl', { class: 'figs' }, fig('Final', fixed(o.final, 2), 'final'), fig('Similarity', fixed(o.similarity, 2), 'similarity'), fig('Suitability', fixed(o.suitability, 2), 'suitability')),
+  );
 }
 
 export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: MissionOutcome): void {
@@ -134,6 +232,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     h('p', { class: 'coords' }, `${latLonText(lat, lon)} · cell ${id}`),
     h('p', { class: 'muted' }, `A 1° cell of about ${cellSize(app, lat, 'EARTH')}: every value below is an average over the whole cell, not a site.`),
     place.nearest && place.nearestKm != null && place.nearestKm <= NEAREST_PLACE_MAX_KM ? h('p', { class: 'muted' }, `Nearest populated place: ${place.nearest}, ${num(place.nearestKm, 0)} km from the cell centre.`) : null,
+    place.region ? h('p', { class: 'muted', 'data-note': 'region' }, REGION_CAVEAT) : null,
+    pairStrip(app, o),
   );
 
   // 2. result
@@ -142,12 +242,19 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         'p',
         { class: 'result is-pass', 'data-result': 'pass', 'data-rank': String(rank ?? '') },
         verdict(true, ['Passes', '']),
-        h('span', null, ` Rank ${rank ?? 'not ranked'} of ${int(total)} · final score `, h('strong', { class: 'final' }, fixed(o.final, 2)), ' / 100'),
+        h('span', null, ` Rank ${rank == null ? 'not ranked' : int(rank)} of ${int(total)} · final score `, h('strong', { class: 'final' }, fixed(o.final, 2)), ' / 100'),
         h('span', { class: 'tag' }, statusWords(m)),
         custom ? h('span', { class: 'tag' }, 'your weights') : null,
         o.missingTemp ? tempMark(app) : null,
       )
-    : h('p', { class: 'result is-fail', 'data-result': 'fail' }, verdict(false, ['', 'Eliminated for this mission:']), h('span', { class: 'reason' }, o.line));
+    : h(
+        'p',
+        { class: 'result is-fail', 'data-result': 'fail' },
+        verdict(false, ['', 'Eliminated for this mission:']),
+        h('span', { class: 'reason' }, o.reasons.map((r) => reasonWords(app, o, r)).join('; ') + '.'),
+        // the engine's exact reason (missions.json reason_codes[].text), as the team's reason format requires
+        h('span', { class: 'reason-exact' }, 'Exact reason as the engine writes it: ', h('code', null, o.line)),
+      );
 
   // 3. the lunar side, up front: which place on the Moon this point is compared with
   let lunar: HTMLElement;
@@ -176,7 +283,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       'section',
       { class: 'panel-sec lunar', 'data-twin': 'none' },
       h('h3', null, 'Lunar side'),
-      h('p', { class: 'lead no-twin' }, app.noTwinText()),
+      h('p', { class: 'lead no-twin' }, app.noTwinText(m)),
       h('p', { class: 'muted' }, `The lunar reference is "${(store.similarity.target as { name?: string }).name ?? 'the whole-Moon average'}": the values in the similarity table below. There is no lunar marker, beam or paired view under this rule.`),
     );
   }
@@ -198,7 +305,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
       h(
         'tr',
         { 'data-variable': r.wv.variable },
-        h('th', { scope: 'row' }, r.wv.label, h('span', { class: 'sub' }, valueText(r.value.value, r.wv.unit), ' · ', levelTag(r.wv.levels.EARTH))),
+        h('th', { scope: 'row' }, r.wv.label, h('span', { class: 'sub' }, valueText(r.value.value, r.wv.unit), ' · ', levelOfValue(r.value.value, r.wv.levels.EARTH)), reliefSub(app, r.wv.variable)),
         h('td', null, bar(r.utility), h('span', { class: 'num' }, r.utility == null ? 'no data' : num(r.utility, 3))),
         h('td', { class: 'num' }, num(r.weight, 2)),
         h('td', { class: 'num' }, r.contribution == null ? 'ignored' : num(r.contribution, 3)),
@@ -229,9 +336,9 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
     h(
       'tr',
       { class: r.clipped ? 'is-clipped' : '', 'data-variable': r.sv.variable },
-      h('th', { scope: 'row' }, r.label, h('span', { class: 'sub' }, `weight ${num(r.normWeight, 3)}`)),
-      h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, zText(r.earth.z), ' · ', levelTag(r.earth.level))),
-      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, zText(r.moon.z), ' · ', levelTag(r.moon.level)))),
+      h('th', { scope: 'row' }, r.label, h('span', { class: 'sub' }, `weight ${num(r.normWeight, 3)}`), reliefSub(app, r.sv.columns.EARTH && store.variable(r.sv.columns.EARTH) ? r.sv.columns.EARTH : r.sv.variable)),
+      h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, zText(r.earth.z), ' · ', levelOfValue(r.earth.value, r.earth.level))),
+      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, zText(r.moon.z), ' · ', levelOfValue(r.moon.value, r.moon.level)))),
     ),
   );
   const notActive = store.similarity.variables.filter((v) => v.status !== 'active');
@@ -246,8 +353,8 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         h('span', { class: 'sub' }, 'not part of the similarity'),
         r.variable === 'rock_or_bare_frac' && store.text('rock_note') ? h('span', { class: 'sub note', 'data-note': 'rock' }, store.text('rock_note')) : null,
       ),
-      h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, levelTag(r.earth.level))),
-      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, r.moon.how === 'commonest' ? 'commonest class · ' : r.moon.how === 'mean' ? 'whole-Moon mean · ' : '', levelTag(r.moon.level)))),
+      h('td', null, h('span', { class: 'val' }, valueText(r.earth.value, r.unit)), h('span', { class: 'sub' }, levelOfValue(r.earth.value, r.earth.level))),
+      moonCell(h('td', null, h('span', { class: 'val' }, valueText(r.moon.value, r.unit)), h('span', { class: 'sub' }, r.moon.how === 'commonest' ? 'commonest class · ' : r.moon.how === 'mean' ? 'whole-Moon mean · ' : '', levelOfValue(r.moon.value, r.moon.level)))),
     ),
   );
   sections.push(
@@ -275,7 +382,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
                 null,
                 h('strong', null, `${store.similarityLabel(v.variable).label}: `),
                 v.status === 'excluded' ? 'excluded on these data. ' : 'not active on these data. ',
-                v.variable === 'rock_or_bare_frac' && store.text('rock_note') ? 'shown below for information.' : capitalise(v.status_reason ?? ''),
+                v.variable === 'rock_or_bare_frac' && store.text('rock_note') ? 'Shown below for information.' : capitalise(v.status_reason ?? ''),
               ),
             ),
           )
@@ -288,6 +395,14 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
         h('tbody', null, infoRows),
       ),
     ),
+  );
+
+  sections.push(
+    reliefSection(app, [
+      ...[...o.common, ...o.gates].map((g) => g.gate.variable),
+      ...o.breakdown.map((b) => b.wv.variable),
+      ...o.similarityRows.map((r) => (r.sv.columns.EARTH && store.variable(r.sv.columns.EARTH) ? r.sv.columns.EARTH : r.sv.variable)),
+    ]),
   );
 
   if (o.pass) {
@@ -360,7 +475,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
             { 'data-mission': x.id },
             h('span', { class: 'other-name' }, missionName(x)),
             verdict(oo.pass, ['Passes', 'Eliminated']),
-            h('span', { class: 'other-what' }, oo.pass ? `rank ${oo.rank} of ${int(x.ranked_count)}, final ${fixed(oo.final, 2)}` : oo.line),
+            h('span', { class: 'other-what' }, oo.pass ? `rank ${oo.rank == null ? 'not ranked' : int(oo.rank)} of ${int(x.ranked_count)}, final ${fixed(oo.final, 2)}` : reasonLabels(oo)),
             button(`Open in ${missionName(x)}`, () => void app.select(id, x.id), { kind: 'quiet', cls: 'btn-small', iconAfter: 'next' }),
           );
         }),
@@ -380,7 +495,7 @@ export function renderDetail(root: HTMLElement, app: FlowApp, id: number, o: Mis
           'p',
           null,
           verdict(ice.pass, ['Passes the ice filters', 'Does not pass the ice filters']),
-          ice.pass ? ` · ice suitability ${fixed(ice.suitability, 2)} / 100` : h('span', { class: 'reason' }, `: ${ice.line}`),
+          ice.pass ? ` · ice suitability ${fixed(ice.suitability, 2)} / 100` : h('span', { class: 'reason' }, `: ${ice.reasons.map((r) => capitalise(r.label)).join('; ')}`),
         ),
         ice.pass
           ? h('ul', { class: 'notes' }, ice.utilities.map((u) => h('li', null, `${u.wv.label}: ${valueText(u.value.value, u.wv.unit)}, utility ${u.utility == null ? 'no data' : num(u.utility, 3)}`)))

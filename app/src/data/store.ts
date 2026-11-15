@@ -43,10 +43,12 @@ export class DataError extends Error {
   readonly file: string;
   readonly detail: string;
   constructor(file: string, detail: string) {
+    // The technical detail (HTTP status, network error) goes to the console, not on screen.
     super(
-      `The mission data file "${file}" could not be loaded (${detail}). ` +
+      `The mission data file "${file}" could not be loaded. ` +
         'Check the network connection and reload the page; if it keeps failing, the site was published without its data folder.',
     );
+    if (typeof console !== 'undefined') console.warn(`[data] ${file}: ${detail}`);
     this.name = 'DataError';
     this.file = file;
     this.detail = detail;
@@ -692,7 +694,8 @@ export class DataStore {
           points: u == null || den === 0 ? null : (100 * w[i] * u) / den,
         };
       })
-      .sort((a, b) => (b.contribution ?? -1) - (a.contribution ?? -1));
+      // by contribution, ties by variable name (the engine's explain.json order)
+      .sort((a, b) => (b.contribution ?? -1) - (a.contribution ?? -1) || (a.wv.variable < b.wv.variable ? -1 : a.wv.variable > b.wv.variable ? 1 : 0));
 
     const p = landPos >= 0 ? md.passPos[landPos] : -1;
     const stored = (name: string) => (p >= 0 ? this.q(md.table, name, p) : null);

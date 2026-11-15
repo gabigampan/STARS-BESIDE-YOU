@@ -38,6 +38,34 @@ export function statusWords(m: Mission): string {
   return m.threshold_status.status === 'provisional' ? 'Provisional thresholds' : 'Team design values';
 }
 
-export const PURPOSE =
-  'Find the places on Earth where a Moon mission can be tested, see how closely each one resembles the Moon, and why.';
+/** The purpose sentence; with twins the result is a pair (an Earth place and its lunar match). */
+export function purposeText(twins: boolean): string {
+  return twins
+    ? 'Find the places on Earth where a Moon mission can be tested, each paired with the place on the Moon it matches (each world measured on its own scale), and see why.'
+    : 'Find the places on Earth where a Moon mission can be tested, see how each one compares with the Moon (each world measured on its own scale), and why.';
+}
+
+/**
+ * English display words for the team's class names (variables.json categories are kept verbatim in
+ * Spanish in the bundle). Display only: the bundle's values, thresholds and utilities are unchanged.
+ */
+export const CLASS_WORDS: Record<string, string> = {
+  roca: 'rock',
+  regolito: 'regolith',
+  arena: 'sand',
+  suelo: 'soil',
+  hielo: 'ice',
+  agua: 'water',
+  continuo: 'continuous',
+  discontinuo: 'discontinuous',
+  esporadico: 'sporadic',
+  ninguno: 'none',
+};
+
+export function classWord(c: string): string {
+  return CLASS_WORDS[c] ?? c;
+}
+
+/** The region label rule in plain words (ASSUMPTIONS 0.9 item 6). */
+export const REGION_CAVEAT = 'The region name is taken from the nearest populated place (GeoNames) and can be wrong.';
 export const AUDIENCE = 'For teams that test lunar rovers, solar arrays and base equipment on Earth before they fly.';

@@ -198,7 +198,55 @@ class BodyMarkers {
     return this.view.scene;
   }
 
+  /** Rank label of an entry (top ranks only). */
+  private addRankLabel(entry: Entry, topLabels: number): void {
+    const item = entry.item;
+    if (item.rank == null || item.rank < 1 || item.rank > topLabels) return;
+    entry.rankLabel = this.rankLabels.add({
+      position: entry.point.position,
+      text: String(item.rank),
+      font: `600 14px ${FONT}`,
+      fillColor: TEXT,
+      outlineColor: HALO,
+      outlineWidth: 4,
+      style: LabelStyle.FILL_AND_OUTLINE,
+      horizontalOrigin: HorizontalOrigin.LEFT,
+      verticalOrigin: VerticalOrigin.CENTER,
+      pixelOffset: new Cartesian2(entry.size / 2 + 4, 0),
+      disableDepthTestDistance: NO_DEPTH,
+      // Slightly smaller when the camera is far, never below legibility.
+      scaleByDistance: new NearFarScalar(1.0e6, 1.0, 4.0e7, 1.0),
+    });
+  }
+
+  /**
+   * Same set of ids with new scores or ranks (the weight sliders): restyle the existing points in
+   * place instead of rebuilding thousands of primitives. Returns false when the ids differ.
+   */
+  private restyle(items: readonly MarkerItem[], topLabels: number): boolean {
+    if (!this.entries.length || items.length !== this.entries.length) return false;
+    for (const it of items) {
+      const e = this.byId.get(it.id);
+      if (!e || e.item.lat !== it.lat || e.item.lon !== it.lon || e.item.label !== it.label) return false;
+    }
+    this.rankLabels.removeAll();
+    for (const it of items) {
+      const entry = this.byId.get(it.id)!;
+      entry.item = it;
+      entry.base = baseColor(it.score);
+      entry.size = sizeFor(it.score);
+      entry.point.color = entry.base;
+      entry.point.pixelSize = entry.size;
+      entry.fade = -1; // the next update re-applies the limb fade to the new colour
+      entry.rankLabel = undefined;
+      this.addRankLabel(entry, topLabels);
+    }
+    this.invalidate();
+    return true;
+  }
+
   set(items: readonly MarkerItem[], topLabels: number): void {
+    if (this.restyle(items, topLabels)) return;
     this.points.removeAll();
     this.rankLabels.removeAll();
     this.entries = [];
@@ -222,23 +270,7 @@ class BodyMarkers {
       });
       ellipsoid.transformPositionToScaledSpace(position, scaled);
       const entry: Entry = { item, point, base, size, sx: scaled.x, sy: scaled.y, sz: scaled.z, fade: 1 };
-      if (item.rank != null && item.rank >= 1 && item.rank <= topLabels) {
-        entry.rankLabel = this.rankLabels.add({
-          position,
-          text: String(item.rank),
-          font: `600 14px ${FONT}`,
-          fillColor: TEXT,
-          outlineColor: HALO,
-          outlineWidth: 4,
-          style: LabelStyle.FILL_AND_OUTLINE,
-          horizontalOrigin: HorizontalOrigin.LEFT,
-          verticalOrigin: VerticalOrigin.CENTER,
-          pixelOffset: new Cartesian2(size / 2 + 4, 0),
-          disableDepthTestDistance: NO_DEPTH,
-          // Slightly smaller when the camera is far, never below legibility.
-          scaleByDistance: new NearFarScalar(1.0e6, 1.0, 4.0e7, 1.0),
-        });
-      }
+      this.addRankLabel(entry, topLabels);
       this.entries.push(entry);
       this.byId.set(item.id, entry);
     }
@@ -291,9 +323,18 @@ class BodyMarkers {
   }
 
   /** Horizon test and limb fade, only when the camera moved or the markers changed. */
+  private lastW = -1;
+  private lastH = -1;
+
   private update(): void {
     const camera = this.scene.camera;
-    const moved = !Matrix4.equalsEpsilon(camera.viewMatrix, this.lastView, 1e-9);
+    // A resized canvas changes every screen position without moving the camera.
+    const cw = this.scene.canvas.clientWidth;
+    const ch = this.scene.canvas.clientHeight;
+    const resized = cw !== this.lastW || ch !== this.lastH;
+    this.lastW = cw;
+    this.lastH = ch;
+    const moved = resized || !Matrix4.equalsEpsilon(camera.viewMatrix, this.lastView, 1e-9);
     if (!moved && !this.dirty) return;
     Matrix4.clone(camera.viewMatrix, this.lastView);
     this.dirty = false;

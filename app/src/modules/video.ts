@@ -58,8 +58,28 @@ export class VideoDialog implements VideoApi {
     this.spec = spec;
     this.fill(spec);
     dialog.showModal();
-    (dialog.querySelector('.video-close') as HTMLButtonElement).focus();
+    this.startPlayback(dialog);
     return new Promise((resolve) => (this.resolveClose = resolve));
+  }
+
+  /**
+   * "Start the mission" starts the film: focus goes to the player (Space then pauses or plays it, it
+   * never closes the dialog) and playback begins, muted if the browser refuses sound without a
+   * gesture. Under prefers-reduced-motion the film waits, paused, with focus on the player.
+   */
+  private startPlayback(dialog: HTMLDialogElement): void {
+    const video = dialog.querySelector('video');
+    if (!video) {
+      (dialog.querySelector('.video-retry, .video-close') as HTMLButtonElement | null)?.focus();
+      return;
+    }
+    video.tabIndex = 0;
+    video.focus();
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    video.play().catch(() => {
+      video.muted = true;
+      return video.play().catch(() => undefined);
+    });
   }
 
   closeVideo(): void {

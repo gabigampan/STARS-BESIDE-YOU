@@ -781,6 +781,7 @@ async function run(name, viewport, { touch = false } = {}) {
     await page.waitForFunction(() => document.querySelector('dialog.video-dialog video')?.readyState >= 1, null, { timeout: 60_000 });
     const v = await page.evaluate(async () => {
       const video = document.querySelector('dialog.video-dialog video');
+      const wasPlaying = !video.paused;
       video.currentTime = 4;
       await new Promise((r) => video.addEventListener('seeked', r, { once: true }));
       await new Promise((r) => setTimeout(r, 400));
@@ -792,7 +793,8 @@ async function run(name, viewport, { touch = false } = {}) {
         activeCue: showing?.activeCues?.[0]?.text ?? null,
         credit: document.querySelector('.video-credit').textContent,
         note: document.querySelector('.video-note').textContent,
-        active: document.activeElement?.className,
+        active: document.activeElement?.tagName,
+        playing: wasPlaying,
         modal: document.querySelector('dialog.video-dialog').matches(':modal'),
         closeLabel: document.querySelector('.video-close').getAttribute('aria-label'),
         closeSize: (() => {
@@ -804,7 +806,8 @@ async function run(name, viewport, { touch = false } = {}) {
     check(v.modal && v.controls, 'video dialog is modal with native controls');
     check(v.tracks[0]?.endsWith(':showing') && !!v.activeCue, `captions on by default (${v.tracks.join(', ')}; cue "${(v.activeCue ?? '').split('\n')[0]}")`);
     check(v.credit === MEDIA.credit && v.note === MEDIA.note, 'credit line and note under the player');
-    check(/video-close/.test(v.active ?? '') && v.closeLabel === 'Close video' && v.closeSize[0] >= 44 && v.closeSize[1] >= 44, 'focus starts on the 44 px close (X) button');
+    check(v.active === 'VIDEO' && v.closeLabel === 'Close video' && v.closeSize[0] >= 44 && v.closeSize[1] >= 44, `focus starts on the player (${v.active}; Space plays or pauses, never closes); the X is 44 px`);
+    check(v.playing, 'the film starts playing when the dialog opens (muted if the browser blocks sound)');
     await shot(page, `${name}-09-video`);
     // Focus trap: Tab and Shift+Tab never leave the dialog.
     let escaped = false;

@@ -331,8 +331,14 @@ a:hover {
   font-family: var(--font-body) !important;
   font-size: 14px !important;
   color: #d9d7d2 !important;
-  text-shadow: 0 0 3px #000, 0 0 2px #000;
+  text-shadow: none;
   max-width: calc(100% - 12px);
+  /* a solid backing: the credit must read on any imagery (checklist 05) */
+  background: rgba(10, 12, 15, 0.92);
+  padding: 0 8px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  white-space: normal;
 }
 .cesium-widget-credits a {
   color: #e8e6e1 !important;

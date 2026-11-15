@@ -4,7 +4,7 @@
 
 import type { DataStore } from '../data/store.ts';
 import { missionName, statusWords } from './copy';
-import { append, h, int, levelTag } from './dom';
+import { append, capitalise, h, int, levelTag } from './dom';
 
 const add = (el: Element, ...c: (Node | string | null)[]) => append(el, c);
 
@@ -20,10 +20,9 @@ export function renderDataDialog(store: DataStore, ruleText: string, meaning: st
     h('h3', { class: 'dlg-h' }, 'How to read the results'),
     h('p', null, `Every point is a 1° grid cell: about ${int(g.EARTH.cell_ns_km)} km north-south on Earth and ${int(g.MOON.cell_ns_km)} km on the Moon (narrower east-west towards the poles). Every value is an average over the whole cell; nothing here describes a rover-scale site.`),
     h('p', { 'data-note': 'meaning' }, meaning),
-    h('p', { 'data-note': 'rule' }, h('strong', null, 'Similarity rule in use. '), ruleText.replace(/^Similarity rule: /, '')),
-    h('p', { class: 'muted' }, `Technical detail (${sim.rule}): ${sim.rule_options[sim.rule] ?? ''}`),
-    sim.no_twin_reason ? h('p', null, sim.no_twin_reason) : null,
-    h('p', null, 'Final score = alpha x similarity + (1 - alpha) x suitability; ', `alpha = ${store.missionsJson.alpha}. `, store.missionsJson.alpha_why),
+    h('p', { 'data-note': 'rule' }, h('strong', null, 'Similarity rule in use. '), capitalise(ruleText.replace(/^Similarity rule: /, ''))),
+    sim.no_twin_reason && !ruleText.includes(sim.no_twin_reason) ? h('p', null, sim.no_twin_reason) : null,
+    h('p', null, 'Final score = alpha x similarity + (1 - alpha) x suitability; ', `alpha = ${store.missionsJson.alpha} for every mission (the team's value; it can be changed under "Adjust the weights").`),
   );
 
   add(wrap, h('h3', { class: 'dlg-h' }, 'The filter funnel (the same for every mission)'), h('ol', { class: 'funnel' }, store.missionsJson.funnel.map((f) => h('li', null, h('strong', null, `${f.name[0].toUpperCase()}${f.name.slice(1)}. `), f.text))));
@@ -32,10 +31,25 @@ export function renderDataDialog(store: DataStore, ruleText: string, meaning: st
     add(wrap, 
       h('h3', { class: 'dlg-h', id: `limits-${m.id}`, tabindex: '-1' }, `${missionName(m)} mission: known limitations`),
       h('p', null, h('strong', null, `${statusWords(m)}. `), m.threshold_status.text),
-      m.provisional_note ? h('p', { lang: 'es' }, `Team note: ${m.provisional_note}`) : null,
-      h('ul', null, m.known_limitations.map((l) => h('li', null, l))),
+      m.provisional_note
+        ? h('details', { class: 'team-note' }, h('summary', null, "The team's original note (in Spanish, verbatim)"), h('p', { lang: 'es' }, m.provisional_note))
+        : null,
+      // the solar limitation describes the twin: under a rule without twins it does not apply (as on the card)
+      h('ul', null, m.known_limitations.filter((l) => store.hasTwins() || l !== store.similarity.texts?.['solar_limitation']?.text).map((l) => h('li', null, l))),
     );
   }
+
+  // the code-level wording, for reviewers who want to trace a number to the engine
+  add(
+    wrap,
+    h(
+      'details',
+      { class: 'tech-notes' },
+      h('summary', null, 'Technical notes for reviewers'),
+      h('p', null, `Similarity rule "${sim.rule}": ${sim.rule_options[sim.rule] ?? ''}`),
+      h('p', null, `Alpha: ${store.missionsJson.alpha_why}`),
+    ),
+  );
 
   add(wrap, 
     h('h3', { class: 'dlg-h' }, 'Data levels'),

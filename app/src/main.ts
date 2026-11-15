@@ -15,7 +15,7 @@ import { Focus } from './modules/focus';
 import { Markers } from './modules/markers';
 import { Sunlight, bindSunlightControl } from './modules/sunlight';
 import { VideoDialog } from './modules/video';
-import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons } from './ui/shell';
+import { LoadingScreen, setupCredits, setupLabelsToggle, setupResetButtons, setupViewMenu } from './ui/shell';
 import { FlowApp } from './flow/app';
 
 declare global {
@@ -88,6 +88,7 @@ function main(): void {
       : [],
   );
   setupLabelsToggle(setLabels);
+  setupViewMenu();
   setupResetButtons((body) => globesApi.resetView(body));
   bindSunlightControl(sunlight);
 

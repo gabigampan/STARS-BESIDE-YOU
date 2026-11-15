@@ -1,7 +1,8 @@
 // Small DOM and formatting helpers shared by every flow component (one implementation for every
 // repeated element: buttons, tags, rows, icons, level words).
 
-import type { Level } from '../data/types.ts';
+import type { Gate, Level } from '../data/types.ts';
+import { classWord } from './copy';
 
 type Child = Node | string | number | null | undefined | false | Child[];
 type Attrs = Record<string, string | number | boolean | null | undefined | EventListener>;
@@ -38,6 +39,7 @@ const ICONS: Record<string, string> = {
   play: 'M8 5.5v13l11-6.5z',
   info: 'M12 10.5v6M12 7.2v.1',
   ext: 'M14 5h5v5M19 5l-8 8M10 6H6v12h12v-4',
+  search: 'M10.5 4a6.5 6.5 0 1 1 0 13a6.5 6.5 0 1 1 0-13zM15.5 15.5L20 20',
 };
 
 /** A stroked 24 px icon (decorative unless `label` is given). */
@@ -141,13 +143,30 @@ const UNIT_TEXT: Record<string, string> = {
 /** Value with its unit for display (categories are shown by class name). Float32 values are rounded sensibly. */
 export function valueText(v: number | string | null | undefined, unit: string): string {
   if (v == null || (typeof v === 'number' && !Number.isFinite(v))) return 'no data';
-  if (typeof v === 'string') return v;
+  if (typeof v === 'string') return classWord(v);
   const u = UNIT_TEXT[unit] ?? unit;
   const abs = Math.abs(v);
   const d = unit === 'fraction 0-1' ? 3 : abs >= 100 ? 1 : abs >= 10 ? 2 : 3;
   const s = num(v, d);
   if (!u) return s;
   return u === '°' || u === '°C' ? `${s}${u}` : `${s} ${u}`;
+}
+
+/**
+ * A gate's limit in words, from gates[].min / max / allow / exclude (e.g. "at least 2.5 kWh/m²/day",
+ * "0.5 to 15°", "not water"); the engine's interval text (gates[].limit) stays available as the exact form.
+ */
+export function limitWords(g: Gate, unit: string): string {
+  const v = (x: number) => valueText(x, unit);
+  if (g.min != null && g.max != null) {
+    const u = UNIT_TEXT[unit] ?? unit;
+    return u === '' ? `${num(g.min, 3)} to ${num(g.max, 3)}` : `${v(g.min).replace(/\s?[^\d.,-]+$/, '')} to ${v(g.max)}`;
+  }
+  if (g.min != null) return `at least ${v(g.min)}`;
+  if (g.max != null) return `at most ${v(g.max)}`;
+  if (g.exclude?.length) return `not ${g.exclude.map(classWord).join(' or ')}`;
+  if (g.allow?.length) return `one of ${g.allow.map(classWord).join(', ')}`;
+  return g.limit;
 }
 
 export function latLonText(lat: number, lon: number): string {

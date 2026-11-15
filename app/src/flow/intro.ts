@@ -2,14 +2,14 @@
 // selector as the main action: exactly the missions the bundle offers, in its order.
 
 import type { FlowApp } from './app';
-import { AUDIENCE, PURPOSE, missionLine, missionName, statusWords } from './copy';
+import { AUDIENCE, missionLine, purposeText, missionName, statusWords } from './copy';
 import { button, h, icon, int } from './dom';
 
 export function renderIntro(root: HTMLElement, app: FlowApp): void {
   const hadFocus = root.contains(document.activeElement) ? (document.activeElement as HTMLElement).dataset.mission : undefined;
   const card = h('div', { class: 'intro-card' });
   card.append(
-    h('h2', { class: 'intro-title', id: 'intro-title', tabindex: '-1' }, PURPOSE),
+    h('h2', { class: 'intro-title', id: 'intro-title', tabindex: '-1' }, purposeText(app.hasData() && app.store.hasTwins())),
     h('p', { class: 'intro-audience' }, AUDIENCE),
   );
   const err = app.error();

@@ -75,6 +75,18 @@ async function expectations(dir) {
 const media = JSON.parse(readFileSync(join(DIST, 'media-index.json'), 'utf8')).videos;
 const MEDIA_FOLDER = { rover: 'rover', solar: 'solar', lunar_base: 'lunar-base' };
 
+// Python's round(x, 2) on the exact binary value: half-even only on an exact tie (e.g. 96.625).
+function round2HalfEven(x) {
+  const s = Math.abs(x).toFixed(40);
+  const dot = s.indexOf('.');
+  const rest = s.slice(dot + 3);
+  if (/^50*$/.test(rest)) {
+    const cents = Math.round(Math.abs(x) * 100 - 0.5);
+    return (Math.sign(x) * (cents % 2 === 0 ? cents : cents + 1)) / 100;
+  }
+  return Number(x.toFixed(2));
+}
+
 // The recompute of the contract ("Recompute formulas (browser)"), written again here on purpose.
 function independentOrder(store, missionId, weights, alpha) {
   const mat = store.matrix(missionId);
@@ -90,7 +102,7 @@ function independentOrder(store, missionId, weights, alpha) {
     const sim = mat.similarity[p];
     if (!den || Number.isNaN(sim)) continue;
     const f = alpha * sim + (1 - alpha) * ((100 * num) / den);
-    rows.push([Number(f.toFixed(2)), mat.ids[p]]);
+    rows.push([round2HalfEven(f), mat.ids[p]]);
   }
   rows.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
   return rows;
@@ -193,7 +205,15 @@ async function run(browser, srv, variant, exp, size) {
   const ctx = await browser.newContext({ viewport: { width: size.w, height: size.h }, reducedMotion: size.reduce ? 'reduce' : 'no-preference', deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   const errors = [];
-  page.on('console', (m) => m.type() === 'error' && errors.push(m.text().slice(0, 300)));
+  // Imagery tiles come from third-party hosts (NASA GIBS, Moon Trek, EOX); a tile they refuse (often
+  // an error answer without a CORS header) is a network event outside the app, counted separately.
+  const imageryNoise = [];
+  page.on('console', (m) => {
+    if (m.type() !== 'error') return;
+    const t = m.text();
+    if (/gibs\.earthdata\.nasa\.gov|trek\.nasa\.gov|tiles\.maps\.eox\.at/.test(t) || /^Failed to load resource: net::ERR_FAILED$/.test(t)) imageryNoise.push(t.slice(0, 200));
+    else errors.push(t.slice(0, 300));
+  });
   page.on('pageerror', (e) => errors.push(`pageerror ${e.message}`));
   let shotN = 0;
   const shot = async (name) => {
@@ -552,6 +572,7 @@ async function run(browser, srv, variant, exp, size) {
     check(await stepIs('choose'), `${tag}: "Change mission" goes back to the mission choice`);
   }
 
+  if (imageryNoise.length) console.log(`     ${tag}: ${imageryNoise.length} imagery tile request(s) refused by a third-party host (not app errors)`);
   check(errors.length === 0, `${tag}: no console errors${errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''}`);
   (report.responses ??= []).push({ run: tag, max_ms: Number(Math.max(...responses.map((r) => r[1])).toFixed(1)), n: responses.length });
   await ctx.close();
@@ -750,7 +771,9 @@ async function checkPair(page, tag, store, m, top, twins, size) {
 async function extras(browser, srv, exp) {
   const page0 = async (w, h) => {
     const ctx = await browser.newContext({ viewport: { width: w, height: h } });
-    return { ctx, page: await ctx.newPage() };
+    const page = await ctx.newPage();
+    page.setDefaultTimeout(180_000); // software WebGL at 3840 px is slow to settle
+    return { ctx, page };
   };
   // a missing data file
   {

@@ -6,7 +6,8 @@ import { globesApi } from '../api';
 import type { Mission } from '../data/types.ts';
 import type { FlowApp } from './app';
 import { missionLine, missionName, statusWords } from './copy';
-import { button, capitalise, fixed, h, icon, int, num } from './dom';
+import { button, capitalise, fixed, h, icon, int, latLonText, num } from './dom';
+import type { RankItem } from './app';
 import { levelLegend } from './legend';
 import { tempMark } from './detailPanel';
 
@@ -18,6 +19,7 @@ export class MissionPanel {
   private moreEl: HTMLElement | null = null;
   private statusEl: HTMLElement | null = null;
   private weightsOpen = false;
+  private query = '';
 
   constructor(
     private readonly app: FlowApp,
@@ -72,8 +74,13 @@ export class MissionPanel {
       'section',
       { class: 'panel-sec counts', 'aria-label': 'How many places pass' },
       h('p', { class: 'lead' }, `Of ${int(land)} land cells on Earth, `, h('strong', null, `${int(pass)} pass`), ` the ${missionName(m).toLowerCase()} filters and are ranked; ${int(land - pass)} are eliminated.`),
-      h('p', { class: 'muted' }, this.app.ruleText()),
-      h('p', { class: 'muted' }, this.app.cellSizeText()),
+    );
+    // the rule and the true cell size, right under the list (so the list starts in the first view)
+    const about = h(
+      'section',
+      { class: 'panel-sec about', 'aria-label': 'How to read the ranking' },
+      h('p', { class: 'muted', 'data-note': 'rule' }, this.app.ruleText()),
+      h('p', { class: 'muted', 'data-note': 'cell-size' }, this.app.cellSizeText()),
     );
     const funnel = h(
       'details',
@@ -150,17 +157,44 @@ export class MissionPanel {
     // ranking
     this.listEl = h('ol', { class: 'rank-list', 'aria-label': `Ranked places for the ${missionName(m)} mission` }) as HTMLOListElement;
     this.moreEl = h('div', { class: 'more' });
+    this.query = '';
+    const search = h('input', {
+      type: 'search',
+      id: 'rank-search',
+      class: 'search-input',
+      placeholder: this.app.store.hasTwins() ? 'Country, region or lunar feature' : 'Country or region',
+      autocomplete: 'off',
+      spellcheck: 'false',
+    }) as HTMLInputElement;
+    search.addEventListener('input', () => {
+      this.query = search.value.trim().toLowerCase();
+      this.limit = PAGE;
+      this.renderList();
+    });
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        (this.listEl?.querySelector('.rank-row') as HTMLElement | null)?.focus();
+        e.preventDefault();
+      }
+    });
+    const searchBox = h(
+      'div',
+      { class: 'search', role: 'search' },
+      h('label', { for: 'rank-search', class: 'search-label' }, 'Find a ranked place'),
+      h('div', { class: 'search-field' }, icon('search'), search),
+    );
     const ranking = h(
       'section',
       { class: 'panel-sec ranking', 'aria-labelledby': 'ranking-title' },
       h('h3', { id: 'ranking-title' }, 'Ranked places'),
       h('p', { class: 'muted' }, 'Pick a place in the list or a marker on the Earth globe to compare it with the Moon. Up and Down move through the list; Enter opens the comparison.'),
-      h('div', { class: 'rank-head', 'aria-hidden': 'true' }, h('span', null, 'Rank'), h('span', null, 'Place'), h('span', null, 'Final score')),
+      searchBox,
+      h('div', { class: 'rank-head', 'aria-hidden': 'true' }, h('span', null, 'Rank'), h('span', null, this.app.store.hasTwins() ? 'Earth place and its lunar twin' : 'Place'), h('span', null, 'Final score')),
       this.listEl,
       this.moreEl,
     );
 
-    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, counts, details, ranking, elim, funnel, levelLegend()));
+    this.root.replaceChildren(h('div', { class: 'panel-body' }, head, counts, details, ranking, about, elim, funnel, levelLegend()));
     this.setRecomputeStatus(this.app.usingCustom() ? 'custom' : 'team', this.app.lastRecomputeMs() ?? undefined);
     this.renderList();
     this.app.updateMoonNote();
@@ -173,19 +207,46 @@ export class MissionPanel {
     return h('div', { class: 'note-box limitation', 'data-note': 'limitation' }, icon('info'), h('p', null, t.text));
   }
 
+  /** The lunar side of a ranked row in words: "Moon: near <feature>" with twins, else nothing. */
+  private twinWords(it: RankItem): string | null {
+    const mid = this.app.state.missionId;
+    if (!mid || !this.app.store.hasTwins() || it.twinId == null) return null;
+    const t = this.app.store.twin(mid, it.twinId);
+    if (!t) return null;
+    return t.feature ? `Moon: near ${t.feature.name}` : `Moon: cell at ${latLonText(t.lat, t.lon)}`;
+  }
+
+  /** The ranking, filtered by the search words (place text and lunar twin name). */
+  private visibleItems(): RankItem[] {
+    const items = this.app.ranking();
+    const q = this.query;
+    if (!q) return items;
+    return items.filter((it) => it.place.toLowerCase().includes(q) || (this.twinWords(it)?.toLowerCase().includes(q) ?? false));
+  }
+
+  /** Keyboard focus on the main action of this screen: the first ranked place. */
+  focusFirst(): void {
+    const row = this.listEl?.querySelector<HTMLElement>('.rank-row');
+    if (row) row.focus({ preventScroll: true });
+    else (this.root.querySelector('.panel-title') as HTMLElement | null)?.focus();
+  }
+
   renderList(): void {
     if (!this.listEl || !this.moreEl) return;
-    const items = this.app.ranking();
+    const all = this.app.ranking();
+    const items = this.visibleItems();
     const shown = items.slice(0, this.limit);
     const rows = shown.map((it) => {
+      const twin = this.twinWords(it);
+      const where = `${latLonText(it.lat, it.lon)}${twin ? ` · ${twin}` : ''}`;
       const b = h(
         'button',
         { type: 'button', class: 'rank-row', 'data-id': String(it.id) },
-        h('span', { class: 'rank-n' }, String(it.rank)),
-        h('span', { class: 'rank-place' }, it.place, it.missingTemp ? tempMark(this.app) : null),
+        h('span', { class: 'rank-n' }, int(it.rank)),
+        h('span', { class: 'rank-place' }, h('span', { class: 'rank-name' }, it.place), h('span', { class: 'rank-where' }, where), it.missingTemp ? tempMark(this.app) : null),
         h('span', { class: 'rank-score' }, h('span', { class: 'score-bar', style: `--v:${Math.max(0, Math.min(100, it.final))}%`, 'aria-hidden': 'true' }), fixed(it.final, 2)),
       );
-      b.setAttribute('aria-label', `Rank ${it.rank}: ${it.place}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`);
+      b.setAttribute('aria-label', `Rank ${int(it.rank)}: ${it.place}, ${where}, final score ${fixed(it.final, 2)} of 100${it.missingTemp ? `; ${this.app.store.text('missing_temperature_mark') ?? ''}` : ''}`);
       if (it.missingTemp) b.dataset.missingTemp = 'true';
       b.addEventListener('click', () => globesApi.markers.activate('earth', it.id));
       b.addEventListener('focus', () => globesApi.markers.setHighlighted('earth', it.id));
@@ -194,13 +255,20 @@ export class MissionPanel {
       return h('li', null, b);
     });
     this.listEl.replaceChildren(...rows);
-    if (!items.length) {
+    const zeroWeights = this.app.usingCustom() && this.app.weights().every((w) => w === 0);
+    if (zeroWeights) {
+      this.listEl.append(
+        h('li', { class: 'empty', 'data-empty': 'zero-weights' }, 'All weights are zero, so no suitability can be computed and no place can be ranked; the filters have not changed. Set at least one weight above 0, or use "Reset to team values".'),
+      );
+    } else if (!all.length) {
       this.listEl.append(h('li', { class: 'empty' }, 'No place passes this mission with these settings. Use "Reset to team values" or choose another mission.'));
+    } else if (!items.length) {
+      this.listEl.append(h('li', { class: 'empty', 'data-empty': 'search' }, `No ranked place matches "${this.query}". Clear the search box to see all ${int(all.length)} ranked places.`));
     }
     this.moreEl.replaceChildren();
     if (items.length > this.limit) {
       this.moreEl.append(
-        h('p', { class: 'muted' }, `Showing ${int(shown.length)} of ${int(items.length)} ranked places.`),
+        h('p', { class: 'muted' }, `Showing ${int(shown.length)} of ${int(items.length)} ${this.query ? 'matching ' : ''}ranked places.`),
         button(`Show ${Math.min(PAGE, items.length - this.limit)} more`, () => {
           const first = this.limit;
           this.limit += PAGE;
@@ -208,7 +276,7 @@ export class MissionPanel {
           (this.listEl?.querySelectorAll<HTMLElement>('.rank-row')[first])?.focus();
         }, { kind: 'secondary', id: 'show-more' }),
       );
-    } else if (items.length) this.moreEl.append(h('p', { class: 'muted' }, `All ${int(items.length)} ranked places are listed.`));
+    } else if (items.length) this.moreEl.append(h('p', { class: 'muted' }, this.query ? `${int(items.length)} ranked places match "${this.query}".` : `All ${int(items.length)} ranked places are listed.`));
   }
 
   private rowKey(e: KeyboardEvent, b: HTMLElement): void {
@@ -222,7 +290,7 @@ export class MissionPanel {
   }
 
   focusRow(id: number): void {
-    const items = this.app.ranking();
+    const items = this.visibleItems();
     const k = items.findIndex((x) => x.id === id);
     if (k >= this.limit) {
       this.limit = Math.ceil((k + 1) / PAGE) * PAGE;
