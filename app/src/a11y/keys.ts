@@ -1,6 +1,6 @@
 // Keyboard guide (one handler for the page):
 //   1, 2, 3  start screen: choose a mission
-//   1 to 5   mission screen: open one of the five best analogs
+//   1 to 5   mission screen: open one of the five analogs shown
 //   Escape   back one step (a pair to its mission, a mission to the start); an open dialog closes first
 //   R        repeat the audio guide's current track
 //   ?        the list of shortcuts (also the "Keys" button in the header)
@@ -14,7 +14,7 @@ import type { A11y } from './index';
 
 export const KEY_MAP: { keys: string[]; where: string; what: string }[] = [
   { keys: ['1', '2', '3'], where: 'Start screen', what: 'Choose the Rover, Solar panels or Lunar base mission' },
-  { keys: ['1', '2', '3', '4', '5'], where: 'Mission screen', what: 'Open one of the five best analogs' },
+  { keys: ['1', '2', '3', '4', '5'], where: 'Mission screen', what: 'Open one of the five analogs shown' },
   { keys: ['Esc'], where: 'Anywhere', what: 'Go back one step (a dialog closes first)' },
   { keys: ['R'], where: 'Anywhere', what: 'Repeat the audio guide (or start it after a reload)' },
   { keys: ['?'], where: 'Anywhere', what: 'Show this list of shortcuts' },

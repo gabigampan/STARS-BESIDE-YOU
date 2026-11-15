@@ -1,83 +1,85 @@
-WEBVTT - Vídeo de la misión solar (simulación 3D), subtítulos descriptivos en español
+WEBVTT - Vídeo de la misión de paneles solares (simulación 3D), subtítulos descriptivos en español
 
 NOTE
-Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. Sol, potencia y energía son calculados; tamaños y tiempos son ilustrativos.
+Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo; el estado del panel no cambia dentro de un subtítulo. El Sol es calculado; potencia y energía son un modelo declarado para un panel plano (horizontal) por m², antes de la eficiencia de las células; el tamaño de los paneles y los tiempos son ilustrativos. Mientras el Sol está bajo se aumenta la exposición de la imagen (no a escala).
 
 1
-00:00.000 --> 00:03.000
-Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real LOLA en 75,5° S 100,5° O, cerca del cráter Boltzmann en la cara oculta; solo el terreno alto está iluminado.
-Amanecer: Sol tras el relieve · Sol 2,5° / acimut 86,5° · horizonte del terreno 5,3°
-Potencia 0 W/m² · energía 0,00 kWh/m² · 0,0 días terrestres transcurridos · ×35.800
+00:00.000 --> 00:02.000
+Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real (SLDEM2015, LOLA y Kaguya) de la celda lunar M23206, 25,5° N 13,5° O, a 38,5 km de Timocharis, en las llanuras ecuatoriales bajas (los mares). El Sol acaba de asomar por el horizonte este; la exposición se aumenta por el Sol bajo (no a escala). La cámara desciende hasta los paneles plegados.
+Amanecer: Sol bajo al este, paneles plegados · Sol 1,6° / acimut 89,0° · horizonte del terreno 0,0°
+Potencia (modelo, panel plano) 37 W/m² · energía 0,00 kWh/m² · 0,0 días terrestres transcurridos · ×33.200
 
 2
-00:03.000 --> 00:06.000
-El Sol supera el relieve del este en el punto de los paneles; la cámara desciende hasta los paneles plegados.
-Amanecer: paneles plegados · Sol 6,2° / acimut 71,8° · horizonte del terreno 6,3°
-Potencia 469 W/m² · energía 0,00 kWh/m² · 1,2 días terrestres transcurridos · ×35.800
+00:02.000 --> 00:05.000
+El Sol pasa de 10°; las sombras se acortan.
+Mañana: el Sol sube, paneles plegados · Sol 10,0° / acimut 93,1° · horizonte del terreno -0,1°
+Potencia (modelo, panel plano) 237 W/m² · energía 0,00 kWh/m² · 0,8 días terrestres transcurridos · ×33.200
 
 3
-00:06.000 --> 00:09.000
-El mástil se extiende y las dos alas de paneles con bisagras empiezan a desplegarse.
-Desplegando los paneles · Sol 9,6° / acimut 56,9° · horizonte del terreno 6,6°
-Potencia 1.342 W/m² · energía 0,00 kWh/m² · 2,5 días terrestres transcurridos · ×35.800
+00:05.000 --> 00:10.000
+El mástil sube y dos alas de paneles con bisagras se despliegan hacia arriba.
+Desplegando los paneles planos · Sol 22,6° / acimut 99,6° · horizonte del terreno 0,1°
+Potencia (modelo, panel plano) 523 W/m² · energía 0,00 kWh/m² · 1,9 días terrestres transcurridos · ×33.200
 
 4
-00:09.000 --> 00:12.000
-Las alas se abren del todo; la energía se cuenta desde el final del despliegue.
-Desplegando los paneles · Sol 12,5° / acimut 41,7° · horizonte del terreno 6,5°
-Potencia 1.329 W/m² · energía 0,00 kWh/m² · 3,7 días terrestres transcurridos · ×35.800
+00:10.000 --> 00:11.500
+Los paneles quedan en horizontal, mirando al cielo; la energía se cuenta desde ahora.
+Paneles desplegados, en horizontal · Sol 42,9° / acimut 113,7° · horizonte del terreno 0,4°
+Potencia (modelo, panel plano) 926 W/m² · energía 0,00 kWh/m² · 3,8 días terrestres transcurridos · ×33.200
 
 5
-00:12.000 --> 00:15.000
-Los paneles verticales giran para mirar al Sol mientras se desplaza a ras del horizonte.
-Siguiendo al Sol · Sol 14,6° / acimut 26,2° · horizonte del terreno 6,0°
-Potencia 1.317 W/m² · energía 13,13 kWh/m² · 5,0 días terrestres transcurridos · ×35.800
+00:11.500 --> 00:15.033
+Mañana: el Sol sube por el este. La potencia de un panel plano sigue la altura del Sol (modelo, antes de la eficiencia de las células).
+Mañana: el Sol sube por el este · Sol 48,5° / acimut 119,7° · horizonte del terreno 0,5°
+Potencia (modelo, panel plano) 1.020 W/m² · energía 13,48 kWh/m² · 4,4 días terrestres transcurridos · ×33.200
 
 6
-00:15.000 --> 00:18.000
-Las sombras largas del mástil y los paneles se extienden por el suelo.
-Siguiendo al Sol · Sol 15,8° / acimut 10,6° · horizonte del terreno 4,7°
-Potencia 1.310 W/m² · energía 52,32 kWh/m² · 6,2 días terrestres transcurridos · ×35.800
+00:15.033 --> 00:19.000
+El Sol pasa de 60°: sombras cortas y la máxima potencia.
+Sol alto: sombras cortas, máxima potencia · Sol 60,1° / acimut 140,3° · horizonte del terreno 0,4°
+Potencia (modelo, panel plano) 1.180 W/m² · energía 49,56 kWh/m² · 5,8 días terrestres transcurridos · ×33.200
 
 7
-00:18.000 --> 00:21.000
-Mediodía local: el Sol está en su punto más alto, unos 16° sobre el horizonte, al norte.
-Siguiendo al Sol · Sol 16,0° / acimut 354,8° · horizonte del terreno 3,5°
-Potencia 1.308 W/m² · energía 91,39 kWh/m² · 7,5 días terrestres transcurridos · ×35.800
+00:19.000 --> 00:23.000
+Mediodía local: el Sol está al sur, a la altura máxima de la celda según la tabla (66,04°).
+Sol alto: sombras cortas, máxima potencia · Sol 66,0° / acimut 180,0° · horizonte del terreno 0,1°
+Potencia (modelo, panel plano) 1.244 W/m² · energía 94,27 kWh/m² · 7,3 días terrestres transcurridos · ×33.200
 
 8
-00:21.000 --> 00:24.000
-El Sol se desplaza al oeste a ras del horizonte; las sombras giran.
-Siguiendo al Sol · Sol 15,1° / acimut 339,1° · horizonte del terreno 2,5°
-Potencia 1.314 W/m² · energía 130,52 kWh/m² · 8,7 días terrestres transcurridos · ×35.800
+00:23.000 --> 00:30.000
+Tarde: el Sol baja hacia el oeste; las sombras se alargan.
+Tarde: el Sol baja hacia el oeste · Sol 60,0° / acimut 220,0° · horizonte del terreno 0,3°
+Potencia (modelo, panel plano) 1.179 W/m² · energía 139,35 kWh/m² · 8,8 días terrestres transcurridos · ×33.200
 
 9
-00:24.000 --> 00:27.000
-Siguiendo al Sol · Sol 13,3° / acimut 323,6° · horizonte del terreno 1,8°
-Potencia 1.324 W/m² · energía 169,90 kWh/m² · 10,0 días terrestres transcurridos · ×35.800
+00:30.000 --> 00:36.033
+La potencia cae a medida que el Sol baja. El día lunar dura 29,5 días terrestres y aproximadamente la mitad es de noche: tras la puesta de Sol un panel aquí no recibe luz durante unas dos semanas terrestres (sombreado en la gráfica).
+Tarde: el Sol baja hacia el oeste · Sol 35,0° / acimut 252,7° · horizonte del terreno 2,0°
+Potencia (modelo, panel plano) 780 W/m² · energía 204,31 kWh/m² · 11,5 días terrestres transcurridos · ×33.200
 
 10
-00:27.000 --> 00:30.000
-Siguiendo al Sol · Sol 10,7° / acimut 308,3° · horizonte del terreno 1,4°
-Potencia 1.337 W/m² · energía 209,64 kWh/m² · 11,2 días terrestres transcurridos · ×35.800
+00:36.033 --> 00:37.733
+Sol bajo al oeste: sombras largas; la exposición vuelve a aumentarse (no a escala). Después llegan la puesta de Sol y la noche lunar.
+Sol bajo al oeste: sombras largas · Sol 9,9° / acimut 267,0° · horizonte del terreno 2,4°
+Potencia (modelo, panel plano) 233 W/m² · energía 233,06 kWh/m² · 13,8 días terrestres transcurridos · ×33.200
 
 11
-00:30.000 --> 00:33.000
-El Sol baja hacia el relieve del oeste.
-Siguiendo al Sol · Sol 7,4° / acimut 293,3° · horizonte del terreno 0,9°
-Potencia 1.350 W/m² · energía 249,76 kWh/m² · 12,4 días terrestres transcurridos · ×35.800
+00:37.733 --> 00:37.867
+El Sol empieza a ocultarse tras el relieve real; la luz sobre los paneles se apaga.
+Sol en parte tapado por el relieve · Sol 2,7° / acimut 270,4° · horizonte del terreno 2,5°
+Potencia (modelo, panel plano) 54 W/m² · energía 235,40 kWh/m² · 14,5 días terrestres transcurridos · ×33.200
 
 12
-00:33.000 --> 00:36.000
-Sol bajo al oeste: el suelo junto a los paneles queda en sombra, luego el Sol se oculta tras el relieve del oeste y la potencia cae.
-Siguiendo al Sol · Sol 3,8° / acimut 278,5° · horizonte del terreno 0,6°
-Potencia 1.358 W/m² · energía 290,19 kWh/m² · 13,7 días terrestres transcurridos · ×35.800
+00:37.867 --> 00:38.000
+El Sol está tras el relieve real aunque sigue sobre el horizonte plano: los paneles quedan en sombra y la potencia es cero.
+Sol tapado por el relieve · Sol 2,1° / acimut 270,7° · horizonte del terreno 2,5°
+Potencia (modelo, panel plano) 0 W/m² · energía 235,42 kWh/m² · 14,5 días terrestres transcurridos · ×33.200
 
 13
-00:36.000 --> 00:39.000
-Tarjeta final: el análogo terrestre Cabo Occidental, Sudáfrica (celda E44120) frente a la celda lunar M59479. Irradiancia horizontal 5,518 frente a 2,372 kWh/m² al día; Sol más alto 80,939° frente a 16,04°; Sol por debajo de 5° durante 0,07016 frente a 0,2271 de las horas de luz; celda lunar iluminada 0,4543 del tiempo; pendiente 2,137° frente a 10,693°; altitud 1127,1 m frente a 122,4 m.
+00:38.000 --> 00:41.000
+Tarjeta final: análogo 1 de los cinco análogos de paneles solares mostrados (puesto 1 de la clasificación completa). El análogo terrestre en Menabe, Madagascar (celda E40184, 21,5° S 44,5° E, a 18,8 km de Manja) y su gemela lunar, la celda M23206 cerca de Timocharis, emparejadas por la luz solar por encima de la atmósfera: 9,3437 frente a 9,383 kWh/m² al día (diferencia 0,0393, tolerancia 0,6). En el punto terrestre solo 5,745 kWh/m² al día llegan al suelo (modelado): 5,7 de 9,3, se pierde un 39 % en la atmósfera; la Luna no tiene atmósfera. Pendiente 0,753° frente a 0,757°; rugosidad 26,56 m frente a 27,15 m. Idoneidad 97,94, similitud 99,83, final 98,88.
 
 14
-00:39.000 --> 00:42.000
-La celda terrestre recibe 2,3 veces más luz solar horizontal, con un Sol mucho más alto y en terreno más suave; allí no se reproduce el Sol bajo de la Luna. Simulación 3D basada en datos de las tablas. No son imágenes reales.
+00:41.000 --> 00:44.000
+Un panel en el punto terrestre no recibe lo mismo que un panel en la Luna: allí solo llega la luz que alcanza el suelo, mientras que el día lunar dura 29,5 días terrestres, aproximadamente la mitad a oscuras. La temperatura media de la superficie, 300,56 K frente a 212,81 K, y la oscilación diaria, 13,6 K frente a 289,73 K, no forman parte de la similitud. Simulación 3D basada en datos de las tablas. No son imágenes reales.
 

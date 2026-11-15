@@ -89,7 +89,7 @@ function main(): void {
   setupCredits([
     {
       source: 'Audio guide (19 recordings)',
-      used: 'The spoken guide of the start screen, the three mission introductions and the five best pairs of each mission (public/audio). Off by default; its text is always shown as a caption.',
+      used: 'The spoken guide of the start screen, the three mission introductions and the five analogs shown for each mission (public/audio). Off by default; its text is always shown as a caption.',
       credit: 'Recorded by the Stars Beside You team (text to speech, American English voice); shipped unchanged, with SHA-256 checksums.',
       licence: "The team's own recordings for this project.",
       link: '',
