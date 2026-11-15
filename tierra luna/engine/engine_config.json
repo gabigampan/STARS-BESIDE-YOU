@@ -367,7 +367,7 @@
         ],
         "mission_card": false,
         "replaces": "the solar limitation of decision 5 (2026-11-15 night), superseded: the solar twin is no longer chosen by terrain and temperature",
-        "text": "This pair is matched on sunlight above the atmosphere: {toa_earth} kWh/m²/day at the top of Earth's atmosphere here and {toa_moon} kWh/m²/day on the lunar surface. At the Earth site only {ground_earth} of those {toa_earth} kWh/m²/day reach the ground ({loss_pct} % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts {lunar_day} Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion.",
+        "text": "Both places get about the same sunlight before it passes through any air: {toa_earth} here and {toa_moon} on the Moon, in kilowatt-hours per square metre each day. Here only {ground_earth} of those {toa_earth} reach the ground: the air takes {loss_pct} %. The Moon has no air, but its day lasts {lunar_day} Earth days, about half of them dark. How sloped and rough the ground is counts less.",
         "where": "on every solar pair (earth_solar.bin twin present), in the panel next to the twin",
         "display_rule": "every number is printed as the browser displays its stored float32 (the shortest decimal of the float32, written with the placeholder's decimals, half up); {loss_pct} is computed from the printed {toa_earth} and {ground_earth} (its 'formula'), so the three numbers agree. explain.json missions.solar[].similarity.pair_sentence is this text filled by the engine with the same rule (engine/display.py).",
         "placeholders": {
@@ -414,7 +414,7 @@
           "lunar_base"
         ],
         "mission_card": false,
-        "text": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is {temp_diff_k} K colder on average (minimum {tmin_moon_c} °C at the surface against {tmin_earth_c} °C air temperature here) and its day-night swing is {amp_diff_k} K larger; slope differs by {slope_diff}° and roughness by {rough_diff} m.",
+        "text": "These two places are not equally cold. They match because each holds a similar place in its own world's ranking, from mildest to coldest and from steadiest to most changeable. The twin is {temp_diff_k} °C colder, and its temperature swings {amp_diff_k} °C more between day and night.",
         "where": "on EVERY lunar_base pair (earth_lunar_base.bin twin present), in the panel next to the twin and the similarity (the team's condition: every pair says it is a likeness of thermal position, not of temperature, with the real difference written)",
         "placeholders": {
           "temp_diff_k": {

@@ -426,7 +426,7 @@ def test_solar_sentence_share_lost_agrees_with_the_printed_numbers(real, real_di
         want = int(np.floor(Fraction(100 * (a - g), a) + Fraction(1, 2)))       # 100 (A - G) / A, half up
         assert share_lost_percent(above[p], ground[p]) == want
         filled = fill_pair_sentence(tpl, {c: float(col[c][p]) for c in col})
-        assert f"reach the ground ({want} % is lost" in filled and f"only {g // 10}.{g % 10} of those {a // 10}.{a % 10} kWh/m²/day" in filled
+        assert f"reach the ground: the air takes {want} %" in filled and f"only {g // 10}.{g % 10} of those {a // 10}.{a % 10} reach" in filled
         n_changed += want != round(100 * float(lost[p]))
     print(f"solar pairs whose share lost differs from the former rule (100 x atm.lost_share): {n_changed}")
     # the top 5 read 35, 36, 38, 37, 36 (the team's recorded audio, docs/AUDIO_TOP5.json)
@@ -435,13 +435,13 @@ def test_solar_sentence_share_lost_agrees_with_the_printed_numbers(real, real_di
     assert [share_lost_percent(above[p], ground[p]) for p in top] == [35, 36, 38, 37, 36]
     # explain.json: the engine fills the same sentence for the published top pairs
     ex = b.json("explain.json")["missions"]["solar"]
-    assert ex[0]["similarity"]["pair_sentence"].startswith("This pair is matched on sunlight above the atmosphere: 9.6 kWh/m²/day")
-    assert "only 6.2 of those 9.6 kWh/m²/day reach the ground (35 % is lost in the atmosphere)" in ex[0]["similarity"]["pair_sentence"]
+    assert ex[0]["similarity"]["pair_sentence"].startswith("Both places get about the same sunlight before it passes through any air: 9.6 here")
+    assert "only 6.2 of those 9.6 reach the ground: the air takes 35 %" in ex[0]["similarity"]["pair_sentence"]
     pos = {int(i): k for k, i in enumerate(b.int_column("earth_base.bin", "id")[b.int_column("earth_solar.bin", "land_index")])}
     for it in ex:
         p = pos[it["id"]]
         assert it["similarity"]["pair_sentence"] == fill_pair_sentence(tpl, {c: float(col[c][p]) for c in col})
-        assert f"({share_lost_percent(above[p], ground[p])} % is lost" in it["similarity"]["pair_sentence"]
+        assert f"the air takes {share_lost_percent(above[p], ground[p])} %" in it["similarity"]["pair_sentence"]
 
 
 def test_display_rounding_is_half_up_on_the_shortest_decimal():

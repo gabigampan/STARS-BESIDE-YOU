@@ -240,11 +240,11 @@ def test_number_one_and_the_approved_pair_sentence(lb, ecfg):
     ex = b.json("explain.json")["missions"]["lunar_base"][0]
     assert (ex["rank"], ex["id"], ex["similarity"]["twin"]["id"]) == (1, 17538, 63528)
     assert "position, not of temperature" in ex["similarity"]["meaning"]
-    want = ("This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and "
-            "daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate "
-            "landing regions near the lunar south pole. In real values the twin is 195 K colder on average (minimum -232 °C "
-            "at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs "
-            "by 0.5° and roughness by 0.3 m.")
+    # plain-language wording of 2026-11-15 19:50 CET (docs/DECISIONS.md, 'Frases del par en lenguaje llano'),
+    # same figures as before (195 K colder, 138 K larger swing)
+    want = ("These two places are not equally cold. They match because each holds a similar place in its own world's ranking, "
+            "from mildest to coldest and from steadiest to most changeable. The twin is 195 °C colder, and its temperature "
+            "swings 138 °C more between day and night.")
     assert ex["similarity"]["pair_sentence"] == want
     tpl = b.json("similarity.json")["texts"]["lunar_base_pair_sentence"]
     assert tpl["missions"] == ["lunar_base"] and tpl["mission_card"] is False and "Artemis" not in tpl["text"]
