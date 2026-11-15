@@ -1,0 +1,614 @@
+{
+ "corrected": {
+  "soft": {
+   "lst_diurnal_amp_k": {
+    "weight": 0.35,
+    "bad": 15.0,
+    "good": 35.0
+   },
+   "tmin_c": {
+    "weight": 0.25,
+    "bad": 5.0,
+    "good": -50.0
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.25,
+    "bad": 0.1,
+    "good": 0.7
+   },
+   "irradiance_kwh_m2_day": {
+    "weight": 0.1,
+    "bad": 3.0,
+    "good": 6.0
+   }
+  },
+  "soft_weight_sum": 0.95,
+  "top5_rule": {
+   "rule": "rank_with_skips",
+   "min_separation_deg": 2.0,
+   "skips": {
+    "ice": {
+     "enabled": true,
+     "column": "snow_ice_frac",
+     "op": ">=",
+     "value": 0.5,
+     "why": "The team lead (2026-11-15 11:28/11:36 CET): glacial ice is not an analog of regolith. snow_ice_frac = ESA CCI land-cover class 220 (permanent snow and ice) share of the cell's land pixels (real_data/provenance_earth.csv)."
+    },
+    "water": {
+     "enabled": true,
+     "column": "mask_fraction",
+     "op": "<",
+     "value": 0.5,
+     "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+    }
+   }
+  },
+  "funnel_exclusions_each_alone": {
+   "present:lst_diurnal_amp_k": 46062,
+   "present:tmin_c": 39316,
+   "present:thermal_inertia_class": 0,
+   "gate:elevation_m": 39732,
+   "gate:mask_fraction": 42578,
+   "gate:lst_diurnal_amp_k": 60252,
+   "gate:tmin_c": 46183,
+   "gate:thermal_inertia_class": 43724
+  },
+  "passed": 2419,
+  "paired": 450,
+  "distinct_twins": 103,
+  "zone_cells": 280,
+  "five": [
+   21054,
+   17538,
+   21833,
+   18627,
+   19672
+  ],
+  "skipped_before_fifth": [
+   [
+    21412,
+    2,
+    "near 21054"
+   ],
+   [
+    20695,
+    4,
+    "near 21054"
+   ]
+  ],
+  "top10": [
+   {
+    "rank": 1,
+    "earth": 21054,
+    "lat": 31.5,
+    "lon": -5.5,
+    "twin": 62517,
+    "similarity": 99.36,
+    "suitability": 44.64,
+    "final": 72.0,
+    "amp_k": 18.71,
+    "tmin_c": -1.52,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 2,
+    "earth": 21412,
+    "lat": 30.5,
+    "lon": -7.5,
+    "twin": 62516,
+    "similarity": 97.55,
+    "suitability": 45.0,
+    "final": 71.28,
+    "amp_k": 19.3,
+    "tmin_c": 0.31,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 3,
+    "earth": 17538,
+    "lat": 41.5,
+    "lon": 78.5,
+    "twin": 63528,
+    "similarity": 97.31,
+    "suitability": 43.15,
+    "final": 70.23,
+    "amp_k": 15.6,
+    "tmin_c": -24.54,
+    "mask_fraction": 0.9983,
+    "snow_ice_frac": 0.0832
+   },
+   {
+    "rank": 4,
+    "earth": 20695,
+    "lat": 32.5,
+    "lon": -4.5,
+    "twin": 62135,
+    "similarity": 95.06,
+    "suitability": 45.21,
+    "final": 70.13,
+    "amp_k": 19.31,
+    "tmin_c": -1.26,
+    "mask_fraction": 0.9988,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 5,
+    "earth": 21833,
+    "lat": 29.5,
+    "lon": 53.5,
+    "twin": 62515,
+    "similarity": 92.5,
+    "suitability": 47.25,
+    "final": 69.87,
+    "amp_k": 20.03,
+    "tmin_c": -1.49,
+    "mask_fraction": 0.9583,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 6,
+    "earth": 18627,
+    "lat": 38.5,
+    "lon": 87.5,
+    "twin": 62479,
+    "similarity": 83.98,
+    "suitability": 55.63,
+    "final": 69.8,
+    "amp_k": 22.12,
+    "tmin_c": -16.84,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0002
+   },
+   {
+    "rank": 7,
+    "earth": 19672,
+    "lat": 35.5,
+    "lon": 52.5,
+    "twin": 63657,
+    "similarity": 93.33,
+    "suitability": 46.12,
+    "final": 69.73,
+    "amp_k": 19.67,
+    "tmin_c": -5.19,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 8,
+    "earth": 18254,
+    "lat": 39.5,
+    "lon": 74.5,
+    "twin": 63875,
+    "similarity": 92.32,
+    "suitability": 47.0,
+    "final": 69.66,
+    "amp_k": 17.28,
+    "tmin_c": -20.94,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0481
+   },
+   {
+    "rank": 9,
+    "earth": 44750,
+    "lat": -34.5,
+    "lon": -69.5,
+    "twin": 63822,
+    "similarity": 92.12,
+    "suitability": 47.0,
+    "final": 69.56,
+    "amp_k": 20.01,
+    "tmin_c": -7.0,
+    "mask_fraction": 0.9976,
+    "snow_ice_frac": 0.0125
+   },
+   {
+    "rank": 10,
+    "earth": 42951,
+    "lat": -29.5,
+    "lon": -68.5,
+    "twin": 62135,
+    "similarity": 98.33,
+    "suitability": 40.57,
+    "final": 69.45,
+    "amp_k": 18.94,
+    "tmin_c": -1.14,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   }
+  ],
+  "difference_table": [
+   {
+    "variable": "tmin_k",
+    "scale": "percentile_within_population",
+    "role": "key",
+    "tolerance": 10.0,
+    "bound": 10.0,
+    "n": 450,
+    "median": 3.168517096793245,
+    "p90": 7.715156794425085,
+    "max": 9.786290084450485,
+    "all_within_bound": true
+   },
+   {
+    "variable": "lst_diurnal_amp_k",
+    "scale": "percentile_within_population",
+    "role": "key",
+    "tolerance": 10.0,
+    "bound": 10.0,
+    "n": 450,
+    "median": 2.9886907222583137,
+    "p90": 7.666612531742744,
+    "max": 9.952976436544027,
+    "all_within_bound": true
+   },
+   {
+    "variable": "slope_deg",
+    "scale": "real",
+    "role": "secondary",
+    "tolerance": 2.0,
+    "bound": 4.0,
+    "n": 450,
+    "median": 1.5065,
+    "p90": 2.6943,
+    "max": 3.917,
+    "all_within_bound": true
+   },
+   {
+    "variable": "roughness_m",
+    "scale": "real",
+    "role": "secondary",
+    "tolerance": 30.0,
+    "bound": 60.0,
+    "n": 450,
+    "median": 27.264999999999993,
+    "p90": 54.42600000000001,
+    "max": 59.81,
+    "all_within_bound": true
+   }
+  ],
+  "vs_bundle": {
+   "folder": "/home/user/stars-beside-you/app/public/data/v2",
+   "pass_mine": 2419,
+   "pass_bundle": 2419,
+   "same_pass_set": true,
+   "paired_mine": 450,
+   "paired_bundle": 450,
+   "twin_mismatch": 0,
+   "rank_mismatch": 0,
+   "max_diff_suitability": 0.0,
+   "nan_mismatch_suitability": 0,
+   "max_diff_similarity": 0.0,
+   "nan_mismatch_similarity": 0,
+   "max_diff_final": 0.0,
+   "nan_mismatch_final": 0,
+   "bundle_top5": {
+    "rule": "The five shown are chosen down the full ranking by final score: a point whose cell is half or more snow and ice, or less than half land, is skipped, and so is a point within 2 degrees of arc (about 222.4 km) of one already kept. The full ranking itself is unchanged.",
+    "min_separation_deg": 2.0,
+    "min_separation_km": 222.4,
+    "ids": [
+     21054,
+     17538,
+     21833,
+     18627,
+     19672
+    ],
+    "overall_ranks": [
+     1,
+     3,
+     5,
+     6,
+     7
+    ],
+    "rule_id": "rank_with_skips",
+    "skips": {
+     "ice": {
+      "enabled": true,
+      "column": "snow_ice_frac",
+      "op": ">=",
+      "value": 0.5
+     },
+     "water": {
+      "enabled": true,
+      "column": "mask_fraction",
+      "op": "<",
+      "value": 0.5
+     }
+    },
+    "top_tie_n": 1,
+    "top_tie_n_after_skips": 1,
+    "alternative_rule": null
+   }
+  }
+ },
+ "audited_morning": {
+  "soft": {
+   "lst_diurnal_amp_k": {
+    "weight": 0.35,
+    "bad": 15.0,
+    "good": 35.0
+   },
+   "tmin_c": {
+    "weight": 0.25,
+    "bad": 5.0,
+    "good": -50.0
+   },
+   "thermal_inertia_class": {
+    "weight": 0.15,
+    "map": {
+     "roca": 1.0,
+     "regolito": 1.0,
+     "arena": 0.9,
+     "suelo": 0.6,
+     "hielo": 0.4
+    },
+    "default": 0.5
+   },
+   "rock_or_bare_frac": {
+    "weight": 0.1,
+    "bad": 0.1,
+    "good": 0.7
+   },
+   "irradiance_kwh_m2_day": {
+    "weight": 0.1,
+    "bad": 3.0,
+    "good": 6.0
+   },
+   "permafrost_class": {
+    "weight": 0.05,
+    "map": {
+     "esporadico": 1.0,
+     "discontinuo": 1.0,
+     "continuo": 0.7,
+     "ninguno": 0.3
+    },
+    "default": 0.5
+   }
+  },
+  "soft_weight_sum": 1.0,
+  "top5_rule": {
+   "rule": "by_rank"
+  },
+  "funnel_exclusions_each_alone": {
+   "present:lst_diurnal_amp_k": 46062,
+   "present:tmin_c": 39316,
+   "present:thermal_inertia_class": 0,
+   "gate:elevation_m": 39732,
+   "gate:mask_fraction": 42578,
+   "gate:lst_diurnal_amp_k": 60252,
+   "gate:tmin_c": 46183,
+   "gate:thermal_inertia_class": 43724
+  },
+  "passed": 2419,
+  "paired": 450,
+  "distinct_twins": 103,
+  "zone_cells": 280,
+  "five": [
+   17538,
+   16830,
+   15751,
+   21054,
+   17187
+  ],
+  "skipped_before_fifth": [],
+  "top10": [
+   {
+    "rank": 1,
+    "earth": 17538,
+    "lat": 41.5,
+    "lon": 78.5,
+    "twin": 63528,
+    "similarity": 97.31,
+    "suitability": 47.27,
+    "final": 72.29,
+    "amp_k": 15.6,
+    "tmin_c": -24.54,
+    "mask_fraction": 0.9983,
+    "snow_ice_frac": 0.0832
+   },
+   {
+    "rank": 2,
+    "earth": 16830,
+    "lat": 43.5,
+    "lon": 90.5,
+    "twin": 63841,
+    "similarity": 96.61,
+    "suitability": 47.96,
+    "final": 72.28,
+    "amp_k": 18.01,
+    "tmin_c": -18.86,
+    "mask_fraction": 0.9998,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 3,
+    "earth": 15751,
+    "lat": 46.5,
+    "lon": 91.5,
+    "twin": 64018,
+    "similarity": 96.86,
+    "suitability": 46.6,
+    "final": 71.73,
+    "amp_k": 16.04,
+    "tmin_c": -25.85,
+    "mask_fraction": 0.9977,
+    "snow_ice_frac": 0.0066
+   },
+   {
+    "rank": 4,
+    "earth": 21054,
+    "lat": 31.5,
+    "lon": -5.5,
+    "twin": 62517,
+    "similarity": 99.36,
+    "suitability": 43.91,
+    "final": 71.63,
+    "amp_k": 18.71,
+    "tmin_c": -1.52,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   },
+   {
+    "rank": 5,
+    "earth": 17187,
+    "lat": 42.5,
+    "lon": 87.5,
+    "twin": 62523,
+    "similarity": 95.03,
+    "suitability": 47.54,
+    "final": 71.28,
+    "amp_k": 18.16,
+    "tmin_c": -18.35,
+    "mask_fraction": 0.9798,
+    "snow_ice_frac": 0.0004
+   },
+   {
+    "rank": 6,
+    "earth": 42949,
+    "lat": -29.5,
+    "lon": -70.5,
+    "twin": 62477,
+    "similarity": 93.41,
+    "suitability": 49.07,
+    "final": 71.24,
+    "amp_k": 21.93,
+    "tmin_c": -2.48,
+    "mask_fraction": 0.9995,
+    "snow_ice_frac": 0.0015
+   },
+   {
+    "rank": 7,
+    "earth": 16833,
+    "lat": 43.5,
+    "lon": 93.5,
+    "twin": 63841,
+    "similarity": 94.83,
+    "suitability": 47.47,
+    "final": 71.15,
+    "amp_k": 17.6,
+    "tmin_c": -20.25,
+    "mask_fraction": 0.9995,
+    "snow_ice_frac": 0.0029
+   },
+   {
+    "rank": 8,
+    "earth": 18254,
+    "lat": 39.5,
+    "lon": 74.5,
+    "twin": 63875,
+    "similarity": 92.32,
+    "suitability": 49.65,
+    "final": 70.99,
+    "amp_k": 17.28,
+    "tmin_c": -20.94,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0481
+   },
+   {
+    "rank": 9,
+    "earth": 18627,
+    "lat": 38.5,
+    "lon": 87.5,
+    "twin": 62479,
+    "similarity": 83.98,
+    "suitability": 57.84,
+    "final": 70.91,
+    "amp_k": 22.12,
+    "tmin_c": -16.84,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0002
+   },
+   {
+    "rank": 10,
+    "earth": 21412,
+    "lat": 30.5,
+    "lon": -7.5,
+    "twin": 62516,
+    "similarity": 97.55,
+    "suitability": 44.25,
+    "final": 70.9,
+    "amp_k": 19.3,
+    "tmin_c": 0.31,
+    "mask_fraction": 1.0,
+    "snow_ice_frac": 0.0
+   }
+  ],
+  "difference_table": [
+   {
+    "variable": "tmin_k",
+    "scale": "percentile_within_population",
+    "role": "key",
+    "tolerance": 10.0,
+    "bound": 10.0,
+    "n": 450,
+    "median": 3.168517096793245,
+    "p90": 7.715156794425085,
+    "max": 9.786290084450485,
+    "all_within_bound": true
+   },
+   {
+    "variable": "lst_diurnal_amp_k",
+    "scale": "percentile_within_population",
+    "role": "key",
+    "tolerance": 10.0,
+    "bound": 10.0,
+    "n": 450,
+    "median": 2.9886907222583137,
+    "p90": 7.666612531742744,
+    "max": 9.952976436544027,
+    "all_within_bound": true
+   },
+   {
+    "variable": "slope_deg",
+    "scale": "real",
+    "role": "secondary",
+    "tolerance": 2.0,
+    "bound": 4.0,
+    "n": 450,
+    "median": 1.5065,
+    "p90": 2.6943,
+    "max": 3.917,
+    "all_within_bound": true
+   },
+   {
+    "variable": "roughness_m",
+    "scale": "real",
+    "role": "secondary",
+    "tolerance": 30.0,
+    "bound": 60.0,
+    "n": 450,
+    "median": 27.264999999999993,
+    "p90": 54.42600000000001,
+    "max": 59.81,
+    "all_within_bound": true
+   }
+  ],
+  "vs_bundle": {
+   "folder": "/tmp/claude-0/-home-user-stars-beside-you/171df355-e9a0-5121-abdd-85aadacdca0a/scratchpad/morning/app/public/data/v2",
+   "pass_mine": 2419,
+   "pass_bundle": 2419,
+   "same_pass_set": true,
+   "paired_mine": 450,
+   "paired_bundle": 450,
+   "twin_mismatch": 0,
+   "rank_mismatch": 0,
+   "max_diff_suitability": 0.0,
+   "nan_mismatch_suitability": 0,
+   "max_diff_similarity": 0.0,
+   "nan_mismatch_similarity": 0,
+   "max_diff_final": 0.0,
+   "nan_mismatch_final": 0,
+   "bundle_top5": null
+  }
+ },
+ "corrected_vs_morning": {
+  "same_pass_ids": true,
+  "twin_differences": 0,
+  "similarity_max_diff": 0.0,
+  "suitability_changed_points": 2222,
+  "rank_changed_points": 437,
+  "top50_overlap": 38
+ },
+ "seconds": 4.4
+}
