@@ -988,3 +988,43 @@ kbd.key {
     order: 5;
   }
 }
+
+/* Credit logo, every size: the dark pill is painted only 2 px around the 14 px logo (18 px tall);
+   the 44x44 hit area is a transparent ::after centred on it, so the pill covers no more of the globe.
+   The selectors outrank the phone rules in src/ui/mobileFold.css (min-height 44px, bottom 16px). */
+.pane .cesium-widget .cesium-widget-credits {
+  display: flex !important;
+  align-items: flex-end;
+  line-height: 0;
+  bottom: 13px !important; /* the hit area's lower edge stays inside the pane (overflow hidden) */
+}
+body.mf-phone .pane .cesium-widget .cesium-widget-credits {
+  bottom: 21px !important; /* hit area 8 px or more above the sheet handle under the lower globe */
+}
+body .pane .cesium-widget-credits .cesium-credit-logoContainer a,
+body.mf-phone .pane .cesium-widget-credits .cesium-credit-logoContainer a {
+  position: relative;
+  pointer-events: auto; /* the logo's wrapper lets touches through on phones (flow.css) */
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+  height: 18px;
+  margin: 0;
+  border: 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: rgba(10, 12, 15, 0.55);
+  background-clip: border-box;
+}
+body .pane .cesium-widget-credits .cesium-credit-logoContainer a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: 44px;
+  transform: translate(-50%, -50%);
+  background: transparent;
+}

@@ -107,7 +107,7 @@ export class MissionPanel {
         { class: 'funnel' },
         plainFunnel(store, m, meaningText(this.app), m.alpha).map((f) => h('li', null, h('strong', null, `${f.name}. `), f.text)),
       ),
-      h('p', { class: 'muted' }, `Alpha for this mission: ${num(m.alpha, 2)} (the team's value); it can be changed under "Adjust the weights".`),
+      h('p', { class: 'muted' }, `Alpha for this mission: ${num(m.alpha, 2)} (the team's value); it can be changed under "Set what matters most".`),
     );
     const elim = h(
       'section',
@@ -121,7 +121,7 @@ export class MissionPanel {
     const details = h('details', { class: 'panel-sec weights' }) as HTMLDetailsElement;
     details.open = this.weightsOpen;
     details.addEventListener('toggle', () => (this.weightsOpen = details.open));
-    details.append(h('summary', null, 'Adjust the weights'));
+    details.append(h('summary', null, 'Set what matters most'));
     const w = this.app.weights();
     const sliders = h('div', { class: 'sliders' });
     const inputs: HTMLInputElement[] = [];
@@ -592,6 +592,6 @@ export class MissionPanel {
     else if (state === 'custom') this.statusEl.append(icon('info'), `Your weights are in use: scores, ranks, markers and list recomputed in the browser${typeof detail === 'number' ? ` in ${num(detail, 0)} ms` : ''}.`);
     else this.statusEl.append(icon('check'), "The team's weights are in use.");
     const badge = this.root.querySelector('.weights summary');
-    if (badge) badge.textContent = state === 'custom' ? 'Adjust the weights (your weights are in use)' : 'Adjust the weights';
+    if (badge) badge.textContent = state === 'custom' ? 'Set what matters most (your settings are in use)' : 'Set what matters most';
   }
 }

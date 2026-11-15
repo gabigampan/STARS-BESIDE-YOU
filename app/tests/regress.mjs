@@ -29,7 +29,10 @@ const check = (ok, msg) => {
   if (!ok) failed++;
 };
 const srv = await serve(DIST);
-const ready = (page) => page.waitForFunction(() => window.starsFlow?.hasData(), null, { timeout: 30_000 });
+// REGRESS_ONLY=F (or e.g. AE) runs only the named check letters; unset runs all
+const ONLY = (process.env.REGRESS_ONLY || 'ABCDEF').toUpperCase();
+const runs = (letters) => [...letters].some((l) => ONLY.includes(l));
+const ready = (page) => page.waitForFunction(() => window.starsFlow?.hasData(), null, { timeout: 120_000 });
 const waitStep = (page, s) => page.waitForFunction((x) => window.starsFlow?.state.step === x, s, { timeout: 15_000 }).then(() => true, () => false);
 const missionIds = (page) => page.evaluate(() => [...document.querySelectorAll('#intro .choice')].map((c) => c.dataset.mission));
 
@@ -65,7 +68,7 @@ async function checkDialog(browser, tag) {
 }
 
 // ---------- A without WebGL ----------
-{
+if (runs('A')) {
   const browser = await chromium.launch({ args: ['--disable-gpu', '--disable-3d-apis'] });
   await checkDialog(browser, 'no WebGL');
   await browser.close();
@@ -73,10 +76,10 @@ async function checkDialog(browser, tag) {
 
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 // ---------- A with WebGL ----------
-await checkDialog(browser, 'WebGL');
+if (runs('A')) await checkDialog(browser, 'WebGL');
 
 // ---------- B, C phone ----------
-{
+if (runs('BC')) {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
   const page = await ctx.newPage();
   await page.goto(srv.base);
@@ -118,7 +121,7 @@ await checkDialog(browser, 'WebGL');
 }
 
 // ---------- D, E desktop ----------
-for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
+for (const [w, h] of runs('DE') ? [[1366, 768], [1440, 900], [1920, 1080]] : []) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h } });
   const page = await ctx.newPage();
   await page.goto(srv.base);
@@ -141,7 +144,13 @@ for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
       const logo = [...document.querySelectorAll('.cesium-credit-logoContainer a')].map((a) => {
         const b = a.getBoundingClientRect();
         const img = a.querySelector('img')?.getBoundingClientRect();
-        return { w: Math.round(b.width), h: Math.round(b.height), imgH: img ? Math.round(img.height) : 0 };
+        // real hit area: from the box centre, probe 1 px steps with elementFromPoint (a pseudo-element hits as its link)
+        const cx = Math.round(b.left + b.width / 2), cy = Math.round(b.top + b.height / 2);
+        const hits = (x, y) => { const e = document.elementFromPoint(x, y); return !!e && (e === a || a.contains(e)); };
+        const reach = (dx, dy) => { let k = 0; while (k < 400 && hits(cx + (k + 1) * dx, cy + (k + 1) * dy)) k++; return k; };
+        const c = hits(cx, cy);
+        const hw = c ? reach(-1, 0) + reach(1, 0) + 1 : 0, hh = c ? reach(0, -1) + reach(0, 1) + 1 : 0;
+        return { w: Math.round(b.width), h: Math.round(b.height), hw, hh, imgH: img ? Math.round(img.height) : 0 };
       });
       const lastBtn = btns.length ? btns[btns.length - 1].getBoundingClientRect().bottom : 1e9;
       const mp = document.getElementById('mission-panel');
@@ -163,10 +172,119 @@ for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
     check(r.titleTop >= 0 && r.lastRow <= r.vh - 8 && r.scrollers.length === 0, `E ${w}x${h} ${m}: heading top ${r.titleTop}, last folded row bottom ${r.lastRow} <= ${r.vh - 8}, scrolling boxes [${r.scrollers.join(',')}]`);
     check(r.heights.every((x) => x >= 44) && r.minFont >= 14 && r.cut.length === 0, `E ${w}x${h} ${m}: button heights ${r.heights.join(',')} (>= 44), smallest text ${r.minFont} px (>= 14), cut numbers [${r.cut.join(',')}]`);
     check(r.twinCut.length === 0, `E ${w}x${h} ${m}: visible twin line of the five not truncated (cut: [${r.twinCut.join('; ')}]); places cut [${r.placeCut.join(',')}]`);
-    check(r.logo.length > 0 && r.logo.every((l) => l.w >= 44 && l.h >= 44), `D ${w}x${h} ${m}: credit logo links ${r.logo.map((l) => `${l.w}x${l.h} (logo ${l.imgH} px)`).join('; ')}`);
+    check(r.logo.length > 0 && r.logo.every((l) => l.hw >= 44 && l.hh >= 44), `D ${w}x${h} ${m}: ${r.logo.map((l) => `credit logo painted ${l.w}x${l.h}, hit area ${l.hw}x${l.hh} (logo ${l.imgH} px)`).join('; ')}`);
   }
   await ctx.close();
 }
+// ---------- F: no two visible touch targets closer than 8 px (same rule as tests/flow.mjs) ----------
+// start, mission and pair steps; phones with the sheet unfolded and folded; desktop with "Full ranking" open
+const tightPairs = (page) =>
+  page.evaluate(() => {
+    const vis = (el) => el && el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+    const targets = [...document.querySelectorAll('button, a[href], input:not([type=radio]), select, summary, label.seg')].filter((el) => {
+      if (!vis(el) || el.disabled || el.closest('.sr-only')) return false;
+      const r = el.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return false;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      if (cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight) return false;
+      const top = document.elementFromPoint(cx, cy);
+      return !!top && (el.contains(top) || top.contains(el) || top.closest('label') === el);
+    });
+    // visible box: the target's box intersected with every clipping or scrolling ancestor
+    // (overflow other than visible, measured at its padding box) and with the viewport
+    const visibleBox = (el) => {
+      const r = el.getBoundingClientRect();
+      let L = Math.max(r.left, 0), T = Math.max(r.top, 0), Rr = Math.min(r.right, innerWidth), B = Math.min(r.bottom, innerHeight);
+      for (let p = el.parentElement; p && p !== document.documentElement; p = p.parentElement) {
+        const cs = getComputedStyle(p);
+        const cx = cs.overflowX !== 'visible', cy = cs.overflowY !== 'visible';
+        if (!cx && !cy) continue;
+        const pr = p.getBoundingClientRect();
+        const pl = pr.left + p.clientLeft, pt = pr.top + p.clientTop;
+        if (cx) { L = Math.max(L, pl); Rr = Math.min(Rr, pl + p.clientWidth); }
+        if (cy) { T = Math.max(T, pt); B = Math.min(B, pt + p.clientHeight); }
+      }
+      return Rr - L >= 1 && B - T >= 1 ? { left: L, top: T, right: Rr, bottom: B } : null;
+    };
+    const nameOf = (el) => (el.id ? '#' + el.id + ' ' : '') + (el.textContent || el.getAttribute('aria-label') || el.tagName || '').trim().slice(0, 25);
+    const out = [];
+    const rs = targets.map((el) => [el, visibleBox(el)]).filter(([, r]) => r);
+    for (let i = 0; i < rs.length; i++)
+      for (let j = i + 1; j < rs.length; j++) {
+        const [a, ra] = rs[i], [b, rb] = rs[j];
+        if (a.contains(b) || b.contains(a)) continue;
+        const d = Math.max(Math.max(0, rb.left - ra.right, ra.left - rb.right), Math.max(0, rb.top - ra.bottom, ra.top - rb.bottom));
+        if (d < 8 - 0.5) out.push(`${nameOf(a)} | ${nameOf(b)} (${d.toFixed(1)} px)`);
+      }
+    return out;
+  });
+// smallest gap between any visible element matching selA and any matching selB (null when none is visible)
+const gapOf = (page, selA, selB) =>
+  page.evaluate(([x, y]) => {
+    const shown = (s) => [...document.querySelectorAll(s)].filter((e) => e.getClientRects().length && e.checkVisibility({ checkVisibilityCSS: true }));
+    let best = null;
+    for (const a of shown(x))
+      for (const b of shown(y)) {
+        const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        const d = Math.round(Math.max(Math.max(0, rb.left - ra.right, ra.left - rb.right), Math.max(0, rb.top - ra.bottom, ra.top - rb.bottom)) * 10) / 10;
+        best = best == null ? d : Math.min(best, d);
+      }
+    return best;
+  }, [selA, selB]);
+for (const [w, h] of runs('F') ? [[1440, 900], [1366, 768], [375, 812], [812, 375], [667, 375]] : []) {
+  const phone = w < 900;
+  const ctx = await browser.newContext(phone ? { viewport: { width: w, height: h }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 } : { viewport: { width: w, height: h } });
+  const page = await ctx.newPage();
+  await page.goto(srv.base);
+  await ready(page);
+  await page.waitForTimeout(800);
+  const sweep = async (view) => {
+    const t = await tightPairs(page);
+    check(t.length === 0, `F ${w}x${h} ${view}: no targets closer than 8 px${t.length ? ': ' + t.slice(0, 6).join('; ') : ''}`);
+  };
+  const folds = async (view) => {
+    await sweep(view + (phone ? ' (sheet unfolded)' : ''));
+    if (!phone || !(await page.locator('#mf-handle').isVisible())) return;
+    const logoGap = await gapOf(page, '.cesium-credit-logoContainer a', '#mf-handle');
+    if (logoGap != null) check(logoGap >= 8, `F ${w}x${h} ${view}: credit logo to sheet handle ${logoGap} px (want >= 8)`);
+    await page.click('#mf-handle');
+    await page.waitForTimeout(400);
+    await sweep(view + ' (sheet folded)');
+    const g2 = await gapOf(page, '.cesium-credit-logoContainer a', '#mf-handle');
+    if (g2 != null) check(g2 >= 8, `F ${w}x${h} ${view} folded: credit logo to sheet handle ${g2} px (want >= 8)`);
+    await page.click('#mf-handle');
+    await page.waitForTimeout(400);
+  };
+  await sweep('start');
+  const [m] = await missionIds(page);
+  await page.click(`#intro .choice[data-mission="${m}"]`);
+  await waitStep(page, 'pick');
+  await page.waitForTimeout(600);
+  await folds('mission');
+  // FAULT 2: "Full ranking" unfolded, "Show 50 more" against the next folded row ("Set what matters most")
+  const opened = await page.evaluate(() => {
+    const d = document.querySelector('#mission-panel .ranking-box');
+    if (!d) return false;
+    d.open = true;
+    return true;
+  });
+  if (opened) {
+    await page.waitForTimeout(300);
+    await page.evaluate(() => document.getElementById('show-more')?.scrollIntoView({ block: 'center' }));
+    await page.waitForTimeout(200);
+    const g = await gapOf(page, '#show-more', '#mission-panel .weights > summary');
+    check(g != null && g >= 8, `F ${w}x${h} mission, full ranking open: "Show more" to "Set what matters most" ${g} px (want >= 8)`);
+    await sweep('mission, full ranking open');
+    await page.evaluate(() => { document.querySelector('#mission-panel .ranking-box').open = false; });
+    await page.waitForTimeout(300);
+  }
+  await page.locator('.top5-btn').first().click();
+  await waitStep(page, 'pair');
+  await page.waitForTimeout(800);
+  await folds('pair');
+  await ctx.close();
+}
+
 await browser.close();
 await srv.close?.();
 console.log(failed ? `${failed} check(s) failed` : 'all regression checks passed');

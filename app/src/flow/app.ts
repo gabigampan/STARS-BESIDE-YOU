@@ -96,6 +96,11 @@ export class FlowApp {
     this.updateGuide();
     if (this.dataReady) {
       renderDataDialog(this.store, (m) => this.ruleText(m), (m) => meaningText(this, m));
+      // The zone sources belong in the dialog from the start screen too: load the zones in the background.
+      this.store.loadZones().then(
+        () => renderZoneSources(this.store),
+        () => undefined,
+      );
       // Place names for the list come next; they are small and needed as soon as a mission is open.
       this.store.loadPlaceDetail().then(
         () => {
@@ -296,7 +301,7 @@ export class FlowApp {
     const c = this.store.pairCounts(id);
     if (!opts.keepSelection) this.updateGuide();
     this.announce(
-      `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth pass its filters` +
+      `${missionName(m)} mission chosen: ${c.passing.toLocaleString('en-GB')} places on Earth meet its requirements` +
         (c.unpaired > 0 && this.missionHasTwins(m) ? `; ${c.paired.toLocaleString('en-GB')} of them have a lunar twin.` : '.'),
     );
     // Start fetching the utilities for the weight sliders in the background.

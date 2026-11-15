@@ -351,9 +351,6 @@ body.flow[data-step='choose'] .pane-rule {
   body.flow .pane-rule {
     display: none;
   }
-  body.flow:not([data-step='choose']) .pane-reset {
-    display: none;
-  }
 }
 
 /* ---------- first screen ---------- */
@@ -824,6 +821,7 @@ table.rows td {
   border-bottom: 1px solid var(--edge);
   font-weight: 400;
   font-size: var(--step--1);
+  overflow-wrap: anywhere; /* long tokens wrap: the table fits the panel column, no sideways scroll (point 12) */
 }
 table.rows thead th {
   color: var(--text-dim);
@@ -2027,4 +2025,52 @@ body.flow[data-step='choose'] .pane-reset {
     padding-top: 4px;
     padding-bottom: 4px;
   }
+}
+
+/* at least 8 px between adjacent touch targets in the mission panel (regress check F): the three folded
+   rows sit 8 px apart and after the fifth analog; open, the full ranking keeps 8 px below "Show 50 more" */
+#mission-panel .panel-body {
+  padding-top: 10px; /* "Change mission" 8 px or more under the step row at 1366x768 */
+}
+#mission-panel .panel-sec.weights,
+#mission-panel .ranking-box,
+#mission-panel .method-box {
+  margin-top: 8px;
+}
+#mission-panel .ranking-box[open] {
+  padding-bottom: 8px;
+}
+
+/* "Departures from the team's criteria": on a narrow dialog the table scrolls inside its own region (check G) */
+.criteria-set > [role='region'] {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.criteria-set > [role='region']:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+/* long URLs and unbroken strings in the dialog wrap instead of widening it (check G) */
+#credits-body :is(p, li, dd, dt, a, code, pre) {
+  overflow-wrap: anywhere;
+}
+#credits-body pre {
+  white-space: pre-wrap;
+}
+
+/* every scrolling area ends 8 px or more from the fixed controls beside it (regress check F, visible
+   geometry): a solid 8 px top border on the panels (the scroll area starts under it, so no row scrolled
+   half out of view is drawn against the step row or, on phones, the sheet handle) and an 8 px bottom border
+   on the comparison card's scroll area above its action bar. Borders, not padding: content never scrolls
+   under a border. The mission panel's body gives the same 8 px back, so the five analogs still fit. */
+body.flow #mission-panel,
+body.flow #detail-panel {
+  border-top: 8px solid var(--glass-solid);
+}
+#mission-panel .panel-body {
+  padding-top: 2px; /* + the 8 px border: "Change mission" still 10 px under the step row */
+}
+body.flow .panel-scroll {
+  border-bottom: 8px solid transparent;
 }
