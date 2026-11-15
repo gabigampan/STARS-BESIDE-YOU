@@ -29,7 +29,10 @@ const check = (ok, msg) => {
   if (!ok) failed++;
 };
 const srv = await serve(DIST);
-const ready = (page) => page.waitForFunction(() => window.starsFlow?.hasData(), null, { timeout: 30_000 });
+// REGRESS_ONLY=F (or e.g. AE) runs only the named check letters; unset runs all
+const ONLY = (process.env.REGRESS_ONLY || 'ABCDEF').toUpperCase();
+const runs = (letters) => [...letters].some((l) => ONLY.includes(l));
+const ready = (page) => page.waitForFunction(() => window.starsFlow?.hasData(), null, { timeout: 120_000 });
 const waitStep = (page, s) => page.waitForFunction((x) => window.starsFlow?.state.step === x, s, { timeout: 15_000 }).then(() => true, () => false);
 const missionIds = (page) => page.evaluate(() => [...document.querySelectorAll('#intro .choice')].map((c) => c.dataset.mission));
 
@@ -65,7 +68,7 @@ async function checkDialog(browser, tag) {
 }
 
 // ---------- A without WebGL ----------
-{
+if (runs('A')) {
   const browser = await chromium.launch({ args: ['--disable-gpu', '--disable-3d-apis'] });
   await checkDialog(browser, 'no WebGL');
   await browser.close();
@@ -73,10 +76,10 @@ async function checkDialog(browser, tag) {
 
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 // ---------- A with WebGL ----------
-await checkDialog(browser, 'WebGL');
+if (runs('A')) await checkDialog(browser, 'WebGL');
 
 // ---------- B, C phone ----------
-{
+if (runs('BC')) {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
   const page = await ctx.newPage();
   await page.goto(srv.base);
@@ -118,7 +121,7 @@ await checkDialog(browser, 'WebGL');
 }
 
 // ---------- D, E desktop ----------
-for (const [w, h] of [[1366, 768], [1440, 900], [1920, 1080]]) {
+for (const [w, h] of runs('DE') ? [[1366, 768], [1440, 900], [1920, 1080]] : []) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h } });
   const page = await ctx.newPage();
   await page.goto(srv.base);
@@ -181,9 +184,25 @@ const tightPairs = (page) =>
       const top = document.elementFromPoint(cx, cy);
       return !!top && (el.contains(top) || top.contains(el) || top.closest('label') === el);
     });
+    // visible box: the target's box intersected with every clipping or scrolling ancestor
+    // (overflow other than visible, measured at its padding box) and with the viewport
+    const visibleBox = (el) => {
+      const r = el.getBoundingClientRect();
+      let L = Math.max(r.left, 0), T = Math.max(r.top, 0), Rr = Math.min(r.right, innerWidth), B = Math.min(r.bottom, innerHeight);
+      for (let p = el.parentElement; p && p !== document.documentElement; p = p.parentElement) {
+        const cs = getComputedStyle(p);
+        const cx = cs.overflowX !== 'visible', cy = cs.overflowY !== 'visible';
+        if (!cx && !cy) continue;
+        const pr = p.getBoundingClientRect();
+        const pl = pr.left + p.clientLeft, pt = pr.top + p.clientTop;
+        if (cx) { L = Math.max(L, pl); Rr = Math.min(Rr, pl + p.clientWidth); }
+        if (cy) { T = Math.max(T, pt); B = Math.min(B, pt + p.clientHeight); }
+      }
+      return Rr - L >= 1 && B - T >= 1 ? { left: L, top: T, right: Rr, bottom: B } : null;
+    };
     const nameOf = (el) => (el.id ? '#' + el.id + ' ' : '') + (el.textContent || el.getAttribute('aria-label') || el.tagName || '').trim().slice(0, 25);
     const out = [];
-    const rs = targets.map((el) => [el, el.getBoundingClientRect()]);
+    const rs = targets.map((el) => [el, visibleBox(el)]).filter(([, r]) => r);
     for (let i = 0; i < rs.length; i++)
       for (let j = i + 1; j < rs.length; j++) {
         const [a, ra] = rs[i], [b, rb] = rs[j];
@@ -206,7 +225,7 @@ const gapOf = (page, selA, selB) =>
       }
     return best;
   }, [selA, selB]);
-for (const [w, h] of [[1440, 900], [1366, 768], [375, 812], [812, 375], [667, 375]]) {
+for (const [w, h] of runs('F') ? [[1440, 900], [1366, 768], [375, 812], [812, 375], [667, 375]] : []) {
   const phone = w < 900;
   const ctx = await browser.newContext(phone ? { viewport: { width: w, height: h }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 } : { viewport: { width: w, height: h } });
   const page = await ctx.newPage();

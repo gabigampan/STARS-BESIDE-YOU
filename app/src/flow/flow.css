@@ -2060,3 +2060,19 @@ body.flow[data-step='choose'] .pane-reset {
 #credits-body pre {
   white-space: pre-wrap;
 }
+
+/* every scrolling area ends 8 px or more from the fixed controls beside it (regress check F, visible
+   geometry): a solid 8 px top border on the panels (the scroll area starts under it, so no row scrolled
+   half out of view is drawn against the step row or, on phones, the sheet handle) and an 8 px bottom border
+   on the comparison card's scroll area above its action bar. Borders, not padding: content never scrolls
+   under a border. The mission panel's body gives the same 8 px back, so the five analogs still fit. */
+body.flow #mission-panel,
+body.flow #detail-panel {
+  border-top: 8px solid var(--glass-solid);
+}
+#mission-panel .panel-body {
+  padding-top: 2px; /* + the 8 px border: "Change mission" still 10 px under the step row */
+}
+body.flow .panel-scroll {
+  border-bottom: 8px solid transparent;
+}

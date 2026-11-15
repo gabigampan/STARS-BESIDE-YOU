@@ -302,3 +302,20 @@ body.mf-phone .pane .cesium-credit-logoContainer a {
     margin-top: 6px;
   }
 }
+
+/* scroll areas 8 px or more from the handle and the Options button (regress check F): the start
+   introduction's scroll area ends 8 px above the handle (and starts 8 px under the top row) at every
+   phone size, its shade going on under the transparent borders; the side panel under the handle keeps the
+   8 px top border from flow.css; the Options sheet's scroll area starts 8 px under the top row */
+body.mf-phone.flow .intro {
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+body.mf-phone.flow[data-step='pick'] .stage > .panel,
+body.mf-phone.flow[data-step='compare'] .stage > .panel {
+  border-top: 8px solid var(--glass-solid);
+}
+body.mf-phone .mf-sheet {
+  border-top: 8px solid var(--glass-solid);
+  padding-top: 4px;
+}
