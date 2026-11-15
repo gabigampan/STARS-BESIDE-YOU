@@ -1,0 +1,4 @@
+mission,weights_min_top5_overlap,weights_min_top50_overlap,weights_min_spearman_all,weights_number1_changes,weights_variants,thresholds_max_entering,thresholds_max_leaving,thresholds_number1_changes,thresholds_variants,tolerances_max_gained,tolerances_max_lost,tolerances_number1_changes,tolerances_variants
+rover,5,48,0.995018,0,6,604,483,0,12,107,525,0,6
+solar,4,46,0.996726,0,12,1312,1316,0,12,186,404,0,6
+lunar_base,3,44,0.996406,6,12,407,421,4,8,80,58,4,8

@@ -51,6 +51,55 @@ def check_tables(sc):
     return out
 
 
+BUNDLE = os.path.join(HERE, "..", "public", "data", "v2")
+
+
+def check_pair_values(sc):
+    """Lunar base card: every number of scenario.pair_values must equal the shipped bundle
+    (explain.json, the item of that rank), the ids must be the scenario's cells and the
+    population sizes those of missions.json."""
+    pv = sc.get("pair_values")
+    if not pv:
+        return []
+    ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
+    it = [x for x in ex["missions"]["lunar_base"] if x["rank"] == pv["rank"]][0]
+    sim = it["similarity"]
+    out = []
+
+    def eq(name, a, b):
+        ok = (a == b) if isinstance(a, str) else abs(float(a) - float(b)) < 1e-9
+        out.append(dict(item=name, scenario=a, bundle=b, ok=ok))
+        if not ok:
+            raise SystemExit("PAIR MISMATCH %s: scenario %s bundle %s" % (name, a, b))
+    eq("earth_id", pv["earth_id"], it["id"]); eq("moon_id", pv["moon_id"], sim["twin"]["id"])
+    eq("earth cell", sc["earth_site"]["cell_id"], "E%d" % it["id"]); eq("moon cell", sc["site"]["cell_id"], "M%d" % sim["twin"]["id"])
+    for k in ("suitability", "final"):
+        eq(k, pv[k], it[k])
+    eq("similarity", pv["similarity"], sim["value"])
+    eq("pair_sentence", pv["pair_sentence"], sim["pair_sentence"])
+    for v in sim["variables"]:
+        d = pv["variables"][v["variable"]]
+        eq(v["variable"] + ".earth", d["earth"], v["earth_real"]); eq(v["variable"] + ".moon", d["moon"], v["moon_real"])
+        eq(v["variable"] + ".diff", d["diff"], v["difference_real"])
+        if v["scale"] == "percentile_within_population":
+            eq(v["variable"] + ".earth_pct", d["earth_pct"], v["earth"]); eq(v["variable"] + ".moon_pct", d["moon_pct"], v["moon"])
+            eq(v["variable"] + ".diff_pct", d["diff_pct"], v["difference"])
+    for k, d in sim["not_part_of_similarity"].items():
+        for s in ("earth", "moon", "difference"):
+            eq("info.%s.%s" % (k, s), pv["not_part_of_similarity"][k][s], d[s])
+    eq("place.nearest", sc["earth_site"]["nearest_place"], it["place"]["nearest_place"])
+    eq("place.nearest_km", sc["earth_site"]["nearest_place_km"], it["place"]["nearest_place_km"])
+    eq("place.region", sc["earth_site"]["name"], "%s, %s" % (it["place"]["region"], it["place"]["country"]))
+    eq("feature", sc["site"]["place_ref"]["feature"], sim["twin"]["feature"])
+    eq("feature_km", sc["site"]["place_ref"]["distance_km"], sim["twin"]["feature_km"])
+    ms = json.load(open(os.path.join(BUNDLE, "missions.json")))
+    lb = [m for m in ms["missions"] if m.get("id") == "lunar_base"][0]["similarity"]
+    eq("population EARTH", pv["populations"]["earth_points"], lb["populations"]["EARTH"]["cells"])
+    eq("population MOON", pv["populations"]["moon_cells"], lb["populations"]["MOON"]["cells"])
+    eq("zone name", sc["site"]["zone"]["name"], lb["zone"]["name"])
+    return out
+
+
 def dest(lat, lon, e, n):
     """local east/north metres (azimuthal equidistant about the site) -> lat, lon (deg)."""
     p = math.radians(lat)
@@ -149,6 +198,7 @@ def main():
     ap.add_argument("scenario")
     ap.add_argument("--work", default=os.path.join(HERE, "build"))
     ap.add_argument("--ldem16", default=LDEM16_DEFAULT)
+    ap.add_argument("--checks-only", action="store_true", help="table and bundle checks only, no terrain")
     a = ap.parse_args()
     sc = json.load(open(a.scenario))
     work = os.path.join(a.work, sc["name"]); cache = os.path.join(a.work, "cache")
@@ -156,6 +206,11 @@ def main():
     t0 = time.time()
     checks = {"tables": check_tables(sc)}
     print("table values: %d checked, all equal" % len(checks["tables"]))
+    checks["pair_values"] = check_pair_values(sc)
+    if checks["pair_values"]:
+        print("pair values: %d checked against the bundle, all equal" % len(checks["pair_values"]))
+    if a.checks_only:
+        return
 
     lat, lon = sc["site"]["lat_deg"], sc["site"]["lon_deg"]
     k = float(D.ps_scale_factor(lat))

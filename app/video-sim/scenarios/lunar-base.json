@@ -27,7 +27,8 @@
       "region_code": "A",
       "nasa_region": "Haworth",
       "source": "mission_zones.json region A (280 cells; moon_base.bin region column); the cell's 1-degree square intersects the Haworth footprint of tierra luna/engine/data/artemis_iii_regions.geojson (USGS navigational grids, McClernan 2024, DOI 10.5066/P1MEQ6UK; NASA release 24-136, 2024-10-28) at its edge"
-    }
+    },
+    "card_name": "near Mons Malapert"
   },
   "earth_site": {
     "body": "EARTH",
@@ -191,10 +192,11 @@
   },
   "sun": {
     "declination_deg": -1.54,
-    "declination_note": "Southern-summer solstice: the Sun reaches the table's sun_elev_max_deg (7.04 deg) at local noon. Illustrative choice of season.",
-    "hour_angle_start_deg": -150,
-    "hour_angle_end_deg": 210,
-    "sim_end_s": 40
+    "declination_note": "Southern-summer solstice: the Sun reaches the table's sun_elev_max_deg (5.04 deg) at local noon; the most sunlit season. Illustrative choice of season.",
+    "hour_angle_start_deg": -22,
+    "hour_angle_end_deg": 100,
+    "sim_end_s": 40,
+    "window_note": "Part of one lunar day (122 deg of hour angle, 10.0 Earth days): from shortly before the Sun clears the northern terrain to after it goes behind the western terrain. The rest of the cycle at this point is terrain shadow or night."
   },
   "temperature_model": {
     "description": "Stated shape model, not a measurement: T = Tmin + (Tmax - Tmin) * g, where g is the cycle-normalised value of a radiative-equilibrium shape (sin h)^(1/4) while the Sun is above the flat horizon AND more than half of its disc clears the real terrain horizon at the habitat, decaying after the last sunlit moment as g_sunset * exp(-t / tau). The curve is rescaled so that over the full cycle shown it reaches exactly the cell's measured Diviner minimum and maximum.",
@@ -224,21 +226,25 @@
     "berm_w_m": 4.0,
     "steps": [
       {
-        "name": "Module placed",
-        "t0": 5.0,
-        "t1": 9.0
+        "active": "Lowering the module",
+        "done": "Module placed",
+        "t0": 5.5,
+        "t1": 9.5
       },
       {
-        "name": "Inflatable section deploying",
-        "t0": 9.5,
-        "t1": 14.5
+        "active": "Inflatable section deploying",
+        "done": "Inflatable section deployed",
+        "t0": 11.0,
+        "t1": 15.5
       },
       {
-        "name": "Regolith berm built",
-        "t0": 15.0,
-        "t1": 21.5
+        "active": "Building the regolith berm",
+        "done": "Regolith berm built",
+        "t0": 16.5,
+        "t1": 22.5
       }
-    ]
+    ],
+    "done_hold_s": 1.5
   },
   "camera": {
     "keys": [
@@ -246,42 +252,42 @@
         "t": 0.0,
         "dist": 2000,
         "elev_deg": 22,
-        "az_deg": 150,
+        "az_deg": 20,
         "target_z": 0
       },
       {
         "t": 4.5,
         "dist": 85,
         "elev_deg": 12,
-        "az_deg": 150,
+        "az_deg": 30,
         "target_z": 2
       },
       {
         "t": 13.0,
         "dist": 66,
         "elev_deg": 11,
-        "az_deg": 100,
+        "az_deg": 350,
         "target_z": 2
       },
       {
-        "t": 20.0,
+        "t": 21.0,
         "dist": 62,
         "elev_deg": 11,
-        "az_deg": 65,
+        "az_deg": 320,
         "target_z": 2
       },
       {
-        "t": 28.0,
-        "dist": 64,
-        "elev_deg": 9,
-        "az_deg": 122,
+        "t": 28.5,
+        "dist": 70,
+        "elev_deg": 8,
+        "az_deg": 110,
         "target_z": 2
       },
       {
         "t": 40.0,
-        "dist": 72,
-        "elev_deg": 7,
-        "az_deg": 140,
+        "dist": 80,
+        "elev_deg": 10,
+        "az_deg": 30,
         "target_z": 2
       }
     ],
@@ -293,93 +299,109 @@
     "vp9_crf": 34
   },
   "card": {
-    "title": "Earth analog and lunar twin: lunar base",
-    "subtitle": "Values from the project tables (1-degree cells). Each value carries its level.",
+    "title": "Earth analog and lunar twin: lunar base, pair number 1",
+    "subtitle": "Suitability 47.27, similarity 97.31, final 72.29. The lunar cell lies in NASA's nine candidate landing regions near the lunar south pole. Values from the project tables (1-degree cells); each carries its level.",
     "rows": [
       {
-        "label": "Diurnal temperature amplitude",
+        "label": "Coldest temperature",
+        "sub": "compared by percentile",
+        "var": "tmin_k",
+        "unit": "K",
+        "dec": 2,
+        "celsius": true,
+        "pct": true,
         "earth": {
-          "var": "lst_diurnal_amp_k",
-          "unit": "K",
+          "level": "MODELLED",
+          "note": "air, WorldClim"
+        },
+        "moon": {
+          "level": "MEASURED",
+          "note": "surface, Diviner"
+        }
+      },
+      {
+        "label": "Daily temperature swing",
+        "sub": "compared by percentile",
+        "var": "lst_diurnal_amp_k",
+        "unit": "K",
+        "dec": 2,
+        "pct": true,
+        "earth": {
+          "level": "DERIVED",
           "note": "MODIS land surface"
         },
         "moon": {
-          "var": "lst_diurnal_amp_k",
-          "unit": "K",
+          "level": "DERIVED",
           "note": "Diviner surface"
         }
       },
       {
-        "label": "Minimum temperature",
+        "label": "Slope",
+        "sub": "compared in real value",
+        "var": "slope_deg",
+        "unit": "°",
+        "dec": 3,
         "earth": {
-          "var": "tmin_c",
-          "unit": "°C",
-          "note": "air, WorldClim"
+          "level": "DERIVED"
         },
         "moon": {
-          "var": "tmin_c",
-          "unit": "°C",
-          "note": "surface"
+          "level": "DERIVED"
         }
       },
       {
-        "label": "Maximum surface temperature",
-        "earth": null,
+        "label": "Roughness",
+        "sub": "compared in real value",
+        "var": "roughness_m",
+        "unit": "m",
+        "dec": 2,
+        "earth": {
+          "level": "DERIVED"
+        },
         "moon": {
-          "var": "tmax_k",
-          "unit": "K"
+          "level": "DERIVED"
         }
       },
       {
-        "label": "Mean surface temperature",
+        "label": "Mean temperature",
+        "sub": "not part of the similarity",
+        "var": "temp_k",
+        "info": true,
+        "unit": "K",
+        "dec": 2,
         "earth": {
-          "var": "temp_k",
-          "unit": "K"
+          "level": "DERIVED",
+          "note": "MODIS land surface"
         },
         "moon": {
-          "var": "temp_k",
-          "unit": "K"
+          "level": "DERIVED",
+          "note": "Diviner surface"
         }
       },
       {
-        "label": "Elevation",
+        "label": "Relative elevation",
+        "sub": "not part of the similarity",
+        "var": "elevation_rel_m",
+        "info": true,
+        "unit": "m",
+        "dec": 1,
         "earth": {
-          "var": "elevation_m",
-          "unit": "m",
-          "note": "geoid"
+          "level": "DERIVED",
+          "note": "minus Earth mean"
         },
         "moon": {
-          "var": "elevation_m",
-          "unit": "m",
-          "note": "1737.4 km sphere"
+          "level": "DERIVED",
+          "note": "minus Moon mean"
         }
-      },
-      {
-        "label": "Mean slope (3.7 km baseline)",
-        "earth": {
-          "var": "slope_deg",
-          "unit": "°"
-        },
-        "moon": {
-          "var": "slope_deg",
-          "unit": "°"
-        }
-      },
-      {
-        "label": "Permafrost",
-        "earth": {
-          "var": "permafrost_class",
-          "text": "continuous",
-          "unit": ""
-        },
-        "moon": null
       }
     ],
-    "sentence": "Both are high, cold, bare sites, but the cold differs in size: the Kunlun cell swings 27.12 K between day and night against 187.06 K on Mons Mouton, and its coldest value (−28.68 °C, air) is far above the lunar surface minimum (−204.65 °C, 68.5 K). It reproduces a high plateau on frozen ground, not the lunar thermal range.",
-    "legend": "Levels as stated in the project provenance tables. Earth minimum: WorldClim 2.1 air temperature (modelled, non-commercial licence), not a surface value. Moon temperatures: Diviner bolometric surface brightness temperature. Earth elevation above the EGM2008 geoid; Moon elevation above the 1737.4 km reference sphere."
+    "levels_source": "variables.json variables[].bodies[EARTH|MOON].level; Moon coldest temperature MEASURED per missions.json missions[lunar_base].similarity.variables[tmin_k].sides.MOON (Diviner tmin_k); relative elevation DERIVED per missions.json elevation_rel_m sides",
+    "legend": "Percentiles: the Earth point among the 2,419 Earth candidates of the Lunar base mission, the lunar cell among the 280 cells of the nine NASA regions. Earth coldest temperature: WorldClim 2.1 modelled air temperature of the coldest month (non-commercial licence); Moon: Diviner measured surface night minimum. They are not the same quantity. Relative elevation: elevation minus each body's mean."
   },
   "render": {
-    "earthshine_display_fraction": 0.2
+    "earthshine_display_fraction": 0.2,
+    "shadow_exposure": 6.0,
+    "exposure_adapt_s": 1.0,
+    "lighting_note": "Sun: one parallel light; terrain shadows from the real LOLA horizons; 3.5 % uniform fill standing in for light reflected by the surrounding ground (assumption). While the habitat site is in shadow the display exposure is raised to x6 (like a camera's exposure), stated on screen; the light itself is not changed."
   },
   "captions": {
     "cue_times": [
@@ -468,5 +490,74 @@
         "Kunlun reproduce una meseta alta sobre suelo helado, no el rango térmico lunar. Simulación 3D basada en datos de las tablas. No son imágenes reales."
       ]
     }
+  },
+  "pair_values": {
+    "source": "app/public/data/v2/explain.json, missions.lunar_base item with rank 1 (the same values as earth_lunar_base_pairs.bin and twins.json); prepare.py checks every number here against that file",
+    "earth_id": 17538,
+    "moon_id": 63528,
+    "rank": 1,
+    "suitability": 47.27,
+    "similarity": 97.31,
+    "final": 72.29,
+    "variables": {
+      "tmin_k": {
+        "earth": 248.61,
+        "moon": 41.23,
+        "diff": 207.38,
+        "earth_pct": 8.3712,
+        "moon_pct": 8.0357,
+        "diff_pct": 0.3355
+      },
+      "lst_diurnal_amp_k": {
+        "earth": 15.6,
+        "moon": 153.27,
+        "diff": 137.67,
+        "earth_pct": 6.72,
+        "moon_pct": 10.18,
+        "diff_pct": 3.46
+      },
+      "slope_deg": {
+        "earth": 6.652,
+        "moon": 7.179,
+        "diff": 0.527
+      },
+      "roughness_m": {
+        "earth": 238.81,
+        "moon": 238.49,
+        "diff": 0.32
+      }
+    },
+    "not_part_of_similarity": {
+      "temp_k": {
+        "earth": 272.06,
+        "moon": 77.49,
+        "difference": 194.57
+      },
+      "elevation_rel_m": {
+        "earth": 2807.0,
+        "moon": 680.7,
+        "difference": 2126.3
+      },
+      "irradiance_kwh_m2_day": {
+        "earth": 4.093,
+        "moon": 0.103,
+        "difference": 3.99
+      }
+    },
+    "pair_sentence": "This pair matches by relative thermal position, not by equal temperatures: this site's coldest temperature and daily swing rank among Earth's lunar-base candidates where its twin's rank among the cells of NASA's nine candidate landing regions near the lunar south pole. In real values the twin is 195 K colder on average (minimum -232 °C at the surface against -24.5 °C air temperature here) and its day-night swing is 138 K larger; slope differs by 0.5° and roughness by 0.3 m.",
+    "populations": {
+      "earth_points": 2419,
+      "moon_cells": 280,
+      "source": "missions.json missions[lunar_base].similarity.populations"
+    }
+  },
+  "sun_status": {
+    "before_sunrise": "Sun up, behind the northern terrain",
+    "rising": "Sun rising over the terrain",
+    "day_before": "Sunlit",
+    "blocked": "Sun behind the terrain: site in shadow",
+    "partly": "Sun partly behind the terrain",
+    "day_after": "Habitat assembled, sunlit",
+    "night": "Lunar night: Sun below the horizon"
   }
 }

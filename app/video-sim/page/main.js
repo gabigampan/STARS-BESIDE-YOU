@@ -378,7 +378,35 @@ function drawInset(T) {
   bar.fillStyle = '#fff'; bar.fillRect(Math.round(u * 300), 0, 4, 14);
 }
 
+// Pair card (Lunar base): every number comes from the scenario's pair_values block, which
+// prepare.py checks against the shipped bundle (explain.json) before anything is rendered.
+function buildPairCard() {
+  const C = SC.card, PV = SC.pair_values;
+  const lv = (x) => ({ MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled' }[x] || x);
+  const fx = (x, d) => Number(x).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const val = (x, r) => `${fx(x, r.dec)}${r.unit === '°' ? '°' : ' ' + r.unit}`;
+  const rowsH = C.rows.map((r) => {
+    const v = r.info ? PV.not_part_of_similarity[r.var] : PV.variables[r.var];
+    const side = (b) => {
+      const x = v[b], s = r[b];
+      const c = r.celsius ? ` <span class="c">(${fx(x - 273.15, 2)} °C)</span>` : '';
+      const p = r.pct ? `<div class="pct">percentile ${fx(v[b + '_pct'], 2)}</div>` : '';
+      return `<td class="num">${val(x, r)}${c}<div class="lv">${lv(s.level)}${s.note ? ', ' + s.note : ''}</div>${p}</td>`;
+    };
+    const d = `<td class="num">${val(v.diff ?? v.difference, r)}${r.pct ? `<div class="pct">${fx(v.diff_pct, 2)} percentile points</div>` : ''}</td>`;
+    return `<tr><td class="var">${r.label}${r.sub ? `<div class="lv">${r.sub}</div>` : ''}</td>${side('earth')}${side('moon')}${d}</tr>`;
+  }).join('');
+  document.getElementById('card').classList.add('pair');
+  const es = SC.earth_site, ms = SC.site;
+  const ll =(lat, lon) => `${Math.abs(lat)}° ${lat < 0 ? 'S' : 'N'} ${Math.abs(lon)}° ${lon < 0 ? 'W' : 'E'}`;
+  document.getElementById('cardInner').innerHTML = `<h1>${C.title}</h1><div class="sub">${C.subtitle}</div>` +
+    `<table class="pair"><tr><th>Variable</th><th>Earth: ${es.name}<div class="lv">cell ${es.cell_id}, ${ll(es.lat_deg, es.lon_deg)}; ${es.nearest_place_km} km from ${es.nearest_place}</div></th>` +
+    `<th>Moon: ${ms.card_name}<div class="lv">cell ${ms.cell_id}, ${ms.label}; ${ms.place_ref.distance_km} km from ${ms.place_ref.feature}</div></th><th>Real difference</th></tr>${rowsH}</table>` +
+    `<div class="sentence">${PV.pair_sentence}</div><div class="legend">${C.legend}</div>`;
+}
+
 function buildCard() {
+  if (SC.pair_values) return buildPairCard();
   const C = SC.card, tv = SC.table_values;
   const lv = (x) => ({ MEASURED: 'measured', DERIVED: 'derived', MODELLED: 'modelled' }[x] || x);
   const cell = (body, v) => {
@@ -393,6 +421,39 @@ function buildCard() {
     `<div class="sentence">${C.sentence}</div><div class="legend">${C.legend}</div>`;
 }
 buildCard();
+
+// ------------------------------------------------------------------ lunar base: status label and display exposure
+// Each habitat step has an 'active' label (shown from t0 while it moves) and a 'done' label shown
+// only from t1, the first moment the part is at rest (phase() reaches exactly 1 at t1), for hold_s.
+function baseStatus(t, s) {
+  const HB = SC.habitat, st = HB.steps;
+  const hold = HB.done_hold_s ?? 0.8;
+  for (let k = st.length - 1; k >= 0; k--) {
+    const x = st[k], nextT0 = k + 1 < st.length ? st[k + 1].t0 : Infinity;
+    if (t >= x.t0 && t < x.t1) return x.active;
+    if (t >= x.t1 && t < Math.min(x.t1 + hold, nextT0)) return x.done;
+  }
+  const S = SC.sun_status;
+  if (s.elev <= -M.SUN_DIAM_DEG / 2) return S.night;
+  if (s.vis <= 0) return t < st[0].t0 ? S.before_sunrise : S.blocked;
+  if (s.vis < 1) return t < st[0].t0 ? S.rising : S.partly;
+  return t < st[0].t0 ? S.day_before : S.day_after;
+}
+// Display exposure: 1 while the habitat site is sunlit; raised to render.shadow_exposure while it is in
+// shadow, like a camera's exposure, following the shadowed share of the last exposure_adapt_s seconds
+// (a deterministic function of t). Stated on screen whenever it is above 1.25.
+function exposureAt(t) {
+  const EX = SC.render?.shadow_exposure ?? 1, A = SC.render?.exposure_adapt_s ?? 1.0, n = 24;
+  if (EX === 1) return 1;
+  let sh = 0;
+  for (let k = 0; k < n; k++) { const tt = Math.max(0, t - A * k / (n - 1)); sh += 1 - M.smooth(sunAt(Math.min(tt, SIM_END)).vis); }
+  sh /= n;
+  return 1 + (EX - 1) * M.smooth(sh);
+}
+window.statusAt = function (t) {
+  const s = sunAt(Math.min(t, SIM_END));
+  return { t, status: isSolar ? null : baseStatus(t, s), sunElev: s.elev, sunAz: s.az, horizon: s.hz, visible: s.vis, exposure: isSolar ? 1 : exposureAt(t) };
+};
 
 // ------------------------------------------------------------------ frame
 const tmpV = new THREE.Vector3();
@@ -478,19 +539,20 @@ window.renderAt = function (t) {
     const T = Tcurve(s.Hh);
     out.T = T; out.night = night; out.earthLit = earthLit;
     const tm = SC.table_values.moon;
-    const step = st.find((x) => t >= x.t0 && t < x.t1 + 0.8);
-    if (step) status = step.name;
-    else if (t < st[0].t0) status = s.elev > 0 ? 'Night ending: sunrise' : 'Lunar night';
-    else if (s.elev > 0 && s.vis > 0) status = 'Habitat assembled, daylight';
-    else if (s.elev > 0) status = 'Sun blocked by terrain';
-    else status = 'Night: surface cooling';
+    status = baseStatus(t, s);
     out.status = status;
+    const ex = exposureAt(t);
+    renderer.toneMappingExposure = ex;
+    out.exposure = ex; out.landed = t >= st[0].t1;
+    const lit = s.vis >= 1 ? 'sunlit' : s.vis > 0 ? 'partly sunlit' : (s.elev > -M.SUN_DIAM_DEG / 2 ? 'in terrain shadow' : 'night');
     rows = row('Surface temp.', `${f1(T)} K  ${f1(T - 273.15)} °C`) + row('Measured min', tm.tmin_k.value + ' K') + row('Measured max', tm.tmax_k.value + ' K') +
       row('Diurnal amplitude', tm.lst_diurnal_amp_k.value + ' K') + row('Sun elevation', f1(s.elev) + '°') + row('Sun azimuth', f1(s.az) + '°') +
-      row('Terrain horizon', f1(s.hz) + '°') + row('Elapsed', f1(M.simDays(SC, tc)) + ' Earth days') + row('Time', compStr) +
-      row('Earth', TR.earth.draw ? `az ${f1(TR.earth.az_deg, 0)}° el ${f1(TR.earth.elev_deg)}°` : 'below horizon');
-    panel.innerHTML = `<div class="title">Lunar base · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div><div class="status">${status}</div>${rows}` +
-      `<div class="tag" style="margin-top:8px">Surface temp.: model curve between the measured Diviner min and max. Sun: computed.${night > 0.5 ? '<br><span style=\"color:#f2a33a\">Night view: exposure raised to show earthshine (not to scale).</span>' : ''}</div>`;
+      row('Terrain horizon', f1(s.hz) + '°') + row('Habitat site', lit) + row('Elapsed', f1(M.simDays(SC, tc)) + ' Earth days') + row('Time', compStr) +
+      row('Earth', TR.earth.draw ? `az ${f1(TR.earth.az_deg, 0)}° el ${f1(TR.earth.elev_deg)}°` : 'behind the terrain');
+    const exTag = ex > 1.25 ? `<br><span style="color:#f2a33a">Site in shadow: exposure raised ×${f1(ex)} to show the ground (not to scale).</span>` : '';
+    panel.innerHTML = `<div class="title">Lunar base · ${SC.site.cell_id}</div><div class="site">${SC.site.label}, ${SC.site.place}</div>` +
+      (SC.site.zone ? `<div class="site zone">${SC.site.zone.name}</div>` : '') + `<div class="status">${status}</div>${rows}` +
+      `<div class="tag" style="margin-top:8px">Surface temp.: model curve between the measured Diviner min and max. Sun: computed.${night > 0.5 ? '<br><span style=\"color:#f2a33a\">Night view: exposure raised to show earthshine (not to scale).</span>' : ''}${exTag}</div>`;
     drawInset(T);
   }
   out.status = status;

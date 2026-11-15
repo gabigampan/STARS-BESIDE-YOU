@@ -65,6 +65,13 @@ async function renderFrames() {
     console.log('wrote', path.join(TW, 'check_topdown_render.png'));
     await browser.close(); srv.close(); return;
   }
+  if (flag('timeline')) {          // status label and exposure of every frame, without rendering
+    const tl = await page.evaluate(({ nf, fps }) => { const o = []; for (let i = 0; i < nf; i++) o.push(window.statusAt(i / fps)); return o; }, { nf: NF, fps: SC.fps });
+    fs.writeFileSync(path.join(TW, 'timeline.json'), JSON.stringify(tl));
+    let prev = null;
+    tl.forEach((x, i) => { if (x.status !== prev) { console.log(`frame ${i} t=${(i / SC.fps).toFixed(3)} ${x.status} (sun ${x.sunElev.toFixed(2)} az ${x.sunAz.toFixed(1)} hz ${x.horizon.toFixed(2)} vis ${x.visible.toFixed(2)} exp ${x.exposure.toFixed(2)})`); prev = x.status; } });
+    await browser.close(); srv.close(); return;
+  }
   const stills = opt('stills', null);
   if (stills) {
     const sd = path.join(TW, 'stills'); fs.mkdirSync(sd, { recursive: true });
@@ -167,7 +174,7 @@ function probe() {
 
 (async () => {
   if (!flag('encode-only') && !flag('captions-only')) await renderFrames();
-  if (opt('stills', null) || opt('frames', null) || flag('topdown')) return;
+  if (opt('stills', null) || opt('frames', null) || flag('topdown') || flag('timeline')) return;
   if (!flag('captions-only')) encode();
   captions(); probe();
 })().catch((e) => { console.error(e); process.exit(1); });
