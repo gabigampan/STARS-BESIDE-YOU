@@ -20,7 +20,10 @@ It also edited three of the team's original files (`tierra luna/analog_finder.py
 The team's scoring file `tierra luna/mission_scoring.json` was read and quoted, never edited.
 
 Independent AI reviewers (separate sessions of the assistant) re-computed the figures and checked the texts: the statistical audit and the re-audits
-of Rover and Lunar base in `docs/stats_audit/`, the validation in `docs/VALIDATION.md`, and the independent
+of the three missions (Rover, Solar panels and Lunar base) in `docs/stats_audit/`, the independent re-read of every
+published text (`11_textos_finales.md`), the check of the 19 audio texts (`10_textos_audio.md`), the external
+contrast of the fifteen published sites (`12_contraste_realidad_nuevos.md`), the checks of the validation
+(`13_comprobacion_validacion.md`) and of the videos (`14_comprobacion_videos.md`, provisional), the validation in `docs/VALIDATION.md`, and the independent
 re-computation of the real tables from raw files (`docs/REAL_DATA.md` section 6,
 `tierra luna/real_data/verification/`).
 

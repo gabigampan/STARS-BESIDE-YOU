@@ -28,7 +28,9 @@ planners, students and the public, and for the jury: every value shown carries i
 | **Lunar base** | cold places with a strong daily thermal swing (gate: swing at least 15 K) | a cell touching one of NASA's nine candidate landing regions near the lunar south pole (280 cells) | thermal **position** (coldest temperature and daily swing as percentiles of each body's population, within 10 points), slope and roughness in real values |
 
 For every mission the list is ordered by a final score: 50 % similarity to the lunar twin and 50 % the team's
-suitability for the mission. The app shows five spread-out sites per mission and the full ranking. What these
+suitability for the mission. The app shows the full ranking and five analogs per mission: for Rover, five of the 254 sites tied at the
+top, chosen to be spread across the world; for Solar panels and Lunar base, five of the highest-scoring analogs,
+at least 2 degrees apart (`app/public/data/v2/missions.json` `top5`). What these
 lists can and cannot claim is in [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 
 ## How to run it
@@ -61,6 +63,15 @@ every `.env.*` except `.env.example`) may hold `VITE_CESIUM_ION_TOKEN`; it is us
 `VITE_USE_ION=1` (`VITE_USE_ION=1 npm run build`), and otherwise it is replaced by an empty string so it never
 reaches `dist/` (the smoke test checks this). Anything built with `VITE_USE_ION=1` contains the token in public
 JavaScript: never use a token with write scopes there; use a read-only token, or none.
+
+### Deployment
+
+Production URL: https://stars-beside-you.vercel.app (a rehearsal build is live; the final build is deployed after
+the web branch `web-accessibility` is merged [TO CONFIRM BY THE DIRECTOR: at 14:05 CET `git log --oneline -15` on `final-integration` shows no merge commit of `web-accessibility`]). Deploy from the repository root with the Vercel token
+in the environment, never on the command line: `bash scripts/deploy_vercel.sh` (production) or
+`bash scripts/deploy_vercel.sh --preview`; configuration in `app/vercel.json`.
+
+**Performance.** Lighthouse desktop performance was measured on the rehearsal deployment (https://stars-beside-you.vercel.app) from the build container: 24 and 25 in two runs, with a total blocking time of 35 to 37 s. That container has no GPU and runs WebGL in software, so this is not a valid measurement of a real computer, and the performance target of 85 is **not demonstrated**. Two causes on the page side were found: the intro heading is built in JavaScript and waits for the 4.1 MB bundle, and the page shifts its layout by 0.28 (cumulative layout shift) when the globes mount.
 
 ### Engine (`tierra luna/engine/`)
 
@@ -150,7 +161,7 @@ frame from the bundle and real lunar relief (three.js in headless Chromium). Com
 | [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md) | the exact structure of the data bundle the app reads (files, columns, encodings, sizes) |
 | [ASSUMPTIONS.md](ASSUMPTIONS.md) | every engine setting and assumption: what was assumed, why, its effect, where to change it |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | the team's design decisions, dated, with the options and figures before and after (in Spanish) |
-| docs/STATS_AUDIT.md and [docs/stats_audit/](docs/stats_audit/) | the independent statistical audit (parts 1 to 9, re-audits of Rover and Lunar base, research notes; in Spanish) |
+| docs/STATS_AUDIT.md and [docs/stats_audit/](docs/stats_audit/) | the independent statistical audit (parts 1 to 14: re-audits of the three missions, final text re-read, audio texts, external contrast of the fifteen published sites, validation and video checks, research notes; in Spanish) |
 | [docs/VALIDATION.md](docs/VALIDATION.md) | what was checked about the shipped pairs, how, and what each check does not show |
 | [docs/UX_CHECKLIST.md](docs/UX_CHECKLIST.md) and [docs/UX_REPORT.md](docs/UX_REPORT.md) | the local jury's UX checklist and the app measured against it |
 | [docs/REAL_DATA.md](docs/REAL_DATA.md) | the real tables: products, definitions, licences, provenance levels, verification |

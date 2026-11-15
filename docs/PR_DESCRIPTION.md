@@ -21,7 +21,7 @@ which lunar place that is. Overview, commands and credits: [README.md](../README
 **Engine** (`tierra luna/engine/`, `python -m engine`)
 - Reads the real tables and the team's `mission_scoring.json`, applies each mission's filters, scores
   suitability, pairs each passing Earth point with its lunar twin inside the mission's lunar zone, ranks by
-  50 % similarity and 50 % suitability, picks five spread-out sites, and writes the data bundle
+  50 % similarity and 50 % suitability, picks five analogs (Rover: five of the 254 tied at the top, spread across the world; Solar panels and Lunar base: five of the highest-scoring, at least 2 degrees apart), and writes the data bundle
   `app/public/data/v2/` (engine 3.4.0, data contract revision 8, `docs/DATA_CONTRACT.md`) with every text,
   limitation and credit the app shows.
 - Tests in `tierra luna/tests/`; validation scripts in `tierra luna/validation/`; audit scripts in
@@ -43,7 +43,7 @@ which lunar place that is. Overview, commands and credits: [README.md](../README
 
 **Documents**
 - `ASSUMPTIONS.md` and, in `docs/`: `DATA_CONTRACT.md`, `DECISIONS.md` (the team's dated decisions),
-  `stats_audit/` (statistical audit, parts 1 to 9 and re-audits), `VALIDATION.md`, `REAL_DATA.md`,
+  `STATS_AUDIT.md`, `stats_audit/` (statistical audit, parts 1 to 14, re-audits of the three missions), `VALIDATION.md`, `REAL_DATA.md`,
   `MISSION_ZONES.md`, `AUDIT.md`, `UX_CHECKLIST.md`, `UX_REPORT.md`, `KNOWN_LIMITATIONS.md`, `AI_USE.md` (draft)
   and this file. What each is for: README "Documents".
 
@@ -83,13 +83,16 @@ Real-data builders and the video renderer: README "How to run it" and `app/video
   is the Shackleton region instead of Tycho; filters read from `mission_scoring.json`), `tierra luna/rover_preset.py` (version 3, which states that
   nothing from versions 1 and 2 was removed) and `tierra luna/data/presets/presets.json` (rewritten presets). Edited code carries `[AI-assisted]`
   comments.
-- The work on the branch `web-accessibility` (a separate session on `app/src` and `app/tests`) is not merged here.
+- The work on the branch `web-accessibility` (a separate session on `app/src` and `app/tests`) is to be merged into `final-integration` before submission [TO CONFIRM BY THE DIRECTOR: at 14:05 CET `git log --oneline -15` on `final-integration` shows no merge commit of `web-accessibility`].
+- Validation (phase 3): `docs/VALIDATION.md` and `tierra luna/validation/`, with an independent check in `docs/stats_audit/13_comprobacion_validacion.md`.
+- Deployment: `scripts/deploy_vercel.sh` and `app/vercel.json`; production URL https://stars-beside-you.vercel.app (rehearsal build live; final build after the web merge). Lighthouse desktop performance on the rehearsal, measured from a container without GPU (software WebGL): 24 and 25; not valid for a real computer, the target of 85 is not demonstrated.
+- Audio: final texts of the 19 tracks in `app/public/audio/transcripts.json`, checked independently; the recordings are pending (`app/public/audio/pending.json`), and until they arrive the web shows each track's text and plays nothing.
 
 ## What reviewers should look at first
 
 1. `docs/KNOWN_LIMITATIONS.md`: what the lists can and cannot claim.
 2. `docs/DECISIONS.md` and `ASSUMPTIONS.md`: the team's decisions and every setting with its effect.
-3. `docs/stats_audit/9_reauditoria_rover.md` and `9_reauditoria_base.md`: the independent re-audits (in Spanish).
+3. `docs/STATS_AUDIT.md` and `docs/stats_audit/9_reauditoria_rover.md`, `9_reauditoria_solar.md`, `9_reauditoria_base.md`: the audit summary and the independent re-audits of the three missions (in Spanish).
 4. `tierra luna/real_data/provenance_*.csv` and `docs/REAL_DATA.md` section 3: sources and licences, in particular
    the WorldClim licence.
 5. The app itself (`npm run dev`), each mission's five sites and their pair sentences.
@@ -100,7 +103,7 @@ Real-data builders and the video renderer: README "How to run it" and `app/video
 - Rover: 254 sites tied within the measurement uncertainty; the order among them is the team's suitability.
 - Solar panels: similarity saturated; matched on sunlight above the atmosphere, about a third or more is lost before the ground at the Earth site.
 - Lunar base: a likeness of thermal position, not of temperature (about 200 K apart); the five are fragile; polar stations are excluded by the 15 K swing gate.
-- Earth temperature (WorldClim) and permafrost are modelled; WorldClim is non-commercial only (pending team decision); frame rate not measured on real hardware.
+- Earth temperature (WorldClim) and permafrost are modelled; WorldClim is non-commercial only (pending team decision); frame rate and Lighthouse performance not measured on real hardware.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 https://claude.ai/code/session_01RaZffQcqLUAZjsW856KTAM

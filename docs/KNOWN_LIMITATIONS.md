@@ -2,7 +2,7 @@
 
 Team "Stars Beside You", NASA Space Apps Challenge 2026. State of branch `final-integration`, engine 3.4.0,
 data contract revision 8, 15 November 2026. Every statement below is taken from `ASSUMPTIONS.md`,
-`docs/REAL_DATA.md`, `docs/DECISIONS.md`, the statistical audit in `docs/stats_audit/` (parts 1 to 9 and the
+`docs/REAL_DATA.md`, `docs/DECISIONS.md`, the statistical audit in `docs/stats_audit/` (parts 1 to 14 and the
 re-audit JSON files) and the texts the bundle ships (`app/public/data/v2/similarity.json` `texts`). Where a
 figure is quoted, the source named next to it holds the computation.
 
@@ -63,7 +63,7 @@ proven best" (Rover: "five of the 254 sites tied at the top"). The full ranking 
 - Recognised analogs pay for the bare-ground criterion at 1 degree: Bardenas ranks in the top 68.2 % and Tabernas
   in the top 71.5 %, losing 24.4 and 19.8 suitability points on the bare-ground share alone; Ramon (3.6 %),
   Haughton (4.2 %), Qaidam (4.0 %) and Yungay (8.1 %) stay in the top 10 %.
-- **The five are not stable as individuals:** in 200 simulations under the documented data uncertainty each stays
+- **Which five are shown is unstable:** in 200 simulations under the documented data uncertainty each stays
   among the five in 43-87.5 % of runs and the exact list repeats in 10.5 %; the tied group is stable (89 % of its
   members kept, median). The twins change in most runs.
 - Ice sheets and water-dominated cells are not excluded from the ranking (1,506 and 1,145 ranked points); they are
@@ -83,11 +83,14 @@ proven best" (Rover: "five of the 254 sites tied at the top"). The full ranking 
   of them in darkness. No text says or implies that panels charge the same in both places.
 - Only Earth points at about 33.5 deg of latitude or less can find a twin among the equatorial maria: 12,417 of
   the 18,777 passing points have no twin and are listed after the paired points.
-- The three latitude-driven or modelled criteria weigh 0 in the suitability; 35 % of it is the ISCCP clear-sky
-  fraction.
-- No independent re-audit of Solar panels (a part 9 like those of Rover and Lunar base) is in
-  `docs/stats_audit/`; the stability sentence of the five reads "Stability figures pending the independent
-  re-audit." in the shipped bundle.
+- The three latitude-driven or modelled criteria weigh 0 in the suitability; the ISCCP clear-sky fraction is half
+  of it (weight 0.35 of the 0.70 the weights sum to). A point with no cloud value (4.5 S 122.5 E, Sulawesi) is
+  ranked 16th by renormalisation, outside the five.
+- **Within one latitude row the model is no better than latitude:** 28.8 % against 27.9 %
+  (`docs/stats_audit/9_reauditoria_solar.md`, said in the app).
+- **The five never repeat:** in 200 simulations the same five come back together in 0 runs (each stays among the
+  five in 0.5-13 % of runs); the stability figures are published in the bundle (`top5_stability_solar`).
+  The independent re-audit of Solar panels is in `docs/stats_audit/9_reauditoria_solar.md` (GO).
 
 ### Lunar base
 
@@ -95,7 +98,7 @@ proven best" (Rover: "five of the 254 sites tied at the top"). The full ranking 
   as percentiles of each body's own population. In real values the two places are far apart: median difference
   207.9 K in coldest temperature (about 200 K) and 153.8 K in daily swing over the 450 pairs (ASSUMPTIONS.md
   0.13). Every pair sentence in the app says so with the real difference.
-- **The five are fragile:** in 200 simulations the same five come back together in 0 runs, and no one of them
+- **The five are fragile and never repeat:** in 200 simulations the same five come back together in 0 runs, and no one of them
   stays among the five in more than 23 % (`docs/stats_audit/9_reauditoria_base.md`). The number 2 site (E17538)
   is 0.6 K above the swing gate and leaves the funnel in 36.5 % of the simulations; the fifth is in a practical
   tie (10 of 16 weight changes keep it).
@@ -124,6 +127,16 @@ percentage is given (`docs/VALIDATION.md`). What was checked is where known site
   and 2 have a twin (MDRS number 335, Craters of the Moon number 179 of 450); separation 0.615
   (`9_reauditoria_base.md` section 7). No polar analog passes (section 3).
 
+**External contrast of the fifteen published sites** (`docs/stats_audit/12_contraste_realidad_nuevos.md`, final
+verdict "GO con matices declarados"): the five sites of each mission agree with independent sources within what
+could be checked, with these nuances: (1) slope and roughness are cell means at baselines of about 3.7-3.8 km and
+1.85-1.9 km, not rover-scale values, and the Rover thresholds were written for 300 m; (2) Lunar base site E17538
+(41.5 N 78.5 E) comes out about 4 K warmer than elevation-adjusted stations, and E19672 has contradicting
+stations; (3) the ground irradiance of the Lunar base sites is within ±12 % of the Global Solar Atlas (-11 % to
++12 %); (4) the roughness of E4037 is 11.6 m lower in the independent elevation model; (5) E4037 is land with about
+30 % water in the cell (free of permanent ice by Natural Earth, 0 %, and ESA WorldCover 2021, 0.16 % snow/ice);
+(6) Solar panels site E28670 has a clear-sky fraction 0.08 above CERES.
+
 ## 5. Criteria of the team without an official source
 
 - The solar and thermal (Lunar base) thresholds in `tierra luna/mission_scoring.json` are, in the file's own note,
@@ -151,7 +164,8 @@ derived from it must be shared under the same licence.
 
 ## 7. Software and presentation
 
-- Frame rate has not been measured on real hardware. The app's tests and the video renders run in headless
+- Lighthouse desktop performance was measured on the rehearsal deployment (https://stars-beside-you.vercel.app) from the build container: 24 and 25 in two runs, with a total blocking time of 35 to 37 s. That container has no GPU and runs WebGL in software, so this is not a valid measurement of a real computer, and the performance target of 85 is **not demonstrated**. Two causes on the page side were found: the intro heading is built in JavaScript and waits for the 4.1 MB bundle, and the page shifts its layout by 0.28 (cumulative layout shift) when the globes mount.
+- Frame rate has not been measured on real hardware; in the independent UX recheck it was not measurable in a headless container (about 1 fps with software WebGL) and is reported as not measured. The app's tests and the video renders run in headless
   Chromium in a container without a GPU (WebGL in SwiftShader, `app/video-sim/README.md`).
 - There is no cloud layer on the Earth globe (the NASA Visible Earth host could not be reached from the build
   container); the star background in the Moon view is oriented with Earth-frame logic (cosmetic).
@@ -162,12 +176,19 @@ derived from it must be shared under the same licence.
 
 ## 8. Open items listed by the audit
 
-- The re-audits of Rover and Lunar base (`docs/stats_audit/9_reauditoria_*.md`) found no implementation fault and
-  returned "NOT YET" on texts only (an outdated scoring formula text and missing stability figures for Rover; the
-  external-validation and stability sentences for Lunar base, plus two minor wording points). The shipped bundle
-  now carries the corrected Lunar base external-validation and stability texts; the Rover and Solar panels
-  stability sentences still read "pending" in `similarity.json`.
-- Solar panels has no independent re-audit yet (section 3).
+- The re-audits of the three missions (`docs/stats_audit/9_reauditoria_*.md`) found no implementation fault. Lunar
+  base is final with all nine items GO; Rover and Solar panels returned "NOT YET" on texts only, for sentences now
+  corrected in the bundle (scoring formula, slope-minimum figures and stability for Rover; half of the
+  suitability, criteria and stability for Solar panels). An independent re-read of every published text gives GO
+  for the three missions (`docs/stats_audit/11_textos_finales.md`); one repetition on the Rover card (the sentence
+  on the 254 tied sites appears three times) was passed to the web session.
+- The audio guide: the final texts of the 19 tracks are in `app/public/audio/transcripts.json`, checked
+  independently (`docs/stats_audit/10_textos_audio.md`); the 19 recordings are listed in
+  `app/public/audio/pending.json` as awaiting the team's new recording (announced for about 14:35 CET). Until
+  they arrive the web shows each track's text and plays nothing.
+- Open design decisions, not applied: the impossible lunar temperature of cell M32647 (439 K in a half-cell); the
+  dead configuration not moved (audit point A); the Rover card sentence about which five are shown
+  (`docs/STATS_AUDIT.md` sections 1 and 6).
 - The WorldClim licence decision (section 6).
 - The water skip for the five (mask_fraction below 0.5) is marked "to be confirmed" (ASSUMPTIONS.md 0).
 - No lunar cold-trap variable exists; ice prospecting has no lunar side and is shown only as information.
