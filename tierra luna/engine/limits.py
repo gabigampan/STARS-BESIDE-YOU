@@ -231,13 +231,17 @@ def stability_sentence(mid: str, top5_ids: List[int], cfg: Dict[str, Any]) -> Di
                   "the audited five differ from the five shown" if e.get("ids") and list(e["ids"]) != list(top5_ids)
                   else "a figure is missing")
         return {"text": cfg["pending_sentence"], "status": "pending", "reason": reason, "source": None}
-    per = [cfg["per_analog"].replace("{n}", str(k + 1)).replace("{top5}", fmt_pct(a)).replace("{top20}", fmt_pct(b))
+    per_t = e.get("per_analog") or cfg["per_analog"]
+    per = [per_t.replace("{n}", str(k + 1)).replace("{top5}", fmt_pct(a)).replace("{top20}", fmt_pct(b))
            for k, (a, b) in enumerate(zip(e["in_top5_share"], e["in_top20_share"]))]
     rep = e.get("five_repeat_share")
     text = fill(cfg["sentence"], {"simulations": fmt_int(e["simulations"]), "per_analog": "; ".join(per),
                                   "survivors": e["weights_pm10_survivors"], "count": len(top5_ids),
-                                  "repeat": (cfg["repeat_sentence"].replace("{repeat_n}", fmt_int(round(rep * e["simulations"])))
+                                  "repeat": ((e.get("repeat_sentence") or cfg["repeat_sentence"]).replace("{repeat_n}", fmt_int(round(rep * e["simulations"])))
+                                             .replace("{repeat_pct}", fmt_pct(100 * rep)).replace("{distinct}", fmt_int(e.get("distinct_fives") or 0))
                                              .replace("{simulations}", fmt_int(e["simulations"])) if rep is not None else "")})
+    if e.get("extra_sentence"):
+        text = text + " " + e["extra_sentence"]
     return {"text": text, "status": "audited", "reason": None, "source": e["source"]}
 
 
@@ -533,8 +537,29 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
         ok = np.isfinite(res.earth_suit.score)
         v = pd.to_numeric(earth[t["column"]], errors="coerce").to_numpy(dtype=np.float64)[ok]
         fin = np.isfinite(v)
-        return {"passing_n": fmt_int(ok.sum()), "missing_n": fmt_int((~fin).sum()),
-                "p10": f"{np.percentile(v[fin], 10):.3f}", "p90": f"{np.percentile(v[fin], 90):.3f}"}
+        w = res.earth_suit.weights
+        wsum = float(sum(float(x) for x in w.values()))
+        wc = float(w[t["column"]])
+        vals = {"passing_n": fmt_int(ok.sum()), "missing_n": fmt_int((~fin).sum()),
+                "p10": f"{np.percentile(v[fin], 10):.3f}", "p90": f"{np.percentile(v[fin], 90):.3f}",
+                "weight": f"{wc:g}", "weight_sum": f"{wsum:.2f}", "effective_pct": f"{100 * wc / wsum:g}"}
+        # re-audit 2026-11-15 (9_reauditoria_solar F2): a ranked point without a value of the
+        # column ranks where it does only because its weight is shared among the other criteria
+        miss_rows = np.flatnonzero(ok)[~fin]
+        ranked_miss = [k for k in miss_rows if res.rank[k] > 0]
+        shown = set((rows5 or {}).get(t["mission"], []))
+        if ranked_miss and t.get("missing_ranked_sentence"):
+            k = int(min(ranked_miss, key=lambda r: res.rank[r]))
+            la, lo = float(earth["lat_deg"].iloc[k]), float(earth["lon_deg"].iloc[k])
+            where = (t.get("missing_place_names") or {}).get(str(int(earth["id"].iloc[k])))
+            vals["missing_ranked"] = fill(t["missing_ranked_sentence"], {
+                "where": f"in {where}, " if where else "",
+                "lat": f"{abs(la):g} {'N' if la >= 0 else 'S'}", "lon": f"{abs(lo):g} {'E' if lo >= 0 else 'W'}",
+                "rank": fmt_int(res.rank[k]), "suit": f"{float(res.earth_suit.score[k]) * (100 if float(np.nanmax(res.earth_suit.score)) <= 1.0 else 1):.2f}",
+                "shown": "it is not among the five shown" if k not in shown else "it is among the five shown"})
+        else:
+            vals["missing_ranked"] = ""
+        return vals
     if name == "site_values":  # a column at named sites (polar stations)
         if t["column"] not in earth.columns:
             return None
@@ -598,7 +623,13 @@ def _computed_figures(name: str, t: Dict[str, Any], results: Dict[str, Any], ear
             return (f"{label} (number {fmt_int(res.rank[k])}, similarity {res.similarity_pct[k]:.2f}, "
                     f"suitability {suit[k]:.2f}): " + "; ".join(parts))
         ex = [site(st["name"], k) for st, k in zip(t["sites"], rows) if k is not None and res.rank[k] > 0]
-        ex.append(site("against the tied site at the top", j))
+        # reference: the first analog shown (re-audit T8: the first tied site, E3872, is a
+        # cell the five skip for being mostly water)
+        first = (rows5 or {}).get(mid) or []
+        if first:
+            ex.append(site("against the first analog shown", int(first[0])))
+        else:
+            ex.append(site("against the tied site at the top", j))
         return {"tied_n": fmt_int(tied.sum()), "ranked_n": fmt_int(ranked.sum()), "sat_all_n": fmt_int((allsat & tied).sum()),
                 "sat_all_ranked_n": fmt_int(allsat.sum()), "suit100_n": fmt_int((ranked & (np.round(suit, 2) >= 100.0)).sum()),
                 "criteria": crit, "per_criterion": per,

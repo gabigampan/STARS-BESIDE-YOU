@@ -108,21 +108,42 @@ def test_region_follows_the_corrected_nearest_place(b, ecfg):
     assert np.all(km[has] <= lim + 1e-3)
 
 
+def _half_up(x, d):
+    return float(Decimal(repr(float(x))).quantize(Decimal(1).scaleb(-d), rounding=ROUND_HALF_UP))
+
+
 def test_audio_top5_places_are_unchanged(b):
-    """The 15 recorded pairs keep their place, distance and direction (the transcripts)."""
+    """Each recorded pair of docs/AUDIO_TOP5.json (regenerated for the corrected model in
+    0486ad9) is the cell of the bundle's five shown, and its place is the great-circle
+    nearest populated place of that cell, with the distance from the stored float32 rounded
+    once (never frozen names: recomputed against the current file and bundle)."""
+    from engine.places import load_geonames_places
     a = json.load(open(os.path.join(REPO, "docs", "AUDIO_TOP5.json"), encoding="utf-8"))
-    want = {("rover", 1): ("Bayinbaolige", 65.6, "north-west"), ("rover", 2): ("Tamanrasset", 79.5, "north"),
-            ("rover", 3): ("Ehen Hudag", 78.4, "north-east"), ("rover", 4): ("Banqiao", 27.8, "north-east"),
-            ("rover", 5): ("Buga", 41.0, "south-east"), ("solar", 1): ("Derby", 128.7, "north-east"),
-            ("solar", 2): ("Derby", 282.9, "north-east"), ("solar", 3): ("Maintirano", 80.1, "north-east"),
-            ("solar", 4): ("Kununurra", 279.7, "north-west"), ("solar", 5): ("Derby", 218.2, "north-east"),
-            ("lunar_base", 1): ("Aheqi", 62.3, "north"), ("lunar_base", 2): ("Mori", 43.6, "south-east"),
-            ("lunar_base", 3): ("Burenhayrhan", 45.5, "north"), ("lunar_base", 4): ("Tinghir", 3.5, "south-east"),
-            ("lunar_base", 5): ("Ewirgol", 53.3, "south")}
+    mj = {m["id"]: m for m in b.json("missions.json")["missions"]}
+    ids = b.int_column("earth_base.bin", "id")
+    near_i = b.int_column("earth_place_detail.bin", "nearest_place")
+    near_km = b.column("earth_place_detail.bin", "nearest_place_km")
+    names = b.json("place_detail.json")["nearest_places"]
+    gn = load_geonames_places()
+    glat, glon = np.radians(gn["lat"].to_numpy(dtype=np.float64)), np.radians(gn["lon"].to_numpy(dtype=np.float64))
+    n = 0
     for mid in ("rover", "solar", "lunar_base"):
+        five = mj[mid]["top5"]["ids"]
         for p in a["missions"][mid]["pairs"]:
+            eid = int(p["earth_cell_id"][1:])
+            assert eid == five[p["number"] - 1]
             ep = p["earth_place"]
-            assert (ep["nearest_named_place"], ep["distance_km"], ep["direction_from_place"]) == want[(mid, p["rank"])]
+            pos = int(np.flatnonzero(ids == eid)[0])
+            assert names[near_i[pos]] == ep["nearest_named_place"]
+            km32 = float(np.float32(near_km[pos]))
+            assert ep["distance_km"] == _half_up(km32, 1) and ep["distance_km_spoken"] == int(_half_up(km32, 0))
+            la, lo = math.radians(ep["cell_centre_lat"]), math.radians(ep["cell_centre_lon"])
+            h = np.sin((glat - la) / 2) ** 2 + math.cos(la) * np.cos(glat) * np.sin((glon - lo) / 2) ** 2
+            d = 2 * R_EARTH * np.arcsin(np.sqrt(h))
+            k = int(np.argmin(d))
+            assert gn["name"].iloc[k] == ep["nearest_named_place"] and abs(d[k] - km32) < 0.5
+            n += 1
+    assert n == 15
 
 
 # ----------------------------------------------------------------------------- correction 2
@@ -305,22 +326,25 @@ def test_audio_top5_is_regenerated_and_rounds_once(b, tmp_path):
 
 
 def test_cell_area_caveat_is_recomputed(b):
+    """The cell areas of docs/AUDIO_TOP5.json and its cell-size caveat, recomputed from the
+    bundle's radii for the current five (no frozen ratios)."""
     a = json.load(open(os.path.join(REPO, "docs", "AUDIO_TOP5.json"), encoding="utf-8"))
     Re, Rm = b.manifest["grid"]["bodies"]["EARTH"]["radius_km"], b.manifest["grid"]["bodies"]["MOON"]["radius_km"]
 
     def area(lat, r):
         return r * r * math.radians(1) * abs(math.sin(math.radians(lat + 0.5)) - math.sin(math.radians(lat - 0.5)))
-    ratios = {}
     for mid, ms in a["missions"].items():
-        ratios[mid] = []
         for p in ms["pairs"]:
             el, ml = p["earth_place"]["cell_centre_lat"], p["moon_place"]["cell_centre_lat"]
-            ratios[mid].append(area(el, Re) / area(ml, Rm))
-            assert p["cell_area_km2"]["earth_over_moon"] == pytest.approx(ratios[mid][-1], abs=0.06)
-    cav = next(c for c in a["caveats"] if c.startswith("East-west"))
-    lb = ratios["lunar_base"]
-    assert f"{min(lb):.0f} to {max(lb):.0f} times more ground" in cav
-    assert 85 < min(lb) and max(lb) < 230 and all(13 < r < 15 for r in ratios["solar"]) and all(35 < r < 55 for r in ratios["rover"])
+            c = p["cell_area_km2"]
+            assert c["earth"] == pytest.approx(area(el, Re), abs=0.06) and c["moon"] == pytest.approx(area(ml, Rm), abs=0.06)
+            assert c["earth_over_moon"] == pytest.approx(area(el, Re) / area(ml, Rm), abs=0.06)
+    cav = next(c for c in a["caveats"] if c.startswith("Each place is a 1-degree cell"))
+    assert f"about {math.radians(1) * Re:.0f} km north-south on Earth (about {math.radians(1) * Rm:.0f} km on the Moon)" in cav
+    times = [c for c in a["caveats"] if "times more ground" in c]
+    for cv in times:  # if a ratio caveat is ever written again, it must match the recomputed ratios
+        lb = [area(p["earth_place"]["cell_centre_lat"], Re) / area(p["moon_place"]["cell_centre_lat"], Rm) for p in a["missions"]["lunar_base"]["pairs"]]
+        assert f"{min(lb):.0f} to {max(lb):.0f} times more ground" in cv
 
 
 # ----------------------------------------------------------------------------- correction 5 (contract rounding)

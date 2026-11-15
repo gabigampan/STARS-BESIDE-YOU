@@ -1,0 +1,17 @@
+mission,list,scope,threshold,positives,negatives,positives_passing_funnel,negatives_passing_funnel,true_positives,false_positives,recall_pct,precision_pct,recovered,false_alarms
+rover,rover_preset.py,all,top10,11,5,10,3,5,0,45.5,100,Yungay Erfoud Ramon Haughton Qaidam,
+rover,rover_preset.py,all,top25,11,5,10,3,6,0,54.5,100,MDRS Yungay Erfoud Ramon Haughton Qaidam,
+rover,rover_preset.py,all,top50,11,5,10,3,6,1,54.5,85.7,MDRS Yungay Erfoud Ramon Haughton Qaidam,Rio Tinto
+rover,rover_preset.py,all,paired,11,5,10,3,10,3,90.9,76.9,Bardenas Tabernas Dumont Dunes MDRS Yungay Erfoud Ramon Haughton Death Valley Qaidam,HI-SEAS Rio Tinto El Soplao
+rover,rover_preset.py,verified_only,top10,8,2,7,1,4,0,50,100,Yungay Ramon Haughton Qaidam,
+rover,rover_preset.py,verified_only,top25,8,2,7,1,5,0,62.5,100,MDRS Yungay Ramon Haughton Qaidam,
+rover,rover_preset.py,verified_only,top50,8,2,7,1,5,0,62.5,100,MDRS Yungay Ramon Haughton Qaidam,
+rover,rover_preset.py,verified_only,paired,8,2,7,1,7,1,87.5,87.5,Bardenas Tabernas MDRS Yungay Ramon Haughton Qaidam,El Soplao
+solar,validation_sites_solar.csv,all,top10,13,6,11,0,3,0,23.1,100,Gobabeb (BSRN GOB) Solar Village (BSRN SOV) Gandhinagar (BSRN GAN),
+solar,validation_sites_solar.csv,all,top25,13,6,11,0,6,0,46.2,100,Tamanrasset (BSRN TAM) Gobabeb (BSRN GOB) Solar Village (BSRN SOV) Gandhinagar (BSRN GAN) Gurgaon (BSRN GUR) Alice Springs (BSRN ASP),
+solar,validation_sites_solar.csv,all,top50,13,6,11,0,9,0,69.2,100,Tamanrasset (BSRN TAM) Gobabeb (BSRN GOB) De Aar (BSRN DAA) Sede Boqer (BSRN SBO) Solar Village (BSRN SOV) Gandhinagar (BSRN GAN) Gurgaon (BSRN GUR) Alice Springs (BSRN ASP) Petrolina (BSRN PTR),
+solar,validation_sites_solar.csv,all,paired,13,6,11,0,9,0,69.2,100,Tamanrasset (BSRN TAM) Gobabeb (BSRN GOB) De Aar (BSRN DAA) Sede Boqer (BSRN SBO) Solar Village (BSRN SOV) Gandhinagar (BSRN GAN) Gurgaon (BSRN GUR) Alice Springs (BSRN ASP) Petrolina (BSRN PTR),
+lunar_base,validation_sites_lunar_base.csv,all,top10,13,7,3,0,0,0,0,,,
+lunar_base,validation_sites_lunar_base.csv,all,top25,13,7,3,0,0,0,0,,,
+lunar_base,validation_sites_lunar_base.csv,all,top50,13,7,3,0,1,0,7.7,100,Craters of the Moon National Monument,
+lunar_base,validation_sites_lunar_base.csv,all,paired,13,7,3,0,2,0,15.4,100,"Mars Desert Research Station (MDRS) (Hanksville, Utah) Craters of the Moon National Monument",

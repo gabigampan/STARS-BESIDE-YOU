@@ -40,8 +40,16 @@ def components() -> pd.DataFrame:
         tabs = ["earth_real_1deg.csv", "moon_real_1deg.csv", "earth_base.bin", f"earth_{m}.bin", "moon_base.bin"]
         n = sum(val.loc[t, "records"] for t in tabs)
         bad = sum(val.loc[t, "failing_records"] for t in tabs)
+        # external agreement = mean recall at the top 25 % over every site list measured for the
+        # mission: the team benchmark (metric 3, D1) and the dedicated list of metric 3b (m9:
+        # rover_preset.py, validation_sites_solar.csv, validation_sites_lunar_base.csv; scope "all")
         g = pr[(pr["mission"] == m) & (pr["definition"] == "D1_top25")].iloc[0]
-        ext = g["recall_pct"] if g["positives"] > 0 else None
+        recalls = [float(g["recall_pct"])] if g["positives"] > 0 else []
+        if os.path.exists(os.path.join(OUT, "m9_precision_recall.csv")):
+            p9 = _r("m9_precision_recall.csv")
+            h = p9[(p9["mission"] == m) & (p9["threshold"] == "top25") & (p9["scope"] == "all")]
+            recalls += [float(x) for x in h["recall_pct"].dropna()]
+        ext = sum(recalls) / len(recalls) if recalls else None
         k = 50
         ov = pd.concat([sw[sw.mission == m].top50_overlap, st[st.mission == m].top50_overlap, so[so.mission == m].top50_overlap])
         c = co.loc[m]

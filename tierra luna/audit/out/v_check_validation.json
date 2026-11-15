@@ -1,0 +1,242 @@
+{
+ "missions": {
+  "rover": {
+   "passing": 10337,
+   "paired": 10337,
+   "distinct_twins": 1144,
+   "all_twins_in_zone": true,
+   "missions_json_ranked_count": 10337,
+   "missions_json_passing_without_similarity": 0,
+   "twin_count_sum_moon": 10337,
+   "ranks_1_to_N": true,
+   "top5": [
+    {
+     "id": 4037,
+     "rank": 3,
+     "lat": 78.5,
+     "lon": -102.5,
+     "inside_cell": true,
+     "twin": 63714,
+     "twin_region": "B",
+     "twin_in_zone": true
+    },
+    {
+     "id": 50510,
+     "rank": 254,
+     "lat": -50.5,
+     "lon": -69.5,
+     "inside_cell": true,
+     "twin": 59438,
+     "twin_region": "B",
+     "twin_in_zone": true
+    },
+    {
+     "id": 44239,
+     "rank": 251,
+     "lat": -32.5,
+     "lon": 139.5,
+     "inside_cell": true,
+     "twin": 59712,
+     "twin_region": "B",
+     "twin_in_zone": true
+    },
+    {
+     "id": 26510,
+     "rank": 241,
+     "lat": 16.5,
+     "lon": 50.5,
+     "inside_cell": true,
+     "twin": 63711,
+     "twin_region": "B",
+     "twin_in_zone": true
+    },
+    {
+     "id": 26087,
+     "rank": 236,
+     "lat": 17.5,
+     "lon": -12.5,
+     "inside_cell": true,
+     "twin": 61294,
+     "twin_region": "B",
+     "twin_in_zone": true
+    }
+   ]
+  },
+  "solar": {
+   "passing": 18777,
+   "paired": 6360,
+   "distinct_twins": 1704,
+   "all_twins_in_zone": true,
+   "missions_json_ranked_count": 6360,
+   "missions_json_passing_without_similarity": 12417,
+   "twin_count_sum_moon": 6360,
+   "ranks_1_to_N": true,
+   "top5": [
+    {
+     "id": 40184,
+     "rank": 1,
+     "lat": -21.5,
+     "lon": 44.5,
+     "inside_cell": true,
+     "twin": 23206,
+     "twin_region": "D",
+     "twin_in_zone": true
+    },
+    {
+     "id": 29749,
+     "rank": 2,
+     "lat": 7.5,
+     "lon": 49.5,
+     "inside_cell": true,
+     "twin": 26063,
+     "twin_region": "D",
+     "twin_in_zone": true
+    },
+    {
+     "id": 23648,
+     "rank": 5,
+     "lat": 24.5,
+     "lon": 68.5,
+     "inside_cell": true,
+     "twin": 22156,
+     "twin_region": "D",
+     "twin_in_zone": true
+    },
+    {
+     "id": 29746,
+     "rank": 7,
+     "lat": 7.5,
+     "lon": 46.5,
+     "inside_cell": true,
+     "twin": 26056,
+     "twin_region": "D",
+     "twin_in_zone": true
+    },
+    {
+     "id": 28670,
+     "rank": 9,
+     "lat": 10.5,
+     "lon": 50.5,
+     "inside_cell": true,
+     "twin": 25483,
+     "twin_region": "D",
+     "twin_in_zone": true
+    }
+   ]
+  },
+  "lunar_base": {
+   "passing": 2419,
+   "paired": 450,
+   "distinct_twins": 103,
+   "all_twins_in_zone": true,
+   "missions_json_ranked_count": 450,
+   "missions_json_passing_without_similarity": 1969,
+   "twin_count_sum_moon": 450,
+   "ranks_1_to_N": true,
+   "top5": [
+    {
+     "id": 21054,
+     "rank": 1,
+     "lat": 31.5,
+     "lon": -5.5,
+     "inside_cell": true,
+     "twin": 62517,
+     "twin_region": "A",
+     "twin_in_zone": true
+    },
+    {
+     "id": 17538,
+     "rank": 3,
+     "lat": 41.5,
+     "lon": 78.5,
+     "inside_cell": true,
+     "twin": 63528,
+     "twin_region": "A",
+     "twin_in_zone": true
+    },
+    {
+     "id": 21833,
+     "rank": 5,
+     "lat": 29.5,
+     "lon": 53.5,
+     "inside_cell": true,
+     "twin": 62515,
+     "twin_region": "A",
+     "twin_in_zone": true
+    },
+    {
+     "id": 18627,
+     "rank": 6,
+     "lat": 38.5,
+     "lon": 87.5,
+     "inside_cell": true,
+     "twin": 62479,
+     "twin_region": "A",
+     "twin_in_zone": true
+    },
+    {
+     "id": 19672,
+     "rank": 7,
+     "lat": 35.5,
+     "lon": 52.5,
+     "inside_cell": true,
+     "twin": 63657,
+     "twin_region": "A",
+     "twin_in_zone": true
+    }
+   ]
+  }
+ },
+ "twins_json_counts": {
+  "rover": 1144,
+  "solar": 1704,
+  "lunar_base": 103
+ },
+ "twins_json_ids_equal_bin": {
+  "rover": true,
+  "solar": true,
+  "lunar_base": true
+ },
+ "twins_json_row_keys": {
+  "rover": [
+   "id",
+   "lat",
+   "lon",
+   "earth_cells",
+   "values",
+   "not_part_of_similarity",
+   "feature"
+  ],
+  "solar": [
+   "id",
+   "lat",
+   "lon",
+   "earth_cells",
+   "values",
+   "not_part_of_similarity",
+   "feature"
+  ],
+  "lunar_base": [
+   "id",
+   "lat",
+   "lon",
+   "earth_cells",
+   "values",
+   "percentiles",
+   "not_part_of_similarity",
+   "feature"
+  ]
+ },
+ "m6_distinct_twins": {
+  "rover": 1144,
+  "solar": 1704,
+  "lunar_base": 103
+ },
+ "m6_ranked_points": {
+  "rover": 10337,
+  "solar": 6360,
+  "lunar_base": 450
+ },
+ "validity_records": 251430,
+ "validity_failing": 10
+}

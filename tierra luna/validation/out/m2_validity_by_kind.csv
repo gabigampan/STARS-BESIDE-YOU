@@ -1,5 +1,4 @@
 table,kind,column,count
-earth_moon_real_1deg.csv,differs_from_body_table,permafrost_class,64800
 earth_real_1deg.csv,below_physical_min,elevation_m,1
 earth_real_1deg.csv,below_physical_min,lst_diurnal_amp_k,9
 earth_real_1deg.csv,below_physical_min,lst_diurnal_amp_max_k,3

@@ -228,7 +228,7 @@
       "repo_global_mean": "What the repository does by default (analog_finder.compute_analog_ranking with its default target zone 'Global Lunar Surface Mean'): the target is the mean z profile of the whole Moon; one similarity per Earth cell, the same for every mission; no twin. Kept available for comparison; not the shipped rule since 2026-11-15.",
       "zone_twin": "Used by lunar_base until 2026-11-15 08:55 CET (and by rover and solar until the morning decision of the same day); kept available with --similarity-rule zone_twin: z-score formula of analog_finder against every lunar cell of the mission's zone (similarity_zones); the twin is the single most similar zone cell (ties: lowest id). Lunar cells are not passed through the mission filters.",
       "physical_pooled": "The integration's earlier rule (engine 1.1-2.0): per-variable sim = max(0, 1 - |earth - moon| / pooled 5-95 percentile range) over the mission's comparable weighted variables, twin among the lunar cells passing the mission. Kept available, not the default.",
-      "real_value_tolerance": "Active for rover and solar since the team decision of 2026-11-15 (morning): per variable a score exp(-0.5 * (|earth - moon| / tolerance)^2) on REAL values; similarity = 100 * weighted mean of the scores; pair filter: every key variable within its tolerance and every secondary within twice its tolerance, otherwise no twin; twin = the zone cell passing the filter with the highest similarity (ties: lowest id). Variables, roles, weights, tolerances and zones in real_value_similarity.",
+      "real_value_tolerance": "Active for rover and solar since the team decision of 2026-11-15 (morning): per variable a score exp(-0.5 * (|earth - moon| / tolerance)^2) on REAL values (Rover since 11:51 CET: s = 1 within the measurement uncertainty sigma of the elevation models, else exp(-0.5 * max(0, |d| / sigma - 1)^2), sigma 0.265093 deg for slope and 17.4017 m for roughness); similarity = 100 * weighted mean of the scores; pair filter: every key variable within its tolerance and every secondary within twice its tolerance, otherwise no twin; twin = the zone cell passing the filter with the highest similarity (ties: lowest id). Variables, roles, weights, tolerances and zones in real_value_similarity.",
       "percentile_and_real_tolerance": "Active for lunar_base since the team decision of 2026-11-15 08:55 CET (the team lead's delegate on the team lead's behalf), confirming the recommended design D4b of docs/LUNAR_BASE_PROPOSAL.md: the real_value_tolerance machinery with a scale per variable. Variables with scale 'percentile_within_population' (coldest temperature, daily thermal amplitude) are compared as mid-rank percentiles, 100 * (rank - 0.5) / n with ties averaged, within their own population (Earth: the points that pass the mission's funnel; Moon: the cells of the mission's zone); variables with scale 'real' (slope, roughness) in real values. Per variable s = exp(-0.5 * (difference / tolerance)^2); similarity = 100 * weighted mean; pair filter: key variables within 1 x tolerance, secondary within 2 x tolerance; twin = the zone cell passing the filter with the highest similarity (ties: lowest id); no twin otherwise. It is a likeness of thermal POSITION, not of temperature: the real values and differences are exported per pair."
     },
     "why": "What each value of similarity_rule means; exported in similarity.json so the app can say which rule produced the numbers of each mission."
@@ -303,7 +303,7 @@
           "rover",
           "solar"
         ],
-        "text": "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Both values and their difference are shown side by side.",
+        "text": "Each Earth point is paired with its lunar twin: the 1-degree lunar cell, inside the mission's target zone, whose real values are closest. Similarity is computed on real values within stated tolerances: every key variable of the twin is within its tolerance of the Earth point and every secondary variable within twice its tolerance, and each variable scores lower the further apart the two values are. Each mission has its own score rule. Solar panels: the score falls from 1 with the first difference, as exp(-0.5 (difference / tolerance)^2). Rover: a difference within the measurement uncertainty of the elevation models (slope 0.27 degrees, roughness 17.4 m) scores 1, and beyond it the score falls as exp(-0.5 max(0, difference / uncertainty - 1)^2). Both values and their difference are shown side by side.",
         "where": "rover and solar (real_value_tolerance rule): wherever a similarity is shown, next to each similarity variable's Earth value, lunar value, difference and tolerance (earth_<mission>_pairs.bin '<variable>.earth', '<variable>.moon', '<variable>.diff'; tolerances in missions.json similarity.variables)"
       },
       "similarity_meaning_lunar_base": {
@@ -1058,7 +1058,7 @@
                       "column": "mask_fraction",
                       "op": "<",
                       "value": 0.5,
-                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable; confirmed by the team lead at 12:10 CET on 15 November 2026 (docs/DECISIONS.md 'Puntos del líder de las 12:10', point 3)."
                     }
                   },
                   "alternative_rule": "rank_with_skips"
@@ -1143,7 +1143,7 @@
                       "column": "mask_fraction",
                       "op": "<",
                       "value": 0.5,
-                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable; confirmed by the team lead at 12:10 CET on 15 November 2026 (docs/DECISIONS.md 'Puntos del líder de las 12:10', point 3)."
                     }
                   }
                 }
@@ -1318,7 +1318,7 @@
                       "column": "mask_fraction",
                       "op": "<",
                       "value": 0.5,
-                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable, TO BE CONFIRMED by the team lead."
+                      "why": "Same reasoning as the ice rule (a cell that is mostly sea or lake is not solid ground); mask_fraction = land share of the cell (ESA CCI land cover, inland water counts as water). Found by the first implementer: the Rover number 1, E3872 on the Kara Sea coast, is 33.8 % land. Separately switchable; confirmed by the team lead at 12:10 CET on 15 November 2026 (docs/DECISIONS.md 'Puntos del líder de las 12:10', point 3)."
                     }
                   }
                 }
@@ -1397,26 +1397,66 @@
       "per_analog": "number {n} stays in the top 5 in {top5} % of the simulations and in the top 20 in {top20} %",
       "missions": {
         "rover": {
-          "status": "pending_reaudit",
-          "ids": null,
-          "in_top5_share": null,
-          "in_top20_share": null,
-          "simulations": null,
-          "weights_pm10_survivors": null,
-          "source": null,
-          "note": "To be filled by the independent re-audit of the corrected Rover (slope and roughness, desaturated by the elevation models' uncertainty, five by spread among the tied points): ids = missions.json top5.ids in order; in_top5_share / in_top20_share = percent of the simulations in which each of the five stays in the top 5 / top 20; simulations; weights_pm10_survivors; source. Also wanted: how often the five repeat exactly (five_repeat_share). Until every figure is filled and ids equal the five shown, the build ships pending_sentence.",
-          "five_repeat_share": null
+          "status": "audited",
+          "ids": [
+            4037,
+            50510,
+            44239,
+            26510,
+            26087
+          ],
+          "in_top5_share": [
+            52.5,
+            43.0,
+            65.0,
+            87.5,
+            67.0
+          ],
+          "in_top20_share": [
+            72.5,
+            43.0,
+            88.5,
+            100.0,
+            74.0
+          ],
+          "simulations": 200,
+          "weights_pm10_survivors": "each of the five stays among the five shown in 10 of the 10 weight changes",
+          "source": "docs/stats_audit/9_reauditoria_rover.json 'stability.corrected' (per_analog in_five_share_pct, in_tied_top_group_share_pct, twin_kept_share_pct; five_repeat_exact_pct, distinct_fives, tied_group; weights_pm10; 200 runs, seed 20261115), independent re-audit of Rover, 2026-11-15",
+          "five_repeat_share": 0.105,
+          "distinct_fives": 60,
+          "per_analog": "number {n} is among the five shown in {top5} % of the simulations and stays in the group tied at the top in {top20} %",
+          "repeat_sentence": "The exact same five come back in {repeat_pct} % of the simulations ({distinct} different fives in all). ",
+          "extra_sentence": "The lunar twin of each of the five is kept in 17.5 to 38 % of the simulations, and the group tied at the top keeps about 89 % of its members (median). In plain words: which five are shown is not stable, because many sites are tied at the top and any of them could be shown; which sites belong to the tied group mostly is.",
+          "note": "Filled on 2026-11-15 from the independent re-audit of the corrected Rover (docs/stats_audit/9_reauditoria_rover.json stability.corrected). The Rover ranking ties at the top, so 'stays in the top 20' is replaced by the share of runs in which the analog stays in the tied top group (in_tied_top_group_share_pct)."
         },
         "solar": {
-          "status": "pending_reaudit",
-          "ids": null,
-          "in_top5_share": null,
-          "in_top20_share": null,
-          "simulations": null,
-          "weights_pm10_survivors": null,
-          "source": null,
-          "note": "As rover: the five shown change with the 2-degree separation, so the audited figures of the first five no longer describe them.",
-          "five_repeat_share": null
+          "status": "audited",
+          "ids": [
+            40184,
+            29749,
+            23648,
+            29746,
+            28670
+          ],
+          "in_top5_share": [
+            9.5,
+            7.0,
+            13.0,
+            1.5,
+            0.5
+          ],
+          "in_top20_share": [
+            40.0,
+            37.5,
+            31.5,
+            14.5,
+            12.5
+          ],
+          "simulations": 200,
+          "weights_pm10_survivors": "each of the five stays among the five shown, with the same twin, in 14 of the 14 weight changes",
+          "source": "docs/stats_audit/9_reauditoria_solar.json 'stability.corrected' (per_analog share_in_five, share_top20, weights_pm10_in_five_same_twin; five_same_set 0.0; 200 runs), independent re-audit of Solar panels, 2026-11-15",
+          "five_repeat_share": 0.0,
+          "note": "Filled on 2026-11-15 from the independent re-audit of the corrected Solar panels (docs/stats_audit/9_reauditoria_solar.json stability.corrected)."
         },
         "lunar_base": {
           "status": "audited",
@@ -1492,7 +1532,7 @@
             "paired_item": "{name} (number {rank})",
             "unpaired_item": "{name} (passes, but its sunlight finds no lunar twin)",
             "failing_item": "{name} (does not pass the funnel: {reasons})",
-            "text": "What was checked against known places: {pos_n} solar radiation stations of the world network (BSRN) in sunny places, and {neg_n} cloudy stations in Scotland and Shetland as a contrast. Of the sunny stations, {pos_pass_n} pass the Solar panels funnel and {pos_twin_n} have a lunar twin; in the ranking of {ranked} paired points they come out as {paired}. Passing without a twin (too far from the equator for the sunlight of the lunar maria): {unpaired}. Not passing: {failing}. Of the {neg_n} cloudy stations, {neg_pass_n} pass the funnel. The check describes the ranking, it does not prove it.",
+            "text": "What was checked against known places: {pos_n} solar radiation stations of the world network (BSRN) in sunny places, and {neg_n} cloudy stations in Scotland and Shetland as a contrast. Of the sunny stations, {pos_pass_n} pass the Solar panels funnel and {pos_twin_n} have a lunar twin; in the ranking of {ranked} paired points they come out as {paired}. Passing without a twin (too far from the equator for the sunlight of the lunar maria): {unpaired}. Not passing: {failing}. Of the {neg_n} cloudy stations, {neg_pass_n} pass the funnel. Compared with the model of this morning (before the suitability was corrected), the sunny stations rank better in the full ranking (median position in the top 8.3 % against 14.9 %), but within their own latitude row they rank no better (median 28.8 % against 27.9 %): the corrected suitability is not shown to say more than latitude about these stations. The check describes the ranking, it does not prove it.",
             "source": "computed at build from tierra luna/data/benchmark/validation_sites_solar.csv (research r4; the same figures as tierra luna/research/r4_rank_sites.py run on the bundle)"
           },
         "lunar_base": {
@@ -1621,7 +1661,10 @@
         ],
         "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
         "source": "docs/stats_audit/research_2_solar_idoneidad.md option E2; ISCCP-H HGM v01r00 (NOAA NCEI), Rossow and Schiffer 1999",
-        "text": "The Solar panels suitability no longer uses criteria driven by latitude. The maximum sun elevation and the share of time with a low sun (pure geometry of latitude) and the modelled ground irradiance (WorldClim, which repeats what the similarity already compares) carry no weight now; their gates still apply, and the ground irradiance, the sunlight above the atmosphere and the share lost stay in every pair's sentence. In their place, 35 % of the suitability is the clear-sky fraction measured by satellite: 1 minus the mean ISCCP-H cloud amount (NOAA NCEI, monthly means 2012 to 2016), scored from 0 at {p10} to 1 at {p90}, the 10th and 90th percentiles over the {passing_n} points that pass the funnel. {missing_n} of those points have no cloud value and that weight is shared among the other criteria.",
+        "missing_ranked_sentence": "One of them, the cell at {lat} {lon} ({where}number {rank} in the full ranking, suitability {suit}), ranks that high only because its clear-sky weight is shared among the other criteria; {shown}.",
+        "missing_place_names": {"34142": "Sulawesi, Indonesia"},
+        "missing_place_names_source": "docs/stats_audit/9_reauditoria_solar.json faults F2",
+        "text": "The Solar panels suitability no longer uses criteria driven by latitude. The maximum sun elevation and the share of time with a low sun (pure geometry of latitude) and the modelled ground irradiance (WorldClim, which repeats what the similarity already compares) carry no weight now; their gates still apply, and the ground irradiance, the sunlight above the atmosphere and the share lost stay in every pair's sentence. In their place, the clear-sky fraction measured by satellite makes up half of the suitability ({effective_pct} %: its weight {weight} out of the {weight_sum} that the four weights add up to; the suitability is divided by that sum): 1 minus the mean ISCCP-H cloud amount (NOAA NCEI, monthly means 2012 to 2016), scored from 0 at {p10} to 1 at {p90}, the 10th and 90th percentiles over the {passing_n} points that pass the funnel. {missing_n} of those points have no cloud value and that weight is shared among the other criteria. {missing_ranked}",
         "criteria_set": "corrected"
       },
       "lunar_base_swing_gate": {
@@ -1699,7 +1742,7 @@
         ],
         "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
         "source": "docs/stats_audit/research_5_rover_escala.md 'Para implementar'",
-        "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA; slope 0.27 degrees, roughness 17.4 m). Differences within that error are scored as equal, so {tied_n} of the {ranked_n} paired sites share the top final score of {score}; {tied_kept_n} remain after leaving out cells that are half or more ice or less than half land. {rule}",
+        "text": "With slope and roughness alone, many sites differ from their lunar twin by less than the measurement error of the elevation models (ETOPO 2022 and LOLA), and such differences are scored as equal, so {tied_n} of the {ranked_n} paired sites share the top final score of {score}. {rule}",
         "criteria_set": "corrected"
       },
       "rover_suitability_one_criterion": {
@@ -1793,8 +1836,8 @@
           "data_and_limits"
         ],
         "decision": "2026-11-15 12:10 CET (the team lead's points, through his delegate; docs/DECISIONS.md 'Puntos del líder de las 12:10')",
-        "source": "docs/DECISIONS.md, section of 11:23 CET 'Pendiente mínima de Rover (0,5°)': measured with the engine with and without the minimum",
-        "text": "The Rover minimum slope of 0.5 degrees is a criterion of the team with no official source. It is kept because of its measured effect: without it 7,847 more points pass (2,862 of them ice or snow cells), 28 of the top 50 become flats with a slope below 0.5 degrees (water-dominated cells in the top 50 go from 4 to 13), one lunar twin takes 13.9 % of the pairs instead of 2.6 %, and the known mobility analogs rank worse (Qaidam from the top 4.0 % to 8.3 %, Haughton 4.2 % to 8.4 %, Ramon 3.6 % to 8.0 %, Yungay 8.1 % to 11.6 %)."
+        "source": "docs/DECISIONS.md, section of 11:23 CET 'Pendiente mínima de Rover (0,5°)': measured with the engine with and without the minimum; figures re-measured under the shipped rule by the independent re-audit (docs/stats_audit/9_reauditoria_rover.json slope_minimum.slope_min_study_corrected)",
+        "text": "The Rover minimum slope of 0.5 degrees is a criterion of the team with no official source. It is kept because of its measured effect: without it 7,847 more points pass (2,862 of them ice or snow cells), 26 of the top 50 would be added points, all of them flats with a slope below 0.5 degrees (water-dominated cells in the top 50 go from 12 to 25), one lunar twin takes 16.4 % of the pairs instead of 2.6 %, and the known mobility analogs rank worse (Qaidam from the top 4.0 % to 8.3 %, Haughton 4.2 % to 8.4 %, Ramon 3.6 % to 8.0 %, Yungay 8.1 % to 11.6 %)."
       },
       "top5_rule_parts": {
         "kind": "computed:top5_rule_parts",

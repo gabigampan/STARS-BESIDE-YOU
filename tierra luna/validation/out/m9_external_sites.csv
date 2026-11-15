@@ -1,0 +1,56 @@
+mission,list,site_id,name,role,cell,passes_funnel,paired,rank,ranked_total,rank_top_pct,unverified,reasons,rank_pct_within_lat_row
+rover,rover_preset.py,ES06,Bardenas,positive,E17098,True,True,7046,10337,68.1629,,,
+rover,rover_preset.py,ES04,Tabernas,positive,E18897,True,True,7390,10337,71.4908,,,
+rover,rover_preset.py,MA04,Dumont Dunes,positive,E19503,True,True,7127,10337,68.9465,source_status is FROM MEMORY,,
+rover,rover_preset.py,MA05,MDRS,positive,E18429,True,True,2122,10337,20.5282,,,
+rover,rover_preset.py,MA01,Yungay,positive,E41150,True,True,840,10337,8.12615,,,
+rover,rover_preset.py,MA15,Erfoud,positive,E21055,True,True,386,10337,3.73416,source_status: location FROM MEMORY,,
+rover,rover_preset.py,MA17,Dhofar,positive,E25795,False,False,,10337,,,slope_300m_deg:below_min; rough_300m_m:below_min,
+rover,rover_preset.py,MA16,Ramon,positive,E21454,True,True,369,10337,3.5697,,,
+rover,rover_preset.py,MA06,Haughton,positive,E5130,True,True,430,10337,4.15981,,,
+rover,rover_preset.py,MA03,Death Valley,positive,E19143,True,True,8284,10337,80.1393,source_status is FROM MEMORY,,
+rover,rover_preset.py,MA14,Qaidam,positive,E18633,True,True,419,10337,4.0534,,,
+rover,rover_preset.py,OP01,Concordia,negative,E59703,False,False,,10337,,,slope_300m_deg:below_min; rough_300m_m:below_min,
+rover,rover_preset.py,OP03,NEEMO,negative,E23499,False,False,,10337,,source_status is FROM MEMORY,slope_300m_deg:missing; rough_300m_m:missing; elevation_m:below_min; mask_fraction:below_min,
+rover,rover_preset.py,OP02,HI-SEAS,negative,E25224,True,True,8651,10337,83.6897,source_status is FROM MEMORY,,
+rover,rover_preset.py,ES01,Rio Tinto,negative,E18893,True,True,4381,10337,42.3817,coord_quality says 'from memory',,
+rover,rover_preset.py,ES08,El Soplao,negative,E16735,True,True,9864,10337,95.4242,,,
+solar,validation_sites_solar.csv,SP01,Tamanrasset (BSRN TAM),positive,E24305,True,True,880,6360,13.84,,,44.2
+solar,validation_sites_solar.csv,SP02,Gobabeb (BSRN GOB),positive,E40875,True,True,587,6360,9.23,,,4.6
+solar,validation_sites_solar.csv,SP03,De Aar (BSRN DAA),positive,E43403,True,True,2858,6360,44.94,,,19.4
+solar,validation_sites_solar.csv,SP04,Sede Boqer (BSRN SBO),positive,E21454,True,True,1956,6360,30.75,,,33.3
+solar,validation_sites_solar.csv,SP05,Solar Village (BSRN SOV),positive,E23626,True,True,57,6360,0.9,,,1.5
+solar,validation_sites_solar.csv,SP06,Gandhinagar (BSRN GAN),positive,E24012,True,True,36,6360,0.57,,,1.5
+solar,validation_sites_solar.csv,SP07,Gurgaon (BSRN GUR),positive,E22217,True,True,879,6360,13.82,,,33.1
+solar,validation_sites_solar.csv,SP08,Alice Springs (BSRN ASP),positive,E40993,True,True,1551,6360,24.39,,,57.5
+solar,validation_sites_solar.csv,SP09,Desert Rock (BSRN DRA),positive,E19143,True,False,11949,6360,,,,28.8
+solar,validation_sites_solar.csv,SP10,Boulder Table Mountain (BSRN BOS),positive,E17714,True,False,17997,6360,,,,94
+solar,validation_sites_solar.csv,SP11,Petrolina (BSRN PTR),positive,E35779,True,True,2073,6360,32.59,,,4.2
+solar,validation_sites_solar.csv,SP12,Izana (BSRN IZA),positive,E22123,False,False,,6360,,,"mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed",
+solar,validation_sites_solar.csv,SP13,Lampedusa (BSRN LMP),positive,E19632,False,False,,6360,,,"mask_fraction outside [0.3, inf]; slope_deg no data; thermal_inertia_class not allowed",
+solar,validation_sites_solar.csv,SN01,Lerwick (Met Office climate station),negative,E10618,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed",
+solar,validation_sites_solar.csv,SN02,Eskdalemuir (Met Office climate station),negative,E12416,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]",
+solar,validation_sites_solar.csv,SN03,Stornoway (Met Office climate station),negative,E11333,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed",
+solar,validation_sites_solar.csv,SN04,Braemar (Met Office climate station),negative,E11696,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]",
+solar,validation_sites_solar.csv,SN05,Dunstaffnage (Met Office climate station),negative,E12054,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]",
+solar,validation_sites_solar.csv,SN06,Tiree (Met Office climate station),negative,E12053,False,False,,6360,,,"irradiance_kwh_m2_day outside [2.5, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed",
+lunar_base,validation_sites_lunar_base.csv,LP01,Concordia Station (Dome C),positive,E59703,False,False,,450,,,lst_diurnal_amp_k no data,
+lunar_base,validation_sites_lunar_base.csv,LP02,"Haughton impact crater (Devon Island, Nunavut)",positive,E5130,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]",
+lunar_base,validation_sites_lunar_base.csv,LP03,McMurdo Dry Valleys,positive,E60462,False,False,,450,,,lst_diurnal_amp_k no data,
+lunar_base,validation_sites_lunar_base.csv,LP04,Svalbard - Bockfjorden volcanic complex (Sverrefjell),positive,E3793,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; thermal_inertia_class not allowed",
+lunar_base,validation_sites_lunar_base.csv,LP05,Kangerlussuaq (ice-sheet margin),positive,E8049,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]",
+lunar_base,validation_sites_lunar_base.csv,LP06,Mauna Kea - Pu'u Hiwahine (PISCES site),positive,E25224,False,False,,450,,,"tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LP07,Teide National Park - Minas de San Jose (Tenerife),positive,E22123,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LP08,"Mars Desert Research Station (MDRS) (Hanksville, Utah)",positive,E18429,True,True,335,450,74.44,,,25.5
+lunar_base,validation_sites_lunar_base.csv,LP09,Iceland - Askja caldera,positive,E8803,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]",
+lunar_base,validation_sites_lunar_base.csv,LP10,Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field),positive,E19508,True,False,1704,450,,,,74.2
+lunar_base,validation_sites_lunar_base.csv,LP11,Craters of the Moon National Monument,positive,E16626,True,True,179,450,39.78,,,9.8
+lunar_base,validation_sites_lunar_base.csv,LP12,Lanzarote - Timanfaya lava fields,positive,E22126,False,False,,450,,,"mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LP13,Neumayer III / EDEN ISS greenhouse,positive,E57771,False,False,,450,,,"elevation_m outside [1.0, inf]; lst_diurnal_amp_k no data; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed",
+lunar_base,validation_sites_lunar_base.csv,LN01,Paramaribo (BSRN PAR),negative,E30364,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN02,Lanyu Station (BSRN LYU),negative,E24421,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN03,Ishigakijima (BSRN ISH),negative,E23704,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN04,Rolim de Moura (BSRN RLM),negative,E36478,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN05,Selegua (BSRN SEL),negative,E26728,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN06,Darwin (BSRN DAR),negative,E37030,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",
+lunar_base,validation_sites_lunar_base.csv,LN07,Reunion Island University (BSRN RUN),negative,E39835,False,False,,450,,,"lst_diurnal_amp_k outside [15.0, inf]; mask_fraction outside [0.3, inf]; thermal_inertia_class not allowed; tmin_c outside [-inf, 5.0]",

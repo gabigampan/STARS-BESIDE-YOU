@@ -1,405 +1,1148 @@
 mission,twin,lat,lon,bundle_feature,bundle_km,recomputed_feature,recomputed_km,name_agrees,km_within_0.1
-rover,61116,-79.5,96.5,Ganswindt,81.2,Ganswindt,81.199,True,True
+rover,59712,-75.5,132.5,Schrodinger,23.5,Schrodinger,23.504,True,True
+rover,63712,-86.5,172.5,Haynes,68.5,Haynes,68.461,True,True
+rover,63713,-86.5,173.5,Haynes,68.6,Haynes,68.562,True,True
+rover,59713,-75.5,133.5,Schrodinger,23.7,Schrodinger,23.697,True,True
+rover,63714,-86.5,174.5,Sverdrup,68.6,Sverdrup,68.567,True,True
+rover,61217,-80.5,-162.5,Laveran,41.4,Laveran,41.364,True,True
+rover,59438,-75.5,-141.5,Zeeman,51.3,Zeeman,51.267,True,True
+rover,63711,-86.5,171.5,Haynes,68.4,Haynes,68.379,True,True
+rover,60438,-77.5,138.5,Schrodinger,93.1,Schrodinger,93.114,True,True
+rover,60939,-79.5,-80.5,Drygalski,36.8,Drygalski,36.817,True,True
+rover,59447,-75.5,-132.5,Zeeman,23.7,Zeeman,23.676,True,True
+rover,60937,-79.5,-82.5,Drygalski,25.8,Drygalski,25.845,True,True
+rover,60936,-79.5,-83.5,Drygalski,20.4,Drygalski,20.368,True,True
+rover,59450,-75.5,-129.5,Zeeman,44.8,Zeeman,44.775,True,True
+rover,60435,-77.5,135.5,Schrodinger,86,Schrodinger,85.962,True,True
+rover,60058,-76.5,118.5,Ganswindt,99.7,Ganswindt,99.67,True,True
+rover,60716,-78.5,56.5,Demonax,21.6,Demonax,21.581,True,True
+rover,62227,-82.5,127.5,Nefed ev,56.1,Nefed ev,56.106,True,True
+rover,61843,-81.5,103.5,Idel son,41.8,Idel son,41.784,True,True
+rover,61287,-80.5,-92.5,Drygalski,39.6,Drygalski,39.579,True,True
+rover,63710,-86.5,170.5,Haynes,68.3,Haynes,68.314,True,True
+rover,59451,-75.5,-128.5,Zeeman,52.2,Zeeman,52.18,True,True
+rover,60436,-77.5,136.5,Schrodinger,87.8,Schrodinger,87.817,True,True
+rover,59966,-76.5,26.5,Schomberger,13.4,Schomberger,13.42,True,True
+rover,60427,-77.5,127.5,Schrodinger,92.6,Schrodinger,92.65,True,True
+rover,60428,-77.5,128.5,Schrodinger,89.8,Schrodinger,89.823,True,True
+rover,60064,-76.5,124.5,Schrodinger,82.9,Schrodinger,82.936,True,True
+rover,62928,-84.5,108.5,Amundsen,73.7,Amundsen,73.733,True,True
+rover,59727,-75.5,147.5,Schrodinger,115.6,Schrodinger,115.565,True,True
+rover,59824,-76.5,-115.5,Ashbrook,142.5,Ashbrook,142.473,True,True
+rover,61285,-80.5,-94.5,Drygalski,47.5,Drygalski,47.537,True,True
+rover,63454,-86.5,-85.5,Lacus Tenebrarum,7.5,Lacus Tenebrarum,7.464,True,True
+rover,60431,-77.5,131.5,Schrodinger,84.5,Schrodinger,84.549,True,True
+rover,63456,-86.5,-83.5,Lacus Tenebrarum,9.8,Lacus Tenebrarum,9.826,True,True
+rover,59699,-75.5,119.5,Rittenhouse,105.2,Rittenhouse,105.204,True,True
+rover,63453,-86.5,-86.5,Lacus Tenebrarum,6.7,Lacus Tenebrarum,6.705,True,True
+rover,61837,-81.5,97.5,Hedervari,53,Hedervari,53.033,True,True
 rover,59895,-76.5,-44.5,Casatus,159.2,Casatus,159.163,True,True
-rover,60992,-79.5,-27.5,Newton,110,Newton,110.025,True,True
-rover,60245,-77.5,-54.5,Le Gentil,185.2,Le Gentil,185.171,True,True
-rover,61352,-80.5,-27.5,Mons Cabeus,102.4,Mons Cabeus,102.436,True,True
-rover,61008,-79.5,-11.5,Newton,97.7,Newton,97.673,True,True
-rover,59619,-75.5,39.5,Boguslawsky,84.7,Boguslawsky,84.65,True,True
-rover,64346,-88.5,86.5,Slater,25.5,Slater,25.512,True,True
-rover,64041,-87.5,141.5,Slater,38.8,Slater,38.826,True,True
-rover,60697,-78.5,37.5,Schomberger,100.5,Schomberger,100.537,True,True
-rover,64056,-87.5,156.5,Haynes,39.2,Haynes,39.245,True,True
-rover,64050,-87.5,150.5,Haynes,41,Haynes,41.043,True,True
-rover,64047,-87.5,147.5,Haynes,42.2,Haynes,42.183,True,True
-rover,62165,-82.5,65.5,Svedberg,24.9,Svedberg,24.89,True,True
-rover,64055,-87.5,155.5,Haynes,39.5,Haynes,39.497,True,True
-rover,61037,-79.5,17.5,Schomberger,97.6,Schomberger,97.602,True,True
-rover,64277,-88.5,17.5,Shoemaker,27.2,Shoemaker,27.202,True,True
-rover,59618,-75.5,38.5,Boguslawsky,88,Boguslawsky,87.987,True,True
-rover,64049,-87.5,149.5,Haynes,41.4,Haynes,41.407,True,True
-rover,59845,-76.5,-94.5,Boltzmann,59.4,Boltzmann,59.393,True,True
-rover,64083,-88.5,-176.5,Haynes,13.9,Haynes,13.887,True,True
-rover,63247,-85.5,67.5,Nobile,35.3,Nobile,35.259,True,True
-rover,64082,-88.5,-177.5,Haynes,13.3,Haynes,13.291,True,True
-rover,64048,-87.5,148.5,Haynes,41.8,Haynes,41.787,True,True
-rover,59580,-75.5,0.5,Short,70.4,Short,70.41,True,True
-rover,60695,-78.5,35.5,Schomberger,90.1,Schomberger,90.11,True,True
-rover,62125,-82.5,25.5,Mons Mouton,66.3,Mons Mouton,66.306,True,True
-rover,64027,-87.5,127.5,Slater,25.7,Slater,25.68,True,True
-rover,62166,-82.5,66.5,Svedberg,25.5,Svedberg,25.475,True,True
-rover,64036,-87.5,136.5,Slater,33.9,Slater,33.902,True,True
-rover,64356,-88.5,96.5,Slater,18.4,Slater,18.392,True,True
-rover,59844,-76.5,-95.5,Boltzmann,63.6,Boltzmann,63.587,True,True
-rover,59866,-76.5,-73.5,Le Gentil,70.2,Le Gentil,70.186,True,True
-rover,61376,-80.5,-3.5,Whitaker,127.4,Whitaker,127.424,True,True
-rover,64032,-87.5,132.5,Slater,30.1,Slater,30.108,True,True
-rover,64273,-88.5,13.5,Shoemaker,30.4,Shoemaker,30.356,True,True
-rover,64051,-87.5,151.5,Haynes,40.7,Haynes,40.697,True,True
-rover,59896,-76.5,-43.5,Casatus,153.8,Casatus,153.797,True,True
-rover,64397,-88.5,137.5,Haynes,22.7,Haynes,22.717,True,True
-rover,63611,-86.5,71.5,Malinkin,23.1,Malinkin,23.075,True,True
-rover,62517,-83.5,57.5,Wapowski,18.3,Wapowski,18.348,True,True
-rover,63999,-87.5,99.5,Slater,22.2,Slater,22.24,True,True
-rover,64043,-87.5,143.5,Slater,40.8,Slater,40.83,True,True
-rover,64276,-88.5,16.5,Shoemaker,28,Shoemaker,27.988,True,True
-rover,61433,-80.5,53.5,von Baeyer,55.4,von Baeyer,55.427,True,True
-rover,62516,-83.5,56.5,Wapowski,16,Wapowski,16.005,True,True
-rover,61316,-80.5,-63.5,Drygalski,126.4,Drygalski,126.39,True,True
-rover,59900,-76.5,-39.5,Casatus,134.9,Casatus,134.865,True,True
-rover,60698,-78.5,38.5,Schomberger,106,Schomberger,105.952,True,True
+rover,59728,-75.5,148.5,Schrodinger,123.1,Schrodinger,123.14,True,True
+rover,60057,-76.5,117.5,Ganswindt,96.9,Ganswindt,96.934,True,True
+rover,60941,-79.5,-78.5,Drygalski,47.8,Drygalski,47.79,True,True
+rover,60429,-77.5,129.5,Schrodinger,87.5,Schrodinger,87.504,True,True
+rover,61621,-81.5,-118.5,Ashbrook,38.2,Ashbrook,38.235,True,True
+rover,59716,-75.5,136.5,Schrodinger,36.3,Schrodinger,36.277,True,True
+rover,60796,-78.5,136.5,Nefed ev,78.1,Nefed ev,78.085,True,True
+rover,61839,-81.5,99.5,Idel son,59.7,Idel son,59.709,True,True
+rover,63093,-85.5,-86.5,Ibn Bajja,34.5,Ibn Bajja,34.549,True,True
+rover,62204,-82.5,104.5,Idel son,49.3,Idel son,49.305,True,True
+rover,61712,-81.5,-27.5,Mons Cabeus,73.8,Mons Cabeus,73.836,True,True
+rover,62960,-84.5,140.5,Wiechert,74.1,Wiechert,74.076,True,True
+rover,62445,-83.5,-14.5,Whitaker,59,Whitaker,58.966,True,True
+rover,63306,-85.5,126.5,Slater,81.7,Slater,81.69,True,True
+rover,60482,-78.5,-177.5,De Forest,102.6,De Forest,102.604,True,True
+rover,59701,-75.5,121.5,Schrodinger,91.8,Schrodinger,91.82,True,True
+rover,59806,-76.5,-133.5,Zeeman,44.9,Zeeman,44.943,True,True
+rover,59807,-76.5,-132.5,Zeeman,47.4,Zeeman,47.412,True,True
+rover,60437,-77.5,137.5,Schrodinger,90.2,Schrodinger,90.215,True,True
+rover,60793,-78.5,133.5,Nefed ev,78.9,Nefed ev,78.925,True,True
+rover,62252,-82.5,152.5,Braude,33.5,Braude,33.459,True,True
+rover,60075,-76.5,135.5,Schrodinger,57,Schrodinger,56.982,True,True
 rover,61036,-79.5,16.5,Schomberger,100.6,Schomberger,100.6,True,True
-rover,64033,-87.5,133.5,Slater,31,Slater,31.04,True,True
-rover,64035,-87.5,135.5,Slater,32.9,Slater,32.938,True,True
-rover,64359,-88.5,99.5,Slater,16.6,Slater,16.569,True,True
-rover,59867,-76.5,-72.5,Le Gentil,72.6,Le Gentil,72.646,True,True
-rover,62054,-82.5,-45.5,Mons Cabeus,49.1,Mons Cabeus,49.098,True,True
-rover,62794,-84.5,-25.5,Mons Cabeus,41.6,Mons Cabeus,41.648,True,True
-rover,64357,-88.5,97.5,Slater,17.8,Slater,17.761,True,True
-rover,64431,-88.5,171.5,Haynes,8.1,Haynes,8.145,True,True
-rover,60244,-77.5,-55.5,Le Gentil,179.1,Le Gentil,179.073,True,True
-rover,60657,-78.5,-2.5,Newton,114.4,Newton,114.421,True,True
-rover,62162,-82.5,62.5,von Baeyer,21.3,von Baeyer,21.345,True,True
-rover,62844,-84.5,24.5,Mons Mouton,19,Mons Mouton,18.954,True,True
-rover,63527,-86.5,-12.5,Mons Malapert,26.6,Mons Malapert,26.624,True,True
-rover,64042,-87.5,142.5,Slater,39.8,Slater,39.826,True,True
-rover,64057,-87.5,157.5,Haynes,39,Haynes,39.014,True,True
-rover,64152,-88.5,-107.5,Brill,13.9,Brill,13.863,True,True
-rover,64413,-88.5,153.5,Haynes,12.6,Haynes,12.581,True,True
-rover,59850,-76.5,-89.5,Boltzmann,51.3,Boltzmann,51.308,True,True
-rover,62167,-82.5,67.5,Svedberg,26.7,Svedberg,26.706,True,True
-rover,63641,-86.5,101.5,Faustini,35.2,Faustini,35.189,True,True
-rover,63691,-86.5,151.5,Haynes,70.4,Haynes,70.444,True,True
-rover,59581,-75.5,1.5,Short,77.6,Short,77.588,True,True
-rover,59916,-76.5,-23.5,Newton,42.8,Newton,42.841,True,True
-rover,60991,-79.5,-28.5,Newton,113.7,Newton,113.694,True,True
-rover,59846,-76.5,-93.5,Boltzmann,55.9,Boltzmann,55.892,True,True
-rover,60227,-77.5,-72.5,Le Gentil,101.2,Le Gentil,101.185,True,True
-rover,60652,-78.5,-7.5,Newton,88.4,Newton,88.409,True,True
-rover,62264,-82.5,164.5,Braude,31,Braude,31.048,True,True
-rover,64028,-87.5,128.5,Slater,26.5,Slater,26.528,True,True
-rover,60586,-78.5,-73.5,Drygalski,85.1,Drygalski,85.076,True,True
-rover,61436,-80.5,56.5,von Baeyer,46.7,von Baeyer,46.708,True,True
-rover,62518,-83.5,58.5,Wapowski,21,Wapowski,21.029,True,True
-rover,62845,-84.5,25.5,Mons Mouton,16.1,Mons Mouton,16.121,True,True
-rover,62847,-84.5,27.5,Mons Mouton,10.5,Mons Mouton,10.524,True,True
-rover,64358,-88.5,98.5,Slater,17.2,Slater,17.153,True,True
-rover,60040,-76.5,100.5,Rittenhouse,84.7,Rittenhouse,84.696,True,True
-rover,60587,-78.5,-72.5,Drygalski,90.4,Drygalski,90.385,True,True
-rover,60666,-78.5,6.5,Schomberger,130.7,Schomberger,130.739,True,True
-rover,60693,-78.5,33.5,Schomberger,80.4,Schomberger,80.407,True,True
-rover,61035,-79.5,15.5,Schomberger,103.9,Schomberger,103.881,True,True
-rover,61056,-79.5,36.5,Scott,103.4,Scott,103.414,True,True
-rover,61353,-80.5,-26.5,Mons Cabeus,103.9,Mons Cabeus,103.916,True,True
-rover,64000,-87.5,100.5,Slater,21.6,Slater,21.552,True,True
-rover,64034,-87.5,134.5,Slater,32,Slater,31.984,True,True
-rover,64396,-88.5,136.5,Haynes,23.4,Haynes,23.377,True,True
-rover,59532,-75.5,-47.5,Casatus,162.3,Casatus,162.254,True,True
-rover,59944,-76.5,4.5,Short,109.6,Short,109.593,True,True
-rover,60676,-78.5,16.5,Schomberger,77.6,Schomberger,77.602,True,True
-rover,61384,-80.5,4.5,Whitaker,127.3,Whitaker,127.255,True,True
-rover,62479,-83.5,19.5,Mons Mouton,49,Mons Mouton,49.029,True,True
-rover,59517,-75.5,-62.5,Le Gentil,112.9,Le Gentil,112.871,True,True
-rover,59600,-75.5,20.5,Schomberger,46.1,Schomberger,46.125,True,True
-rover,59865,-76.5,-74.5,Le Gentil,68.5,Le Gentil,68.491,True,True
-rover,59938,-76.5,-1.5,Short,75.7,Short,75.698,True,True
-rover,62168,-82.5,68.5,Mons Amundsen,28.5,Mons Amundsen,28.465,True,True
-rover,62795,-84.5,-24.5,Mons Cabeus,44.2,Mons Cabeus,44.159,True,True
-rover,63612,-86.5,72.5,Malinkin,22.6,Malinkin,22.606,True,True
-rover,64046,-87.5,146.5,Haynes,42.6,Haynes,42.595,True,True
-rover,64278,-88.5,18.5,Shoemaker,26.4,Shoemaker,26.42,True,True
-rover,64428,-88.5,168.5,Haynes,7.6,Haynes,7.623,True,True
-rover,64430,-88.5,170.5,Haynes,7.9,Haynes,7.909,True,True
-rover,59622,-75.5,42.5,Boguslawsky,79.1,Boguslawsky,79.05,True,True
-rover,60305,-77.5,5.5,Short,131.4,Short,131.383,True,True
-rover,60755,-78.5,95.5,Ganswindt,94.8,Ganswindt,94.8,True,True
-rover,61032,-79.5,12.5,Schomberger,115.2,Schomberger,115.161,True,True
-rover,61385,-80.5,5.5,Whitaker,127.7,Whitaker,127.732,True,True
-rover,63248,-85.5,68.5,Nobile,37.6,Nobile,37.634,True,True
-rover,63876,-87.5,-23.5,Haworth,24.4,Haworth,24.429,True,True
-rover,59861,-76.5,-78.5,Le Gentil,70.1,Le Gentil,70.104,True,True
-rover,60310,-77.5,10.5,Schomberger,99.5,Schomberger,99.492,True,True
-rover,60404,-77.5,104.5,Ganswindt,70.7,Ganswindt,70.692,True,True
-rover,61107,-79.5,87.5,Hedervari,69.5,Hedervari,69.517,True,True
+rover,63309,-85.5,129.5,Slater,83.1,Slater,83.141,True,True
+rover,59711,-75.5,131.5,Schrodinger,25.8,Schrodinger,25.781,True,True
+rover,59808,-76.5,-131.5,Zeeman,50.9,Zeeman,50.856,True,True
+rover,60577,-78.5,-82.5,Drygalski,42.3,Drygalski,42.256,True,True
+rover,62570,-83.5,110.5,Idel son,65.8,Idel son,65.837,True,True
+rover,63312,-85.5,132.5,Slater,84.8,Slater,84.811,True,True
+rover,60246,-77.5,-53.5,Le Gentil,191.3,Le Gentil,191.338,True,True
+rover,60425,-77.5,125.5,Schrodinger,99.6,Schrodinger,99.643,True,True
+rover,63095,-85.5,-84.5,Ibn Bajja,31.6,Ibn Bajja,31.617,True,True
+rover,63304,-85.5,124.5,Slater,80.9,Slater,80.853,True,True
+rover,63364,-86.5,-175.5,Sverdrup,62,Sverdrup,61.994,True,True
+rover,63457,-86.5,-82.5,Lacus Tenebrarum,11.3,Lacus Tenebrarum,11.252,True,True
+rover,60424,-77.5,124.5,Ganswindt,99.2,Ganswindt,99.223,True,True
+rover,60426,-77.5,126.5,Schrodinger,95.9,Schrodinger,95.939,True,True
+rover,61218,-80.5,-161.5,Laveran,40.2,Laveran,40.188,True,True
+rover,61481,-80.5,101.5,Idel son,59.3,Idel son,59.27,True,True
+rover,63311,-85.5,131.5,Slater,84.2,Slater,84.231,True,True
+rover,59717,-75.5,137.5,Schrodinger,42.5,Schrodinger,42.541,True,True
+rover,60434,-77.5,134.5,Schrodinger,84.7,Schrodinger,84.688,True,True
+rover,63459,-86.5,-80.5,Ibn Bajja,12.1,Ibn Bajja,12.095,True,True
+rover,61037,-79.5,17.5,Schomberger,97.6,Schomberger,97.602,True,True
+rover,61266,-80.5,-113.5,Ashbrook,23.2,Ashbrook,23.163,True,True
+rover,63092,-85.5,-87.5,Ibn Bajja,36.1,Ibn Bajja,36.116,True,True
+rover,60970,-79.5,-49.5,Mons Cabeus,138.8,Mons Cabeus,138.799,True,True
+rover,63081,-85.5,-98.5,Lacus Tenebrarum,42.8,Lacus Tenebrarum,42.784,True,True
+rover,63307,-85.5,127.5,Slater,82.1,Slater,82.148,True,True
+rover,59714,-75.5,134.5,Schrodinger,26.3,Schrodinger,26.303,True,True
+rover,60576,-78.5,-83.5,Drygalski,38.8,Drygalski,38.841,True,True
+rover,62900,-84.5,80.5,Amundsen,7.7,Amundsen,7.726,True,True
+rover,59801,-76.5,-138.5,Zeeman,50.4,Zeeman,50.388,True,True
+rover,63305,-85.5,125.5,Slater,81.3,Slater,81.258,True,True
+rover,61619,-81.5,-120.5,Ashbrook,47,Ashbrook,47.002,True,True
+rover,63709,-86.5,169.5,Haynes,68.3,Haynes,68.267,True,True
+rover,60575,-78.5,-84.5,Drygalski,36,Drygalski,36.027,True,True
+rover,60721,-78.5,61.5,Demonax,18.2,Demonax,18.203,True,True
+rover,61288,-80.5,-91.5,Drygalski,36.1,Drygalski,36.081,True,True
+rover,59448,-75.5,-131.5,Zeeman,30.4,Zeeman,30.391,True,True
+rover,60787,-78.5,127.5,Nefed ev,89.6,Nefed ev,89.591,True,True
+rover,61340,-80.5,-39.5,Mons Cabeus,97.1,Mons Cabeus,97.091,True,True
+rover,63715,-86.5,175.5,Sverdrup,67.8,Sverdrup,67.842,True,True
+rover,59449,-75.5,-130.5,Zeeman,37.5,Zeeman,37.484,True,True
+rover,60129,-77.5,-170.5,De Forest,51,De Forest,50.997,True,True
+rover,61116,-79.5,96.5,Ganswindt,81.2,Ganswindt,81.199,True,True
+rover,61286,-80.5,-93.5,Drygalski,43.4,Drygalski,43.426,True,True
+rover,63360,-86.5,-179.5,Sverdrup,64.4,Sverdrup,64.43,True,True
+rover,63437,-86.5,-102.5,Lacus Tenebrarum,27.3,Lacus Tenebrarum,27.297,True,True
+rover,60059,-76.5,119.5,Ganswindt,102.7,Ganswindt,102.714,True,True
+rover,60443,-77.5,143.5,Schrodinger,113.5,Schrodinger,113.53,True,True
+rover,60785,-78.5,125.5,Ganswindt,87.5,Ganswindt,87.485,True,True
+rover,60789,-78.5,129.5,Nefed ev,84.9,Nefed ev,84.858,True,True
+rover,60926,-79.5,-93.5,Drygalski,34.9,Drygalski,34.874,True,True
 rover,62069,-82.5,-30.5,Mons Cabeus,41,Mons Cabeus,41.016,True,True
-rover,63236,-85.5,56.5,Nobile,10.4,Nobile,10.409,True,True
-rover,63694,-86.5,154.5,Haynes,69.7,Haynes,69.697,True,True
-rover,64402,-88.5,142.5,Haynes,19.4,Haynes,19.434,True,True
-rover,64425,-88.5,165.5,Haynes,7.7,Haynes,7.704,True,True
-rover,60264,-77.5,-35.5,Newton,126.1,Newton,126.065,True,True
-rover,60293,-77.5,-6.5,Newton,80.1,Newton,80.122,True,True
-rover,60678,-78.5,18.5,Schomberger,69.3,Schomberger,69.328,True,True
-rover,61404,-80.5,24.5,Schomberger,117.1,Schomberger,117.078,True,True
-rover,62177,-82.5,77.5,Mons Amundsen,7.4,Mons Amundsen,7.364,True,True
-rover,62512,-83.5,52.5,Wapowski,13.6,Wapowski,13.595,True,True
-rover,62519,-83.5,59.5,Wapowski,23.9,Wapowski,23.933,True,True
-rover,62889,-84.5,69.5,Oberbeck,29.1,Oberbeck,29.123,True,True
-rover,64151,-88.5,-108.5,Brill,14.6,Brill,14.6,True,True
-rover,59975,-76.5,35.5,Schomberger,76.1,Schomberger,76.136,True,True
-rover,60038,-76.5,98.5,Hale,88.8,Hale,88.795,True,True
-rover,60224,-77.5,-75.5,Drygalski,94.1,Drygalski,94.075,True,True
-rover,60262,-77.5,-37.5,Newton,139.2,Newton,139.166,True,True
-rover,60263,-77.5,-36.5,Newton,132.6,Newton,132.611,True,True
-rover,60331,-77.5,31.5,Schomberger,53,Schomberger,53.02,True,True
-rover,60680,-78.5,20.5,Schomberger,62.7,Schomberger,62.672,True,True
-rover,61018,-79.5,-1.5,Newton,134.3,Newton,134.279,True,True
-rover,61021,-79.5,1.5,Newton,148.5,Newton,148.525,True,True
-rover,61038,-79.5,18.5,Schomberger,94.9,Schomberger,94.915,True,True
-rover,61054,-79.5,34.5,Schomberger,106,Schomberger,106.037,True,True
-rover,61309,-80.5,-70.5,Drygalski,91.5,Drygalski,91.517,True,True
-rover,61400,-80.5,20.5,Schomberger,119.7,Schomberger,119.675,True,True
-rover,61803,-81.5,63.5,Svedberg,9.1,Svedberg,9.141,True,True
-rover,62843,-84.5,23.5,Mons Mouton,21.8,Mons Mouton,21.796,True,True
-rover,64192,-88.5,-67.5,de Gerlache,16.5,de Gerlache,16.544,True,True
-rover,64360,-88.5,100.5,Slater,16,Slater,16.014,True,True
-rover,64398,-88.5,138.5,Haynes,22.1,Haynes,22.057,True,True
-rover,64416,-88.5,156.5,Haynes,10.9,Haynes,10.934,True,True
-rover,64429,-88.5,169.5,Haynes,7.7,Haynes,7.733,True,True
-rover,64446,-89.5,-173.5,Shackleton,12.8,Shackleton,12.787,True,True
-rover,64468,-89.5,-151.5,Shackleton,16.5,Shackleton,16.452,True,True
-rover,59539,-75.5,-40.5,Casatus,117.2,Casatus,117.168,True,True
-rover,59579,-75.5,-0.5,Short,63.4,Short,63.379,True,True
-rover,59582,-75.5,2.5,Short,84.9,Short,84.874,True,True
-rover,59585,-75.5,5.5,Short,107.1,Short,107.138,True,True
-rover,59590,-75.5,10.5,Simpelius,94.4,Simpelius,94.367,True,True
-rover,59617,-75.5,37.5,Boguslawsky,91.9,Boguslawsky,91.939,True,True
-rover,59621,-75.5,41.5,Boguslawsky,80.1,Boguslawsky,80.12,True,True
-rover,59947,-76.5,7.5,Schomberger,120.7,Schomberger,120.721,True,True
-rover,59948,-76.5,8.5,Schomberger,113.8,Schomberger,113.753,True,True
-rover,60039,-76.5,99.5,Rittenhouse,89.4,Rittenhouse,89.416,True,True
-rover,60253,-77.5,-46.5,Casatus,189.3,Casatus,189.305,True,True
-rover,60276,-77.5,-23.5,Newton,50.8,Newton,50.825,True,True
-rover,60350,-77.5,50.5,Demonax,59.4,Demonax,59.428,True,True
-rover,60993,-79.5,-26.5,Newton,106.6,Newton,106.592,True,True
-rover,61052,-79.5,32.5,Schomberger,99.4,Schomberger,99.418,True,True
-rover,61090,-79.5,70.5,Svedberg,71.2,Svedberg,71.174,True,True
+rover,63441,-86.5,-98.5,Lacus Tenebrarum,20.4,Lacus Tenebrarum,20.428,True,True
+rover,59452,-75.5,-127.5,Zeeman,59.7,Zeeman,59.653,True,True
+rover,59459,-75.5,-120.5,Zeeman,112.6,Zeeman,112.634,True,True
+rover,60060,-76.5,120.5,Ganswindt,106,Ganswindt,106.039,True,True
+rover,60062,-76.5,122.5,Schrodinger,94.9,Schrodinger,94.872,True,True
+rover,60063,-76.5,123.5,Schrodinger,88.8,Schrodinger,88.79,True,True
+rover,60810,-78.5,150.5,Braude,109.4,Braude,109.386,True,True
+rover,63094,-85.5,-85.5,Ibn Bajja,33,Ibn Bajja,33.046,True,True
+rover,63308,-85.5,128.5,Slater,82.6,Slater,82.632,True,True
+rover,63438,-86.5,-101.5,Lacus Tenebrarum,25.6,Lacus Tenebrarum,25.569,True,True
+rover,63783,-87.5,-116.5,Brill,34.4,Brill,34.381,True,True
+rover,59443,-75.5,-136.5,Zeeman,17.2,Zeeman,17.153,True,True
+rover,60439,-77.5,139.5,Schrodinger,96.5,Schrodinger,96.468,True,True
+rover,60573,-78.5,-86.5,Drygalski,32.8,Drygalski,32.794,True,True
+rover,60927,-79.5,-92.5,Drygalski,29.4,Drygalski,29.388,True,True
+rover,60928,-79.5,-91.5,Drygalski,23.9,Drygalski,23.905,True,True
+rover,61299,-80.5,-80.5,Drygalski,44.9,Drygalski,44.854,True,True
+rover,61300,-80.5,-79.5,Drygalski,49,Drygalski,49.042,True,True
+rover,61985,-82.5,-114.5,Ashbrook,45.6,Ashbrook,45.574,True,True
+rover,62203,-82.5,103.5,Idel son,52.4,Idel son,52.381,True,True
+rover,62901,-84.5,81.5,Amundsen,4.9,Amundsen,4.935,True,True
+rover,63366,-86.5,-173.5,Sverdrup,60.9,Sverdrup,60.889,True,True
+rover,63455,-86.5,-84.5,Lacus Tenebrarum,8.5,Lacus Tenebrarum,8.539,True,True
+rover,59440,-75.5,-139.5,Zeeman,36.6,Zeeman,36.602,True,True
+rover,60071,-76.5,131.5,Schrodinger,54.7,Schrodinger,54.654,True,True
+rover,60073,-76.5,133.5,Schrodinger,53.8,Schrodinger,53.767,True,True
+rover,60078,-76.5,138.5,Schrodinger,68,Schrodinger,68.029,True,True
+rover,62898,-84.5,78.5,Amundsen,13.5,Amundsen,13.472,True,True
+rover,63310,-85.5,130.5,Slater,83.7,Slater,83.674,True,True
+rover,64035,-87.5,135.5,Slater,32.9,Slater,32.938,True,True
+rover,60578,-78.5,-81.5,Drygalski,46.1,Drygalski,46.137,True,True
+rover,60717,-78.5,57.5,Demonax,17,Demonax,16.957,True,True
+rover,60739,-78.5,79.5,Hedervari,104,Hedervari,104.017,True,True
+rover,60788,-78.5,128.5,Nefed ev,87.1,Nefed ev,87.094,True,True
+rover,60791,-78.5,131.5,Nefed ev,81.2,Nefed ev,81.249,True,True
+rover,63443,-86.5,-96.5,Lacus Tenebrarum,17.1,Lacus Tenebrarum,17.066,True,True
+rover,59581,-75.5,1.5,Short,77.6,Short,77.588,True,True
+rover,60076,-76.5,136.5,Schrodinger,60,Schrodinger,59.954,True,True
+rover,60971,-79.5,-48.5,Mons Cabeus,137.1,Mons Cabeus,137.092,True,True
+rover,61056,-79.5,36.5,Scott,103.4,Scott,103.414,True,True
+rover,61617,-81.5,-122.5,Ashbrook,55.9,Ashbrook,55.877,True,True
+rover,62902,-84.5,82.5,Amundsen,2.5,Amundsen,2.469,True,True
+rover,63097,-85.5,-82.5,Ibn Bajja,29,Ibn Bajja,29.025,True,True
+rover,63460,-86.5,-79.5,Ibn Bajja,10.5,Ibn Bajja,10.504,True,True
+rover,63461,-86.5,-78.5,Ibn Bajja,9,Ibn Bajja,9.034,True,True
+rover,59468,-75.5,-111.5,Boltzmann,164.2,Boltzmann,164.186,True,True
+rover,59800,-76.5,-139.5,Zeeman,54.5,Zeeman,54.538,True,True
+rover,59809,-76.5,-130.5,Zeeman,55.1,Zeeman,55.094,True,True
+rover,61294,-80.5,-85.5,Drygalski,29.4,Drygalski,29.428,True,True
+rover,61707,-81.5,-32.5,Mons Cabeus,67.3,Mons Cabeus,67.31,True,True
+rover,61838,-81.5,98.5,Hedervari,57.4,Hedervari,57.369,True,True
+rover,62021,-82.5,-78.5,Drygalski,97.5,Drygalski,97.501,True,True
+rover,62083,-82.5,-16.5,Mons Cabeus,79.5,Mons Cabeus,79.526,True,True
+rover,62226,-82.5,126.5,Nefed ev,58.9,Nefed ev,58.936,True,True
+rover,63079,-85.5,-100.5,Mons Kocher,41.8,Mons Kocher,41.817,True,True
+rover,63138,-85.5,-41.5,Cabeus,5.4,Cabeus,5.369,True,True
+rover,63297,-85.5,117.5,Slater,78.8,Slater,78.804,True,True
+rover,63439,-86.5,-100.5,Lacus Tenebrarum,23.8,Lacus Tenebrarum,23.846,True,True
+rover,63782,-87.5,-117.5,Henson,35,Henson,34.994,True,True
+rover,59700,-75.5,120.5,Schrodinger,99.3,Schrodinger,99.333,True,True
+rover,60070,-76.5,130.5,Schrodinger,56.6,Schrodinger,56.61,True,True
+rover,60440,-77.5,140.5,Schrodinger,100.2,Schrodinger,100.23,True,True
+rover,60490,-78.5,-169.5,De Forest,61.8,De Forest,61.846,True,True
+rover,60697,-78.5,37.5,Schomberger,100.5,Schomberger,100.537,True,True
+rover,60784,-78.5,124.5,Ganswindt,82,Ganswindt,82.041,True,True
+rover,60799,-78.5,139.5,Nefed ev,80.5,Nefed ev,80.483,True,True
+rover,61479,-80.5,99.5,Idel son,68,Idel son,67.958,True,True
+rover,61480,-80.5,100.5,Idel son,63.6,Idel son,63.587,True,True
+rover,63784,-87.5,-115.5,Brill,33.6,Brill,33.597,True,True
+rover,63832,-87.5,-67.5,Cartwright,26.6,Cartwright,26.605,True,True
+rover,63920,-87.5,20.5,Haworth,34,Haworth,34.039,True,True
+rover,59439,-75.5,-140.5,Zeeman,43.9,Zeeman,43.874,True,True
+rover,59845,-76.5,-94.5,Boltzmann,59.4,Boltzmann,59.393,True,True
+rover,59911,-76.5,-28.5,Newton,78.1,Newton,78.111,True,True
+rover,60501,-78.5,-158.5,De Forest,56.7,De Forest,56.727,True,True
+rover,60657,-78.5,-2.5,Newton,114.4,Newton,114.421,True,True
+rover,60718,-78.5,58.5,Demonax,13.6,Demonax,13.6,True,True
+rover,60723,-78.5,63.5,Demonax,28.4,Demonax,28.411,True,True
+rover,60786,-78.5,126.5,Nefed ev,92.3,Nefed ev,92.325,True,True
+rover,60790,-78.5,130.5,Nefed ev,82.9,Nefed ev,82.902,True,True
+rover,60869,-79.5,-150.5,Laveran,83.2,Laveran,83.163,True,True
+rover,60938,-79.5,-81.5,Drygalski,31.3,Drygalski,31.33,True,True
+rover,61133,-79.5,113.5,Ganswindt,13.2,Ganswindt,13.192,True,True
+rover,61289,-80.5,-90.5,Drygalski,33,Drygalski,33.045,True,True
+rover,61594,-81.5,-145.5,Laveran,63.4,Laveran,63.387,True,True
+rover,62228,-82.5,128.5,Nefed ev,53.5,Nefed ev,53.471,True,True
+rover,62602,-83.5,142.5,Wiechert,74.4,Wiechert,74.358,True,True
+rover,62959,-84.5,139.5,Wiechert,77,Wiechert,76.981,True,True
+rover,63296,-85.5,116.5,Slater,78.6,Slater,78.629,True,True
+rover,63363,-86.5,-176.5,Sverdrup,62.6,Sverdrup,62.576,True,True
+rover,63830,-87.5,-69.5,Cartwright,29.1,Cartwright,29.09,True,True
+rover,59469,-75.5,-110.5,Boltzmann,156.6,Boltzmann,156.602,True,True
+rover,60150,-77.5,-149.5,De Forest,94.1,De Forest,94.139,True,True
+rover,60481,-78.5,-178.5,De Forest,108.3,De Forest,108.308,True,True
+rover,60848,-79.5,-171.5,Laveran,90.2,Laveran,90.168,True,True
+rover,60974,-79.5,-45.5,Mons Cabeus,132.7,Mons Cabeus,132.66,True,True
+rover,61194,-79.5,174.5,Braude,103.6,Braude,103.6,True,True
+rover,61295,-80.5,-84.5,Drygalski,31.4,Drygalski,31.394,True,True
+rover,61708,-81.5,-31.5,Mons Cabeus,68.2,Mons Cabeus,68.229,True,True
+rover,62323,-83.5,-136.5,Kocher,30.4,Kocher,30.356,True,True
+rover,62569,-83.5,109.5,Idel son,66.5,Idel son,66.474,True,True
+rover,62756,-84.5,-63.5,Ibn Bajja,61,Ibn Bajja,61.012,True,True
+rover,62950,-84.5,130.5,Wiechert,103,Wiechert,102.979,True,True
+rover,63038,-85.5,-141.5,Kocher,37,Kocher,37.003,True,True
+rover,63134,-85.5,-45.5,Cabeus,9.6,Cabeus,9.647,True,True
+rover,63708,-86.5,168.5,Haynes,68.2,Haynes,68.239,True,True
+rover,63718,-86.5,178.5,Sverdrup,65.8,Sverdrup,65.75,True,True
+rover,64051,-87.5,151.5,Haynes,40.7,Haynes,40.697,True,True
+rover,59422,-75.5,-157.5,De Forest,60.5,De Forest,60.536,True,True
+rover,59523,-75.5,-56.5,Le Gentil,157.9,Le Gentil,157.945,True,True
+rover,59718,-75.5,138.5,Schrodinger,49.2,Schrodinger,49.237,True,True
+rover,60423,-77.5,123.5,Ganswindt,94.4,Ganswindt,94.416,True,True
+rover,60483,-78.5,-176.5,De Forest,97,De Forest,96.979,True,True
+rover,60722,-78.5,62.5,Demonax,23.1,Demonax,23.054,True,True
+rover,60795,-78.5,135.5,Nefed ev,78,Nefed ev,78.002,True,True
+rover,60870,-79.5,-149.5,Laveran,85.9,Laveran,85.917,True,True
+rover,60990,-79.5,-29.5,Newton,117.6,Newton,117.575,True,True
+rover,61260,-80.5,-119.5,Ashbrook,46.9,Ashbrook,46.92,True,True
 rover,61383,-80.5,3.5,Whitaker,126.9,Whitaker,126.888,True,True
-rover,61692,-81.5,-47.5,Mons Cabeus,79.1,Mons Cabeus,79.064,True,True
-rover,61809,-81.5,69.5,Svedberg,20,Svedberg,20.046,True,True
-rover,62066,-82.5,-33.5,Mons Cabeus,36.8,Mons Cabeus,36.774,True,True
-rover,62163,-82.5,63.5,von Baeyer,22.2,von Baeyer,22.229,True,True
-rover,62176,-82.5,76.5,Mons Amundsen,3.8,Mons Amundsen,3.767,True,True
-rover,63157,-85.5,-22.5,Cabeus,47.6,Cabeus,47.628,True,True
-rover,63519,-86.5,-20.5,Haworth,37.6,Haworth,37.594,True,True
-rover,63525,-86.5,-14.5,Mons Malapert,29.9,Mons Malapert,29.895,True,True
-rover,64084,-88.5,-175.5,Haynes,14.5,Haynes,14.493,True,True
-rover,64414,-88.5,154.5,Haynes,12,Haynes,12.014,True,True
-rover,59599,-75.5,19.5,Schomberger,51.2,Schomberger,51.246,True,True
-rover,59608,-75.5,28.5,Schomberger,44.3,Schomberger,44.327,True,True
-rover,59654,-75.5,74.5,Demonax,130.4,Demonax,130.367,True,True
-rover,59848,-76.5,-91.5,Boltzmann,51.5,Boltzmann,51.511,True,True
-rover,59957,-76.5,17.5,Schomberger,50.8,Schomberger,50.791,True,True
-rover,60315,-77.5,15.5,Schomberger,67.5,Schomberger,67.518,True,True
-rover,60367,-77.5,67.5,Demonax,55.1,Demonax,55.112,True,True
-rover,60372,-77.5,72.5,Demonax,85.9,Demonax,85.938,True,True
-rover,60395,-77.5,95.5,Hale,106.1,Hale,106.057,True,True
-rover,60696,-78.5,36.5,Schomberger,95.2,Schomberger,95.248,True,True
-rover,61051,-79.5,31.5,Schomberger,96.5,Schomberger,96.536,True,True
-rover,61754,-81.5,14.5,Malapert,106.7,Malapert,106.66,True,True
-rover,61808,-81.5,68.5,Svedberg,15.8,Svedberg,15.829,True,True
-rover,63226,-85.5,46.5,Nobile,17.9,Nobile,17.853,True,True
-rover,63230,-85.5,50.5,Nobile,9.6,Nobile,9.599,True,True
-rover,63568,-86.5,28.5,Stose,7.7,Stose,7.741,True,True
-rover,63583,-86.5,43.5,Burbidge,10.7,Burbidge,10.657,True,True
-rover,64354,-88.5,94.5,Slater,19.7,Slater,19.712,True,True
-rover,64409,-88.5,149.5,Haynes,15,Haynes,14.972,True,True
-rover,64424,-88.5,164.5,Haynes,7.9,Haynes,7.865,True,True
-rover,64435,-88.5,175.5,Haynes,9.6,Haynes,9.589,True,True
-rover,64469,-89.5,-150.5,Spudis,16.3,Spudis,16.328,True,True
-rover,64555,-89.5,-64.5,Spudis,5.2,Spudis,5.25,True,True
-rover,64622,-89.5,2.5,Spudis,20.7,Spudis,20.686,True,True
-rover,64647,-89.5,27.5,Shackleton,19.9,Shackleton,19.863,True,True
-rover,59535,-75.5,-44.5,Casatus,141.9,Casatus,141.867,True,True
-rover,59597,-75.5,17.5,Schomberger,62.8,Schomberger,62.78,True,True
-rover,59646,-75.5,66.5,Demonax,92.6,Demonax,92.601,True,True
-rover,59847,-76.5,-92.5,Boltzmann,53.2,Boltzmann,53.221,True,True
-rover,59862,-76.5,-77.5,Le Gentil,68.4,Le Gentil,68.441,True,True
-rover,59937,-76.5,-2.5,Short,71.3,Short,71.278,True,True
-rover,59958,-76.5,18.5,Schomberger,43.8,Schomberger,43.788,True,True
-rover,59981,-76.5,41.5,Boguslawsky,110,Boguslawsky,110.017,True,True
-rover,60300,-77.5,0.5,Short,107.8,Short,107.808,True,True
-rover,60689,-78.5,29.5,Schomberger,64.5,Schomberger,64.522,True,True
-rover,60747,-78.5,87.5,Hedervari,99.7,Hedervari,99.691,True,True
-rover,61022,-79.5,2.5,Newton,153.5,Newton,153.464,True,True
-rover,61034,-79.5,14.5,Schomberger,107.4,Schomberger,107.418,True,True
-rover,61048,-79.5,28.5,Schomberger,89.9,Schomberger,89.929,True,True
-rover,61050,-79.5,30.5,Schomberger,94,Schomberger,93.976,True,True
-rover,61066,-79.5,46.5,Demonax,86.8,Demonax,86.784,True,True
-rover,61761,-81.5,21.5,Mons Mouton,99.9,Mons Mouton,99.944,True,True
-rover,61801,-81.5,61.5,von Baeyer,9.3,von Baeyer,9.283,True,True
-rover,62369,-83.5,-90.5,Ibn Bajja,93.8,Ibn Bajja,93.751,True,True
-rover,62848,-84.5,28.5,Mons Mouton,7.8,Mons Mouton,7.812,True,True
-rover,63178,-85.5,-1.5,Lhamu,12.7,Lhamu,12.739,True,True
-rover,63229,-85.5,49.5,Nobile,11.4,Nobile,11.446,True,True
-rover,63528,-86.5,-11.5,Mons Malapert,25.1,Mons Malapert,25.059,True,True
-rover,63690,-86.5,150.5,Haynes,70.7,Haynes,70.724,True,True
-rover,64044,-87.5,144.5,Slater,41.8,Slater,41.837,True,True
-rover,64394,-88.5,134.5,Slater,24.3,Slater,24.323,True,True
-rover,64445,-89.5,-174.5,Shackleton,12.6,Shackleton,12.614,True,True
-rover,64470,-89.5,-149.5,Spudis,16.1,Spudis,16.107,True,True
-rover,64648,-89.5,28.5,Shackleton,19.7,Shackleton,19.732,True,True
-rover,59516,-75.5,-63.5,Le Gentil,105.5,Le Gentil,105.489,True,True
-rover,59536,-75.5,-43.5,Casatus,135.4,Casatus,135.371,True,True
-rover,59589,-75.5,9.5,Simpelius,97.8,Simpelius,97.762,True,True
-rover,59595,-75.5,15.5,Schomberger,75.4,Schomberger,75.358,True,True
-rover,59598,-75.5,18.5,Schomberger,56.8,Schomberger,56.84,True,True
-rover,59623,-75.5,43.5,Boguslawsky,78.8,Boguslawsky,78.83,True,True
-rover,59843,-76.5,-96.5,Boltzmann,68.3,Boltzmann,68.345,True,True
-rover,59851,-76.5,-88.5,Boltzmann,52.8,Boltzmann,52.826,True,True
-rover,59901,-76.5,-38.5,Casatus,130.9,Casatus,130.91,True,True
-rover,59952,-76.5,12.5,Schomberger,85.8,Schomberger,85.812,True,True
-rover,59992,-76.5,52.5,Demonax,66.3,Demonax,66.29,True,True
-rover,60007,-76.5,67.5,Demonax,72.5,Demonax,72.452,True,True
-rover,60031,-76.5,91.5,Hale,72,Hale,72.003,True,True
-rover,60037,-76.5,97.5,Hale,84.5,Hale,84.542,True,True
-rover,60312,-77.5,12.5,Schomberger,86.6,Schomberger,86.558,True,True
-rover,60314,-77.5,14.5,Schomberger,73.8,Schomberger,73.797,True,True
-rover,60337,-77.5,37.5,Schomberger,90.5,Schomberger,90.538,True,True
-rover,60341,-77.5,41.5,Demonax,115.4,Demonax,115.384,True,True
-rover,60348,-77.5,48.5,Demonax,71.7,Demonax,71.719,True,True
-rover,60455,-77.5,155.5,Braude,132.2,Braude,132.23,True,True
-rover,60618,-78.5,-41.5,Mons Cabeus,158.6,Mons Cabeus,158.6,True,True
-rover,60663,-78.5,3.5,Short,143.3,Short,143.322,True,True
-rover,60667,-78.5,7.5,Schomberger,125,Schomberger,124.965,True,True
-rover,60674,-78.5,14.5,Schomberger,87,Schomberger,87.025,True,True
-rover,60677,-78.5,17.5,Schomberger,73.3,Schomberger,73.295,True,True
-rover,60687,-78.5,27.5,Schomberger,59.3,Schomberger,59.313,True,True
-rover,61028,-79.5,8.5,Schomberger,132.7,Schomberger,132.726,True,True
-rover,61040,-79.5,20.5,Schomberger,90.6,Schomberger,90.585,True,True
+rover,61622,-81.5,-117.5,Ashbrook,33.9,Ashbrook,33.921,True,True
+rover,62084,-82.5,-15.5,Mons Cabeus,82.7,Mons Cabeus,82.748,True,True
+rover,64034,-87.5,134.5,Slater,32,Slater,31.984,True,True
+rover,64049,-87.5,149.5,Haynes,41.4,Haynes,41.407,True,True
+rover,64110,-88.5,-149.5,Sverdrup,6.3,Sverdrup,6.336,True,True
+rover,59464,-75.5,-115.5,Zeeman,150.5,Zeeman,150.55,True,True
+rover,59803,-76.5,-136.5,Zeeman,44.7,Zeeman,44.716,True,True
+rover,60061,-76.5,121.5,Schrodinger,101.1,Schrodinger,101.138,True,True
+rover,60069,-76.5,129.5,Schrodinger,59.5,Schrodinger,59.459,True,True
+rover,60281,-77.5,-18.5,Newton,30.6,Newton,30.558,True,True
+rover,60432,-77.5,132.5,Schrodinger,84,Schrodinger,83.973,True,True
+rover,60695,-78.5,35.5,Schomberger,90.1,Schomberger,90.11,True,True
+rover,60783,-78.5,123.5,Ganswindt,76.6,Ganswindt,76.638,True,True
+rover,61132,-79.5,112.5,Ganswindt,7.8,Ganswindt,7.825,True,True
+rover,61840,-81.5,100.5,Idel son,55.2,Idel son,55.229,True,True
+rover,62258,-82.5,158.5,Braude,20.7,Braude,20.677,True,True
+rover,62903,-84.5,83.5,Amundsen,2.2,Amundsen,2.218,True,True
+rover,63096,-85.5,-83.5,Ibn Bajja,30.3,Ibn Bajja,30.273,True,True
+rover,63247,-85.5,67.5,Nobile,35.3,Nobile,35.259,True,True
+rover,63317,-85.5,137.5,Wiechert,86.2,Wiechert,86.165,True,True
+rover,63764,-87.5,-135.5,Sverdrup,31.5,Sverdrup,31.506,True,True
+rover,63820,-87.5,-79.5,Lacus Tenebrarum,27,Lacus Tenebrarum,26.968,True,True
+rover,63833,-87.5,-66.5,Cartwright,25.4,Cartwright,25.361,True,True
+rover,64359,-88.5,99.5,Slater,16.6,Slater,16.569,True,True
+rover,59627,-75.5,47.5,Boguslawsky,86.2,Boguslawsky,86.189,True,True
+rover,60088,-76.5,148.5,Schrodinger,128.5,Schrodinger,128.478,True,True
+rover,60240,-77.5,-59.5,Le Gentil,155.6,Le Gentil,155.573,True,True
+rover,60442,-77.5,142.5,Schrodinger,108.8,Schrodinger,108.802,True,True
+rover,60487,-78.5,-172.5,De Forest,75.7,De Forest,75.669,True,True
+rover,60792,-78.5,132.5,Nefed ev,79.9,Nefed ev,79.918,True,True
+rover,60801,-78.5,141.5,Nefed ev,83.8,Nefed ev,83.756,True,True
+rover,60924,-79.5,-95.5,Drygalski,45.8,Drygalski,45.848,True,True
+rover,60980,-79.5,-39.5,Mons Cabeus,127.3,Mons Cabeus,127.261,True,True
+rover,61216,-80.5,-163.5,Laveran,43,Laveran,43.014,True,True
+rover,61334,-80.5,-45.5,Mons Cabeus,103.4,Mons Cabeus,103.428,True,True
+rover,61475,-80.5,95.5,Hedervari,60.1,Hedervari,60.092,True,True
+rover,62456,-83.5,-3.5,Whitaker,37.8,Whitaker,37.794,True,True
+rover,62571,-83.5,111.5,Idel son,65.4,Idel son,65.433,True,True
+rover,63924,-87.5,24.5,Shoemaker,31,Shoemaker,31.048,True,True
+rover,64047,-87.5,147.5,Haynes,42.2,Haynes,42.183,True,True
+rover,59659,-75.5,79.5,Hale,105.3,Hale,105.335,True,True
+rover,59804,-76.5,-135.5,Zeeman,43.5,Zeeman,43.539,True,True
+rover,59964,-76.5,24.5,Schomberger,4.4,Schomberger,4.431,True,True
+rover,60072,-76.5,132.5,Schrodinger,53.7,Schrodinger,53.689,True,True
+rover,60510,-78.5,-149.5,De Forest,100.7,De Forest,100.719,True,True
+rover,60780,-78.5,120.5,Ganswindt,60.8,Ganswindt,60.807,True,True
+rover,60940,-79.5,-79.5,Drygalski,42.3,Drygalski,42.304,True,True
+rover,60987,-79.5,-32.5,Mons Cabeus,127.4,Mons Cabeus,127.424,True,True
 rover,61041,-79.5,21.5,Schomberger,89,Schomberger,88.993,True,True
-rover,61071,-79.5,51.5,Demonax,63,Demonax,62.999,True,True
-rover,61373,-80.5,-6.5,Whitaker,129.3,Whitaker,129.297,True,True
-rover,61409,-80.5,29.5,Scott,102,Scott,101.96,True,True
-rover,61749,-81.5,9.5,Whitaker,101.1,Whitaker,101.087,True,True
-rover,61766,-81.5,26.5,Mons Mouton,95.4,Mons Mouton,95.37,True,True
-rover,61800,-81.5,60.5,von Baeyer,11,von Baeyer,10.957,True,True
-rover,61812,-81.5,72.5,Svedberg,33,Svedberg,33.027,True,True
-rover,61817,-81.5,77.5,Mons Amundsen,33.3,Mons Amundsen,33.302,True,True
-rover,62005,-82.5,-94.5,Ashbrook,81,Ashbrook,80.974,True,True
-rover,62007,-82.5,-92.5,Ashbrook,88.4,Ashbrook,88.352,True,True
-rover,62126,-82.5,26.5,Mons Mouton,65.4,Mons Mouton,65.45,True,True
+rover,61292,-80.5,-87.5,Drygalski,28.1,Drygalski,28.136,True,True
+rover,61335,-80.5,-44.5,Mons Cabeus,102,Mons Cabeus,101.992,True,True
+rover,61616,-81.5,-123.5,Ashbrook,60.3,Ashbrook,60.336,True,True
+rover,61952,-82.5,-147.5,Laveran,55,Laveran,55.007,True,True
+rover,62219,-82.5,119.5,Idel son,45.3,Idel son,45.345,True,True
+rover,62309,-83.5,-150.5,Kuhn,30.4,Kuhn,30.428,True,True
+rover,62809,-84.5,-10.5,Whitaker,32.4,Whitaker,32.38,True,True
+rover,63091,-85.5,-88.5,Lacus Tenebrarum,36.7,Lacus Tenebrarum,36.73,True,True
+rover,63144,-85.5,-35.5,Cabeus,16.9,Cabeus,16.869,True,True
+rover,63458,-86.5,-81.5,Lacus Tenebrarum,12.8,Lacus Tenebrarum,12.77,True,True
+rover,63757,-87.5,-142.5,Sverdrup,27.5,Sverdrup,27.541,True,True
+rover,63760,-87.5,-139.5,Sverdrup,29.1,Sverdrup,29.072,True,True
+rover,63897,-87.5,-2.5,Haworth,3.9,Haworth,3.875,True,True
+rover,64591,-89.5,-28.5,Spudis,14.1,Spudis,14.121,True,True
+rover,64605,-89.5,-14.5,Spudis,17.2,Spudis,17.244,True,True
+rover,59444,-75.5,-135.5,Zeeman,13.5,Zeeman,13.523,True,True
+rover,59753,-75.5,173.5,Brashear,134.2,Brashear,134.196,True,True
+rover,59799,-76.5,-140.5,Zeeman,59.3,Zeeman,59.33,True,True
+rover,59802,-76.5,-137.5,Zeeman,47.1,Zeeman,47.053,True,True
+rover,59844,-76.5,-95.5,Boltzmann,63.6,Boltzmann,63.587,True,True
+rover,60081,-76.5,141.5,Schrodinger,83.8,Schrodinger,83.795,True,True
+rover,60145,-77.5,-154.5,De Forest,61.6,De Forest,61.616,True,True
+rover,60192,-77.5,-107.5,Ashbrook,110.6,Ashbrook,110.618,True,True
+rover,60314,-77.5,14.5,Schomberger,73.8,Schomberger,73.797,True,True
+rover,60453,-77.5,153.5,Braude,134.1,Braude,134.093,True,True
+rover,60850,-79.5,-169.5,Laveran,84.3,Laveran,84.328,True,True
+rover,60854,-79.5,-165.5,Laveran,75.1,Laveran,75.1,True,True
+rover,60883,-79.5,-136.5,Laveran,132.8,Laveran,132.85,True,True
+rover,61267,-80.5,-112.5,Ashbrook,20.6,Ashbrook,20.561,True,True
+rover,61575,-81.5,-164.5,Laveran,22.7,Laveran,22.651,True,True
+rover,61757,-81.5,17.5,Mons Mouton,105.6,Mons Mouton,105.632,True,True
+rover,61941,-82.5,-158.5,Laveran,21.9,Laveran,21.914,True,True
+rover,62045,-82.5,-54.5,Mons Cabeus,75.3,Mons Cabeus,75.317,True,True
+rover,62225,-82.5,125.5,Nefed ev,61.9,Nefed ev,61.934,True,True
+rover,62659,-84.5,-160.5,Kuhn,23.3,Kuhn,23.341,True,True
+rover,62724,-84.5,-95.5,Mons Kocher,66,Mons Kocher,65.975,True,True
+rover,62917,-84.5,97.5,Amundsen,42.1,Amundsen,42.099,True,True
+rover,62958,-84.5,138.5,Wiechert,79.9,Wiechert,79.884,True,True
+rover,63098,-85.5,-81.5,Ibn Bajja,27.9,Ibn Bajja,27.887,True,True
+rover,63139,-85.5,-40.5,Cabeus,6.5,Cabeus,6.491,True,True
+rover,63303,-85.5,123.5,Slater,80.5,Slater,80.475,True,True
+rover,63440,-86.5,-99.5,Lacus Tenebrarum,22.1,Lacus Tenebrarum,22.132,True,True
+rover,63445,-86.5,-94.5,Lacus Tenebrarum,13.8,Lacus Tenebrarum,13.808,True,True
+rover,63758,-87.5,-141.5,Sverdrup,28,Sverdrup,28.02,True,True
+rover,63759,-87.5,-140.5,Sverdrup,28.5,Sverdrup,28.531,True,True
+rover,63785,-87.5,-114.5,Brill,32.8,Brill,32.829,True,True
+rover,63919,-87.5,19.5,Haworth,32.7,Haworth,32.737,True,True
+rover,63921,-87.5,21.5,Shoemaker,33.7,Shoemaker,33.741,True,True
+rover,63999,-87.5,99.5,Slater,22.2,Slater,22.24,True,True
+rover,64036,-87.5,136.5,Slater,33.9,Slater,33.902,True,True
+rover,59429,-75.5,-150.5,De Forest,102.1,De Forest,102.143,True,True
+rover,59460,-75.5,-119.5,Zeeman,120.2,Zeeman,120.226,True,True
+rover,59715,-75.5,135.5,Schrodinger,30.7,Schrodinger,30.714,True,True
+rover,59811,-76.5,-128.5,Zeeman,65.3,Zeeman,65.299,True,True
+rover,59885,-76.5,-54.5,Le Gentil,176.7,Le Gentil,176.666,True,True
+rover,59896,-76.5,-43.5,Casatus,153.8,Casatus,153.797,True,True
+rover,60017,-76.5,77.5,Demonax,129.6,Demonax,129.574,True,True
+rover,60077,-76.5,137.5,Schrodinger,63.7,Schrodinger,63.678,True,True
+rover,60130,-77.5,-169.5,De Forest,44.7,De Forest,44.745,True,True
+rover,60151,-77.5,-148.5,De Forest,100.7,De Forest,100.692,True,True
+rover,60325,-77.5,25.5,Schomberger,26.7,Schomberger,26.672,True,True
+rover,60433,-77.5,133.5,Schrodinger,84,Schrodinger,84.02,True,True
+rover,60486,-78.5,-173.5,De Forest,80.8,De Forest,80.767,True,True
+rover,60666,-78.5,6.5,Schomberger,130.7,Schomberger,130.739,True,True
+rover,60698,-78.5,38.5,Schomberger,106,Schomberger,105.952,True,True
+rover,60798,-78.5,138.5,Nefed ev,79.3,Nefed ev,79.334,True,True
+rover,60929,-79.5,-90.5,Drygalski,18.4,Drygalski,18.433,True,True
+rover,60935,-79.5,-84.5,Drygalski,14.9,Drygalski,14.909,True,True
+rover,60942,-79.5,-77.5,Drygalski,53.3,Drygalski,53.275,True,True
+rover,60963,-79.5,-56.5,Mons Cabeus,153.5,Mons Cabeus,153.496,True,True
+rover,60979,-79.5,-40.5,Mons Cabeus,127.8,Mons Cabeus,127.818,True,True
+rover,61206,-80.5,-173.5,Laveran,74.9,Laveran,74.869,True,True
+rover,61332,-80.5,-47.5,Mons Cabeus,106.7,Mons Cabeus,106.705,True,True
+rover,61338,-80.5,-41.5,Mons Cabeus,98.6,Mons Cabeus,98.575,True,True
+rover,61578,-81.5,-161.5,Laveran,11.8,Laveran,11.8,True,True
+rover,61608,-81.5,-131.5,Kocher,90.4,Kocher,90.435,True,True
+rover,61651,-81.5,-88.5,Drygalski,58.8,Drygalski,58.776,True,True
+rover,61654,-81.5,-85.5,Drygalski,59,Drygalski,58.998,True,True
+rover,61704,-81.5,-35.5,Mons Cabeus,65.9,Mons Cabeus,65.851,True,True
+rover,61723,-81.5,-16.5,Mons Cabeus,100.3,Mons Cabeus,100.337,True,True
+rover,61933,-82.5,-166.5,Laveran,35,Laveran,34.976,True,True
+rover,61934,-82.5,-165.5,Laveran,31.8,Laveran,31.794,True,True
+rover,62165,-82.5,65.5,Svedberg,24.9,Svedberg,24.89,True,True
+rover,62217,-82.5,117.5,Idel son,40.5,Idel son,40.467,True,True
+rover,62455,-83.5,-4.5,Whitaker,39,Whitaker,38.974,True,True
+rover,62949,-84.5,129.5,Wiechert,105.8,Wiechert,105.843,True,True
+rover,63242,-85.5,62.5,Nobile,23.5,Nobile,23.481,True,True
+rover,63436,-86.5,-103.5,Lacus Tenebrarum,29,Lacus Tenebrarum,29.03,True,True
+rover,63444,-86.5,-95.5,Lacus Tenebrarum,15.4,Lacus Tenebrarum,15.419,True,True
+rover,63447,-86.5,-92.5,Lacus Tenebrarum,10.8,Lacus Tenebrarum,10.755,True,True
+rover,63719,-86.5,179.5,Sverdrup,65.1,Sverdrup,65.082,True,True
+rover,63761,-87.5,-138.5,Sverdrup,29.6,Sverdrup,29.642,True,True
+rover,63766,-87.5,-133.5,Henson,32.6,Henson,32.573,True,True
+rover,63780,-87.5,-119.5,Henson,34.3,Henson,34.298,True,True
+rover,63827,-87.5,-72.5,Brill,32.7,Brill,32.692,True,True
+rover,63923,-87.5,23.5,Shoemaker,31.9,Shoemaker,31.933,True,True
+rover,63987,-87.5,87.5,Faustini,10.6,Faustini,10.599,True,True
+rover,64228,-88.5,-31.5,Bay,8.8,Bay,8.778,True,True
+rover,64305,-88.5,45.5,Shoemaker,11,Shoemaker,11.013,True,True
+rover,64315,-88.5,55.5,Shoemaker,13.9,Shoemaker,13.89,True,True
+rover,64346,-88.5,86.5,Slater,25.5,Slater,25.512,True,True
+rover,59424,-75.5,-155.5,De Forest,71.3,De Forest,71.302,True,True
+rover,59445,-75.5,-134.5,Zeeman,13.8,Zeeman,13.789,True,True
+rover,59662,-75.5,82.5,Hale,84.1,Hale,84.082,True,True
+rover,59697,-75.5,117.5,Rittenhouse,90.7,Rittenhouse,90.703,True,True
+rover,59720,-75.5,140.5,Schrodinger,63.4,Schrodinger,63.367,True,True
+rover,59744,-75.5,164.5,Braude,194.3,Braude,194.33,True,True
+rover,59805,-76.5,-134.5,Zeeman,43.6,Zeeman,43.617,True,True
+rover,59901,-76.5,-38.5,Casatus,130.9,Casatus,130.91,True,True
+rover,59916,-76.5,-23.5,Newton,42.8,Newton,42.841,True,True
+rover,60155,-77.5,-144.5,Zeeman,100,Zeeman,99.989,True,True
+rover,60409,-77.5,109.5,Ganswindt,59,Ganswindt,58.953,True,True
+rover,60574,-78.5,-85.5,Drygalski,34,Drygalski,33.964,True,True
+rover,60631,-78.5,-28.5,Newton,93.9,Newton,93.88,True,True
+rover,60640,-78.5,-19.5,Newton,61.5,Newton,61.509,True,True
+rover,60663,-78.5,3.5,Short,143.3,Short,143.322,True,True
+rover,60978,-79.5,-41.5,Mons Cabeus,128.5,Mons Cabeus,128.515,True,True
+rover,61040,-79.5,20.5,Schomberger,90.6,Schomberger,90.585,True,True
+rover,61219,-80.5,-160.5,Laveran,39.5,Laveran,39.528,True,True
+rover,61247,-80.5,-132.5,Ashbrook,107.2,Ashbrook,107.162,True,True
+rover,61291,-80.5,-88.5,Drygalski,28.9,Drygalski,28.929,True,True
+rover,61329,-80.5,-50.5,Mons Cabeus,112.5,Mons Cabeus,112.539,True,True
+rover,61349,-80.5,-30.5,Mons Cabeus,98.9,Mons Cabeus,98.873,True,True
+rover,61576,-81.5,-163.5,Laveran,18.7,Laveran,18.702,True,True
+rover,61618,-81.5,-121.5,Ashbrook,51.4,Ashbrook,51.43,True,True
+rover,61632,-81.5,-107.5,Ashbrook,18.5,Ashbrook,18.511,True,True
+rover,61722,-81.5,-17.5,Mons Cabeus,97.5,Mons Cabeus,97.486,True,True
+rover,61907,-81.5,167.5,Braude,39.1,Braude,39.095,True,True
+rover,61954,-82.5,-145.5,Laveran,62.7,Laveran,62.67,True,True
+rover,61981,-82.5,-118.5,Ashbrook,54.4,Ashbrook,54.361,True,True
+rover,61984,-82.5,-115.5,Ashbrook,47.3,Ashbrook,47.34,True,True
+rover,62077,-82.5,-22.5,Mons Cabeus,61,Mons Cabeus,60.963,True,True
+rover,62085,-82.5,-14.5,Whitaker,83,Whitaker,82.994,True,True
+rover,62240,-82.5,140.5,Nefed ev,47.9,Nefed ev,47.869,True,True
+rover,62299,-83.5,-160.5,Kuhn,39.1,Kuhn,39.113,True,True
+rover,62304,-83.5,-155.5,Kuhn,31.3,Kuhn,31.275,True,True
+rover,62401,-83.5,-58.5,Cabeus,73,Cabeus,73.045,True,True
 rover,62412,-83.5,-47.5,Mons Cabeus,38.7,Mons Cabeus,38.7,True,True
-rover,62477,-83.5,17.5,Malapert,49,Malapert,49.044,True,True
-rover,62497,-83.5,37.5,Floss,28.2,Floss,28.202,True,True
-rover,62513,-83.5,53.5,Wapowski,12.8,Wapowski,12.846,True,True
-rover,62514,-83.5,54.5,Wapowski,13.1,Wapowski,13.051,True,True
-rover,62701,-84.5,-118.5,Mons Kocher,29.1,Mons Kocher,29.134,True,True
-rover,63179,-85.5,-0.5,Lhamu,13,Lhamu,12.986,True,True
-rover,63524,-86.5,-15.5,Mons Malapert,31.6,Mons Malapert,31.587,True,True
-rover,63601,-86.5,61.5,Burbidge,24.8,Burbidge,24.756,True,True
-rover,64008,-87.5,108.5,Slater,17.9,Slater,17.858,True,True
-rover,64026,-87.5,126.5,Slater,24.9,Slater,24.854,True,True
-rover,64054,-87.5,154.5,Haynes,39.8,Haynes,39.768,True,True
-rover,64089,-88.5,-170.5,Sverdrup,15.3,Sverdrup,15.313,True,True
-rover,64275,-88.5,15.5,Shoemaker,28.8,Shoemaker,28.776,True,True
-rover,64337,-88.5,77.5,Tooley,27.4,Tooley,27.377,True,True
-rover,64417,-88.5,157.5,Haynes,10.4,Haynes,10.426,True,True
-rover,64426,-88.5,166.5,Haynes,7.6,Haynes,7.608,True,True
-rover,64432,-88.5,172.5,Haynes,8.4,Haynes,8.436,True,True
-rover,64447,-89.5,-172.5,Shackleton,13,Shackleton,12.96,True,True
-rover,64627,-89.5,7.5,Spudis,21.6,Spudis,21.616,True,True
+rover,62465,-83.5,5.5,Whitaker,38.5,Whitaker,38.501,True,True
+rover,62591,-83.5,131.5,Nefed ev,75.6,Nefed ev,75.604,True,True
+rover,62742,-84.5,-77.5,Ibn Bajja,54.8,Ibn Bajja,54.789,True,True
+rover,62795,-84.5,-24.5,Mons Cabeus,44.2,Mons Cabeus,44.159,True,True
+rover,62899,-84.5,79.5,Amundsen,10.6,Amundsen,10.586,True,True
+rover,62944,-84.5,124.5,Idel son,104.8,Idel son,104.781,True,True
+rover,63127,-85.5,-52.5,Cabeus,25.6,Cabeus,25.613,True,True
+rover,63137,-85.5,-42.5,Cabeus,5.2,Cabeus,5.222,True,True
+rover,63295,-85.5,115.5,Faustini,77.3,Faustini,77.269,True,True
+rover,63611,-86.5,71.5,Malinkin,23.1,Malinkin,23.075,True,True
+rover,63763,-87.5,-136.5,Sverdrup,30.9,Sverdrup,30.861,True,True
+rover,63821,-87.5,-78.5,Lacus Tenebrarum,27.7,Lacus Tenebrarum,27.695,True,True
+rover,63831,-87.5,-68.5,Cartwright,27.8,Cartwright,27.848,True,True
+rover,64043,-87.5,143.5,Slater,40.8,Slater,40.83,True,True
+rover,64046,-87.5,146.5,Haynes,42.6,Haynes,42.595,True,True
+rover,64048,-87.5,148.5,Haynes,41.8,Haynes,41.787,True,True
+rover,64116,-88.5,-143.5,Sverdrup,9.9,Sverdrup,9.913,True,True
+rover,64117,-88.5,-142.5,Henson,9.4,Henson,9.425,True,True
+rover,64219,-88.5,-40.5,Bay,8.3,Bay,8.312,True,True
+rover,64302,-88.5,42.5,Shoemaker,11.4,Shoemaker,11.413,True,True
+rover,64357,-88.5,97.5,Slater,17.8,Slater,17.761,True,True
+rover,64424,-88.5,164.5,Haynes,7.9,Haynes,7.865,True,True
+rover,64430,-88.5,170.5,Haynes,7.9,Haynes,7.909,True,True
+rover,64446,-89.5,-173.5,Shackleton,12.8,Shackleton,12.787,True,True
+rover,64606,-89.5,-13.5,Spudis,17.5,Spudis,17.458,True,True
+rover,59413,-75.5,-166.5,De Forest,49.2,De Forest,49.162,True,True
+rover,59503,-75.5,-76.5,Le Gentil,37.4,Le Gentil,37.372,True,True
+rover,59749,-75.5,169.5,Brashear,163.5,Brashear,163.477,True,True
+rover,59907,-76.5,-32.5,Newton,106.2,Newton,106.229,True,True
+rover,60237,-77.5,-62.5,Le Gentil,139.3,Le Gentil,139.255,True,True
+rover,60238,-77.5,-61.5,Le Gentil,144.5,Le Gentil,144.538,True,True
+rover,60430,-77.5,130.5,Schrodinger,85.7,Schrodinger,85.734,True,True
+rover,60507,-78.5,-152.5,De Forest,84.3,De Forest,84.264,True,True
+rover,60557,-78.5,-102.5,Ashbrook,89.9,Ashbrook,89.903,True,True
+rover,60579,-78.5,-80.5,Drygalski,50.4,Drygalski,50.376,True,True
+rover,60604,-78.5,-55.5,Mons Cabeus,179.1,Mons Cabeus,179.102,True,True
+rover,60639,-78.5,-20.5,Newton,63.3,Newton,63.262,True,True
+rover,60653,-78.5,-6.5,Newton,93.3,Newton,93.295,True,True
+rover,60719,-78.5,59.5,Demonax,12.6,Demonax,12.573,True,True
+rover,60794,-78.5,134.5,Nefed ev,78.3,Nefed ev,78.283,True,True
+rover,60797,-78.5,137.5,Nefed ev,78.5,Nefed ev,78.531,True,True
+rover,60836,-78.5,176.5,Braude,134.8,Braude,134.819,True,True
+rover,60849,-79.5,-170.5,Laveran,87.2,Laveran,87.162,True,True
+rover,60964,-79.5,-55.5,Mons Cabeus,151.1,Mons Cabeus,151.134,True,True
+rover,61236,-80.5,-143.5,Laveran,85.2,Laveran,85.175,True,True
+rover,61249,-80.5,-130.5,Ashbrook,97.8,Ashbrook,97.784,True,True
+rover,61261,-80.5,-118.5,Ashbrook,42.5,Ashbrook,42.514,True,True
+rover,61373,-80.5,-6.5,Whitaker,129.3,Whitaker,129.297,True,True
+rover,61398,-80.5,18.5,Schomberger,122.7,Schomberger,122.678,True,True
+rover,61607,-81.5,-132.5,Kocher,90.1,Kocher,90.142,True,True
+rover,61657,-81.5,-82.5,Drygalski,62.8,Drygalski,62.844,True,True
+rover,61761,-81.5,21.5,Mons Mouton,99.9,Mons Mouton,99.944,True,True
+rover,61830,-81.5,90.5,Hedervari,23.1,Hedervari,23.122,True,True
+rover,61874,-81.5,134.5,Nefed ev,14.2,Nefed ev,14.236,True,True
+rover,62018,-82.5,-81.5,Drygalski,92.6,Drygalski,92.591,True,True
+rover,62044,-82.5,-55.5,Mons Cabeus,78.5,Mons Cabeus,78.501,True,True
+rover,62078,-82.5,-21.5,Mons Cabeus,63.9,Mons Cabeus,63.934,True,True
+rover,62103,-82.5,3.5,Whitaker,66.5,Whitaker,66.467,True,True
+rover,62166,-82.5,66.5,Svedberg,25.5,Svedberg,25.475,True,True
+rover,62264,-82.5,164.5,Braude,31,Braude,31.048,True,True
+rover,62310,-83.5,-149.5,Kuhn,31.2,Kuhn,31.232,True,True
+rover,62577,-83.5,117.5,Idel son,68,Idel son,67.976,True,True
+rover,62579,-83.5,119.5,Idel son,70.6,Idel son,70.596,True,True
+rover,62581,-83.5,121.5,Idel son,74,Idel son,73.969,True,True
+rover,62632,-83.5,172.5,Wiechert,30.3,Wiechert,30.311,True,True
+rover,62769,-84.5,-50.5,Cabeus,33.7,Cabeus,33.695,True,True
+rover,62858,-84.5,38.5,Floss,13,Floss,13.012,True,True
+rover,62859,-84.5,39.5,Floss,10.6,Floss,10.578,True,True
+rover,62927,-84.5,107.5,Amundsen,70.9,Amundsen,70.88,True,True
+rover,62964,-84.5,144.5,Wiechert,62.5,Wiechert,62.454,True,True
+rover,63082,-85.5,-97.5,Lacus Tenebrarum,41.8,Lacus Tenebrarum,41.778,True,True
+rover,63111,-85.5,-68.5,Ibn Bajja,28,Ibn Bajja,27.966,True,True
+rover,63314,-85.5,134.5,Slater,86,Slater,86.037,True,True
+rover,63318,-85.5,138.5,Wiechert,83.9,Wiechert,83.893,True,True
+rover,63372,-86.5,-167.5,Sverdrup,58.1,Sverdrup,58.093,True,True
+rover,63442,-86.5,-97.5,Lacus Tenebrarum,18.7,Lacus Tenebrarum,18.737,True,True
+rover,63691,-86.5,151.5,Haynes,70.4,Haynes,70.444,True,True
+rover,63716,-86.5,176.5,Sverdrup,67.1,Sverdrup,67.131,True,True
+rover,63755,-87.5,-144.5,Sverdrup,26.7,Sverdrup,26.689,True,True
+rover,63826,-87.5,-73.5,Brill,31.9,Brill,31.943,True,True
+rover,63842,-87.5,-57.5,Cartwright,14.3,Cartwright,14.256,True,True
+rover,63922,-87.5,22.5,Shoemaker,32.8,Shoemaker,32.831,True,True
+rover,63983,-87.5,83.5,Faustini,9.7,Faustini,9.673,True,True
+rover,64084,-88.5,-175.5,Haynes,14.5,Haynes,14.493,True,True
+rover,64112,-88.5,-147.5,Sverdrup,7.3,Sverdrup,7.343,True,True
+rover,64234,-88.5,-25.5,Bay,11.4,Bay,11.36,True,True
+rover,64298,-88.5,38.5,Shoemaker,12.8,Shoemaker,12.809,True,True
+rover,64568,-89.5,-51.5,Spudis,8.6,Spudis,8.559,True,True
 rover,64628,-89.5,8.5,Spudis,21.8,Spudis,21.797,True,True
-rover,64650,-89.5,30.5,Shackleton,19.5,Shackleton,19.466,True,True
-rover,64655,-89.5,35.5,Shackleton,18.8,Shackleton,18.779,True,True
-rover,64657,-89.5,37.5,Shackleton,18.5,Shackleton,18.495,True,True
-rover,59524,-75.5,-55.5,Le Gentil,165.5,Le Gentil,165.523,True,True
-rover,59531,-75.5,-48.5,Casatus,169.3,Casatus,169.284,True,True
-rover,59538,-75.5,-41.5,Casatus,123,Casatus,122.988,True,True
-rover,59559,-75.5,-20.5,Newton,38.2,Newton,38.209,True,True
-rover,59567,-75.5,-12.5,Newton,47.6,Newton,47.619,True,True
-rover,59583,-75.5,3.5,Short,92.2,Short,92.239,True,True
-rover,59594,-75.5,14.5,Schomberger,81.9,Schomberger,81.887,True,True
-rover,59596,-75.5,16.5,Schomberger,69,Schomberger,68.974,True,True
-rover,59609,-75.5,29.5,Schomberger,49.2,Schomberger,49.224,True,True
-rover,59611,-75.5,31.5,Schomberger,60.5,Schomberger,60.474,True,True
-rover,59667,-75.5,87.5,Hale,53.4,Hale,53.411,True,True
-rover,59684,-75.5,104.5,Rittenhouse,43,Rittenhouse,43.042,True,True
-rover,59836,-76.5,-103.5,Boltzmann,110.4,Boltzmann,110.373,True,True
-rover,59852,-76.5,-87.5,Boltzmann,55.3,Boltzmann,55.327,True,True
-rover,59883,-76.5,-56.5,Le Gentil,162.9,Le Gentil,162.88,True,True
-rover,59931,-76.5,-8.5,Short,59.8,Short,59.844,True,True
-rover,59955,-76.5,15.5,Schomberger,64.8,Schomberger,64.805,True,True
-rover,60094,-76.5,154.5,Braude,163.1,Braude,163.131,True,True
-rover,60200,-77.5,-99.5,Drygalski,97,Drygalski,96.978,True,True
-rover,60260,-77.5,-39.5,Newton,152.3,Newton,152.288,True,True
-rover,60261,-77.5,-38.5,Newton,145.7,Newton,145.726,True,True
-rover,60298,-77.5,-1.5,Short,100.5,Short,100.503,True,True
-rover,60299,-77.5,-0.5,Short,104,Short,103.966,True,True
-rover,60302,-77.5,2.5,Short,116.5,Short,116.467,True,True
-rover,60306,-77.5,6.5,Schomberger,125.6,Schomberger,125.617,True,True
-rover,60308,-77.5,8.5,Schomberger,112.5,Schomberger,112.526,True,True
-rover,60309,-77.5,9.5,Schomberger,106,Schomberger,105.999,True,True
-rover,60346,-77.5,46.5,Demonax,84.1,Demonax,84.134,True,True
-rover,60351,-77.5,51.5,Demonax,53.4,Demonax,53.362,True,True
-rover,60386,-77.5,86.5,Hale,109.3,Hale,109.297,True,True
-rover,60454,-77.5,154.5,Braude,133.1,Braude,133.058,True,True
-rover,60558,-78.5,-101.5,Drygalski,88.5,Drygalski,88.501,True,True
-rover,60588,-78.5,-71.5,Drygalski,95.7,Drygalski,95.735,True,True
-rover,60665,-78.5,5.5,Schomberger,136.6,Schomberger,136.565,True,True
-rover,60673,-78.5,13.5,Schomberger,92.1,Schomberger,92.056,True,True
-rover,60683,-78.5,23.5,Schomberger,57,Schomberger,56.956,True,True
-rover,60688,-78.5,28.5,Schomberger,61.6,Schomberger,61.63,True,True
-rover,60708,-78.5,48.5,Demonax,67.9,Demonax,67.852,True,True
-rover,60729,-78.5,69.5,Demonax,63.6,Demonax,63.58,True,True
-rover,60756,-78.5,96.5,Ganswindt,89.3,Ganswindt,89.314,True,True
-rover,61007,-79.5,-12.5,Newton,95.5,Newton,95.474,True,True
-rover,61009,-79.5,-10.5,Newton,100.2,Newton,100.212,True,True
-rover,61044,-79.5,24.5,Schomberger,86.8,Schomberger,86.757,True,True
-rover,61310,-80.5,-69.5,Drygalski,96.5,Drygalski,96.464,True,True
-rover,61313,-80.5,-66.5,Drygalski,111.4,Drygalski,111.392,True,True
-rover,61366,-80.5,-13.5,Newton,122.9,Newton,122.923,True,True
-rover,61368,-80.5,-11.5,Newton,125.7,Newton,125.733,True,True
-rover,61380,-80.5,0.5,Whitaker,126.5,Whitaker,126.45,True,True
+rover,64656,-89.5,36.5,Shackleton,18.6,Shackleton,18.638,True,True
+rover,59470,-75.5,-109.5,Boltzmann,149,Boltzmann,149.014,True,True
+rover,59576,-75.5,-3.5,Short,43.9,Short,43.896,True,True
+rover,59663,-75.5,83.5,Hale,77.3,Hale,77.307,True,True
+rover,59738,-75.5,158.5,Braude,191.7,Braude,191.659,True,True
+rover,59752,-75.5,172.5,Brashear,141.4,Brashear,141.419,True,True
+rover,59755,-75.5,175.5,Brashear,120,Brashear,120.028,True,True
+rover,59828,-76.5,-111.5,Ashbrook,139.7,Ashbrook,139.72,True,True
+rover,59869,-76.5,-70.5,Le Gentil,79.6,Le Gentil,79.552,True,True
+rover,59912,-76.5,-27.5,Newton,71.1,Newton,71.066,True,True
+rover,59967,-76.5,27.5,Schomberger,20.2,Schomberger,20.226,True,True
+rover,60052,-76.5,112.5,Rittenhouse,79.9,Rittenhouse,79.887,True,True
+rover,60239,-77.5,-60.5,Le Gentil,150,Le Gentil,149.983,True,True
+rover,60441,-77.5,141.5,Schrodinger,104.4,Schrodinger,104.355,True,True
+rover,60455,-77.5,155.5,Braude,132.2,Braude,132.23,True,True
+rover,60571,-78.5,-88.5,Drygalski,33.4,Drygalski,33.441,True,True
+rover,60834,-78.5,174.5,Braude,128.3,Braude,128.315,True,True
+rover,60871,-79.5,-148.5,Laveran,88.9,Laveran,88.85,True,True
+rover,60877,-79.5,-142.5,Laveran,109.3,Laveran,109.314,True,True
+rover,60892,-79.5,-127.5,Ashbrook,98.7,Ashbrook,98.681,True,True
+rover,60972,-79.5,-47.5,Mons Cabeus,135.5,Mons Cabeus,135.497,True,True
+rover,60991,-79.5,-28.5,Newton,113.7,Newton,113.694,True,True
+rover,61033,-79.5,13.5,Schomberger,111.2,Schomberger,111.186,True,True
+rover,61050,-79.5,30.5,Schomberger,94,Schomberger,93.976,True,True
+rover,61077,-79.5,57.5,Demonax,44.2,Demonax,44.232,True,True
+rover,61079,-79.5,59.5,Demonax,42.9,Demonax,42.874,True,True
+rover,61096,-79.5,76.5,Hedervari,82,Hedervari,82.028,True,True
+rover,61148,-79.5,128.5,Nefed ev,60.4,Nefed ev,60.38,True,True
+rover,61172,-79.5,152.5,Braude,76.9,Braude,76.938,True,True
+rover,61233,-80.5,-146.5,Laveran,73.2,Laveran,73.18,True,True
+rover,61274,-80.5,-105.5,Ashbrook,30.7,Ashbrook,30.657,True,True
+rover,61290,-80.5,-89.5,Drygalski,30.6,Drygalski,30.61,True,True
+rover,61328,-80.5,-51.5,Mons Cabeus,114.7,Mons Cabeus,114.701,True,True
+rover,61347,-80.5,-32.5,Mons Cabeus,97.3,Mons Cabeus,97.284,True,True
 rover,61381,-80.5,1.5,Whitaker,126.5,Whitaker,126.485,True,True
-rover,61382,-80.5,2.5,Whitaker,126.6,Whitaker,126.631,True,True
+rover,61396,-80.5,16.5,Schomberger,126.7,Schomberger,126.716,True,True
+rover,61478,-80.5,98.5,Hedervari,71.3,Hedervari,71.323,True,True
+rover,61623,-81.5,-116.5,Ashbrook,29.7,Ashbrook,29.684,True,True
+rover,61656,-81.5,-83.5,Drygalski,61.2,Drygalski,61.189,True,True
+rover,61674,-81.5,-65.5,Drygalski,121.8,Drygalski,121.809,True,True
+rover,61842,-81.5,102.5,Idel son,46.3,Idel son,46.265,True,True
+rover,61851,-81.5,111.5,Idel son,7.1,Idel son,7.102,True,True
+rover,61855,-81.5,115.5,Idel son,13.5,Idel son,13.501,True,True
+rover,61897,-81.5,157.5,Braude,11.4,Braude,11.448,True,True
+rover,61957,-82.5,-142.5,Kocher,66.2,Kocher,66.242,True,True
+rover,61982,-82.5,-117.5,Ashbrook,51.8,Ashbrook,51.771,True,True
+rover,62033,-82.5,-66.5,Cabeus,114.4,Cabeus,114.384,True,True
+rover,62043,-82.5,-56.5,Mons Cabeus,81.7,Mons Cabeus,81.714,True,True
+rover,62148,-82.5,48.5,Scott,4.5,Scott,4.452,True,True
+rover,62150,-82.5,50.5,Scott,9.1,Scott,9.095,True,True
+rover,62276,-82.5,176.5,Wiechert,62.4,Wiechert,62.394,True,True
+rover,62316,-83.5,-143.5,Kuhn,41.1,Kuhn,41.132,True,True
+rover,62514,-83.5,54.5,Wapowski,13.1,Wapowski,13.051,True,True
+rover,62578,-83.5,118.5,Idel son,69.2,Idel son,69.186,True,True
+rover,62598,-83.5,138.5,Nefed ev,74.4,Nefed ev,74.44,True,True
+rover,62630,-83.5,170.5,Wiechert,25,Wiechert,25.004,True,True
+rover,62660,-84.5,-159.5,Kuhn,20.4,Kuhn,20.437,True,True
+rover,62664,-84.5,-155.5,Kuhn,8.8,Kuhn,8.814,True,True
+rover,62755,-84.5,-64.5,Ibn Bajja,60,Ibn Bajja,59.98,True,True
+rover,62799,-84.5,-20.5,Mons Cabeus,54.8,Mons Cabeus,54.789,True,True
+rover,62805,-84.5,-14.5,Whitaker,43.6,Whitaker,43.642,True,True
+rover,62826,-84.5,6.5,Whitaker,17.4,Whitaker,17.398,True,True
+rover,63003,-85.5,-176.5,Wiechert,67.9,Wiechert,67.859,True,True
+rover,63080,-85.5,-99.5,Lacus Tenebrarum,43.9,Lacus Tenebrarum,43.86,True,True
+rover,63129,-85.5,-50.5,Cabeus,20.9,Cabeus,20.903,True,True
+rover,63248,-85.5,68.5,Nobile,37.6,Nobile,37.634,True,True
+rover,63313,-85.5,133.5,Slater,85.4,Slater,85.413,True,True
+rover,63325,-85.5,145.5,Wiechert,68.7,Wiechert,68.683,True,True
+rover,63361,-86.5,-178.5,Sverdrup,63.8,Sverdrup,63.795,True,True
+rover,63371,-86.5,-168.5,Sverdrup,58.5,Sverdrup,58.501,True,True
+rover,63411,-86.5,-128.5,Mons Kocher,38.4,Mons Kocher,38.439,True,True
+rover,63451,-86.5,-88.5,Lacus Tenebrarum,6.5,Lacus Tenebrarum,6.54,True,True
+rover,63465,-86.5,-74.5,Ibn Bajja,6.3,Ibn Bajja,6.258,True,True
+rover,63612,-86.5,72.5,Malinkin,22.6,Malinkin,22.606,True,True
+rover,63717,-86.5,177.5,Sverdrup,66.4,Sverdrup,66.433,True,True
+rover,63738,-87.5,-161.5,Sverdrup,26.4,Sverdrup,26.398,True,True
+rover,63750,-87.5,-149.5,Sverdrup,25.2,Sverdrup,25.247,True,True
+rover,63752,-87.5,-147.5,Sverdrup,25.7,Sverdrup,25.697,True,True
+rover,63756,-87.5,-143.5,Sverdrup,27.1,Sverdrup,27.097,True,True
+rover,63767,-87.5,-132.5,Henson,32.5,Henson,32.5,True,True
+rover,63769,-87.5,-130.5,Henson,32.4,Henson,32.446,True,True
+rover,63770,-87.5,-129.5,Henson,32.5,Henson,32.466,True,True
+rover,63772,-87.5,-127.5,Henson,32.6,Henson,32.597,True,True
+rover,63779,-87.5,-120.5,Henson,34,Henson,33.988,True,True
+rover,63793,-87.5,-106.5,Brill,27.4,Brill,27.418,True,True
+rover,63829,-87.5,-70.5,Cartwright,30.3,Cartwright,30.332,True,True
+rover,63847,-87.5,-52.5,Cartwright,8.4,Cartwright,8.444,True,True
+rover,63981,-87.5,81.5,Faustini,10.4,Faustini,10.385,True,True
+rover,63982,-87.5,82.5,Faustini,9.9,Faustini,9.937,True,True
+rover,63986,-87.5,86.5,Faustini,10.1,Faustini,10.086,True,True
+rover,64008,-87.5,108.5,Slater,17.9,Slater,17.858,True,True
+rover,64033,-87.5,133.5,Slater,31,Slater,31.04,True,True
+rover,64050,-87.5,150.5,Haynes,41,Haynes,41.043,True,True
+rover,64108,-88.5,-151.5,Sverdrup,5.7,Sverdrup,5.657,True,True
+rover,64109,-88.5,-150.5,Sverdrup,5.9,Sverdrup,5.948,True,True
+rover,64128,-88.5,-131.5,Henson,2.2,Henson,2.227,True,True
+rover,64129,-88.5,-130.5,Henson,2.1,Henson,2.125,True,True
+rover,64142,-88.5,-117.5,Henson,10.4,Henson,10.373,True,True
+rover,64218,-88.5,-41.5,Bay,8.6,Bay,8.568,True,True
+rover,64273,-88.5,13.5,Shoemaker,30.4,Shoemaker,30.356,True,True
+rover,64300,-88.5,40.5,Shoemaker,12,Shoemaker,12.002,True,True
+rover,64301,-88.5,41.5,Shoemaker,11.7,Shoemaker,11.678,True,True
+rover,64304,-88.5,44.5,Shoemaker,11.1,Shoemaker,11.078,True,True
+rover,64309,-88.5,49.5,Shoemaker,11.5,Shoemaker,11.456,True,True
+rover,64370,-88.5,110.5,Slater,12.8,Slater,12.78,True,True
+rover,64433,-88.5,173.5,Haynes,8.8,Haynes,8.778,True,True
+rover,64556,-89.5,-63.5,Spudis,5.5,Spudis,5.507,True,True
+rover,64587,-89.5,-32.5,Spudis,13.2,Spudis,13.189,True,True
+rover,64590,-89.5,-29.5,Spudis,13.9,Spudis,13.89,True,True
+rover,64621,-89.5,1.5,Spudis,20.5,Spudis,20.496,True,True
+rover,64622,-89.5,2.5,Spudis,20.7,Spudis,20.686,True,True
+rover,64649,-89.5,29.5,Shackleton,19.6,Shackleton,19.6,True,True
+rover,64655,-89.5,35.5,Shackleton,18.8,Shackleton,18.779,True,True
+rover,59403,-75.5,-176.5,Brashear,71.6,Brashear,71.614,True,True
+rover,59412,-75.5,-167.5,De Forest,52.9,De Forest,52.899,True,True
+rover,59446,-75.5,-133.5,Zeeman,17.8,Zeeman,17.778,True,True
+rover,59465,-75.5,-114.5,Zeeman,158.1,Zeeman,158.114,True,True
+rover,59473,-75.5,-106.5,Boltzmann,126.2,Boltzmann,126.24,True,True
+rover,59506,-75.5,-73.5,Le Gentil,42.2,Le Gentil,42.172,True,True
+rover,59588,-75.5,8.5,Simpelius,101.7,Simpelius,101.718,True,True
+rover,59598,-75.5,18.5,Schomberger,56.8,Schomberger,56.84,True,True
+rover,59698,-75.5,118.5,Rittenhouse,97.9,Rittenhouse,97.909,True,True
+rover,59703,-75.5,123.5,Schrodinger,76.9,Schrodinger,76.914,True,True
+rover,59704,-75.5,124.5,Schrodinger,69.6,Schrodinger,69.554,True,True
+rover,59723,-75.5,143.5,Schrodinger,85.5,Schrodinger,85.458,True,True
+rover,59739,-75.5,159.5,Braude,191.7,Braude,191.68,True,True
+rover,59745,-75.5,165.5,Brashear,193.5,Brashear,193.451,True,True
+rover,59754,-75.5,174.5,Brashear,127.1,Brashear,127.06,True,True
+rover,59757,-75.5,177.5,Brashear,106.4,Brashear,106.37,True,True
+rover,59770,-76.5,-169.5,De Forest,44.9,De Forest,44.922,True,True
+rover,59818,-76.5,-121.5,Zeeman,109.6,Zeeman,109.606,True,True
+rover,59903,-76.5,-36.5,Casatus,124.2,Casatus,124.159,True,True
+rover,59924,-76.5,-15.5,Newton,13.7,Newton,13.746,True,True
+rover,59952,-76.5,12.5,Schomberger,85.8,Schomberger,85.812,True,True
+rover,59953,-76.5,13.5,Schomberger,78.8,Schomberger,78.813,True,True
+rover,59965,-76.5,25.5,Schomberger,7.1,Schomberger,7.09,True,True
+rover,60029,-76.5,89.5,Hale,74,Hale,73.954,True,True
+rover,60080,-76.5,140.5,Schrodinger,78.2,Schrodinger,78.176,True,True
+rover,60107,-76.5,167.5,Braude,168.2,Braude,168.207,True,True
+rover,60115,-76.5,175.5,Brashear,134.9,Brashear,134.928,True,True
+rover,60126,-77.5,-173.5,De Forest,70.2,De Forest,70.223,True,True
+rover,60233,-77.5,-66.5,Le Gentil,120.2,Le Gentil,120.211,True,True
+rover,60234,-77.5,-65.5,Le Gentil,124.6,Le Gentil,124.607,True,True
+rover,60306,-77.5,6.5,Schomberger,125.6,Schomberger,125.617,True,True
+rover,60310,-77.5,10.5,Schomberger,99.5,Schomberger,99.492,True,True
+rover,60405,-77.5,105.5,Ganswindt,67.4,Ganswindt,67.433,True,True
+rover,60411,-77.5,111.5,Ganswindt,58.1,Ganswindt,58.119,True,True
+rover,60414,-77.5,114.5,Ganswindt,61.5,Ganswindt,61.48,True,True
+rover,60420,-77.5,120.5,Ganswindt,80.9,Ganswindt,80.942,True,True
+rover,60470,-77.5,170.5,Braude,144.8,Braude,144.828,True,True
+rover,60480,-78.5,-179.5,De Forest,114.1,De Forest,114.078,True,True
+rover,60509,-78.5,-150.5,De Forest,95.1,De Forest,95.125,True,True
+rover,60524,-78.5,-135.5,Zeeman,104.1,Zeeman,104.107,True,True
+rover,60592,-78.5,-67.5,Drygalski,117.4,Drygalski,117.408,True,True
+rover,60605,-78.5,-54.5,Mons Cabeus,177,Mons Cabeus,176.998,True,True
+rover,60606,-78.5,-53.5,Mons Cabeus,175,Mons Cabeus,174.979,True,True
+rover,60618,-78.5,-41.5,Mons Cabeus,158.6,Mons Cabeus,158.6,True,True
+rover,60641,-78.5,-18.5,Newton,60.4,Newton,60.417,True,True
+rover,60800,-78.5,140.5,Nefed ev,82,Nefed ev,81.963,True,True
+rover,60802,-78.5,142.5,Nefed ev,85.8,Nefed ev,85.843,True,True
+rover,60819,-78.5,159.5,Braude,100.7,Braude,100.726,True,True
+rover,60822,-78.5,162.5,Braude,102.4,Braude,102.36,True,True
+rover,60838,-78.5,178.5,De Forest,125.8,De Forest,125.773,True,True
+rover,60844,-79.5,-175.5,Laveran,103.6,Laveran,103.581,True,True
+rover,60853,-79.5,-166.5,Laveran,77.1,Laveran,77.05,True,True
+rover,60955,-79.5,-64.5,Drygalski,124.1,Drygalski,124.11,True,True
+rover,60981,-79.5,-38.5,Mons Cabeus,126.8,Mons Cabeus,126.848,True,True
+rover,61051,-79.5,31.5,Schomberger,96.5,Schomberger,96.536,True,True
+rover,61076,-79.5,56.5,Demonax,46,Demonax,46.037,True,True
+rover,61080,-79.5,60.5,Demonax,43.4,Demonax,43.391,True,True
+rover,61149,-79.5,129.5,Nefed ev,57.4,Nefed ev,57.395,True,True
+rover,61182,-79.5,162.5,Braude,72.5,Braude,72.539,True,True
+rover,61183,-79.5,163.5,Braude,73.9,Braude,73.88,True,True
+rover,61196,-79.5,176.5,Braude,110.9,Braude,110.891,True,True
+rover,61208,-80.5,-171.5,Laveran,67.2,Laveran,67.179,True,True
+rover,61215,-80.5,-164.5,Laveran,45.1,Laveran,45.084,True,True
+rover,61221,-80.5,-158.5,Laveran,39.8,Laveran,39.838,True,True
+rover,61230,-80.5,-149.5,Laveran,61.9,Laveran,61.929,True,True
+rover,61277,-80.5,-102.5,Ashbrook,43.2,Ashbrook,43.169,True,True
+rover,61282,-80.5,-97.5,Drygalski,60.9,Drygalski,60.893,True,True
+rover,61284,-80.5,-95.5,Drygalski,51.8,Drygalski,51.847,True,True
 rover,61386,-80.5,6.5,Whitaker,128.3,Whitaker,128.316,True,True
 rover,61401,-80.5,21.5,Schomberger,118.6,Schomberger,118.589,True,True
-rover,61432,-80.5,52.5,von Baeyer,58.8,von Baeyer,58.777,True,True
-rover,61435,-80.5,55.5,von Baeyer,49.4,von Baeyer,49.351,True,True
-rover,61753,-81.5,13.5,Whitaker,106.3,Whitaker,106.322,True,True
-rover,61758,-81.5,18.5,Mons Mouton,104.1,Mons Mouton,104.058,True,True
+rover,61409,-80.5,29.5,Scott,102,Scott,101.96,True,True
+rover,61436,-80.5,56.5,von Baeyer,46.7,von Baeyer,46.708,True,True
+rover,61557,-80.5,177.5,Braude,95,Braude,95.001,True,True
+rover,61562,-81.5,-177.5,Laveran,78.2,Laveran,78.228,True,True
+rover,61569,-81.5,-170.5,Laveran,48,Laveran,47.98,True,True
+rover,61590,-81.5,-149.5,Laveran,46.1,Laveran,46.122,True,True
+rover,61605,-81.5,-134.5,Kocher,90,Kocher,89.989,True,True
+rover,61606,-81.5,-133.5,Kocher,90,Kocher,89.992,True,True
+rover,61641,-81.5,-98.5,Ashbrook,56.5,Ashbrook,56.545,True,True
+rover,61655,-81.5,-84.5,Drygalski,59.9,Drygalski,59.899,True,True
+rover,61658,-81.5,-81.5,Drygalski,64.8,Drygalski,64.837,True,True
+rover,61667,-81.5,-72.5,Drygalski,93.2,Drygalski,93.181,True,True
+rover,61706,-81.5,-33.5,Mons Cabeus,66.6,Mons Cabeus,66.603,True,True
+rover,61717,-81.5,-22.5,Mons Cabeus,84.3,Mons Cabeus,84.342,True,True
+rover,61749,-81.5,9.5,Whitaker,101.1,Whitaker,101.087,True,True
+rover,61750,-81.5,10.5,Whitaker,102.2,Whitaker,102.238,True,True
+rover,61751,-81.5,11.5,Whitaker,103.5,Whitaker,103.498,True,True
+rover,61759,-81.5,19.5,Mons Mouton,102.6,Mons Mouton,102.583,True,True
 rover,61762,-81.5,22.5,Mons Mouton,98.8,Mons Mouton,98.789,True,True
-rover,61767,-81.5,27.5,Scott,92.6,Scott,92.572,True,True
-rover,61768,-81.5,28.5,Scott,88.6,Scott,88.56,True,True
+rover,61766,-81.5,26.5,Mons Mouton,95.4,Mons Mouton,95.37,True,True
 rover,61769,-81.5,29.5,Scott,84.6,Scott,84.559,True,True
-rover,62107,-82.5,7.5,Whitaker,69.6,Whitaker,69.616,True,True
-rover,62118,-82.5,18.5,Mons Mouton,76.2,Mons Mouton,76.245,True,True
-rover,62160,-82.5,60.5,von Baeyer,21.9,von Baeyer,21.936,True,True
-rover,62189,-82.5,89.5,Hedervari,27.4,Hedervari,27.36,True,True
-rover,62193,-82.5,93.5,Hedervari,39.5,Hedervari,39.467,True,True
+rover,61775,-81.5,35.5,Scott,61,Scott,60.994,True,True
+rover,61776,-81.5,36.5,Scott,57.2,Scott,57.193,True,True
+rover,61800,-81.5,60.5,von Baeyer,11,von Baeyer,10.957,True,True
+rover,61802,-81.5,62.5,von Baeyer,9.5,von Baeyer,9.543,True,True
+rover,61809,-81.5,69.5,Svedberg,20,Svedberg,20.046,True,True
+rover,61829,-81.5,89.5,Hedervari,19.1,Hedervari,19.069,True,True
+rover,61850,-81.5,110.5,Idel son,10.9,Idel son,10.941,True,True
+rover,61854,-81.5,114.5,Idel son,9.4,Idel son,9.38,True,True
+rover,61908,-81.5,168.5,Braude,43.4,Braude,43.355,True,True
+rover,61962,-82.5,-137.5,Kocher,60.8,Kocher,60.809,True,True
+rover,61963,-82.5,-136.5,Kocher,60.2,Kocher,60.241,True,True
+rover,61980,-82.5,-119.5,Ashbrook,57.2,Ashbrook,57.156,True,True
+rover,61983,-82.5,-116.5,Ashbrook,49.4,Ashbrook,49.419,True,True
+rover,61992,-82.5,-107.5,Ashbrook,44.3,Ashbrook,44.347,True,True
+rover,61993,-82.5,-106.5,Ashbrook,45.8,Ashbrook,45.818,True,True
+rover,62019,-82.5,-80.5,Drygalski,94,Drygalski,94.027,True,True
+rover,62020,-82.5,-79.5,Drygalski,95.7,Drygalski,95.667,True,True
+rover,62023,-82.5,-76.5,Drygalski,101.7,Drygalski,101.703,True,True
+rover,62046,-82.5,-53.5,Mons Cabeus,72.2,Mons Cabeus,72.166,True,True
+rover,62047,-82.5,-52.5,Mons Cabeus,69.1,Mons Cabeus,69.054,True,True
+rover,62066,-82.5,-33.5,Mons Cabeus,36.8,Mons Cabeus,36.774,True,True
+rover,62125,-82.5,25.5,Mons Mouton,66.3,Mons Mouton,66.306,True,True
+rover,62133,-82.5,33.5,Scott,60,Scott,60.003,True,True
+rover,62145,-82.5,45.5,Scott,12.8,Scott,12.845,True,True
+rover,62146,-82.5,46.5,Scott,9.2,Scott,9.202,True,True
+rover,62149,-82.5,49.5,Scott,5.9,Scott,5.941,True,True
+rover,62188,-82.5,88.5,Hedervari,25.1,Hedervari,25.136,True,True
+rover,62190,-82.5,90.5,Hedervari,30,Hedervari,29.992,True,True
+rover,62202,-82.5,102.5,Idel son,55.6,Idel son,55.608,True,True
+rover,62205,-82.5,105.5,Idel son,46.4,Idel son,46.411,True,True
+rover,62213,-82.5,113.5,Idel son,35.1,Idel son,35.106,True,True
+rover,62237,-82.5,137.5,Nefed ev,43.9,Nefed ev,43.942,True,True
+rover,62257,-82.5,157.5,Braude,21.4,Braude,21.391,True,True
+rover,62322,-83.5,-137.5,Kocher,31.3,Kocher,31.324,True,True
 rover,62383,-83.5,-76.5,Ibn Bajja,84.9,Ibn Bajja,84.881,True,True
-rover,62401,-83.5,-58.5,Cabeus,73,Cabeus,73.045,True,True
-rover,62424,-83.5,-35.5,Mons Cabeus,5.6,Mons Cabeus,5.619,True,True
-rover,62530,-83.5,70.5,Oberbeck,8.2,Oberbeck,8.211,True,True
-rover,62756,-84.5,-63.5,Ibn Bajja,61,Ibn Bajja,61.012,True,True
-rover,63063,-85.5,-116.5,Mons Kocher,3.9,Mons Kocher,3.92,True,True
-rover,63065,-85.5,-114.5,Mons Kocher,8.6,Mons Kocher,8.592,True,True
-rover,63206,-85.5,26.5,Jaci,11.6,Jaci,11.606,True,True
-rover,63517,-86.5,-22.5,Haworth,39.7,Haworth,39.677,True,True
-rover,63526,-86.5,-13.5,Mons Malapert,28.2,Mons Malapert,28.239,True,True
-rover,63631,-86.5,91.5,Faustini,23.9,Faustini,23.909,True,True
-rover,63640,-86.5,100.5,Faustini,33.9,Faustini,33.875,True,True
-rover,63804,-87.5,-95.5,Brill,23.5,Brill,23.462,True,True
-rover,63862,-87.5,-37.5,Cartwright,12.9,Cartwright,12.931,True,True
-rover,64058,-87.5,158.5,Haynes,38.8,Haynes,38.804,True,True
+rover,62397,-83.5,-62.5,Cabeus,81,Cabeus,80.992,True,True
+rover,62409,-83.5,-50.5,Mons Cabeus,48.7,Mons Cabeus,48.728,True,True
+rover,62519,-83.5,59.5,Wapowski,23.9,Wapowski,23.933,True,True
+rover,62701,-84.5,-118.5,Mons Kocher,29.1,Mons Kocher,29.134,True,True
+rover,62737,-84.5,-82.5,Ibn Bajja,57.3,Ibn Bajja,57.307,True,True
+rover,62738,-84.5,-81.5,Ibn Bajja,56.6,Ibn Bajja,56.612,True,True
+rover,62807,-84.5,-12.5,Whitaker,38,Whitaker,38.008,True,True
+rover,62828,-84.5,8.5,Malapert,17.2,Malapert,17.159,True,True
+rover,62906,-84.5,86.5,Amundsen,10.2,Amundsen,10.189,True,True
+rover,62937,-84.5,117.5,Idel son,97.2,Idel son,97.174,True,True
+rover,62941,-84.5,121.5,Idel son,100.8,Idel son,100.813,True,True
+rover,62952,-84.5,132.5,Wiechert,97.2,Wiechert,97.234,True,True
+rover,62965,-84.5,145.5,Wiechert,59.6,Wiechert,59.553,True,True
+rover,63042,-85.5,-137.5,Kocher,32.6,Kocher,32.634,True,True
+rover,63090,-85.5,-89.5,Lacus Tenebrarum,36.9,Lacus Tenebrarum,36.88,True,True
+rover,63136,-85.5,-43.5,Cabeus,6.1,Cabeus,6.12,True,True
+rover,63177,-85.5,-2.5,Lhamu,12.9,Lhamu,12.891,True,True
+rover,63178,-85.5,-1.5,Lhamu,12.7,Lhamu,12.739,True,True
+rover,63217,-85.5,37.5,Masina,13.1,Masina,13.063,True,True
+rover,63265,-85.5,85.5,Amundsen,32.8,Amundsen,32.785,True,True
+rover,63268,-85.5,88.5,Amundsen,35.2,Amundsen,35.208,True,True
+rover,63275,-85.5,95.5,Amundsen,45.9,Amundsen,45.93,True,True
+rover,63298,-85.5,118.5,Slater,79,Slater,79.009,True,True
+rover,63299,-85.5,119.5,Slater,79.2,Slater,79.244,True,True
+rover,63301,-85.5,121.5,Slater,79.8,Slater,79.802,True,True
+rover,63302,-85.5,122.5,Slater,80.1,Slater,80.124,True,True
+rover,63367,-86.5,-172.5,Sverdrup,60.4,Sverdrup,60.367,True,True
+rover,63568,-86.5,28.5,Stose,7.7,Stose,7.741,True,True
+rover,63751,-87.5,-148.5,Sverdrup,25.4,Sverdrup,25.45,True,True
+rover,63753,-87.5,-146.5,Sverdrup,26,Sverdrup,25.987,True,True
+rover,63762,-87.5,-137.5,Sverdrup,30.2,Sverdrup,30.239,True,True
+rover,63765,-87.5,-134.5,Sverdrup,32.2,Sverdrup,32.173,True,True
+rover,63771,-87.5,-128.5,Henson,32.5,Henson,32.516,True,True
+rover,63788,-87.5,-111.5,Brill,30.6,Brill,30.629,True,True
+rover,63792,-87.5,-107.5,Brill,28,Brill,28.006,True,True
+rover,63925,-87.5,25.5,Shoemaker,30.2,Shoemaker,30.177,True,True
+rover,63926,-87.5,26.5,Shoemaker,29.3,Shoemaker,29.321,True,True
+rover,63929,-87.5,29.5,Shoemaker,26.9,Shoemaker,26.868,True,True
+rover,63985,-87.5,85.5,Faustini,9.8,Faustini,9.751,True,True
+rover,64000,-87.5,100.5,Slater,21.6,Slater,21.552,True,True
+rover,64006,-87.5,106.5,Slater,18.4,Slater,18.419,True,True
+rover,64028,-87.5,128.5,Slater,26.5,Slater,26.528,True,True
 rover,64090,-88.5,-169.5,Sverdrup,14.5,Sverdrup,14.539,True,True
-rover,64153,-88.5,-106.5,Brill,13.1,Brill,13.138,True,True
-rover,64272,-88.5,12.5,Shoemaker,31.1,Shoemaker,31.148,True,True
-rover,64345,-88.5,85.5,Slater,26.3,Slater,26.275,True,True
-rover,64353,-88.5,93.5,Slater,20.4,Slater,20.397,True,True
-rover,64408,-88.5,148.5,Haynes,15.6,Haynes,15.593,True,True
-rover,64415,-88.5,155.5,Haynes,11.5,Haynes,11.465,True,True
-rover,64419,-88.5,159.5,Haynes,9.5,Haynes,9.492,True,True
-rover,64427,-88.5,167.5,Haynes,7.6,Haynes,7.581,True,True
+rover,64091,-88.5,-168.5,Sverdrup,13.8,Sverdrup,13.771,True,True
+rover,64105,-88.5,-154.5,Sverdrup,5.5,Sverdrup,5.511,True,True
+rover,64114,-88.5,-145.5,Sverdrup,8.6,Sverdrup,8.562,True,True
+rover,64115,-88.5,-144.5,Sverdrup,9.2,Sverdrup,9.225,True,True
+rover,64118,-88.5,-141.5,Henson,8.7,Henson,8.676,True,True
+rover,64119,-88.5,-140.5,Henson,7.9,Henson,7.93,True,True
+rover,64130,-88.5,-129.5,Henson,2.3,Henson,2.296,True,True
+rover,64132,-88.5,-127.5,Henson,3.2,Henson,3.223,True,True
+rover,64152,-88.5,-107.5,Brill,13.9,Brill,13.863,True,True
+rover,64181,-88.5,-78.5,de Gerlache,7.9,de Gerlache,7.857,True,True
+rover,64217,-88.5,-42.5,Bay,8.9,Bay,8.875,True,True
+rover,64222,-88.5,-37.5,Bay,7.9,Bay,7.898,True,True
+rover,64223,-88.5,-36.5,Bay,7.9,Bay,7.888,True,True
+rover,64233,-88.5,-26.5,Bay,10.9,Bay,10.854,True,True
+rover,64303,-88.5,43.5,Shoemaker,11.2,Shoemaker,11.212,True,True
+rover,64307,-88.5,47.5,Shoemaker,11.1,Shoemaker,11.097,True,True
+rover,64360,-88.5,100.5,Slater,16,Slater,16.014,True,True
+rover,64413,-88.5,153.5,Haynes,12.6,Haynes,12.581,True,True
+rover,64414,-88.5,154.5,Haynes,12,Haynes,12.014,True,True
+rover,64426,-88.5,166.5,Haynes,7.6,Haynes,7.608,True,True
 rover,64434,-88.5,174.5,Haynes,9.2,Haynes,9.164,True,True
-rover,64444,-89.5,-175.5,Shackleton,12.4,Shackleton,12.44,True,True
-rover,64467,-89.5,-152.5,Shackleton,16.3,Shackleton,16.293,True,True
-rover,64621,-89.5,1.5,Spudis,20.5,Spudis,20.496,True,True
-rover,64649,-89.5,29.5,Shackleton,19.6,Shackleton,19.6,True,True
-rover,64651,-89.5,31.5,Shackleton,19.3,Shackleton,19.331,True,True
-rover,64652,-89.5,32.5,Shackleton,19.2,Shackleton,19.195,True,True
-rover,64656,-89.5,36.5,Shackleton,18.6,Shackleton,18.638,True,True
+rover,64570,-89.5,-49.5,Spudis,9.1,Spudis,9.059,True,True
+rover,64585,-89.5,-34.5,Spudis,12.7,Spudis,12.716,True,True
+rover,64588,-89.5,-31.5,Spudis,13.4,Spudis,13.423,True,True
+rover,64616,-89.5,-3.5,Spudis,19.5,Spudis,19.52,True,True
+rover,64623,-89.5,3.5,Spudis,20.9,Spudis,20.875,True,True
+rover,64647,-89.5,27.5,Shackleton,19.9,Shackleton,19.863,True,True
+rover,64654,-89.5,34.5,Shackleton,18.9,Shackleton,18.919,True,True
 rover,64658,-89.5,38.5,Shackleton,18.4,Shackleton,18.352,True,True
+rover,59411,-75.5,-168.5,De Forest,57.3,De Forest,57.302,True,True
+rover,59418,-75.5,-161.5,De Forest,45.5,De Forest,45.497,True,True
+rover,59423,-75.5,-156.5,De Forest,65.7,De Forest,65.747,True,True
+rover,59425,-75.5,-154.5,De Forest,77.1,De Forest,77.127,True,True
+rover,59426,-75.5,-153.5,De Forest,83.2,De Forest,83.163,True,True
+rover,59432,-75.5,-147.5,Zeeman,96.5,Zeeman,96.521,True,True
+rover,59466,-75.5,-113.5,Zeeman,165.7,Zeeman,165.67,True,True
+rover,59467,-75.5,-112.5,Ashbrook,170.3,Ashbrook,170.329,True,True
+rover,59485,-75.5,-94.5,Boltzmann,37.8,Boltzmann,37.828,True,True
+rover,59544,-75.5,-35.5,Casatus,93.7,Casatus,93.669,True,True
+rover,59548,-75.5,-31.5,Casatus,85.2,Casatus,85.242,True,True
+rover,59554,-75.5,-25.5,Newton,66.6,Newton,66.616,True,True
+rover,59574,-75.5,-5.5,Short,33.8,Short,33.845,True,True
+rover,59582,-75.5,2.5,Short,84.9,Short,84.874,True,True
+rover,59600,-75.5,20.5,Schomberger,46.1,Schomberger,46.125,True,True
+rover,59608,-75.5,28.5,Schomberger,44.3,Schomberger,44.327,True,True
+rover,59609,-75.5,29.5,Schomberger,49.2,Schomberger,49.224,True,True
+rover,59664,-75.5,84.5,Hale,70.8,Hale,70.765,True,True
+rover,59695,-75.5,115.5,Rittenhouse,76.7,Rittenhouse,76.672,True,True
+rover,59706,-75.5,126.5,Schrodinger,55.2,Schrodinger,55.153,True,True
+rover,59707,-75.5,127.5,Schrodinger,48.2,Schrodinger,48.215,True,True
+rover,59719,-75.5,139.5,Schrodinger,56.2,Schrodinger,56.21,True,True
+rover,59761,-76.5,-178.5,Brashear,104.8,Brashear,104.848,True,True
+rover,59764,-76.5,-175.5,De Forest,85.6,De Forest,85.625,True,True
+rover,59785,-76.5,-154.5,De Forest,62.9,De Forest,62.876,True,True
+rover,59789,-76.5,-150.5,De Forest,90.2,De Forest,90.19,True,True
+rover,59810,-76.5,-129.5,Zeeman,60,Zeeman,59.955,True,True
+rover,59832,-76.5,-107.5,Boltzmann,137.5,Boltzmann,137.455,True,True
+rover,59846,-76.5,-93.5,Boltzmann,55.9,Boltzmann,55.892,True,True
+rover,59847,-76.5,-92.5,Boltzmann,53.2,Boltzmann,53.221,True,True
+rover,59850,-76.5,-89.5,Boltzmann,51.3,Boltzmann,51.308,True,True
+rover,59868,-76.5,-71.5,Le Gentil,75.8,Le Gentil,75.795,True,True
+rover,59906,-76.5,-33.5,Newton,113.2,Newton,113.241,True,True
+rover,59921,-76.5,-18.5,Newton,7.5,Newton,7.514,True,True
+rover,59922,-76.5,-17.5,Newton,0.8,Newton,0.752,True,True
+rover,59937,-76.5,-2.5,Short,71.3,Short,71.278,True,True
+rover,59938,-76.5,-1.5,Short,75.7,Short,75.698,True,True
+rover,59944,-76.5,4.5,Short,109.6,Short,109.593,True,True
+rover,59948,-76.5,8.5,Schomberger,113.8,Schomberger,113.753,True,True
+rover,59954,-76.5,14.5,Schomberger,71.8,Schomberger,71.811,True,True
+rover,60011,-76.5,71.5,Demonax,94,Demonax,93.955,True,True
+rover,60065,-76.5,125.5,Schrodinger,77.4,Schrodinger,77.363,True,True
+rover,60074,-76.5,134.5,Schrodinger,54.9,Schrodinger,54.886,True,True
+rover,60079,-76.5,139.5,Schrodinger,72.9,Schrodinger,72.894,True,True
+rover,60082,-76.5,142.5,Schrodinger,89.7,Schrodinger,89.687,True,True
+rover,60099,-76.5,159.5,Braude,161.4,Braude,161.36,True,True
+rover,60101,-76.5,161.5,Braude,162,Braude,161.972,True,True
+rover,60102,-76.5,162.5,Braude,162.6,Braude,162.56,True,True
+rover,60108,-76.5,168.5,Braude,169.9,Braude,169.85,True,True
+rover,60109,-76.5,169.5,Braude,171.7,Braude,171.654,True,True
+rover,60111,-76.5,171.5,Brashear,159.4,Brashear,159.358,True,True
+rover,60112,-76.5,172.5,Brashear,153,Brashear,153.039,True,True
+rover,60140,-77.5,-159.5,De Forest,30.9,De Forest,30.883,True,True
+rover,60146,-77.5,-153.5,De Forest,68.1,De Forest,68.065,True,True
+rover,60149,-77.5,-150.5,De Forest,87.6,De Forest,87.594,True,True
+rover,60178,-77.5,-121.5,Zeeman,121.8,Zeeman,121.778,True,True
+rover,60188,-77.5,-111.5,Ashbrook,109.4,Ashbrook,109.415,True,True
+rover,60191,-77.5,-108.5,Ashbrook,109.9,Ashbrook,109.899,True,True
+rover,60226,-77.5,-73.5,Le Gentil,99.6,Le Gentil,99.562,True,True
+rover,60236,-77.5,-63.5,Le Gentil,134.2,Le Gentil,134.157,True,True
+rover,60276,-77.5,-23.5,Newton,50.8,Newton,50.825,True,True
+rover,60280,-77.5,-19.5,Newton,32.8,Newton,32.839,True,True
+rover,60282,-77.5,-17.5,Newton,29.7,Newton,29.698,True,True
+rover,60283,-77.5,-16.5,Newton,30.4,Newton,30.38,True,True
+rover,60299,-77.5,-0.5,Short,104,Short,103.966,True,True
+rover,60307,-77.5,7.5,Schomberger,119.1,Schomberger,119.066,True,True
+rover,60312,-77.5,12.5,Schomberger,86.6,Schomberger,86.558,True,True
+rover,60331,-77.5,31.5,Schomberger,53,Schomberger,53.02,True,True
+rover,60350,-77.5,50.5,Demonax,59.4,Demonax,59.428,True,True
+rover,60386,-77.5,86.5,Hale,109.3,Hale,109.297,True,True
+rover,60387,-77.5,87.5,Hale,106.9,Hale,106.925,True,True
+rover,60412,-77.5,112.5,Ganswindt,58.6,Ganswindt,58.641,True,True
+rover,60448,-77.5,148.5,Nefed ev,129.3,Nefed ev,129.299,True,True
+rover,60462,-77.5,162.5,Braude,132.4,Braude,132.409,True,True
+rover,60469,-77.5,169.5,Braude,142.6,Braude,142.649,True,True
+rover,60491,-78.5,-168.5,De Forest,57.9,De Forest,57.931,True,True
+rover,60496,-78.5,-163.5,De Forest,47.4,De Forest,47.45,True,True
+rover,60518,-78.5,-141.5,Zeeman,113.1,Zeeman,113.078,True,True
+rover,60550,-78.5,-109.5,Ashbrook,79.2,Ashbrook,79.178,True,True
+rover,60569,-78.5,-90.5,Drygalski,37.8,Drygalski,37.769,True,True
+rover,60572,-78.5,-87.5,Drygalski,32.6,Drygalski,32.614,True,True
+rover,60587,-78.5,-72.5,Drygalski,90.4,Drygalski,90.385,True,True
+rover,60603,-78.5,-56.5,Drygalski,177.7,Drygalski,177.678,True,True
+rover,60627,-78.5,-32.5,Newton,115.1,Newton,115.069,True,True
+rover,60643,-78.5,-16.5,Newton,60.3,Newton,60.334,True,True
+rover,60673,-78.5,13.5,Schomberger,92.1,Schomberger,92.056,True,True
+rover,60720,-78.5,60.5,Demonax,14.4,Demonax,14.384,True,True
+rover,60755,-78.5,95.5,Ganswindt,94.8,Ganswindt,94.8,True,True
+rover,60781,-78.5,121.5,Ganswindt,66,Ganswindt,66.004,True,True
+rover,60782,-78.5,122.5,Ganswindt,71.3,Ganswindt,71.288,True,True
+rover,60811,-78.5,151.5,Braude,107.5,Braude,107.496,True,True
+rover,60832,-78.5,172.5,Braude,122.3,Braude,122.29,True,True
+rover,60833,-78.5,173.5,Braude,125.2,Braude,125.238,True,True
+rover,60872,-79.5,-147.5,Laveran,91.9,Laveran,91.946,True,True
+rover,60873,-79.5,-146.5,Laveran,95.2,Laveran,95.186,True,True
+rover,60925,-79.5,-94.5,Drygalski,40.4,Drygalski,40.362,True,True
+rover,60934,-79.5,-85.5,Drygalski,9.5,Drygalski,9.502,True,True
+rover,60957,-79.5,-62.5,Drygalski,134.9,Drygalski,134.895,True,True
+rover,60989,-79.5,-30.5,Newton,121.6,Newton,121.646,True,True
+rover,60993,-79.5,-26.5,Newton,106.6,Newton,106.592,True,True
+rover,61008,-79.5,-11.5,Newton,97.7,Newton,97.673,True,True
+rover,61018,-79.5,-1.5,Newton,134.3,Newton,134.279,True,True
+rover,61021,-79.5,1.5,Newton,148.5,Newton,148.525,True,True
+rover,61035,-79.5,15.5,Schomberger,103.9,Schomberger,103.881,True,True
+rover,61078,-79.5,58.5,Demonax,43.2,Demonax,43.159,True,True
+rover,61081,-79.5,61.5,Demonax,44.7,Demonax,44.683,True,True
+rover,61097,-79.5,77.5,Hedervari,79.5,Hedervari,79.483,True,True
+rover,61144,-79.5,124.5,Ganswindt,73.9,Ganswindt,73.852,True,True
+rover,61161,-79.5,141.5,Nefed ev,55.9,Nefed ev,55.898,True,True
+rover,61190,-79.5,170.5,Braude,90.3,Braude,90.326,True,True
+rover,61193,-79.5,173.5,Braude,100.1,Braude,100.1,True,True
+rover,61213,-80.5,-166.5,Laveran,50.3,Laveran,50.267,True,True
+rover,61220,-80.5,-159.5,Laveran,39.4,Laveran,39.409,True,True
+rover,61235,-80.5,-144.5,Laveran,81.1,Laveran,81.116,True,True
+rover,61244,-80.5,-135.5,Laveran,118.9,Laveran,118.884,True,True
+rover,61302,-80.5,-77.5,Drygalski,57.9,Drygalski,57.921,True,True
+rover,61309,-80.5,-70.5,Drygalski,91.5,Drygalski,91.517,True,True
+rover,61313,-80.5,-66.5,Drygalski,111.4,Drygalski,111.392,True,True
+rover,61316,-80.5,-63.5,Drygalski,126.4,Drygalski,126.39,True,True
+rover,61326,-80.5,-53.5,Mons Cabeus,119.3,Mons Cabeus,119.315,True,True
+rover,61336,-80.5,-43.5,Mons Cabeus,100.7,Mons Cabeus,100.701,True,True
+rover,61339,-80.5,-40.5,Mons Cabeus,97.8,Mons Cabeus,97.751,True,True
+rover,61341,-80.5,-38.5,Mons Cabeus,96.6,Mons Cabeus,96.601,True,True
+rover,61342,-80.5,-37.5,Mons Cabeus,96.3,Mons Cabeus,96.281,True,True
+rover,61343,-80.5,-36.5,Mons Cabeus,96.1,Mons Cabeus,96.135,True,True
+rover,61353,-80.5,-26.5,Mons Cabeus,103.9,Mons Cabeus,103.916,True,True
+rover,61357,-80.5,-22.5,Mons Cabeus,111.1,Mons Cabeus,111.128,True,True
+rover,61360,-80.5,-19.5,Mons Cabeus,117.7,Mons Cabeus,117.705,True,True
+rover,61376,-80.5,-3.5,Whitaker,127.4,Whitaker,127.424,True,True
+rover,61382,-80.5,2.5,Whitaker,126.6,Whitaker,126.631,True,True
+rover,61395,-80.5,15.5,Schomberger,129.1,Schomberger,129.092,True,True
+rover,61404,-80.5,24.5,Schomberger,117.1,Schomberger,117.078,True,True
+rover,61430,-80.5,50.5,Scott,56.9,Scott,56.899,True,True
+rover,61512,-80.5,132.5,Nefed ev,23.5,Nefed ev,23.513,True,True
+rover,61517,-80.5,137.5,Nefed ev,19.3,Nefed ev,19.262,True,True
+rover,61527,-80.5,147.5,Nefed ev,59.4,Nefed ev,59.407,True,True
+rover,61544,-80.5,164.5,Braude,47.8,Braude,47.79,True,True
+rover,61549,-80.5,169.5,Braude,63.5,Braude,63.491,True,True
+rover,61560,-81.5,-179.5,Laveran,86.9,Laveran,86.867,True,True
+rover,61566,-81.5,-173.5,Laveran,60.9,Laveran,60.93,True,True
+rover,61577,-81.5,-162.5,Laveran,15,Laveran,15.004,True,True
+rover,61579,-81.5,-160.5,Laveran,9.6,Laveran,9.596,True,True
+rover,61582,-81.5,-157.5,Laveran,13.5,Laveran,13.538,True,True
+rover,61589,-81.5,-150.5,Laveran,41.8,Laveran,41.829,True,True
+rover,61635,-81.5,-104.5,Ashbrook,30.3,Ashbrook,30.314,True,True
+rover,61640,-81.5,-99.5,Ashbrook,52.1,Ashbrook,52.096,True,True
+rover,61652,-81.5,-87.5,Drygalski,58.4,Drygalski,58.431,True,True
+rover,61653,-81.5,-86.5,Drygalski,58.5,Drygalski,58.505,True,True
+rover,61662,-81.5,-77.5,Drygalski,75.6,Drygalski,75.564,True,True
+rover,61666,-81.5,-73.5,Drygalski,89.4,Drygalski,89.399,True,True
+rover,61668,-81.5,-71.5,Drygalski,97.1,Drygalski,97.062,True,True
+rover,61694,-81.5,-45.5,Mons Cabeus,75.1,Mons Cabeus,75.064,True,True
+rover,61703,-81.5,-36.5,Mons Cabeus,65.8,Mons Cabeus,65.815,True,True
+rover,61705,-81.5,-34.5,Mons Cabeus,66.1,Mons Cabeus,66.115,True,True
+rover,61714,-81.5,-25.5,Mons Cabeus,77.6,Mons Cabeus,77.642,True,True
+rover,61716,-81.5,-23.5,Mons Cabeus,82,Mons Cabeus,81.991,True,True
+rover,61803,-81.5,63.5,Svedberg,9.1,Svedberg,9.141,True,True
+rover,61805,-81.5,65.5,Svedberg,5.7,Svedberg,5.691,True,True
+rover,61817,-81.5,77.5,Mons Amundsen,33.3,Mons Amundsen,33.302,True,True
+rover,61841,-81.5,101.5,Idel son,50.7,Idel son,50.747,True,True
+rover,61846,-81.5,106.5,Idel son,28.4,Idel son,28.372,True,True
+rover,61888,-81.5,148.5,Braude,46.6,Braude,46.608,True,True
+rover,61906,-81.5,166.5,Braude,34.9,Braude,34.862,True,True
+rover,61919,-81.5,179.5,Braude,90.7,Braude,90.718,True,True
+rover,61930,-82.5,-169.5,Laveran,45.4,Laveran,45.435,True,True
+rover,61939,-82.5,-160.5,Laveran,21.5,Laveran,21.465,True,True
+rover,61948,-82.5,-151.5,Laveran,40.3,Laveran,40.31,True,True
+rover,61956,-82.5,-143.5,Kuhn,67.4,Kuhn,67.384,True,True
+rover,61958,-82.5,-141.5,Kocher,64.8,Kocher,64.838,True,True
+rover,61969,-82.5,-130.5,Kocher,60.8,Kocher,60.842,True,True
+rover,61987,-82.5,-112.5,Ashbrook,43.1,Ashbrook,43.127,True,True
+rover,62007,-82.5,-92.5,Ashbrook,88.4,Ashbrook,88.352,True,True
+rover,62022,-82.5,-77.5,Drygalski,99.5,Drygalski,99.516,True,True
+rover,62042,-82.5,-57.5,Mons Cabeus,85,Mons Cabeus,84.952,True,True
+rover,62054,-82.5,-45.5,Mons Cabeus,49.1,Mons Cabeus,49.098,True,True
+rover,62068,-82.5,-31.5,Mons Cabeus,39.3,Mons Cabeus,39.318,True,True
+rover,62079,-82.5,-20.5,Mons Cabeus,67,Mons Cabeus,66.964,True,True
+rover,62082,-82.5,-17.5,Mons Cabeus,76.3,Mons Cabeus,76.332,True,True
+rover,62088,-82.5,-11.5,Whitaker,77.3,Whitaker,77.335,True,True
+rover,62126,-82.5,26.5,Mons Mouton,65.4,Mons Mouton,65.45,True,True
+rover,62152,-82.5,52.5,Scott,16.5,Scott,16.531,True,True
+rover,62153,-82.5,53.5,Wapowski,17.6,Wapowski,17.552,True,True
+rover,62167,-82.5,67.5,Svedberg,26.7,Svedberg,26.706,True,True
+rover,62169,-82.5,69.5,Mons Amundsen,24.5,Mons Amundsen,24.545,True,True
+rover,62191,-82.5,91.5,Hedervari,32.9,Hedervari,32.936,True,True
+rover,62206,-82.5,106.5,Idel son,43.7,Idel son,43.735,True,True
+rover,62209,-82.5,109.5,Idel son,37.5,Idel son,37.481,True,True
+rover,62214,-82.5,114.5,Idel son,35.8,Idel son,35.771,True,True
+rover,62215,-82.5,115.5,Idel son,36.9,Idel son,36.917,True,True
+rover,62216,-82.5,116.5,Idel son,38.5,Idel son,38.499,True,True
+rover,62232,-82.5,132.5,Nefed ev,45.5,Nefed ev,45.549,True,True
+rover,62303,-83.5,-156.5,Kuhn,32.4,Kuhn,32.382,True,True
+rover,62307,-83.5,-152.5,Kuhn,29.8,Kuhn,29.778,True,True
+rover,62369,-83.5,-90.5,Ibn Bajja,93.8,Ibn Bajja,93.751,True,True
+rover,62471,-83.5,11.5,Malapert,45.5,Malapert,45.48,True,True
+rover,62480,-83.5,20.5,Mons Mouton,46.8,Mons Mouton,46.794,True,True
+rover,62561,-83.5,101.5,Amundsen,64.9,Amundsen,64.878,True,True
+rover,62572,-83.5,112.5,Idel son,65.3,Idel son,65.266,True,True
+rover,62580,-83.5,120.5,Idel son,72.2,Idel son,72.195,True,True
+rover,62597,-83.5,137.5,Nefed ev,74,Nefed ev,73.955,True,True
+rover,62615,-83.5,155.5,Wiechert,34.3,Wiechert,34.288,True,True
+rover,62633,-83.5,173.5,Wiechert,33.1,Wiechert,33.132,True,True
+rover,62661,-84.5,-158.5,Kuhn,17.5,Kuhn,17.531,True,True
+rover,62677,-84.5,-142.5,Kocher,24.7,Kocher,24.704,True,True
+rover,62727,-84.5,-92.5,Lacus Tenebrarum,67.9,Lacus Tenebrarum,67.889,True,True
+rover,62757,-84.5,-62.5,Cabeus,59.8,Cabeus,59.828,True,True
+rover,62803,-84.5,-16.5,Whitaker,49.3,Whitaker,49.272,True,True
+rover,62808,-84.5,-11.5,Whitaker,35.2,Whitaker,35.193,True,True
+rover,62889,-84.5,69.5,Oberbeck,29.1,Oberbeck,29.123,True,True
+rover,62904,-84.5,84.5,Amundsen,4.6,Amundsen,4.562,True,True
+rover,62905,-84.5,85.5,Amundsen,7.3,Amundsen,7.334,True,True
+rover,62908,-84.5,88.5,Amundsen,16,Amundsen,15.969,True,True
+rover,62926,-84.5,106.5,Amundsen,68,Amundsen,68.022,True,True
+rover,62933,-84.5,113.5,Amundsen,87.9,Amundsen,87.911,True,True
+rover,62938,-84.5,118.5,Idel son,97.9,Idel son,97.894,True,True
+rover,62940,-84.5,120.5,Idel son,99.7,Idel son,99.718,True,True
+rover,62947,-84.5,127.5,Nefed ev,108.4,Nefed ev,108.355,True,True
+rover,62961,-84.5,141.5,Wiechert,71.2,Wiechert,71.17,True,True
+rover,62963,-84.5,143.5,Wiechert,65.4,Wiechert,65.358,True,True
+rover,62975,-84.5,155.5,Wiechert,31.2,Wiechert,31.211,True,True
+rover,62992,-84.5,172.5,Wiechert,27.5,Wiechert,27.506,True,True
+rover,63004,-85.5,-175.5,Kuhn,67.7,Kuhn,67.684,True,True
+rover,63032,-85.5,-147.5,Kuhn,33.5,Kuhn,33.537,True,True
+rover,63112,-85.5,-67.5,Ibn Bajja,29.1,Ibn Bajja,29.112,True,True
+rover,63133,-85.5,-46.5,Cabeus,11.8,Cabeus,11.766,True,True
+rover,63230,-85.5,50.5,Nobile,9.6,Nobile,9.599,True,True
+rover,63263,-85.5,83.5,Amundsen,32.2,Amundsen,32.169,True,True
+rover,63273,-85.5,93.5,Amundsen,42.3,Amundsen,42.333,True,True
+rover,63277,-85.5,97.5,Amundsen,49.8,Amundsen,49.817,True,True
+rover,63324,-85.5,144.5,Wiechert,70.8,Wiechert,70.761,True,True
+rover,63362,-86.5,-177.5,Sverdrup,63.2,Sverdrup,63.176,True,True
+rover,63369,-86.5,-170.5,Sverdrup,59.4,Sverdrup,59.388,True,True
+rover,63404,-86.5,-135.5,Mons Kocher,48.3,Mons Kocher,48.329,True,True
+rover,63406,-86.5,-133.5,Mons Kocher,45.2,Mons Kocher,45.249,True,True
+rover,63446,-86.5,-93.5,Lacus Tenebrarum,12.2,Lacus Tenebrarum,12.246,True,True
+rover,63450,-86.5,-89.5,Lacus Tenebrarum,7.2,Lacus Tenebrarum,7.165,True,True
+rover,63452,-86.5,-87.5,Lacus Tenebrarum,6.4,Lacus Tenebrarum,6.375,True,True
+rover,63466,-86.5,-73.5,Ibn Bajja,6.8,Ibn Bajja,6.832,True,True
+rover,63480,-86.5,-59.5,Ibn Bajja,30.1,Ibn Bajja,30.133,True,True
+rover,63519,-86.5,-20.5,Haworth,37.6,Haworth,37.594,True,True
+rover,63528,-86.5,-11.5,Mons Malapert,25.1,Mons Malapert,25.059,True,True
+rover,63583,-86.5,43.5,Burbidge,10.7,Burbidge,10.657,True,True
+rover,63601,-86.5,61.5,Burbidge,24.8,Burbidge,24.756,True,True
+rover,63641,-86.5,101.5,Faustini,35.2,Faustini,35.189,True,True
+rover,63656,-86.5,116.5,Slater,48.4,Slater,48.417,True,True
+rover,63660,-86.5,120.5,Slater,49.5,Slater,49.522,True,True
+rover,63661,-86.5,121.5,Slater,49.9,Slater,49.888,True,True
+rover,63729,-87.5,-170.5,Sverdrup,31,Sverdrup,31.004,True,True
+rover,63754,-87.5,-145.5,Sverdrup,26.3,Sverdrup,26.318,True,True
+rover,63768,-87.5,-131.5,Henson,32.5,Henson,32.458,True,True
+rover,63778,-87.5,-121.5,Henson,33.7,Henson,33.705,True,True
+rover,63787,-87.5,-112.5,Brill,31.3,Brill,31.343,True,True
+rover,63816,-87.5,-83.5,Lacus Tenebrarum,24.8,Lacus Tenebrarum,24.776,True,True
+rover,63822,-87.5,-77.5,Lacus Tenebrarum,28.5,Lacus Tenebrarum,28.484,True,True
+rover,63835,-87.5,-64.5,Cartwright,22.9,Cartwright,22.875,True,True
+rover,63840,-87.5,-59.5,Cartwright,16.7,Cartwright,16.694,True,True
+rover,63866,-87.5,-33.5,Cartwright,17.8,Cartwright,17.8,True,True
+rover,63898,-87.5,-1.5,Haworth,5.1,Haworth,5.131,True,True
+rover,63901,-87.5,1.5,Haworth,9,Haworth,9.033,True,True
+rover,63938,-87.5,38.5,Shoemaker,21.1,Shoemaker,21.086,True,True
+rover,63984,-87.5,84.5,Faustini,9.6,Faustini,9.61,True,True
+rover,63988,-87.5,88.5,Faustini,11.3,Faustini,11.264,True,True
+rover,64009,-87.5,109.5,Slater,17.7,Slater,17.685,True,True
+rover,64027,-87.5,127.5,Slater,25.7,Slater,25.68,True,True
+rover,64032,-87.5,132.5,Slater,30.1,Slater,30.108,True,True
+rover,64054,-87.5,154.5,Haynes,39.8,Haynes,39.768,True,True
+rover,64055,-87.5,155.5,Haynes,39.5,Haynes,39.497,True,True
+rover,64083,-88.5,-176.5,Haynes,13.9,Haynes,13.887,True,True
+rover,64089,-88.5,-170.5,Sverdrup,15.3,Sverdrup,15.313,True,True
+rover,64107,-88.5,-152.5,Sverdrup,5.5,Sverdrup,5.482,True,True
+rover,64113,-88.5,-146.5,Sverdrup,7.9,Sverdrup,7.932,True,True
+rover,64120,-88.5,-139.5,Henson,7.2,Henson,7.188,True,True
+rover,64131,-88.5,-128.5,Henson,2.7,Henson,2.689,True,True
+rover,64153,-88.5,-106.5,Brill,13.1,Brill,13.138,True,True
+rover,64220,-88.5,-39.5,Bay,8.1,Bay,8.113,True,True
+rover,64226,-88.5,-33.5,Bay,8.2,Bay,8.246,True,True
+rover,64227,-88.5,-32.5,Bay,8.5,Bay,8.486,True,True
+rover,64240,-88.5,-19.5,Bay,14.8,Bay,14.757,True,True
+rover,64299,-88.5,39.5,Shoemaker,12.4,Shoemaker,12.381,True,True
+rover,64306,-88.5,46.5,Shoemaker,11,Shoemaker,11.02,True,True
+rover,64310,-88.5,50.5,Shoemaker,11.7,Shoemaker,11.732,True,True
+rover,64314,-88.5,54.5,Shoemaker,13.4,Shoemaker,13.371,True,True
+rover,64319,-88.5,59.5,Tooley,15.8,Tooley,15.802,True,True
+rover,64334,-88.5,74.5,Tooley,25.1,Tooley,25.125,True,True
+rover,64340,-88.5,80.5,Tooley,29.7,Tooley,29.681,True,True
+rover,64358,-88.5,98.5,Slater,17.2,Slater,17.153,True,True
+rover,64369,-88.5,109.5,Slater,12.9,Slater,12.861,True,True
+rover,64372,-88.5,112.5,Slater,12.8,Slater,12.806,True,True
+rover,64374,-88.5,114.5,Slater,13.1,Slater,13.082,True,True
+rover,64394,-88.5,134.5,Slater,24.3,Slater,24.323,True,True
+rover,64396,-88.5,136.5,Haynes,23.4,Haynes,23.377,True,True
+rover,64397,-88.5,137.5,Haynes,22.7,Haynes,22.717,True,True
+rover,64416,-88.5,156.5,Haynes,10.9,Haynes,10.934,True,True
+rover,64423,-88.5,163.5,Haynes,8.1,Haynes,8.088,True,True
+rover,64427,-88.5,167.5,Haynes,7.6,Haynes,7.581,True,True
+rover,64429,-88.5,169.5,Haynes,7.7,Haynes,7.733,True,True
+rover,64432,-88.5,172.5,Haynes,8.4,Haynes,8.436,True,True
+rover,64443,-89.5,-176.5,Shackleton,12.3,Shackleton,12.266,True,True
+rover,64445,-89.5,-174.5,Shackleton,12.6,Shackleton,12.614,True,True
+rover,64447,-89.5,-172.5,Shackleton,13,Shackleton,12.96,True,True
+rover,64470,-89.5,-149.5,Spudis,16.1,Spudis,16.107,True,True
+rover,64555,-89.5,-64.5,Spudis,5.2,Spudis,5.25,True,True
+rover,64557,-89.5,-62.5,Spudis,5.8,Spudis,5.764,True,True
+rover,64569,-89.5,-50.5,Spudis,8.8,Spudis,8.809,True,True
+rover,64571,-89.5,-48.5,Spudis,9.3,Spudis,9.308,True,True
+rover,64572,-89.5,-47.5,Spudis,9.6,Spudis,9.557,True,True
+rover,64579,-89.5,-40.5,Spudis,11.3,Spudis,11.276,True,True
+rover,64586,-89.5,-33.5,Spudis,13,Spudis,12.953,True,True
+rover,64593,-89.5,-26.5,Spudis,14.6,Spudis,14.582,True,True
+rover,64607,-89.5,-12.5,Spudis,17.7,Spudis,17.67,True,True
+rover,64608,-89.5,-11.5,Spudis,17.9,Spudis,17.881,True,True
+rover,64609,-89.5,-10.5,Spudis,18.1,Spudis,18.091,True,True
+rover,64610,-89.5,-9.5,Spudis,18.3,Spudis,18.299,True,True
+rover,64617,-89.5,-2.5,Spudis,19.7,Spudis,19.718,True,True
+rover,64620,-89.5,0.5,Spudis,20.3,Spudis,20.304,True,True
+rover,64624,-89.5,4.5,Spudis,21.1,Spudis,21.063,True,True
+rover,64627,-89.5,7.5,Spudis,21.6,Spudis,21.616,True,True
+rover,64630,-89.5,10.5,Shackleton,21.9,Shackleton,21.873,True,True
+rover,64648,-89.5,28.5,Shackleton,19.7,Shackleton,19.732,True,True
+rover,64651,-89.5,31.5,Shackleton,19.3,Shackleton,19.331,True,True
+rover,64653,-89.5,33.5,Shackleton,19.1,Shackleton,19.058,True,True
+rover,64657,-89.5,37.5,Shackleton,18.5,Shackleton,18.495,True,True
+rover,64659,-89.5,39.5,Shackleton,18.2,Shackleton,18.207,True,True
+rover,64667,-89.5,47.5,Shackleton,17,Shackleton,17.007,True,True
+rover,64736,-89.5,116.5,Shackleton,5.9,Shackleton,5.89,True,True
 solar,21795,29.5,15.5,Banting,91.9,Banting,91.922,True,True
 solar,21796,29.5,16.5,Mare Serenitatis,83.4,Mare Serenitatis,83.424,True,True
 solar,21709,29.5,-70.5,Briggs,98.9,Briggs,98.86,True,True

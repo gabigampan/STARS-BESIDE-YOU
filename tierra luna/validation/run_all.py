@@ -15,16 +15,22 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from common import write_json  # noqa: E402
-import m1_coverage, m2_validity, m3_external, m4_sensitivity, m5_reproduction, m6_coordinates, m7_global, m8_improvements  # noqa: E402,E401
+import m1_coverage, m2_validity, m3_external, m4_sensitivity, m5_reproduction, m6_coordinates, m7_global, m8_improvements, m9_external_lists  # noqa: E402,E401
 
 
 def main() -> int:
     summary = {}
     for name, mod in (("m1_coverage", m1_coverage), ("m2_validity", m2_validity), ("m3_external", m3_external),
                       ("m4_sensitivity", m4_sensitivity), ("m5_reproduction", m5_reproduction),
-                      ("m6_coordinates", m6_coordinates), ("m7_global", m7_global), ("m8_improvements", m8_improvements)):
+                      ("m6_coordinates", m6_coordinates), ("m9_external_lists", m9_external_lists), ("m7_global", m7_global),
+                      ("m8_improvements", m8_improvements)):
         t = time.time()
-        summary[name] = mod.run()
+        try:
+            summary[name] = mod.run()
+        except Exception as exc:  # report and continue: one failing metric must not hide the others
+            import traceback
+            traceback.print_exc()
+            summary[name] = {"error": f"{type(exc).__name__}: {exc}"}
         print(f"{name}: done in {time.time() - t:.0f} s", flush=True)
     write_json(summary, "summary.json")
     print("wrote validation/out/summary.json")

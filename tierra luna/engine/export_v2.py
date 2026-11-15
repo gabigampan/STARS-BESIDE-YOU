@@ -295,7 +295,8 @@ def funnel_steps(mission_cfg: Dict, engine_cfg: EngineConfig) -> List[Dict[str, 
     if real_ms:
         rv = engine_cfg.v("real_value_similarity")
         mult = rv["filter_bound_multiplier"]
-        parts5.append(f"{', '.join(real_ms)}: similarity on real values (similarity.json real_value): per variable s = exp(-0.5 * (|earth - moon| / tolerance)^2), "
+        parts5.append(f"{', '.join(real_ms)}: similarity on real values (similarity.json real_value): per variable s = exp(-0.5 * (|earth - moon| / tolerance)^2) "
+                      "(Rover: s = 1 within the measurement uncertainty sigma of the elevation models, else exp(-0.5 * max(0, |d| / sigma - 1)^2); similarity.json real_value score_by_mission), "
                       f"similarity = 100 * weighted mean of s; the twin is the lunar zone cell with every key variable within {mult['key']:g} x its tolerance "
                       f"and every secondary within {mult['secondary']:g} x its tolerance that has the highest similarity; a point with no such cell has no twin, "
                       "no similarity and no final (it keeps its suitability).")
@@ -547,6 +548,20 @@ def real_variable_rows(res: MissionResult, reg: Dict, engine_cfg: EngineConfig) 
     return rows
 
 
+def mission_score_text(spec: Any, generic: str) -> str:
+    """The per-variable score of one real-value mission as it is computed (re-audit
+    2026-11-15 T1): the Gaussian on the tolerance, or, for variables with a measurement
+    uncertainty sigma (Rover), a dead band of one sigma and then a Gaussian in sigma units."""
+    sig = getattr(spec, "sigma", None)
+    if sig is None or not np.isfinite(np.asarray(sig, dtype=np.float64)).any():
+        return generic
+    unit = {"slope_deg": "slope {} deg", "roughness_m": "roughness {} m"}
+    parts = [unit.get(v, v + " {}").format(repr(float(x))) for v, x in zip(spec.variables, sig) if np.isfinite(x)]
+    return ("s = 1 when |earth value - moon value| <= sigma (a difference within the measurement uncertainty of the elevation models), "
+            "else s = exp(-0.5 * max(0, |earth value - moon value| / sigma - 1)^2); sigma: " + ", ".join(parts)
+            + " (similarity.variables[].uncertainty_scale.sigma); the pair filter still keeps |difference| <= tolerance")
+
+
 def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfig) -> Dict[str, Any]:
     """missions.json similarity block of a real-value mission (rule real_value_tolerance)."""
     from engine.real_similarity import NOPAIR_KINDS, nopair_summary
@@ -563,7 +578,7 @@ def real_similarity_block(res: MissionResult, reg: Dict, engine_cfg: EngineConfi
     return {
         "variables": real_variable_rows(res, reg, engine_cfg),
         "weights_why": mrule.get("weights_why"),
-        "score": rv["score"], "similarity_formula": rv["similarity"],
+        "score": mission_score_text(real["spec"], rv["score"]), "similarity_formula": rv["similarity"],
         "filter": {"key": f"|difference| <= {rv['filter_bound_multiplier']['key']:g} x tolerance",
                    "secondary": f"|difference| <= {rv['filter_bound_multiplier']['secondary']:g} x tolerance",
                    "missing_key": rv["missing_key"], "missing_secondary": rv["missing_secondary"]},
@@ -861,12 +876,13 @@ def real_value_json(results: Dict[str, MissionResult], missions: List[str], ds: 
     return {
         "rule": "real_value_tolerance", "missions": missions,
         "why": engine_cfg.real_value_similarity.why,
-        "score": rv["score"], "similarity": rv["similarity"], "filter_bound_multiplier": rv["filter_bound_multiplier"],
+        "score": rv["score"], "score_by_mission": {m: mission_score_text(results[m].extra["real"]["spec"], rv["score"]) for m in missions},
+        "similarity": rv["similarity"], "filter_bound_multiplier": rv["filter_bound_multiplier"],
         "missing_key": rv["missing_key"], "missing_secondary": rv["missing_secondary"],
         "score_decimals": int(rv["score_decimals"]),
         "twin": "the zone cell that passes the filter with the highest similarity, compared at full precision; ties: lowest lunar id; lunar cells are not passed through the mission filters",
         "published": "per-variable scores s.<variable> are rounded to score_decimals (int32 q / 10^score_decimals); the published similarity is 100 * sum(w * s) / sum(w) from those scores (unrounded in the final, rounded to 2 decimals when stored)",
-        "meaning": "Similarity on real values within stated tolerances: the twin's key variables are within their tolerance of the Earth point and its secondary variables within twice theirs; a score of 1 means equal values, 0.61 a difference of one tolerance, 0.14 a difference of two.",
+        "meaning": "Similarity on real values within stated tolerances: the twin's key variables are within their tolerance of the Earth point and its secondary variables within twice theirs. Each mission's score is given in score_by_mission: for Solar panels a score of 1 means equal values, 0.61 a difference of one tolerance, 0.14 a difference of two; for Rover a difference within the measurement uncertainty of the elevation models (sigma) scores 1, and beyond it the score falls as a Gaussian in units of sigma.",
         "derived_variables": derived,
         "irradiance_toa": {"formula": "Q = S0 / pi / r^2 * (h0 sin(phi) sin(d) + cos(phi) cos(d) sin(h0)), annual mean over a Kepler orbit sampled uniformly in time, x hours_per_day / 1000 (kWh/m2/day); Earth only, from latitude; the Moon's value is its surface irradiance",
                            "settings": toa, "settings_why": engine_cfg.toa_insolation.why,
@@ -1366,8 +1382,11 @@ def build_v2_files(ds: Dataset, results: Dict[str, MissionResult], mission_cfg: 
             real = res.extra["real"]
             sdq = int(real["settings"]["score_decimals"])
             for q, v in enumerate(real["spec"].variables):
+                sg = real["spec"].sigma
+                form = (f"1 within sigma {repr(float(sg[q]))}, else exp(-0.5 * max(0, difference / sigma - 1)^2)"
+                        if sg is not None and np.isfinite(sg[q]) else "exp(-0.5 * (difference / tolerance)^2)")
                 ef.quantised(f"s.{v}", real["scores"][idx, q], sdq, "passing",
-                             description=f"score of {v} for the pair: exp(-0.5 * (difference / tolerance)^2), 0-1; missing when there is no twin or no value on a side")
+                             description=f"score of {v} for the pair: {form}, 0-1; missing when there is no twin or no value on a side")
         if ctx is not None and res.rule in REPO_RULES:
             used, bits_sim = similarity_variables_used(ctx, res.rule, idx, res.twin_id[idx] if has_twins else None)
             ef.i32("sim_vars_used", used, "passing",

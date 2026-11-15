@@ -278,8 +278,8 @@
     }
   },
   "card": {
-    "title": "Earth analog and lunar twin: solar panels, pair number 1",
-    "subtitle": "Suitability 97.94, similarity 99.83, final 98.88. The lunar cell lies in the low equatorial plains (the maria), the Solar panels zone: within 30° of the equator and at or below −1,200 m. Values from the project tables (1-degree cells); each carries its level.",
+    "title": "Earth analog and lunar twin: solar panels, analog 1 of the five shown",
+    "subtitle": "Analog 1 of the five shown (overall rank 1). Suitability 97.94, similarity 99.83, final 98.88. The lunar cell lies in the low equatorial plains (the maria), the Solar panels zone: within 30° of the equator and at or below −1,200 m. Values from the project tables (1-degree cells); each carries its level.",
     "rows": [
       {
         "label": "Sunlight above the atmosphere",
@@ -425,7 +425,8 @@
     "populations": {
       "earth_paired": 6360,
       "source": "missions.json missions[solar].similarity.paired_count"
-    }
+    },
+    "top5_position": 1
   },
   "captions": {
     "cue_times": [
@@ -483,7 +484,7 @@
         "Low Sun in the west: long shadows; the exposure is raised again (not to scale). Sunset and the lunar night follow.",
         "The Sun starts to go behind the real terrain; the light on the array fades.",
         "The Sun is behind the real terrain while still above the flat horizon: the array is in shadow and the power is zero.",
-        "Closing card: the Earth analog in Menabe, Madagascar (cell E40184, 21.5° S 44.5° E, 18.8 km from Manja) and its lunar twin, cell M23206 near Timocharis, matched on sunlight above the atmosphere: 9.3437 against 9.383 kWh/m² per day (difference 0.0393, tolerance 0.6). At the Earth site only 5.745 kWh/m² per day reach the ground (modelled): 5.7 of 9.3, 39 % is lost in the atmosphere; the Moon has no atmosphere. Slope 0.753° against 0.757°; roughness 26.56 m against 27.15 m. Suitability 97.94, similarity 99.83, final 98.88.",
+        "Closing card: analog 1 of the five Solar panels analogs shown (overall rank 1). The Earth analog in Menabe, Madagascar (cell E40184, 21.5° S 44.5° E, 18.8 km from Manja) and its lunar twin, cell M23206 near Timocharis, matched on sunlight above the atmosphere: 9.3437 against 9.383 kWh/m² per day (difference 0.0393, tolerance 0.6). At the Earth site only 5.745 kWh/m² per day reach the ground (modelled): 5.7 of 9.3, 39 % is lost in the atmosphere; the Moon has no atmosphere. Slope 0.753° against 0.757°; roughness 26.56 m against 27.15 m. Suitability 97.94, similarity 99.83, final 98.88.",
         "A panel at the Earth site does not receive what a panel on the Moon receives: only the sunlight that reaches the ground arrives there, while the Moon's day lasts 29.5 Earth days, about half of them dark. Mean surface temperature 300.56 K against 212.81 K and daily swing 13.6 K against 289.73 K are not part of the similarity. 3D simulation driven by table data. Not real footage."
       ]
     },
@@ -525,7 +526,7 @@
         "Sol bajo al oeste: sombras largas; la exposición vuelve a aumentarse (no a escala). Después llegan la puesta de Sol y la noche lunar.",
         "El Sol empieza a ocultarse tras el relieve real; la luz sobre los paneles se apaga.",
         "El Sol está tras el relieve real aunque sigue sobre el horizonte plano: los paneles quedan en sombra y la potencia es cero.",
-        "Tarjeta final: el análogo terrestre en Menabe, Madagascar (celda E40184, 21,5° S 44,5° E, a 18,8 km de Manja) y su gemela lunar, la celda M23206 cerca de Timocharis, emparejadas por la luz solar por encima de la atmósfera: 9,3437 frente a 9,383 kWh/m² al día (diferencia 0,0393, tolerancia 0,6). En el punto terrestre solo 5,745 kWh/m² al día llegan al suelo (modelado): 5,7 de 9,3, se pierde un 39 % en la atmósfera; la Luna no tiene atmósfera. Pendiente 0,753° frente a 0,757°; rugosidad 26,56 m frente a 27,15 m. Idoneidad 97,94, similitud 99,83, final 98,88.",
+        "Tarjeta final: análogo 1 de los cinco análogos de paneles solares mostrados (puesto 1 de la clasificación completa). El análogo terrestre en Menabe, Madagascar (celda E40184, 21,5° S 44,5° E, a 18,8 km de Manja) y su gemela lunar, la celda M23206 cerca de Timocharis, emparejadas por la luz solar por encima de la atmósfera: 9,3437 frente a 9,383 kWh/m² al día (diferencia 0,0393, tolerancia 0,6). En el punto terrestre solo 5,745 kWh/m² al día llegan al suelo (modelado): 5,7 de 9,3, se pierde un 39 % en la atmósfera; la Luna no tiene atmósfera. Pendiente 0,753° frente a 0,757°; rugosidad 26,56 m frente a 27,15 m. Idoneidad 97,94, similitud 99,83, final 98,88.",
         "Un panel en el punto terrestre no recibe lo mismo que un panel en la Luna: allí solo llega la luz que alcanza el suelo, mientras que el día lunar dura 29,5 días terrestres, aproximadamente la mitad a oscuras. La temperatura media de la superficie, 300,56 K frente a 212,81 K, y la oscilación diaria, 13,6 K frente a 289,73 K, no forman parte de la similitud. Simulación 3D basada en datos de las tablas. No son imágenes reales."
       ]
     }

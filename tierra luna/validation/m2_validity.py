@@ -244,18 +244,19 @@ def run() -> Dict:
     c = context()
     earth = pd.read_csv(os.path.join(REAL_DIR, "earth_real_1deg.csv"), low_memory=False)
     moon = pd.read_csv(os.path.join(REAL_DIR, "moon_real_1deg.csv"), low_memory=False)
-    comb = pd.read_csv(os.path.join(REAL_DIR, "earth_moon_real_1deg.csv"), low_memory=False)
+    comb_path = os.path.join(REAL_DIR, "earth_moon_real_1deg.csv")  # removed from the repository since this morning
+    comb = pd.read_csv(comb_path, low_memory=False) if os.path.exists(comb_path) else None
     fails = []
     fails += check_table(earth, "earth_real_1deg.csv", "EARTH", EARTH_RANGES, "E")
     fails += consistency_earth(earth, c)
     fails += check_table(moon, "moon_real_1deg.csv", "MOON", MOON_RANGES, "M")
     fails += consistency_moon(moon)
-    comb_fails = check_combined(comb, earth, moon)
+    comb_fails = check_combined(comb, earth, moon) if comb is not None else []
     fails += comb_fails
     bf, brec, zone_note = check_bundle()
     fails += bf
     records = {"earth_real_1deg.csv": len(earth), "moon_real_1deg.csv": len(moon),
-               "earth_moon_real_1deg.csv": len(comb), **brec}
+               **({"earth_moon_real_1deg.csv": len(comb)} if comb is not None else {}), **brec}
     fdf = pd.DataFrame(fails, columns=["table", "record", "kind", "column", "value"])
     fdf["record"] = fdf["record"].astype(str)
     fdf = fdf.sort_values(["table", "kind", "column", "record"], kind="mergesort")

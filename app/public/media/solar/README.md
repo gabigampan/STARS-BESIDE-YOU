@@ -1,3 +1,5 @@
+> **Status at 13:40 CET, 2026-11-15: the published Solar panels video files in this folder (`solar.mp4`, `solar.webm`, posters, `.vtt`) still show the EARLIER pair, lunar cell M59479 (75.5° S 100.5° W, south-polar zone) with Earth cell E44120 (Western Cape, South Africa), not the corrected model's first analog.** A re-render for Earth cell E40184 (21.5° S 44.5° E, Menabe, Madagascar) with lunar cell M23206 (25.5° N 13.5° W) is in progress; the rest of this README describes that new video and applies only once its files replace these. Do not present the current video as one of today's pairs.
+
 # Solar panels mission video
 
 **Credit line to show in the app:**

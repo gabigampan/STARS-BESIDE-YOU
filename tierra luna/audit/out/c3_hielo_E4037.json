@@ -1,0 +1,54 @@
+{
+ "cell": "E4037",
+ "bounds_lonlat": [
+  -103,
+  78,
+  -102,
+  79
+ ],
+ "natural_earth": {
+  "product": "Natural Earth 1:10m Physical, glaciated areas (ne_10m_glaciated_areas)",
+  "version": "5.2.0-pre",
+  "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_glaciated_areas.geojson",
+  "n_features": 1886,
+  "share_of_cell": 0.0,
+  "nearest_polygon_distance_deg_within_1deg": []
+ },
+ "worldcover": {
+  "product": "ESA WorldCover 10 m 2021 v200 (Sentinel-1/2; produced independently of CCI LC)",
+  "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N78W105_Map.tif",
+  "overviews": [
+   2,
+   4,
+   8,
+   16,
+   32,
+   64
+  ],
+  "overview_level_used": 2,
+  "factor": 8,
+  "pixel_deg": [
+   0.0006666666666666666,
+   0.0006666666666666666
+  ],
+  "window_shape": [
+   1500,
+   1500
+  ],
+  "n_valid": 2250000,
+  "n_nodata0": 0,
+  "class_share": {
+   "10 tree": 8.888888888888889e-07,
+   "30 grass": 0.018192,
+   "60 bare/sparse": 0.5448,
+   "70 snow and ice": 0.0015648888888888889,
+   "80 permanent water": 0.30532888888888887,
+   "90 herbaceous wetland": 0.025308444444444446,
+   "100 moss and lichen": 0.10480488888888889
+  },
+  "share_70_snow_ice": 0.0015648888888888889,
+  "share_80_water": 0.30532888888888887,
+  "share_60_bare_sparse": 0.5448,
+  "note": "overview pixels are a decimated (nearest/mode) sample of the 10 m map"
+ }
+}
