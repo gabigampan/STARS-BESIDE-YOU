@@ -74,7 +74,15 @@ Canadá); 0 en los 500 primeros; la mejor, el puesto 722.
 
 ### Tests
 
-Suite completa: ver el final de este documento.
+Suite completa (`python -m pytest -q` en `tierra luna`, después `git checkout` de `data/presets/presets.json`):
+**185 passed** (las 171 de antes y las 14 nuevas), 6 min 27 s. Una prueba existente se ha tenido que ajustar:
+`test_real_value_similarity.py::test_rover_and_solar_are_byte_identical_to_revision_5` congelaba el sha256 de
+`earth_base.bin` y de `missions.json`/`explain.json` de Rover y Paneles, que cambian a propósito (etiquetas de lugar,
+`not_used_by_engine.why`, limitaciones). Ahora sus huellas dejan fuera solo `country`/`region` de `earth_base.bin`, el
+`place` de `explain.json` y `not_used_by_engine.why`, y **dan el mismo valor sobre el paquete publicado antes de las
+correcciones y sobre el nuevo** (comprobado), así que siguen probando que ningún número, par ni gemelo de Rover y
+Paneles cambia; las limitaciones nuevas quedan congeladas en `KNOWN_LIMITATIONS`. `docs/AUDIO_TOP5.json` regenerado dos
+veces: idéntico.
 
 ## Fallos que no lo eran (o no del todo)
 

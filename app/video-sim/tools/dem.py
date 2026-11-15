@@ -98,3 +98,33 @@ def ldem16_sample(ldem16_path, lat, lon):
     i = np.clip(((90 - lat) * 16 - 0.5).round().astype(int), 0, 2879)
     j = (((lon % 360) * 16 - 0.5).round().astype(int)) % 5760
     return a[i, j].astype(np.float64) * 0.5
+
+
+# ---------------------------------------------------------------- simple cylindrical products
+# (SLDEM2015 / LDEM_xxx tiles: PDS3 IMG, one file, read locally with a memory map)
+#   0-based line   = LINE_PROJECTION_OFFSET   - lat * MAP_RESOLUTION
+#   0-based sample = SAMPLE_PROJECTION_OFFSET + (lon_east - CENTER_LONGITUDE) * MAP_RESOLUTION
+# (pixel centres; checked against LDEM_16 by prepare.py's georeference check)
+def parse_cyl_label(text):
+    def g(key):
+        m = re.search(r"^\s*" + key + r"\s*=\s*([^\n<]+)", text, re.M)
+        return m.group(1).strip().strip('"') if m else None
+    lab = dict(lines=int(g("LINES")), samples=int(g("LINE_SAMPLES")), res_ppd=float(g("MAP_RESOLUTION")),
+               scale_m=float(g("MAP_SCALE")) * (1000.0 if float(g("MAP_SCALE")) < 10 else 1.0),
+               line_off=float(g("LINE_PROJECTION_OFFSET")), sample_off=float(g("SAMPLE_PROJECTION_OFFSET")),
+               center_lon=float(g("CENTER_LONGITUDE")), sample_type=g("SAMPLE_TYPE"), sample_bits=int(g("SAMPLE_BITS")),
+               scaling=float(g("SCALING_FACTOR")), unit=g("UNIT"), max_lat=float(g("MAXIMUM_LATITUDE")),
+               min_lat=float(g("MINIMUM_LATITUDE")), west=float(g("WESTERNMOST_LONGITUDE")), east=float(g("EASTERNMOST_LONGITUDE")),
+               product_id=g("PRODUCT_ID"), created=g("PRODUCT_CREATION_TIME"), projection="simple_cylindrical")
+    lab["to_m"] = 1000.0 if (lab["unit"] or "").upper().startswith("KILOMETER") else 1.0
+    return lab
+
+
+def cyl_open(path, lab):
+    dt = {"PC_REAL": "<f4", "LSB_INTEGER": "<i2"}[lab["sample_type"]]
+    return np.memmap(path, dtype=dt, mode="r", shape=(lab["lines"], lab["samples"]))
+
+
+def cyl_pixel(lab, lat, lon):
+    lon_e = np.mod(lon, 360.0)
+    return lab["sample_off"] + (lon_e - lab["center_lon"]) * lab["res_ppd"], lab["line_off"] - lat * lab["res_ppd"]

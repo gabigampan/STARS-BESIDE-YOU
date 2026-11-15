@@ -61,6 +61,8 @@ def check_pair_values(sc):
     pv = sc.get("pair_values")
     if not pv:
         return []
+    if pv.get("mission") == "solar":
+        return check_pair_values_solar(sc, pv)
     ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
     it = [x for x in ex["missions"]["lunar_base"] if x["rank"] == pv["rank"]][0]
     sim = it["similarity"]
@@ -100,6 +102,86 @@ def check_pair_values(sc):
     return out
 
 
+def _f32_tenths(x):
+    """similarity.json texts.solar_limitation display rule: the stored float32 written with 1 decimal,
+    half up, as an integer of tenths (6.177 -> 62)."""
+    sh = "%.12f" % float(str(np.float32(x)))
+    i = sh.index(".")
+    return int(sh[:i]) * 10 + int(sh[i + 1]) + (1 if int(sh[i + 2]) >= 5 else 0)
+
+
+def check_pair_values_solar(sc, pv):
+    """Solar panels card: every number of scenario.pair_values (and every card level) must equal the
+    shipped bundle: explain.json missions.solar item of that rank, missions.json (zone, similarity
+    variables and their levels), mission_zones.json (zone label), similarity.json (display rule of the
+    share lost) and variables.json (levels)."""
+    ex = json.load(open(os.path.join(BUNDLE, "explain.json")))
+    it = [x for x in ex["missions"]["solar"] if x["rank"] == pv["rank"]][0]
+    sim = it["similarity"]
+    out = []
+
+    def eq(name, a, b):
+        ok = (a == b) if (isinstance(a, str) or a is None or b is None) else abs(float(a) - float(b)) < 1e-9
+        out.append(dict(item=name, scenario=a, bundle=b, ok=ok))
+        if not ok:
+            raise SystemExit("PAIR MISMATCH %s: scenario %s bundle %s" % (name, a, b))
+    eq("earth_id", pv["earth_id"], it["id"]); eq("moon_id", pv["moon_id"], sim["twin"]["id"])
+    eq("earth cell", sc["earth_site"]["cell_id"], "E%d" % it["id"]); eq("moon cell", sc["site"]["cell_id"], "M%d" % sim["twin"]["id"])
+    eq("earth lat", sc["earth_site"]["lat_deg"], it["lat"]); eq("earth lon", sc["earth_site"]["lon_deg"], it["lon"])
+    eq("moon lat", sc["site"]["lat_deg"], sim["twin"]["lat"]); eq("moon lon", sc["site"]["lon_deg"], sim["twin"]["lon"])
+    for k in ("suitability", "final"):
+        eq(k, pv[k], it[k])
+    eq("similarity", pv["similarity"], sim["value"]); eq("rule", pv["rule"], sim["rule"])
+    eq("pair_sentence", pv["pair_sentence"], sim["pair_sentence"])
+    if len(pv["variables"]) != len(sim["variables"]):
+        raise SystemExit("PAIR MISMATCH: number of similarity variables")
+    for v in sim["variables"]:
+        d = pv["variables"][v["variable"]]
+        for s_ in ("earth", "moon", "difference", "tolerance", "role", "weight"):
+            eq(v["variable"] + "." + s_, d[s_], v[s_])
+    for k, d in sim["not_part_of_similarity"].items():
+        for s_ in ("earth", "moon", "difference"):
+            eq("info.%s.%s" % (k, s_), pv["not_part_of_similarity"][k][s_], d[s_])
+    for k in ("ground_kwh_m2_day", "toa_kwh_m2_day", "lost_share"):
+        eq("atmosphere." + k, pv["atmosphere"][k], sim["atmosphere"][k])
+    # share lost, as displayed (similarity.json texts.solar_limitation.placeholders.loss_pct.formula)
+    A = _f32_tenths(sim["atmosphere"]["toa_kwh_m2_day"]); G = _f32_tenths(sim["atmosphere"]["ground_kwh_m2_day"])
+    eq("displayed toa (tenths)", pv["atmosphere"]["toa_display"], "%d.%d" % divmod(A, 10))
+    eq("displayed ground (tenths)", pv["atmosphere"]["ground_display"], "%d.%d" % divmod(G, 10))
+    eq("displayed share lost %", pv["atmosphere"]["loss_pct_display"], (200 * (A - G) + A) // (2 * A))
+    simj = json.load(open(os.path.join(BUNDLE, "similarity.json")))
+    eq("loss rule", pv["atmosphere"]["loss_rule"], simj["texts"]["solar_limitation"]["placeholders"]["loss_pct"]["rule"])
+    eq("saturation note", pv["saturation_note"], simj["texts"]["solar_similarity_saturation"]["text"])
+    eq("lunar day (Earth days)", pv["synodic_days_bundle"], simj["real_value"]["lunar_day_earth_days"])
+    # place names
+    eq("place.nearest", sc["earth_site"]["nearest_place"], it["place"]["nearest_place"])
+    eq("place.nearest_km", sc["earth_site"]["nearest_place_km"], it["place"]["nearest_place_km"])
+    eq("place.country", sc["earth_site"]["name"], ", ".join(x for x in (it["place"]["region"], it["place"]["country"]) if x))
+    eq("feature", sc["site"]["place_ref"]["feature"], sim["twin"]["feature"])
+    eq("feature_km", sc["site"]["place_ref"]["distance_km"], sim["twin"]["feature_km"])
+    # zone: missions.json rule and mission_zones.json label of the mission's region
+    ms = json.load(open(os.path.join(BUNDLE, "missions.json")))
+    m = [x for x in ms["missions"] if x.get("id") == "solar"][0]
+    z = m["similarity"]["zone"]
+    eq("zone abs_lat_max", sc["site"]["zone"]["abs_lat_max"], z["abs_lat_max"]); eq("zone elevation_max_m", sc["site"]["zone"]["elevation_max_m"], z["elevation_max_m"])
+    eq("zone cells", sc["site"]["zone"]["cells"], z["cells"])
+    mz = json.load(open(os.path.join(BUNDLE, "mission_zones.json")))
+    code = mz["mission_zone_regions"]["solar"]
+    eq("zone code", sc["site"]["zone"]["region_code"], code[0] if len(code) == 1 else None)
+    eq("zone name", sc["site"]["zone"]["name"], [r for r in mz["regions"] if r["code"] == code[0]][0]["label"])
+    if not (abs(sc["site"]["lat_deg"]) <= z["abs_lat_max"] and sc["table_values"]["moon"]["elevation_m"]["value"] <= z["elevation_max_m"]):
+        raise SystemExit("lunar cell outside the Solar panels zone")
+    # levels: similarity variables from missions.json sides, the rest from variables.json
+    vj = {v["name"]: v for v in json.load(open(os.path.join(BUNDLE, "variables.json")))["variables"]}
+    simv = {v["variable"]: v for v in m["similarity"]["variables"]}
+    for var, lv in pv["levels"].items():
+        for b, L in lv.items():
+            src = simv[var]["sides"][b.upper()]["level"] if var in simv else vj[var]["bodies"][b.upper()]["level"]
+            eq("level %s.%s" % (var, b), L, src)
+    eq("population EARTH", pv["populations"]["earth_paired"], m["similarity"]["paired_count"])
+    return out
+
+
 def dest(lat, lon, e, n):
     """local east/north metres (azimuthal equidistant about the site) -> lat, lon (deg)."""
     p = math.radians(lat)
@@ -117,7 +199,23 @@ def bilinear(a, r, c):
             + a[r0, c0 + 1] * (1 - fr) * fc + a[r0 + 1, c0 + 1] * fr * fc)
 
 
+_CYL = {}
+
+
 def sample_product(spec, lab, lat, lon, line_sign, cache):
+    if lab.get("projection") == "simple_cylindrical":     # one local file (memory map); spec["file"] in the cache
+        path = os.path.join(cache, spec["file"])
+        if path not in _CYL:
+            _CYL[path] = D.cyl_open(path, lab)
+        a = _CYL[path]
+        s, l = D.cyl_pixel(lab, lat, lon)
+        assert s.min() >= 0 and s.max() < lab["samples"] - 1 and l.min() >= 0 and l.max() < lab["lines"] - 1, "patch leaves the product"
+        r0, r1 = int(np.floor(l.min())), int(np.ceil(l.max())) + 1
+        c0, c1 = int(np.floor(s.min())), int(np.ceil(s.max())) + 1
+        blk = np.asarray(a[r0:r1 + 1, c0:c1 + 1], dtype=np.float64) * lab["scaling"] * lab["to_m"]
+        if not np.isfinite(blk).all() or np.abs(blk).max() > 20000:
+            raise SystemExit("invalid heights in %s rows %d-%d" % (spec["file"], r0, r1))
+        return bilinear(blk, l - r0, s - c0), path, (r0, r1)
     x, y = D.ps_forward(lat, lon)
     s, l = D.to_pixel(lab, x, y, line_sign)
     l0, a, raw = D.fetch_rows(spec["url"], lab, int(np.floor(l.min())) - 2, int(np.ceil(l.max())) + 2, cache)
@@ -217,9 +315,16 @@ def main():
     specs = sc["dem"]
     labs = {}
     for key in ("near", "far"):
-        labs[key], lp = D.get_label(specs[key]["label"], cache)
-    near_step = labs["near"]["scale_m"] / k
-    far_native = labs["far"]["scale_m"] / k
+        if specs[key].get("projection") == "simple_cylindrical":
+            lp = os.path.join(cache, os.path.basename(specs[key]["label"]))
+            if not os.path.exists(lp):
+                D.curl(specs[key]["label"], lp)
+            labs[key] = D.parse_cyl_label(open(lp, encoding="latin-1").read())
+            k = 1.0   # simple cylindrical: MAP_SCALE is the true north-south spacing; east-west it is finer (x cos lat)
+        else:
+            labs[key], lp = D.get_label(specs[key]["label"], cache)
+    near_step = labs["near"]["scale_m"] / k * specs["near"].get("native_step_px", 1)
+    far_native = labs["far"]["scale_m"] / k * specs["far"].get("native_step_px", 1)
     print("true ground spacing at %.2f: near %.2f m/px, far %.2f m/px (k=%.5f)" % (lat, near_step, far_native, k))
 
     near = build_grid(sc, specs["near"], labs["near"], specs["near"]["half_extent_m"], near_step, None, cache)
@@ -292,7 +397,7 @@ def main():
         earth = dict(draw=bool(ev["elev_mean_deg"] - 0.95 > hz), az_deg=az, elev_deg=ev["elev_mean_deg"], terrain_horizon_deg=hz,
                      note="Earth angular radius 0.95 deg; drawn only if the whole disc clears the real horizon at the mean position")
     elif ev:
-        i = int(round(ev.get("az_mean_deg", (ev["az_min_deg"] + ev["az_max_deg"]) / 2) / 0.5)) % n_obj
+        i = int(round((ev["az_mean_deg"] if "az_mean_deg" in ev else (ev["az_min_deg"] + ev["az_max_deg"]) / 2) / 0.5)) % n_obj
         earth = dict(draw=False, terrain_horizon_at_earth_az_deg=obj_hz[i], elev_mean_deg=ev["elev_mean_deg"])
     checks["earth"] = earth
     print("earth:", earth)

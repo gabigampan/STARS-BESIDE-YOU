@@ -5,98 +5,124 @@
   "fps": 30,
   "width": 1920,
   "height": 1080,
-  "duration_s": 42,
+  "duration_s": 44,
   "card_s": 6,
   "site": {
     "body": "MOON",
-    "cell_id": "M59479",
-    "lat_deg": -75.5,
-    "lon_deg": -100.5,
-    "label": "75.5° S 100.5° W",
-    "place": "near Boltzmann crater, far side",
+    "cell_id": "M24296",
+    "lat_deg": 22.5,
+    "lon_deg": -3.5,
+    "label": "22.5° N 3.5° W",
+    "place": "75.8 km from Huxley",
     "place_ref": {
-      "feature": "Boltzmann",
-      "iau_lat": -74.8229,
-      "iau_lon_e": 269.5931,
-      "diameter_km": 72.31,
-      "source": "IAU/USGS Gazetteer of Planetary Nomenclature, MOON_nomenclature_center_pts.zip, https://planetarynames.wr.usgs.gov/Feature/805"
-    }
+      "feature": "Huxley",
+      "distance_km": 75.8,
+      "source": "Nearest primary IAU feature of the cell and its distance: bundle app/public/data/v2/explain.json (solar rank 1, similarity.twin.feature / feature_km); IAU/USGS Gazetteer of Planetary Nomenclature"
+    },
+    "zone": {
+      "name": "Low equatorial plains (the maria)",
+      "region_code": "D",
+      "abs_lat_max": 30.0,
+      "elevation_max_m": -1200.0,
+      "cells": 6686,
+      "bundle_rule_name": "Mare Tranquillitatis & Equatorial Maria",
+      "source": "mission_zones.json region D label (mission_zone_regions.solar = D); rule and cell count from missions.json missions[solar].similarity.zone (absolute latitude <= 30 deg and elevation <= -1,200 m, 6,686 cells)"
+    },
+    "card_name": "near Huxley"
   },
   "earth_site": {
     "body": "EARTH",
-    "cell_id": "E44120",
-    "lat_deg": -32.5,
-    "lon_deg": 20.5,
-    "name": "Western Cape, South Africa"
+    "cell_id": "E38464",
+    "lat_deg": -16.5,
+    "lon_deg": 124.5,
+    "name": "Australia",
+    "nearest_place": "Derby",
+    "nearest_place_km": 128.7,
+    "source": "explain.json solar rank 1 'place' (country; region null in the bundle; nearest GeoNames populated place)"
   },
   "table_values": {
     "moon": {
       "elevation_m": {
-        "value": 122.4,
+        "value": -1842.7,
         "level": "MEASURED",
         "unit": "m above the 1737.4 km sphere"
       },
-      "slope_deg": {
-        "value": 10.693,
+      "slope_iso_deg": {
+        "value": 1.047,
         "level": "DERIVED",
-        "unit": "deg (3.79 km baseline)"
+        "unit": "deg (the mission's slope_deg)"
       },
-      "illum_frac": {
-        "value": 0.4543,
+      "roughness_m": {
+        "value": 39.03,
         "level": "DERIVED",
-        "unit": "fraction of time lit (LOLA topography)"
+        "unit": "m (deviogram, ~1.9 km lag)"
       },
       "irradiance_kwh_m2_day": {
-        "value": 2.372,
+        "value": 9.604,
         "level": "DERIVED",
-        "unit": "kWh/m2/day, horizontal"
+        "unit": "kWh/m2/day, horizontal, whole lunar cycle"
       },
       "sun_elev_max_deg": {
-        "value": 16.04,
+        "value": 69.04,
         "level": "DERIVED",
         "unit": "deg"
       },
+      "illum_frac": {
+        "value": 0.5016,
+        "level": "DERIVED",
+        "unit": "fraction of time lit (flat geometry)"
+      },
       "sun_low_frac_0_5deg": {
-        "value": 0.2271,
+        "value": 0.0601,
         "level": "DERIVED",
         "unit": "fraction of daylight"
       },
-      "tmin_k": {
-        "value": 75.27,
-        "level": "MEASURED",
+      "temp_k": {
+        "value": 213.39,
+        "level": "DERIVED",
         "unit": "K"
       },
-      "tmax_k": {
-        "value": 299.25,
-        "level": "MEASURED",
+      "lst_diurnal_amp_k": {
+        "value": 293.36,
+        "level": "DERIVED",
         "unit": "K"
       }
     },
     "earth": {
       "elevation_m": {
-        "value": 1127.1,
+        "value": 137.3,
         "level": "MEASURED",
         "unit": "m above the EGM2008 geoid"
       },
-      "slope_deg": {
-        "value": 2.137,
-        "level": "DERIVED",
-        "unit": "deg (3.71 km baseline)"
-      },
-      "irradiance_kwh_m2_day": {
-        "value": 5.518,
-        "level": "MODELLED",
-        "unit": "kWh/m2/day, horizontal, at the ground"
-      },
-      "sun_elev_max_deg": {
-        "value": 80.939,
+      "slope_iso_deg": {
+        "value": 0.976,
         "level": "DERIVED",
         "unit": "deg"
       },
-      "sun_low_frac_0_5deg": {
-        "value": 0.07016,
+      "roughness_m": {
+        "value": 39.2,
         "level": "DERIVED",
-        "unit": "fraction of daylight"
+        "unit": "m"
+      },
+      "irradiance_kwh_m2_day": {
+        "value": 6.177,
+        "level": "MODELLED",
+        "unit": "kWh/m2/day, horizontal, at the ground (WorldClim 2.1)"
+      },
+      "sun_elev_max_deg": {
+        "value": 90,
+        "level": "DERIVED",
+        "unit": "deg"
+      },
+      "temp_k": {
+        "value": 302.37,
+        "level": "DERIVED",
+        "unit": "K"
+      },
+      "lst_diurnal_amp_k": {
+        "value": 11.89,
+        "level": "DERIVED",
+        "unit": "K"
       }
     }
   },
@@ -109,12 +135,12 @@
     "moon_obliquity_deg": {
       "value": 1.54,
       "level": "MEASURED",
-      "source": "NASA Photojournal PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map (same value as the table formula, provenance_moon.csv)"
+      "source": "NASA Photojournal PIA13720, https://science.nasa.gov/photojournal/south-pole-illumination-map"
     },
     "synodic_period_days": {
       "value": 29.53,
       "level": "MEASURED",
-      "source": "NSSDC Moon fact sheet, 'Synodic period (days) 29.53', https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+      "source": "NSSDC Moon fact sheet, 'Synodic period (days) 29.53'; the same value as similarity.json real_value.lunar_day_earth_days"
     },
     "moon_radius_m": {
       "value": 1737400,
@@ -124,49 +150,72 @@
   },
   "dem": {
     "near": {
-      "product": "LOLA LDEM_75S_60M (polar stereographic, V2.0)",
-      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_75s_60m.img",
-      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_75s_60m.lbl",
+      "product": "SLDEM2015 (LOLA + SELENE TC, 512 ppd tile 00N-30N 315-360E, V1.0)",
+      "projection": "simple_cylindrical",
+      "file": "sldem2015_512_00n_30n_315_360_float.img",
+      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.img",
+      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.lbl",
       "half_extent_m": 6000
     },
     "far": {
-      "product": "LOLA LDEM_60S_240M (polar stereographic, V2.0)",
-      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_60s_240m.img",
-      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_60s_240m.lbl",
+      "product": "SLDEM2015 (LOLA + SELENE TC, 512 ppd tile 00N-30N 315-360E, V1.0)",
+      "projection": "simple_cylindrical",
+      "file": "sldem2015_512_00n_30n_315_360_float.img",
+      "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.img",
+      "label": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/sldem2015/tiles/float_img/sldem2015_512_00n_30n_315_360_float.lbl",
       "half_extent_m": 60000,
+      "native_step_px": 4,
       "render_step_px": 2
     },
     "line_sign": -1,
     "horizon_azimuths": 90
   },
   "sun": {
-    "declination_deg": -1.54,
-    "declination_note": "Southern-summer solstice: the Sun reaches the table's sun_elev_max_deg (16.04 deg) at local noon. Illustrative choice of season.",
-    "hour_angle_start_deg": -86.0,
-    "hour_angle_end_deg": 96.0,
-    "sim_end_s": 36
+    "declination_deg": 1.54,
+    "declination_note": "Northern-summer solstice: the Sun reaches the table's sun_elev_max_deg (69.04 deg = 90 - 22.5 + 1.54) at local noon, in the south. Illustrative choice of season; other seasons change the noon Sun by at most 3.1 deg.",
+    "hour_angle_start_deg": -89.0,
+    "hour_angle_end_deg": 89.0,
+    "sim_end_s": 38,
+    "window_note": "One lunar daytime, from shortly after sunrise (Sun 1.5 deg up) to shortly before sunset: 178 deg of the 181.3 deg of hour angle between flat-horizon sunrise and sunset (14.6 of the 14.9 Earth days of daylight). The other half of the 29.53-day cycle is night (shaded on the graph)."
   },
   "earth_visibility": {
-    "source": "JPL Horizons API (DE441), observer at the site (coord@301, 259.5 E, -75.5, 0 km), target 399, QUANTITIES=4, airless, 2026-01-01..2044-12-31 every 12 h",
-    "elev_min_deg": -11.43,
-    "elev_max_deg": 5.63,
-    "elev_mean_deg": -2.88,
-    "frac_above_flat_horizon": 0.351,
-    "az_min_deg": 90.82,
-    "az_max_deg": 109.52,
     "draw": false,
-    "decision": "Mean elevation below the horizon: the Earth is not drawn."
+    "elev_mean_deg": 67.2,
+    "az_mean_deg": 170.9,
+    "decision": "Not drawn. At its mean position (the sub-Earth point at 0 N 0 E; elevation 90 deg minus the 22.8 deg arc from the site, az 170.9 deg; parallax and libration ignored, a geometric estimate) the Earth stands about 67 deg up in the south, above the camera's field of view for most of the video."
   },
   "array": {
-    "assumption": "Illustrative engineering shape, not a real design: vertical mast 8.0 m; two wings of 3 hinged panels, each panel 2.0 m x 1.2 m (total 14.4 m2); panels end vertical (tilt 90 deg from horizontal) and the mast turns them to face the Sun's azimuth (one-axis tracking).",
-    "mast_height_m": 8.0,
+    "assumption": "Illustrative engineering shape, not a real design: short mast, hub 2.4 m above ground; two wings of 3 hinged panels, each panel 2.0 m x 1.2 m (total 14.4 m2), that unfold upwards and end flat (horizontal, tilt 0 deg), as the mission's irradiance (a horizontal surface) assumes. No tracking.",
+    "mast_height_m": 2.4,
     "panel_w_m": 2.0,
     "panel_h_m": 1.2,
     "panels_per_wing": 3,
-    "final_tilt_deg": 90,
+    "final_tilt_deg": 0,
     "deploy_start_s": 5.0,
-    "deploy_end_s": 11.0,
-    "hub_height_m": 6.0
+    "deploy_end_s": 10.0,
+    "done_hold_s": 1.5,
+    "hub_height_m": 2.4
+  },
+  "sun_status": {
+    "low_deg": 10,
+    "high_deg": 60,
+    "low_morning_stowed": "Sunrise: low Sun in the east, panels stowed",
+    "morning_stowed": "Morning: Sun climbing, panels stowed",
+    "deploying": "Unfolding the flat panels",
+    "deployed": "Panels deployed, lying flat",
+    "low_morning": "Low Sun in the east: long shadows",
+    "morning": "Morning: Sun climbing in the east",
+    "high": "Sun high in the south: short shadows, most power",
+    "afternoon": "Afternoon: Sun descending in the west",
+    "low_evening": "Low Sun in the west: long shadows",
+    "blocked": "Sun behind the terrain",
+    "partly": "Sun partly behind the terrain",
+    "night": "Lunar night: Sun below the horizon"
+  },
+  "panel_text": {
+    "earth_row": "not drawn (~67° up, mean pos.)",
+    "graph_caption": "Power per m², flat panel, over one whole lunar cycle (0–1,400 W/m²)",
+    "model_tag": "Model, not a measurement: power per m² of a flat panel = S0 1361 W/m² × sin(Sun elevation) × visible part of the solar disc, before any cell efficiency. The lunar day lasts 29.5 Earth days and about half of it is night."
   },
   "camera": {
     "keys": [
@@ -174,211 +223,220 @@
         "t": 0.0,
         "dist": 1900,
         "elev_deg": 16,
-        "az_deg": 95,
+        "az_deg": 140,
         "target_z": 0
       },
       {
         "t": 4.8,
-        "dist": 80,
-        "elev_deg": 12,
-        "az_deg": 75,
-        "target_z": 4
+        "dist": 60,
+        "elev_deg": 14,
+        "az_deg": 150,
+        "target_z": 2
       },
       {
         "t": 11.0,
-        "dist": 46,
-        "elev_deg": 8,
-        "az_deg": 62,
-        "target_z": 4.5
+        "dist": 36,
+        "elev_deg": 17,
+        "az_deg": 165,
+        "target_z": 1.5
       },
       {
-        "t": 22.0,
+        "t": 20.0,
+        "dist": 38,
+        "elev_deg": 21,
+        "az_deg": 200,
+        "target_z": 1.5
+      },
+      {
+        "t": 30.0,
+        "dist": 42,
+        "elev_deg": 16,
+        "az_deg": 232,
+        "target_z": 1.5
+      },
+      {
+        "t": 38.0,
         "dist": 50,
-        "elev_deg": 9,
-        "az_deg": 25,
-        "target_z": 4.5
-      },
-      {
-        "t": 36.0,
-        "dist": 58,
-        "elev_deg": 10,
-        "az_deg": 330,
-        "target_z": 4.5
+        "elev_deg": 12,
+        "az_deg": 250,
+        "target_z": 1.5
       }
     ],
     "fov_deg": 50
   },
-  "poster_s": 26.0,
+  "poster_s": 19.0,
   "encode": {
     "x264_crf": 25,
     "vp9_crf": 34
   },
+  "render": {
+    "relief_credit": "LOLA + Kaguya (SLDEM2015)"
+  },
   "card": {
-    "title": "Earth analog and lunar twin: solar power",
-    "subtitle": "Values from the project tables (1-degree cells). Each value carries its level.",
+    "title": "Earth analog and lunar twin: solar panels, pair number 1",
+    "subtitle": "Suitability 96.9, similarity 99.99, final 98.45. The lunar cell lies in the low equatorial plains (the maria), the Solar panels zone: within 30° of the equator and at or below −1,200 m. Values from the project tables (1-degree cells); each carries its level.",
     "rows": [
       {
-        "label": "Horizontal irradiance",
-        "earth": {
-          "var": "irradiance_kwh_m2_day",
-          "unit": "kWh/m²/day",
-          "note": "at the ground"
-        },
-        "moon": {
-          "var": "irradiance_kwh_m2_day",
-          "unit": "kWh/m²/day",
-          "note": "no atmosphere"
-        }
+        "label": "Sunlight above the atmosphere",
+        "sub": "key variable (tolerance 0.6)",
+        "var": "irradiance_toa_kwh_m2_day",
+        "unit": "kWh/m²/day",
+        "tol": true,
+        "earth_note": "top of the atmosphere, formula from latitude",
+        "moon_note": "at the surface"
       },
       {
-        "label": "Highest Sun elevation",
-        "earth": {
-          "var": "sun_elev_max_deg",
-          "unit": "°"
-        },
-        "moon": {
-          "var": "sun_elev_max_deg",
-          "unit": "°"
-        }
+        "label": "Sunlight reaching the ground",
+        "sub": "not part of the similarity",
+        "kind": "atmosphere",
+        "var": "irradiance_kwh_m2_day",
+        "moon_from": "irradiance_toa_kwh_m2_day",
+        "unit": "kWh/m²/day",
+        "earth_note": "WorldClim 2.1",
+        "moon_note": "no atmosphere: all of it"
       },
       {
-        "label": "Daylight with Sun below 5°",
-        "earth": {
-          "var": "sun_low_frac_0_5deg",
-          "unit": "of daylight"
-        },
-        "moon": {
-          "var": "sun_low_frac_0_5deg",
-          "unit": "of daylight"
-        }
+        "label": "Slope",
+        "sub": "secondary (tolerance 2°)",
+        "var": "slope_deg",
+        "unit": "°",
+        "tol": true
       },
       {
-        "label": "Fraction of time sunlit",
-        "earth": null,
-        "moon": {
-          "var": "illum_frac",
-          "unit": "",
-          "note": "LOLA topography"
-        }
+        "label": "Roughness",
+        "sub": "secondary (tolerance 30 m)",
+        "var": "roughness_m",
+        "unit": "m",
+        "tol": true
       },
       {
-        "label": "Mean slope (3.7 km baseline)",
-        "earth": {
-          "var": "slope_deg",
-          "unit": "°"
-        },
-        "moon": {
-          "var": "slope_deg",
-          "unit": "°"
-        }
+        "label": "Mean surface temperature",
+        "sub": "not part of the similarity",
+        "var": "temp_k",
+        "info": true,
+        "unit": "K",
+        "earth_note": "MODIS",
+        "moon_note": "Diviner"
       },
       {
-        "label": "Elevation",
-        "earth": {
-          "var": "elevation_m",
-          "unit": "m",
-          "note": "geoid"
-        },
-        "moon": {
-          "var": "elevation_m",
-          "unit": "m",
-          "note": "1737.4 km sphere"
-        }
+        "label": "Daily temperature swing",
+        "sub": "not part of the similarity",
+        "var": "lst_diurnal_amp_k",
+        "info": true,
+        "unit": "K",
+        "earth_note": "MODIS",
+        "moon_note": "Diviner"
       }
     ],
-    "sentence": "The Earth cell gets 2.3 times the horizontal sunlight of the lunar cell (5.518 vs 2.372 kWh/m²/day), under a far higher Sun (80.939° vs 16.04° at most) and on gentler ground (2.137° vs 10.693°). Tests there would not reproduce the low, horizon-skimming lunar Sun: below 5° for 0.2271 of lunar daylight against 0.07016 on Earth.",
-    "legend": "Levels as stated in the project provenance tables. Earth irradiance: WorldClim 2.1 (modelled, non-commercial licence). Moon irradiance: horizontal panel, S0 = 1361 W/m², per 24 h. Earth elevation above the EGM2008 geoid; Moon elevation above the 1737.4 km reference sphere."
+    "legend": "Sunlight above the atmosphere: on Earth, the annual-mean daily sunlight on a horizontal surface at the top of the atmosphere, from the cell's latitude (a formula); on the Moon, the table's surface irradiance (horizontal, S0 = 1361 W/m², averaged over the whole lunar cycle, nights included). Sunlight reaching the ground on Earth: WorldClim 2.1, modelled (non-commercial licence). A panel at the Earth site receives only the sunlight that reaches the ground. The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability."
+  },
+  "pair_values": {
+    "source": "app/public/data/v2/explain.json, missions.solar item with rank 1; similarity.json (display rule of the share lost, saturation note, lunar day); missions.json and mission_zones.json (zone); variables.json and missions.json similarity sides (levels). prepare.py checks every value here against those files, and render.js runs that check before it renders.",
+    "mission": "solar",
+    "rule": "real_value_tolerance",
+    "rank": 1,
+    "earth_id": 38464,
+    "moon_id": 24296,
+    "suitability": 96.9,
+    "similarity": 99.99,
+    "final": 98.45,
+    "variables": {
+      "irradiance_toa_kwh_m2_day": {
+        "earth": 9.6005,
+        "moon": 9.604,
+        "difference": 0.0035,
+        "tolerance": 0.6,
+        "role": "key",
+        "weight": 0.8
+      },
+      "slope_deg": {
+        "earth": 0.976,
+        "moon": 1.047,
+        "difference": 0.071,
+        "tolerance": 2.0,
+        "role": "secondary",
+        "weight": 0.1
+      },
+      "roughness_m": {
+        "earth": 39.2,
+        "moon": 39.03,
+        "difference": 0.17,
+        "tolerance": 30.0,
+        "role": "secondary",
+        "weight": 0.1
+      }
+    },
+    "not_part_of_similarity": {
+      "temp_k": {
+        "earth": 302.37,
+        "moon": 213.39,
+        "difference": 88.98
+      },
+      "lst_diurnal_amp_k": {
+        "earth": 11.89,
+        "moon": 293.36,
+        "difference": 281.47
+      }
+    },
+    "atmosphere": {
+      "ground_kwh_m2_day": 6.177,
+      "toa_kwh_m2_day": 9.6005,
+      "lost_share": 0.3566,
+      "toa_display": "9.6",
+      "ground_display": "6.2",
+      "loss_pct_display": 35,
+      "loss_rule": "share_lost_of_displayed_tenths"
+    },
+    "pair_sentence": "This pair is matched on sunlight above the atmosphere: 9.6 kWh/m²/day at the top of Earth's atmosphere here and 9.6 kWh/m²/day on the lunar surface. At the Earth site only 6.2 of those 9.6 kWh/m²/day reach the ground (35 % is lost in the atmosphere), while the Moon has no atmosphere and its day lasts 29.5 Earth days, about half of them in darkness. Terrain (slope and roughness) is a secondary criterion.",
+    "saturation_note": "The Solar panels similarity is saturated. Sunlight above the atmosphere depends on latitude only, so almost every Earth point finds many cells of the equatorial maria that match it almost exactly: its twin is the best of a median of about 1,840 candidate cells that pass the tolerances, 78 % of the 6,360 pairs score 99 or more and 514 show 100.00. Here a high similarity says that the pair is within the tolerances, not that it is closer than another pair: read the real differences shown beside it (sunlight above the atmosphere, slope and roughness). Among the 100 best-ranked points the similarity only goes from 99.88 to 100.00, so their order follows suitability.",
+    "synodic_days_bundle": 29.53,
+    "levels": {
+      "irradiance_toa_kwh_m2_day": {
+        "earth": "DERIVED",
+        "moon": "DERIVED"
+      },
+      "irradiance_kwh_m2_day": {
+        "earth": "MODELLED",
+        "moon": "DERIVED"
+      },
+      "slope_deg": {
+        "earth": "DERIVED",
+        "moon": "DERIVED"
+      },
+      "roughness_m": {
+        "earth": "DERIVED",
+        "moon": "DERIVED"
+      },
+      "temp_k": {
+        "earth": "DERIVED",
+        "moon": "DERIVED"
+      },
+      "lst_diurnal_amp_k": {
+        "earth": "DERIVED",
+        "moon": "DERIVED"
+      }
+    },
+    "populations": {
+      "earth_paired": 6360,
+      "source": "missions.json missions[solar].similarity.paired_count"
+    }
   },
   "captions": {
     "cue_times": [
       0,
-      3,
-      6,
-      9,
-      12,
+      5,
+      10,
+      11.5,
       15,
-      18,
-      21,
+      19,
       24,
-      27,
       30,
-      33,
       36,
-      39
+      38,
+      41
     ],
-    "en": {
-      "header": "Solar mission video (3D simulation), English descriptive captions",
-      "note": "No speech. Each cue gives the values on the on-screen panel at its start time. Sun, power and energy are computed; sizes and timing are illustrative.",
-      "sun": "Sun",
-      "az": "azimuth",
-      "hz": "terrain horizon",
-      "power": "Power",
-      "energy": "energy",
-      "days": "Earth days elapsed",
-      "temp": "Surface",
-      "model": "model",
-      "status": {
-        "Dawn: Sun behind the terrain": "Dawn: Sun behind the terrain",
-        "Dawn: array stowed": "Dawn: array stowed",
-        "Deploying array": "Deploying the array",
-        "Tracking the Sun": "Tracking the Sun",
-        "Sun blocked by terrain": "Sun blocked by terrain",
-        "Sun partly behind terrain": "Sun partly behind terrain",
-        "Sun below the horizon": "Sun below the horizon"
-      },
-      "text": [
-        "3D simulation driven by table data, not real footage. Dawn over the real LOLA relief at 75.5° S 100.5° W, near Boltzmann crater on the far side; only the high ground is lit.",
-        "The Sun clears the eastern terrain at the array site; the camera descends to the stowed array.",
-        "The mast extends and the two wings of hinged panels begin to unfold.",
-        "The wings open fully; energy is counted from the end of deployment.",
-        "The vertical panels turn to face the Sun as it moves along the horizon.",
-        "Long shadows of the mast and panels lie across the ground.",
-        "Local noon: the Sun is at its highest, about 16° above the horizon, in the north.",
-        "The Sun moves west along the horizon; the shadows swing round.",
-        "",
-        "",
-        "The Sun sinks towards the western terrain.",
-        "Low Sun in the west: the ground near the array falls into shadow, then the Sun goes behind the western terrain and the power drops.",
-        "Closing card: Earth analog Western Cape, South Africa (cell E44120) against the lunar cell M59479. Horizontal irradiance 5.518 against 2.372 kWh/m² per day; highest Sun 80.939° against 16.04°; Sun below 5° for 0.07016 against 0.2271 of daylight; lunar cell sunlit 0.4543 of the time; slope 2.137° against 10.693°; elevation 1127.1 m against 122.4 m.",
-        "The Earth cell gets 2.3 times the horizontal sunlight under a far higher Sun on gentler ground; tests there would not reproduce the low lunar Sun. 3D simulation driven by table data. Not real footage."
-      ]
-    },
-    "es": {
-      "header": "Vídeo de la misión solar (simulación 3D), subtítulos descriptivos en español",
-      "note": "Sin voz. Cada subtítulo da los valores del panel en pantalla al inicio del subtítulo. Sol, potencia y energía son calculados; tamaños y tiempos son ilustrativos.",
-      "sun": "Sol",
-      "az": "acimut",
-      "hz": "horizonte del terreno",
-      "power": "Potencia",
-      "energy": "energía",
-      "days": "días terrestres transcurridos",
-      "temp": "Superficie",
-      "model": "modelo",
-      "status": {
-        "Dawn: Sun behind the terrain": "Amanecer: Sol tras el relieve",
-        "Dawn: array stowed": "Amanecer: paneles plegados",
-        "Deploying array": "Desplegando los paneles",
-        "Tracking the Sun": "Siguiendo al Sol",
-        "Sun blocked by terrain": "Sol tapado por el relieve",
-        "Sun partly behind terrain": "Sol en parte tras el relieve",
-        "Sun below the horizon": "Sol bajo el horizonte"
-      },
-      "text": [
-        "Simulación 3D basada en datos de las tablas, no son imágenes reales. Amanecer sobre el relieve real LOLA en 75,5° S 100,5° O, cerca del cráter Boltzmann en la cara oculta; solo el terreno alto está iluminado.",
-        "El Sol supera el relieve del este en el punto de los paneles; la cámara desciende hasta los paneles plegados.",
-        "El mástil se extiende y las dos alas de paneles con bisagras empiezan a desplegarse.",
-        "Las alas se abren del todo; la energía se cuenta desde el final del despliegue.",
-        "Los paneles verticales giran para mirar al Sol mientras se desplaza a ras del horizonte.",
-        "Las sombras largas del mástil y los paneles se extienden por el suelo.",
-        "Mediodía local: el Sol está en su punto más alto, unos 16° sobre el horizonte, al norte.",
-        "El Sol se desplaza al oeste a ras del horizonte; las sombras giran.",
-        "",
-        "",
-        "El Sol baja hacia el relieve del oeste.",
-        "Sol bajo al oeste: el suelo junto a los paneles queda en sombra, luego el Sol se oculta tras el relieve del oeste y la potencia cae.",
-        "Tarjeta final: el análogo terrestre Cabo Occidental, Sudáfrica (celda E44120) frente a la celda lunar M59479. Irradiancia horizontal 5,518 frente a 2,372 kWh/m² al día; Sol más alto 80,939° frente a 16,04°; Sol por debajo de 5° durante 0,07016 frente a 0,2271 de las horas de luz; celda lunar iluminada 0,4543 del tiempo; pendiente 2,137° frente a 10,693°; altitud 1127,1 m frente a 122,4 m.",
-        "La celda terrestre recibe 2,3 veces más luz solar horizontal, con un Sol mucho más alto y en terreno más suave; allí no se reproduce el Sol bajo de la Luna. Simulación 3D basada en datos de las tablas. No son imágenes reales."
-      ]
-    }
+    "cue_rule": "Cue boundaries are the frames where the panel status changes (render.js --timeline), plus mid-phase cues and the closing card; render.js refuses to write captions if the status changes inside a cue.",
+    "en": {},
+    "es": {}
   }
 }
