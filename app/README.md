@@ -276,3 +276,25 @@ Tests: `npm run test:data` (store and recompute on every passing cell of both bu
 browser) and `npm run test:flow` (the whole flow in Chromium on both variants at 1440x900 and
 375x812, forced failures, 768 and 3840 px layouts; screenshots in `$SHOTS_DIR`). The no-twin
 variant is read from `$OTHER_BUNDLE` and served from a temporary copy.
+
+## Deployment
+
+The app is a static site on Vercel (project `stars-beside-you`, production URL
+https://stars-beside-you.vercel.app). It is deployed prebuilt: Vercel runs no build; `vercel.json`
+only sets caching headers (hashed `assets/` immutable for a year, `cesium/` a week, `data/` an hour,
+`audio/`, `media/` and `static/` a day). Vercel serves the text files compressed (brotli).
+
+From the repository root, with the token in the environment (never on the command line):
+
+```sh
+set -a; . /root/.config/stars/vercel.env; set +a
+bash scripts/deploy_vercel.sh            # production; add --preview for a preview deployment
+```
+
+The script builds `app/` key-free (`VITE_USE_ION=0`, empty `VITE_CESIUM_ION_TOKEN`, so
+`.env.local` is never used), refuses to deploy if the build holds the local ion token, the Vercel
+token or any JWT-shaped string that CesiumJS does not ship itself (CesiumJS's own public default
+token in `Ion.js` is the one `eyJ` string expected in `dist/`), checks Vercel's CLI limits (100 MB
+per file on Hobby, 15,000 files), deploys `dist/` and prints the URL. The build is about 82 MB in
+about 440 files; the largest files are the four videos (about 11 MB each). Preview deployments are
+behind Vercel Authentication; production is public.

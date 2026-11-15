@@ -213,8 +213,11 @@ def test_new_texts_have_show_missions_and_no_empty_figures(b):
         assert "missions" not in t or t["missions"], k
         assert not re.search(r"\{[a-z0-9_]+\}", t["text"]), k
     for m in ("rover", "solar", "lunar_base"):
-        assert "five of the highest-scoring analogs in our model" in texts[f"list_order_{m}"]["text"]
         assert "ordered by the final score" in texts[f"list_order_{m}"]["text"]
+    # 12:10 CET point 5: Rover's five are five of the sites tied at the top (test_texts_1210.py)
+    for m in ("solar", "lunar_base"):
+        assert "five of the highest-scoring analogs in our model" in texts[f"list_order_{m}"]["text"]
+    assert "highest-scoring" not in texts["list_order_rover"]["text"]
 
 
 @pytest.mark.skip(reason='superseded by the decisions of 2026-11-15 11:28/11:36/11:51 CET (contract revision 8): this test pins the pre-revision-8 state; the audited_morning criteria set reproduces that state (tests/test_decisions_1128.py::test_audited_morning_reproduces_42d8bba_bundle)')
@@ -272,11 +275,12 @@ def test_numbers_without_effect_lists_inert_gates_and_unread_values(b):
     t = b.json("similarity.json")["texts"]["numbers_without_effect"]
     assert "5_inventario_sentido_fisico.md" in t["source"]
     s = t["text"]
-    for part in ("Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650",
-                 "sun_elev_max_deg >= 10", "sun_low_frac_0_5deg <= 0.25", "Lunar base: mask_fraction >= 0.3",
-                 "the 'tolerances' block", "the 'workable_days' block"):
+    # plain words since 12:10 CET point 6 (no column names in a text the user reads)
+    for part in ("Rover: slope (degrees) at most 15, roughness (m) at least 5, roughness (m) at most 650",
+                 "maximum sun elevation (degrees) at least 10", "share of time with the sun below 5 degrees at most 0.25",
+                 "Lunar base: land share of the cell at least 0.3", "its block of tolerances", "its block of workable days"):
         assert part in s, part
-    assert "slope_300m_deg >= 0.5" not in s                  # the slope minimum does work
+    assert "slope (degrees) at least 0.5" not in s           # the slope minimum does work
 
 
 def test_external_validation_percentiles_recomputed(b, missions):
@@ -296,7 +300,8 @@ def test_external_validation_percentiles_recomputed(b, missions):
     assert f"Qaidam (top {names['Qaidam']['rank_percentile']:.1f} %)" in text
     for m in ("solar", "lunar_base"):
         t = b.json("similarity.json")["texts"][f"external_validation_{m}"]
-        assert t["text"].startswith("No external validation exists") and "3_robustez" in t["source"]
+        # computed from the research r4 site lists since the Lunar base re-audit (test_texts_1210.py)
+        assert t["text"].startswith("What was checked against known places") and "r4_rank_sites.py" in t["source"]
 
 
 # ----------------------------------------------------------------------------- decision 3

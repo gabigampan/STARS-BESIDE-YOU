@@ -146,6 +146,20 @@ def check_pair_values_solar(sc, pv):
     it = [x for x in ex["missions"]["solar"] if x["id"] == first][0]
     sim = it["similarity"]
     out = [dict(item="first analog", scenario=pv["earth_id"], bundle=first, ok=True)]
+    eq0 = lambda n, x, y: None
+    pos = top5.index(first) + 1 if top5 and first in top5 else None
+    if pv.get("top5_position") != pos:
+        raise SystemExit("PAIR MISMATCH position among the five shown: scenario %s bundle %s" % (pv.get("top5_position"), pos))
+    if pos and ms0["top5"]["overall_ranks"][pos - 1] != it["rank"]:
+        raise SystemExit("PAIR MISMATCH top5 overall rank")
+    want = ("Earth analog and lunar twin: solar panels, analog %d of the five shown" % pos) if pos else \
+        ("Earth analog and lunar twin: one of the Solar panels analog pairs (overall rank %d)" % it["rank"])
+    if sc["card"]["title"] != want:
+        raise SystemExit("PAIR MISMATCH card title: %r, expected %r" % (sc["card"]["title"], want))
+    for k, v in (("rank", it["rank"]), ("suitability", it["suitability"]), ("similarity", sim["value"]), ("final", it["final"])):
+        if ("%s" % v) not in sc["card"]["subtitle"]:
+            raise SystemExit("PAIR MISMATCH card subtitle does not show %s %s" % (k, v))
+    out.append(dict(item="position/title/subtitle", scenario=pos, bundle=pos, ok=True))
 
     def eq(name, a, b):
         ok = (a == b) if (isinstance(a, str) or a is None or b is None) else abs(float(a) - float(b)) < 1e-9
@@ -156,7 +170,7 @@ def check_pair_values_solar(sc, pv):
     eq("earth cell", sc["earth_site"]["cell_id"], "E%d" % it["id"]); eq("moon cell", sc["site"]["cell_id"], "M%d" % sim["twin"]["id"])
     eq("earth lat", sc["earth_site"]["lat_deg"], it["lat"]); eq("earth lon", sc["earth_site"]["lon_deg"], it["lon"])
     eq("moon lat", sc["site"]["lat_deg"], sim["twin"]["lat"]); eq("moon lon", sc["site"]["lon_deg"], sim["twin"]["lon"])
-    for k in ("suitability", "final"):
+    for k in ("suitability", "final", "rank"):
         eq(k, pv[k], it[k])
     eq("similarity", pv["similarity"], sim["value"]); eq("rule", pv["rule"], sim["rule"])
     eq("pair_sentence", pv["pair_sentence"], sim["pair_sentence"])

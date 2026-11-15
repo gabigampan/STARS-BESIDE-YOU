@@ -146,3 +146,15 @@ Nota: hay un pase de solo texto en marcha en `final-integration`; este punto se 
 - Fallos de implementación: **ninguno** (puntos 1-3, 8).
 - Fallos de texto: punto 9, 1 y 2 (bloquean), 3 y 4 (menores).
 - Debilidades de criterios decididos (se informan, no se cuentan como fallo): cinco que nunca se repiten bajo la incertidumbre documentada (0/200, igual que por la mañana); E17538 a 0,6 K de la compuerta (sale del embudo en el 36,5 % de las corridas); ningún análogo polar pasa (compuerta de 15 K y falta de LST antártica); quinto en empate práctico (10/16 en ±10 %).
+
+## Revisión final del punto 9 (tras el pase de textos, final-integration 0486ad9)
+
+Fusionado `origin/final-integration` (0486ad9). El paquete solo cambia en textos (`similarity.json`, `missions.json`, `manifest.json`): mi recálculo sigue dando 0 gemelos, 0 rangos y 0,00 de diferencia en los dos conjuntos (corregido y vuelta atrás). Comprobación con `tierra luna/audit/ra_base_texts.py` (salida `out/ra_base_texts.json`):
+
+- `external_validation_lunar_base`: ya no dice que los sitios que pasan no tienen gemelo; dice 13 sitios, 3 pasan, 2 con gemelo (MDRS número 335, Craters of the Moon número 179), Black Point pasa sin gemelo, los demás no pasan con su razón (= mis cifras y las de la tabla), 0 de 7 tropicales pasan. Correcto.
+- `top5_stability_lunar_base`: no pendiente; entre los cinco / top 20 = 18,0/51,5, 23,0/52,5, 19,0/43,5, 18,0/38,0, 22,5/59,0 %; 0 de 200; ±10 %: 16, 16, 15, 15, 10 de 16. Idéntico a mis cifras.
+- Pesos que suman 0,95: dicho en `lunar_base_criteria` y en `deviations_from_team` (efectivos 36,8 / 26,3 / 26,3 / 10,5 %). Correcto.
+- `weighted_variables` `tmin_c` `also_in_similarity`: ahora `true`. Correcto.
+- `rock_or_bare_frac`: la razón dice ahora MEASURED en la procedencia (con la matización de que es una clasificación). Coherente.
+
+**Punto 9: GO.** Los nueve puntos quedan en GO. **Recomendación final: publicar la Base lunar corregida.**

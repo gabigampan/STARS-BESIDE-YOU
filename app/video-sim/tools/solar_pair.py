@@ -146,8 +146,13 @@ def main():
             "pair_sentence": sim["pair_sentence"], "saturation_note": simj["texts"]["solar_similarity_saturation"]["text"],
             "synodic_days_bundle": simj["real_value"]["lunar_day_earth_days"], "levels": lv,
             "populations": {"earth_paired": ms["similarity"]["paired_count"], "source": "missions.json missions[solar].similarity.paired_count"}}
-        sc["card"]["title"] = "Earth analog and lunar twin: solar panels, pair number %d" % it["rank"]
-        sc["card"]["subtitle"] = ("Suitability %s, similarity %s, final %s. The lunar cell lies in the %s, the Solar panels zone: within %g° of the equator and at or below −%s m. "
+        t5 = (ms.get("top5") or {}).get("ids") or []
+        pos = t5.index(eid) + 1 if eid in t5 else None
+        sc["pair_values"]["top5_position"] = pos
+        sc["card"]["title"] = ("Earth analog and lunar twin: solar panels, analog %d of the five shown" % pos) if pos else \
+            ("Earth analog and lunar twin: one of the Solar panels analog pairs (overall rank %d)" % it["rank"])
+        rank_txt = ("Analog %d of the five shown (overall rank %d). " % (pos, it["rank"])) if pos else ("Overall rank %d. " % it["rank"])
+        sc["card"]["subtitle"] = rank_txt + ("Suitability %s, similarity %s, final %s. The lunar cell lies in the %s, the Solar panels zone: within %g° of the equator and at or below −%s m. "
                                   "Values from the project tables (1-degree cells); each carries its level.") % (
             it["suitability"], sim["value"], it["final"], zlabel[0].lower() + zlabel[1:], zone["abs_lat_max"], "{:,.0f}".format(-zone["elevation_max_m"]))
         sc["card"]["legend"] = sc["card"].pop("legend_head") + " " + sc["pair_values"]["saturation_note"]
@@ -205,12 +210,14 @@ def main():
         toa, sl, ro = V["irradiance_toa_kwh_m2_day"], V["slope_deg"], V["roughness_m"]
         tk, sw = npv["temp_k"], npv["lst_diurnal_amp_k"]
         en += [
-            "Closing card: the Earth analog in %s (cell %s, %s, %s km from %s) and its lunar twin, cell %s %s, matched on sunlight above the atmosphere: %s against %s kWh/m² per day (difference %s, tolerance %s). At the Earth site only %s kWh/m² per day reach the ground (modelled): %s of %s, %d %% is lost in the atmosphere; the Moon has no atmosphere. Slope %s° against %s°; roughness %s m against %s m. Suitability %s, similarity %s, final %s." % (
+            ("Closing card: analog %d of the five Solar panels analogs shown (overall rank %d). " % (pv["top5_position"], pv["rank"]) if pv["top5_position"] else "Closing card: overall rank %d. " % pv["rank"]) +
+            "The Earth analog in %s (cell %s, %s, %s km from %s) and its lunar twin, cell %s %s, matched on sunlight above the atmosphere: %s against %s kWh/m² per day (difference %s, tolerance %s). At the Earth site only %s kWh/m² per day reach the ground (modelled): %s of %s, %d %% is lost in the atmosphere; the Moon has no atmosphere. Slope %s° against %s°; roughness %s m against %s m. Suitability %s, similarity %s, final %s." % (
                 e["name"], e["cell_id"], ll(elat, elon), e["nearest_place_km"], e["nearest_place"], m["cell_id"], m["card_name"], toa["earth"], toa["moon"], toa["difference"], toa["tolerance"],
                 at["ground_kwh_m2_day"], at["ground_display"], at["toa_display"], at["loss_pct_display"], sl["earth"], sl["moon"], ro["earth"], ro["moon"], pv["suitability"], pv["similarity"], pv["final"]),
             "A panel at the Earth site does not receive what a panel on the Moon receives: only the sunlight that reaches the ground arrives there, while the Moon's day lasts 29.5 Earth days, about half of them dark. Mean surface temperature %s K against %s K and daily swing %s K against %s K are not part of the similarity. 3D simulation driven by table data. Not real footage." % (tk["earth"], tk["moon"], sw["earth"], sw["moon"])]
         esl += [
-            "Tarjeta final: el análogo terrestre en %s (celda %s, %s, a %s km de %s) y su gemela lunar, la celda %s cerca de %s, emparejadas por la luz solar por encima de la atmósfera: %s frente a %s kWh/m² al día (diferencia %s, tolerancia %s). En el punto terrestre solo %s kWh/m² al día llegan al suelo (modelado): %s de %s, se pierde un %d %% en la atmósfera; la Luna no tiene atmósfera. Pendiente %s° frente a %s°; rugosidad %s m frente a %s m. Idoneidad %s, similitud %s, final %s." % (
+            ("Tarjeta final: análogo %d de los cinco análogos de paneles solares mostrados (puesto %d de la clasificación completa). " % (pv["top5_position"], pv["rank"]) if pv["top5_position"] else "Tarjeta final: puesto %d de la clasificación completa. " % pv["rank"]) +
+            "El análogo terrestre en %s (celda %s, %s, a %s km de %s) y su gemela lunar, la celda %s cerca de %s, emparejadas por la luz solar por encima de la atmósfera: %s frente a %s kWh/m² al día (diferencia %s, tolerancia %s). En el punto terrestre solo %s kWh/m² al día llegan al suelo (modelado): %s de %s, se pierde un %d %% en la atmósfera; la Luna no tiene atmósfera. Pendiente %s° frente a %s°; rugosidad %s m frente a %s m. Idoneidad %s, similitud %s, final %s." % (
                 e["name"], e["cell_id"], ll(elat, elon, ","), es(e["nearest_place_km"]), e["nearest_place"], m["cell_id"], m["place_ref"]["feature"], es(toa["earth"]), es(toa["moon"]), es(toa["difference"]), es(toa["tolerance"]),
                 es(at["ground_kwh_m2_day"]), es(at["ground_display"]), es(at["toa_display"]), at["loss_pct_display"], es(sl["earth"]), es(sl["moon"]), es(ro["earth"]), es(ro["moon"]), es(pv["suitability"]), es(pv["similarity"]), es(pv["final"])),
             "Un panel en el punto terrestre no recibe lo mismo que un panel en la Luna: allí solo llega la luz que alcanza el suelo, mientras que el día lunar dura 29,5 días terrestres, aproximadamente la mitad a oscuras. La temperatura media de la superficie, %s K frente a %s K, y la oscilación diaria, %s K frente a %s K, no forman parte de la similitud. Simulación 3D basada en datos de las tablas. No son imágenes reales." % (es(tk["earth"]), es(tk["moon"]), es(sw["earth"]), es(sw["moon"]))]

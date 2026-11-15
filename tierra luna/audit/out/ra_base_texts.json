@@ -91,7 +91,7 @@
     "mission_card"
    ],
    "decision": "2026-11-15 11:23 CET, points 4 and 5",
-   "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best."
+   "text": "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a cell half or more snow and ice, a cell less than half land and a point within 2 degrees of one already chosen are skipped (numbers 1, 3, 5, 6 and 7 of the full ranking)."
   },
   "top5_stability_lunar_base": {
    "missions": [
@@ -102,10 +102,10 @@
     "data_and_limits"
    ],
    "decision": "2026-11-15 11:23 CET, point 4 (state the fragility of each top 5 with its stability percentages)",
-   "text": "Stability figures pending the independent re-audit.",
-   "status": "pending",
-   "status_reason": "figures not filled",
-   "source": null
+   "text": "How stable these five are: under the documented uncertainty of the input data (200 simulations), number 1 stays in the top 5 in 18.0 % of the simulations and in the top 20 in 51.5 %; number 2 stays in the top 5 in 23.0 % of the simulations and in the top 20 in 52.5 %; number 3 stays in the top 5 in 19.0 % of the simulations and in the top 20 in 43.5 %; number 4 stays in the top 5 in 18.0 % of the simulations and in the top 20 in 38.0 %; number 5 stays in the top 5 in 22.5 % of the simulations and in the top 20 in 59.0 %. The same five come back together in 0 of the 200 simulations. Under a change of plus or minus 10 % in any one weight, number 1 stays in the top 5 in 16 of the 16 weight changes, number 2 in 16, number 3 in 15, number 4 in 15 and number 5 in 10. The five are a sample of close candidates, not a fixed answer.",
+   "status": "audited",
+   "status_reason": null,
+   "source": "docs/stats_audit/9_reauditoria_base.json 'stability' (corrected per_analog share_in_five, share_top20, weights_pm10_in_five; five_identical_set 0.0; 200 runs, seed 20261115), independent re-audit of Lunar base, 2026-11-15"
   },
   "external_validation_lunar_base": {
    "missions": [
@@ -114,9 +114,9 @@
    "show": [
     "data_and_limits"
    ],
-   "decision": "2026-11-15 11:23 CET, point 4 (state honestly what was checked)",
-   "source": "docs/stats_audit/3_robustez_validacion_ranking.md section 6.1 ('Base lunar (N = 450) ... No hay, por tanto, validación externa positiva de Base lunar con este benchmark')",
-   "text": "No external validation exists for Lunar base: the cold and polar analog sites of our benchmark do not pass the Lunar base funnel (no land surface temperature in Antarctica, or a daily swing below the 15 K gate), and the benchmark sites that pass it have no twin among the cells of NASA's nine candidate regions."
+   "decision": "2026-11-15 12:10 CET re-audit of Lunar base (docs/stats_audit/9_reauditoria_base.md: the earlier text said the passing sites had no twin, which is false); research r4 site lists",
+   "source": "computed at build from tierra luna/data/benchmark/validation_sites_lunar_base.csv (research r4; the same figures as tierra luna/research/r4_rank_sites.py run on the bundle: MDRS rank 335, Craters of the Moon rank 179, as found by docs/stats_audit/9_reauditoria_base.md)",
+   "text": "What was checked against known places: 13 stations and analog field sites used for space research in cold, high or thermally harsh places, and 7 warm, humid tropical stations as a contrast. Of the 13, 3 pass the Lunar base funnel and 2 have a twin; in the ranking of 450 paired points they are Mars Desert Research Station (MDRS) (number 335) and Craters of the Moon National Monument (number 179). Passing without a twin: Black Point Lava Flow and SP Mountain (San Francisco Volcanic Field) (passes, but finds no twin among the cells of NASA's nine candidate regions). The other sites do not pass the funnel: Concordia Station (Dome C) (no value of daily land-surface temperature swing), Haughton impact crater (Devon Island, Nunavut) (daily land-surface temperature swing below 15), McMurdo Dry Valleys (no value of daily land-surface temperature swing), Svalbard - Bockfjorden volcanic complex (Sverrefjell) (daily land-surface temperature swing below 15, thermal-inertia class not allowed), Kangerlussuaq (ice-sheet margin) (daily land-surface temperature swing below 15), Mauna Kea - Pu'u Hiwahine (PISCES site) (coldest temperature above 5), Teide National Park - Minas de San Jose (Tenerife) (land share of the cell below 0.3, daily land-surface temperature swing below 15, coldest temperature above 5, thermal-inertia class not allowed), Iceland - Askja caldera (daily land-surface temperature swing below 15), Lanzarote - Timanfaya lava fields (land share of the cell below 0.3, coldest temperature above 5, thermal-inertia class not allowed) and Neumayer III / EDEN ISS greenhouse (no value of daily land-surface temperature swing, elevation below 1, land share of the cell below 0.3, thermal-inertia class not allowed). The recognised polar stations are analogs of cold and isolation, not of a large daily temperature swing, so the 15 K swing gate removes them. Of the 7 tropical stations, 0 pass the funnel. The check describes the ranking, it does not prove it."
   },
   "numbers_without_effect": {
    "show": [
@@ -124,10 +124,10 @@
    ],
    "decision": "2026-11-15 11:23 CET, point 4 (the numbers that have no effect)",
    "source": "inert gates: computed at build (Earth land cells that fail only that gate bound: none); values no code reads: docs/stats_audit/5_inventario_sentido_fisico.md section A.5 (i)",
-   "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3. Values of the team's file mission_scoring.json that no code reads: Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua). The team's file is quoted as it is: these numbers are listed here, not removed.",
+   "text": "Some numbers have no effect at this resolution. Gate limits that, removed on their own, would let no extra cell through: Rover: slope (degrees) at most 15, roughness (m) at least 5, roughness (m) at most 650; Solar panels: land share of the cell at least 0.3, slope (degrees) at most 15, maximum sun elevation (degrees) at least 10, share of time with the sun below 5 degrees at most 0.25; Lunar base: land share of the cell at least 0.3. Values of the team's scoring file that no code reads: Rover: its block of tolerances, its block of workable days, its weights of five domains (relief, material, thermal, light, water); Solar panels: its weights of five domains (relief, material, thermal, light, water); Lunar base: its weights of five domains (relief, material, thermal, light, water). The team's file is quoted as it is: these numbers are listed here, not removed.",
    "figures": {
-    "inert_gates": "Rover: slope_300m_deg <= 15, rough_300m_m >= 5, rough_300m_m <= 650; Solar panels: mask_fraction >= 0.3, slope_deg <= 15, sun_elev_max_deg >= 10, sun_low_frac_0_5deg <= 0.25; Lunar base: mask_fraction >= 0.3",
-    "unread_values": "Rover: the 'tolerances' block, the 'workable_days' block, the domain 'weights' (relieve, material, termico, luz, agua); Solar panels: the domain 'weights' (relieve, material, termico, luz, agua); Lunar base: the domain 'weights' (relieve, material, termico, luz, agua)"
+    "inert_gates": "Rover: slope (degrees) at most 15, roughness (m) at least 5, roughness (m) at most 650; Solar panels: land share of the cell at least 0.3, slope (degrees) at most 15, maximum sun elevation (degrees) at least 10, share of time with the sun below 5 degrees at most 0.25; Lunar base: land share of the cell at least 0.3",
+    "unread_values": "Rover: its block of tolerances, its block of workable days, its weights of five domains (relief, material, thermal, light, water); Solar panels: its weights of five domains (relief, material, thermal, light, water); Lunar base: its weights of five domains (relief, material, thermal, light, water)"
    }
   },
   "zone_edge_lunar_base": {
@@ -140,7 +140,7 @@
    ],
    "decision": "2026-11-15 11:23 CET, decision 3 (the Lunar base zone is kept)",
    "source": "computed at build from engine/data/artemis_iii_regions.geojson (engine_config twin_zone_regions)",
-   "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions (280 cells), so a twin may lie mostly outside the region nearest to it: 69 of the 103 Lunar base twins have less than 50 % of their cell inside a region. Each twin says whether it is 'in' or 'at the edge of' NASA's candidate region it touches most (twins.json nasa_region).",
+   "text": "The Lunar base zone includes every 1-degree lunar cell that touches one of NASA's nine candidate regions (280 cells), so a twin may lie mostly outside the region nearest to it: 69 of the 103 Lunar base twins have less than 50 % of their cell inside a region. Beside each twin we print either 'in NASA's ... candidate region' (50 % or more of the twin's cell lies inside that region) or 'at the edge of NASA's ... candidate region' (less than 50 %), naming the region its cell overlaps most.",
    "figures": {
     "zone_cells": "280",
     "edge_n": "69",
@@ -158,9 +158,9 @@
    ],
    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
    "source": "docs/stats_audit/research_3_base_lunar.md and research_4_validacion_externa.md; values recomputed from the Earth table at build; cells as in research/r4_rank_sites.py (data/benchmark/validation_sites_lunar_base.csv)",
-   "text": "The Lunar base keeps the team's gate 'daily thermal swing at least 15 K'. Without it, Earth cells with a swing of about 1 K (for example on Ellesmere Island) would match the Moon's coldest temperature at a similarity of about 99, and the key variable, the thermal swing, would carry no weight in practice. The recognised polar stations therefore do not pass: daily land-surface swing Haughton crater (Devon Island, cell E5130) 2.5 K; Svalbard, Bockfjorden (cell E3793) 1.2 K; Kangerlussuaq, ice-sheet margin (cell E8049) 6.6 K; McMurdo and Concordia have no land-surface temperature in the table. They are analogs of cold and isolation, not of thermal cycling.",
+   "text": "The Lunar base keeps the team's gate 'daily thermal swing at least 15 K'. Without it, Earth cells with a swing of about 1 K (for example on Ellesmere Island) would match the Moon's coldest temperature at a similarity of about 99, and the key variable, the thermal swing, would carry no weight in practice. The recognised polar stations therefore do not pass: daily land-surface swing Haughton crater (Devon Island) 2.5 K; Svalbard, Bockfjorden 1.2 K; Kangerlussuaq, ice-sheet margin 6.6 K; McMurdo and Concordia have no land-surface temperature in the table. They are analogs of cold and isolation, not of thermal cycling.",
    "figures": {
-    "sites": "Haughton crater (Devon Island, cell E5130) 2.5 K; Svalbard, Bockfjorden (cell E3793) 1.2 K; Kangerlussuaq, ice-sheet margin (cell E8049) 6.6 K",
+    "sites": "Haughton crater (Devon Island) 2.5 K; Svalbard, Bockfjorden 1.2 K; Kangerlussuaq, ice-sheet margin 6.6 K",
     "gate_min": "15"
    }
   },
@@ -174,7 +174,7 @@
    ],
    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
    "source": "docs/stats_audit/research_3_base_lunar.md option R",
-   "text": "The Lunar base suitability uses one criterion for the ground instead of two: the bare-or-sparse fraction (from ESA CCI land cover, continuous, without the urban class) weighs 25 %; the thermal-inertia class (built from the same land-cover classes) and the permafrost class (modelled, missing on 607 of 2,419 passing points, with no sourced link to a base) carry no weight. The thermal-inertia class is still required and still excludes water.",
+   "text": "The Lunar base suitability uses one criterion for the ground instead of two: the bare-or-sparse fraction (from ESA CCI land cover, continuous, without the urban class) weighs 25 %; the thermal-inertia class (built from the same land-cover classes) and the permafrost class (modelled, missing on 607 of 2,419 passing points, with no sourced link to a base) carry no weight. The thermal-inertia class is still required and still excludes water. The four weights left (daily temperature swing 35 %, coldest temperature 25 %, bare-or-sparse fraction 25 %, ground sunlight 10 %) sum to 95 %, and the suitability is divided by that sum, so in effect they weigh 36.8 %, 26.3 %, 26.3 % and 10.5 %.",
    "figures": {}
   },
   "deviations_from_team": {
@@ -183,30 +183,29 @@
    ],
    "decision": "2026-11-15 11:28, 11:36 and 11:51 CET (the team lead, through his delegate; docs/DECISIONS.md 'Decisiones de las 11:28 y 11:36')",
    "source": "engine_config.json criteria_sets (the team's tierra luna/mission_scoring.json is quoted and unchanged)",
-   "text": "Where we depart from the team's mission_scoring.json (7 criteria; criteria set per mission: Rover: corrected; Solar panels: corrected; Lunar base: corrected). Columns: mission | criterion | the team's value | ours | reason | source. Solar panels | irradiance_kwh_m2_day | weight 0.35, bad 2.5, good 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). | docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET || Solar panels | sun_elev_max_deg | weight 0.15, bad 10, good 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | sun_low_frac_0_5deg | weight 0.15, bad 0.25, good 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | clear_frac_isccp | not used (weight 0) | weight 0.35, bad 0.308, good 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised. | ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET || Lunar base | thermal_inertia_class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'. | docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET || Lunar base | rock_or_bare_frac | weight 0.1, bad 0.1, good 0.7 | weight 0.25, bad 0.1, good 0.7 | Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out. | research_3 option R, approved 11:51 CET || Lunar base | permafrost_class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. | research_3 option R, approved 11:51 CET",
+   "text": "Where we depart from the team's scoring file (7 criteria). Columns: mission | criterion | the team's value | ours | reason. Solar panels | ground sunlight (WorldClim) | weight 0.35, no marks at 2.5, full marks at 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). || Solar panels | maximum sun elevation (degrees) | weight 0.15, no marks at 10, full marks at 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. || Solar panels | share of time with the sun below 5 degrees | weight 0.15, no marks at 0.25, full marks at 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. || Solar panels | clear-sky fraction (satellite clouds) | not used (weight 0) | weight 0.35, no marks at 0.308, full marks at 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. 0.308 (no marks) and 0.671 (full marks) are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear-sky fraction (satellite clouds) over the Earth points that pass the Solar panels funnel. Not a required variable: a point without a value has this weight renormalised. || Lunar base | thermal-inertia class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as bare-ground share. It stays a required variable and keeps its gate excluding water. || Lunar base | bare-ground share | weight 0.1, no marks at 0.1, full marks at 0.7 | weight 0.25, no marks at 0.1, full marks at 0.7 | Weight 0.10 to 0.25 (no marks at 0.1 and full marks at 0.7, unchanged): one criterion for the ground instead of two built from the same classes; the fraction is MEASURED in the provenance file (a count of satellite land-cover pixels of the bare and sparse-vegetation classes, so a classification, not a measured bare-ground cover), continuous, and leaves the urban class out. The four Lunar base weights now sum to 0.95 (0.35, 0.25, 0.25, 0.10); the suitability divides by that sum, so they act as 0.368, 0.263, 0.263 and 0.105. || Lunar base | permafrost class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. The sources of each change are listed in the project's decision log.",
    "figures": {
-    "rows": "Solar panels | irradiance_kwh_m2_day | weight 0.35, bad 2.5, good 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). | docs/stats_audit/research_2_solar_idoneidad.md option E2, approved by the team lead 2026-11-15 11:51 CET || Solar panels | sun_elev_max_deg | weight 0.15, bad 10, good 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | sun_low_frac_0_5deg | weight 0.15, bad 0.25, good 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. | research_2 option E2, approved 11:51 CET || Solar panels | clear_frac_isccp | not used (weight 0) | weight 0.35, bad 0.308, good 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. bad 0.308 and good 0.671 are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear_frac_isccp over the Earth points that pass the Solar panels funnel (recomputed at build; tests/test_decisions_1128.py). Not a required variable: a point without a value has this weight renormalised. | ISCCP-H HGM v01r00, NOAA NCEI, 2012-2016 (Rossow and Schiffer 1999, BAMS 80:2261-2287); research_2 option E2, approved 11:51 CET || Lunar base | thermal_inertia_class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as rock_or_bare_frac. It stays a required variable and keeps its gate excluding 'agua'. | docs/stats_audit/research_3_base_lunar.md option R, approved by the team lead 2026-11-15 11:51 CET || Lunar base | rock_or_bare_frac | weight 0.1, bad 0.1, good 0.7 | weight 0.25, bad 0.1, good 0.7 | Weight 0.10 to 0.25 (bad 0.1 and good 0.7 unchanged): one criterion for the ground instead of two built from the same classes; the fraction is DERIVED, continuous, and leaves the urban class out. | research_3 option R, approved 11:51 CET || Lunar base | permafrost_class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility. | research_3 option R, approved 11:51 CET",
-    "n": "7",
-    "sets": "Rover: corrected; Solar panels: corrected; Lunar base: corrected"
+    "rows": "Solar panels | ground sunlight (WorldClim) | weight 0.35, no marks at 2.5, full marks at 6 | not used (weight 0) | A MODELLED WorldClim value that duplicates what the similarity already compares (sunlight above the atmosphere); it stays a required variable, keeps its gate (>= 2.5) and stays in every pair's sentence (ground irradiance, above-atmosphere sunlight, share lost). || Solar panels | maximum sun elevation (degrees) | weight 0.15, no marks at 10, full marks at 70 | not used (weight 0) | Pure geometry of latitude (maximum sun elevation); its gate (>= 10) is unchanged. || Solar panels | share of time with the sun below 5 degrees | weight 0.15, no marks at 0.25, full marks at 0.03 | not used (weight 0) | Pure geometry of latitude (share of time with the sun below 5 degrees); its gate (<= 0.25) is unchanged. || Solar panels | clear-sky fraction (satellite clouds) | not used (weight 0) | weight 0.35, no marks at 0.308, full marks at 0.671 | A measured-satellite (DERIVED) clear-sky fraction replaces the three latitude-driven or modelled criteria. 0.308 (no marks) and 0.671 (full marks) are the team's design values taken from the data's distribution: the 10th and 90th percentiles of clear-sky fraction (satellite clouds) over the Earth points that pass the Solar panels funnel. Not a required variable: a point without a value has this weight renormalised. || Lunar base | thermal-inertia class | weight 0.15 | not used (weight 0) | Weight 0.15 to 0: a second criterion built from the same land-cover classes as bare-ground share. It stays a required variable and keeps its gate excluding water. || Lunar base | bare-ground share | weight 0.1, no marks at 0.1, full marks at 0.7 | weight 0.25, no marks at 0.1, full marks at 0.7 | Weight 0.10 to 0.25 (no marks at 0.1 and full marks at 0.7, unchanged): one criterion for the ground instead of two built from the same classes; the fraction is MEASURED in the provenance file (a count of satellite land-cover pixels of the bare and sparse-vegetation classes, so a classification, not a measured bare-ground cover), continuous, and leaves the urban class out. The four Lunar base weights now sum to 0.95 (0.35, 0.25, 0.25, 0.10); the suitability divides by that sum, so they act as 0.368, 0.263, 0.263 and 0.105. || Lunar base | permafrost class | weight 0.05 | not used (weight 0) | Weight 0.05 to 0: no sourced link to a base, missing on 607 of 2,419 passing points, MODELLED, non-monotonic utility.",
+    "n": "7"
    }
   }
  },
  "known_limitations": [
-  "lunar_base is an exact copy of the team's thermal block (team design values, no external source). The ice block is shown per Earth cell as information only (passes or not, its suitability) and never changes this ranking; no lunar cell passes ice because lunar permafrost_class is the MODELLED label 'ninguno', which the ice gate excludes.",
-  "Similarity is a likeness of thermal POSITION and real terrain, not of temperature (team decision of 2026-11-15 08:55 CET; missions.json similarity, rule percentile_and_real_tolerance): the coldest temperature and the daily temperature swing are compared as percentiles within each population (Earth: the points passing this mission's funnel; Moon: the cells of NASA's nine candidate landing regions near the lunar south pole), each within 10 percentile points, and slope and roughness in real values (within 4 deg and 60 m). Equal positions do not mean equal temperatures: on every pair the twin is far colder and swings far more than the Earth point, and the real values and differences are shown with every pair (similarity.json texts.lunar_base_pair_sentence). A point with no such cell keeps its suitability but has no twin, no similarity and no final score (missions.json similarity.unpaired_by_kind).",
-  "The coldest temperature (tmin_c) is a MODELLED air temperature on Earth (WorldClim, coldest month, interpolated) and a MEASURED surface temperature on the Moon (Diviner night minimum); the Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range. Both are suitability criteria on Earth, and in the similarity only their position within each population is compared, never their values.",
-  "Antarctica has no land surface temperature product here, so its cells fail on lst_diurnal_amp_k with 'no data' (missing_data).",
-  "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best.",
-  "Stability figures pending the independent re-audit.",
-  "The Lunar base keeps the team's gate 'daily thermal swing at least 15 K'. Without it, Earth cells with a swing of about 1 K (for example on Ellesmere Island) would match the Moon's coldest temperature at a similarity of about 99, and the key variable, the thermal swing, would carry no weight in practice. The recognised polar stations therefore do not pass: daily land-surface swing Haughton crater (Devon Island, cell E5130) 2.5 K; Svalbard, Bockfjorden (cell E3793) 1.2 K; Kangerlussuaq, ice-sheet margin (cell E8049) 6.6 K; McMurdo and Concordia have no land-surface temperature in the table. They are analogs of cold and isolation, not of thermal cycling.",
-  "The Lunar base suitability uses one criterion for the ground instead of two: the bare-or-sparse fraction (from ESA CCI land cover, continuous, without the urban class) weighs 25 %; the thermal-inertia class (built from the same land-cover classes) and the permafrost class (modelled, missing on 607 of 2,419 passing points, with no sourced link to a base) carry no weight. The thermal-inertia class is still required and still excludes water."
+  "The Lunar base criteria are an exact copy of the team's thermal block (team design values, no external source). The ice block is shown per Earth cell as information only (passes or not, its suitability) and never changes this ranking; no lunar cell passes ice because the lunar permafrost class is the MODELLED label 'none', which the ice gate excludes.",
+  "Similarity is a likeness of thermal POSITION and real terrain, not of temperature (team decision of 2026-11-15 08:55 CET): the coldest temperature and the daily temperature swing are compared as percentiles within each population (Earth: the points passing this mission's funnel; Moon: the cells of NASA's nine candidate landing regions near the lunar south pole), each within 10 percentile points, and slope and roughness in real values (within 4 deg and 60 m). Equal positions do not mean equal temperatures: on every pair the twin is far colder and swings far more than the Earth point, and the real values and differences are shown with every pair. A point with no such cell keeps its suitability but has no twin, no similarity and no final score.",
+  "The coldest temperature is a MODELLED air temperature on Earth (WorldClim, coldest month, interpolated) and a MEASURED surface temperature on the Moon (Diviner night minimum); the Earth diurnal amplitude is a difference between two satellite overpasses and understates the daily range. Both are suitability criteria on Earth, and in the similarity only their position within each population is compared, never their values.",
+  "Antarctica has no land surface temperature product here, so its cells fail for lack of a daily temperature swing value ('no data').",
+  "The list is ordered by the final score: 50 % similarity to the lunar twin and 50 % suitability for the mission. These are five of the highest-scoring analogs in our model, not a proven best: the five best final scores once a cell half or more snow and ice, a cell less than half land and a point within 2 degrees of one already chosen are skipped (numbers 1, 3, 5, 6 and 7 of the full ranking).",
+  "How stable these five are: under the documented uncertainty of the input data (200 simulations), number 1 stays in the top 5 in 18.0 % of the simulations and in the top 20 in 51.5 %; number 2 stays in the top 5 in 23.0 % of the simulations and in the top 20 in 52.5 %; number 3 stays in the top 5 in 19.0 % of the simulations and in the top 20 in 43.5 %; number 4 stays in the top 5 in 18.0 % of the simulations and in the top 20 in 38.0 %; number 5 stays in the top 5 in 22.5 % of the simulations and in the top 20 in 59.0 %. The same five come back together in 0 of the 200 simulations. Under a change of plus or minus 10 % in any one weight, number 1 stays in the top 5 in 16 of the 16 weight changes, number 2 in 16, number 3 in 15, number 4 in 15 and number 5 in 10. The five are a sample of close candidates, not a fixed answer.",
+  "The Lunar base keeps the team's gate 'daily thermal swing at least 15 K'. Without it, Earth cells with a swing of about 1 K (for example on Ellesmere Island) would match the Moon's coldest temperature at a similarity of about 99, and the key variable, the thermal swing, would carry no weight in practice. The recognised polar stations therefore do not pass: daily land-surface swing Haughton crater (Devon Island) 2.5 K; Svalbard, Bockfjorden 1.2 K; Kangerlussuaq, ice-sheet margin 6.6 K; McMurdo and Concordia have no land-surface temperature in the table. They are analogs of cold and isolation, not of thermal cycling.",
+  "The Lunar base suitability uses one criterion for the ground instead of two: the bare-or-sparse fraction (from ESA CCI land cover, continuous, without the urban class) weighs 25 %; the thermal-inertia class (built from the same land-cover classes) and the permafrost class (modelled, missing on 607 of 2,419 passing points, with no sourced link to a base) carry no weight. The thermal-inertia class is still required and still excludes water. The four weights left (daily temperature swing 35 %, coldest temperature 25 %, bare-or-sparse fraction 25 %, ground sunlight 10 %) sum to 95 %, and the suitability is divided by that sum, so in effect they weigh 36.8 %, 26.3 %, 26.3 % and 10.5 %."
  ],
  "external_validation": null,
  "checks": [
   {
    "text": "external_validation_lunar_base",
    "needle": "no longer says passing sites have no twin",
-   "found": false
+   "found": true
   },
   {
    "text": "external_validation_lunar_base",
@@ -226,57 +225,57 @@
   {
    "text": "top5_stability_lunar_base",
    "needle": "not pending",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E21054 share_in_five 18.0",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E21054 share_top20 51.5",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E17538 share_in_five 23.0",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E17538 share_top20 52.5",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E21833 share_in_five 19.0",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E21833 share_top20 43.5",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E18627 share_in_five 18.0",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E18627 share_top20 38.0",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E19672 share_in_five 22.5",
-   "found": false
+   "found": true
   },
   {
    "text": "top5_stability_lunar_base",
    "needle": "E19672 share_top20 59.0",
-   "found": false
+   "found": true
   },
   {
    "text": "weighted_variables",
@@ -291,7 +290,7 @@
   {
    "text": "weighted_variables",
    "needle": "tmin_c also_in_similarity",
-   "value": false
+   "value": true
   }
  ]
 }

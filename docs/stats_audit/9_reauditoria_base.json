@@ -1,6 +1,6 @@
 {
  "mission": "lunar_base",
- "commit_audited": "d24ebb3",
+ "commit_audited": "d24ebb3 (model); texts re-read at final-integration 0486ad9",
  "verdicts": [
   {
    "item": 1,
@@ -53,11 +53,11 @@
   {
    "item": 9,
    "name": "texts",
-   "verdict": "NOT YET",
-   "figure": "external_validation_lunar_base says the passing benchmark sites have no twin (false: MDRS and Craters of the Moon have twins, ranks 335 and 179); top5_stability_lunar_base pending"
+   "verdict": "GO",
+   "figure": "after the text pass (0486ad9): external-validation note correct (3 of 13 pass, 2 with twins, MDRS 335, Craters of the Moon 179); stability note filled with exactly the audited figures; weights sum 0.95 stated with effective weights; tmin also_in_similarity true; rock_or_bare level coherent"
   }
  ],
- "overall": "publish the corrected Lunar base (after fixing the two texts of item 9; no pair or score change needed)",
+ "overall": "publish the corrected Lunar base (all nine items GO)",
  "five_safe_to_print": true,
  "five": [
   {
@@ -360,25 +360,29 @@
    "kind": "text",
    "severity": "blocking",
    "where": "similarity.json texts.external_validation_lunar_base",
-   "what": "claims the benchmark sites that pass have no twin; MDRS and Craters of the Moon pass with twins (ranks 335 and 179)"
+   "what": "claims the benchmark sites that pass have no twin; MDRS and Craters of the Moon pass with twins (ranks 335 and 179)",
+   "status": "fixed in 0486ad9"
   },
   {
    "kind": "text",
    "severity": "blocking",
    "where": "similarity.json texts.top5_stability_lunar_base",
-   "what": "still 'pending'; fill with stability figures"
+   "what": "still 'pending'; fill with stability figures",
+   "status": "fixed in 0486ad9"
   },
   {
    "kind": "text",
    "severity": "minor",
    "where": "missions.json weighted_variables",
-   "what": "tmin_c also_in_similarity false although tmin_k is a key similarity variable; weights 0.35/0.25/0.25/0.10 sum 0.95 without saying the suitability renormalises"
+   "what": "tmin_c also_in_similarity false although tmin_k is a key similarity variable; weights 0.35/0.25/0.25/0.10 sum 0.95 without saying the suitability renormalises",
+   "status": "fixed in 0486ad9"
   },
   {
    "kind": "documentation",
    "severity": "minor",
    "where": "engine_config criteria_sets lunar_base corrected rock_or_bare_frac reason",
-   "what": "says DERIVED, provenance says MEASURED"
+   "what": "says DERIVED, provenance says MEASURED",
+   "status": "fixed in 0486ad9"
   },
   {
    "kind": "criterion_weakness",
