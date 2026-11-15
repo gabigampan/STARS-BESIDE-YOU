@@ -13,6 +13,9 @@
   --hair: var(--edge);
   --font-title: 'Michroma', 'Barlow', system-ui, sans-serif;
   --font-num: 'IBM Plex Mono', ui-monospace, monospace;
+  /* three typefaces at most: the semi-condensed head face is gone; titles are Michroma where the
+     redesign says so (--font-title), every other heading is Barlow */
+  --font-head: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
   /* gold reticle brackets at the four corners, as background layers (no pseudo-element needed) */
   --brk-c: var(--hud-gold);
   --brk-l: 10px;
@@ -444,16 +447,14 @@ body.mf-phone .pane::after {
   body.hud-boot .topbar,
   body.hud-boot .steps,
   body.hud-boot .stage > .panel,
-  body.hud-boot .intro-card,
-  body.hud-boot .mf-handle {
+  body.hud-boot .intro-card {
     animation: hud-on 420ms ease-out both;
   }
   body.hud-boot .steps {
     animation-delay: 60ms;
   }
   body.hud-boot .intro-card,
-  body.hud-boot .stage > .panel,
-  body.hud-boot .mf-handle {
+  body.hud-boot .stage > .panel {
     animation-delay: 120ms;
   }
   body.hud-boot .pane {
@@ -620,4 +621,43 @@ body.mf-phone .mf-sheet .switch:focus-visible,
 body.mf-phone .mf-sheet .topbar-tools > .btn:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: -2px;
+}
+
+/* ---------- gate fixes (long suites) ---------- */
+/* the phone sheet handle is never faded in by the boot: at opacity 0.01 its text read as #070d1c on
+   #050b1a (1.01:1). It stays an opaque bar of the panel colour with the main text colour. */
+body.mf-phone .mf-handle {
+  opacity: 1;
+  background: var(--glass-solid);
+  color: var(--text);
+}
+body.mf-phone .mf-handle-text {
+  color: var(--text);
+}
+/* the Cesium logo's 44 px hit box: all of its transparent extension goes above the pill (none below),
+   and the credit sits 8 px off the pane's bottom edge, so the hit box ends 8 px clear of the handle */
+body.mf-phone .pane .cesium-widget-credits {
+  bottom: 8px !important;
+}
+body.mf-phone .pane .cesium-credit-logoContainer a {
+  border-top-width: 16px;
+  border-bottom-width: 0;
+  margin-top: -16px;
+  margin-bottom: 0;
+}
+/* the mission panel's three folded rows (full ranking, weights, method) and the five analogs above
+   them are 8 px apart, so "Show 50 more" is clear of "Adjust the weights" with the ranking unfolded */
+#mission-panel .panel-sec.weights,
+#mission-panel .ranking-box,
+#mission-panel .method-box {
+  margin-top: 7px; /* + the row's 1 px edge = 8 px between the boxes */
+}
+/* the 21 px those gaps add are taken back above the five, so the folded rows still end on screen at 1366x768 */
+#mission-panel .panel-body {
+  padding-top: 4px;
+}
+/* a long mission title ("Lunar base mission") drops below "Change mission": a smaller row gap keeps
+   its folded rows on screen at 1366x768 */
+#mission-panel .panel-head {
+  row-gap: 4px;
 }

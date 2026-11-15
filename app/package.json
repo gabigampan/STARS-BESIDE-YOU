@@ -20,7 +20,8 @@
     "test:nowebgl": "node tests/nowebgl.mjs",
     "test:overlap": "node tests/overlap.mjs",
     "test:hud": "node tests/hud.mjs",
-    "test:regress": "node tests/regress.mjs"
+    "test:regress": "node tests/regress.mjs",
+    "test:gatefix": "node tests/gatefix.mjs"
   },
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
